@@ -1,0 +1,168 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>minimize_MSEHat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Minimization of Estimated MSE</h2>
+
+<h3>Description</h3>
+
+<p>Minimization of the estimated MSE as function of <code class="reqn">\sigma</code> in four steps.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">minimize_MSEHat(VarHat.scaled, BiasHat.squared, sigma, Ai, Bj, h, K, fnx,
+  ticker = FALSE, plot = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>VarHat.scaled</code></td>
+<td>
+<p>Vector of estimates of the scaled variance
+(for values of <code class="reqn">\sigma</code> in <code>sigma</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>BiasHat.squared</code></td>
+<td>
+<p>Vector of estimates of the squared bias
+(for values of <code class="reqn">\sigma</code> in <code>sigma</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>Numeric vector <code class="reqn">(\sigma_1, \ldots, \sigma_s)</code> with
+<code class="reqn">s \ge 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ai</code></td>
+<td>
+<p>Numeric vector expecting <code class="reqn">(x_0 - X_1, \ldots, x_0 - X_n) / h</code>,
+where (usually) <code class="reqn">x_0</code> is the point at which the density is to
+be estimated for the data <code class="reqn">X_1, \ldots, X_n</code> with
+<code class="reqn">h = n^{-1/5}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Bj</code></td>
+<td>
+<p>Numeric vector expecting <code class="reqn">(-J(1/n), \ldots, -J(n/n))</code> in case
+of the rank transformation method, but <code class="reqn">(\hat{\theta} - X_1,
+\ldots, \hat{\theta} - X_n)</code> in case of the non-robust
+Srihera-Stute-method. (Note that this the same as argument
+<code>Bj</code> of <code>adaptive_fnhat</code>!)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar, where (usually) <code class="reqn">h = n^{-1/5}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>Kernel function with vectorized in- &amp; output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fnx</code></td>
+<td>
+<p><code class="reqn">f_n(x_0) =</code> <code>mean(K(Ai))/h</code>, where here typically
+<code class="reqn">h = n^{-1/5}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ticker</code></td>
+<td>
+<p>Logical; determines if a 'ticker' documents the iteration
+progress through <code>sigma</code>. Defaults to FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>Should graphical output be produced? Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Step 1: determine first (= smallest) maximizer of <code>VarHat.scaled</code> (!)
+on the grid in <code>sigma</code>. Step 2: determine first (= smallest) minimizer
+of estimated MSE on the <code class="reqn">\sigma</code>-grid LEFT OF the first maximizer of
+<code>VarHat.scaled</code>. Step 3: determine a range around the yet-found
+(discrete) minimizer of estimated MSE within which a finer search for the
+“true” minimum is continued using numerical minimization. Step 4: check if
+the numerically determined minimum is indeed better, i.e., smaller than the
+discrete one; if not keep the first.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with components <code>sigma.adap</code>, <code>msehat.min</code> and
+<code>discr.min.smaller</code> whose meanings are as follows:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+   <code>sigma.adap</code> </td>
+<td style="text-align: left;"> Found minimizer of MSE estimator. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   <code>msehat.min</code> </td>
+<td style="text-align: left;"> Found minimum of MSE estimator. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   <code>discr.min.smaller</code> </td>
+<td style="text-align: left;"> TRUE iff the numerically found minimum was
+                            smaller than the discrete one.
+   </td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+
+set.seed(2017);     n &lt;- 100;     Xdata &lt;- sort(rnorm(n))
+x0 &lt;- 1;      Sigma &lt;- seq(0.01, 10, length = 11)
+
+h &lt;- n^(-1/5)
+Ai &lt;- (x0 - Xdata)/h
+fnx0 &lt;- mean(dnorm(Ai)) / h   # Parzen-Rosenblatt estimator at x0.
+
+ # For non-robust method:
+Bj &lt;- mean(Xdata) - Xdata
+#  # For rank transformation-based method (requires sorted data):
+# Bj &lt;- -J_admissible(1:n / n)   # rank trafo
+
+BV &lt;- kader:::bias_AND_scaledvar(sigma = Sigma, Ai = Ai, Bj = Bj,
+  h = h, K = dnorm, fnx = fnx0, ticker = TRUE)
+
+kader:::minimize_MSEHat(VarHat.scaled = BV$VarHat.scaled,
+  BiasHat.squared = (BV$BiasHat)^2, sigma = Sigma, Ai = Ai, Bj = Bj,
+  h = h, K = dnorm, fnx = fnx0, ticker = TRUE, plot = FALSE)
+
+</code></pre>
+
+
+</div>

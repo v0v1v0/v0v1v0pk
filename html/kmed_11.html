@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fastkmed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple and fast k-medoid algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function runs the simple and fast k-medoid algorithm
+proposed by Park and Jun (2009).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fastkmed(distdata, ncluster, iterate = 10, init = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>distdata</code></td>
+<td>
+<p>A distance matrix (n x n) or dist object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncluster</code></td>
+<td>
+<p>A number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterate</code></td>
+<td>
+<p>A number of iterations for the clustering algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init</code></td>
+<td>
+<p>A vector of initial objects as the cluster medoids
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The simple and fast k-medoids, which sets a set of medoids as the
+cluster centers, adapts the k-means algorithm for medoid up-dating.
+The new medoids of each iteration are calculated in the within cluster
+only such that it gains speed.
+</p>
+<p><code>init = NULL</code> is required because the Park and Jun (2009) has
+a particular method to select the initial medoids.  The initial medoids
+are selected by
+</p>
+<p style="text-align: center;"><code class="reqn"> v_j = \sum_{i=1}^n \frac{d_{ij}}{\sum_{l=1}^n d_{il}},
+\quad j = 1, 2, 3, \ldots, n </code>
+</p>
+
+<p>where the first k of the <code class="reqn">v_j</code> is selected if the number of
+clusters is k.
+</p>
+<p><code>init</code> can be provided with a vector of id objects. The length of
+the vector has to be equal to the number of clusters. However, assigning
+a vector in the <code>init</code> argument, the algorithm is no longer the simple
+and fast k-medoids algorithm. The <code>inckmed</code> function,
+for example, defines a different method to select the initial medoid
+though it applies the <code>fastkmed</code> function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a list of components:
+</p>
+<p><code>cluster</code> is the clustering memberships result.
+</p>
+<p><code>medoid</code> is the id medoids.
+</p>
+<p><code>minimum_distance</code> is the distance of all objects to their cluster
+medoid.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Park, H., Jun, C., 2009. A simple and fast algorithm for
+k-medoids clustering. Expert Systems with Applications 36, pp. 3336-3341.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+result &lt;- fastkmed(mrwdist, ncluster = 3, iterate = 50)
+table(result$cluster, iris[,5])
+
+
+</code></pre>
+
+
+</div>

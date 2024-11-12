@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>eval_dlm_log_like</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Auxiliary function for evaluating the prior density of a DLM</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates the prior density for a set of parameters theta in a DLM. The structure of the DLM is taken to be that of the fitted_dlm object passed as input.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">eval_dlm_log_like(theta, model, lin.pred = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Matrix: A matrix representing the set of parameter for which to evaluate the density. Its size should be n x t, where n is the number of latent states and t is the length of the time series;</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>fitted_dlm: A fitted_dlm object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lin.pred</code></td>
+<td>
+<p>boolean: A flag indicating if theta represents the linear predictors.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar representing the log likelihood evaluated at theta.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- c(AirPassengers)
+
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+outcome &lt;- Poisson(lambda = "rate", data = data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+eval_dlm_log_like(fitted.data$mts, fitted.data)
+</code></pre>
+
+
+</div>

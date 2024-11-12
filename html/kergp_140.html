@@ -1,0 +1,540 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mle-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Maximum Likelihood Estimation of Gaussian Process Model Parameters
+</h2>
+
+<h3>Description</h3>
+
+<p>Maximum Likelihood estimation of Gaussian Process models which
+covariance structure is described in a covariance kernel object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+## S4 method for signature 'covAll'
+mle(object, 
+    y, X, F = NULL, beta = NULL,
+    parCovIni = coef(object),
+    parCovLower = coefLower(object), 
+    parCovUpper = coefUpper(object),
+    noise = TRUE, varNoiseIni = var(y) / 10,
+    varNoiseLower = 0, varNoiseUpper = Inf,
+    compGrad = hasGrad(object),
+    doOptim = TRUE,
+    optimFun = c("nloptr::nloptr", "stats::optim"),
+    optimMethod = ifelse(compGrad, "NLOPT_LD_LBFGS", "NLOPT_LN_COBYLA"),
+    optimCode = NULL,
+    multistart = 1,
+    parTrack = FALSE, trace  = 0, checkNames = TRUE,
+    ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object representing a covariance kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>Response vector.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>Spatial (or input) design matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F</code></td>
+<td>
+
+<p>Trend matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+
+<p>Vector of trend coefficients if known/fixed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parCovIni</code></td>
+<td>
+
+<p>Vector with named elements or matrix giving the initial values for the
+parameters. See <b>Examples</b>. When this argument is omitted, the
+vector of covariance parameters given in <code>object</code> is
+used if <code>multistart == 1</code>; If <code>multistart &gt; 1</code>,
+a matrix of parameters is simulated by using <code>simulPar</code>. 
+Remind that you can use the <code>coef</code> and <code>coef&lt;-</code>
+methods to get and set this slot of the covariance object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parCovLower</code></td>
+<td>
+
+<p>Lower bounds for the parameters. When this argument is omitted, the
+vector of parameters lower bounds in the covariance given in
+<code>object</code> is used. You can use <code>coefLower</code> and
+<code>coefLower&lt;-</code> methods to get and set this slot of the
+covariance object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parCovUpper</code></td>
+<td>
+
+<p>Upper bounds for the parameters. When this argument is omitted, the
+vector of parameters lower bounds in the covariance given in
+<code>object</code> is used. You can use <code>coefUpper</code> and
+<code>coefUpper&lt;-</code> methods to get and set this slot of the
+covariance object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noise</code></td>
+<td>
+
+<p>Logical. Should a noise be added to the error term?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varNoiseIni</code></td>
+<td>
+
+<p>Initial value for the noise variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varNoiseLower</code></td>
+<td>
+
+<p>Lower bound for the noise variance. Should be <code>&lt;= varNoiseIni</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varNoiseUpper</code></td>
+<td>
+
+<p>Upper bound for the noise variance. Should be <code>&gt;= varNoiseIni</code>.
+</p>
+</td>
+</tr>
+</table>
+<table>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical: compute and use the analytical gradient in optimization?
+This is only possible when <code>object</code> provides the analytical
+gradient.
+
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>doOptim</code></td>
+<td>
+
+<p>Logical. If <code>FALSE</code> no optimization is done.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimFun</code></td>
+<td>
+
+<p>Function used for optimization. The two pre-defined choices are
+<code>nloptr::nloptr</code> (default) and <code>stats::optim</code>, both in
+combination with a few specific optimization methods. 
+Ignored if <code>optimCode</code> is provided.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimMethod</code></td>
+<td>
+
+<p>Name of the optimization method or algorithm. This is passed as the
+<code>"algorithm"</code> element of the <code>opts</code> argument when
+<code>nloptr::nloptr</code> is used (default), or to the <code>method</code>
+argument when <code>stats::optim</code> is used. When another value of
+<code>optimFun</code> is given, the value of <code>optimMethod</code> is
+ignored. Ignored if <code>optimCode</code> is provided. Use
+<code>optimMethods</code> to obtain the list of usable values.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimCode</code></td>
+<td>
+
+<p>An object with class <code>"expression"</code> or <code>"character"</code>
+representing a user-written R code to be parsed and performing the
+log-likelihood maximization. Notice that this argument will bypass 
+<code>optimFun</code> and <code>optimMethod</code>. The expression must define
+an object named <code>"opt"</code>, which is either a list containing 
+optimization results, either an object inheriting from <code>"try-error"</code> 
+to cope with the case where a problem occurred during the optimization. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multistart</code></td>
+<td>
+
+<p>Number of optimizations to perform from different starting points
+(see <code>parCovIni</code>).  Parallel backend is encouraged.
+</p>
+</td>
+</tr>
+</table>
+<table>
+<tr style="vertical-align: top;">
+<td><code>parTrack</code></td>
+<td>
+
+<p>If <code>TRUE</code>, the parameter vectors used during the optimization
+are tracked and returned as a matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+
+<p>Integer level of verbosity.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkNames</code></td>
+<td>
+
+<p>if <code>TRUE</code> (default), check the compatibility of <code>X</code> with
+<code>object</code>, see <code>checkX</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Further arguments to be passed to the optimization function,
+<code>nloptr</code> or
+<code>optim</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The choice of optimization method is as follows.
+</p>
+
+<ul>
+<li>
+<p> When <code>optimFun</code> is <code>nloptr:nloptr</code>, it is assumed
+that we are minimizing the negative log-likelihood <code class="reqn">- \log
+    L</code>. Note that both predefined methods
+<code>"NLOPT_LD_LBFGS"</code> and <code>"NLOPT_LN_COBYLA"</code> can cope with a
+non-finite value of the objective, except for the initial value of
+the parameter.  Non-finite values of <code class="reqn">- \log L</code> are
+often met in practice during optimization steps. The method
+<code>"NLOPT_LD_LBFGS"</code> used when <code>compGrad</code> is <code>TRUE</code>
+requires that the gradient is provided by/with the covariance
+object. You can try other values of <code>optimMethod</code> corresponding
+to the possible choice of the <code>"algorithm"</code> element in the
+<code>opts</code> argument of <code>nloptr:nloptr</code>. It may be useful to
+give other options in order to control the optimization and its
+stopping rule.
+</p>
+</li>
+<li>
+<p> When <code>optimFun</code> is <code>"stats:optim"</code>, it is assumed
+that we are maximizing the log-likelihood <code class="reqn">\log L</code>.  We
+suggest to use one of the methods <code>"L-BFGS-B"</code> or
+<code>"BFGS"</code>.  Notice that <code>control</code> can be provided in
+<code>...</code>, but <code>control$fnscale</code> is forced to be <code>- 1</code>,
+corresponding to maximization.  Note that <code>"L-BFGS-B"</code> uses box
+constraints, but the optimization stops as soon as the
+log-likelihood is non-finite or <code>NA</code>. The method <code>"BFGS"</code>
+does not use constraints but allows the log-likelihood to be
+non-finite or <code>NA</code>. Both methods can be used without gradient
+or with gradient if <code>object</code> allows this.
+</p>
+</li>
+</ul>
+<p>The vectors <code>parCovIni</code>, <code>parCovLower</code>, <code>parCovUpper</code>
+must have elements corresponding to those of the vector of kernel
+parameters given by <code>coef(object)</code>. These vectors should have
+suitably named elements.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements hopefully having understandable names. 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>opt</code></td>
+<td>
+
+<p>List of optimization results if it was successful, or an error
+object otherwise.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coef.kernel</code></td>
+<td>
+
+<p>The vector of 'kernel' coefficients. This will include one or
+several variance parameters.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coef.trend</code></td>
+<td>
+
+<p>Estimate of the vector <code class="reqn">\boldsymbol{\beta}</code> of the trend
+coefficients.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parTracked</code></td>
+<td>
+
+<p>A matrix with rows giving the successive iterates during
+optimization if the <code>parTrack</code> argument was set to <code>TRUE</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The checks concerning the parameter names, dimensions of provided
+objects, ... are not fully implemented yet.
+</p>
+<p>Using the <code>optimCode</code> possibility requires a bit of programming
+effort, although a typical code only contains a few lines.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Y. Deville, O. Roustant
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>gp</code> for various examples, <code>optimMethods</code>
+to see the possible values of the argument <code>optimMethod</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+set.seed(29770)
+
+##=======================================================================
+## Example. A 4-dimensional "covMan" kernel
+##=======================================================================
+d &lt;- 4
+myCovMan &lt;- 
+      covMan(
+         kernel = function(x1, x2, par) { 
+         htilde &lt;- (x1 - x2) / par[1]
+         SS2 &lt;- sum(htilde^2)
+         d2 &lt;- exp(-SS2)
+         kern &lt;- par[2] * d2
+         d1 &lt;- 2 * kern * SS2 / par[1]            
+         attr(kern, "gradient") &lt;- c(theta = d1,  sigma2 = d2)
+         return(kern)
+      },
+      label = "myGauss",
+      hasGrad = TRUE,
+      d = 4,    
+      parLower = c(theta = 0.0, sigma2 = 0.0),
+      parUpper = c(theta = +Inf, sigma2 = +Inf),
+      parNames = c("theta", "sigma2"),
+      par = c(NA, NA)
+      )
+kernCode &lt;- "
+       SEXP kern, dkern;
+       int nprotect = 0, d;
+       double SS2 = 0.0, d2, z, *rkern, *rdkern;
+
+       d = LENGTH(x1);
+       PROTECT(kern = allocVector(REALSXP, 1)); nprotect++;
+       PROTECT(dkern = allocVector(REALSXP, 2)); nprotect++;
+       rkern = REAL(kern);
+       rdkern = REAL(dkern);
+
+       for (int i = 0; i &lt; d; i++) {
+         z = ( REAL(x1)[i] - REAL(x2)[i] ) / REAL(par)[0];
+         SS2 += z * z; 
+       }
+
+       d2 = exp(-SS2);
+       rkern[0] = REAL(par)[1] * d2;
+       rdkern[1] =  d2; 
+       rdkern[0] =  2 * rkern[0] * SS2 / REAL(par)[0];
+
+       SET_ATTR(kern, install(\"gradient\"), dkern);
+       UNPROTECT(nprotect);
+       return kern;
+     "
+
+## inline the C function into an R function: MUCH MORE EFFICIENT!!!
+## Not run: 
+require(inline)
+kernC &lt;- cfunction(sig = signature(x1 = "numeric", x2 = "numeric",
+                                   par = "numeric"),
+                    body = kernCode)
+myCovMan &lt;- covMan(kernel = kernC, hasGrad = TRUE, label = "myGauss", d = 4,
+                   parNames = c("theta", "sigma2"),
+                   parLower = c("theta" = 0.0, "sigma2" = 0.0),
+                   parUpper = c("theta" = Inf, "sigma2" = Inf))
+
+## End(Not run)
+
+##=======================================================================
+## Example (continued). Simulate data for covMan and trend
+##=======================================================================
+n &lt;- 100; 
+X &lt;- matrix(runif(n * d), nrow = n)
+colnames(X) &lt;- inputNames(myCovMan)
+
+coef(myCovMan) &lt;- myPar &lt;- c(theta = 0.5, sigma2 = 2)
+C &lt;- covMat(object = myCovMan, X = X,
+            compGrad = FALSE,  index = 1L)
+
+library(MASS)
+set.seed(456)
+y &lt;- mvrnorm(mu = rep(0, n), Sigma = C)
+p &lt;- rpois(1, lambda = 4)
+if (p &gt; 0) {
+  F &lt;- matrix(runif(n * p), nrow = n, ncol = p)
+  beta &lt;- rnorm(p)
+  y &lt;- F %*% beta + y
+} else F &lt;- NULL
+par &lt;- parCovIni &lt;- c("theta" = 0.6, "sigma2" = 4)
+
+##=======================================================================
+## Example (continued). ML estimation. Note the 'partrack' argument
+##=======================================================================           
+est &lt;- mle(object = myCovMan,
+           parCovIni = parCovIni,
+           y = y, X = X, F = F,
+           parCovLower = c(0.05, 0.05), parCovUpper = c(10, 100),
+           parTrack = TRUE, noise = FALSE, checkNames = FALSE)
+est$opt$value
+
+## change the (constrained) optimization  method
+## Not run: 
+est1 &lt;- mle(object = myCovMan,
+            parCovIni = parCovIni,
+            optimFun = "stats::optim",
+            optimMethod = "L-BFGS-B",
+            y = y, X = X, F = F,
+            parCovLower = c(0.05, 0.05), parCovUpper = c(10, 100),
+            parTrack = TRUE, noise = FALSE, checkNames = FALSE)
+est1$opt$value
+
+## End(Not run)
+
+##=======================================================================
+## Example (continued). Grid for graphical analysis
+##=======================================================================
+## Not run: 
+    theta.grid &lt;- seq(from = 0.1, to = 0.7, by = 0.2)
+    sigma2.grid &lt;- seq(from = 0.3, to = 6, by = 0.4)
+    par.grid &lt;- expand.grid(theta = theta.grid, sigma2 = sigma2.grid)
+    ll &lt;- apply(as.matrix(par.grid), 1, est$logLikFun)
+    llmat &lt;- matrix(ll, nrow = length(theta.grid),
+                    ncol = length(sigma2.grid))
+
+## End(Not run)                
+
+##=======================================================================
+## Example (continued). Explore the surface ?
+##=======================================================================
+## Not run: 
+   require(rgl)
+   persp3d(x = theta.grid, y = sigma2.grid, z = ll,
+           xlab = "theta", ylab = "sigma2", zlab = "logLik",
+           col = "SpringGreen3", alpha = 0.6)
+
+## End(Not run)
+
+##=======================================================================
+## Example (continued). Draw a contour plot for the log-lik 
+##                        and show iterates
+##=======================================================================
+## Not run: 
+    contour(x = theta.grid, y = sigma2.grid, z = llmat,
+            col = "SpringGreen3", xlab = "theta", ylab = "sigma2",
+            main = "log-likelihood contours and iterates",
+            xlim = range(theta.grid, est$parTracked[ , 1], na.rm = TRUE),
+            ylim = range(sigma2.grid, est$parTracked[ , 2], na.rm = TRUE))
+    abline(v = est$coef.kernel[1], h = est$coef.kernel[2], lty = "dotted")
+    niter &lt;- nrow(est$parTracked)
+    points(est$parTracked[1:niter-1, ],
+           col = "orangered", bg = "yellow", pch = 21, lwd = 2, type = "o")
+    points(est$parTracked[niter, , drop = FALSE],
+           col = "blue", bg = "blue", pch = 21, lwd = 2, type = "o", cex = 1.5)
+    ann &lt;- seq(from = 1, to = niter, by = 5)
+    text(x = est$parTracked[ann, 1], y = est$parTracked[ann, 2],
+         labels = ann - 1L, pos = 4, cex = 0.8, col = "orangered")
+    points(x = myPar["theta"], y = myPar["sigma2"],
+           bg = "Chartreuse3", col = "ForestGreen",
+           pch = 22, lwd = 2, cex = 1.4)
+
+    legend("topright", legend = c("optim", "optim (last)", "true"),
+           pch = c(21, 21, 22), lwd = c(2, 2, 2), lty = c(1, 1, NA),
+           col = c("orangered", "blue", "ForestGreen"),
+           pt.bg = c("yellow", "blue", "Chartreuse3"))
+ 
+
+## End(Not run)
+</code></pre>
+
+
+</div>

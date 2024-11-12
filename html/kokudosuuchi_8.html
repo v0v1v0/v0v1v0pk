@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>translateKSJData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Translate JPGIS2.1 Data</h2>
+
+<h3>Description</h3>
+
+<p><code>translateKSJData()</code> translates colnames and 'codelist'-type of columns to
+human-readable labels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">translateKSJData(
+  x,
+  id = NULL,
+  variant = NULL,
+  quiet = TRUE,
+  translate_colnames = TRUE,
+  translate_codelist = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A list of sf objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>An ID of the dataset (e.g. <code>A03</code>). This can be <code>NULL</code> if <code>x</code> is loaded
+by <code>readKSJData()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variant</code></td>
+<td>
+<p>A type of variant in case the translation cannot be determined only by <code>id</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>If <code>TRUE</code>, suppress messages.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>translate_colnames</code></td>
+<td>
+<p>If <code>TRUE</code>, translate colnames to human-readable labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>translate_codelist</code></td>
+<td>
+<p>If <code>TRUE</code>, translate codes to human-readable labels.</p>
+</td>
+</tr>
+</table>
+</div>

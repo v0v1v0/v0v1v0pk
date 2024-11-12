@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mlh_reshape</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>mlh_reshape</h2>
+
+<h3>Description</h3>
+
+<p>Machine learning helper function to reshape a matrix of
+predicted probabilities to classes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mlh_reshape(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A matrix with predicted probabilities for several classes.
+Each row must sum up to 1.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Returns a vector of type factor of the same length as rows in object,
+representing the class with the highest probability for each observation in
+object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(123)
+class_0 &lt;- rbeta(100, 2, 4)
+class_1 &lt;- (1 - class_0) * 0.4
+class_2 &lt;- (1 - class_0) * 0.6
+dataset &lt;- cbind("0" = class_0, "1" = class_1, "2" = class_2)
+mlh_reshape(dataset)
+</code></pre>
+
+
+</div>

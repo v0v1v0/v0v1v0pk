@@ -1,0 +1,382 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_lstm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Long Short-Term Memory unit - Hochreiter 1997.</h2>
+
+<h3>Description</h3>
+
+<p>For a step-by-step description of the algorithm, see <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">this tutorial</a>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_lstm(
+  object,
+  units,
+  activation = "tanh",
+  recurrent_activation = "sigmoid",
+  use_bias = TRUE,
+  return_sequences = FALSE,
+  return_state = FALSE,
+  go_backwards = FALSE,
+  stateful = FALSE,
+  time_major = FALSE,
+  unroll = FALSE,
+  kernel_initializer = "glorot_uniform",
+  recurrent_initializer = "orthogonal",
+  bias_initializer = "zeros",
+  unit_forget_bias = TRUE,
+  kernel_regularizer = NULL,
+  recurrent_regularizer = NULL,
+  bias_regularizer = NULL,
+  activity_regularizer = NULL,
+  kernel_constraint = NULL,
+  recurrent_constraint = NULL,
+  bias_constraint = NULL,
+  dropout = 0,
+  recurrent_dropout = 0,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>Positive integer, dimensionality of the output space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use. Default: hyperbolic tangent
+(<code>tanh</code>). If you pass <code>NULL</code>, no activation is applied
+(ie. "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_activation</code></td>
+<td>
+<p>Activation function to use for the recurrent
+step.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>Boolean, whether the layer uses a bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_sequences</code></td>
+<td>
+<p>Boolean. Whether to return the last output in the
+output sequence, or the full sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_state</code></td>
+<td>
+<p>Boolean (default FALSE). Whether to return the last state
+in addition to the output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>go_backwards</code></td>
+<td>
+<p>Boolean (default FALSE). If TRUE, process the input
+sequence backwards and return the reversed sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stateful</code></td>
+<td>
+<p>Boolean (default FALSE). If TRUE, the last state for each
+sample at index i in a batch will be used as initial state for the sample
+of index i in the following batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time_major</code></td>
+<td>
+<p>If True, the inputs and outputs will be in shape
+<code style="white-space: pre;">⁠[timesteps, batch, feature]⁠</code>, whereas in the False case, it will be
+<code style="white-space: pre;">⁠[batch, timesteps, feature]⁠</code>. Using <code>time_major = TRUE</code> is a bit more
+efficient because it avoids transposes at the beginning and end of the RNN
+calculation. However, most TensorFlow data is batch-major, so by default
+this function accepts input and emits output in batch-major form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unroll</code></td>
+<td>
+<p>Boolean (default FALSE). If TRUE, the network will be unrolled,
+else a symbolic loop will be used. Unrolling can speed-up a RNN, although
+it tends to be more memory-intensive. Unrolling is only suitable for short
+sequences.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_initializer</code></td>
+<td>
+<p>Initializer for the <code>kernel</code> weights matrix, used
+for the linear transformation of the inputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_initializer</code></td>
+<td>
+<p>Initializer for the <code>recurrent_kernel</code> weights
+matrix, used for the linear transformation of the recurrent state.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unit_forget_bias</code></td>
+<td>
+<p>Boolean. If TRUE, add 1 to the bias of the forget
+gate at initialization. Setting it to true will also force
+<code>bias_initializer="zeros"</code>. This is recommended in <a href="https://proceedings.mlr.press/v37/jozefowicz15.pdf">Jozefowicz et al.</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the <code>kernel</code>
+weights matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the
+<code>recurrent_kernel</code> weights matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activity_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the output of the
+layer (its "activation")..</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>kernel</code> weights
+matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_constraint</code></td>
+<td>
+<p>Constraint function applied to the
+<code>recurrent_kernel</code> weights matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+linear transformation of the inputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop
+for the linear transformation of the recurrent state.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Standard Layer args.</p>
+</td>
+</tr>
+</table>
+<h3>Input shapes</h3>
+
+<p>N-D tensor with shape <code style="white-space: pre;">⁠(batch_size, timesteps, ...)⁠</code>,
+or <code style="white-space: pre;">⁠(timesteps, batch_size, ...)⁠</code> when <code>time_major = TRUE</code>.
+</p>
+
+
+<h3>Output shape</h3>
+
+
+<ul>
+<li>
+<p> if <code>return_state</code>: a list of tensors. The first tensor is
+the output. The remaining tensors are the last states,
+each with shape <code style="white-space: pre;">⁠(batch_size, state_size)⁠</code>, where <code>state_size</code>
+could be a high dimension tensor shape.
+</p>
+</li>
+<li>
+<p> if <code>return_sequences</code>: N-D tensor with shape <code style="white-space: pre;">⁠[batch_size, timesteps, output_size]⁠</code>, where <code>output_size</code> could be a high dimension tensor shape, or
+<code style="white-space: pre;">⁠[timesteps, batch_size, output_size]⁠</code> when <code>time_major</code> is <code>TRUE</code>
+</p>
+</li>
+<li>
+<p> else, N-D tensor with shape <code style="white-space: pre;">⁠[batch_size, output_size]⁠</code>, where
+<code>output_size</code> could be a high dimension tensor shape.
+</p>
+</li>
+</ul>
+<h3>Masking</h3>
+
+<p>This layer supports masking for input data with a variable number of
+timesteps. To introduce masks to your data, use
+<code>layer_embedding()</code> with the <code>mask_zero</code> parameter set to <code>TRUE</code>.
+</p>
+
+
+<h3>Statefulness in RNNs</h3>
+
+<p>You can set RNN layers to be 'stateful', which means that the states computed
+for the samples in one batch will be reused as initial states for the samples
+in the next batch. This assumes a one-to-one mapping between samples in
+different successive batches.
+</p>
+<p>For intuition behind statefulness, there is a helpful blog post here:
+<a href="https://philipperemy.github.io/keras-stateful-lstm/">https://philipperemy.github.io/keras-stateful-lstm/</a>
+</p>
+<p>To enable statefulness:
+</p>
+
+<ul>
+<li>
+<p> Specify <code>stateful = TRUE</code> in the layer constructor.
+</p>
+</li>
+<li>
+<p> Specify a fixed batch size for your model. For sequential models,
+pass <code>batch_input_shape = list(...)</code> to the first layer in your model.
+For functional models with 1 or more Input layers, pass
+<code>batch_shape = list(...)</code> to all the first layers in your model.
+This is the expected shape of your inputs <em>including the batch size</em>.
+It should be a list of integers, e.g. <code>list(32, 10, 100)</code>.
+For dimensions which can vary (are not known ahead of time),
+use <code>NULL</code> in place of an integer, e.g. <code>list(32, NULL, NULL)</code>.
+</p>
+</li>
+<li>
+<p> Specify <code>shuffle = FALSE</code> when calling <code>fit()</code>.
+</p>
+</li>
+</ul>
+<p>To reset the states of your model, call <code>layer$reset_states()</code> on either
+a specific layer, or on your entire model.
+</p>
+
+
+<h3>Initial State of RNNs</h3>
+
+<p>You can specify the initial state of RNN layers symbolically by calling them
+with the keyword argument <code>initial_state.</code> The value of initial_state should
+be a tensor or list of tensors representing the initial state of the RNN
+layer.
+</p>
+<p>You can specify the initial state of RNN layers numerically by calling
+<code>reset_states</code> with the named argument <code>states.</code> The value of <code>states</code> should
+be an array or list of arrays representing the initial state of the RNN
+layer.
+</p>
+
+
+<h3>Passing external constants to RNNs</h3>
+
+<p>You can pass "external" constants to the cell using the <code>constants</code> named
+argument of <code style="white-space: pre;">⁠RNN$__call__⁠</code> (as well as <code>RNN$call</code>) method. This requires that the
+<code>cell$call</code> method accepts the same keyword argument <code>constants</code>. Such constants
+can be used to condition the cell transformation on additional static inputs
+(not changing over time), a.k.a. an attention mechanism.
+</p>
+
+
+<h3>References</h3>
+
+
+<ul>
+<li> <p><a href="http://www.bioinf.jku.at/publications/older/2604.pdf">Long short-term memory</a> (original 1997 paper)
+</p>
+</li>
+<li> <p><a href="https://www.cs.toronto.edu/~graves/preprint.pdf">Supervised sequence labeling with recurrent neural networks</a>
+</p>
+</li>
+<li> <p><a href="https://arxiv.org/abs/1512.05287">A Theoretically Grounded Application of Dropout in Recurrent Neural Networks</a>
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/guide/keras/rnn">https://www.tensorflow.org/guide/keras/rnn</a>
+</p>
+</li></ul>
+<p>Other recurrent layers: 
+<code>layer_cudnn_gru()</code>,
+<code>layer_cudnn_lstm()</code>,
+<code>layer_gru()</code>,
+<code>layer_rnn()</code>,
+<code>layer_simple_rnn()</code>
+</p>
+<p>Other recurrent layers: 
+<code>layer_cudnn_gru()</code>,
+<code>layer_cudnn_lstm()</code>,
+<code>layer_gru()</code>,
+<code>layer_rnn()</code>,
+<code>layer_simple_rnn()</code>
+</p>
+
+
+</div>

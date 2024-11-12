@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>image_array_save</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Saves an image stored as an array to a path or file object.</h2>
+
+<h3>Description</h3>
+
+<p>Saves an image stored as an array to a path or file object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">image_array_save(
+  x,
+  path,
+  data_format = NULL,
+  file_format = NULL,
+  scale = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An array.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Path or file object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>Image data format, either <code>"channels_first"</code> or
+<code>"channels_last"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file_format</code></td>
+<td>
+<p>Optional file format override. If omitted, the format to
+use is determined from the filename extension. If a file object was
+used instead of a filename, this parameter should always be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>Whether to rescale image values to be within <code style="white-space: pre;">⁠[0, 255]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional keyword arguments passed to <code>PIL.Image.save()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Called primarily for side effects. The input <code>x</code> is returned,
+invisibly, to enable usage with the pipe.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/data_loading/image#saveimg-function">https://keras.io/api/data_loading/image#saveimg-function</a>
+</p>
+</li></ul>
+<p>Other image utils: <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>op_image_affine_transform()</code> <br><code>op_image_crop()</code> <br><code>op_image_extract_patches()</code> <br><code>op_image_hsv_to_rgb()</code> <br><code>op_image_map_coordinates()</code> <br><code>op_image_pad()</code> <br><code>op_image_resize()</code> <br><code>op_image_rgb_to_grayscale()</code> <br><code>op_image_rgb_to_hsv()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_switch</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Switches between two operations depending on a scalar value.</h2>
+
+<h3>Description</h3>
+
+<p>Note that both <code>then_expression</code> and <code>else_expression</code>
+should be symbolic tensors of the <em>same shape</em>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_switch(condition, then_expression, else_expression)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>condition</code></td>
+<td>
+<p>tensor (<code>int</code> or <code>bool</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>then_expression</code></td>
+<td>
+<p>either a tensor, or a function that returns a tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>else_expression</code></td>
+<td>
+<p>either a tensor, or a function that returns a tensor.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The selected tensor.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>khisr-configuration</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>khisr Configuration</h2>
+
+<h3>Description</h3>
+
+<p>Some aspects of khisr behaviour can be controlled via an option.
+</p>
+<p>Temporarily suppress messages by enabling quiet mode within the provided code block.
+</p>
+<p>Temporarily suppress messages within the specified environment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">with_khis_quiet(code)
+
+local_khis_quiet(env = parent.frame())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>Code to execute quietly</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>env</code></td>
+<td>
+<p>The environment to use for scoping.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No return value, called for side effects
+</p>
+<p>No return value, called for side effects
+</p>
+<p>No return value, called for side effects.
+</p>
+
+
+<h3>Messages</h3>
+
+<p>The <code>khis_quiet</code> option can be used to suppress messages form khisr. By
+default, khisr always messages, i.e. it is <em>not</em> quiet.
+</p>
+<p>set <code>khis_quiet</code> to <code>TRUE</code> to suppress message, by one of these means,
+in order of decreasing scope:
+</p>
+
+<ul>
+<li>
+<p> Put <code>options(khis_quiet = TRUE)</code> in the start-up file, such as <code>.Rprofile</code>,
+or  in your R script.
+</p>
+</li>
+<li>
+<p> Use <code>local_khis_quiet()</code> to silence khisr in a specific scope.
+</p>
+</li>
+<li>
+<p> Use <code>with_khis_quite</code> to run small bit of code silently.
+</p>
+</li>
+</ul>
+<p><code>local_khis_quiet</code> and <code>with_khis</code> follow the conventions of the
+<a href="https://withr.r-lib.org">withr</a> package.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+    # message: "The credentials have been set."
+    khis_cred(username = 'username',
+              password = 'password',
+              base_url = 'https://dhis2-instance/api')
+
+    # suppress messages for a small amount of code
+    with_khis_quiet(
+        khis_cred(username = 'username',
+                  password = 'password',
+                  base_url = 'https://dhis2-instance/api')
+    )
+
+## End(Not run)
+
+## Not run: 
+    # message: "The credentials have been set."
+    khis_cred(username = 'username',
+              password = 'password',
+              base_url = 'https://dhis2-instance/api')
+
+    # suppress messages for a in a specific scope
+    local_khis_quiet()
+
+    # no message
+    khis_cred(username = 'username',
+              password = 'password',
+              base_url = 'https://dhis2-instance/api')
+
+    # clear credentials
+    khis_cred_clear()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

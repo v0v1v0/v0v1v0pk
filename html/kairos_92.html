@@ -1,0 +1,152 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict_event</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict Event and Accumulation Dates</h2>
+
+<h3>Description</h3>
+
+<p>Estimates the event and accumulation dates of an assemblage.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predict_event(object, data, ...)
+
+predict_accumulation(object, data, ...)
+
+## S4 method for signature 'EventDate,missing'
+predict_event(object, margin = 1, level = 0.95, calendar = NULL)
+
+## S4 method for signature 'EventDate,matrix'
+predict_event(object, data, margin = 1, level = 0.95, calendar = NULL)
+
+## S4 method for signature 'EventDate,missing'
+predict_accumulation(object, calendar = NULL)
+
+## S4 method for signature 'EventDate,matrix'
+predict_accumulation(object, data, level = 0.95, calendar = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A <code>numeric</code> <code>matrix</code> or a <code>data.frame</code> of count data
+(absolute frequencies) for which to predict event and accumulation dates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to internal methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>A <code>numeric</code> vector giving the subscripts which the prediction
+will be applied over: <code>1</code> indicates rows, <code>2</code> indicates columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the confidence level.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>). If <code>NULL</code> (the default), <em>rata die</em> are
+returned.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+<ul>
+<li> <p><code>predict_event()</code> returns a <code>data.frame</code>.
+</p>
+</li>
+<li> <p><code>predict_accumulation()</code> returns a <code>data.frame</code>.
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Bellanger, L. &amp; Husi, P. (2013). Mesurer et modéliser le temps inscrit dans
+la matière à partir d'une source matérielle : la céramique médiévale.
+In <em>Mesure et Histoire Médiévale</em>. Histoire ancienne et médiévale.
+Paris: Publication de la Sorbonne, p. 119-134.
+</p>
+<p>Bellanger, L. &amp; Husi, P. (2012). Statistical Tool for Dating and
+Interpreting Archaeological Contexts Using Pottery. <em>Journal of
+Archaeological Science</em>, 39(4), 777-790. <a href="https://doi.org/10.1016/j.jas.2011.06.031">doi:10.1016/j.jas.2011.06.031</a>.
+</p>
+<p>Bellanger, L., Tomassone, R. &amp; Husi, P. (2008). A Statistical Approach for
+Dating Archaeological Contexts. <em>Journal of Data Science</em>, 6, 135-154.
+</p>
+<p>Bellanger, L., Husi, P. &amp; Tomassone, R. (2006). Une approche statistique
+pour la datation de contextes archéologiques. <em>Revue de Statistique
+Appliquée</em>, 54(2), 65-81.
+</p>
+<p>Bellanger, L., Husi, P. &amp; Tomassone, R. (2006). Statistical Aspects of
+Pottery Quantification for the Dating of Some Archaeological Contexts.
+<em>Archaeometry</em>, 48(1), 169-183. <a href="https://doi.org/10.1111/j.1475-4754.2006.00249.x">doi:10.1111/j.1475-4754.2006.00249.x</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>event()</code>
+</p>
+<p>Other dating methods: 
+<code>event()</code>,
+<code>mcd()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Peeples and Schachner 2012
+data("zuni", package = "folio")
+
+## Assume that some assemblages are reliably dated (this is NOT a real example)
+zuni_dates &lt;- c(
+  LZ0569 = 1097, LZ0279 = 1119, CS16 = 1328, LZ0066 = 1111,
+  LZ0852 = 1216, LZ1209 = 1251, CS144 = 1262, LZ0563 = 1206,
+  LZ0329 = 1076, LZ0005Q = 859, LZ0322 = 1109, LZ0067 = 863,
+  LZ0578 = 1180, LZ0227 = 1104, LZ0610 = 1074
+)
+
+## Model the event and accumulation date for each assemblage
+model &lt;- event(zuni, zuni_dates, rank = 10)
+plot(model, select = 1:10, event = TRUE, flip = TRUE)
+</code></pre>
+
+
+</div>

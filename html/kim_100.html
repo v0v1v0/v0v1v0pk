@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_sole_csv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read the sole csv file in the working directory</h2>
+
+<h3>Description</h3>
+
+<p>Read the sole csv file in the working directory
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_sole_csv(head = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>head</code></td>
+<td>
+<p>logical. if <code>head = TRUE</code>, prints the first five
+rows of the data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for the <code>fread</code> function
+from the data.table package. Any arguments for data.table's <code>fread</code>
+function can be used, e.g., <code>fill = TRUE</code>, <code>nrows = 100</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a data.table object, that is,
+an output from the data.table function, <code>fread</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+mydata &lt;- read_sole_csv()
+mydata &lt;- read_sole_csv(head = TRUE)
+mydata &lt;- read_sole_csv(fill = TRUE, nrows = 5)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reset_tempdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reset app tempdata (internal mem)</h2>
+
+<h3>Description</h3>
+
+<p>This function is part of a suite of functions handling the interface between the kindisperse app &amp; R
+package. Due to how shiny's interactive programming works, ordinary objects are not visible to the reactive functions
+embedded in the app. The solution implemented here is to construct a custom environment, <code>env_appdata</code>, that is
+accessible within the app and outside of it.
+</p>
+<p>This function resets the internal <code>tempdata</code> environment used by the kindisperse app, keeping it from becoming
+over-cluttered &amp; freeing up space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reset_tempdata()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>No return value, called for side effects
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other app_ports: 
+<code>display_appdata()</code>,
+<code>mount_appdata()</code>,
+<code>reset_appdata()</code>,
+<code>retrieve_appdata()</code>,
+<code>retrieve_tempdata()</code>,
+<code>retrieveall_appdata()</code>,
+<code>unmount_appdata()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">reset_tempdata()
+</code></pre>
+
+
+</div>

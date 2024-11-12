@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dev.create</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a graphics device</h2>
+
+<h3>Description</h3>
+
+<p>This is a way to create a graphic device on screen that can
+display R plots. It is performing the same purpose as R's dev.new,
+but it overcomes the limitations of RStudio.  It is needed because
+RStudio does not implement fully the functionality of
+dev.new. This is suitable for Windows, Linux, and
+Macintosh operating systems.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dev.create(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently, height and width parameters that would be
+suitable with dev.new</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The argument in dev.new named noRStudioGD seems to be aimed at same
+purpose. But it does not do what I want and documentation is too
+sparse.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if(interactive()) dev.create(height = 7, width = 3)
+dev.off()
+
+</code></pre>
+
+
+</div>

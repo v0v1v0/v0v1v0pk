@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lex.div.num</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate lexical diversity</h2>
+
+<h3>Description</h3>
+
+<p>This function is a stripped down version of <code>lex.div</code>. It does not analyze text,
+but takes the numbers of tokens and types directly to calculate measures for which this information is sufficient:
+</p>
+
+<ul>
+<li> <p><code>"TTR"</code>The classic <em>Type-Token Ratio</em>
+</p>
+</li>
+<li> <p><code>"C"</code>Herdan's <em>C</em>
+</p>
+</li>
+<li> <p><code>"R"</code>Guiraud's <em>Root TTR</em>
+</p>
+</li>
+<li> <p><code>"CTTR"</code>Carroll's <em>Corrected TTR</em>
+</p>
+</li>
+<li> <p><code>"U"</code>Dugast's <em>Uber Index</em>
+</p>
+</li>
+<li> <p><code>"S"</code>Summer's index
+</p>
+</li>
+<li> <p><code>"Maas"</code> Maas' (<code class="reqn">a^2</code>)
+</p>
+</li>
+</ul>
+<p>See <code>lex.div</code> for further details on the formulae.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lex.div.num(
+  num.tokens,
+  num.types,
+  measure = c("TTR", "C", "R", "CTTR", "U", "S", "Maas"),
+  log.base = 10,
+  quiet = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>num.tokens</code></td>
+<td>
+<p>Numeric, the number of tokens.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.types</code></td>
+<td>
+<p>Numeric, the number of types.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>measure</code></td>
+<td>
+<p>A character vector defining the measures to calculate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log.base</code></td>
+<td>
+<p>A numeric value defining the base of the logarithm. See <code>log</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Logical. If <code>FALSE</code>, short status messages will be shown.
+<code>TRUE</code> will also suppress all potential warnings regarding the validation status of measures.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.TTR</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Maas, H.-D.,
+(1972). \"Uber den Zusammenhang zwischen Wortschatzumfang und L\"ange eines Textes. <em>Zeitschrift f\"ur
+Literaturwissenschaft und Linguistik</em>, 2(8), 73–96.
+</p>
+<p>Tweedie. F.J. &amp; Baayen,
+R.H. (1998). How Variable May a Constant Be? Measures of Lexical Richness in Perspective.
+<em>Computers and the Humanities</em>, 32(5), 323–352.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>lex.div</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lex.div.num(
+  num.tokens=104,
+  num.types=43
+)
+</code></pre>
+
+
+</div>

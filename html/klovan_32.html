@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Rgeo_vario_construct_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Experimental Ominidirectional Variogram Plot using Regostats</h2>
+
+<h3>Description</h3>
+
+<p>This function constructs an Experimental Ominidirectional Variogram using 'Rgeostats'.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Rgeo_vario_construct_plot(db, num_fac, property, lag, nlag = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>db</code></td>
+<td>
+<p>The db-class containing the data information used to calculate the experimental variogram.
+The variograms are calculated for the set of "z*" variables present in the db.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_fac</code></td>
+<td>
+<p>A numeric value indicating how many factors to analyze. Default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>property</code></td>
+<td>
+<p>A string indicating which factor to build variogram from e.g. "RC1" or "RC2"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>Array containing the distance lags for each calculation direction.
+If the lag is not defined, set as NA.
+A default lag is calculated so that the maximum distance is equal to half of the field diagonal</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlag</code></td>
+<td>
+<p>Array containing the number of lags for each calculation direction
+If nlag not defined, set as NA.
+If the number of lags is not defined, it defaults to 10.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a plottable Rgeostats Experimental Ominidirectional Variogram model
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if(requireNamespace("RGeostats")){
+    library(RGeostats)
+    data("Klovan_Row80", package = "klovan")
+    db &lt;- Rgeo_database(Klovan_Row80, 3, "RC3")
+    Rgeo_vario_construct_plot(db, 3, "RC3", lag = 500)
+}
+</code></pre>
+
+
+</div>

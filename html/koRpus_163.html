@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nWS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Neue Wiener Sachtextformeln</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nWS(
+  txt.file,
+  hyphen = NULL,
+  parameters = c(ms.syll = 3, iw.char = 6, es.syll = 1),
+  nws1 = c(ms = 19.35, sl = 0.1672, iw = 12.97, es = 3.27, const = 0.875),
+  nws2 = c(ms = 20.07, sl = 0.1682, iw = 13.73, const = 2.779),
+  nws3 = c(ms = 29.63, sl = 0.1905, const = 1.1144),
+  nws4 = c(ms = 27.44, sl = 0.2656, const = 1.693),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hyphen</code></td>
+<td>
+<p>An object of class kRp.hyphen. If <code>NULL</code>,
+the text will be hyphenated automatically.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A numeric vector with named magic numbers,
+defining the relevant parameters for all formulas of the index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nws1</code></td>
+<td>
+<p>A numeric vector with named magic numbers for the first of the formulas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nws2</code></td>
+<td>
+<p>A numeric vector with named magic numbers for the second of the formulas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nws3</code></td>
+<td>
+<p>A numeric vector with named magic numbers for the third of the formulas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nws4</code></td>
+<td>
+<p>A numeric vector with named magic numbers for the fourth of the formulas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function calculates the new Wiener Sachtextformeln (formulas 1 to 4). In contrast to <code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bamberger, R. &amp; Vanecek,
+E. (1984). <em>Lesen–Verstehen–Lernen–Schreiben</em>. Wien: Jugend und Volk.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+nWS(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

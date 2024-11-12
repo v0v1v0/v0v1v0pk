@@ -1,0 +1,134 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_meeting</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get speeches by meeting</h2>
+
+<h3>Description</h3>
+
+<p>This function returns all speeches based on the specified conditions.
+Three parameters have to be specified. The first is the name of house
+(<code>house</code>).
+The second is the name of meeting in Japanese
+(<code>meetingName</code>) (e.g. "Yosan Inkai", "Honkaigi").
+And the third is the time period. There are three ways to specifiy the time period
+(1. starting and ending date, 2. National Diet session number, and 3.
+year). If the specified conditions exceed the limit of the number of records
+for one API call (3 records per call), this function will repeatedly call the
+API until all records are obtained.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_meeting(
+  house = "Lower",
+  sessionNumber = NA,
+  startDate = NA,
+  endDate = NA,
+  year = NA,
+  meetingName = NA,
+  searchTerms = NA,
+  verbose = TRUE,
+  downloadMessage = FALSE,
+  sleep = 3,
+  meeting_list = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>house</code></td>
+<td>
+<p>Name of the house, value is "Upper" (Sangiin), "Lower" (Shugin), or "Both" (Ryouin).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionNumber</code></td>
+<td>
+<p>integer, session number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>startDate</code></td>
+<td>
+<p>starting date to obtain the record in the format of "
+(e.g. "1999-01-01"), if you specified session number, you cannot assign this
+option.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>endDate</code></td>
+<td>
+<p>ending date to obtain the record in the format of "
+(e.g. "1999-01-01"), if you specified session number, you cannot assign this
+option.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>integer, year of the record.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meetingName</code></td>
+<td>
+<p>name of the meeting in Japanese. example "Yosan iinkai", "Honkaigi".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>searchTerms</code></td>
+<td>
+<p>search terms. either vector of search terms or a string of
+search terms separated by a space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>display detailed message about the download progress.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>downloadMessage</code></td>
+<td>
+<p>show <code>download.file()</code> progress, default <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sleep</code></td>
+<td>
+<p>the length of break between each time to fetch the record (in seconds).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meeting_list</code></td>
+<td>
+<p>get the list of meeting, instead of actual speeches. Default <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the function returns a data.frame of speeches.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+hm_122 &lt;- get_meeting(meetingName = "\u904B\u8F38\u59D4\u54E1\u4F1A", sessionNumber = 126)
+head(hm_122)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

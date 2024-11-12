@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>setCorrectDate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+setCorrectDate: verifies date entry and returns proper output
+</h2>
+
+<h3>Description</h3>
+
+<p>This function is used inside the verifyDateEntry function, whic is used to verify if a date is correct. The function setCorrectDate verifies if the year, month, day, hour, minutes or seconds are correct. For example, the day has to be an integer between 1 and 31, the minutes and seconds must be integers between 0 an 59 etc.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">setCorrectDate(x, type)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>The element to test
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>The type of element: year, month, day, hour, minute or second
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The element if it is valid; NA otherwise.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

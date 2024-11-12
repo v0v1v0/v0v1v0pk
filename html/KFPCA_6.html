@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernfun</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Functions</h2>
+
+<h3>Description</h3>
+
+<p>Some common-used kernel functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernfun(type)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A <code>character</code> denoting the kernel type; 'epan'(Epanechnikov), 'unif'(Uniform), 'quar'(Quartic), 'gauss'(Gaussian).</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The corresponding kernel function.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- seq(-2, 2, 0.01)
+par(mfrow = c(2,2))
+plot(x, kernfun("epan")(x), type = "l", main = "Epanechnikov")
+plot(x, kernfun("unif")(x), type = "l", main = "Uniform")
+plot(x, kernfun("quar")(x), type = "l", main = "Quartic")
+plot(x, kernfun("gauss")(x), type = "l", main = "Gaussian")
+par(mfrow = c(1,1))
+</code></pre>
+
+
+</div>

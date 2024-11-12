@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>update.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>update.fitted_dlm</h2>
+
+<h3>Description</h3>
+
+<p>update.fitted_dlm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+update(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>fitted_dlm: The fitted model to be updated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra variables necessary for updating (covariates, observed values, etc.).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If an a covariate is necessary for updating, it should be passed as a named argument. Its name must follow this structure: &lt;block name&gt;.Covariate&lt;.index&gt;. If there is only one pulse in the associated block the index is omitted.
+If an a pulse is necessary for updating, it should be passed as a named argument. Its name must follow this structure: &lt;block name&gt;.Pulse&lt;.index&gt;. If there is only one pulse in the associated block the index is omitted.
+If an offset is necessary for updating, it should be passed along with the observed data. See example.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A fitted_dlm object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for fitted_dlm objects: 
+<code>coef.fitted_dlm()</code>,
+<code>eval_dlm_norm_const()</code>,
+<code>fit_model()</code>,
+<code>forecast.fitted_dlm()</code>,
+<code>simulate.fitted_dlm()</code>,
+<code>smoothing()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+# Only first 100 observations (for the sake of the example)
+outcome &lt;- Poisson(lambda = "rate", data = c(AirPassengers)[1:100])
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+
+updated.fit &lt;- update(fitted.data, AirPassengers = list(data = c(AirPassengers)[101:144]))
+# If a offset was present, the user should pass its value when updating
+# updated.fit=update(fitted.data,
+#                     AirPassengers=list(
+#                      data=c(AirPassengers)[101:144],
+#                      offset= ... ))
+
+</code></pre>
+
+
+</div>

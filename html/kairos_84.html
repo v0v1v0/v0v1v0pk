@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_time</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Abundance vs Time Plot</h2>
+
+<h3>Description</h3>
+
+<p>Produces an abundance <em>vs</em> time diagram.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_time(object, dates, ...)
+
+## S4 method for signature 'data.frame,numeric'
+plot_time(object, dates, calendar = getOption("kairos.calendar"), ...)
+
+## S4 method for signature 'matrix,numeric'
+plot_time(object, dates, calendar = getOption("kairos.calendar"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dates</code></td>
+<td>
+<p>A <code>numeric</code> vector of dates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further parameters to be passed to <code>aion::plot()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>plot_time()</code> is called it for its side-effects: it results in a graphic
+being displayed (invisibly returns <code>object</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other plotting methods: 
+<code>plot_aoristic</code>,
+<code>plot_event</code>,
+<code>plot_fit</code>,
+<code>plot_mcd</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Crema et al. 2016
+data("merzbach", package = "folio")
+
+## Coerce the merzbach dataset to a count matrix
+## Keep only decoration types that have a maximum frequency of at least 50
+keep &lt;- apply(X = merzbach, MARGIN = 2, FUN = function(x) max(x) &gt;= 50)
+counts &lt;- merzbach[, keep]
+
+## Set dates
+## We use the row names as time coordinates (roman numerals)
+dates &lt;- as.numeric(utils::as.roman(rownames(counts)))
+
+## Plot abundance vs time
+plot_time(counts, dates, calendar = NULL, ncol = 3, xlab = "Phases")
+</code></pre>
+
+
+</div>

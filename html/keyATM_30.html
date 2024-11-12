@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.keyATM_output</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict topic proportions for the covariate keyATM</h2>
+
+<h3>Description</h3>
+
+<p>Predict topic proportions for the covariate keyATM
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keyATM_output'
+predict(
+  object,
+  newdata,
+  transform = FALSE,
+  burn_in = NULL,
+  parallel = TRUE,
+  posterior_mean = TRUE,
+  ci = 0.9,
+  method = c("hdi", "eti"),
+  point = c("mean", "median"),
+  label = NULL,
+  raw_values = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>the keyATM_output object for the covariate model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>New observations which should be predicted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+<p>Transorm and standardize the <code>newdata</code> with the same formula and option as <code>model_settings</code> used in <code>keyATM()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>burn_in</code></td>
+<td>
+<p>integer. Burn-in period. If not specified, it is the half of samples. Default is <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>logical. If <code>TRUE</code>, parallelization for speeding up. Default is <code>TRUE</code>. Please <code>plan()</code> before use this function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posterior_mean</code></td>
+<td>
+<p>logical. If <code>TRUE</code>, the quantity of interest to estimate is the posterior mean. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>value of the credible interval (between 0 and 1) to be estimated. Default is <code>0.9</code> (90%).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method for computing the credible interval. The Highest Density Interval (<code>hdi</code>, default) or Equal-tailed Interval (<code>eti</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>point</code></td>
+<td>
+<p>method for computing the point estimate. <code>mean</code> (default) or <code>median</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>a character. Add a <code>label</code> column to the output. The default is <code>NULL</code> (do not add it).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raw_values</code></td>
+<td>
+<p>a logical. Returns raw values. The default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments not used.</p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,162 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kRp.text,-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>S4 Class kRp.text</h2>
+
+<h3>Description</h3>
+
+<p>This class is used for objects that are returned by <code>treetag</code> or <code>tokenize</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>lang</code></dt>
+<dd>
+<p>A character string,
+naming the language that is assumed for the tokenized text in this object.</p>
+</dd>
+<dt><code>desc</code></dt>
+<dd>
+<p>Descriptive statistics of the tagged text.</p>
+</dd>
+<dt><code>tokens</code></dt>
+<dd>
+<p>Results of the called tokenizer and POS tagger. The data.frame usually has eleven columns:
+</p>
+
+<dl>
+<dt>
+<code>doc_id</code>:</dt>
+<dd>
+<p>Factor, optional document identifier.</p>
+</dd>
+<dt>
+<code>token</code>:</dt>
+<dd>
+<p>Character, the tokenized text.</p>
+</dd>
+<dt>
+<code>tag</code>:</dt>
+<dd>
+<p>Factor, POS tags for each token.</p>
+</dd>
+<dt>
+<code>lemma</code>:</dt>
+<dd>
+<p>Character, lemma for each token.</p>
+</dd>
+<dt>
+<code>lttr</code>:</dt>
+<dd>
+<p>Integer, number of letters.</p>
+</dd>
+<dt>
+<code>wclass</code>:</dt>
+<dd>
+<p>Factor, word class.</p>
+</dd>
+<dt>
+<code>desc</code>:</dt>
+<dd>
+<p>Factor, a short description of the POS tag.</p>
+</dd>
+<dt>
+<code>stop</code>:</dt>
+<dd>
+<p>Logical, <code>TRUE</code> if token is a stopword.</p>
+</dd>
+<dt>
+<code>stem</code>:</dt>
+<dd>
+<p>Character, stemmed token.</p>
+</dd>
+<dt>
+<code>idx</code>:</dt>
+<dd>
+<p>Integer, index number of token in this document.</p>
+</dd>
+<dt>
+<code>sntc</code>:</dt>
+<dd>
+<p>Integer, number of sentence in this document.</p>
+</dd>
+</dl>
+<p>This data.frame structure adheres to the "Text Interchange Formats" guidelines set out by rOpenSci[1].</p>
+</dd>
+<dt><code>features</code></dt>
+<dd>
+<p>A named logical vector,
+indicating which features are available in this object's <code>feat_list</code> slot.
+Common features are listed in the description of the <code>feat_list</code> slot.</p>
+</dd>
+<dt><code>feat_list</code></dt>
+<dd>
+<p>A named list with optional analysis results or other content as used by the defined <code>features</code>:
+</p>
+
+<ul>
+<li>
+<p><code>hyphen</code> A named list of objects of class <code>kRp.hyphen</code>.
+</p>
+</li>
+<li>
+<p><code>readability</code> A named list of objects of class <code>kRp.readability</code>.
+</p>
+</li>
+<li>
+<p><code>lex_div</code> A named list of objects of class <code>kRp.TTR</code>.
+</p>
+</li>
+<li>
+<p><code>freq</code> A list with additional results of <code>freq.analysis</code>.
+</p>
+</li>
+<li>
+<p><code>corp_freq</code> An object of class <code>kRp.corp.freq</code>,
+e.g., results of a call to
+<code>read.corp.custom</code>.
+</p>
+</li>
+<li>
+<p><code>diff</code> Additional results of calls to a method like <code>textTransform</code>.
+</p>
+</li>
+<li>
+<p><code>doc_term_matrix</code> A sparse document-term matrix,
+as produced by <code>docTermMatrix</code>.
+</p>
+</li>
+</ul>
+<p>See the <code>getter and setter methods</code> for easy access to these sub-slots.
+There can actually be any number of additional features,
+the above is just a list of those already defined by this package.</p>
+</dd>
+</dl>
+<h3>Contructor function</h3>
+
+<p>Should you need to manually generate objects of this class (which should rarely be the case),
+the contructor function 
+<code>kRp_text(...)</code> can be used instead of
+<code>new("kRp.text", ...)</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>There is also <code>as()</code> methods to transform objects from other koRpus classes into kRp.text.
+</p>
+
+
+<h3>References</h3>
+
+<p>[1] Text Interchange Formats (<a href="https://github.com/ropensci/tif">https://github.com/ropensci/tif</a>)
+</p>
+
+
+</div>

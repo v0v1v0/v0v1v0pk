@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LookupCZ</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>LookupCZ</h2>
+
+<h3>Description</h3>
+
+<p>This function will return the climate zone for the co-ordinates provided.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LookupCZ(data, res = "course", rc = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The co-ordinates for the location you are trying to predict the climate zone of (format is three column dataframe, first column site IDs, second column longitude values, third column latitude values).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+<p>Specify the resolution as a string - 'course' for lower resolution (default, 0.5 degrees), 'fine' for higher resolution (100s).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rc</code></td>
+<td>
+<p>Specify whether to generate the rounded coordinate columns in the input dataframe, default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The climate zone for the co-ordinates provided.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- data.frame(Site = c("GC","UFS","NEG"),
+  Longitude = c(-15.42,10.98,34.78),
+  Latitude = c(27.82,47.42,30.86))
+data &lt;- data.frame(data,
+  rndCoord.lon = RoundCoordinates(data$Longitude),
+  rndCoord.lat = RoundCoordinates(data$Latitude))
+data &lt;- data.frame(data,ClimateZ=LookupCZ(data))
+</code></pre>
+
+
+</div>

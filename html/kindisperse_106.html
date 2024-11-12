@@ -1,0 +1,148 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>filter_methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Access or modify the <code>filter</code> parameters of <code>KinPairSimulation</code> objects</h2>
+
+<h3>Description</h3>
+
+<p>These generics &amp; methods work as an interface between <code>KinPairSimulation</code> objects and the
+<code>sample_kindist</code> function. They either retrieve the value of pre-existing filter steps that have
+been applied to the object (e.g. <code>upper(x)</code>) or assign such a filtering parameter to the <code>KinPairSimulation</code>
+object (e.g. <code>sampledims(x) &lt;- value</code>). In this case, the method passes the <code>KinPairSimulation</code> object to the
+<code>sample_kindist()</code> function for subsampling or filtering, then updates the sampling parameter before returning the
+modified object. Note that while the <code>sample_kindist</code> function can take <code>KinPairData</code> objects, the methods
+described here are only applicable to objects of class <code>KinPairSimulation</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">upper(x)
+
+upper(x) &lt;- value
+
+lower(x)
+
+lower(x) &lt;- value
+
+spacing(x)
+
+spacing(x) &lt;- value
+
+samplenum(x)
+
+samplenum(x) &lt;- value
+
+sampledims(x)
+
+sampledims(x) &lt;- value
+
+## S4 method for signature 'KinPairSimulation'
+upper(x)
+
+## S4 method for signature 'KinPairSimulation'
+lower(x)
+
+## S4 method for signature 'KinPairSimulation'
+spacing(x)
+
+## S4 method for signature 'KinPairSimulation'
+samplenum(x)
+
+## S4 method for signature 'KinPairSimulation'
+sampledims(x)
+
+## S4 replacement method for signature 'KinPairSimulation'
+upper(x) &lt;- value
+
+## S4 replacement method for signature 'KinPairSimulation'
+lower(x) &lt;- value
+
+## S4 replacement method for signature 'KinPairSimulation'
+spacing(x) &lt;- value
+
+## S4 replacement method for signature 'KinPairSimulation'
+samplenum(x) &lt;- value
+
+## S4 replacement method for signature 'KinPairSimulation'
+sampledims(x) &lt;- value
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class KinPairSimulation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>value for parameter to be adjusted to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KinPairSimulation</code></td>
+<td>
+<p>object of class KinPairSimulation</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>either the accessed <code>numeric</code> filter parameter or a filtered <code>KinPairSimulation</code> object
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>upper,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>lower,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>spacing,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>samplenum,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>sampledims,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>upper&lt;-,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>lower&lt;-,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>spacing&lt;-,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>samplenum&lt;-,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>sampledims&lt;-,KinPairSimulation-method</code>: 
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other kpsmethods: 
+<code>access_sigmas</code>,
+<code>kernelshape()</code>,
+<code>kerneltype()</code>,
+<code>simtype()</code>
+</p>
+
+
+</div>

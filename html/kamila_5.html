@@ -1,0 +1,167 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>genMixedData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate simulated mixed-type data with cluster structure.</h2>
+
+<h3>Description</h3>
+
+<p>This function simulates mixed-type data sets with a latent cluster
+structure, with continuous and nominal variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">genMixedData(
+  sampSize,
+  nConVar,
+  nCatVar,
+  nCatLevels,
+  nConWithErr,
+  nCatWithErr,
+  popProportions,
+  conErrLev,
+  catErrLev
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sampSize</code></td>
+<td>
+<p>Integer: Size of the simulated data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nConVar</code></td>
+<td>
+<p>The number of continuous variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nCatVar</code></td>
+<td>
+<p>The number of categorical variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nCatLevels</code></td>
+<td>
+<p>Integer: The number of categories per categorical variables. Currently must be a multiple of the number of populations specified in popProportions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nConWithErr</code></td>
+<td>
+<p>Integer: The number of continuous variables with error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nCatWithErr</code></td>
+<td>
+<p>Integer: The number of categorical variables with error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>popProportions</code></td>
+<td>
+<p>A vector of scalars that sums to one. The length gives the number of populations (clusters), with values denoting the prior probability of observing a member of the corresponding population. NOTE: currently only two populations are supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conErrLev</code></td>
+<td>
+<p>A scalar between 0.01 and 1 denoting the univariate overlap between clusters on the continuous variables specified to have error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catErrLev</code></td>
+<td>
+<p>Univariate overlap level for the categorical variables with error.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function simulates mixed-type data sets with a latent cluster
+structure. Continuous variables follow a normal mixture model, and
+categorical variables follow a multinomial mixture model. Overlap of the
+continuous and categorical variables (i.e. how clear the cluster structure
+is) can be manipulated by the user. Overlap between two clusters is the area
+of the overlapping region defined by their densities (or, for categorical
+variables, the summed height of overlapping segments defined by their point
+masses). The default overlap level is 0.01 (i.e. almost perfect separation).
+A user-specified number of continuous and categorical variables can be
+specified to be "error variables" with arbitrary overlap within 0.01 and 1.00
+(where 1.00 corresponds to complete overlap).
+NOTE: Currently, only two populations (clusters) are supported. While exact
+control of overlap between two clusters is straightforward, controlling the
+overlap between the K choose 2 pairwise combinations of clusters is a more
+difficult task.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>trueID</code></td>
+<td>
+<p>Integer vector giving population (cluster) membership of each observation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trueMus</code></td>
+<td>
+<p>Mean parameters used for population (cluster) centers in the continuous variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conVars</code></td>
+<td>
+<p>The continuous variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>errVariance</code></td>
+<td>
+<p>Variance parameter used for continuous error distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>popProbsNoErr</code></td>
+<td>
+<p>Multinomial probability vectors for categorical variables without measurement error</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>popProbsWithErr</code></td>
+<td>
+<p>Multinomial probability vectors for categorical variables with measurement error</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catVars</code></td>
+<td>
+<p>The categorical variables</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- genMixedData(100, 2, 2, nCatLevels=4, nConWithErr=1, nCatWithErr=1,
+  popProportions=c(0.3,0.7), conErrLev=0.3, catErrLev=0.2)
+with(dat,plot(conVars,col=trueID))
+with(dat,table(data.frame(catVars[,1:2],trueID, stringsAsFactors = TRUE)))
+</code></pre>
+
+
+</div>

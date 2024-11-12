@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random_binomial</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw samples from a Binomial distribution.</h2>
+
+<h3>Description</h3>
+
+<p>The values are drawn from a Binomial distribution with
+specified trial count and probability of success.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random_binomial(shape, counts, probabilities, dtype = NULL, seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>The shape of the random values to generate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>counts</code></td>
+<td>
+<p>A number or array of numbers representing the
+number of trials. It must be broadcastable with <code>probabilities</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>probabilities</code></td>
+<td>
+<p>A float or array of floats representing the
+probability of success of an individual event.
+It must be broadcastable with <code>counts</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>Optional dtype of the tensor. Only floating point types are
+supported. If not specified, <code>config_floatx()</code> is used,
+which defaults to <code>"float32"</code> unless you configured it otherwise (via
+<code>config_set_floatx(float_dtype)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>A Python integer or instance of
+<code>random_seed_generator()</code>.
+Used to make the behavior of the initializer
+deterministic. Note that an initializer seeded with an integer
+or None (unseeded) will produce the same random values
+across multiple calls. To get different random values
+across multiple calls, use as seed an instance
+of <code>random_seed_generator()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor of random values.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/random/binomial">https://www.tensorflow.org/api_docs/python/tf/keras/random/binomial</a>
+</p>
+</li></ul>
+<p>Other random: <br><code>random_beta()</code> <br><code>random_categorical()</code> <br><code>random_dropout()</code> <br><code>random_gamma()</code> <br><code>random_integer()</code> <br><code>random_normal()</code> <br><code>random_seed_generator()</code> <br><code>random_shuffle()</code> <br><code>random_truncated_normal()</code> <br><code>random_uniform()</code> <br></p>
+
+
+</div>

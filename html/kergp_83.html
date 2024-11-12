@@ -1,0 +1,237 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covANOVA-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class <code>"covANOVA"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>S4 class representing a Tensor Product (ANOVA) covariance kernel.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("covANOVA", ...)</code>
+or by using the <code>covANOVA</code> function.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>k1Fun1</code>:</dt>
+<dd>
+<p>Object of class <code>"function"</code> A function of a scalar numeric
+variable.
+</p>
+</dd>
+<dt>
+<code>k1Fun1Char</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code> describing the function in the
+slot <code>k1Fun1</code>.
+</p>
+</dd>
+<dt>
+<code>hasGrad</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>. Tells if the value returned by
+the function <code>kern1Fun</code> has an attribute named <code>"der"</code>
+giving the derivative(s).
+</p>
+</dd>
+<dt>
+<code>cov</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. The value <code>1L</code> corresponds
+to a general covariance kernel. The value of <code>0L</code> sets the variance parameter to <code>1</code>, which does <em>not</em> correspond to a correlation kernel. See Section 'details' of <code>covANOVA</code>.</p>
+</dd>
+<dt>
+<code>iso</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. The value <code>1L</code> corresponds
+to an isotropic covariance, with all the inputs sharing the same
+range value.
+</p>
+</dd>
+<dt>
+<code>iso1</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code> used only when the function in
+the slot <code>k1Fun1</code> depends on parameters i.e. has more than
+one formal argument. NOT IMPLEMENTED YET.  
+</p>
+</dd>
+<dt>
+<code>label</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Short description of the
+object.
+</p>
+</dd>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Dimension, i.e. number of
+inputs.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>Object of class <code>"optCharacter"</code>. Names of the inputs.
+</p>
+</dd>
+<dt>
+<code>parLower</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Numeric values for the lower
+bounds on the parameters. Can be <code>-Inf</code>.
+</p>
+</dd>
+<dt>
+<code>parUpper</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Numeric values for the upper
+bounds on the parameters. Can be <code>Inf</code>.
+</p>
+</dd>
+<dt>
+<code>par</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Numeric values for the
+parameters. Can be <code>NA</code>.
+</p>
+</dd>
+<dt>
+<code>kern1ParN1</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. The number of parameters in
+<code>k1Fun1</code> (such as a shape).
+</p>
+</dd>
+<dt>
+<code>parN1</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Number of parameters of the
+function <code>kern1Fun</code> (such as a shape).
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Number of parameters for the
+object. The include: <em>direct</em> parameters in the function
+<code>kern1Fun</code>, ranges, and variance.
+</p>
+</dd>
+<dt>
+<code>kern1ParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Names of the <em>direct</em>
+parameters.
+</p>
+</dd>
+<dt>
+<code>kernParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Names of the parameters.
+</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>"covAll"</code>, directly.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>coef</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Get the vector of values for
+the parameters.
+</p>
+</dd>
+<dt>coef&lt;-</dt>
+<dd>
+<p><code>signature(object = "covANOVA", value = "numeric")</code>: Set the
+vector of values for the parameters.
+</p>
+</dd>
+<dt>coefLower</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Get the vector of
+lower bounds on the parameters.
+</p>
+</dd>
+<dt>coefLower&lt;-</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Set the vector of lower
+bounds on the parameters.
+</p>
+</dd>
+<dt>coefUpper</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Get the vector of upper
+bounds on the parameters.
+</p>
+</dd>
+<dt>coefUpper&lt;-</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Set the vector of upper
+bounds on the parameters. 
+</p>
+</dd>
+<dt>covMat</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Compute the covariance
+matrix for given sites.
+</p>
+</dd>
+<dt>npar</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Get the number of
+parameters.
+</p>
+</dd>
+<dt>scores</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Compute the scores
+i.e. the derivatives w.r.t. the parameters of the contribution of
+the covariance in the log-likelihood of a <code>gp</code>.
+</p>
+</dd>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Print or show the object.
+</p>
+</dd>
+<dt>varVec</dt>
+<dd>
+<p><code>signature(object = "covANOVA")</code>: Compute the variance
+vector for given sites.
+</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>covTP</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">showClass("covANOVA")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kbase</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>base of a Knowledge Space</h2>
+
+<h3>Description</h3>
+
+<p>Computes the base of a knowledge space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  kbase(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kspace</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>A <em>base</em> for a knowledge space is a minimal family of knowledge
+states spanning the knowledge space, i.e., the base includes the minimal
+states sufficient to reconstruct the full knowledge space. A knowledge
+structure has a base only if it is a knowledge space.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>kbase</code>, i.e. a <code>set</code> of sets where 
+each subset represents one knowledge state of the base.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kspace</code>, <code>kstructure</code>, <code>set</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kspace(kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e"))))
+kbase(kst)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getNewGapsInd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+A function to create random gaps
+</h2>
+
+<h3>Description</h3>
+
+<p>This function creates nGaps gaps of length lGaps in the time series timSer. It is used internally. The gaps do not overlay amongst them; they do not overlay pre-existing gaps either.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getNewGapsInd(timSer, lGaps, nGaps)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>timSer</code></td>
+<td>
+
+<p>The time series where the gaps will be created.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lGaps</code></td>
+<td>
+
+<p>The length of the gaps
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nGaps</code></td>
+<td>
+
+<p>The number of gaps.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector containing the indices of the gaps
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Create time series
+TS &lt;- genTSExample(InKTSEnv = FALSE)[1:50,]
+
+# Create 3 gaps of 7 NAs each
+gInd &lt;- getNewGapsInd(TS, 7, 3)
+
+# Create time series duplicate and apply the gaps
+TS1 &lt;- TS
+TS1$value[gInd] &lt;- NA
+
+#Compare
+cbind(TS, TS1$value)
+
+</code></pre>
+
+
+</div>

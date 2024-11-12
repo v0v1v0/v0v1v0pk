@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>precomputeUpdateData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Useful precomputations to quickly update kriging mean and variance</h2>
+
+<h3>Description</h3>
+
+<p>This function is used in combination with <code>computeQuickKrigcov</code> and computes an output list that serves as input in that function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">precomputeUpdateData(model, integration.points)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>A Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.points</code></td>
+<td>
+
+<p>p*d matrix of points for numerical integration in the X space.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Kinv.c.olddata</code></td>
+<td>
+<p>Matrix equal to K^(-1)*c where K is the non conditional covariance matrix at the design points and c is the non conditional covariances between the design points and the integration points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kinv.F</code></td>
+<td>
+<p>Matrix equal to K^(-1)*F where F is a matrix with the values of the trend functions at the design points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>first.member</code></td>
+<td>
+<p>Matrix with a complicated expression.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Bect J., Ginsbourger D., Vazquez E., Picheny V., Richet Y. (2014), <em>Fast parallel kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>, Technometrics, vol. 56(4), pp 455-465
+</p>
+<p>Chevalier C., Ginsbourger D. (2014), <em>Corrected Kriging update formulae for batch-sequential data assimilation</em>, in Pardo-Iguzquiza, E., et al. (Eds.) Mathematics of Planet Earth, pp 119-122
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>computeQuickKrigcov</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#precomputeUpdateData
+
+set.seed(9)
+N &lt;- 20 #number of observations
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+#the points where we want to compute prediction (if a point new.x is added to the doe)
+n.grid &lt;- 20 #you can run it with 100
+x.grid &lt;- y.grid &lt;- seq(0,1,length=n.grid)
+integration.points &lt;- expand.grid(x.grid,y.grid)
+integration.points &lt;- as.matrix(integration.points)
+precalc.data &lt;- precomputeUpdateData(model=model,integration.points=integration.points)
+
+#now we can compute quickly kriging covariances 
+#between the integration.points and any other points
+newdata &lt;- matrix(c(0.6,0.6),ncol=2)
+pred &lt;- predict_nobias_km(object=model,newdata=newdata,type="UK",se.compute=TRUE)
+
+kn &lt;- computeQuickKrigcov(model=model,integration.points=integration.points,X.new=newdata,
+                    precalc.data=precalc.data,F.newdata=pred$F.newdata,
+                    c.newdata=pred$c)
+
+z.grid &lt;- matrix(kn, n.grid, n.grid)
+
+#plots: contour of the covariances, DOE points and new point
+#these covariances have been computed quickly with computeQuickKrigcov
+image(x=x.grid,y=y.grid,z=z.grid,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid,15,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+points(newdata, col="red", pch=17, lwd=4,cex=3)
+title("Kriging covariances with the point (0.6,0.6), in red")
+</code></pre>
+
+
+</div>

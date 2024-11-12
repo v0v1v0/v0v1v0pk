@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keysInput</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a keys input control</h2>
+
+<h3>Description</h3>
+
+<p>Create a key input that can be used to observe keys pressed by
+the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keysInput(inputId, keys, global = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputId</code></td>
+<td>
+<p>The input slot that will be used to access the value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keys</code></td>
+<td>
+<p>A character vector of keys to bind. Examples include, <code>command</code>,
+<code>command+shift+a</code>, <code style="white-space: pre;">⁠up down left right⁠</code>, and more.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global</code></td>
+<td>
+<p>Should keys work anywhere? If TRUE, keys are triggered when
+inside a textInput.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+ui &lt;- fluidPage(
+  keysInput("keys", c(
+    "1",
+    "2",
+    "3",
+    "command+shift+k",
+    "up up down down left right left right b a enter"
+  )),
+)
+
+server &lt;- function(input, output, session) {
+  observeEvent(input$keys, {
+    print(input$keys)
+  })
+}
+
+shinyApp(ui, server)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

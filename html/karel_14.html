@@ -1,0 +1,40 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>draw_karel_df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate a dataset to plot Karel's figure in each time</h2>
+
+<h3>Description</h3>
+
+<p>Karel is drawn with 6 squares (body, feet, eyes and mouth) using geom_rect(),
+so we need arguments xmin, xmax, ymin and ymax for each of them. So this
+function takes Karel's current position (x, y) and direction (1 east, 2
+north, 3 west, 4 south) and generates the corresponding values of xmin, xmax,
+ymin and ymax.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">draw_karel_df(x, y, direction, moment)
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>This function is called repeatedly for each position of Karel through time.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A 6x7 tibble. First row is for the body, 2nd for the left foot, then
+right foot, left eye, right eye and finally the mouth. Columns are xmin,
+xmax, ymin, ymax, moment (time), a color (for fill) and a transparency
+value (alpha)
+</p>
+
+
+</div>

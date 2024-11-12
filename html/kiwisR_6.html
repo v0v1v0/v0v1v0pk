@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ki_timeseries_values</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get values for time series id or list of time series ids.</h2>
+
+<h3>Description</h3>
+
+<p>Returns time series values for given time series id and date range.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ki_timeseries_values(
+  hub,
+  ts_id,
+  start_date,
+  end_date,
+  return_fields,
+  datasource = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>hub</code></td>
+<td>
+<p>The KiWIS database you are querying. Either one of the defaults or a URL.
+See <a href="https://github.com/rywhale/kiwisR">README</a>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ts_id</code></td>
+<td>
+<p>Either: a single time series id or a vector of time series ids.
+Time series ids can be found using the 'ki_timeseries_list' function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_date</code></td>
+<td>
+<p>A date string formatted "YYYY-MM-DD". Defaults to yesterday.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end_date</code></td>
+<td>
+<p>A date string formatted "YYYY-MM-DD". Defaults to today.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_fields</code></td>
+<td>
+<p>(Optional) Specific fields to return. Consult your KiWIS hub services documentation for available options.
+Should be a comma separate string or a vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>datasource</code></td>
+<td>
+<p>(Optional) The data source to be used, defaults to 0.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble with following columns by default: Timestamp, Value, ts_name, Units, station_name
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+ki_timeseries_values(
+  hub = "swmc",
+  ts_id = "1125831042",
+  start_date = "2015-12-01",
+  end_date = "2018-01-01"
+)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

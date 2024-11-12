@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rep_mean_sd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>rep_mean_sd</h2>
+
+<h3>Description</h3>
+
+<p>Reporting helper function: computes and formats mean and
+standard deviation from a numeric vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rep_mean_sd(
+  x,
+  digits = 2,
+  na.rm = TRUE,
+  sd_brackets = c("round", "square"),
+  sd_prefix = TRUE,
+  weighted = FALSE,
+  weights = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer indicating the number of decimal places.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>A logical indicating if missings should be removed from <code>x</code>
+before computing the distributional parameters (default: <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd_brackets</code></td>
+<td>
+<p>A character. Either <code>"round"</code> (default) or <code>"square"</code> to
+indicate the type of brackets to surround the standard deviation in the
+formatted output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd_prefix</code></td>
+<td>
+<p>A logical. If <code>TRUE</code> (default), the standard deviation is
+prefixed with a plus-minus-sign ("±").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weighted</code></td>
+<td>
+<p>A logical. If <code>TRUE</code>, a weighted mean and standard deviation
+are calculated (default: <code>FALSE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>A vector with the weights (if <code>weighted = TRUE</code>;
+default: <code>NA</code>) passed futher on to <code>stats::weighted.mean()</code> and
+<code>Hmisc::wtd.var()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character with the formatted output.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mean()</code>, <code>stats::sd()</code>, <code>stats::weighted.mean()</code>,
+<code>Hmisc::wtd.var()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(123)
+x &lt;- rnorm(1000)
+rep_mean_sd(x)
+rep_mean_sd(rep(1, 10))
+rep_mean_sd(x, sd_brackets = "square")
+rep_mean_sd(x, sd_brackets = "square", sd_prefix = FALSE)
+
+</code></pre>
+
+
+</div>

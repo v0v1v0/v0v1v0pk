@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nif</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Nested if else</h2>
+
+<h3>Description</h3>
+
+<p><code>nif</code> is a fast implementation of SQL <code>CASE WHEN</code> statement for R. Conceptually, <code>nif</code> is a nested version of <code>iif</code> (with smarter implementation than manual nesting). It is not the same but it is comparable to <code>dplyr::case_when</code> and <code>data.table::fcase</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  nif(..., default=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p> A sequence consisting of logical condition (<code>when</code>)-resulting value (<code>value</code>) <em>pairs</em> in the following order <code>when1, value1, when2, value2, ..., whenN, valueN</code>. Logical conditions <code>when1, when2, ..., whenN</code> must all have the same length, type and attributes. Each <code>value</code> may either share length with <code>when</code> or be length 1. Please see Examples section for further details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default</code></td>
+<td>
+<p> Default return value, <code>NULL</code> by default, for when all of the logical conditions <code>when1, when2, ..., whenN</code> are <code>FALSE</code> or missing for some entries. Argument <code>default</code> can be a vector either of length 1 or length of logical conditions <code>when1, when2, ..., whenN</code>. Note that argument 'default' must be named explicitly.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Unlike <code>data.table::fcase</code>, the <code>default</code> argument is set to <code>NULL</code>. In addition, <code>nif</code> can be called by other packages at C level. Note that at C level, the function has an additional argument <code>SEXP md</code> which is either <code>TRUE</code> for lazy evaluation or <code>FALSE</code> for non lazy evaluation. This argument is not exposed to R users and is more for C users.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Vector with the same length as the logical conditions (<code>when</code>) in <code>...</code>, filled with the corresponding values (<code>value</code>) from <code>...</code>, or eventually <code>default</code>. Attributes of output values <code>value1, value2, ...valueN</code> in <code>...</code> are preserved.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgan Jacob</p>
+
+
+<h3>See Also</h3>
+
+<p><code>iif</code>
+<code>vswitch</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x = 1:10
+nif(
+	x &lt; 5L, 1L,
+	x &gt; 5L, 3L
+)
+
+nif(
+	x &lt; 5L, 1L:10L,
+	x &gt; 5L, 3L:12L
+)
+
+# Lazy evaluation example
+nif(
+	x &lt; 5L, 1L,
+	x &gt;= 5L, 3L,
+	x == 5L, stop("provided value is an unexpected one!")
+)
+
+# nif preserves attributes, example with dates
+nif(
+	x &lt; 5L, as.Date("2019-10-11"),
+	x &gt; 5L, as.Date("2019-10-14")
+)
+
+# nif example with factor; note the matching levels
+nif(
+	x &lt; 5L, factor("a", levels=letters[1:3]),
+	x &gt; 5L, factor("b", levels=letters[1:3])
+)
+
+# Example of using the 'default' argument
+nif(
+	x &lt; 5L, 1L,
+	x &gt; 5L, 3L,
+	default = 5L
+)
+
+nif(
+	x &lt; 5L, 1L,
+	x &gt; 5L, 3L,
+	default = rep(5L, 10L)
+)
+</code></pre>
+
+
+</div>

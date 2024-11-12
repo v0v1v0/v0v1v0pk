@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MetRef</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Nuclear Magnetic Resonance Spectra of Urine Samples</h2>
+
+<h3>Description</h3>
+
+<p>The data belong to a cohort of 22 healthy donors (11 male and 11 female) where each provided about 40 urine samples over the time course of approximately 2 months, for a total of 873 samples. Each sample was analysed by Nuclear Magnetic Resonance Spectroscopy. Each spectrum was divided in 450 spectral bins.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(MetRef)</code></pre>
+
+
+<h3>Value</h3>
+
+<p>A list with the following elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Metabolomic data. A matrix with 873 rows and 450 columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gender</code></td>
+<td>
+<p>Gender index. A vector with 873 elements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>donor</code></td>
+<td>
+<p>Donor index. A vector with 873 elements.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Assfalg M, Bertini I, Colangiuli D, <em>et al.</em>	<br>
+Evidence of different metabolic phenotypes in humans.<br><em>Proc Natl Acad Sci U S A</em> 2008;105(5):1420-4. doi: 10.1073/pnas.0705685105.  <a href="https://www.pnas.org/doi/full/10.1073/pnas.0705685105">Link</a>
+<br><br>
+Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=normalization(u)$newXtrain
+u=scaling(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc= pca(u)$x
+plot(cc,pch=21,bg=class)
+
+class=as.numeric(as.factor(MetRef$donor))
+plot(cc,pch=21,bg=rainbow(22)[class])
+
+kk=KODAMA.matrix(u)
+cc=KODAMA.visualization(kk,"t-SNE")
+plot(cc,pch=21,bg=rainbow(22)[class])
+
+
+
+</code></pre>
+
+
+</div>

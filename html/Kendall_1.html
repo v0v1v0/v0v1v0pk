@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Kendall-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Kendall correlation and trend tests.
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute Kendall's rank correlation and various trend tests.
+</p>
+
+
+<h3>Details</h3>
+
+
+<table>
+<tr>
+<td style="text-align: left;">
+Package: </td>
+<td style="text-align: left;"> Kendall</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Type: </td>
+<td style="text-align: left;"> Package</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Version: </td>
+<td style="text-align: left;"> 2.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Date: </td>
+<td style="text-align: left;"> 2011-05-16</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+License: </td>
+<td style="text-align: left;"> GPL (&gt;= 2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+LazyLoad: </td>
+<td style="text-align: left;"> yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>If you just want to compute Kendall's tau or its signficance level,
+the base function <code>cor</code> and <code>cor.test</code> are recommended.
+The purpose of this package is to implement the Mann-Kendall test,
+the seasonal Mann-Kendall trend test as well as computing the 
+Kendall score.	 See documentation for Mann-Kendall on using
+the block bootstrap to deal with autocorrelation.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. I. McLeod
+</p>
+<p>Maintainer: aimcleod@uwo.ca
+</p>
+
+
+<h3>References</h3>
+
+ 
+<p>Hipel, K.W. and McLeod, A.I., (1994).
+Time Series Modelling of Water Resources and Environmental Systems.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cor</code>, 
+<code>cor.test</code>, 
+<code>print.Kendall</code>, 
+<code>summary.Kendall</code>,
+<code>MannKendall</code>,
+<code>SeasonalMannKendall</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(boot)
+data(PrecipGL)
+MKtau&lt;-function(z) MannKendall(z)$tau
+tsboot(PrecipGL, MKtau, R=500, l=5, sim="fixed")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>binomial_test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Binomial test</h2>
+
+<h3>Description</h3>
+
+<p>Conduct a binomial test. In other words, test whether an observed
+proportion of "successes" (e.g., proportion of heads in a series
+of coin tosses) is greater than the expected proportion (e.g., 0.5).
+This function uses the 'binom.test' function from the 'stats' package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">binomial_test(
+  x = NULL,
+  success = NULL,
+  failure = NULL,
+  p = 0.5,
+  alternative = "two.sided",
+  ci = 0.95,
+  round_percentages = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of values, each of which represents an instance of
+either a "success" or "failure" (e.g., c("s", "f", "s", "s", "f", "s"))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>success</code></td>
+<td>
+<p>which value(s) indicate "successes"?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>failure</code></td>
+<td>
+<p>(optional) which value(s) indicate "failures"?
+If no input is provided for this argument, then all the non-NA values
+that are not declared to be "successes" will be treated as "failures".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>hypothesized probability of success (default = 0.5)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alternative</code></td>
+<td>
+<p>indicates the alternative hypothesis and must be
+one of "two.sided", "greater", or "less". You can specify just the
+initial letter. By default, <code>alternative = "two.sided"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>width of the confidence interval (default = 0.95)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_percentages</code></td>
+<td>
+<p>number of decimal places to which to round the
+percentages in the summary table (default = 0)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># sample vector
+sample_vector &lt;- c(0, 1, 1, 0, 1, 98, 98, 99, NA)
+binomial_test(
+x = sample_vector,
+success = 1, failure = 0)
+binomial_test(
+x = sample_vector,
+success = 1, failure = 0,
+p = 0.1,
+alternative = "greater")
+binomial_test(
+x = sample_vector,
+success = c(1, 99), failure = c(0, 98),
+p = 0.6,
+alternative = "less")
+</code></pre>
+
+
+</div>

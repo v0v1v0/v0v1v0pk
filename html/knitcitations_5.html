@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cite_options</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Toggles for various citation options</h2>
+
+<h3>Description</h3>
+
+<p>Toggles for various citation options
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cite_options(
+  citation_format = "compatibility",
+  style = "text",
+  hyperlink = FALSE,
+  cite.style = "authoryear",
+  super = FALSE,
+  max.names = 4,
+  longnamesfirst = FALSE,
+  check.entries = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>citation_format</code></td>
+<td>
+<p>'pandoc', 'compatibility' (with version 0.5 or earlier), or 'text'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>style</code></td>
+<td>
+<p>plain "text" style (default) inline citations, "markdown" style or or html style links
+to the hyperlink</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hyperlink</code></td>
+<td>
+<p>Either logical (FALSE), or link "to.doc" (by DOI if available, otherwise to URL), or
+link "to.bib" section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cite.style</code></td>
+<td>
+<p>Should inline textual citations use "authoryear", "numeric", or "authortitle" format?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>super</code></td>
+<td>
+<p>logical, should numeric cite.style be a superscript?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.names</code></td>
+<td>
+<p>numeric, maximum number of names to list before adding "et al.".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longnamesfirst</code></td>
+<td>
+<p>logical. Should all authors be listed the first time a citation is used (rather than obeying max.names?)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>check.entries</code></td>
+<td>
+<p>logical. Should error if any 'required' bibtex field is missing? Default FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments to BibOptions</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>updates the option specified for the duration of the session.
+</p>
+
+
+</div>

@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>castItem</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cast Item variable from the stat data downloaded from getStatData function</h2>
+
+<h3>Description</h3>
+
+<p>Cast Item variable from the stat data downloaded from getStatData function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">castItem(statData, itemVar = c("ITM_NM", "ITM_ID", "ITM_NM_ENG"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>statData</code></td>
+<td>
+<p>A data.frame downloaded from getStatData function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>itemVar</code></td>
+<td>
+<p>A string specifying item variable</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<pre>
+## Example
+statData &lt;- getStatData(orgId = "101", tblId = "DT_1B41", objL1 = "ALL")
+castItem(statData = statData, itemVar = "ITM_NM")
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame object containing queried information
+</p>
+
+
+</div>

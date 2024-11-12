@@ -1,0 +1,272 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dkps</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Distance using Kernel Product Similarity (DKPS) for Mixed-type Data
+</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the pairwise distances between mixed-type observations 
+consisting of numeric (continuous), factor (nominal), and ordered factor 
+(ordinal) variables using the method described in Ghashti, J. S. and Thompson, 
+J. R. J (2023). This kernel metric learning methodology learns the bandwidths 
+associated with each kernel function for each variable type and returns a 
+distance matrix that can be utilized in any distance-based clustering algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dkps(df, bw = "mscv", cFUN = "c_gaussian", uFUN = "u_aitken", 
+      oFUN = "o_wangvanryzin", stan = TRUE, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+
+<p>a <code class="reqn">p</code>-variate data frame for which the pairwise distances between 
+observations will be calculated. The data types may be continuous, nominal 
+(unordered factors), ordinal (ordered factors), or any combination thereof. 
+Columns of <code>df</code> should be of appropriate variable type prior to running 
+the function.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+
+<p>a bandwidth specification method. This can be set as a vector of <code class="reqn">p</code>-many
+bandwidths, with each element <code class="reqn">i</code> corresponding to the bandwidth for 
+column <code class="reqn">i</code> in <code>df</code>. Alternatively, one of two character strings may 
+be inputted for bandwidth selection methods. <code>mscv</code> specifies maximum-
+similarity cross-validation, and <code>np</code> specifies likelihood-cross 
+validation which is calculated via <code>npudensbw</code> in package 
+<code>np</code>. Defaults to <code>mscv</code>. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cFUN</code></td>
+<td>
+
+<p>character string specifying the continuous kernel function. Options include 
+<code>c_gaussian</code>, <code>c_epanechnikov</code>, <code>c_uniform</code>, <code>c_triangle</code>,
+<code>c_biweight</code>, <code>c_triweight</code>, <code>c_tricube</code>, <code>c_cosine</code>, 
+<code>c_logistic</code>, <code>c_sigmoid</code>, and <code>c_silverman</code>. Note that if 
+using <code>np</code> for <code>bw</code> selection above, continuous kernel types are 
+restricted to either <code>c_gaussian</code>, <code>c_epanechnikov</code>, or <code>c_uniform</code>. 
+Defaults to <code>c_gaussian</code>. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>uFUN</code></td>
+<td>
+
+<p>character string specifying the nominal kernel function for unordered 
+factors. Options include <code>u_aitken</code> and <code>u_aitchisonaitken</code>. 
+Defaults to <code>u_aitken</code>. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>oFUN</code></td>
+<td>
+
+<p>character string specifying the ordinal kernel function for ordered factors. 
+Options include <code>o_aitken</code>, <code>o_aitchisonaitken</code>, <code>o_habbema</code>, 
+<code>o_wangvanryzin</code>, and <code>o_liracine</code>. Note that if using <code>np</code> 
+for <code>bw</code> selection above, ordinal kernel types are restricted to either 
+<code>o_wangvanryzin</code> or <code>o_liracine</code>. Defaults to <code>o_wangvanryzin</code>.
+See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stan</code></td>
+<td>
+
+<p>a logical value which specifies whether to scale the resulting distance 
+matrix between 0 and 1 using min-max normalization. If set to <code>FALSE</code>, 
+there is no normalization. Defaults to <code>TRUE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>a logical value which specifies whether to print procedural steps to the 
+console. If set to <code>FALSE</code>, no output is printed to the console. 
+Defaults to <code>FALSE</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>dkps</code> implements the distance using kernel product similarity (DKPS) as 
+described by Ghashti and Thompson (2023). This approach uses product kernels 
+for continuous variables, and summation kernels for nominal and ordinal data,
+which are then summed over all variable types to return the pairwise distance 
+between mixed-type data. 
+</p>
+<p>Each kernel requires a bandwidth specification, which can either be a user 
+defined numeric vector of length <code class="reqn">p</code> from alternative methodologies for 
+bandwidth selection, or through two bandwidth specification methods. The 
+<code>mscv</code> bandwidth selection routine is based on the maximum-similarity 
+cross-validation routine by Ghashti and Thompson (2023), invoked by the 
+function <code>mscv.dkps</code>. The <code>np</code> bandwidth selection routine 
+follows maximum-likelihood cross-validation techniques described by Li and 
+Racine (2007) and Li and Racine (2003) for kernel density estimation of 
+mixed-type data. Bandwidths will differ for each variable.
+</p>
+<p>Data contained in the data frame <code>df</code> may constitute any combinations of 
+continuous, nominal, or ordinal data, which is to be specified in the data 
+frame <code>df</code> using <code>factor</code> for nominal data, and <code>ordered</code> 
+for ordinal data. Data can be entered in an arbitrary order and data types 
+will be detected automatically. User-inputted vectors of bandwidths <code>bw</code> 
+must be defined in the same order as the variables in the data frame <code>df</code>, 
+as to ensure they sorted accordingly by the routine.
+</p>
+<p>The are many kernels which can be specified by the user. The majority of the 
+continuous kernel functions may be found in Cameron and Trivedi (2005), Härdle
+et al. (2004) or Silverman (1986). Nominal kernels use a variation on 
+Aitchison and Aitken's (1976) kernel, while ordinal kernels use a variation 
+of the Wang and van Ryzin (1981) kernel. Both nominal and ordinal kernel 
+functions can be found in Li and Racine (2007), Li and Racine (2003), Ouyan et
+al. (2006), and Titterington and Bowman (1985).
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>dkps</code> returns a <code>list</code> object, with the
+following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>distances</code></td>
+<td>
+
+<p>an <code class="reqn">n \times n</code> numeric matrix containing pairwise distances between 
+observations
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bandwidths</code></td>
+<td>
+
+<p>a <code class="reqn">p</code>-variate vector of bandwidth values returned based on the <code>bw</code> 
+bandwidth specification method, sorted by variable type
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>John R. J. Thompson <a href="mailto:john.thompson@ubc.ca">john.thompson@ubc.ca</a>, Jesse S. Ghashti
+<a href="mailto:jesse.ghashti@ubc.ca">jesse.ghashti@ubc.ca</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Aitchison, J. and  C.G.G. Aitken (1976), “Multivariate binary 
+discrimination by the kernel method”, Biometrika, 63, 413-420.
+</p>
+<p>Cameron, A. and P. Trivedi (2005), “Microeconometrics: Methods and 
+Applications”, Cambridge University Press.
+</p>
+<p>Ghashti, J.S. and J.R.J Thompson (2023), “Mixed-type Distance Shrinkage 
+and Selection for Clustering via Kernel Metric Learning”, arXiv preprint 
+arXiv:2306.01890.
+</p>
+<p>Härdle, W., and M. Müller and S. Sperlich and A. Werwatz (2004), 
+“Nonparametric and Semiparametric Models”, (Vol. 1). Berlin: Springer.
+</p>
+<p>Li, Q. and J.S. Racine (2007), “Nonparametric Econometrics: Theory
+and Practice”, Princeton University Press.
+</p>
+<p>Li, Q. and J.S. Racine (2003), “Nonparametric estimation of
+distributions with categorical and continuous data”, Journal
+of Multivariate Analysis, 86, 266-292.
+</p>
+<p>Ouyang, D. and Q. Li and J.S. Racine (2006), “Cross-validation
+and the estimation of probability distributions with categorical
+data”, Journal of Nonparametric Statistics, 18, 69-100.
+</p>
+<p>Silverman, B.W. (1986), “Density Estimation”, London: Chapman and
+Hall.
+</p>
+<p>Titterington, D.M. and A.W. Bowman (1985), “A comparative study of 
+smoothing procedures for ordered categorical data”, Journal of Statistical 
+Computation and Simulation, 21(3-4), 291-312.
+</p>
+<p>Wang, M.C. and J. van Ryzin (1981), “A class of smooth estimators
+for discrete distributions”,  Biometrika, 68, 301-309.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mscv.dkps</code>, <code>dkss</code>, <code>mscv.dkss</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# example data frame with mixed numeric, nominal, and ordinal data.
+levels = c("Low", "Medium", "High")
+df &lt;- data.frame(
+  x1 = runif(100, 0, 100),
+  x2 = factor(sample(c("A", "B", "C"), 100, TRUE)),
+  x3 = factor(sample(c("A", "B", "C"), 100, TRUE)),
+  x4 = rnorm(100, 10, 3),
+  x5 = ordered(sample(c("Low", "Medium", "High"), 100, TRUE), levels = levels),
+  x6 = ordered(sample(c("Low", "Medium", "High"), 100, TRUE), levels = levels))
+
+# minimal implementation requires just the data frame, and will automatically be
+# defaulted to the mscv bandwidth specification technique and default kernel 
+# function
+d1 &lt;- dkps(df = df)
+# d$bandwidths to see the mscv obtained bandwidths
+# d$distances to see the distance matrix
+
+
+# try using the np package, which has few continuous and ordinal kernels to 
+# choose from. Recommended using default kernel functions
+d2 &lt;- dkps(df = df, bw = "np")
+
+
+# precomputed bandwidth example
+# note that continuous variables requires bandwidths &gt; 0
+# ordinal variables requires bandwidths in [0,1]
+# for nominal variables, u_aitken requires bandwidths in [0,1] 
+# and u_aitchisonaitken in [0,(c-1)/c]
+# where c is the number of unique values in the i-th column of df.
+# any bandwidths outside this range will result in a warning message
+bw_vec &lt;- c(1.0, 0.5, 0.5, 5.0, 0.3, 0.3) 
+d3 &lt;- dkps(df = df, bw = bw_vec)
+
+
+# user-specific kernel functions example
+d5 &lt;- dkps(df = df, bw = "mscv", cFUN = "c_epanechnikov", uFUN = "u_aitken", 
+      oFUN = "o_habbema")
+
+</code></pre>
+
+
+</div>

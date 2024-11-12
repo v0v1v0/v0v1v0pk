@@ -1,0 +1,223 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_layer_normalization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Layer normalization layer (Ba et al., 2016).</h2>
+
+<h3>Description</h3>
+
+<p>Normalize the activations of the previous layer for each given example in a
+batch independently, rather than across a batch like Batch Normalization.
+i.e. applies a transformation that maintains the mean activation within each
+example close to 0 and the activation standard deviation close to 1.
+</p>
+<p>If <code>scale</code> or <code>center</code> are enabled, the layer will scale the normalized
+outputs by broadcasting them with a trainable variable <code>gamma</code>, and center
+the outputs by broadcasting with a trainable variable <code>beta</code>. <code>gamma</code> will
+default to a ones tensor and <code>beta</code> will default to a zeros tensor, so that
+centering and scaling are no-ops before training has begun.
+</p>
+<p>So, with scaling and centering enabled the normalization equations
+are as follows:
+</p>
+<p>Let the intermediate activations for a mini-batch to be the <code>inputs</code>.
+</p>
+<p>For each sample <code>x</code> in a batch of <code>inputs</code>, we compute the mean and
+variance of the sample, normalize each value in the sample
+(including a small factor <code>epsilon</code> for numerical stability),
+and finally,
+transform the normalized output by <code>gamma</code> and <code>beta</code>,
+which are learned parameters:
+</p>
+<div class="sourceCode r"><pre>outputs &lt;- inputs |&gt; apply(1, function(x) {
+  x_normalized &lt;- (x - mean(x)) /
+                  sqrt(var(x) + epsilon)
+  x_normalized * gamma + beta
+})
+</pre></div>
+<p><code>gamma</code> and <code>beta</code> will span the axes of <code>inputs</code> specified in <code>axis</code>, and
+this part of the inputs' shape must be fully defined.
+</p>
+<p>For example:
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_layer_normalization(axis = c(2, 3, 4))
+
+layer(op_ones(c(5, 20, 30, 40))) |&gt; invisible() # build()
+shape(layer$beta)
+</pre></div>
+<div class="sourceCode"><pre>## shape(20, 30, 40)
+
+</pre></div>
+<div class="sourceCode r"><pre>shape(layer$gamma)
+</pre></div>
+<div class="sourceCode"><pre>## shape(20, 30, 40)
+
+</pre></div>
+<p>Note that other implementations of layer normalization may choose to define
+<code>gamma</code> and <code>beta</code> over a separate set of axes from the axes being
+normalized across. For example, Group Normalization
+(<a href="https://arxiv.org/abs/1803.08494">Wu et al. 2018</a>) with group size of 1
+corresponds to a <code>layer_layer_normalization()</code> that normalizes across height, width,
+and channel and has <code>gamma</code> and <code>beta</code> span only the channel dimension.
+So, this <code>layer_layer_normalization()</code> implementation will not match a
+<code>layer_group_normalization()</code> layer with group size set to 1.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_layer_normalization(
+  object,
+  axis = -1L,
+  epsilon = 0.001,
+  center = TRUE,
+  scale = TRUE,
+  rms_scaling = FALSE,
+  beta_initializer = "zeros",
+  gamma_initializer = "ones",
+  beta_regularizer = NULL,
+  gamma_regularizer = NULL,
+  beta_constraint = NULL,
+  gamma_constraint = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>Integer or list. The axis or axes to normalize across.
+Typically, this is the features axis/axes. The left-out axes are
+typically the batch axis/axes. <code>-1</code> is the last dimension in the
+input. Defaults to <code>-1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>Small float added to variance to avoid dividing by zero.
+Defaults to 1e-3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>If <code>TRUE</code>, add offset of <code>beta</code> to normalized tensor. If <code>FALSE</code>,
+<code>beta</code> is ignored. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>If <code>TRUE</code>, multiply by <code>gamma</code>. If <code>FALSE</code>, <code>gamma</code> is not used.
+When the next layer is linear (also e.g. <code>layer_activation_relu()</code>), this can be
+disabled since the scaling will be done by the next layer.
+Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rms_scaling</code></td>
+<td>
+<p>If <code>TRUE</code>, <code>center</code> and <code>scale</code> are ignored, and the
+inputs are scaled by <code>gamma</code> and the inverse square root
+of the square of all inputs. This is an approximate and faster
+approach that avoids ever computing the mean of the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_initializer</code></td>
+<td>
+<p>Initializer for the beta weight. Defaults to zeros.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_initializer</code></td>
+<td>
+<p>Initializer for the gamma weight. Defaults to ones.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_regularizer</code></td>
+<td>
+<p>Optional regularizer for the beta weight.
+<code>NULL</code> by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_regularizer</code></td>
+<td>
+<p>Optional regularizer for the gamma weight.
+<code>NULL</code> by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_constraint</code></td>
+<td>
+<p>Optional constraint for the beta weight.
+<code>NULL</code> by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_constraint</code></td>
+<td>
+<p>Optional constraint for the gamma weight.
+<code>NULL</code> by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Base layer keyword arguments (e.g. <code>name</code> and <code>dtype</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1607.06450">Lei Ba et al., 2016</a>.
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/normalization_layers/layer_normalization#layernormalization-class">https://keras.io/api/layers/normalization_layers/layer_normalization#layernormalization-class</a>
+</p>
+</li></ul>
+<p>Other normalization layers: <br><code>layer_batch_normalization()</code> <br><code>layer_group_normalization()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_unit_normalization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

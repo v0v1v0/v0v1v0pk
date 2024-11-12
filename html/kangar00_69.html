@@ -1,0 +1,331 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pathway</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An S4 class to represent a gene-gene interaction network</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to represent a gene-gene interaction network
+</p>
+<p><code>pathway</code> is the <code>pathway</code> object constructor.
+</p>
+<p><code>show</code> displays the <code>pathway</code> object briefly
+</p>
+<p><code>summary</code> generates a <code>pathway</code> object summary including basic network properties.
+</p>
+<p><code>pathway2igraph</code> converts a <code>pathway</code> object into an 
+<code>igraph</code> object with edge attribute <code>sign</code>
+</p>
+<p>analyze <code>pathway</code> network properties
+</p>
+<p><code>get_genes</code> is a helper function that extracts the gene names in a 
+<code>pathway</code> and returns a <code>vector</code> containing <code>character</code>
+elements of gene names
+</p>
+<p><code>plot</code> visualizes the <code>pathway</code> as <code>igraph</code> object
+</p>
+<p><code>sample_genes</code> randomly selects effect gene in a 
+<code>pathway</code> according the betweenness centrality and (no -1) neighors
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pathway(object, ...)
+
+## S4 method for signature 'ANY'
+pathway(id, adj = matrix(0), sign = NULL)
+
+## S4 method for signature 'pathway'
+show(object)
+
+## S4 method for signature 'pathway'
+summary(object)
+
+## S4 method for signature 'pathway'
+pathway2igraph(object)
+
+## S4 method for signature 'pathway'
+analyze(object, ...)
+
+## S4 method for signature 'pathway'
+get_genes(object)
+
+## S4 method for signature 'pathway,missing'
+plot(
+  x,
+  y = NA,
+  highlight.genes = NULL,
+  gene.names = c(NULL, "legend", "nodes"),
+  main = NULL,
+  asp = 0.95,
+  vertex.size = 11,
+  vertex.color = "khaki1",
+  vertex.label.cex = 0.8,
+  edge.width = 2,
+  edge.color = "olivedrab4",
+  ...
+)
+
+## S4 method for signature 'pathway'
+sample_genes(object, no = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>pathway-class</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments can be added to the function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>A <code>character</code> repesenting the <code>pathway</code> id.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adj</code></td>
+<td>
+<p>A <code>matrix</code> respresenting the network adjacency matrix of dimension 
+equaling the number of genes (1 interaction, 0 otherwise)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sign</code></td>
+<td>
+<p>A <code>numeric</code> <code>vector</code> indicating the interaction type for
+each link (1 activation, -1 inhibition) in the interaction network for the <code>pathway</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p><code>pathway</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>missing (placeholder)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>highlight.genes</code></td>
+<td>
+<p>vector of gene names or node id's, which should be highlighted in a different color, default is <code>NULL</code> so that no genes are highlighted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gene.names</code></td>
+<td>
+<p>character indicating whether the genes names should appear in a legend (<code>'legend'</code>), as vertex label (<code>'nodes'</code>), or should be omitted (<code>NA</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>optional overall main title, default is <code>NULL</code>, which uses the <code>pathway</code> id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>asp</code></td>
+<td>
+<p>a <code>numeric</code> constant, which gives the aspect ratio parameter for plot, default is 0.95</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vertex.size</code></td>
+<td>
+<p>a <code>numeric</code> constant specifying the vertex size, default is 11</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vertex.color</code></td>
+<td>
+<p>a <code>character</code> or <code>numeric</code> constant specifying the vertex color, default is 'khaki1'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vertex.label.cex</code></td>
+<td>
+<p>a <code>numeric</code> constant specifying the the vertex label size, default is 0.8,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edge.width</code></td>
+<td>
+<p>a <code>numeric</code> constant specifying the edge width, default is 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edge.color</code></td>
+<td>
+<p>a <code>character</code> or <code>numeric</code> constant specifying the edge color, default is 'olivedrab4'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>no</code></td>
+<td>
+<p>a <code>numeric</code> constant specifying the number of genes to be sampled, default is 3</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>pathway2igraph</code> returns an unweighted <code>igraph</code> object with edge attribute <code>sign</code>
+</p>
+<p><code>analyze</code> returns a <code>data.frame</code> consisting of 
+</p>
+
+<dl>
+<dt>id</dt>
+<dd>
+<p>pathway id,</p>
+</dd> 
+<dt>vcount</dt>
+<dd>
+<p>number of genes,</p>
+</dd>
+<dt>ecount</dt>
+<dd>
+<p>number of links,</p>
+</dd>
+<dt>inh_ecount</dt>
+<dd>
+<p>number of inhibition links,</p>
+</dd>
+<dt>density</dt>
+<dd>
+<p>network density,</p>
+</dd>
+<dt>av_deg</dt>
+<dd>
+<p>average degree,</p>
+</dd>
+<dt>inh_deg</dt>
+<dd>
+<p>average degree of inhibition links,</p>
+</dd>
+<dt>diam</dt>
+<dd>
+<p>network diamter,</p>
+</dd>
+<dt>trans</dt>
+<dd>
+<p>transitivity, and </p>
+</dd>
+<dt>s_trans</dt>
+<dd>
+<p>signed transitivity (Kunegis et al., 2009).</p>
+</dd>
+</dl>
+<p><code>get_genes</code> returns a character vector of gene names extracted from adjacency matrix rownames.
+</p>
+<p><code>sample_genes</code> returns a <code>vector</code> of length <code>no</code> with 
+vertex id's of sampled genes
+</p>
+
+
+<h3>Methods (by generic)</h3>
+
+
+<ul>
+<li> <p><code>analyze(pathway)</code>: 
+</p>
+</li>
+<li> <p><code>get_genes(pathway)</code>: 
+</p>
+</li>
+<li> <p><code>sample_genes(pathway)</code>: 
+</p>
+</li>
+</ul>
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>id</code></dt>
+<dd>
+<p>A <code>character</code> repesenting the <code>pathway</code> id, 
+e.g. hsa00100 as used in the KEGG database.</p>
+</dd>
+<dt><code>adj</code></dt>
+<dd>
+<p>A <code>matrix</code> respresenting the network adjacency matrix of dimension 
+equaling the number of genes (1 interaction, 0 otherwise)</p>
+</dd>
+<dt><code>sign</code></dt>
+<dd>
+<p>A <code>numeric</code> <code>vector</code> indicating the interaction type for 
+each link (1 activation, -1 inhibition) in the interaction network for the 
+<code>pathway</code>.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Juliane Manitz, Stefanie Friedrichs, Patricia Burger
+</p>
+
+
+<h3>References</h3>
+
+<p>Details to the computation and interpretation can be found in:
+</p>
+
+<ul>
+<li>
+<p> Kolaczyk, E. D. (2009). Statistical analysis of network data: methods and models. Springer series in statistics. Springer.
+</p>
+</li>
+<li>
+<p> Kunegis, J., A. Lommatzsch, and C. Bauckhage (2009). The slashdot zoo: Mining a social network with negative egdes. In Proceedings of the 18th international conference on World wide web, pp. 741-750. ACM Press.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># pathway object constructor
+pathway(id="hsa04022")
+
+# convert to igraph object
+data(hsa04020)
+str(hsa04020)
+g &lt;- pathway2igraph(hsa04020)
+str(g)
+
+# analyze pathway network properties
+data(hsa04020)
+summary(hsa04020)
+analyze(hsa04020)
+
+# extract gene names from pathway object
+get_genes(hsa04020)
+
+# plot pathway as igraph object
+plot(hsa04020)
+sample3 &lt;- sample_genes(hsa04020, no = 3)
+plot(hsa04020, highlight.genes = sample3)
+
+# sample effect genes
+sample3 &lt;- sample_genes(hsa04020, no = 3)
+plot(hsa04020, highlight.genes = sample3)
+sample5 &lt;- sample_genes(hsa04020, no = 5)
+plot(hsa04020, highlight.genes = sample5)
+
+</code></pre>
+
+
+</div>

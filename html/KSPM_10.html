@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cooks.distance.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cook's distance for a Kernel Semi Parametric Model Fit</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Cook's distance method for an object of class "kspm".
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+cooks.distance(model, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>an model of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>furter arguments passed to or from other methods (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Cook's distance values (<code class="reqn">C_i</code>) are computed as follows: <code class="reqn">C_i = \frac{e_i^2 h_{ii}}{\hat{\sigma}^2 tr(H) (1-h_{ii})^2}</code> where e_i is the residual of subject i, h_ii is the i th diagonal element of Hat matrix H corresponding to the leverage associated with subject i and tr(H) is the trace of the Hat matrix H.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector containing Cook's distance values.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm for fitting model, residuals.kspm, rstandard.kspm, plot.kspm.
+</p>
+
+
+</div>

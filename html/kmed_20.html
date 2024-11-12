@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>skm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple k-medoid algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function runs the simple k-medoid algorithm
+proposed by Budiaji and Leisch (2019).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">skm(distdata, ncluster, seeding = 20, iterate = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>distdata</code></td>
+<td>
+<p>A distance matrix (n x n) or dist object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncluster</code></td>
+<td>
+<p>A number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seeding</code></td>
+<td>
+<p>A number of seedings to run the algorithm
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterate</code></td>
+<td>
+<p>A number of iterations for each seeding
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The simple k-medoids, which sets a set of medoids as the
+cluster centers, adapts the simple and fast k-medoid algoritm.
+The best practice to run the simple and fast k-medoid is by running
+the algorithm several times with different random seeding options.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a list of components:
+</p>
+<p><code>cluster</code> is the clustering memberships result.
+</p>
+<p><code>medoid</code> is the id medoids.
+</p>
+<p><code>minimum_distance</code> is the distance of all objects to their cluster
+medoid.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>W. Budiaji, and F. Leisch. 2019. Simple K-Medoids Partitioning
+Algorithm for Mixed Variable Data. Algorithms Vol 12(9) 177
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+result &lt;- skm(mrwdist, ncluster = 3, seeding = 50)
+table(result$cluster, iris[,5])
+
+
+</code></pre>
+
+
+</div>

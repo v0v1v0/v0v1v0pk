@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot methods for S4 objects of class klausuR and klausuR.mult</h2>
+
+<h3>Description</h3>
+
+<p>These plot methods are beeing called by <code>klausur.report</code>.
+If <code>x</code> is of class <code>klausuR.mult</code>, only the global results will be plotted.
+Should you rather like plots on each test form,
+call <code>plot</code> with the single slots from that object accordingly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot(x, y, ...)
+
+## S4 method for signature 'klausuR,missing'
+plot(x, marks = FALSE, sd.lines = FALSE, plot.normal = TRUE,
+      na.rm = TRUE, ...)
+
+## S4 method for signature 'klausuR.mult,missing'
+plot(x, marks = FALSE, sd.lines = FALSE,
+      plot.normal = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An S4 object of class <code>klausuR</code> or <code>klausuR.mult</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>From the generic <code>plot</code> function, ignored for klausuR class objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Any other argument suitable for plot()</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks</code></td>
+<td>
+<p>Logical,
+whether the histogram should show the distribution of points (default) or marks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd.lines</code></td>
+<td>
+<p>Logical, whether standard deviation lines should be plotted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.normal</code></td>
+<td>
+<p>Logical,
+whether normal distribution should be plotted (according to mean and Sd of the results)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>Logical, whether NA values should be ignored. Defaults to TRUE,
+because plotting would fail otherwise</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>, <code>klausur.mufo</code>,
+<code>klausur.report</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(antworten)
+
+# vector with correct answers:
+richtig &lt;- c(Item01=3, Item02=2, Item03=2, Item04=2, Item05=4,
+ Item06=3, Item07=4, Item08=1, Item09=2, Item10=2, Item11=4,
+ Item12=4, Item13=2, Item14=3, Item15=2, Item16=3, Item17=4,
+ Item18=4, Item19=3, Item20=5, Item21=3, Item22=3, Item23=1,
+ Item24=3, Item25=1, Item26=3, Item27=5, Item28=3, Item29=4,
+ Item30=4, Item31=13, Item32=234)
+
+# vector with assignement of marks:
+notenschluessel &lt;- c()
+# scheme of assignments: marks[points_from:to] &lt;- mark
+notenschluessel[0:12]  &lt;- 5.0
+notenschluessel[13:15] &lt;- 4.0
+notenschluessel[16:18] &lt;- 3.7
+notenschluessel[19:20] &lt;- 3.3
+notenschluessel[21]    &lt;- 3.0
+notenschluessel[22]    &lt;- 2.7
+notenschluessel[23]    &lt;- 2.3
+notenschluessel[24]    &lt;- 2.0
+notenschluessel[25:26] &lt;- 1.7
+notenschluessel[27:29] &lt;- 1.3
+notenschluessel[30:32] &lt;- 1.0
+
+data.obj &lt;- klausur.data(answ=antworten, corr=richtig, marks=notenschluessel)
+klsr.obj &lt;- klausur(data.obj)
+plot(klsr.obj, marks=TRUE)
+</code></pre>
+
+
+</div>

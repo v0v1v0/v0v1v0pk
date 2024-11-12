@@ -1,0 +1,271 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kfs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel feature significance </h2>
+
+<h3>Description</h3>
+
+<p>Kernel feature significance for 1- to 6-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kfs(x, H, h, deriv.order=2, gridsize, gridtype, xmin, xmax, supp=3.7,
+    eval.points, binned, bgridsize, positive=FALSE, adj.positive, w, 
+    verbose=FALSE, signif.level=0.05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>matrix of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H,h</code></td>
+<td>
+<p>bandwidth matrix/scalar bandwidth. If these are missing, <code>Hpi</code> or <code>hpi</code> is called by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridsize</code></td>
+<td>
+<p>vector of number of grid points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridtype</code></td>
+<td>
+<p>not yet implemented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmin,xmax</code></td>
+<td>
+<p>vector of minimum/maximum values for grid</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>supp</code></td>
+<td>
+<p>effective support for standard normal</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eval.points</code></td>
+<td>
+<p>vector or matrix of points at which estimate is evaluated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>flag for binned estimation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bgridsize</code></td>
+<td>
+<p>vector of binning grid sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>positive</code></td>
+<td>
+<p>flag if 1-d data are positive. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adj.positive</code></td>
+<td>
+<p>adjustment applied to positive 1-d data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w</code></td>
+<td>
+<p>vector of weights. Default is a vector of all ones.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>flag to print out progress information. Default is
+FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>signif.level</code></td>
+<td>
+<p>overall level of significance for hypothesis
+tests. Default is 0.05.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Feature significance is based on significance testing of the gradient
+(first derivative) and curvature (second derivative) of a kernel
+density estimate. Only the latter is currently implemented, and is
+also known as significant modal regions.
+</p>
+<p>The hypothesis test at a grid point <code class="reqn">\bold{x}</code> is
+<code class="reqn">H_0(\bold{x}): \mathsf{H} f(\bold{x}) &lt; 0</code>,
+i.e.  the density Hessian matrix <code class="reqn">\mathsf{H} f(\bold{x})</code> is negative definite.
+The <code class="reqn">p</code>-values are computed for each <code class="reqn">\bold{x}</code> using that
+the test statistic is
+approximately chi-squared distributed with <code class="reqn">d(d+1)/2</code> d.f.
+We then use a Hochberg-type simultaneous testing procedure, based on the
+ordered <code class="reqn">p</code>-values, to control the
+overall level of significance to be <code>signif.level</code>. If
+<code class="reqn">H_0(\bold{x})</code> is rejected then <code class="reqn">\bold{x}</code>
+belongs to a significant modal region. 
+</p>
+<p>The computations are based on <code>kdde(x, deriv.order=2)</code> so
+<code>kfs</code> inherits its behaviour from <code>kdde</code>.
+If the bandwidth <code>H</code> is missing, then
+the default bandwidth is the plug-in selector
+<code>Hpi(,deriv.order=2)</code>. Likewise for missing <code>h</code>.
+The effective support, binning, grid size, grid range, positive
+parameters are the same as <code>kde</code>.
+</p>
+<p>This function is similar to the <code>featureSignif</code> function in the
+<span class="pkg">feature</span> package, except that it accepts unconstrained bandwidth
+matrices. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A kernel feature significance estimate is an object of class
+<code>kfs</code> which is a list with fields 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eval.points</code></td>
+<td>
+<p>vector or list of points at which the estimate is evaluated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate</code></td>
+<td>
+<p>binary matrix for significant feature at
+<code>eval.points</code>: 0 = not signif.,  1 = signif.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>scalar bandwidth (1-d only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>bandwidth matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridtype</code></td>
+<td>
+<p>"linear"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridded</code></td>
+<td>
+<p>flag for estimation on a grid</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>flag for binned estimation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>variable names</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w</code></td>
+<td>
+<p>vector of weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.ind</code></td>
+<td>
+<p>martix where each row is a vector of partial derivative indices.</p>
+</td>
+</tr>
+</table>
+<p>This is the same structure as a <code>kdde</code> object, except that
+<code>estimate</code> is a binary matrix rather than real-valued. 
+</p>
+
+
+<h3>References</h3>
+
+<p>Chaudhuri, P. &amp; Marron, J.S. (1999) 
+SiZer for exploration of structures in curves.
+<em>Journal of the American Statistical Association</em>,
+<b>94</b>,  807-823.
+</p>
+<p>Duong, T., Cowling, A., Koch, I. &amp; Wand, M.P. (2008)
+Feature significance for multivariate kernel density estimation.
+<em>Computational Statistics and Data Analysis</em>, <b>52</b>,
+4225-4242. 
+</p>
+<p>Godtliebsen, F., Marron, J.S. &amp; Chaudhuri, P. (2002) 
+Significance in scale space for bivariate density estimation.
+<em>Journal of Computational and Graphical Statistics</em>,
+<b>11</b>, 1-22.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdde</code>, <code>plot.kfs</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(geyser, package="MASS")
+geyser.fs &lt;- kfs(geyser$duration, binned=TRUE)
+plot(geyser.fs, xlab="duration")
+
+## see example in ? plot.kfs
+</code></pre>
+
+
+</div>

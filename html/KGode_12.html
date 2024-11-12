@@ -1,0 +1,249 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Warp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The 'Warp' class object</h2>
+
+<h3>Description</h3>
+
+<p>This class provide the warping method which can be used to warp the original signal to sinusoidal like signal.
+</p>
+
+
+<h3>Format</h3>
+
+<p><code>R6Class</code> object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an  <code>R6Class</code> object which can be used for doing interpolation using reproducing kernel Hilbert space.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt><code>warpsin(len ,lop,p0,eps)</code></dt>
+<dd>
+<p>This method is used to warp the initial interpolation into a sinusoidal shape.</p>
+</dd>   
+<dt><code>slowWarp(lens,peod,eps)</code></dt>
+<dd>
+<p>This method is used to find the optimised initial hyper parameters for the sigmoid basis function for each ode states.</p>
+</dd>
+<dt><code> warpLossLen(par,lam,p0,eps)</code></dt>
+<dd>
+<p>This method is used to implement the loss function for warping. It is called by the 'warpSin' function.</p>
+</dd> </dl>
+<h3>Public fields</h3>
+
+<div class="r6-fields">
+
+<dl>
+<dt><code>y</code></dt>
+<dd>
+<p>matrix(of size n_s*n_o) containing observation.</p>
+</dd>
+<dt><code>t</code></dt>
+<dd>
+<p>vector(of length n_o) containing time points for observation.</p>
+</dd>
+<dt><code>b</code></dt>
+<dd>
+<p>vector(of length n_o) containing coefficients of kernel or basis functions.</p>
+</dd>
+<dt><code>lambda</code></dt>
+<dd>
+<p>scalar containing the weighting parameter for penalising the length of warped time span.</p>
+</dd>
+<dt><code>ker</code></dt>
+<dd>
+<p>kernel class object containing sigmoid basis function.</p>
+</dd>
+</dl>
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-Warp-new"><code>Warp$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-greet"><code>Warp$greet()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-showker"><code>Warp$showker()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-warpLoss"><code>Warp$warpLoss()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-warpLossLen"><code>Warp$warpLossLen()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-warpSin"><code>Warp$warpSin()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-slowWarp"><code>Warp$slowWarp()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-Warp-clone"><code>Warp$clone()</code></a>
+</p>
+</li>
+</ul>
+<hr>
+<a id="method-Warp-new"></a>
+
+
+
+<h4>Method <code>new()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$new(y = NULL, t = NULL, b = NULL, lambda = NULL, ker = NULL)</pre></div>
+
+
+<hr>
+<a id="method-Warp-greet"></a>
+
+
+
+<h4>Method <code>greet()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$greet()</pre></div>
+
+
+<hr>
+<a id="method-Warp-showker"></a>
+
+
+
+<h4>Method <code>showker()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$showker()</pre></div>
+
+
+<hr>
+<a id="method-Warp-warpLoss"></a>
+
+
+
+<h4>Method <code>warpLoss()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$warpLoss(par, len, p0, eps)</pre></div>
+
+
+<hr>
+<a id="method-Warp-warpLossLen"></a>
+
+
+
+<h4>Method <code>warpLossLen()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$warpLossLen(par, lam, p0, eps)</pre></div>
+
+
+<hr>
+<a id="method-Warp-warpSin"></a>
+
+
+
+<h4>Method <code>warpSin()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$warpSin(len, lop, p0, eps)</pre></div>
+
+
+<hr>
+<a id="method-Warp-slowWarp"></a>
+
+
+
+<h4>Method <code>slowWarp()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$slowWarp(lens, p0, eps)</pre></div>
+
+
+<hr>
+<a id="method-Warp-clone"></a>
+
+
+
+<h4>Method <code>clone()</code>
+</h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>Warp$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt>
+<dd>
+<p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+</div>
+
+
+
+
+<h3>Author(s)</h3>
+
+<p>Mu Niu, <a href="mailto:mu.niu@glasgow.ac.uk">mu.niu@glasgow.ac.uk</a>
+</p>
+
+
+</div>

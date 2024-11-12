@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logLX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluates mixture log likelihood when extra findings present</h2>
+
+<h3>Description</h3>
+
+<p>Replacement for logL in DNAmixtures that calls calls LogL.UKX instead of logL.UK.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logLX(mixture, expr.extra.findings, presence.only = FALSE, initialize = FALSE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>Compiled DNAmixture object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expr.extra.findings</code></td>
+<td>
+<p>expression containing the extra findings</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>presence.only</code></td>
+<td>
+<p>Set to TRUE to ignore peak heights and evaluate the likelihood function considering peak presence and absence (heights above and below threshold) only. Defaults to FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize</code></td>
+<td>
+<p>should all entered evidence be removed from the networks in <code>mixture</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The log likelihood.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>logL</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+# set threshold C
+C&lt;-0.001
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(0.001),database=db)
+pars&lt;-mixpar(rho=list(2),eta=list(100),xi=list(0.1),phi=list(c(U1=0.7,U2=0.3)))
+baseline&lt;-logL(mixD)(pars)
+
+mixMBN&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db,triangulate=FALSE,compile=FALSE)
+cgtcaca&lt;-gt2aca(mixMBN,Cgt)
+add.child.meiosis.nodes(mixMBN,cgtcaca,1)
+log10LR&lt;-(logLX(mixMBN,
+	expr.make.findings(list(
+	list('Male',ind=1),
+	list('Caca',aca='cgtcaca')
+	))
+	)(pars)-attr(cgtcaca,'logGt')-baseline)/log(10)
+cat('log10 LR',log10LR,'\n')
+</code></pre>
+
+
+</div>

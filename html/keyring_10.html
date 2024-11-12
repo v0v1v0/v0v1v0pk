@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>b_wincred_decode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decode a raw password obtained by b_wincred_get_raw</h2>
+
+<h3>Description</h3>
+
+<p>Defaults to 'auto' encoding, which uses <code>b_wincred_decode_auto</code> to
+accomplish the decoding (this works with decoding either UTF-8 or
+UTF-16LE encodings). In the case where an encoding is specified,
+use that to convert the raw password.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">b_wincred_decode(password, encoding = "auto")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>password</code></td>
+<td>
+<p>A raw byte string returned from <code>b_wincred_get_raw</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>A character value, specifying an encoding to use.
+Defaults to 'auto', which will decode either of UTF-8 or UTF-16LE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character value containing a password.
+</p>
+
+
+</div>

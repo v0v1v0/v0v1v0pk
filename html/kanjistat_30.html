@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>options</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kanjistat Options</h2>
+
+<h3>Description</h3>
+
+<p>Set or examine global kanjistat options.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kanjistat_options(...)
+
+get_kanjistat_option(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>any number of options specified as <code>name = value</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>name of an option given as character string.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>kanjistat_options</code> returns the list of all set options if there
+is no function argument. Otherwise it returns list of <em>all</em> old options.
+<code>get_kanjistat_option</code> returns the current value set for option <code>x</code>
+or NULL if the option is not set.
+</p>
+
+
+</div>

@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KScorrect-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KScorrect: Lilliefors-Corrected Kolmogorov-Smirnov Goodness-of-Fit Tests</h2>
+
+<h3>Description</h3>
+
+<p>Implements the Lilliefors-corrected Kolmogorov-Smirnov test for use in
+goodness-of-fit tests.
+</p>
+
+
+<h3>Details</h3>
+
+<p>KScorrect implements the Lilliefors-corrected Kolmogorov-Smirnov test for
+use in goodness-of-fit tests, suitable when population parameters are unknown
+and must be estimated by sample statistics. <em>P</em>-values are estimated by
+simulation. Coded to complement <code>ks.test</code>, it can be used
+with a variety of continuous distributions, including normal, lognormal,
+univariate mixtures of normals, uniform, loguniform, exponential, gamma, and
+Weibull distributions.
+</p>
+<p>Functions to generate random numbers and calculate density, distribution, and
+quantile functions are provided for use with the loguniform and mixture
+distributions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Phil Novack-Gottshall <a href="mailto:pnovack-gottshall@ben.edu">pnovack-gottshall@ben.edu</a>
+</p>
+<p>Steve C. Wang <a href="mailto:scwang@swarthmore.edu">scwang@swarthmore.edu</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get the package version and citation of KScorrect
+packageVersion("KScorrect")
+citation("KScorrect")
+
+x &lt;- runif(200)
+Lc &lt;- LcKS(x, cdf="pnorm", nreps=999)
+hist(Lc$D.sim)
+abline(v = Lc$D.obs, lty = 2)
+print(Lc, max=50)  # Print first 50 simulated statistics
+# Approximate p-value (usually) &lt;&lt; 0.05
+
+# Confirmation uncorrected version has increased Type II error rate when
+#   using sample statistics to estimate parameters:
+ks.test(x, "pnorm", mean(x), sd(x))   # p-value always larger, (usually) &gt; 0.05
+
+x &lt;- rlunif(200, min=exp(1), max=exp(10)) # random loguniform sample
+Lc &lt;- LcKS(x, cdf="plnorm")
+Lc$p.value      # Approximate p-value: (usually) &lt;&lt; 0.05
+</code></pre>
+
+
+</div>

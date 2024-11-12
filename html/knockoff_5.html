@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create.solve_equi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimization for equi-correlated fixed-X and Gaussian knockoffs</h2>
+
+<h3>Description</h3>
+
+<p>This function solves a very simple optimization problem needed to create fixed-X and 
+Gaussian SDP knockoffs on the full the covariance matrix. This may be significantly
+less powerful than <code>create.solve_sdp</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create.solve_equi(Sigma)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>Sigma</code></td>
+<td>
+<p>positive-definite p-by-p covariance matrix.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Computes the closed-form solution to the semidefinite programming problem:
+</p>
+<p style="text-align: center;"><code class="reqn"> \mathrm{maximize}  \; s \quad
+       \mathrm{subject} \; \mathrm{to:}   \; 0 \leq s \leq 1, \;
+       2\Sigma - sI \geq 0 </code>
+</p>
+
+<p>used to generate equi-correlated knockoffs.
+</p>
+<p>The closed form-solution to this problem is <code class="reqn">s = 2\lambda_{\mathrm{min}}(\Sigma) \land 1</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The solution <code class="reqn">s</code> to the optimization problem defined above.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other optimization: 
+<code>create.solve_asdp()</code>,
+<code>create.solve_sdp()</code>
+</p>
+
+
+</div>

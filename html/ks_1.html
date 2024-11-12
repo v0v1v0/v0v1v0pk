@@ -1,0 +1,373 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ks-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ks</h2>
+
+<h3>Description</h3>
+
+<p>Kernel smoothing for data from 1- to 6-dimensions.
+</p>
+
+
+<h3>Details</h3>
+
+<p>There are three main types of functions in this package:
+</p>
+
+<ul>
+<li>
+<p> computing kernel estimators - these function names begin with ‘k’
+</p>
+</li>
+<li>
+<p> computing bandwidth selectors - these begin with ‘h’ (1-d) or
+‘H’ (&gt;1-d)
+</p>
+</li>
+<li>
+<p> displaying kernel estimators - these begin with ‘plot’.
+</p>
+</li>
+</ul>
+<p>The kernel used throughout is the normal (Gaussian) kernel <code class="reqn">K</code>.
+For 1-d data, the bandwidth <code class="reqn">h</code> is the standard deviation of
+the normal kernel, whereas for multivariate data, the bandwidth matrix 
+<code class="reqn">\bold{{\rm H}}</code> is the variance matrix.
+</p>
+<p>–For kernel density estimation, <code>kde</code> computes  
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}(\bold{x}) = n^{-1} \sum_{i=1}^n K_{\bold{{\rm H}}} (\bold{x} - \bold{X}_i).</code>
+</p>
+ 
+<p>The bandwidth matrix <code class="reqn">\bold{{\rm H}}</code> is a matrix of smoothing
+parameters and its choice is crucial for the performance of kernel
+estimators. For display, its <code>plot</code> method calls <code>plot.kde</code>.
+</p>
+<p>–For kernel density estimation, there are several varieties of bandwidth selectors 
+</p>
+
+<ul>
+<li>
+<p> plug-in <code>hpi</code> (1-d); 
+<code>Hpi</code>, <code>Hpi.diag</code> (2- to 6-d) 
+</p>
+</li>
+<li>
+<p> least squares (or unbiased) cross validation (LSCV or UCV) <code>hlscv</code> (1-d);
+<code>Hlscv</code>, <code>Hlscv.diag</code> (2- to 6-d) 
+</p>
+</li>
+<li>
+<p> biased cross validation (BCV) 
+<code>Hbcv</code>, <code>Hbcv.diag</code> (2- to 6-d) 
+</p>
+</li>
+<li>
+<p> smoothed cross validation (SCV) <code>hscv</code> (1-d);
+<code>Hscv</code>, <code>Hscv.diag</code> (2- to 6-d) 
+</p>
+</li>
+<li>
+<p> normal scale <code>hns</code> (1-d); <code>Hns</code> (2- to 6-d).
+</p>
+</li>
+</ul>
+<p>–For kernel density support estimation, the main function is
+<code>ksupp</code> which is (the convex hull of) 
+</p>
+<p style="text-align: center;"><code class="reqn">\{\bold{x}: \hat{f}(\bold{x}) &gt;
+    \tau\}</code>
+</p>
+
+<p>for a suitable level <code class="reqn">\tau</code>. This is closely related to the <code class="reqn">\tau</code>-level set of
+<code class="reqn">\hat{f}</code>. 
+</p>
+<p>–For truncated kernel density estimation, the main function is
+<code>kde.truncate</code>
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f} (\bold{x}) \bold{1}\{\bold{x} \in \Omega\} /
+  \int_{\Omega}\hat{f} (\bold{x}) \, d\bold{x}</code>
+</p>
+
+<p>for a bounded data support <code class="reqn">\Omega</code>. The standard density
+estimate <code class="reqn">\hat{f}</code> is truncated and rescaled to give
+unit integral over <code class="reqn">\Omega</code>. Its <code>plot</code> method calls <code>plot.kde</code>.
+</p>
+<p>–For boundary kernel density estimation where the kernel function is
+modified explicitly in the boundary region, the main function is
+<code>kde.boundary</code>
+</p>
+<p style="text-align: center;"><code class="reqn"> n^{-1} \sum_{i=1}^n K^*_{\bold{{\rm H}}} (\bold{x} - \bold{X}_i)</code>
+</p>
+ 
+<p>for a boundary kernel <code class="reqn">K^*</code>. Its <code>plot</code> method calls <code>plot.kde</code>.
+</p>
+<p>–For variable kernel density estimation where the bandwidth is not a
+constant matrix, the main functions are <code>kde.balloon</code>
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}_{\rm ball}(\bold{x}) = n^{-1} \sum_{i=1}^n K_{\bold{{\rm H}}(\bold{x})} (\bold{x} - \bold{X}_i)</code>
+</p>
+
+<p>and
+<code>kde.sp</code> 
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}_{\rm SP}(\bold{x}) = n^{-1} \sum_{i=1}^n K_{\bold{{\rm H}}(\bold{X}_i)} (\bold{x} - \bold{X}_i).</code>
+</p>
+
+<p>For the balloon estimation <code class="reqn">\hat{f}_{\rm ball}</code> the
+bandwidth varies with the estimation point <code class="reqn">\bold{x}</code>, whereas
+for the sample point estimation  <code class="reqn">\hat{f}_{\rm SP}</code>
+the bandwidth varies with the data point
+<code class="reqn">\bold{X}_i, i=1,\dots,n</code>. 
+Their <code>plot</code> methods call <code>plot.kde</code>. The bandwidth
+selectors for <code>kde.balloon</code> are based on the normal scale bandwidth
+<code>Hns(,deriv.order=2)</code> via the MSE minimal formula, and for
+<code>kde.SP</code> on <code>Hns(,deriv.order=4)</code> via the Abramson formula.
+</p>
+<p>–For kernel density derivative estimation, the main function is <code>kdde</code>
+</p>
+<p style="text-align: center;"><code class="reqn">{\sf D}^{\otimes r}\hat{f}(\bold{x}) = n^{-1} \sum_{i=1}^n {\sf
+  D}^{\otimes r}K_{\bold{{\rm H}}} (\bold{x} -
+\bold{X}_i).</code>
+</p>
+ 
+<p>The bandwidth selectors are a modified subset of those for
+<code>kde</code>, i.e. <code>Hlscv</code>, <code>Hns</code>, <code>Hpi</code>, <code>Hscv</code> with <code>deriv.order&gt;0</code>. 
+Its <code>plot</code> method is <code>plot.kdde</code> for plotting each
+partial derivative singly.
+</p>
+<p>–For kernel summary curvature estimation, the main function is
+<code>kcurv</code>
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{s}(\bold{x})= - \bold{1}\{{\sf D}^2 \hat{f}(\bold{x}) &lt;
+    0\} \mathrm{abs}(|{\sf D}^2 \hat{f}(\bold{x})|)</code>
+</p>
+<p> where <code class="reqn">{\sf D}^2
+    \hat{f}(\bold{x})</code> is the kernel Hessian matrix estimate.
+It has the same structure as a kernel density estimate so its <code>plot</code>
+method calls <code>plot.kde</code>. 
+</p>
+<p>–For kernel discriminant analysis, the main function is
+<code>kda</code> which computes density estimates for each the 
+groups in the training data, and the discriminant surface. 
+Its <code>plot</code> method is <code>plot.kda</code>. The wrapper function
+<code>hkda</code>, <code>Hkda</code> computes 
+bandwidths for each group in the training data for <code>kde</code>,
+e.g. <code>hpi</code>, <code>Hpi</code>.
+</p>
+<p>–For kernel functional estimation, the main function is
+<code>kfe</code> which computes the <code class="reqn">r</code>-th order integrated density functional  
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{{\bold \psi}}_r  = n^{-2} \sum_{i=1}^n \sum_{j=1}^n {\sf D}^{\otimes r}K_{\bold{{\rm H}}}(\bold{X}_i-\bold{X}_j).</code>
+</p>
+<p> The plug-in selectors are <code>hpi.kfe</code> (1-d), <code>Hpi.kfe</code> (2- to 6-d).
+Kernel functional estimates are usually not required to computed
+directly by the user, but only within other functions in the package.
+</p>
+<p>–For kernel-based 2-sample testing, the main function is
+<code>kde.test</code> which computes the integrated 
+<code class="reqn">L_2</code> distance between the two density estimates as the test
+statistic, comprising a linear combination of 0-th order kernel
+functional estimates:
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{T} = \hat{\psi}_{0,1} + \hat{\psi}_{0,2} - (\hat{\psi}_{0,12} +
+  \hat{\psi}_{0,21}),</code>
+</p>
+<p> and the corresponding p-value. The <code class="reqn">\psi</code> are
+zero order kernel functional estimates with the subscripts indicating
+that 1 = sample 1 only, 2 = sample 2 only, and 12, 21 =
+samples 1 and 2.  The bandwidth selectors are <code>hpi.kfe</code>,
+<code>Hpi.kfe</code> with <code>deriv.order=0</code>. 
+</p>
+<p>–For kernel-based local 2-sample testing, the main function is
+<code>kde.local.test</code> which computes the squared distance
+between the two density estimates as the test  
+statistic </p>
+<p style="text-align: center;"><code class="reqn">\hat{U}(\bold{x}) = [\hat{f}_1(\bold{x}) -
+     \hat{f}_2(\bold{x})]^2</code>
+</p>
+<p> and the corresponding local
+p-values.  The bandwidth selectors are those used with <code>kde</code>,
+e.g. <code>hpi, Hpi</code>.  
+</p>
+<p>–For kernel cumulative distribution function estimation, the main
+function is <code>kcde</code>
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{F}(\bold{x}) = n^{-1} \sum_{i=1}^n
+    \mathcal{K}_{\bold{{\rm H}}} (\bold{x} - \bold{X}_i)</code>
+</p>
+
+<p>where <code class="reqn">\mathcal{K}</code> is the integrated kernel.  
+The bandwidth selectors are <code>hpi.kcde</code>,
+<code>Hpi.kcde</code>.  Its <code>plot</code> method is
+<code>plot.kcde</code>.
+There exist analogous functions for the survival function <code class="reqn">\hat{\bar{F}}</code>.
+</p>
+<p>–For kernel estimation of a ROC (receiver operating characteristic)
+curve to compare two samples from <code class="reqn">\hat{F}_1,
+  \hat{F}_2</code>, the main function is <code>kroc</code>
+</p>
+<p style="text-align: center;"><code class="reqn">\{\hat{F}_{\hat{Y}_1}(z),
+  \hat{F}_{\hat{Y}_2}(z)\}</code>
+</p>
+<p> based on the cumulative distribution functions of
+<code class="reqn">\hat{Y}_j = \hat{\bar{F}}_1(\bold{X}_j), j=1,2</code>.
+</p>
+<p>The bandwidth selectors are those used with <code>kcde</code>,
+e.g. <code>hpi.kcde, Hpi.kcde</code>  for
+<code class="reqn">\hat{F}_{\hat{Y}_j}, \hat{\bar{F}}_1</code>. Its <code>plot</code> method
+is <code>plot.kroc</code>.   
+</p>
+<p>–For kernel estimation of a copula, the
+main function is <code>kcopula</code>
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{C}(\bold{z}) = \hat{F}(\hat{F}_1^{-1}(z_1), \dots,
+  \hat{F}_d^{-1}(z_d))</code>
+</p>
+
+<p>where <code class="reqn">\hat{F}_j^{-1}(z_j)</code> is
+the <code class="reqn">z_j</code>-th quantile of of the <code class="reqn">j</code>-th marginal
+distribution <code class="reqn">\hat{F}_j</code>.
+The bandwidth selectors are those used with <code>kcde</code> for
+<code class="reqn">\hat{F}, \hat{F}_j</code>.
+Its <code>plot</code> method is <code>plot.kcde</code>.
+</p>
+
+
+
+
+
+
+
+
+
+
+<p>–For kernel mean shift clustering, the main function is
+<code>kms</code>. The mean shift recurrence relation of the candidate
+point <code class="reqn">{\bold x}</code>   
+</p>
+<p style="text-align: center;"><code class="reqn">{\bold x}_{j+1} = {\bold x}_j + \bold{{\rm H}} {\sf D} \hat{f}({\bold
+      x}_j)/\hat{f}({\bold x}_j),</code>
+</p>
+
+<p>where <code class="reqn">j\geq 0</code> and <code class="reqn">{\bold x}_0 = {\bold x}</code>,
+is iterated until <code class="reqn">{\bold x}</code> converges to its
+local mode in the density estimate <code class="reqn">\hat{f}</code> by following
+the density gradient ascent paths. This mode determines the cluster
+label for <code class="reqn">\bold{x}</code>.  The bandwidth selectors are those used with
+<code>kdde(,deriv.order=1)</code>.  
+</p>
+<p>–For kernel density ridge estimation, the main function is
+<code>kdr</code>. The kernel density ridge recurrence relation of
+the candidate point <code class="reqn">{\bold x}</code> 
+</p>
+<p style="text-align: center;"><code class="reqn">{\bold x}_{j+1} = {\bold x}_j + \bold{{\rm U}}_{(d-1)}({\bold
+    x}_j)\bold{{\rm U}}_{(d-1)}({\bold x}_j)^T \bold{{\rm H}} {\sf D}
+    \hat{f}({\bold x}_j)/\hat{f}({\bold x}_j),</code>
+</p>
+
+<p>where <code class="reqn">j\geq 0</code>, <code class="reqn">{\bold x}_0 = {\bold x}</code> and <code class="reqn">\bold{{\rm U}}_{(d-1)}</code> is the 1-dimensional projected
+density gradient, 
+is iterated until <code class="reqn">{\bold x}</code> converges to the ridge in the
+density estimate. The bandwidth selectors are those used with 
+<code>kdde(,deriv.order=2)</code>. 
+</p>
+<p>– For kernel feature significance, the main function
+<code>kfs</code>.  The hypothesis test at a point <code class="reqn">\bold{x}</code> is
+<code class="reqn">H_0(\bold{x}): \mathsf{H} f(\bold{x}) &lt; 0</code>,
+i.e. the density Hessian matrix <code class="reqn">\mathsf{H} f(\bold{x})</code> is negative definite.
+The test statistic is  
+</p>
+<p style="text-align: center;"><code class="reqn">W(\bold{x}) = \Vert 
+    \mathbf{S}(\bold{x})^{-1/2} \mathrm{vech} \ \mathsf{H} \hat{f} (\bold{x})\Vert ^2</code>
+</p>
+
+<p>where <code class="reqn">{\sf H}\hat{f}</code> is the
+Hessian estimate, vech is the vector-half operator, and
+<code class="reqn">\mathbf{S}</code> is an estimate of the null variance.
+<code class="reqn">W(\bold{x})</code> is
+approximately <code class="reqn">\chi^2</code> distributed with
+<code class="reqn">d(d+1)/2</code> degrees of freedom.
+If <code class="reqn">H_0(\bold{x})</code> is rejected, then <code class="reqn">\bold{x}</code>
+belongs to a significant modal region.
+The bandwidth selectors are those used with
+<code>kdde(,deriv.order=2)</code>. Its <code>plot</code> method is
+<code>plot.kfs</code>.
+</p>
+<p>–For deconvolution density estimation, the main function is
+<code>kdcde</code>. A weighted kernel density
+estimation with the contaminated data <code class="reqn">{\bold W}_1, \dots, {\bold
+  W}_n</code>, 
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}_w({\bold x}) = n^{-1} \sum_{i=1}^n
+    \alpha_i K_{\bold{{\rm H}}}({\bold x} - {\bold W}_i),</code>
+</p>
+
+<p>is utilised, where the weights <code class="reqn">\alpha_1, \dots,
+  \alpha_n</code> are chosen via a
+quadratic optimisation involving the error variance and the
+regularisation parameter. The bandwidth selectors are those used with
+<code>kde</code>.
+</p>
+<p>–Binned kernel estimation is an approximation to the exact kernel
+estimation and is available for d=1, 2, 3, 4. This makes
+kernel estimators feasible for large samples. 
+</p>
+<p>–For an overview of this package with 2-d density estimation, see 
+<code>vignette("kde")</code>.
+</p>
+<p>–For <span class="pkg">ks</span> <code class="reqn">\geq</code> 1.11.1, the <span class="pkg">misc3d</span> and
+<span class="pkg">rgl</span> (3-d plot), <span class="pkg">oz</span> (Australian map) packages, and for <span class="pkg">ks</span> <code class="reqn">\geq</code> 1.14.2, the <span class="pkg">plot3D</span> (3-d plot) package, have been moved from
+Depends to Suggests. This was done to allow <span class="pkg">ks</span> to be installed
+on systems where these latter graphical-based packages can't be
+installed. Furthermore, since the future of OpenGL in R is not certain, 
+<span class="pkg">plot3D</span> becomes the default for 3D plotting for <span class="pkg">ks</span> <code class="reqn">\geq</code> 1.12.0. RGL plots are still supported though these may be deprecated in the 
+future.  
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Tarn Duong for most of the package. 
+M. P. Wand for the binned estimation, univariate plug-in selector and 
+univariate density derivative estimator code.
+J. E. Chacon for the unconstrained pilot functional estimation and fast implementation of derivative-based estimation code.
+A. and J. Gramacki for the binned estimation for unconstrained bandwidth 
+matrices. 
+</p>
+
+
+<h3>References</h3>
+
+<p>Bowman, A. &amp; Azzalini, A. (1997) <em>Applied Smoothing Techniques
+for Data Analysis</em>. Oxford University Press, Oxford.
+</p>
+<p>Chacon, J.E. &amp; Duong, T. (2018) <em>Multivariate Kernel Smoothing
+and Its Applications</em>. Chapman &amp; Hall/CRC, Boca Raton. 
+</p>
+<p>Duong, T. (2004) <em>Bandwidth Matrices for Multivariate Kernel Density 
+Estimation.</em> Ph.D. Thesis, University of Western Australia. 
+</p>
+<p>Scott, D.W. (2015) <em>Multivariate Density Estimation: Theory,
+Practice, and Visualization (2nd edn)</em>. John Wiley &amp; Sons, New York.
+</p>
+<p>Silverman, B. (1986) <em>Density Estimation for Statistics and
+Data Analysis</em>. Chapman &amp; Hall/CRC, London.
+</p>
+<p>Simonoff, J. S. (1996) <em>Smoothing Methods in Statistics</em>.
+Springer-Verlag, New York.
+</p>
+<p>Wand, M.P. &amp; Jones, M.C. (1995) <em>Kernel Smoothing</em>. Chapman &amp;
+Hall/CRC, London.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><span class="pkg">feature</span>, <span class="pkg">sm</span>, <span class="pkg">KernSmooth</span></p>
+
+
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anchors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Anchor Information</h2>
+
+<h3>Description</h3>
+
+<p>Retrieves diagnostics such as the anchor index and history. Use for 
+code verification and troubleshooting. Also used internally by kfigr.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anchors(tag)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>tag</code></td>
+<td>
+<p>Optional specification of return type. <code>tag = "index"</code> 
+returns a dataframe listing the chunk labels, asigned types and index 
+numbers. <code>tag = "history"</code> returns a dataframe listing all reference 
+calls, in order.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>If <code>tag = "index"</code>, a dataframe listing all anchored chunks. If 
+<code>tag = "history"</code>, a dataframe listing all references made, in order.
+If the value of <code>tag</code> matches a specific <code>type</code>, all references 
+of that <code>type</code> are provided in a list. If <code>tag</code> is missing, all 
+references of all types are provided in a nested list.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">figr("foo", type="figure")
+figr("bar", type="table")
+figr("test", type="figure")
+anchors()
+
+</code></pre>
+
+
+</div>

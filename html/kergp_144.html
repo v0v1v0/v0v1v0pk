@@ -1,0 +1,297 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covOrd-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Class <code>"covOrd"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Covariance kernel for qualitative ordered inputs obtained by warping. 
+</p>
+<p>Let <code class="reqn">u</code> be an ordered factor with levels <code class="reqn">u_1, \dots, u_L</code>. 
+Let <code class="reqn">k_1</code> be a 1-dimensional stationary kernel (with no or fixed parameters), <code class="reqn">F</code> a warping function i.e. an increasing function on the interval <code class="reqn">[0,1]</code> and <code class="reqn">\theta</code> a scale parameter. Then <code class="reqn">k</code> is defined by:
+</p>
+<p style="text-align: center;"><code class="reqn">k(u_i, u_j) = k_1([F(z_i) - F(z_{j})]/\theta)</code>
+</p>
+
+<p>where <code class="reqn">z_1, \dots, z_L</code> form a regular sequence from <code class="reqn">0</code> to <code class="reqn">1</code> (included). Notice that an example of warping is a distribution function (cdf) restricted to <code class="reqn">[0,1]</code>.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("covOrd", ...)</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>covLevels</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>. 
+</p>
+</dd>
+<dt>
+<code>covLevMat</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>hasGrad</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>acceptLowerSQRT</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>label</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>. Here equal to 1.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>nlevels</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>levels</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>parLower</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>parUpper</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>par</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>kernParNames</code>:</dt>
+<dd>
+<p>Same as for <code>covQual-class</code>.
+</p>
+</dd>
+<dt>
+<code>k1Fun1</code>:</dt>
+<dd>
+<p>A function representing a 1-dimensional stationary kernel function, with no or fixed parameters.
+</p>
+</dd>
+<dt>
+<code>warpFun</code>:</dt>
+<dd>
+<p>A cumulative density function representing a warping.
+</p>
+</dd>
+<dt>
+<code>cov</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. The value <code>0L</code> corresponds
+to a correlation kernel while <code>1L</code> is for a covariance
+kernel.
+</p>
+</dd>
+<dt>
+<code>parNk1</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Number of parameters of <code>k1Fun1</code>. Equal to <code>0</code> at this stage.
+</p>
+</dd>
+<dt>
+<code>parNwarp</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Number of parameters of <code>warpFun</code>.
+</p>
+</dd>
+<dt>
+<code>k1ParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Parameter names of <code>k1Fun1</code>.
+</p>
+</dd>
+<dt>
+<code>warpParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Parameter names of <code>warpFun</code>.
+</p>
+</dd>
+<dt>
+<code>warpKnots</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Parameters of <code>warpFun</code>.
+</p>
+</dd>
+<dt>
+<code>ordered</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>. <code>TRUE</code> for an ordinal input.
+</p>
+</dd>
+<dt>
+<code>intAsChar</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>. If <code>TRUE</code> (default), 
+an integer-valued input will be coerced into a character.
+Otherwise, it will be coerced into a factor.
+</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>checkX</dt>
+<dd>
+<p><code>signature(object = "covOrd", X = "data.frame")</code>: check that
+the inputs exist with suitable column names and suitable <em>factor</em>
+content. The levels should match the prescribed levels. Returns a
+matrix with the input columns in the order prescribed by
+<code>object</code>.
+</p>
+<p><code>signature(object = "covOrd", X = "matrix")</code>: check that the
+inputs exist with suitable column names and suitable <em>numeric</em>
+content for coercion into a factor with the prescribed levels.
+Returns a data frame with the input columns in the order
+prescribed by <code>object</code>.
+</p>
+</dd>
+<dt>coef&lt;-</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: replace the whole vector of
+coefficients, as required during ML estimation.
+</p>
+</dd>
+<dt>coefLower&lt;-</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: replacement method for lower
+bounds on covOrd coefficients.
+</p>
+</dd>
+<dt>coefLower</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: extracts the numeric values of
+the lower bounds.
+</p>
+</dd>
+<dt>coef</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: extracts the numeric values
+of the covariance parameters.
+</p>
+</dd>
+<dt>coefUpper&lt;-</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: replacement method for upper
+bounds on <code>covOrd</code> coefficients.
+</p>
+</dd>
+<dt>coefUpper</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: ...
+</p>
+</dd>
+<dt>covMat</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: build the covariance matrix
+or the cross covariance matrix between two sets of locations for a
+<code>covOrd</code> object.
+</p>
+</dd>
+<dt>npar</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: returns the number of
+parameters.
+</p>
+</dd>
+<dt>scores</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: return the vector of
+scores, i.e. the derivative of the log-likelihood w.r.t. the
+parameter vector at the current parameter values.
+</p>
+</dd>
+<dt>simulate</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: simulate <code>nsim</code> paths
+from a Gaussian Process having the covariance structure. The paths
+are indexed by the finite set of levels of factor inputs, and they
+are returned as columns of a matrix.
+</p>
+</dd>
+<dt>varVec</dt>
+<dd>
+<p><code>signature(object = "covOrd")</code>: build the variance vector
+corresponding to a set locations for a <code>covOrd</code> object.
+</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This class is to be regarded as experimental. The slot names or list
+may be changed in the future. The methods <code>npar</code>,
+<code>inputNames</code> or <code>`inputNames&lt;-`</code> should provide a more
+robust access to some slot values.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See <code>covMan</code> for a comparable structure dedicated
+to kernels with continuous inputs.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+showClass("covOrd")
+
+</code></pre>
+
+
+</div>

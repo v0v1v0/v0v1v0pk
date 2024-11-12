@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calcNormCounts</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Normalize raw counts</h2>
+
+<h3>Description</h3>
+
+<p>Normalizes raw counts from <code>counts</code> slot in <code>TapestriExperiment</code> and returns the object with normalized counts in the <code>normcounts</code> slot.
+Also calculates the standard deviation for each probe using normalized counts and adds it to <code>rowData</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calcNormCounts(TapestriExperiment, method = "mb", scaling.factor = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Character, normalization method. Default "mb".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaling.factor</code></td>
+<td>
+<p>Numeric, optional number to scale normalized counts if <code>method == "libNorm"</code>. Default <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>"mb" method performs the same normalization scheme as in Mission Bio's mosaic package for python:
+Counts for each barcode are normalized relative to their barcode's mean and probe counts are normalized relative to their probe's median.
+"libNorm" method preforms library size normalization, returning the proportion of counts of each probe within a cell.
+The proportion is multiplied by <code>scaling.factor</code> if provided.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> object with normalized counts added to <code>normcounts</code> slot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- calcNormCounts(tap.object)
+</code></pre>
+
+
+</div>

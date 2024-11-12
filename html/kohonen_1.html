@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kohonen-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Supervised and Unsupervised Self-Organising Maps
+</h2>
+
+<h3>Description</h3>
+
+<p>Functions to train self-organising maps (SOMs). Also interrogation of the maps and prediction using trained maps are supported. The name of the package refers to Teuvo Kohonen, the inventor of the SOM.
+</p>
+
+
+<h3>Details</h3>
+
+<p>The kohonen package implements several forms of self-organising maps
+(SOMs). Online and batch training algorithms are available; batch
+training can also be done in parallel. Multiple data layers may be
+presented to the training algorithm, with potentially different distance
+measures for each layer. The overall distance is a weighted average of
+the layer distances. Layers may be selected through the <code>whatmap</code>
+argument, or by providing a weight of zero. The basic function is
+<code>supersom</code>; <code>som</code> is simply a wrapper for SOMs using just one
+layer (the classical form).
+</p>
+<p>New data may be mapped to a trained SOM using the <code>map.kohonen</code>
+function. Function <code>predict.kohonen</code> will map data to the SOM, and
+will return predictions (i.e., average values for winning units) for
+those layers that are not in the new data object.
+</p>
+<p>Several visualisation methods are available in function
+<code>plot.kohonen</code>. 
+</p>
+
+<p>Index of help topics:
+</p>
+<pre>
+check.whatmap           Check the validity of a whatmap argument
+classvec2classmat       Convert a classification vector into a matrix
+                        or the other way around.
+degelder                Powder pattern data by Rene de Gelder
+expandMap               Expand a self-organising map
+getCodes                Extract codebook vectors from a kohonen object
+kohonen-package         Supervised and Unsupervised Self-Organising
+                        Maps
+layer.distances         Assessing distances to winning units
+map.kohonen             Map data to a supervised or unsupervised SOM
+nir                     Near-infrared data with temperature effects
+object.distances        Calculate distances between object vectors in a
+                        SOM
+peppaPic                Synthetic image of a pepper plant with peppers
+plot.kohonen            Plot kohonen object
+predict.kohonen         Predict properties using a trained Kohonen map
+summary.kohonen         Summary and print methods for kohonen objects
+supersom                Self- and super-organising maps
+tricolor                Provides smooth unit colors for SOMs
+unit.distances          SOM-grid related functions
+wines                   Wine data
+yeast                   Yeast cell-cycle data
+</pre>
+
+
+<h3>Author(s)</h3>
+
+<p>Ron Wehrens and Johannes Kruisselbrink
+</p>
+<p>Maintainer: Ron Wehrens &lt;ron.wehrens@gmail.com&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>R. Wehrens and J. Kruisselbrink: Flexible Self-Organising Maps in
+kohonen 3.0. Journal of Statistical Software, 87, 7 (2018).</p>
+
+
+</div>

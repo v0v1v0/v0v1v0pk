@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>interaction.indices-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Shapley interaction indices</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Shapley interaction index for pairs of elements with
+respect to a set function. The set function can be given either under
+the form of an object of class <code>set.func</code>, <code>card.set.func</code>
+or <code>Mobius.set.func</code>
+.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.set.func" </dt>
+<dd>
+<p>The Shapley interaction indices are computed from the Möbius transform of a set function.</p>
+</dd>
+<dt>object = "card.set.func" </dt>
+<dd>
+<p>The Shapley interaction indices are computed from a cardinal set function.</p>
+</dd>
+<dt>object = "set.func" </dt>
+<dd>
+<p>The Shapley interaction indices are computed from a general set function.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>G. Owen (1971/72), <em>Multilinear extensions of games</em>, Management Sci. 18, pages 64–79.
+</p>
+<p>T. Murofushi and S. Soneda (1993), <em>Techniques for reading fuzzy measures
+(III): interaction index</em>, 9th Fuzzy System Symposium, pages 693–696, Saporo, Japan.
+</p>
+<p>M. Grabisch, J-L. Marichal and M. Roubens (2000), <em>Equivalent
+representations of set functions</em>, Mathematics of Operations
+Research 25(2), pages 157–178.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.set.func-class</code>,
+<br><code>card.set.func-class</code>,
+<br><code>set.func-class</code>,
+<br><code>Mobius-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a set function
+mu &lt;- set.func(c(-7:6,6,6))
+
+## the associated interaction indices
+interaction.indices(mu)
+
+
+## a similar example using a Mobius.set.func object
+a &lt;- Mobius(mu)
+interaction.indices(a)
+
+## a similar example using a card.set.func object
+mu &lt;- upper.capacity(6)
+interaction.indices(mu)
+</code></pre>
+
+
+</div>

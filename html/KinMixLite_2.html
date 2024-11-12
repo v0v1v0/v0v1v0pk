@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>add.child.meiosis.nodes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Replace CPTs for mixture contributor a Father, given Child genotype, by MBN method</h2>
+
+<h3>Description</h3>
+
+<p>loop over markers, and alleles within markers
+to create nodes for child allele count nodes,
+for paternity model with only Child genotyped
+then compile all domains. Implements method MBN.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">add.child.meiosis.nodes(mixture,aca,ind=1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A compiled DNAmixture object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aca</code></td>
+<td>
+<p>Child's genotype profile as an allele count array</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind</code></td>
+<td>
+<p>Index of contributor regarded as Parent (or Child): which ‘unknown’ contributor are we modelling by amending his/her CPTs?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>To calculate the likelihood of this model, conditional on the child's genotype, a call to this function should be followed by (a) setting the finding of the child's genotype by defining <code>extra.findings</code>, (b) evaluating the loglikelihood using <code>logLX</code>, and (c) correcting the result by subtracting the log probability of the child's genotype, all as in the example below. Without (c), the value returned is the likelihood for the peak heights <em>and</em> the child's genotype.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No value is returned, the function is called for its side effect</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+# set threshold C
+C&lt;-0.001
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db)
+pars&lt;-mixpar(rho=list(2),eta=list(100),xi=list(0.1),phi=list(c(U1=0.7,U2=0.3)))
+baseline&lt;-logL(mixD)(pars)
+
+mixMBN&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db,triangulate=FALSE,compile=FALSE)
+cgtcaca&lt;-gt2aca(mixMBN,Cgt)
+add.child.meiosis.nodes(mixMBN,cgtcaca,1)
+log10LR&lt;-(logLX(mixMBN,
+	expr.make.findings(list(
+	list('Male',ind=1),
+	list('Caca',aca='cgtcaca')
+	))
+	)(pars)-attr(cgtcaca,'logGt')-baseline)/log(10)
+cat('log10 LR',log10LR,'\n')  
+</code></pre>
+
+
+</div>

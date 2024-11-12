@@ -1,0 +1,253 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_depthwise_conv_1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Depthwise 1D convolution</h2>
+
+<h3>Description</h3>
+
+<p>Depthwise 1D convolution
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_depthwise_conv_1d(
+  object,
+  kernel_size,
+  strides = 1L,
+  padding = "valid",
+  depth_multiplier = 1L,
+  data_format = NULL,
+  dilation_rate = 1L,
+  activation = NULL,
+  use_bias = TRUE,
+  depthwise_initializer = "glorot_uniform",
+  bias_initializer = "zeros",
+  depthwise_regularizer = NULL,
+  bias_regularizer = NULL,
+  activity_regularizer = NULL,
+  depthwise_constraint = NULL,
+  bias_constraint = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_size</code></td>
+<td>
+<p>An integer, specifying the height and width of the 1D
+convolution window. Can be a single integer to specify the same value for
+all spatial dimensions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strides</code></td>
+<td>
+<p>An integer, specifying the strides of the convolution along the
+height and width. Can be a single integer to specify the same value for
+all spatial dimensions. Specifying any stride value != 1 is incompatible
+with specifying any <code>dilation_rate</code> value != 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>one of <code>'valid'</code> or <code>'same'</code> (case-insensitive). <code>"valid"</code> means no
+padding. <code>"same"</code> results in padding with zeros evenly to the left/right
+or up/down of the input such that output has the same height/width
+dimension as the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depth_multiplier</code></td>
+<td>
+<p>The number of depthwise convolution output channels for
+each input channel. The total number of depthwise convolution output
+channels will be equal to <code>filters_in * depth_multiplier</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>A string, one of <code>"channels_last"</code> (default) or <code>"channels_first"</code>.
+The ordering of the dimensions in the inputs. <code>channels_last</code> corresponds
+to inputs with shape <code style="white-space: pre;">⁠(batch_size, height, width, channels)⁠</code> while
+<code>channels_first</code> corresponds to inputs with shape <code style="white-space: pre;">⁠(batch_size, channels, height, width)⁠</code>. It defaults to the <code>image_data_format</code> value found in
+your Keras config file at <code style="white-space: pre;">⁠~/.keras/keras.json⁠</code>. If you never set it, then
+it will be 'channels_last'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dilation_rate</code></td>
+<td>
+<p>A single integer, specifying the dilation rate to use for
+dilated convolution. Currently, specifying any <code>dilation_rate</code> value != 1
+is incompatible with specifying any stride value != 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use. If you don't specify anything, no
+activation is applied (see <code>?activation_relu</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>Boolean, whether the layer uses a bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depthwise_initializer</code></td>
+<td>
+<p>Initializer for the depthwise kernel matrix (see
+<code>initializer_glorot_uniform</code>). If NULL, the default initializer
+(<code>"glorot_uniform"</code>) will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector (see
+<code>keras.initializers</code>). If NULL, the default initializer ('zeros') will be
+used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depthwise_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the depthwise kernel
+matrix (see  <code>regularizer_l1()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector (see
+<code>regularizer_l1()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activity_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the output of the
+layer (its 'activation') (see  <code>regularizer_l1()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depthwise_constraint</code></td>
+<td>
+<p>Constraint function applied to the depthwise kernel
+matrix (see <code>constraint_maxnorm()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector (see
+<code>constraint_maxnorm()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Depthwise convolution is a type of convolution in which each input channel is
+convolved with a different kernel (called a depthwise kernel). You
+can understand depthwise convolution as the first step in a depthwise
+separable convolution.
+</p>
+<p>It is implemented via the following steps:
+</p>
+
+<ul>
+<li>
+<p> Split the input into individual channels.
+</p>
+</li>
+<li>
+<p> Convolve each channel with an individual depthwise kernel with
+<code>depth_multiplier</code> output channels.
+</p>
+</li>
+<li>
+<p> Concatenate the convolved outputs along the channels axis.
+</p>
+</li>
+</ul>
+<p>Unlike a regular 1D convolution, depthwise convolution does not mix
+information across different input channels.
+</p>
+<p>The <code>depth_multiplier</code> argument determines how many filter are applied to one
+input channel. As such, it controls the amount of output channels that are
+generated per input channel in the depthwise step.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/DepthwiseConv1D">https://www.tensorflow.org/api_docs/python/tf/keras/layers/DepthwiseConv1D</a>
+</p>
+</li></ul>
+<p>Other convolutional layers: 
+<code>layer_conv_1d()</code>,
+<code>layer_conv_1d_transpose()</code>,
+<code>layer_conv_2d()</code>,
+<code>layer_conv_2d_transpose()</code>,
+<code>layer_conv_3d()</code>,
+<code>layer_conv_3d_transpose()</code>,
+<code>layer_conv_lstm_2d()</code>,
+<code>layer_cropping_1d()</code>,
+<code>layer_cropping_2d()</code>,
+<code>layer_cropping_3d()</code>,
+<code>layer_depthwise_conv_2d()</code>,
+<code>layer_separable_conv_1d()</code>,
+<code>layer_separable_conv_2d()</code>,
+<code>layer_upsampling_1d()</code>,
+<code>layer_upsampling_2d()</code>,
+<code>layer_upsampling_3d()</code>,
+<code>layer_zero_padding_1d()</code>,
+<code>layer_zero_padding_2d()</code>,
+<code>layer_zero_padding_3d()</code>
+</p>
+
+
+</div>

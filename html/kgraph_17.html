@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>m_embeds</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A dataset containing medical word embeddings</h2>
+
+<h3>Description</h3>
+
+<p>The embedding matrix has been fitted using Glove word
+embeddings on 1,700 open-access publications related to
+mental health.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("m_embeds")
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A matrix with 1122 rows and 100 columns.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Each row is the embedding vector of a CUI in 100 Glove dimensions.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('m_embeds')
+
+fit_kg = fit_embeds_kg(m_embeds, 'cosine')
+
+</code></pre>
+
+
+</div>

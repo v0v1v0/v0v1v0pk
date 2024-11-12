@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>floyd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find Shortest Paths Between All Nodes in a Graph</h2>
+
+<h3>Description</h3>
+
+<p>The <code>floyd</code> function finds all shortest paths in a graph using Floyd's algorithm. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">floyd(data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>matrix or distance object</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>floyd</code> returns a matrix with the total lengths of the shortest path between each pair of points.
+</p>
+
+
+<h3>References</h3>
+
+<p>Floyd, Robert W	<br>
+Algorithm 97: Shortest Path.<br><em>Communications of the ACM</em> 1962; 5 (6): 345. doi:10.1145/367766.368168. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># build a graph with 5 nodes
+x=matrix(c(0,NA,NA,NA,NA,30,0,NA,NA,NA,10,NA,0,NA,NA,NA,70,50,0,10,NA,40,20,60,0),ncol=5)
+print(x)
+
+# compute all path lengths
+z=floyd(x)
+print(z)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>EventDate-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Date Model</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to store the event and accumulation times of archaeological
+assemblages.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>dates</code></dt>
+<dd>
+<p>A length-<code class="reqn">m</code> <code>numeric</code> vector of dates expressed in
+<em>rata die</em>.</p>
+</dd>
+<dt><code>model</code></dt>
+<dd>
+<p>A multiple linear model: the Gaussian
+multiple linear regression model fitted for event date estimation and
+prediction.</p>
+</dd>
+<dt><code>keep</code></dt>
+<dd>
+<p>An <code>integer</code> vector giving the subscripts of the CA components
+to keep.</p>
+</dd>
+</dl>
+<h3>Extract</h3>
+
+<p>In the code snippets below, <code>x</code> is an <code>EventDate</code> object.
+</p>
+
+<dl>
+<dt><code>time(x)</code></dt>
+<dd>
+<p>Extract dates of assemblages.</p>
+</dd>
+<dt><code>coef(x)</code></dt>
+<dd>
+<p>Extract model coefficients.</p>
+</dd>
+<dt><code>fitted(x)</code></dt>
+<dd>
+<p>Extract model fitted values.</p>
+</dd>
+<dt><code>residuals(x)</code></dt>
+<dd>
+<p>Extract model residuals.</p>
+</dd>
+<dt><code>sigma(x)</code></dt>
+<dd>
+<p>Extract the residual standard deviation.</p>
+</dd>
+<dt><code>terms(x)</code></dt>
+<dd>
+<p>Extract model terms.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>Dates are internally stored as <em>rata die</em>.
+This class inherits from <code>dimensio::CA</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dimensio::CA</code>
+</p>
+<p>Other classes: 
+<code>AoristicSum-class</code>,
+<code>CountApportion-class</code>,
+<code>IncrementTest-class</code>,
+<code>MeanDate-class</code>,
+<code>PermutationOrder-class</code>,
+<code>RateOfChange-class</code>,
+<code>RefinePermutationOrder-class</code>
+</p>
+
+
+</div>

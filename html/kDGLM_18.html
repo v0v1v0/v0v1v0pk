@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coef.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>coef.fitted_dlm</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates the predictive values for the observed values used to fit the model and its latent states.
+Predictions can be made with smoothed values, with filtered values or h-steps ahead.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+coef(
+  object,
+  t.eval = seq_len(object$t),
+  lag = -1,
+  pred.cred = 0.95,
+  eval.pred = FALSE,
+  eval.metric = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>fitted_dlm: The fitted model to be use for evaluation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.eval</code></td>
+<td>
+<p>numeric: A vector of positive integers indicating the time index from which to extract predictions. The default is to extract to evaluate the model at all observed times.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>integer: The relative offset for forecast. Values for time t will be calculated based on the filtered values of time t-h. If lag is negative, then the smoothed distribution for the latent states will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>numeric: The credibility level for the C.I..</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eval.pred</code></td>
+<td>
+<p>boolean: A flag indicating if the predictions should be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eval.metric</code></td>
+<td>
+<p>boolean: A flag indicating if the model density (f(M|y)) should be calculated. Only used when lag&lt;0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra arguments passed to the coef method.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+
+<ul>
+<li>
+<p> data data.frame: A table with the model evaluated at each observed time.
+</p>
+</li>
+<li>
+<p> theta.mean matrix: The mean of the latent states at each time. Dimensions are n x t, where t is the size of t.eval and n is the number of latent states.
+</p>
+</li>
+<li>
+<p> theta.cov array: A 3D-array containing the covariance matrix of the latent states at each time. Dimensions are n x n x t, where t is the size of t.eval and n is the number of latent states.
+</p>
+</li>
+<li>
+<p> lambda.mean matrix: The mean of the linear predictor at each time. Dimensions are k x t, where t is the size of t.eval and k is the number of linear predictors.
+</p>
+</li>
+<li>
+<p> lambda.cov array: A 3D-array containing the covariance matrix for the linear predictor at each time. Dimensions are k x k x t, where t is the size of t.eval and k is the number of linear predictors.
+</p>
+</li>
+<li>
+<p> log.like, mae, mase, rae, mse, interval.score: The metric value at each time.
+</p>
+</li>
+<li>
+<p> conj.param list: A list containing, for each outcome, a data.frame with the parameter of the conjugated distribution at each time.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for fitted_dlm objects: 
+<code>eval_dlm_norm_const()</code>,
+<code>fit_model()</code>,
+<code>forecast.fitted_dlm()</code>,
+<code>simulate.fitted_dlm()</code>,
+<code>smoothing()</code>,
+<code>update.fitted_dlm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Poisson case
+data &lt;- c(AirPassengers)
+
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+outcome &lt;- Poisson(lambda = "rate", data = data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+
+var.vals &lt;- coef(fitted.data)
+
+</code></pre>
+
+
+</div>

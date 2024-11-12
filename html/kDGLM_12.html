@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>block_mult</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Auxiliary function to replicate blocks</h2>
+
+<h3>Description</h3>
+
+<p>An auxiliary function to replicate blocks.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">block_mult(block, k)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>block</code></td>
+<td>
+<p>dlm_block: A block to be replicated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Integer: The number of blocks to generate.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The combined replicated blocks as a dlm_block.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for structural blocks: 
+<code>TF_block()</code>,
+<code>block_rename()</code>,
+<code>block_superpos()</code>,
+<code>harmonic_block()</code>,
+<code>intervention()</code>,
+<code>noise_block()</code>,
+<code>polynomial_block()</code>,
+<code>regression_block()</code>,
+<code>specify.dlm_block()</code>,
+<code>summary.dlm_block()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Long way
+level &lt;- polynomial_block(alpha = 1, order = 1)
+
+final.block &lt;- block_mult(level, 5)
+
+# Short way
+final.block &lt;- 5 * polynomial_block(alpha = 1, order = 1)
+
+</code></pre>
+
+
+</div>

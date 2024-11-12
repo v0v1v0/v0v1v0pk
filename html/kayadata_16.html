@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_fuel_mix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot fuel mix</h2>
+
+<h3>Description</h3>
+
+<p>Plot fuel mix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_fuel_mix(
+  fuel_mix,
+  collapse_renewables = TRUE,
+  title = NULL,
+  colors = NULL,
+  font_size = 20
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fuel_mix</code></td>
+<td>
+<p>A tibble with the mixture of fuels for one or more countries or regions:
+</p>
+
+<dl>
+<dt>region</dt>
+<dd>
+<p>The name of the country or region</p>
+</dd>
+<dt>fuel</dt>
+<dd>
+<p>The name of the fuel</p>
+</dd>
+<dt>quads</dt>
+<dd>
+<p>The number of quads per year the country or region consumes</p>
+</dd>
+<dt>frac</dt>
+<dd>
+<p>The fraction of the country's energy that comes from that fuel</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>collapse_renewables</code></td>
+<td>
+<p>Combine hydroelectricity and other renewables into
+a single category.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>Include a title on the plot. If <code>title</code> is <code>NULL</code> (default)
+or <code>TRUE</code>, a default title is created from the names of the regions in
+<code>fuel_mix</code>.
+If <code>title</code> is a character string, that string is used.
+If <code>title</code> is <code>FALSE</code>, the plot is produced with no title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colors</code></td>
+<td>
+<p>A named vector with the colors to use for
+<code>Coal</code>, <code>Oil</code>, <code style="white-space: pre;">⁠Natural Gas⁠</code>, <code>Nuclear</code>, <code>Hydro</code>, and <code>Renewables</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>font_size</code></td>
+<td>
+<p>The base font size.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">usa_fuel &lt;- get_fuel_mix("United States", collapse_renewables = FALSE)
+plot_fuel_mix(usa_fuel)
+plot_fuel_mix(usa_fuel, collapse_renewables = FALSE)
+plot_fuel_mix(usa_fuel, collapse_renewables = FALSE,
+              colors = c(Coal = "black", "Natural Gas" = "gray60",
+                         Oil = "gray30", Nuclear = "forestgreen",
+                         Hydro = "royalblue", Renewables="palegreen"))
+plot_fuel_mix("United States")
+plot_fuel_mix("USA")
+
+</code></pre>
+
+
+</div>

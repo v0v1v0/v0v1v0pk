@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kappaCohen</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculates Cohen's kappa for all pairs of columns in a given dataframe
+</h2>
+
+<h3>Description</h3>
+
+<p>This function is based on the function 'kappa2' from the package 'irr', and simply adds the possibility of calculating several kappas at once.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kappaCohen(data, weight="unweighted")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>dataframe with <code class="reqn">2 \times p</code> columns, <code class="reqn">p</code> being the number of traits coded by the two raters. The first two columns represent the scores attributed by the two raters for the first trait; the next two columns represent the scores attributed by the two raters for the second trait; etc. The dataframe must contains a header, and each column must be labeled as follows: ‘VariableName_X’, where X is a unique character (letter or number) associated with each rater (cf. below for an example).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+<p>character string specifying the weighting scheme ("unweighted", "equal" or "squared"). See the function ‘kappa2’ from the package ‘irr’.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For each trait, only complete cases are used for the calculation.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dataframe with <code class="reqn">p</code> rows (one per trait) and three columns, giving respectively the kappa value for each trait, the number of individuals used to calculate this value, and the associated <code class="reqn">p</code>-value.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Frédéric Santos, <a href="mailto:frederic.santos@u-bordeaux.fr">frederic.santos@u-bordeaux.fr</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Cohen, J. (1960) A coefficient of agreement for nominal scales. <em>Educational and Psychological Measurement</em>, <b>20</b>, 37–46.
+</p>
+<p>Cohen, J. (1968) Weighted kappa: Nominal scale agreement with provision for scaled disagreement or partial credit. <em>Psychological Bulletin</em>, <b>70</b>, 213–220.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>irr::kappa2
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Here we create and display an artifical dataset,
+# describing two traits coded by two raters:
+scores &lt;- data.frame(
+	Trait1_A = c(1,0,2,1,1,1,0,2,1,1),
+	Trait1_B = c(1,2,0,1,2,1,0,1,2,1),
+	Trait2_A = c(1,4,5,2,3,5,1,2,3,4),
+	Trait2_B = c(2,5,2,2,4,5,1,3,1,4)
+	)
+scores
+
+# Retrieve Cohen's kappa for Trait1 and Trait2,
+# to evaluate inter-rater agreement between raters A and B:
+kappaCohen(scores, weight="unweighted")
+kappaCohen(scores, weight="squared")
+</code></pre>
+
+
+</div>

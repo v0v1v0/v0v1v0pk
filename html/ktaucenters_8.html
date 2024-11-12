@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mars_screw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Intensity and saturation values of a picture from mars.</h2>
+
+<h3>Description</h3>
+
+<p>A dataset containing the Intensity and Saturation values of a picture from Mars
+taken from Rover Curiosity.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mars_screw
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A list containing information about  pixels of a picture form mars mainly
+containing red sand and  metal form Rover itself. List include:
+</p>
+
+<ul>
+<li>
+<p> SI_matrix: A matrix with 5063 rows and 128 columns.
+Elements 1 to 64 of each row indicate the Saturation values of pixels in a square cell 8 x 8
+whereas elements 65 to 128 of each row indicate the cell's Intensity  values.
+</p>
+</li>
+<li>
+<p> geographic_matrix: An integer matrix of dimension 5063 x 2, each row indicates
+each square cell's locations (x-axis y-axis) at the picture.
+</p>
+</li>
+<li>
+<p> screw_index: the index corresponding to the screw observation (screw_index=4180)
+</p>
+</li>
+</ul>
+<h3>Source</h3>
+
+<p><a href="https://www.nasa.gov/wp-content/uploads/2023/03/694811main_pia16225-43_full.jpg">https://www.nasa.gov/wp-content/uploads/2023/03/694811main_pia16225-43_full.jpg</a>
+</p>
+
+
+</div>

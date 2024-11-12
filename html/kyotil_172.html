@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>p.adj.perm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Permutation-based Multitesting P Values Adjustment
+</h2>
+
+<h3>Description</h3>
+
+<p>An implementation of Westfall and Young
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">p.adj.perm(p.unadj, p.perms, alpha = 0.05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p.unadj</code></td>
+<td>
+
+<p>p.unadj
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.perms</code></td>
+<td>
+
+<p>p.perms
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+
+<p>alpha
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This implementation is not as fast as the implementation from the package multtest. But ususally the step to create p.perms is the rate-limiting step.  <br><br></p>
+<p>The smallest of the Westfall and Young FWER-controlling multitesting adjusted p values coincides with the p value for testing a global null without any assumptions. 
+But for the multitesting adjustment to hold, it requires the subset pivotality condition.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sue Li, sli@fredhutch.org
+</p>
+
+
+<h3>References</h3>
+
+<p>Westfall, P. H., &amp; Young, S. S. (1993). Resampling-based multiple testing: Examples and methods for p-value adjustment (Vol. 279). John Wiley &amp; Sons.
+<br>
+Westfall, P. H., &amp; Troendle, J. F. (2008). Multiple testing with minimal assumptions. Biometrical Journal: Journal of Mathematical Methods in Biosciences, 50(5), 745-755.
+</p>
+
+
+</div>

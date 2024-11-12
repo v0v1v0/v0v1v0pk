@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ksNN</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>This function calculates the prediction value of k* nearest neighbors algorithm.</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the prediction value of k* nearest neighbors algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ksNN(Label, Distance, L_C = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Label</code></td>
+<td>
+<p>vectors of the known labels of the samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Distance</code></td>
+<td>
+<p>vectors of the distance between the target sample we want to predict and the other samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L_C</code></td>
+<td>
+<p>parameter of k* nearest neighbors algorithm.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the prediction value(pred) and the weight of the samples(alpha).
+</p>
+
+
+<h3>Note</h3>
+
+<p>This algorithm is based on Anava and Levy(2017).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  library(ksNN)
+  set.seed(1)
+
+  #make the nonlinear regression problem
+  X&lt;-runif(100)
+  Y&lt;-X^6-3*X^3+5*X^2+2
+
+  suffle&lt;-order(rnorm(length(X)))
+  X&lt;-X[suffle]
+  Y&lt;-Y[suffle]
+
+  test_X&lt;-X[1]
+  test_Y&lt;-Y[1]
+
+  train_X&lt;-X[-1]
+  train_Y&lt;-Y[-1]
+
+  Label&lt;-train_Y
+  Distance&lt;-sqrt((test_X-train_X)^2)
+
+  pred_ksNN&lt;-ksNN(Label,Distance,L_C=1)
+
+  #the predicted value with k*NN
+  pred_ksNN$pred
+
+  #the 'true' value
+  test_Y
+</code></pre>
+
+
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>specify.dlm_block</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Specify method for dlm blocks</h2>
+
+<h3>Description</h3>
+
+<p>Sets the values of undefined parameters in a block to those passed by the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'dlm_block'
+specify(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>dlm_block: A undefined dlm_block object from which the undefined parameters shall be substituted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>A set of named values for each unknown parameter.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The initual block, but with the undefined parameters set to the chosen values.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for structural blocks: 
+<code>TF_block()</code>,
+<code>block_mult()</code>,
+<code>block_rename()</code>,
+<code>block_superpos()</code>,
+<code>harmonic_block()</code>,
+<code>intervention()</code>,
+<code>noise_block()</code>,
+<code>polynomial_block()</code>,
+<code>regression_block()</code>,
+<code>summary.dlm_block()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+season &lt;- harmonic_block(rate = 1, period = 12, D = "D.sazo") |&gt;
+  specify(D.sazo = 0.975)
+
+</code></pre>
+
+
+</div>

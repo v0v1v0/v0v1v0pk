@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>psort</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parallel Sort</h2>
+
+<h3>Description</h3>
+
+<p>Similar to <code>base::sort</code> but just for character vector and partially using parallelism.
+It is currently experimental and might change in the future. Use with caution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  psort(x, decreasing=FALSE, na.last=NA,
+        nThread=getOption("kit.nThread"),c.locale=TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p> A vector of type character. If other, it will default to <code>base::sort</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.last</code></td>
+<td>
+<p> For controlling the treatment of <code>NA</code>s. If <code>TRUE</code>, missing values in the data are put last; if <code>FALSE</code>, they are put first; if <code>NA</code>, they are removed. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decreasing</code></td>
+<td>
+<p> A boolean indicating where to sort the data in decreasing way. Default is <code>FALSE</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nThread</code></td>
+<td>
+<p> Number of thread to use. Default value is <code>1L</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c.locale</code></td>
+<td>
+<p> A boolean, whether to use C Locale or R session locale. Default TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns the input <code>x</code> in sorted order similar to <code>base::sort</code> but usually faster. If <code>c.locale=FALSE</code>, <code>psort</code> will return the same output as <code>base::sort</code> with <code>method="quick"</code>, i.e. using R session locale. If <code>c.locale=TRUE</code>, <code>psort</code> will return the same output as <code>base::sort</code> with <code>method="radix"</code>, i.e. using C locale. See example below.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgan Jacob</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x = c("b","A","B","a","\xe4")
+Encoding(x) = "latin1"
+identical(psort(x, c.locale=FALSE), sort(x))
+identical(psort(x, c.locale=TRUE), sort(x, method="radix"))
+
+# Benchmarks
+# ----------
+# strings = as.character(as.hexmode(1:1000))
+# x = sample(strings, 1e8, replace=TRUE)
+# system.time({kit::psort(x, na.last = TRUE, nThread = 1L)})
+#   user  system elapsed 
+#  2.833   0.434   3.277
+# system.time({sort(x,method="radix",na.last = TRUE)})
+#   user  system elapsed 
+#  5.597   0.559   6.176
+# system.time({x[order(x,method="radix",na.last = TRUE)]})
+#   user  system elapsed 
+#  5.561   0.563   6.143
+</code></pre>
+
+
+</div>

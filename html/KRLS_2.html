@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gausskernel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Gaussian Kernel Distance Computation
+</h2>
+
+<h3>Description</h3>
+
+<p>Given a <var>N</var> by <var>D</var> numeric data matrix, this function computes the <var>N</var> by <var>N</var> distance matrix with the pairwise distances between the rows of the data matrix as measured by a Gaussian Kernel. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gausskernel(X = NULL, sigma = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p><var>N</var> by <var>N</var> numeric data matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>Positive scalar that specifies the bandwidth of the Gaussian kernel (see details).
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given two <var>D</var> dimensional vectors <code class="reqn">x_i</code> and <code class="reqn">x_j</code>. The Gaussian kernel is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">k(x_i,x_j)=exp(\frac{-|| x_i - x_j ||^2}{\sigma^2})</code>
+</p>
+
+<p>where <code class="reqn">||x_i - x_j||</code> is the Euclidean distance given by
+</p>
+<p style="text-align: center;"><code class="reqn">||x_i - x_j||=((x_i1-x_j1)^2 + (x_i2-x_j2)^2 + ... + (x_iD-x_jD)^2)^.5</code>
+</p>
+
+<p>and <code class="reqn">\sigma^2</code> is the bandwidth of the kernel.
+</p>
+<p>Note that the Gaussian kernel is a measure of similarity between <code class="reqn">x_i</code> and <code class="reqn">x_j</code>. It evalues to 1 if the <code class="reqn">x_i</code> and <code class="reqn">x_j</code> are identical, and approaches 0 as <code class="reqn">x_i</code> and <code class="reqn">x_j</code> move further apart. 
+</p>
+<p>The function relies on the <code>dist</code> function in the stats package for an initial estimate of the euclidean distance.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <var>N</var> by <var>N</var> numeric distance matrix that contains the pairwise distances between the rows in <var>X</var>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dist</code> function in the stats package.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">X &lt;- matrix(rnorm(6),ncol=2)
+gausskernel(X=X,sigma=1)
+</code></pre>
+
+
+</div>

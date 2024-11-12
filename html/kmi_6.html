@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.cox.kmi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summary method for cox.kmi objects</h2>
+
+<h3>Description</h3>
+
+<p>Provides a summary of the fitted model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'cox.kmi'
+summary(object, conf.int = 0.95, scale = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>cox.kmi</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.int</code></td>
+<td>
+<p>Level of the confidence intervals. Default is 0.95</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>Vector of scale factors for the coefficients, default to
+1. The confidence limits are for the risk change associated with one
+scale unit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>summary.cox.kmi</code> with the following
+components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The matched call</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coefficients</code></td>
+<td>
+<p>A matrix with 5 columns including the regression
+coefficients, subdistribution hazard ratios, standard-errors,
+t-statistics and corresponding two-sided p-values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.int</code></td>
+<td>
+<p>A matrix with 4 columns that consists of the
+subdistribution hazard ratios, exp(-coef) and the lower and upper
+bounds of the confidence interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>individual.fit</code></td>
+<td>
+<p>A list of <code>summary.coxph</code> objects for each
+imputed data set</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arthur Allignol, <a href="mailto:arthur.allignol@gmail.com">arthur.allignol@gmail.com</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>cox.kmi</code>, <code>print.summary.cox.kmi</code>,
+<code>summary.coxph</code></p>
+
+
+</div>

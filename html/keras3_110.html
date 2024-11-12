@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>config_set_backend</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reload the backend (and the Keras package).</h2>
+
+<h3>Description</h3>
+
+<p>Reload the backend (and the Keras package).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">config_set_backend(backend)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>backend</code></td>
+<td>
+<p>String</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Nothing, this function is called for its side effect.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode python"><pre>config_set_backend("jax")
+</pre></div>
+
+
+<h3>WARNING</h3>
+
+<p>Using this function is dangerous and should be done
+carefully. Changing the backend will <strong>NOT</strong> convert
+the type of any already-instantiated objects.
+Thus, any layers / tensors / etc. already created will no
+longer be usable without errors. It is strongly recommended <strong>not</strong>
+to keep around <strong>any</strong> Keras-originated objects instances created
+before calling <code>config_set_backend()</code>.
+</p>
+<p>This includes any function or class instance that uses any Keras
+functionality. All such code needs to be re-executed after calling
+<code>config_set_backend()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other config: <br><code>config_backend()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_enable_unsafe_deserialization()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_floatx()</code> <br><code>config_set_image_data_format()</code> <br></p>
+
+
+</div>

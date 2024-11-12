@@ -1,0 +1,140 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>part</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+
+Fits a linear model based on spline terms with additional support for other independent variables.
+</h2>
+
+<h3>Description</h3>
+
+
+<p>The user will input a data frame, then designate the variable that is the outcome. Then the spline term is selected along with any other independent variables. Finally, a number K partitions is chosen for the algorithm to search for potential cubic spline knots based on the spline term and partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">part(d, outcomeVariable, splineTerm, additionalVars = NULL, K)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+
+<p>A data frame data set with column names.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcomeVariable</code></td>
+<td>
+
+<p>The variable from 'd' that is the outcome.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>splineTerm</code></td>
+<td>
+
+<p>The spline term, inherited from 'd'.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>additionalVars</code></td>
+<td>
+
+<p>A vector of additional variables to be included in the model.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+
+<p>The number of evenly spaced partitions to be searched.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+
+
+
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fits</code></td>
+<td>
+
+<p>The fitted values of the linear model.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xhat</code></td>
+<td>
+
+<p>The entire feature matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coefs</code></td>
+<td>
+
+<p>The significant coefficients of the model.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adjr2</code></td>
+<td>
+
+<p>The adjusted R^2 value.
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+
+<p>Eric Golinko
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## for simple spline model.
+data(LakeHuron)
+d &lt;- data.frame(seq(1875, 1972, 1), LakeHuron)
+names(d) &lt;- c('date', 'lh')
+fit &lt;- part(d = d, outcomeVariable = 'lh', splineTerm = 'date', K = 20)
+fit
+plot(d$date, d$lh)
+lines(d$date, fit$fits, col = 'red')
+
+
+## multivariate
+data(freeny)
+freeny$time &lt;- as.numeric(rownames(freeny))
+fit &lt;- part(d = freeny, outcomeVariable = 'y',
+    splineTerm = 'time', additionalVars = c('market.potential', 'income.level'), K =2)
+fit$coefs
+</code></pre>
+
+
+</div>

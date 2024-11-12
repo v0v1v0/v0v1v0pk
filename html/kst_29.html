@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Family of Sets</h2>
+
+<h3>Description</h3>
+
+<p>Plots a Hasse diagram of a family of sets
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  ## S3 method for class 'kstructure'
+plot(x, ...)
+  ## S3 method for class 'kbase'
+plot(x, ...)
+  ## S3 method for class 'kfamset'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>,
+<code>kbase</code>, or <code>kfamset</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments to be passed to methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>plot</code> takes an arbitrary family of sets and plots a Hasse diagram. 
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>, <code>kbase</code>, <code>kfamset</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fs &lt;- kfamset(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+if(require("Rgraphviz")) {plot(fs)}
+</code></pre>
+
+
+</div>

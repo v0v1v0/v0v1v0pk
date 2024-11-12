@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rankkmed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rank k-medoid algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function runs the rank k-medoids algorithm proposed by
+Zadegan et. al. (2013).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rankkmed(distdata, ncluster, m = 3, iterate = 10, init = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>distdata</code></td>
+<td>
+<p>A distance matrix (n x n) or dist object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncluster</code></td>
+<td>
+<p>A number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>A number of objects to compute hostility (see
+<strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterate</code></td>
+<td>
+<p>A number of iterations for the clustering algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init</code></td>
+<td>
+<p>A vector of initial objects as the cluster medoids
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This algorithm is claimed to cope with the local optima problem
+of the simple and fast-kmedoids algorithm (<code>fastkmed</code>). The
+<code>m</code> argument is defined by the user and has to be <code class="reqn">1 &lt; m \leq n</code>.
+The <code>m</code> is a hostility measure computed by
+</p>
+<p style="text-align: center;"><code class="reqn">m_i = \sum_{X_j \in Y} r_{ij}</code>
+</p>
+
+<p>where <code class="reqn">x_j</code> is the object j, Y is the set of objects
+as many as m, and <code class="reqn">r_{ij}</code> is the rank distance, i.e. sorted
+distance, between object i and j.
+</p>
+<p><code>init</code> can be provided with a vector of id objects. The length of
+the vector has to be equal to the number of clusters. However, assigning
+a vector in the <code>init</code> argument, the algorithm is no longer the rank
+k-medoids algorithm.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a list of components:
+</p>
+<p><code>cluster</code> is the clustering memberships result.
+</p>
+<p><code>medoid</code> is the id medoids.
+</p>
+<p><code>minimum_distance</code> is the distance of all objects to their cluster
+medoid.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Zadegan, S.M.R, Mirzaie M, and Sadoughi, F. 2013. Ranked k-medoids: A fast and
+accurate rank-based partitioning algorithm for clustering large datasets. Knowledge-Based
+Systems 39, 133-143.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+result &lt;- rankkmed(mrwdist, ncluster = 3, iterate = 50)
+table(result$cluster, iris[,5])
+
+
+</code></pre>
+
+
+</div>

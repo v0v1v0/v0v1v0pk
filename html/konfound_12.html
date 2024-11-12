@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>konfound_lm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Konfound Analysis for Linear Models</h2>
+
+<h3>Description</h3>
+
+<p>This function performs konfound analysis on a linear model object
+produced by lm.
+It calculates the sensitivity of inferences for coefficients in the model.
+It supports analysis for a single variable or multiple variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">konfound_lm(
+  model_object,
+  tested_variable_string,
+  alpha,
+  tails,
+  index,
+  to_return
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model_object</code></td>
+<td>
+<p>The linear model object produced by lm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tested_variable_string</code></td>
+<td>
+<p>The name of the variable being tested.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Significance level for hypothesis testing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tails</code></td>
+<td>
+<p>Number of tails for the test (1 or 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>Type of sensitivity analysis ('RIR' by default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_return</code></td>
+<td>
+<p>The type of output to return.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The results of the konfound analysis for the specified variable(s).
+</p>
+
+
+</div>

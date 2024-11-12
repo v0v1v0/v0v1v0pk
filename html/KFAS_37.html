@@ -1,0 +1,597 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SSMarima</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a State Space Model Object of Class SSModel</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>SSModel</code> creates a state space object object of class
+<code>SSModel</code> which can be used as an input object for various functions of
+<code>KFAS</code> package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SSMarima(
+  ar = NULL,
+  ma = NULL,
+  d = 0,
+  Q,
+  stationary = TRUE,
+  index,
+  n = 1,
+  state_names = NULL,
+  ynames
+)
+
+SSMcustom(Z, T, R, Q, a1, P1, P1inf, index, n = 1, state_names = NULL)
+
+SSMcycle(
+  period,
+  Q,
+  type,
+  index,
+  a1,
+  P1,
+  P1inf,
+  damping = 1,
+  n = 1,
+  state_names = NULL,
+  ynames
+)
+
+SSModel(formula, data, H, u, distribution, tol = .Machine$double.eps^0.5)
+
+SSMregression(
+  rformula,
+  data,
+  type,
+  Q,
+  index,
+  R,
+  a1,
+  P1,
+  P1inf,
+  n = 1,
+  remove.intercept = TRUE,
+  state_names = NULL,
+  ynames
+)
+
+SSMseasonal(
+  period,
+  Q,
+  sea.type = c("dummy", "trigonometric"),
+  type,
+  index,
+  a1,
+  P1,
+  P1inf,
+  n = 1,
+  state_names = NULL,
+  ynames,
+  harmonics
+)
+
+SSMtrend(
+  degree = 1,
+  Q,
+  type,
+  index,
+  a1,
+  P1,
+  P1inf,
+  n = 1,
+  state_names = NULL,
+  ynames
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ar</code></td>
+<td>
+<p>For arima component, a numeric vector containing the autoregressive
+coeffients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ma</code></td>
+<td>
+<p>For arima component, a numericvector containing the moving average
+coeffients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>For arima component, a degree of differencing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>For arima, cycle and seasonal component, a <code class="reqn">p \times p</code>
+covariance matrix of the disturbances (or in the time varying case <code class="reqn">p
+\times p \times n</code> array), where where $p$ = <code>length(index)</code>.
+For trend component, list of length <code>degree</code> containing the <code class="reqn">p
+\times p</code> or <code class="reqn">p \times p \times n</code> covariance matrices. For a custom
+component, arbitrary covariance matrix or array of disturbance terms
+<code class="reqn">\eta_t</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stationary</code></td>
+<td>
+<p>For arima component, logical value indicating whether a
+stationarity of the arima part is assumed. Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>A vector indicating for which series the corresponding
+components are constructed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Length of the series, only used internally for dimensionality check.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>state_names</code></td>
+<td>
+<p>A character vector giving the state names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ynames</code></td>
+<td>
+<p>names of the times series, used internally.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>For a custom component, system matrix or array of observation
+equation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>For a custom component, system matrix or array of transition
+equation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>For a custom and regression components, optional <code class="reqn">m \times k</code>
+system matrix or array of transition equation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a1</code></td>
+<td>
+<p>Optional <code class="reqn">m \times 1</code> matrix giving the expected value
+of the initial state vector <code class="reqn">\alpha_1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P1</code></td>
+<td>
+<p>Optional <code class="reqn">m \times m</code> matrix giving the covariance
+matrix of <code class="reqn">\alpha_1</code>. In the diffuse case the non-diffuse
+part of <code class="reqn">P_1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P1inf</code></td>
+<td>
+<p>Optional <code class="reqn">m \times m</code> matrix giving the diffuse part
+of <code class="reqn">P_1</code>. Diagonal matrix with ones on diagonal elements which
+correspond to the diffuse initial states. If <code>P1inf[i,i]&gt;0</code>, corresponding
+row and column of <code>P1</code> should be zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>period</code></td>
+<td>
+<p>For a cycle and seasonal components, the length of the
+cycle/seasonal pattern.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>For cycle, seasonal, trend and regression components, character
+string defining if <code>"distinct"</code> or <code>"common"</code> states are used for
+different series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>damping</code></td>
+<td>
+<p>A damping factor for cycle component. Defaults to 1.
+Note that there are no checks for the range of the factor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>An object of class <code>formula</code> containing the
+symbolic description of the model. The intercept term can be removed with
+<code>-1</code> as in <code>lm</code>. In case of trend or differenced arima component the
+intercept is removed automatically in order to keep the model identifiable.
+See package vignette and examples in <code>KFAS</code> for special functions
+used in model construction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>An optional data frame, list or environment containing the
+variables in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>Covariance matrix or array of disturbance terms
+<code class="reqn">\epsilon_t</code> of observation equation. Defaults to an identity matrix.
+Omitted in case of non-Gaussian distributions (augment the state vector if you want to add
+additional noise).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>Additional parameters for non-Gaussian models. See details in
+<code>KFAS</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distribution</code></td>
+<td>
+<p>A vector of distributions of the observations. Default is
+<code>rep("gaussian", p)</code>, where <code>p</code> is the number of series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>A tolerance parameter used in checking whether <code>Finf</code> or <code>F</code> is numerically zero.
+Defaults to <code>.Machine$double.eps^0.5</code>. If <code>F &lt; tol * max(abs(Z[Z &gt; 0]))^2</code>,
+then F is deemed to be zero (i.e. differences are due to numerical precision).
+This has mostly effect only on determining when to end exact diffuse phase. Tweaking this
+and/or scaling model parameters/observations can sometimes help with numerical issues.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rformula</code></td>
+<td>
+<p>For regression component, right hand side formula or list of
+of such formulas defining the custom regression part.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.intercept</code></td>
+<td>
+<p>Remove intercept term from regression model. Default
+is <code>TRUE</code>. This tries to ensure that there are no extra intercept
+terms in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sea.type</code></td>
+<td>
+<p>For seasonal component, character string defining whether to
+use <code>"dummy"</code> or <code>"trigonometric"</code> form of the seasonal
+component.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>harmonics</code></td>
+<td>
+<p>For univariate trigonometric seasonal, argument
+<code>harmonics</code> can be used to specify which subharmonics
+are added to the model. Note that for multivariate model you can call
+<code>SSMseasonal</code> multiple times with different values of <code>index</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>degree</code></td>
+<td>
+<p>For trend component, integer defining the degree of the
+polynomial trend. 1 corresponds to local level, 2 for local linear trend
+and so forth.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Formula of the model can contain the usual regression part and additional
+functions defining different types of components of the model, named as
+<code>SSMarima</code>, <code>SSMcustom</code>, <code>SSMcycle</code>, <code>SSMregression</code>,
+<code>SSMseasonal</code> and <code>SSMtrend</code>.
+</p>
+<p>For more details, see package vignette (the mathematical notation is somewhat non-readable in ASCII).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>SSModel</code>, which is a list with the following
+components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A n x p matrix containing the observations. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>A p x m x 1 or p x m x n array corresponding to the system matrix
+of observation equation. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>A p x p x 1 or p x p x n array
+corresponding to the covariance matrix of observational disturbances
+epsilon. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>A m x m x 1 or m x m x n array corresponding to the
+first system matrix of state equation. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>A m x k x 1 or m x k x n
+array corresponding to the second system matrix of state equation. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>A k x k x 1 or k x k x n array corresponding to the covariance
+matrix of state disturbances eta </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a1</code></td>
+<td>
+<p>A m x 1 matrix containing the
+expected values of the initial states. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P1</code></td>
+<td>
+<p>A m x m matrix
+containing the covariance matrix of the nondiffuse part of the initial
+state vector. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P1inf</code></td>
+<td>
+<p>A m x m matrix containing the covariance
+matrix of the diffuse part of the initial state vector.
+If <code>P1[i,i]</code> is non-zero then <code>P1inf[i,i]</code> is automatically set to zero. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>A n x p
+matrix of an additional parameters in case of non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distribution</code></td>
+<td>
+<p>A vector of length p giving the distributions of the
+observations. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>A tolerance parameter for Kalman filtering. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>Original call to the function. </p>
+</td>
+</tr>
+</table>
+<p> In addition, object of class
+<code>SSModel</code> contains following attributes:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>Names of the
+list components. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p, m, k, n</code></td>
+<td>
+<p>Integer valued scalars defining the
+dimensions of the model components. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>state_types</code></td>
+<td>
+<p>Types of the
+states in the model. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta_types</code></td>
+<td>
+<p>Types of the
+state disturbances in the model. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tv</code></td>
+<td>
+<p>Integer vector stating whether <code>Z</code>,<code>H</code>,<code>T</code>,<code>R</code> or <code>Q</code> is
+time-varying (indicated by 1 in <code>tv</code> and 0 otherwise).
+If you manually change the dimensions of the matrices you must change this attribute also.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>artransform</code>
+</p>
+<p><code>KFAS</code> for more examples.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># add intercept to state equation by augmenting the state vector:
+# diffuse initialization for the intercept, gets estimated like other states:
+# for known fixed intercept, just set P1 = P1inf = 0 (default in SSMcustom).
+intercept &lt;- 0
+model_int &lt;- SSModel(Nile ~ SSMtrend(1, Q = 1469) +
+SSMcustom(Z = 0, T = 1, Q = 0, a1 = intercept, P1inf = 1), H = 15099)
+
+model_int$T
+model_int$T[1, 2, 1] &lt;- 1 # add the intercept value to level
+out &lt;- KFS(model_int)
+
+# An example of a time-varying variance
+
+model_drivers &lt;- SSModel(log(cbind(front, rear)) ~ SSMtrend(1, Q = list(diag(2))),
+data = Seatbelts, H = array(NA, c(2, 2, 192)))
+
+ownupdatefn &lt;- function(pars, model){
+  diag(model$Q[, , 1]) &lt;- exp(pars[1:2])
+  model$H[,,1:169] &lt;- diag(exp(pars[3:4])) # break in variance
+  model$H[,,170:192] &lt;- diag(exp(pars[5:6]))
+  model
+}
+
+fit_drivers &lt;- fitSSM(model_drivers, inits = rep(-1, 6),
+  updatefn = ownupdatefn, method = "BFGS")
+fit_drivers$model$H[,,1]
+fit_drivers$model$H[,,192]
+
+# An example of shift in the level component
+
+Tt &lt;- array(diag(2), c(2, 2, 100))
+Tt[1,2,28] &lt;- 1
+Z &lt;- matrix(c(1,0), 1, 2)
+Q &lt;- diag(c(NA, 0), 2)
+model &lt;- SSModel(Nile ~ -1 + SSMcustom(Z, Tt, Q = Q, P1inf = diag(2)),
+  H = matrix(NA))
+
+model &lt;- fitSSM(model, c(10,10), method = "BFGS")$model
+model$Q
+model$H
+
+conf_Nile &lt;- predict(model, interval = "confidence", level = 0.9)
+pred_Nile &lt;- predict(model, interval = "prediction", level = 0.9)
+
+ts.plot(cbind(Nile, pred_Nile, conf_Nile[, -1]), col = c(1:2, 3, 3, 4, 4),
+        ylab = "Predicted Annual flow", main = "River Nile")
+
+# dynamic regression model
+
+set.seed(1)
+x1 &lt;- rnorm(100)
+x2 &lt;- rnorm(100)
+b1 &lt;- 1 + cumsum(rnorm(100, sd = 1))
+b2 &lt;- 2 + cumsum(rnorm(100, sd = 0.1))
+y &lt;- 1 + b1 * x1 + b2 * x2 + rnorm(100, sd = 0.1)
+
+model &lt;- SSModel(y ~ SSMregression(~ x1 + x2, Q = diag(NA,2)), H = NA)
+
+fit &lt;- fitSSM(model, inits = c(0,0,0), method = "BFGS")
+
+model &lt;- fit$model
+model$Q
+model$H
+out &lt;- KFS(model)
+
+ts.plot(out$alphahat[,-1], b1, b2, col = 1:4)
+
+# SSMregression with multivariate observations
+
+x &lt;- matrix(rnorm(30), 10, 3) # one variable per each series
+y &lt;- x + rnorm(30)
+model &lt;- SSModel(y ~ SSMregression(list(~ X1, ~ X2, ~ X3), data = data.frame(x)))
+# more generally SSMregression(sapply(1:3, function(i) formula(paste0("~ X",i))), ...)
+
+# three covariates per series, with same coefficients:
+y &lt;- x[,1] + x[,2] + x[,3] + matrix(rnorm(30), 10, 3)
+model &lt;- SSModel(y ~ -1 + SSMregression(~ X1 + X2 + X3, remove.intercept = FALSE,
+  type = "common", data = data.frame(x)))
+
+# the above cases can be combined in various ways, you can call SSMregression multiple times:
+model &lt;- SSModel(y ~  SSMregression(~ X1 + X2, type = "common") +
+  SSMregression(~ X2), data = data.frame(x))
+
+# examples of using data argument
+y &lt;- x &lt;- rep(1, 3)
+data1 &lt;- data.frame(x = rep(2, 3))
+data2 &lt;- data.frame(x = rep(3, 3))
+
+f &lt;- formula(~ -1 + x)
+# With data missing the environment of formula is checked,
+# and if not found in there a calling environment via parent.frame is checked.
+
+c(SSModel(y ~ -1 + x)["Z"]) # 1
+c(SSModel(y ~ -1 + x, data = data1)["Z"]) # 2
+
+c(SSModel(y ~ -1 + SSMregression(~ -1 + x))["Z"]) # 1
+c(SSModel(y ~ -1 + SSMregression(~ -1 + x, data = data1))["Z"]) # 2
+c(SSModel(y ~ -1 + SSMregression(~ -1 + x), data = data1)["Z"]) # 2
+SSModel(y ~ -1 + x + SSMregression(~ -1 + x, data = data1))["Z"] # 1 and 2
+SSModel(y ~ -1 + x + SSMregression(~ -1 + x), data = data1)["Z"] # both are 2
+SSModel(y ~ -1 + x + SSMregression(~ -1 + x, data = data1), data = data2)["Z"] # 3 and 2
+
+SSModel(y ~ -1 + x + SSMregression(f))["Z"] # 1 and 1
+SSModel(y ~ -1 + x + SSMregression(f), data = data1)["Z"] # 2 and 1
+SSModel(y ~ -1 + x + SSMregression(f,data = data1))["Z"] # 1 and 2
+
+rm(x)
+c(SSModel(y ~ -1 + SSMregression(f, data = data1))$Z) # 2
+## Not run: 
+# This fails as there is no x in the environment of f
+try(c(SSModel(y ~ -1 + SSMregression(f), data = data1)$Z))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

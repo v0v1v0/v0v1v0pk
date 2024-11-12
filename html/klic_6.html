@@ -1,0 +1,167 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotSimilarityMatrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot similarity matrix with pheatmap</h2>
+
+<h3>Description</h3>
+
+<p>Plot similarity matrix with pheatmap
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotSimilarityMatrix(
+  X,
+  y = NULL,
+  clusLabels = NULL,
+  colX = NULL,
+  colY = NULL,
+  myLegend = NULL,
+  fileName = "posteriorSimilarityMatrix",
+  savePNG = FALSE,
+  semiSupervised = FALSE,
+  showObsNames = FALSE,
+  clr = FALSE,
+  clc = FALSE,
+  plotWidth = 500,
+  plotHeight = 450
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Similarity matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clusLabels</code></td>
+<td>
+<p>Cluster labels</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colX</code></td>
+<td>
+<p>Colours for the matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colY</code></td>
+<td>
+<p>Colours for the response</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>myLegend</code></td>
+<td>
+<p>Vector of strings with the names of the variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fileName</code></td>
+<td>
+<p>If <code>savePNG</code> is TRUE, this is the string containing the
+name of the output file. Can be used to specify the folder path too. Default
+is "posteriorSimilarityMatrix". The extension ".png" is automatically added
+to this string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>savePNG</code></td>
+<td>
+<p>Boolean: if TRUE, the plot is saved as a png file. Default is
+FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>semiSupervised</code></td>
+<td>
+<p>Boolean flag: if TRUE, the response is plotted next to
+the matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showObsNames</code></td>
+<td>
+<p>Boolean. If TRUE, observation names are shown in the
+plot. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clr</code></td>
+<td>
+<p>Boolean. If TRUE, rows are ordered by hierarchical clustering.
+Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clc</code></td>
+<td>
+<p>Boolean. If TRUE, columns are ordered by hierarchical clustering.
+Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plotWidth</code></td>
+<td>
+<p>Plot width. Default is 500.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plotHeight</code></td>
+<td>
+<p>Plot height. Default is 450.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No return value. This function plots the similarity matrix either
+to screen or to a png file.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Alessandra Cabassi <a href="mailto:alessandra.cabassi@mrc-bsu.cam.ac.uk">alessandra.cabassi@mrc-bsu.cam.ac.uk</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Load one dataset with 100 observations, 2 variables, 4 clusters
+data &lt;- as.matrix(read.csv(system.file("extdata", "dataset1.csv",
+package = "klic"), row.names = 1))
+# Load cluster labels
+cluster_labels &lt;- as.matrix(read.csv(system.file("extdata",
+"cluster_labels.csv", package = "klic"), row.names = 1))
+
+# Compute consensus clustering with K=4 clusters
+cm &lt;- coca::consensusCluster(data, 4)
+
+# Plot consensus (similarity) matrix
+plotSimilarityMatrix(cm)
+
+# Plot consensus (similarity) matrix with response
+names(cluster_labels) &lt;- as.character(1:100)
+rownames(cm) &lt;- names(cluster_labels)
+plotSimilarityMatrix(cm, y = cluster_labels)
+</code></pre>
+
+
+</div>

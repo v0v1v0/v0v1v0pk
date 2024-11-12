@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>freeze_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Freeze and unfreeze weights</h2>
+
+<h3>Description</h3>
+
+<p>Freeze weights in a model or layer so that they are no longer trainable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">freeze_weights(object, from = NULL, to = NULL, which = NULL)
+
+unfreeze_weights(object, from = NULL, to = NULL, which = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model or layer object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>Layer instance, layer name, or layer index within model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to</code></td>
+<td>
+<p>Layer instance, layer name, or layer index within model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>layer names, integer positions, layers, logical vector (of
+<code>length(object$layers)</code>), or a function returning a logical vector.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The <code>from</code> and <code>to</code> layer arguments are both inclusive.
+</p>
+<p>When applied to a model, the freeze or unfreeze is a global operation over
+all layers in the model (i.e. layers not within the specified range will be
+set to the opposite value, e.g. unfrozen for a call to freeze).
+</p>
+<p>Models must be compiled again after weights are frozen or unfrozen.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+conv_base &lt;- application_vgg16(
+  weights = "imagenet",
+  include_top = FALSE,
+  input_shape = c(150, 150, 3)
+)
+
+# freeze it's weights
+freeze_weights(conv_base)
+
+conv_base
+
+# create a composite model that includes the base + more layers
+model &lt;- keras_model_sequential() %&gt;%
+  conv_base() %&gt;%
+  layer_flatten() %&gt;%
+  layer_dense(units = 256, activation = "relu") %&gt;%
+  layer_dense(units = 1, activation = "sigmoid")
+
+# compile
+model %&gt;% compile(
+  loss = "binary_crossentropy",
+  optimizer = optimizer_rmsprop(lr = 2e-5),
+  metrics = c("accuracy")
+)
+
+model
+print(model, expand_nested = TRUE)
+
+
+
+# unfreeze weights from "block5_conv1" on
+unfreeze_weights(conv_base, from = "block5_conv1")
+
+# compile again since we froze or unfroze weights
+model %&gt;% compile(
+  loss = "binary_crossentropy",
+  optimizer = optimizer_rmsprop(lr = 2e-5),
+  metrics = c("accuracy")
+)
+
+conv_base
+print(model, expand_nested = TRUE)
+
+# freeze only the last 5 layers
+freeze_weights(conv_base, from = -5)
+conv_base
+# equivalently, also freeze only the last 5 layers
+unfreeze_weights(conv_base, to = -6)
+conv_base
+
+# Freeze only layers of a certain type, e.g, BatchNorm layers
+batch_norm_layer_class_name &lt;- class(layer_batch_normalization())[1]
+is_batch_norm_layer &lt;- function(x) inherits(x, batch_norm_layer_class_name)
+
+model &lt;- application_efficientnet_b0()
+freeze_weights(model, which = is_batch_norm_layer)
+model
+# equivalent to:
+for(layer in model$layers) {
+  if(is_batch_norm_layer(layer))
+    layer$trainable &lt;- FALSE
+  else
+    layer$trainable &lt;- TRUE
+}
+
+## End(Not run)
+</code></pre>
+
+
+</div>

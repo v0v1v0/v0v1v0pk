@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>genRmExample</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+A function to generate a recurrence matrix example
+</h2>
+
+<h3>Description</h3>
+
+<p>A function to generate a recurrence matrix example. It can be assigned to the KTSEnv environment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">genRmExample(name = "SRM", InKTSEnv = TRUE, plotRM = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+
+<p>A name for the recurrence matrix. When the local environment is used instead of KTSEnv, the name is still necessary for the recurrence plot title.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>InKTSEnv</code></td>
+<td>
+
+<p>Assign the output to the KTSEnv (TRUE) or to the local  environment (FALSE)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plotRM</code></td>
+<td>
+
+<p>Plot the recurrence matrix (TRUE) or not (FALSE)
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The recurrence matrix is calculated on a sinusoidal time series composed with a random walk. The embedding dimension is 2, the delay is 290 and the threshold is 20.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The recurrence matrix and the time series
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ res &lt;- genRmExample(name = "RMExample", InKTSEnv = FALSE, plotRM = FALSE)
+ res$newSimpRM
+ res$TS
+</code></pre>
+
+
+</div>

@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>antworten.mufo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Sample dataset: antworten.mufo
+</h2>
+
+<h3>Description</h3>
+
+<p>Sample data of a multiple choice test with two test forms.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(antworten.mufo)</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data.frame with 20 observations of the following 38 variables.
+</p>
+
+<dl>
+<dt><code>No</code></dt>
+<dd>
+<p>Serial number for each subject (numeric vector)</p>
+</dd>
+<dt><code>Name</code></dt>
+<dd>
+<p>Family name (character vector)</p>
+</dd>
+<dt><code>FirstName</code></dt>
+<dd>
+<p>First name (character vector)</p>
+</dd>
+<dt><code>MatrNo</code></dt>
+<dd>
+<p>Matriculation number (numeric vector)</p>
+</dd>
+<dt><code>Pseudonym</code></dt>
+<dd>
+<p>Pseudonym for anonymous feedback (character)</p>
+</dd>
+<dt>
+<code>Item01</code> to <code>Item30</code>
+</dt>
+<dd>
+<p>given answers,
+only one answer per item (numeric vector)</p>
+</dd>
+<dt>
+<code>Item31</code> to <code>Item32</code>
+</dt>
+<dd>
+<p>given answers,
+several answers per item (numeric vector)</p>
+</dd>
+<dt><code>Form</code></dt>
+<dd>
+<p>Test form (character vector)</p>
+</dd>
+</dl>
+<p>And a matrix called <code>corr.key</code> with indices for all items in the two test forms.
+</p>
+
+
+<h3>Details</h3>
+
+<p>The data is actually the same as <code>antworten</code>. But in this object the items of the last 10 test
+subjects were reversed, hence this is test form ”b”. As a convenience,
+a matrix called <code>corr.key</code>
+is also included. This data can be used to test <code>klausur.mufo</code>.
+</p>
+
+
+<h3>Source</h3>
+
+<p>The data was taken from a final exam test in differential psychology at the Institute for Experimental
+Psychology of the Heinrich-Heine-University Düsseldorf, summer term 2009.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(antworten.mufo)
+</code></pre>
+
+
+</div>

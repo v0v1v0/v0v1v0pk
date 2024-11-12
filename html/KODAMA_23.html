@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pca</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Principal Components Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Performs a principal components analysis on the given data matrix and returns the results as an object of class "<code>prcomp</code>".</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pca(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a matrix of data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments passed to <code>prcomp</code> function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns  a list with class <code>prcomp</code> containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>sdev</code></td>
+<td>
+<p>the standard deviations of the principal components (i.e., the square roots of the eigenvalues of the covariance/correlation matrix, though the calculation is actually done with the singular values of the data matrix).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rotation</code></td>
+<td>
+<p>the matrix of variable loadings (i.e., a matrix whose columns contain the eigenvectors). The function <code>princomp</code> returns this in the element <code>loadings</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>if <code>retx</code> is <code>TRUE</code> the value of the rotated data (the centred (and scaled if requested) data multiplied by the <code>rotation</code> matrix) is returned. Hence, <code>cov(x)</code> is the diagonal matrix <code>diag(sdev^2)</code>. For the formula method, <code>napredict()</code> is applied to handle the treatment of values omitted by the <code>na.action</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center, scale</code></td>
+<td>
+<p>the centering and scaling used, or <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>txt</code></td>
+<td>
+<p>the component of variance of each Principal Component.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Pearson, K	<br>
+On Lines and Planes of Closest Fit to Systems of Points in Space.<br><em>Philosophical Magazine</em> 1901;2 (11): 559-572. doi:10.1080/14786440109462720. <a href="https://www.tandfonline.com/doi/abs/10.1080/14786440109462720">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>prcomp</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=normalization(u)$newXtrain
+u=scaling(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc=pca(u)
+plot(cc$x,pch=21,bg=class)
+</code></pre>
+
+
+</div>

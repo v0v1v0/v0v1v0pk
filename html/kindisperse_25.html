@@ -1,0 +1,239 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>DispersalModel-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>DispersalModel Class</h2>
+
+<h3>Description</h3>
+
+<p>The class <code>DispersalModel</code> is an S4 Class supplying organism-specific information about dispersal stages (with axial
+sigmas), FS &amp; HS branch points, and the dispersal stage at which sampling occurs.It is used with the
+<code>simulate_kindist_custom</code> function to enable the simulation of uniquely defined breeding &amp; dispersal cycles.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'DispersalModel'
+show(object)
+
+## S4 method for signature 'DispersalModel'
+initialize(
+  .Object,
+  stages = NULL,
+  dispersal_vector = NULL,
+  fs = NULL,
+  hs = NULL,
+  sampling_stage = NULL,
+  cycle = NULL,
+  breeding_stage = NULL,
+  visible_stage = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>DispersalModel</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.Object</code></td>
+<td>
+<p>object to be constructed into DispersalModel class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stages</code></td>
+<td>
+<p>character.  Ordered vector of all dispersal stages across the breeding cycle of the modeled species</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dispersal_vector</code></td>
+<td>
+<p>numeric. Named vector of custom breeding cycle stages and their corresponding axial dispersal values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fs</code></td>
+<td>
+<p>character.  breeding cycle stage at which first substantial FS-phased dispersal occurs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hs</code></td>
+<td>
+<p>character. breeding cycle stage at which first substantial HS-phased dispersal occurs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sampling_stage</code></td>
+<td>
+<p>character. stage in the breeding cycle at which samples are to be collected for kin identification.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cycle</code></td>
+<td>
+<p>non-negative integer. Breeding cycle numbers of dispersed kin to be modeled.  Represents
+the number of complete breeding cycles each simulated individual has undergone before the sampling point, where the time between
+birth and first reproduction is coded as '0', that between first and second reproduction '1', etc. (default 0)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breeding_stage</code></td>
+<td>
+<p>(character) - stage in the cycle at which breeding occurs. Must correspond to a previously described cycle
+stage name. By default, equated with the .HS stage. This stage corresponds to the <strong>generation</strong> of next-generation individuals;
+the .FS &amp; .HS stages correspond to their separation. Needed for situations where individuals are sampled before they separate from the parent.
+Modify if the modeled .HS gamete dispersal event does not correspond to the initial breeding event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>visible_stage</code></td>
+<td>
+<p>(character) - stage in the cycle at the <strong>beginning</strong> of which individuals are visible to the study for
+sampling rather than their parents (i.e. the beginning point of <code>cycle 0</code>). By default, equated with the <code>fs</code> stage. This parameter
+determines how many dispersal stages individuals have gone through before they are sampled - if <code>.sampling_stage</code> occurs just
+<strong>after</strong> <code>.visible_stage</code>, the sampled individuals will have dispersed through only a small amount of the breeding cycle. if
+<code>.sampling_stage</code> occurs just <strong>before</strong> <code>.visible_stage</code>, the sampled individuals will have dispersed throughout most
+of the breeding cycle before being sampled. If <code>.cycle</code> is set to <code>-1</code>, dispersal stages between breeding &amp; visibility
+can be accessed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DispersalModel</code></td>
+<td>
+<p>an object of class DispersalModel</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The original simulation functions in this package (<code>simulate_kindist_simple()</code> &amp; <code>simulate_kindist_composite</code>) were
+designed for an organism with a specific (&amp; relatively simple) breeding &amp; dispersal cycle. 'simple' corresponded to a single
+dispersal event across a lifespan, equivalency of all dispersal phases (FS, HS, PO) and no lifetime overlaps. 'composite'
+corresponded to many insect dispersal situations, where breeding &amp; oviposition are the key 'phase-defining' events (i.e.,
+they lead to the initial gamete dispersal of half siblings &amp; full siblings from each other), where field sampling typically
+occurs via ovitraps
+</p>
+<p>More general dispersal scenarios (e.g in mammals) require the ability to uniquely specify a variety of distinct breeding
+ecologies &amp; sampling schemes: the <code>DispersalModel</code> class paired with the <code>simulate_kindist_custom</code>
+function achieves this by defining a breeding cycle with an arbitrary number of dispersal phases (the <code>dispersal_vector</code>
+slot, accessed by the <code>dispersal_vector</code> method).
+</p>
+<p>The breeding structure of a species may also impact at which stage
+FS and HS phase branches occur. In <em>Ae. aegypti</em>, males mate with multiple females in a (single) breeding season, and a female
+typically carried the egg of only one male. In this context the FS (full-sibling) phase would be set to correspond to the female's
+oviposition dispersal, while the HS (half-sibling) phase would be set to correspond to the male's breeding dispersal (as its gametes
+will then be dispersed by multiple females across their gravid &amp; ovipositional phases). However, in e.g. some species of the marsupial
+<em>Antechinus</em>, the FS branch point would be more appropriately associated with juveniles at the time that they leave the mother's
+pouch. The <code>fs</code> and <code>hs</code> slots &amp; accessor functions enable the assignment of these phase branches to any
+defined life phase. Similarly, the <code>sampling_stage</code> slot &amp; method allow the sampling point to be set to correspond to any
+phase of the defined breeding cycle.
+</p>
+<p>The next parameter stored in this object is the breeding cycle number <code>cycle</code>, accessed by the <code>breeding_cycle</code> method.
+This parameter enables the treatment of species that undergo multiple breeding cycles in one lifetime. This is defined as a length two
+vector describing the number of breeding cycles undergone by the final descendant of branch 1 and branch 2 of the dispersal pedigree before
+their sampling (or after branching in the case of PO). (where branch one is the 'senior' and branch two the 'junior' member of the pedigree) (so uncle is branch one, nephew branch
+two, grandmother branch one, granddaughter branch two, etc.). For each member of the resulting kin pair, the cycle number represents the
+number of complete breeding cycles each individual has undergone before the sampling point, where the time between birth and first
+reproduction is coded as '0', that between first and second reproduction '1', etc. This enables an application of the simulation
+functions defined here to deal with populations with some amount of overlap between generations.
+</p>
+<p>Note that this 'breeding cycle' approach is only applicable in situations where there is an approximate equivalence between the dispersal which
+occurs in the first 'juvenile' breeding cycle and that which occurs between later breeding cycles. This parameter is implemented here, but it
+will often be more productive to implement it instead as a parameter of the <code>simulate_kindist_custom</code> function (the cycle parameter
+there if set overrides whatever was defined within this object)
+</p>
+<p>The final parameter stored in this object is the breeding stage, <code>breeding_stage</code>. This describes the stage at which the
+descendant individuals are generated (as opposed to <code>fs</code> &amp; <code>hs</code>, which describe the point at which they are dispersed
+from the parent)
+</p>
+
+
+<h3>Value</h3>
+
+<p>returns object of class <code>DispersalModel</code>
+</p>
+<p>No return value. Called for side effects
+</p>
+<p>returns an object of class <code>DispersalModel</code>
+</p>
+
+
+<h3>Methods (by generic)</h3>
+
+
+<ul>
+<li> <p><code>show</code>: print method
+</p>
+</li>
+<li> <p><code>initialize</code>: initialization method
+</p>
+</li>
+</ul>
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>dispersal_vector</code></dt>
+<dd>
+<p>numeric. Named vector of custom breeding cycle stages and their corresponding axial dispersal values</p>
+</dd>
+<dt><code>stages</code></dt>
+<dd>
+<p>character.  Ordered vector of all dispersal stages across the breeding cycle of the modeled species</p>
+</dd>
+<dt><code>fs</code></dt>
+<dd>
+<p>character.  breeding cycle stage at which first substantial FS-phased dispersal occurs</p>
+</dd>
+<dt><code>hs</code></dt>
+<dd>
+<p>character. breeding cycle stage at which first substantial HS-phased dispersal occurs</p>
+</dd>
+<dt><code>sampling_stage</code></dt>
+<dd>
+<p>character. stage in the breeding cycle at which samples are to be collected for kin identification.</p>
+</dd>
+<dt><code>cycle</code></dt>
+<dd>
+<p>non-negative integer. Breeding cycle numbers of dispersed kin to be modeled.  Represents
+the number of complete breeding cycles each individual has undergone before the sampling point, where the time between
+birth and first reproduction is coded as '0', that between first and second reproduction '1', etc. (default 0)</p>
+</dd>
+<dt><code>breeding_stage</code></dt>
+<dd>
+<p>(character) - stage in the cycle at which breeding occurs. Must correspond to a previously described cycle
+stage name. By default, equated with the .HS stage. This stage corresponds to the <strong>generation</strong> of next-generation individuals;
+the .FS &amp; .HS stages correspond to their separation. Needed for situations where individuals are sampled before they separate from the parent.
+Modify if the modeled .HS gamete dispersal event does not correspond to the initial breeding event.</p>
+</dd>
+<dt><code>visible_stage</code></dt>
+<dd>
+<p>(character) - stage in the cycle at the <strong>beginning</strong> of which individuals are visible to the study for
+sampling rather than their parents (i.e. the beginning point of <code>cycle 0</code>). By default, equated with the <code>fs</code> stage. This parameter
+determines how many dispersal stages individuals have gone through before they are sampled - if <code>.sampling_stage</code> occurs just
+<strong>after</strong> <code>.visible_stage</code>, the sampled individuals will have dispersed through only a small amount of the breeding cycle. if
+<code>.sampling_stage</code> occurs just <strong>before</strong> <code>.visible_stage</code>, the sampled individuals will have dispersed throughout most
+of the breeding cycle before being sampled. If <code>.cycle</code> is set to <code>-1</code>, dispersal stages between breeding &amp; visibility
+can be accessed.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p>Other kdclasses: 
+<code>KinPairData-class</code>,
+<code>KinPairSimulation-class</code>
+</p>
+
+
+</div>

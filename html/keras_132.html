@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>image_to_array</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>3D array representation of images</h2>
+
+<h3>Description</h3>
+
+<p>3D array that represents an image with dimensions (height,width,channels) or
+(channels,height,width) depending on the data_format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">image_to_array(img, data_format = c("channels_last", "channels_first"))
+
+image_array_resize(
+  img,
+  height,
+  width,
+  data_format = c("channels_last", "channels_first")
+)
+
+image_array_save(
+  img,
+  path,
+  data_format = NULL,
+  file_format = NULL,
+  scale = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>img</code></td>
+<td>
+<p>Image</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>Image data format ("channels_last" or "channels_first")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>Height to resize to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>Width to resize to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Path to save image to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file_format</code></td>
+<td>
+<p>Optional file format override. If omitted, the format to
+use is determined from the filename extension. If a file object was used
+instead of a filename, this parameter should always be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>Whether to rescale image values to be within 0,255</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other image preprocessing: 
+<code>fit_image_data_generator()</code>,
+<code>flow_images_from_data()</code>,
+<code>flow_images_from_dataframe()</code>,
+<code>flow_images_from_directory()</code>,
+<code>image_load()</code>
+</p>
+
+
+</div>

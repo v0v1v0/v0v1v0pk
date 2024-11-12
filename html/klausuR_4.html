@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compare</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Comparison of data sets</h2>
+
+<h3>Description</h3>
+
+<p>The function <code>compare</code> will take two data.frames (or objects of class <code>klausuR.answ-class</code>)
+and compare them for equality. This is useful to check for typos before you calculate the results with
+<code>klausur</code>. If you need to type in the given answers by hand,
+errors 
+easily occur,
+so it is advisable to input all data at least twice (perhaps by different persons) and check for differences
+with this function,
+which can then be corrected by looking up the original answer in the test.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compare(
+  set1,
+  set2,
+  select = NULL,
+  ignore = NULL,
+  new.set = FALSE,
+  rename = c(),
+  trim = FALSE,
+  id = list(No = "No", Name = c("FirstName", "Name"))
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>set1,
+set2</code></td>
+<td>
+<p>The data sets to be compared. Can be two data.frames or objects of class <code>klausuR.answ-class</code>.
+If the latter, their slots <code>id</code> and <code>items</code> will be compared.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>select</code></td>
+<td>
+<p>A vector with variables that should be compared,
+all others are omitted. At least all the values given in <code>id</code> are needed for the output!
+If <code>NULL</code>, all variables are examined.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore</code></td>
+<td>
+<p>A vector with variables that should be dropped from both sets. See also <code>select</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.set</code></td>
+<td>
+<p>Logical. If <code>TRUE</code>, a data.frame of the compared sets is returned,
+with all unequal cells set to NA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rename</code></td>
+<td>
+<p>A named vector defining if variables in <code>set1</code> and <code>set2</code> need to be renamed into the klausuR name scheme. Accepts elements
+named <code>No</code>, <code>Name</code>, <code>FirstName</code>, <code>MatrNo</code>,
+<code>Pseudonym</code> and <code>Form</code>. The values of these elements
+represent the variable names of the input data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trim</code></td>
+<td>
+<p>Logical. Indicates wheter whitespace in character variables should be trimmed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>A named list of character vectors to help identify differing cases in the input data. The element names of this list will become column names in the
+generated output table,
+their values define the respective column names of the input data. If a value has more than one element, they will be collapsed into
+one string for the output.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If you don't want to compare all variables but only a subset,
+you can use the <code>select</code> option (see examples below).
+But be careful with this,
+at least all the values given in <code>id</code> are needed to produce the output table.
+</p>
+<p>If <code>new.set=TRUE</code>, a new data.frame will be returned,
+that is identical in both sets compared, but all dubious values
+will be replaced by <code>NA</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>new.set=FALSE</code>, a data.frame of the differences, if found (if not,
+just a message is returned). Otherwise returns a combined data.frame (see details).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(antworten)
+
+# create some differences
+antworten2 &lt;- antworten[-3, -7]
+antworten2[4,6] &lt;- NA
+antworten2[8,8:10] &lt;- antworten2[8,8:10] + 1
+
+# default comparison
+compare(antworten, antworten2)
+
+# compare only variables 1 to 12
+compare(antworten, antworten2, select=c(1:12))
+
+# omit variables 3 to 8 and create a new set called "antworten.comp"
+# from the results
+antworten.comp &lt;- compare(antworten, antworten2, select=-c(3:8), new.set=TRUE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

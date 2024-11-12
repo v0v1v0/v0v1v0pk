@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coef.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract Model Coefficients</h2>
+
+<h3>Description</h3>
+
+<p>Returns linear and kernel coefficients for a model of class "kspm".
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+coef(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional optional argument (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Two matrices of coefficients.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>linear</code></td>
+<td>
+<p>A vector of coefficients for linear part. One row is one variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>A matrix of coefficients for linear part. One row is one subject, one column is one kernel part.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Liu, D., Lin, X., and Ghosh, D. (2007). Semiparametric regression of multidimensional genetic pathway data: least squares kernel machines and linear mixed models. Biometrics, 63(4), 1079:1088.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm for fitting model.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+z1 &lt;- runif(15, 1, 6)
+z2 &lt;- rnorm(15, 1, 2)
+y &lt;- 3*x + (z1 + z2)^2 + rnorm(15, 0, 2)
+fit &lt;- kspm(y, linear = ~ x, kernel = ~ Kernel(~ z1 + z2,
+kernel.function = "polynomial", d= 2, rho = 1, gamma = 0))
+coef(fit)
+
+</code></pre>
+
+
+</div>

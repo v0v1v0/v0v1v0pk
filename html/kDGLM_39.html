@@ -1,0 +1,184 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>forecast.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Auxiliary function for forecasting</h2>
+
+<h3>Description</h3>
+
+<p>Auxiliary function for forecasting
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+forecast(
+  object,
+  t = 1,
+  plot = ifelse(requireNamespace("plotly", quietly = TRUE), "plotly",
+    ifelse(requireNamespace("ggplot2", quietly = TRUE), "ggplot2", "base")),
+  pred.cred = 0.95,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>fitted_dlm object: The fitted model to be use for predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>numeric: Time window for prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>boolean or character: A flag indicating if a plot should be produced. Should be one of FALSE, TRUE, 'base', 'ggplot2' or 'plotly'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>numeric: The credibility level for the C.I..</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra variables necessary for prediction (covariates, etc.).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If an a covariate is necessary for forecasting, it should be passed as a named argument. Its name must follow this structure: &lt;block name&gt;.Covariate&lt;.index&gt;. If there is only one covariate in the associated block the index is omitted.
+If an a pulse is necessary for forecasting, it should be passed as a named argument. Its name must follow this structure: &lt;block name&gt;.Pulse&lt;.index&gt;. If there is only one pulse in the associated block the index is omitted.
+The user may pass the observed values at the prediction windows (optional). See example.
+As an special case, if the model has an Multinomial outcome, the user may pass the N parameter instead of the observations.
+If an offset is necessary for forecasting, it should be passed with the same syntax as the observed data. See example.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+
+<ul>
+<li>
+<p> data data.frame: A data frame contain the mean, variance and credibility intervals for the outcomes, including both the observed data and the predictions for future observations.
+</p>
+</li>
+<li>
+<p> forecast data.frame: Same as data, but restricted to predictions for future observations.
+</p>
+</li>
+<li>
+<p> outcomes list: A named list containing predictions for each outcome. Each element of this list is a list containing predictions (mean, variance and credibility intervals), the distribution of the linear predictor for the parameter of the observational model and the parameters of the predictive distribution (if available).
+</p>
+</li>
+<li>
+<p> theta.mean matrix: A matrix with the values for the latent states at each time. Dimensions are n x t, where n is the number of latent states
+</p>
+</li>
+<li>
+<p> theta.cov array: A 3D-array with the covariance of the latent states at each time. Dimensions are n x n x t, where n is the number of latent predictors.
+</p>
+</li>
+<li>
+<p> lambda.mean matrix: A matrix with the values for the linear predictors at each time. Dimensions are k x t, where k is the number of linear predictors
+</p>
+</li>
+<li>
+<p> lambda.cov array: A 3D-array with the covariance of the linear predictors at each time. Dimensions are k x k x t, where k is the number of linear predictors.
+</p>
+</li>
+<li>
+<p> plot (if so chosen): A plotly or ggplot object.
+</p>
+</li>
+</ul>
+<p>A list containing:
+</p>
+
+<ul>
+<li>
+<p> data data.frame: A table with the model evaluated at each observed time, plus the forecasted period.
+</p>
+</li>
+<li>
+<p> forecast data.frame: A table with the model evaluated at the forecasted period.
+</p>
+</li>
+<li>
+<p> outcomes list: A list containing the parameters of the predictive distribution for each outcome at the forecasted period.
+</p>
+</li>
+<li>
+<p> theta.mean matrix: The mean of the latent states at each forecasted time. Dimensions are n x t.forecast, where t.forecast is the size of the forecast windows and n is the number of latent states.
+</p>
+</li>
+<li>
+<p> theta.cov array: A 3D-array containing the covariance matrix of the latent states  at each forecasted time. Dimensions are n x n x t.forecast, where t.forecast is the size of the forecast windows and n is the number of latent states.
+</p>
+</li>
+<li>
+<p> lambda.mean matrix: The mean of the linear predictor at each forecasted time. Dimensions are k x t.forecast, where t.forecast is the size of the forecast windows and k is the number of linear predictors.
+</p>
+</li>
+<li>
+<p> lambda.cov array: A 3D-array containing the covariance matrix for the linear predictor at each forecasted time. Dimensions are k x k x t.forecast, where t.forecast is the size of the forecast windows and k is the number of linear predictors.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for fitted_dlm objects: 
+<code>coef.fitted_dlm()</code>,
+<code>eval_dlm_norm_const()</code>,
+<code>fit_model()</code>,
+<code>simulate.fitted_dlm()</code>,
+<code>smoothing()</code>,
+<code>update.fitted_dlm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+structure &lt;-
+  polynomial_block(p = 1, order = 2, D = 0.95) +
+  harmonic_block(p = 1, period = 12, D = 0.975) +
+  noise_block(p = 1, R1 = 0.1) +
+  regression_block(
+    p = chickenPox$date &gt;= as.Date("2013-09-1"),
+    # Vaccine was introduced in September of 2013
+    name = "Vaccine"
+  )
+
+outcome &lt;- Multinom(p = c("p.1", "p.2"), data = chickenPox[, c(2, 3, 5)])
+fitted.data &lt;- fit_model(structure * 2,
+  chickenPox = outcome
+)
+
+forecast(fitted.data, 24,
+  chickenPox = list(Total = rep(175, 24)), # Optional
+  Vaccine.1.Covariate = rep(TRUE, 24),
+  Vaccine.2.Covariate = rep(TRUE, 24)
+)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>update_kim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Update the package 'kim'</h2>
+
+<h3>Description</h3>
+
+<p>Updates the current package 'kim' by installing the
+most recent version of the package from GitHub
+This function requires installing Package 'remotes' v2.4.2
+(or possibly a higher version) by Csardi et al. (2021),
+<a href="https://cran.r-project.org/package=remotes">https://cran.r-project.org/package=remotes</a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">update_kim(force = TRUE, upgrade_other_pkg = FALSE, confirm = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>logical. If <code>force = TRUE</code>, force installing the
+update. If <code>force = FALSE</code>, do not force installing the update.
+By default, <code>force = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upgrade_other_pkg</code></td>
+<td>
+<p>input for the <code>upgrade</code> argument to
+be passed on to <code>remotes::install_github</code>.
+One of "default", "ask", "always", "never", TRUE, or FALSE.
+"default" respects the value of the R_REMOTES_UPGRADE environment
+variable if set, and falls back to "ask" if unset.
+"ask" prompts the user for which out of date packages to upgrade.
+For non-interactive sessions "ask" is equivalent to "always".
+TRUE and FALSE correspond to "always" and "never" respectively.
+By default, <code>upgrade_other_pkg = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confirm</code></td>
+<td>
+<p>logical. If <code>confirm = TRUE</code>, the user will
+need to confirm the update. If <code>confirm = FALSE</code>, the confirmation
+step will be skipped. By default, <code>confirm = TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>there will be no output from this function. Rather, executing
+this function will update the current 'kim' package by installing
+the most recent version of the package from GitHub.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+if (interactive()) {update_kim()}
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>heidel.welch</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Heidelberger and Welch Diagnostic for MCMC</h2>
+
+<h3>Description</h3>
+
+<p>Conducts a Heidelberger and Welch convergence diagnostic on MCMC iterations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">heidel.welch(object, pvalue)
+
+## S3 method for class 'krige'
+heidel.welch(object, pvalue = 0.05)
+
+## S3 method for class 'summary.krige'
+heidel.welch(object, pvalue = 0.05)
+
+## Default S3 method:
+heidel.welch(object, pvalue = 0.05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An matrix or <code>krige</code>/<code>summary.krige</code> object for which 
+a Heidelberger and Welch diagnostic is desired</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvalue</code></td>
+<td>
+<p>Alpha level for significance tests. Defaults to 0.05.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a generic function currently works with <code>matrix</code>, <code>krige</code>, 
+and <code>summary.krige</code> objects. It is a simplified version of the Heidelberger 
+and Welch test for use with this package.
+</p>
+<p>This is an adaptation of a function in Plummer et al.'s <code>coda</code> package. 
+Heidelberger and Welch's (1993) test for nonconvergence. This version of the 
+diagnostic only reports a Cramer-von Mises test and its corresponding p-value 
+to determine if the chain is weakly stationary with comparisons of early 
+portions of the chain to the end of the chain.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>matrix</code> in which the first row consists of the values of the 
+Cramer-von Mises test statistic for each parameter, and the second row consists 
+of the corresponding p-values. Each column of the matrix represents another 
+parameter of interest. A significant result serves as evidence of nonconvergence, 
+so non-significant results are desired.
+</p>
+
+
+<h3>References</h3>
+
+<p>Philip Heidelberger and Peter D. Welch. 1993. "Simulation Run Length Control 
+in the Presence of an Initial Transient." <em>Operations Research</em> 31:1109-1144.
+</p>
+<p>Martyn Plummer, Nicky Best, Kate Cowles and Karen Vines. 2006. "CODA: Convergence 
+Diagnosis and Output Analysis for MCMC." <em>R News</em> 6:7-11.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>heidel.welch.krige</code>, <code>heidel.welch.summary.krige</code>, 
+<code>geweke</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Load Data
+data(ContrivedData)
+
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+  data = ContrivedData, n.iter = M, n.burnin = 20, range.tol = 0.05)
+
+heidel.welch(contrived.run)
+heidel.welch(summary(contrived.run))
+heidel.welch(contrived.run$mcmc.mat)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

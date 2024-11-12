@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_model_hdf5</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save/Load models using HDF5 files</h2>
+
+<h3>Description</h3>
+
+<p>Save/Load models using HDF5 files
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_model_hdf5(object, filepath, overwrite = TRUE, include_optimizer = TRUE)
+
+load_model_hdf5(filepath, custom_objects = NULL, compile = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Model object to save</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filepath</code></td>
+<td>
+<p>File path</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Overwrite existing file if necessary</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include_optimizer</code></td>
+<td>
+<p>If <code>TRUE</code>, save optimizer's state.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_objects</code></td>
+<td>
+<p>Mapping class names (or function names) of custom
+(non-Keras) objects to class/functions (for example, custom metrics
+or custom loss functions). This mapping can be done with the dict()
+function of reticulate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compile</code></td>
+<td>
+<p>Whether to compile the model after loading.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following components of the model are saved:
+</p>
+
+<ul>
+<li>
+<p> The model architecture, allowing to re-instantiate the model.
+</p>
+</li>
+<li>
+<p> The model weights.
+</p>
+</li>
+<li>
+<p> The state of the optimizer, allowing to resume training exactly where you
+left off.
+This allows you to save the entirety of the state of a model
+in a single file.
+</p>
+</li>
+</ul>
+<p>Saved models can be reinstantiated via <code>load_model_hdf5()</code>. The model returned by
+<code>load_model_hdf5()</code> is a compiled model ready to be used (unless the saved model
+was never compiled in the first place or <code>compile = FALSE</code> is specified).
+</p>
+<p>As an alternative to providing the <code>custom_objects</code> argument, you can
+execute the definition and persistence of your model using the
+<code>with_custom_object_scope()</code> function.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The <code>serialize_model()</code> function enables saving Keras models to
+R objects that can be persisted across R sessions.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model persistence: 
+<code>get_weights()</code>,
+<code>model_to_json()</code>,
+<code>model_to_yaml()</code>,
+<code>save_model_tf()</code>,
+<code>save_model_weights_hdf5()</code>,
+<code>serialize_model()</code>
+</p>
+
+
+</div>

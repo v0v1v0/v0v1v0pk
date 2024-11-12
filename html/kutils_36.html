@@ -1,0 +1,252 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyTemplate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create variable key template (in memory or in a file)</h2>
+
+<h3>Description</h3>
+
+<p>A variable key is a human readable document that describes the
+variables in a data set. A key can be revised and re-imported by R
+to recode data. This might also be referred to as a
+"programmable codebook."  This function inspects a data frame,
+takes notice of its variable names, their classes, and legal
+values, and then it creates a table summarizing that
+information. The aim is to create a document that principal
+investigators and research assistants can use to keep a project
+well organized.  Please see the vignette in this package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyTemplate(
+  dframe,
+  long = FALSE,
+  sort = FALSE,
+  file = NULL,
+  max.levels = 15,
+  missings = NULL,
+  missSymbol = ".",
+  safeNumericToInteger = TRUE,
+  trimws = "both",
+  varlab = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dframe</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>long</code></td>
+<td>
+<p>Default FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort</code></td>
+<td>
+<p>Default FALSE. Should the rows representing the
+variables be sorted alphabetically? Otherwise, they appear in
+the order in which they were included in the original dataset.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>DEFAULT NULL, meaning no file is produced. Choose a
+file name ending in either "csv" (for comma separated
+variables), "xlsx" (compatible with Microsoft Excel), or "rds"
+(R serialization data). The file name will be used to select
+among the 3 storage formats. XLSX output requires the openxlsx
+package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.levels</code></td>
+<td>
+<p>How high is the limit on the number of values
+for discrete (integer, character, and Date) variables?
+Default = 15. If observed number exceeds max.levels, we
+conclude the author should not assign new values in the key
+and only the missing value will be included in the key as a
+"placeholder". This does not affect variables declared as
+factor or ordered variables, for which all levels are included
+in all cases.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>missings</code></td>
+<td>
+<p>Values in exising data which should be treated as
+missing in the new key. Character string in format acceptable
+to the <code>assignMissing</code> function. Can be a string with
+several missing indicators"1;2;3;(8,10);[22,24];&gt; 99;&lt; 2".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>missSymbol</code></td>
+<td>
+<p>Default ".".  A character string used to
+represent missing values in the key that is created.  Relevant
+(mostly) for the key's <code>value_new</code> column. Default is the
+period, ".". Because R's symbol <code>NA</code> can be mistaken for
+the character string <code>"NA"</code>, we use a different
+(hopefully unmistakable) symbol in the key.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safeNumericToInteger</code></td>
+<td>
+<p>Default TRUE: Should we treat values
+which appear to be integers as integers? If a column is
+numeric, it might be safe to treat it as an integer.  In many
+csv data sets, the values coded c(1, 2, 3) are really
+integers, not floats c(1.0, 2.0, 3.0). See <code>safeInteger</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trimws</code></td>
+<td>
+<p>Default is "both", user can change to "left", "right", or
+set as NULL to avoid any trimming.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varlab</code></td>
+<td>
+<p>A key can have a companion data structure for
+variable labels. Default is FALSE, but the value may also be
+TRUE or a named vector of variable labels, such as
+<code>c("x1" = "happiness", "x2" = "wealth")</code>. The labels
+become an attribute of the key object. See Details for
+information on storage of varlabs in saved key files.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The variable key can be created in two formats, wide and long.
+The original style of the variable key, wide, has one row per
+variable. It has a style for compact notation about current values
+and required recodes.  That is more compact, probably easier for
+experts to read, but perhaps more difficult to edit. The long
+style variable key has one row per value per variable.  Thus, in a
+larger project, the long key can have many rows. However, in a
+larger project, the long style key is easier to edit with a spread
+sheet program.
+</p>
+<p>After a key is created, it should be re-imported into R with the
+<code>kutils::keyImport</code> function.  Then the key structure can
+guide the importation and recoding of the data set.
+</p>
+<p>Concerning the varlab attribute. Run <code>attr(key, "varlab"</code> to
+review existing labels, if any.
+</p>
+<p>Storing the variable labels in files requires some care because
+the <code>rds</code>, <code>xlsx</code>, and <code>csv</code> formats have different
+capabilities.  The <code>rds</code> storage format saves all attributes without
+difficulty. In contrast, because <code>csv</code> and <code>xlsx</code> do not save
+attributes, the varlabs are stored as separate character
+matrices. For <code>xlsx</code> files, the varlab object is saved as a second
+sheet in <code>xlsx</code> file, while in <code>csv</code> a second file suffixed
+"-varlab.csv" is created.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A key in the form of a data frame. May also be saved on
+disk if the file argument is supplied. The key may have an
+attribute "varlab", variable labels.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(234234)
+N &lt;- 200
+mydf &lt;- data.frame(x5 = rnorm(N),
+                   x4 = rpois(N, lambda = 3),
+                   x3 = ordered(sample(c("lo", "med", "hi"),
+                   size = N, replace=TRUE),
+                   levels = c("med", "lo", "hi")),
+                   x2 = letters[sample(c(1:4,6), N, replace = TRUE)],
+                   x1 = factor(sample(c("cindy", "bobby", "marcia",
+                                        "greg", "peter"), N,
+                   replace = TRUE)),
+                   x7 = ordered(letters[sample(c(1:4,6), N, replace = TRUE)]),
+                   x6 = sample(c(1:5), N, replace = TRUE),
+                   stringsAsFactors = FALSE)
+mydf$x4[sample(1:N, 10)] &lt;- 999
+mydf$x5[sample(1:N, 10)] &lt;- -999
+
+## Note: If we change this example data, we need to save a copy in
+## "../inst/extdata" for packacing
+dn &lt;- tempdir()
+write.csv(mydf, file = file.path(dn, "mydf.csv"), row.names = FALSE)
+mydf.templ &lt;- keyTemplate(mydf, file = file.path(dn, "mydf.templ.csv"),
+                          varlab = TRUE)
+mydf.templ_long &lt;- keyTemplate(mydf, long = TRUE,
+                            file = file.path(dn, "mydf.templlong.csv"),
+                            varlab = TRUE)
+
+mydf.templx &lt;- keyTemplate(mydf, file = file.path(dn, "mydf.templ.xlsx"),
+                            varlab = TRUE)
+mydf.templ_longx &lt;- keyTemplate(mydf, long = TRUE,
+                             file = file.path(dn, "mydf.templ_long.xlsx"),
+                             varlab = TRUE)
+## Check the varlab attribute
+attr(mydf.templ, "varlab")
+mydf.tmpl2 &lt;- keyTemplate(mydf,
+                         varlab = c(x5 = "height", x4 = "age",
+                         x3 = "intelligence", x1 = "Name"))
+## Check the varlab attribute
+attr(mydf.tmpl2, "varlab")
+
+## Try with the national longitudinal study data
+data(natlongsurv)
+natlong.templ &lt;- keyTemplate(natlongsurv,
+                          file = file.path(dn, "natlongsurv.templ.csv"),
+                          max.levels = 15, varlab = TRUE, sort = TRUE)
+
+natlong.templlong &lt;- keyTemplate(natlongsurv, long = TRUE,
+                   file = file.path(dn, "natlongsurv.templ_long.csv"), sort = TRUE)
+if(interactive()) View(natlong.templlong)
+natlong.templlong2 &lt;- keyTemplate(natlongsurv, long = TRUE,
+                      missings = "&lt;0", max.levels = 50, sort = TRUE,
+                      varlab = TRUE)
+if(interactive()) View(natlong.templlong2)
+
+natlong.templwide2 &lt;- keyTemplate(natlongsurv, long = FALSE,
+                      missings = "&lt;0", max.levels = 50, sort = TRUE)
+if(interactive()) View(natlong.templwide2)
+
+all.equal(wide2long(natlong.templwide2), natlong.templlong2)
+
+head(keyTemplate(natlongsurv, file = file.path(dn, "natlongsurv.templ.xlsx"),
+             max.levels = 15, varlab = TRUE, sort = TRUE), 10)
+head(keyTemplate(natlongsurv, file = file.path(dn, "natlongsurv.templ.xlsx"),
+             long = TRUE, max.levels = 15, varlab = TRUE, sort = TRUE), 10)
+
+list.files(dn)
+
+</code></pre>
+
+
+</div>

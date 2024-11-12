@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>deserialize_keras_object</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve the object by deserializing the config dict.</h2>
+
+<h3>Description</h3>
+
+<p>The config dict is a Python dictionary that consists of a set of key-value
+pairs, and represents a Keras object, such as an <code>Optimizer</code>, <code>Layer</code>,
+<code>Metrics</code>, etc. The saving and loading library uses the following keys to
+record information of a Keras object:
+</p>
+
+<ul>
+<li> <p><code>class_name</code>: String. This is the name of the class,
+as exactly defined in the source
+code, such as "LossesContainer".
+</p>
+</li>
+<li> <p><code>config</code>: Named List. Library-defined or user-defined key-value pairs that store
+the configuration of the object, as obtained by <code>object$get_config()</code>.
+</p>
+</li>
+<li> <p><code>module</code>: String. The path of the python module. Built-in Keras classes
+expect to have prefix <code>keras</code>.
+</p>
+</li>
+<li> <p><code>registered_name</code>: String. The key the class is registered under via
+<code>register_keras_serializable(package, name)</code> API. The
+key has the format of <code>'{package}&gt;{name}'</code>, where <code>package</code> and <code>name</code> are
+the arguments passed to <code>register_keras_serializable()</code>. If <code>name</code> is not
+provided, it uses the class name. If <code>registered_name</code> successfully
+resolves to a class (that was registered), the <code>class_name</code> and <code>config</code>
+values in the config dict will not be used. <code>registered_name</code> is only used for
+non-built-in classes.
+</p>
+</li>
+</ul>
+<p>For example, the following config list represents the built-in Adam optimizer
+with the relevant config:
+</p>
+<div class="sourceCode r"><pre>config &lt;- list(
+  class_name = "Adam",
+  config = list(
+    amsgrad = FALSE,
+    beta_1 = 0.8999999761581421,
+    beta_2 = 0.9990000128746033,
+    epsilon = 1e-07,
+    learning_rate = 0.0010000000474974513,
+    name = "Adam"
+  ),
+  module = "keras.optimizers",
+  registered_name = NULL
+)
+# Returns an `Adam` instance identical to the original one.
+deserialize_keras_object(config)
+</pre></div>
+<div class="sourceCode"><pre>## &lt;keras.src.optimizers.adam.Adam object&gt;
+
+</pre></div>
+<p>If the class does not have an exported Keras namespace, the library tracks
+it by its <code>module</code> and <code>class_name</code>. For example:
+</p>
+<div class="sourceCode r"><pre>config &lt;- list(
+  class_name = "MetricsList",
+  config =  list(
+    ...
+  ),
+  module = "keras.trainers.compile_utils",
+  registered_name = "MetricsList"
+)
+
+# Returns a `MetricsList` instance identical to the original one.
+deserialize_keras_object(config)
+</pre></div>
+<p>And the following config represents a user-customized <code>MeanSquaredError</code>
+loss:
+</p>
+<div class="sourceCode r"><pre># define a custom object
+loss_modified_mse &lt;- Loss(
+  "ModifiedMeanSquaredError",
+  inherit = loss_mean_squared_error)
+
+# register the custom object
+register_keras_serializable(loss_modified_mse)
+
+# confirm object is registered
+get_custom_objects()
+</pre></div>
+<div class="sourceCode"><pre>## $`keras3&gt;ModifiedMeanSquaredError`
+## &lt;class '&lt;r-namespace:keras3&gt;.ModifiedMeanSquaredError'&gt;
+##  signature: (
+##    reduction='sum_over_batch_size',
+##    name='mean_squared_error',
+##    dtype=None
+## )
+
+</pre></div>
+<div class="sourceCode r"><pre>get_registered_name(loss_modified_mse)
+</pre></div>
+<div class="sourceCode"><pre>## [1] "keras3&gt;ModifiedMeanSquaredError"
+
+</pre></div>
+<div class="sourceCode r"><pre># now custom object instances can be serialized
+full_config &lt;- serialize_keras_object(loss_modified_mse())
+
+# the `config` arguments will be passed to loss_modified_mse()
+str(full_config)
+</pre></div>
+<div class="sourceCode"><pre>## List of 4
+##  $ module         : chr "&lt;r-namespace:keras3&gt;"
+##  $ class_name     : chr "ModifiedMeanSquaredError"
+##  $ config         :List of 2
+##   ..$ name     : chr "mean_squared_error"
+##   ..$ reduction: chr "sum_over_batch_size"
+##  $ registered_name: chr "keras3&gt;ModifiedMeanSquaredError"
+
+</pre></div>
+<div class="sourceCode r"><pre># and custom object instances can be deserialized
+deserialize_keras_object(full_config)
+</pre></div>
+<div class="sourceCode"><pre>## &lt;&lt;r-namespace:keras3&gt;.ModifiedMeanSquaredError object&gt;
+##  signature: (y_true, y_pred, sample_weight=None)
+
+</pre></div>
+<div class="sourceCode r"><pre># Returns the `ModifiedMeanSquaredError` object
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">deserialize_keras_object(config, custom_objects = NULL, safe_mode = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>config</code></td>
+<td>
+<p>Named list describing the object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_objects</code></td>
+<td>
+<p>Named list containing a mapping between custom
+object names the corresponding classes or functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safe_mode</code></td>
+<td>
+<p>Boolean, whether to disallow unsafe <code>lambda</code> deserialization.
+When <code>safe_mode=FALSE</code>, loading an object has the potential to
+trigger arbitrary code execution. This argument is only
+applicable to the Keras v3 model format. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The object described by the <code>config</code> dictionary.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_saving_apis/serialization_utils#deserializekerasobject-function">https://keras.io/api/models/model_saving_apis/serialization_utils#deserializekerasobject-function</a>
+</p>
+</li></ul>
+<p>Other serialization utilities: <br><code>get_custom_objects()</code> <br><code>get_registered_name()</code> <br><code>get_registered_object()</code> <br><code>register_keras_serializable()</code> <br><code>serialize_keras_object()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

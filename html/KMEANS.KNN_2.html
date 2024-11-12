@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_Kmeans_best_k</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>find_Kmeans_best_k</h2>
+
+<h3>Description</h3>
+
+<p>find_Kmeans_best_k
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_Kmeans_best_k(data, max_k = 10, Method = "coude", verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The dataset for which K-means clustering will be performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_k</code></td>
+<td>
+<p>The maximum number of clusters to consider. It defaults to 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Method</code></td>
+<td>
+<p>The method used to determine the optimal number of clusters.
+Acceptable values are "coude" (elbow method), "silhouette" (silhouette method),
+or "gap" (gap statistics).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Logical. If TRUE, additional output is provided.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function does not return a value but prints the optimal number of clusters
+based on the chosen method and plots the corresponding graph.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+find_Kmeans_best_k(iris[,-5],9,Method = "coude")
+</code></pre>
+
+
+</div>

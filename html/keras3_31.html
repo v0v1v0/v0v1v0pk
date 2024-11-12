@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>application_convnext_base</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Instantiates the ConvNeXtBase architecture.</h2>
+
+<h3>Description</h3>
+
+<p>Instantiates the ConvNeXtBase architecture.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">application_convnext_base(
+  include_top = TRUE,
+  include_preprocessing = TRUE,
+  weights = "imagenet",
+  input_tensor = NULL,
+  input_shape = NULL,
+  pooling = NULL,
+  classes = 1000L,
+  classifier_activation = "softmax",
+  name = "convnext_base"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>include_top</code></td>
+<td>
+<p>Whether to include the fully-connected
+layer at the top of the network. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include_preprocessing</code></td>
+<td>
+<p>Boolean, whether to include the preprocessing layer at the bottom of the network.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>One of <code>NULL</code> (random initialization),
+<code>"imagenet"</code> (pre-training on ImageNet-1k), or the path to the weights
+file to be loaded. Defaults to <code>"imagenet"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_tensor</code></td>
+<td>
+<p>Optional Keras tensor
+(i.e. output of <code>keras_input()</code>)
+to use as image input for the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_shape</code></td>
+<td>
+<p>Optional shape tuple, only to be specified
+if <code>include_top</code> is <code>FALSE</code>.
+It should have exactly 3 inputs channels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pooling</code></td>
+<td>
+<p>Optional pooling mode for feature extraction
+when <code>include_top</code> is <code>FALSE</code>. Defaults to <code>NULL</code>.
+</p>
+
+<ul>
+<li> <p><code>NULL</code> means that the output of the model will be
+the 4D tensor output of the last convolutional layer.
+</p>
+</li>
+<li> <p><code>avg</code> means that global average pooling
+will be applied to the output of the
+last convolutional layer, and thus
+the output of the model will be a 2D tensor.
+</p>
+</li>
+<li> <p><code>max</code> means that global max pooling will
+be applied.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classes</code></td>
+<td>
+<p>Optional number of classes to classify images
+into, only to be specified if <code>include_top</code> is <code>TRUE</code>, and
+if no <code>weights</code> argument is specified. Defaults to 1000 (number of
+ImageNet classes).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classifier_activation</code></td>
+<td>
+<p>A <code>str</code> or callable. The activation function to use
+on the "top" layer. Ignored unless <code>include_top=TRUE</code>. Set
+<code>classifier_activation=NULL</code> to return the logits of the "top" layer.
+Defaults to <code>"softmax"</code>.
+When loading pretrained weights, <code>classifier_activation</code> can only
+be <code>NULL</code> or <code>"softmax"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>The name of the model (string).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A model instance.
+</p>
+
+
+<h3>References</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/2201.03545">A ConvNet for the 2020s</a>
+(CVPR 2022)
+</p>
+</li></ul>
+<p>For image classification use cases, see
+<a href="https://keras.io/api/applications/#usage-examples-for-image-classification-models">this page for detailed examples</a>.
+For transfer learning use cases, make sure to read the
+<a href="https://keras.io/guides/transfer_learning/">guide to transfer learning &amp; fine-tuning</a>.
+</p>
+<p>The <code>base</code>, <code>large</code>, and <code>xlarge</code> models were first pre-trained on the
+ImageNet-21k dataset and then fine-tuned on the ImageNet-1k dataset. The
+pre-trained parameters of the models were assembled from the
+<a href="https://github.com/facebookresearch/ConvNeXt">official repository</a>. To get a
+sense of how these parameters were converted to Keras compatible parameters,
+please refer to
+<a href="https://github.com/sayakpaul/keras-convnext-conversion">this repository</a>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Each Keras Application expects a specific kind of input preprocessing.
+For ConvNeXt, preprocessing is included in the model using a <code>Normalization</code>
+layer.  ConvNeXt models expect their inputs to be float or uint8 tensors of
+pixels with values in the <code style="white-space: pre;">⁠[0-255]⁠</code> range.
+</p>
+<p>When calling the <code>summary()</code> method after instantiating a ConvNeXt model,
+prefer setting the <code>expand_nested</code> argument <code>summary()</code> to <code>TRUE</code> to better
+investigate the instantiated model.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/applications/convnext#convnextbase-function">https://keras.io/api/applications/convnext#convnextbase-function</a>
+</p>
+</li></ul>
+</div>

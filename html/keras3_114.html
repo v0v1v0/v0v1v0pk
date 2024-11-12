@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>config_set_image_data_format</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set the value of the image data format convention.</h2>
+
+<h3>Description</h3>
+
+<p>Set the value of the image data format convention.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">config_set_image_data_format(data_format)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>string. <code>'channels_first'</code> or <code>'channels_last'</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>No return value, called for side effects.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>config_image_data_format()
+</pre></div>
+<div class="sourceCode"><pre>## [1] "channels_last"
+
+</pre></div>
+<div class="sourceCode r"><pre># 'channels_last'
+</pre></div>
+<div class="sourceCode r"><pre>keras3::config_set_image_data_format('channels_first')
+config_image_data_format()
+</pre></div>
+<div class="sourceCode"><pre>## [1] "channels_first"
+
+</pre></div>
+<div class="sourceCode r"><pre># Set it back to `'channels_last'`
+keras3::config_set_image_data_format('channels_last')
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/utils/config_utils#setimagedataformat-function">https://keras.io/api/utils/config_utils#setimagedataformat-function</a>
+</p>
+</li></ul>
+<p>Other config backend: <br><code>config_backend()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_floatx()</code> <br></p>
+<p>Other backend: <br><code>clear_session()</code> <br><code>config_backend()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_floatx()</code> <br></p>
+<p>Other config: <br><code>config_backend()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_enable_unsafe_deserialization()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>config_set_backend()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_floatx()</code> <br></p>
+
+
+</div>

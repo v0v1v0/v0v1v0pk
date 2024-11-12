@@ -1,0 +1,152 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cox.kmi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cox proportional hazards model applied to imputed data sets</h2>
+
+<h3>Description</h3>
+
+<p>This function fits Cox proportional hazards models to each imputed
+data set to estimate the regression coefficients in a proportional
+subdistribution hazards model, and pools the results.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cox.kmi(formula, imp.data, df.complete = Inf, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula object, with the response on the left of a
+<code>~</code> operator, and the terms on the right. The response must be
+a survival object as returned by the <code>Surv</code>
+function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>imp.data</code></td>
+<td>
+<p>An object of class <code>kmi</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df.complete</code></td>
+<td>
+<p>Complete data degrees of freedom.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments for the <code>coxph</code>
+function.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Fits a Cox proportional hazards model on each imputed data set to
+estimate the regression coefficients in a proportional
+subdistribution hazards model, and pools the results, using the
+<code>MIcombine</code> function of the mitools package.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>cox.kmi</code> including the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>coefficients</code></td>
+<td>
+<p>Pooled regression coefficient estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variance</code></td>
+<td>
+<p>Pooled variance estimate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nimp</code></td>
+<td>
+<p>Number of multiple imputations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>degrees of freedom</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The matched call</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>individual.fit</code></td>
+<td>
+<p>A list of <code>coxph</code> objects. One for each
+imputed data set.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arthur Allignol, <a href="mailto:arthur.allignol@gmail.com">arthur.allignol@gmail.com</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>coxph</code>,
+<code>MIcombine</code>, <code>print.cox.kmi</code>,
+<code>summary.cox.kmi</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(icu.pneu)
+
+
+if (require(survival)) {
+    
+    set.seed(1313)
+    imp.dat &lt;- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
+                   etype = event, id = id, failcode = 2, nimp = 5)
+    
+    fit.kmi &lt;- cox.kmi(Surv(start, stop, event == 2) ~ pneu, imp.dat)
+    
+    summary(fit.kmi)
+    
+### Now using the censoring-complete data
+    fit &lt;- coxph(Surv(start, adm.cens.exit, event == 2) ~ pneu, icu.pneu)
+    
+    summary(fit)
+    
+    ## estimation of the censoring distribution adjusted on covariates
+    dat.cova &lt;- kmi(Surv(start, stop, status) ~ age + sex,
+                    data = icu.pneu, etype = event, id = id,
+                    failcode = 2, nimp = 5)
+    
+    fit.kmi2 &lt;- cox.kmi(Surv(start, adm.cens.exit, event == 2) ~ pneu + age,
+                        dat.cova)
+    
+    summary(fit.kmi2)
+}
+</code></pre>
+
+
+</div>

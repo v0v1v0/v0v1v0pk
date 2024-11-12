@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzsv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kolmogorov-Zurbenko Adaptive filter with Sample Variance.</h2>
+
+<h3>Description</h3>
+
+<p>Sample variance of a Kolmogorov-Zurbenko adaptive filter.
+You want a sigma of at least 3.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzsv(object)
+## S3 method for class 'kzsv'
+summary(object, digits=getOption("digits"), ...)
+## S3 method for class 'kzsv'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>The resultant object from kza function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The results of the kza function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>Precision of output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other parameters.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c(rep(0,4000),rep(0.5,2000),rep(0,4000))
+noise &lt;- rnorm(n = 10000, sd = 1.0) # normally-distributed random variates
+v &lt;- x + noise
+a&lt;-kza(v, m=1000, k=3)
+sv&lt;-kzsv(a)
+</code></pre>
+
+
+</div>

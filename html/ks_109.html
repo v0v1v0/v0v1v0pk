@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kfs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot for kernel feature significance</h2>
+
+<h3>Description</h3>
+
+<p>Plot for kernel significant regions for 1- to 3-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kfs'
+plot(x, display="filled.contour", col=7, colors, abs.cont,
+   alpha=1, alphavec=0.4, add=FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>kfs</code> (output from
+<code>kfs</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display</code></td>
+<td>
+<p>type of display, "slice" for contour plot,
+"persp" for perspective plot, "image" for image plot, "filled.contour"
+for filled contour plot (2-d); "plot3D", "rgl" (3-d)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col,colors</code></td>
+<td>
+<p>colour for contour region</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>abs.cont</code></td>
+<td>
+<p>absolute contour height. Default is 0.5.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>transparency value for contour (2-d)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alphavec</code></td>
+<td>
+<p>vector of transparency values for contour (3-d)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+<p>flag to add to current plot. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphics parameters used in <code>plot.kde</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Plots for 1-d and 2-d are sent to graphics window. Plot for 3-d is sent to
+graphics/RGL window.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.kde</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(geyser, package="MASS")
+geyser.fs &lt;- kfs(geyser, binned=TRUE)
+plot(geyser.fs)
+</code></pre>
+
+
+</div>

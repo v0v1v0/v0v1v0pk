@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KcopClust</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Nonparametric clustering of multivariate populations with arbitrary sizes</h2>
+
+<h3>Description</h3>
+
+<p>This function performs the data driven clustering procedure to cluster K
+multivariate populations of arbitrary sizes into N subgroups characterized
+by a common dependence structure where the number N of clusters is unknow
+and will be automatically chosen by our approach. The method is adapted to
+paired population and can be used with panel data. See the paper at the
+following arXiv weblink: https://arxiv.org/abs/2211.06338 for further information.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KcopClust(Kdata, dn = 3, paired = FALSE, alpha = 0.05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Kdata</code></td>
+<td>
+<p>A list of the K dataframe or matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dn</code></td>
+<td>
+<p>Number of copulas coefficients considered</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paired</code></td>
+<td>
+<p>A logical indicating whether to consider the datas as paired</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The significance level used in our decision rule.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with three elements: the number of identified clusters; 2) the cluster affiliation; 3) the discrepancy matrix.
+the numbers in the clusters refer to the population indexes of the data list
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Yves I. Ngounou Bakam and Denys Pommeret
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## simulation of 5 three-dimensional populations of different sizes
+Packages &lt;- c("copula","gtools","dplyr", "orthopolynom", "stats")
+lapply(Packages, library, character.only = TRUE) # if necessary
+set.seed(2022)
+dat1&lt;-rCopula(50, copula = gumbelCopula(param=6,dim = 2))
+dat2&lt;-rCopula(60, copula = claytonCopula(param=0.4,dim = 2))
+dat3&lt;-rCopula(55, copula = claytonCopula(param=0.4,dim = 2))
+## Form a list of data
+Kdata&lt;-list(data1=dat1,data2=dat2,data3=dat3)
+## Applying the clustering
+KcopClust(Kdata = Kdata)
+
+</code></pre>
+
+
+</div>

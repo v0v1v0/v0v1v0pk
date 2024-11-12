@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mpCart</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Join two lists</h2>
+
+<h3>Description</h3>
+
+<p>Given two lists with elements of the same type, the function returns a new list whose elements are the joining of 
+the two original lists, except for the last elements, which are multiplied.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mpCart( M1 = NULL, M2 = NULL ) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>M1</code></td>
+<td>
+<p>list of vectors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M2</code></td>
+<td>
+<p>list of vectors</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The input of the <code>mpCart</code> function are two lists. Each list might contain multiple lists 
+of two vectors: the first vector contains multisets whose elements are of the same type (integers or vectors
+with the same lenght), the second vector is a number (for example a multiplicity if the multiset is a 
+subdivision). The <code>mpCart</code> function generates a new list of two vectors: the first is 
+obtained by joining the first vectors in the two input lists, the second is just the product 
+of the numbers in the second vectors. See the examples.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>list</code></td>
+<td>
+<p>the list with the joined input lists</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>Called by the function <code>nPM</code> in the package <code>kStatistics</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. 14(2), 440-468. (download from <a href="https://arxiv.org/pdf/math/0607623.pdf">https://arxiv.org/pdf/math/0607623.pdf</a>) 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) Symbolic computation of moments of sampling distributions. 
+Comp. Stat. Data Analysis. 52(11), 4909-4922. (download from <a href="https://arxiv.org/abs/0806.0129">https://arxiv.org/abs/0806.0129</a>) 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2009) A new method for fast computing unbiased estimators of cumulants. 
+Statistics and Computing, 19, 155-165.  (download from <a href="https://arxiv.org/abs/0807.5008">https://arxiv.org/abs/0807.5008</a>) 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pCart</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+A &lt;- list(  list( list(c(1),c(2) ),c(-1)), list(list(c(3)),c(1))  )
+# where 
+# -1 is the multiplicative factor of list(c(1),c(2) ) 
+#  1 is the multiplicative factor of list(c(3))
+B &lt;- list( list( list(c(5)),c(7)))
+# where 7 is the multiplicative factor of list(c(5))
+ 
+# Return [[[1],[2],[5]], -7] , [[[3],[5]], 7]
+mpCart(A,B) 
+
+A &lt;- list( list( list( c(1,0),c(1,0) ), c(-1)),  list( list( c(2,0)), c(1) ))
+# where
+# - 1 is the multiplicative factor of list( c(1,0),c(1,0) )
+#   1 is the multiplicative factor of list( c(2,0) )
+B &lt;- list( list( list( c(1,0)), c(1)) )
+# where 1 is the multiplicative factor of list( c(1,0))
+
+# Return [[[1,0],[1,0],[1,0]], -1], [[[2,0],[1,0]],1]
+mpCart(A,B)
+ 
+
+</code></pre>
+
+
+</div>

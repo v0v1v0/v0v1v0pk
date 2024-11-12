@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Spectrum</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Spectrum kernel</h2>
+
+<h3>Description</h3>
+
+<p>'Spectrum()' computes the basic Spectrum kernel between strings. This kernel
+computes the similarity of two strings by counting how many matching substrings
+of length <em>l</em> are present in each one.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Spectrum(
+  x,
+  alphabet,
+  l = 1,
+  group.ids = NULL,
+  weights = NULL,
+  feat_space = FALSE,
+  cos.norm = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of strings (length <em>N</em>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alphabet</code></td>
+<td>
+<p>Alphabet of reference.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l</code></td>
+<td>
+<p>Length of the substrings.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.ids</code></td>
+<td>
+<p>(optional) A vector with ids. It allows to compute the kernel
+over groups of strings within x, instead of the individual strings.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>(optional) A numeric vector as long as x. It allows to weight differently
+each one of the strings.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>feat_space</code></td>
+<td>
+<p>If FALSE, only the kernel matrix is returned. Otherwise,
+the feature space (i.e. a table with the number of times that a substring of
+length <em>l</em> appears in each string) is also returned (Defaults: FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cos.norm</code></td>
+<td>
+<p>Should the resulting kernel matrix be cosine normalized? (Defaults: FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In large datasets this function may be slow. In that case, you may use the 'stringdot()'
+function of the 'kernlab' package, or the 'spectrumKernel()' function of the 'kebabs' package.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Kernel matrix (dimension: <em>NxN</em>), or a list with the kernel matrix and the
+feature space.
+</p>
+
+
+<h3>References</h3>
+
+<p>Leslie, C., Eskin, E., and Noble, W.S.
+The spectrum kernel: a string kernel for SVM protein classification.
+Pac Symp Biocomput. 2002:564-75. PMID: 11928508.
+<a href="http://psb.stanford.edu/psb-online/proceedings/psb02/abstracts/p564.html">Link</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Examples of alphabets. _ stands for a blank space, a gap, or the
+## start or the end of sequence)
+NT &lt;- c("A","C","G","T","_") # DNA nucleotides
+AA &lt;- c("A","C","D","E","F","G","H","I","K","L","M","N","P","Q","R","S","T",
+"V","W","Y","_") ##canonical aminoacids
+letters_ &lt;- c(letters,"_")
+## Example of data
+strings &lt;- c("hello_world","hello_word","hola_mon","kaixo_mundua",
+"saluton_mondo","ola_mundo", "bonjour_le_monde")
+names(strings) &lt;- c("english1","english_typo","catalan","basque",
+"esperanto","galician","french")
+## Computing the kernel:
+Spectrum(strings,alphabet=letters_,l=2)
+</code></pre>
+
+
+</div>

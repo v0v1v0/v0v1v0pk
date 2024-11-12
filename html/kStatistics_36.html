@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pPart</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Partition polynomials</h2>
+
+<h3>Description</h3>
+
+<p>The function generates the partition polynomial of degree <code>n</code>, whose 
+coefficients are the number of partitions of <code>n</code> into <code>k</code> parts for <code>k</code> 
+from <code>1</code> to <code>n</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pPart(n = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer, the degree of the polynomial </p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Faa di Bruno's formula gives the coefficients of the exponential formal 
+power series obtained from the composition <code>f[g()]</code> of the exponential formal power 
+series <code>f</code> and <code>g</code>. The partition polynomial <code>F[n]</code> of degree <code>n</code> 
+is obtained using the Faa di Bruno's formula, output of the <code>MFB</code> function, 
+in the case "composition of univariate <code>f</code> with univariate <code>g</code>" with <code>f[i]=1/n!, 
+g[i]^k=(i!)^k*k!*y^k</code> for <code>i</code> and <code>k</code> from <code>1</code> to <code>n</code>. Note the 
+symbolic substitution of <code>g[i]</code>, as the power of <code>g[i]</code> appears 
+in the substitution. This function is an example of application of Faa di Bruno's formula 
+and the symbolic calculus with two indexes.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>string</code></td>
+<td>
+<p>the expression of the polynomial</p>
+</td>
+</tr></table>
+<h3>Warning</h3>
+
+<p>The value of the first parameter is the same as the <code>MFB</code> function 
+in the univariate with univariate case composition.</p>
+
+
+<h3>Note</h3>
+
+<p>This function calls the <code>MFB</code> function in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo E., G. Guarino, D. Senato (2011) A new algorithm for computing the multivariate Faa di Bruno's formula. 
+Appl. Math. Comp. 217, 6286-6295. (download from <a href="https://arxiv.org/abs/1012.6008">https://arxiv.org/abs/1012.6008</a>)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>MFB</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Return the partition polynomial F[5]
+pPart(5)
+
+# Return the partition polynomial F[11] and its evaluation when y=7  
+#
+s&lt;-pPart(11)          # run the command
+s&lt;-paste0("1",s)      # add the coefficient to the first term (fixed command)
+s&lt;-gsub(" y","1y",s)  # replace the variable y without coefficient (fixed command)
+s&lt;-gsub("y", "*7",s)  # assignment y = 7
+eval(parse(text=s))   # evaluation of the expression (fixed command)
+</code></pre>
+
+
+</div>

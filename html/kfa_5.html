@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>efa_cfa_syntax</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write confirmatory factor analysis syntax</h2>
+
+<h3>Description</h3>
+
+<p>Uses the factor loadings matrix, presumably from an exploratory factor analysis, to generate <code>lavaan</code> compatible confirmatory factory analysis syntax.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">efa_cfa_syntax(
+  loadings,
+  simple = TRUE,
+  min.loading = NA,
+  single.item = c("keep", "drop", "none"),
+  identified = TRUE,
+  constrain0 = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>loadings</code></td>
+<td>
+<p>matrix of factor loadings</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simple</code></td>
+<td>
+<p>logical; Should the perfect simple structure be returned (default) when converting EFA results to CFA syntax?
+If <code>FALSE</code>, items can cross-load on multiple factors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.loading</code></td>
+<td>
+<p>numeric between 0 and 1 indicating the minimum (absolute) value of the loading for a variable on a factor
+when converting EFA results to CFA syntax. Must be specified when <code>simple = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>single.item</code></td>
+<td>
+<p>character indicating how single-item factors should be treated.
+Use <code>"keep"</code> (default) to keep them in the model when generating the CFA syntax, <code>"drop"</code>
+to remove them, or <code>"none"</code> indicating the CFA syntax should not be generated for
+this model and <code>""</code> is returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>identified</code></td>
+<td>
+<p>logical; Should identification check for rotational uniqueness a la Millsap (2001) be performed?
+If the model is not identified <code>""</code> is returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constrain0</code></td>
+<td>
+<p>logical; Should variable(s) with all loadings below <code>min.loading</code> still be included in model syntax?
+If <code>TRUE</code>, variable(s) will load onto first factor with the loading constrained to 0.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Millsap, R. E. (2001). When trivial constraints are not trivial: The choice of uniqueness
+constraints in confirmatory factor analysis. *Structural Equation Modeling, 8*(1), 1-17. <a href="https://doi.org/10.1207/S15328007SEM0801_1">doi:10.1207/S15328007SEM0801_1</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">loadings &lt;- matrix(c(rep(.2, 3), rep(.6, 3), rep(.8, 3), rep(.3, 3)), ncol = 2)
+# simple structure
+efa_cfa_syntax(loadings)
+# allow cross-loadings and check if model is identified
+efa_cfa_syntax(loadings, simple = FALSE, min.loading = .25)
+# allow cross-loadings and ignore identification check
+efa_cfa_syntax(loadings, simple = FALSE, min.loading = .25, identified = FALSE)
+
+</code></pre>
+
+
+</div>

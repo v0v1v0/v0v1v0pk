@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Sipos.integral-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sipos integral</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Sipos integral (also called <em>symmetric Choquet
+integral</em>) of a real-valued function with respect to a game. The game can be
+given either under the form of an object of class <code>game</code>,
+<code>card.game</code> or <code>Mobius.game</code>.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "game", f = "numeric" </dt>
+<dd>
+<p>The Sipos or symmetric Choquet integral of <code>f</code>
+is computed from a game.</p>
+</dd>
+<dt>object = "Mobius.game", f = "numeric" </dt>
+<dd>
+<p>The Sipos or symmetric Choquet integral of
+<code>f</code> is computed from the Möbius transform of a game.</p>
+</dd>
+<dt>object = "card.game", f = "numeric" </dt>
+<dd>
+<p>The Sipos or symmetric Choquet integral of
+<code>f</code> is computed from a cardinal game.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>M. Grabisch and Ch. Labreuche (2002), The symmetric and asymmetric Choquet
+integrals on finite spaces for decision making, Statistical Papers 43, pages
+37-52.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>game-class</code>,
+<br><code>Mobius.game-class</code>,
+<br><code>card.game-class</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a normalized capacity
+mu &lt;- capacity(c(0:13/13,1,1))
+
+## and its Mobius transform
+a &lt;- Mobius(mu)
+
+## a discrete function f
+f &lt;- c(0.1,-0.9,-0.3,0.8)
+
+## the Sugeno integral of f w.r.t mu
+Sipos.integral(mu,f)
+Sipos.integral(a,f)
+
+## a similar example with a cardinal capacity
+mu &lt;- uniform.capacity(4)
+Sipos.integral(mu,f)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klsh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function that reduces a bag of words into a signature matrix using multiple
+random projections</h2>
+
+<h3>Description</h3>
+
+<p>Function that reduces a bag of words into a signature matrix using multiple
+random projections
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klsh(r.set, p, num.blocks, k, fieldwise = FALSE, quiet = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>r.set</code></td>
+<td>
+<p>Set of records</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Number of random projections p</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.blocks</code></td>
+<td>
+<p>The total number of desired blocks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The total number of tokens</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fieldwise</code></td>
+<td>
+<p>Flag with default FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Flag to turn on printed progress, default to TRUE</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The blocks from performing KLSH
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(RLdata500)
+data.500 &lt;- RLdata500[-c(2,4)]
+klsh.blocks &lt;- klsh(data.500, p=20, num.blocks=5, k=2)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corLevLowRank</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Correlation Matrix for a Low-Rank Structure
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute the correlation matrix for a low-rank structure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+corLevLowRank(par, nlevels, rank, levels,
+              lowerSQRT = FALSE, compGrad = TRUE,
+              cov = 0, impl = c("C", "R"))
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+
+<p>A numeric vector with length <code>npCor + npVar</code> where
+<code>npCor = (rank - 1) *</code> <code>(nlevels - rank / 2)</code> is the number of
+correlation parameters, and <code>npVar</code> is the number of variance
+parameters, which depends on the value of <code>cov</code>. The value of
+<code>npVar</code> is <code>0</code>, <code>1</code> or <code>nlevels</code> corresponding
+to the values of <code>cov</code>: <code>0</code>, <code>1</code> and <code>2</code>.  The
+correlation parameters are assumed to be located at the head of
+<code>par</code> i.e. at indices <code>1</code> to <code>npCor</code>. The variance
+parameter(s) are assumed to be at the tail, i.e. at indices
+<code>npCor +1 </code> to <code>npCor + npVar</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlevels</code></td>
+<td>
+
+<p>Number of levels <code class="reqn">m</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rank</code></td>
+<td>
+
+<p>The rank, which must be <code>&gt;1</code> and <code>&lt; nlevels</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>levels</code></td>
+<td>
+
+<p>Character representing the levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lowerSQRT</code></td>
+<td>
+
+<p>Logical. When <code>TRUE</code> a lower-triangular root
+<code class="reqn">\mathbf{L}</code> of the correlation or covariance matrix
+<code class="reqn">\mathbf{C}</code> is returned instead of the correlation
+matrix. Note that this matrix can have negative diagonal elements
+hence is not a (pivoted) Cholesky root.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical. Should the gradient be computed? This is only possible for
+the C implementation.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>Integer <code>0</code>, <code>1</code> or <code>2</code>. If <code>cov</code> is <code>0</code>,
+the matrix is a <em>correlation</em> matrix (or its root). If
+<code>cov</code> is <code>1</code> or <code>2</code>, the matrix is a
+<em>covariance</em> (or its root) with constant variance vector for
+<code>code = 1</code> and with arbitrary variance for <code>code = 2</code>. The
+variance parameters <code>par</code> are located at the tail of the
+<code>par</code> vector, so at locations <code>npCor + 1</code> to <code>npCor +
+    nlevels</code> when <code>code = 2</code> where <code>npCor</code> is the number of
+correlation parameters.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impl</code></td>
+<td>
+
+<p>A character telling which of the C and R implementations should be
+chosen. The R implementation is only for checks and should not be
+used.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The correlation matrix with size <code class="reqn">m</code> is the general symmetric
+correlation matrix with rank <code class="reqn">\leq r</code> where <code class="reqn">r</code> is
+given, as described by Rapisarda et al.  It depends on <code class="reqn">(r - 1)
+  \times (m - r / 2) / 2</code> parameters
+<code class="reqn">\theta_{ij}</code> where the indices <code class="reqn">i</code> and <code class="reqn">j</code>
+are such that <code class="reqn">1 \leq j &lt; i</code> for <code class="reqn">i \leq r</code> or such that <code class="reqn">1 \leq j &lt; r</code> for
+<code class="reqn">r &lt; i \leq n</code>. The parameters <code class="reqn">\theta_{ij}</code> are angles
+and are to be taken to be in <code class="reqn">[0, 2\pi)</code> if <code class="reqn">j =
+    1</code> and in <code class="reqn">[0, \pi)</code> otherwise.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A correlation matrix (or its root) with the optional <code>gradient</code>
+attribute.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function is essentially for internal use and the corresponding
+correlation or covariance kernels are created as <code>covQual</code>
+objects by using the <code>q1LowRank</code> creator. 
+</p>
+<p>Here the parameters <code class="reqn">\theta_{ij}</code> are used <em>in
+row order</em> rather than in the column order. This order simplifies the
+computation of the gradient.
+</p>
+
+
+<h3>References</h3>
+
+<p>Francesco Rapisarda, Damanio Brigo, Fabio Mercurio (2007).
+"Parameterizing Correlations a Geometric Interpretation".
+<em>IMA Journal of Management Mathematics</em>, <b>18</b>(1):
+55-73.
+</p>
+<p>Igor Grubišić, Raoul Pietersz
+(2007). "Efficient Rank Reduction of Correlation Matrices". <em>Linear
+Algebra and its Applications</em>, <b>422</b>: 629-653.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>q1LowRank</code> creator of a corresponding kernel object
+with class <code>"covQual"</code>, and the similar <code>corLevSymm</code>
+function for the full-rank case.
+</p>
+
+
+</div>

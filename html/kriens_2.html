@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compose</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Continuation Passing Style Function Composition
+</h2>
+
+<h3>Description</h3>
+
+<p>It allows to compose two functions of the form <code>f(x, ret)</code> and <code>g(x, ret)</code> returning a function <code>h(x,ret)</code> which is the composition <code class="reqn">f \circ g</code>.
+It implements the composition operator of the Continuation category.
+</p>
+<p>The the composition has the following properties:
+</p>
+
+<ol>
+<li>
+<p>Associativity: <code class="reqn">h \circ (f \circ g) = ( h \circ g) \circ f</code>
+</p>
+</li>
+<li>
+<p>Unity: <code class="reqn">f \circ identity2 = f = identity2 \circ f</code>
+</p>
+</li>
+</ol>
+<p>In order for these relations to hold, the function <code>f</code> and <code>g</code> must not deal with global mutable states.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compose(f, g)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+
+<p>The first function that must be composed
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+
+<p>The first function that must be composed
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Rerturns the composite function of <code>f</code> and <code>g</code>
+</p>
+
+
+<h3>Note</h3>
+
+<p>The composition is performed from left to right i.e. such that the first function executed is <code>f</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matteo Provenzano<br><a href="http://www.alephdue.com">http://www.alephdue.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>forget</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example 1
+
+# define an arrow in the Continuation category.
+# this function applies the continuation to the
+# increment of its argument and then decrements it.
+one &lt;- function(x, ret) {
+    return(ret(x+1) - 1)
+}
+
+# define another arrow in the Continuation category.
+# this function doubles its argument.
+two &lt;- function(x, ret) {
+    return(ret(2*x))
+}
+
+# create the composition
+# this is exactly the same as one %.% two
+composite &lt;- compose(one, two)
+
+# build the function (forget the continuation)
+execute1 &lt;- forget(composite)
+execute1(1)
+# returns 3
+
+# Example 2
+# compose the function further to loop over an array of elements
+# lapply and sapply are already arrow in the Continuation category
+loop &lt;- compose(lapply, composite)
+
+# build the function
+execute2 &lt;- forget(loop)
+execute2(1:10)
+</code></pre>
+
+
+</div>

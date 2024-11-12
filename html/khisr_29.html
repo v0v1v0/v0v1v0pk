@@ -1,0 +1,130 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>analytics-dimension</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Analytics Data Dimensions</h2>
+
+<h3>Description</h3>
+
+<p>Constructs a dimensions expression for analytics queries based on specified
+property, operator, and values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">analytics_dimension(property, operator, values)
+
+operator %.d% values
+
+operator %.f% values
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>property</code></td>
+<td>
+<p>A character string representing whether its dimension or filter.
+It only accepts <code>'dimension'</code>, <code>'filter'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>operator</code></td>
+<td>
+<p>A character string representing the property to filter on (e.g.,
+<code>'dx'</code>, <code>'pe'</code>, <code>'ou'</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+<p>A vector of values or semi-colon separated string items.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DHIS2 organizes data using multiple dimensions, each with a unique identifier
+and a set of items that represent specific data points within that dimension.
+</p>
+
+<ul>
+<li>
+<p> Data elements (dx): Indicators, data set reporting rate metrics, data element
+operands, program indicators, program data elements, program attributes,
+validation rules.
+</p>
+</li>
+<li>
+<p> Periods (pe): ISO periods (e.g., 202401) and relative periods (e.g., LAST_WEEK).
+</p>
+</li>
+<li>
+<p> Organisation unit hierarchy (ou): Specific health facilities, districts, countries,
+and keywords for user location or its sub-units.
+</p>
+</li>
+<li>
+<p> Category option combinations (co): Category option combo identifiers.
+</p>
+</li>
+<li>
+<p> Attribute option combinations (ao): Category option combo identifiers.
+</p>
+</li>
+<li>
+<p> Categories: Category option identifiers.
+</p>
+</li>
+<li>
+<p> Data element group sets: Data element group identifiers.
+</p>
+</li>
+<li>
+<p> Organisation unit group sets: Organisation unit group identifiers.
+</p>
+</li>
+</ul>
+<p>The infix operator used for filter and dimension includes:
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">⁠%.d%⁠</code>: Infix operator for constructing dimension filters. Equivalent to
+calling <code>analytics_dimension("dimension", ...)</code>.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.f%⁠</code>: Infix operator for constructing filter filters. Equivalent to calling
+<code>analytics_dimension("filter", ...)</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A spliced list with filter in the format property=operator:value
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Create a dimension for data element "DE_1234"
+analytics_dimension('dimension', "dx", "DE_1234")
+
+# Equivalent to the expression above
+dx %.d% "DE_1234"
+
+# Create a filter dimension for the period of January 2024
+pe %.f% "202401"
+
+# Create filter dimension for periods "202401" and "202402":
+analytics_dimension("filter", "pe", c("202401", "202402"))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>remove_user_installed_pkgs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Remove all user installed packages</h2>
+
+<h3>Description</h3>
+
+<p>Remove all user installed packages
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">remove_user_installed_pkgs(
+  exceptions = NULL,
+  type_of_pkg_to_keep = c("base", "recommended"),
+  keep_kim = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>exceptions</code></td>
+<td>
+<p>a character vector of names of packages to keep</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type_of_pkg_to_keep</code></td>
+<td>
+<p>a character vector indicating types
+of packages to keep. The default,
+<code>type_of_pkg_to_keep = c("base", "recommended")</code>, keeps all
+base and recommended packages that come with R when R is installed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_kim</code></td>
+<td>
+<p>logical. If <code>keep_kim = FALSE</code>, Package 'kim'
+will be removed along with all other user-installed packages.
+If <code>keep_kim = TRUE</code>, Package 'kim' will not be removed.
+By default, <code>keep_kim = FALSE</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+remove_user_installed_pkgs()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

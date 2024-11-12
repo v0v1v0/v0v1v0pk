@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_topicprop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Show the expected proportion of the corpus belonging to each topic</h2>
+
+<h3>Description</h3>
+
+<p>Show the expected proportion of the corpus belonging to each topic
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_topicprop(
+  x,
+  n = 3,
+  show_topic = NULL,
+  show_topwords = TRUE,
+  label_topic = NULL,
+  order = c("proportion", "topicid"),
+  xmax = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the output from a keyATM model (see <code>keyATM()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>The number of top words to show. Default is <code>3</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_topic</code></td>
+<td>
+<p>an integer or a vector. Indicate topics to visualize. Default is <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_topwords</code></td>
+<td>
+<p>logical. Show topwords. The default is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_topic</code></td>
+<td>
+<p>a character vector. The name of the topics in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>The order of topics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmax</code></td>
+<td>
+<p>a numeric. Indicate the max value on the x axis</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>keyATM_fig object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>save_fig()</code>
+</p>
+
+
+</div>

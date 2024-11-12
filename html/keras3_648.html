@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>quantize_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Quantize the weights of a model.</h2>
+
+<h3>Description</h3>
+
+<p>Note that the model must be built first before calling this method.
+<code>quantize_weights()</code> will recursively call <code>layer$quantize(mode)</code> in all layers and
+will be skipped if the layer doesn't implement the function.
+</p>
+<p>Currently only <code>Dense</code> and <code>EinsumDense</code> layers support quantization.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">quantize_weights(object, mode, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A Keras Model or Layer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p>The mode of the quantization. Only 'int8' is supported at this
+time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed on to the <code>object</code> quantization method.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>model</code>, invisibly. Note this is just a convenience for usage with <code style="white-space: pre;">⁠|&gt;⁠</code>, the
+model is modified in-place.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other layer methods: <br><code>count_params()</code> <br><code>get_config()</code> <br><code>get_weights()</code> <br><code>reset_state()</code> <br></p>
+
+
+</div>

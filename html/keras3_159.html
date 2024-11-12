@@ -1,0 +1,149 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_file</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Downloads a file from a URL if it not already in the cache.</h2>
+
+<h3>Description</h3>
+
+<p>By default the file at the url <code>origin</code> is downloaded to the
+cache_dir <code style="white-space: pre;">⁠~/.keras⁠</code>, placed in the cache_subdir <code>datasets</code>,
+and given the filename <code>fname</code>. The final location of a file
+<code>example.txt</code> would therefore be <code style="white-space: pre;">⁠~/.keras/datasets/example.txt⁠</code>.
+Files in <code>.tar</code>, <code>.tar.gz</code>, <code>.tar.bz</code>, and <code>.zip</code> formats can
+also be extracted.
+</p>
+<p>Passing a hash will verify the file after download. The command line
+programs <code>shasum</code> and <code>sha256sum</code> can compute the hash.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_file(
+  fname = NULL,
+  origin = NULL,
+  ...,
+  file_hash = NULL,
+  cache_subdir = "datasets",
+  hash_algorithm = "auto",
+  extract = FALSE,
+  archive_format = "auto",
+  cache_dir = NULL,
+  force_download = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fname</code></td>
+<td>
+<p>Name of the file. If an absolute path, e.g. <code>"/path/to/file.txt"</code>
+is specified, the file will be saved at that location.
+If <code>NULL</code>, the name of the file at <code>origin</code> will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>origin</code></td>
+<td>
+<p>Original URL of the file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file_hash</code></td>
+<td>
+<p>The expected hash string of the file after download.
+The sha256 and md5 hash algorithms are both supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cache_subdir</code></td>
+<td>
+<p>Subdirectory under the Keras cache dir where the file is
+saved. If an absolute path, e.g. <code>"/path/to/folder"</code> is
+specified, the file will be saved at that location.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hash_algorithm</code></td>
+<td>
+<p>Select the hash algorithm to verify the file.
+options are <code style="white-space: pre;">⁠"md5'⁠</code>, <code style="white-space: pre;">⁠"sha256'⁠</code>, and <code style="white-space: pre;">⁠"auto'⁠</code>.
+The default 'auto' detects the hash algorithm in use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extract</code></td>
+<td>
+<p><code>TRUE</code> tries extracting the file as an Archive, like tar or zip.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>archive_format</code></td>
+<td>
+<p>Archive format to try for extracting the file.
+Options are <code style="white-space: pre;">⁠"auto'⁠</code>, <code style="white-space: pre;">⁠"tar'⁠</code>, <code style="white-space: pre;">⁠"zip'⁠</code>, and <code>NULL</code>.
+<code>"tar"</code> includes tar, tar.gz, and tar.bz files.
+The default <code>"auto"</code> corresponds to <code>c("tar", "zip")</code>.
+<code>NULL</code> or an empty list will return no matches found.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cache_dir</code></td>
+<td>
+<p>Location to store cached files, when <code>NULL</code> it
+defaults to <code>Sys.getenv("KERAS_HOME", "~/.keras/")</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force_download</code></td>
+<td>
+<p>If <code>TRUE</code>, the file will always be re-downloaded
+regardless of the cache state.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Path to the downloaded file.
+</p>
+<p>** Warning on malicious downloads **
+</p>
+<p>Downloading something from the Internet carries a risk.
+NEVER download a file/archive if you do not trust the source.
+We recommend that you specify the <code>file_hash</code> argument
+(if the hash of the source file is known) to make sure that the file you
+are getting is the one you expect.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>path_to_downloaded_file &lt;- get_file(
+    origin = "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz",
+    extract = TRUE
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/utils/python_utils#getfile-function">https://keras.io/api/utils/python_utils#getfile-function</a>
+</p>
+</li></ul>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+
+
+</div>

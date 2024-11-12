@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulate.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw samples from the distribution of the latent states</h2>
+
+<h3>Description</h3>
+
+<p>This is function draws samples from the latent states using the backward sampling algorithm. See West and Harrison (1997), chapter 15, for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+simulate(object, nsim, seed = NULL, lag = -1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>fitted_dlm: A fitted model from which to sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>integer: The number of samples to draw.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>integer: An object specifying if and how the random number generator should be initialized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>integer: The relative offset for forecast. Values for time t will be calculated based on the filtered values of time t-h. If lag is negative, then the smoothed distribution for the latent states will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra arguments passed to the plot method.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the following values:
+</p>
+
+<ul>
+<li>
+<p> theta array: An array containing a sample of the latent states. Dimensions are n x t x nsim, where n is the number of latent states in the model and t is the number of observed values.
+</p>
+</li>
+<li>
+<p> lambda array: An array containing a sample of the linear predictors. Dimensions are k x t x nsim, where k is the number of linear predictors in the model and t is the number of observed values.
+</p>
+</li>
+<li>
+<p> param list: A named list containing, for each model outcome, an array with the samples of the parameters of the observational model. Each array will have dimensions l x t x nsim, where l is the number of parameters in the observational model and t is the number of observed values.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for fitted_dlm objects: 
+<code>coef.fitted_dlm()</code>,
+<code>eval_dlm_norm_const()</code>,
+<code>fit_model()</code>,
+<code>forecast.fitted_dlm()</code>,
+<code>smoothing()</code>,
+<code>update.fitted_dlm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+structure &lt;- polynomial_block(mu = 1, D = 0.95) +
+  polynomial_block(V = 1, D = 0.95)
+
+outcome &lt;- Normal(mu = "mu", V = "V", data = cornWheat$corn.log.return[1:500])
+fitted.data &lt;- fit_model(structure, corn = outcome)
+
+sample &lt;- simulate(fitted.data, 5000)
+
+</code></pre>
+
+
+</div>

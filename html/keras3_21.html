@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>activation_selu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scaled Exponential Linear Unit (SELU).</h2>
+
+<h3>Description</h3>
+
+<p>The Scaled Exponential Linear Unit (SELU) activation function is defined as:
+</p>
+
+<ul>
+<li> <p><code>scale * x</code> if <code>x &gt; 0</code>
+</p>
+</li>
+<li> <p><code>scale * alpha * (exp(x) - 1)</code> if <code>x &lt; 0</code>
+</p>
+</li>
+</ul>
+<p>where <code>alpha</code> and <code>scale</code> are pre-defined constants
+(<code>alpha = 1.67326324</code> and <code>scale = 1.05070098</code>).
+</p>
+<p>Basically, the SELU activation function multiplies <code>scale</code> (&gt; 1) with the
+output of the <code>activation_elu</code> function to ensure a slope larger
+than one for positive inputs.
+</p>
+<p>The values of <code>alpha</code> and <code>scale</code> are
+chosen so that the mean and variance of the inputs are preserved
+between two consecutive layers as long as the weights are initialized
+correctly (see <code>initializer_lecun_normal()</code>)
+and the number of input units is "large enough"
+(see reference paper for more information).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">activation_selu(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input tensor.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A tensor, the result from applying the activation to the input tensor <code>x</code>.
+</p>
+
+
+<h3>Notes</h3>
+
+
+<ul>
+<li>
+<p> To be used together with
+<code>initializer_lecun_normal()</code>.
+</p>
+</li>
+<li>
+<p> To be used together with the dropout variant
+<code>layer_alpha_dropout()</code> (legacy, depracated).
+</p>
+</li>
+</ul>
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1706.02515">Klambauer et al., 2017</a>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/activations#selu-function">https://keras.io/api/layers/activations#selu-function</a>
+</p>
+</li></ul>
+<p>Other activations: <br><code>activation_elu()</code> <br><code>activation_exponential()</code> <br><code>activation_gelu()</code> <br><code>activation_hard_sigmoid()</code> <br><code>activation_leaky_relu()</code> <br><code>activation_linear()</code> <br><code>activation_log_softmax()</code> <br><code>activation_mish()</code> <br><code>activation_relu()</code> <br><code>activation_relu6()</code> <br><code>activation_sigmoid()</code> <br><code>activation_silu()</code> <br><code>activation_softmax()</code> <br><code>activation_softplus()</code> <br><code>activation_softsign()</code> <br><code>activation_tanh()</code> <br></p>
+
+
+</div>

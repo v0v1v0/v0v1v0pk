@@ -1,0 +1,220 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loclda</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Localized Linear Discriminant Analysis (LocLDA)</h2>
+
+<h3>Description</h3>
+
+<p>A localized version of Linear Discriminant Analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loclda(x, ...)
+
+## S3 method for class 'formula'
+loclda(formula, data, ..., subset, na.action)
+
+## Default S3 method:
+loclda(x, grouping, weight.func = function(x) 1/exp(x), 
+    k = nrow(x), weighted.apriori = TRUE, ...)
+
+## S3 method for class 'data.frame'
+ loclda(x, ...)
+
+## S3 method for class 'matrix'
+loclda(x, grouping, ..., subset, na.action)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>Formula of the form ‘<code>groups ~ x1 + x2 + ...</code>’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data frame from which variables specified in <code>formula</code> are to be taken.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Matrix or data frame containing the explanatory variables
+(required, if <code>formula</code> is not given).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grouping</code></td>
+<td>
+<p>(required if no <code>formula</code> principal argument is given.) 
+A factor specifying the class for each observation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight.func</code></td>
+<td>
+<p>Function used to compute local weights. 
+Must be finite over the interval [0,1]. See Details below.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of nearest neighbours used to construct localized classification rules. 
+See Details below.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weighted.apriori</code></td>
+<td>
+<p>Logical: if <code>TRUE</code>, class prior probabilities are computed 
+using local weights (see Details below). If <code>FALSE</code>, equal priors for all classes 
+actually occurring in the train data are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>An index vector specifying the cases to be used in the training sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>A function to specify the action to be taken if <code>NA</code>s are found. 
+The default action is for the procedure to fail. An alternative is <code>na.omit</code> 
+which leads to rejection of cases with missing values on any required variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to <code>loclda.default</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is an approach to apply the concept of localization described by Tutz and Binder (2005) 
+to Linear Discriminant Analysis. The function <code>loclda</code> generates an object of class <code>loclda</code> 
+(see Value below). As localization makes it necessary to build an 
+individual decision rule for each test observation, 
+this rule construction has to be handled by <code>predict.loclda</code>. 
+For convenience, the rule building procedure is still described here.
+</p>
+<p>To classify a test observation <code class="reqn">x_s</code>, only the <code>k</code> nearest neighbours of 
+<code class="reqn">x_s</code> within the train data are used. Each of these k train observations 
+<code class="reqn">x_i, i = 1,\dots,k</code>, is assigned a weight <code class="reqn">w_i</code> according to 
+</p>
+<p style="text-align: center;"><code class="reqn">w_i = K\left(\frac{||x_i-x_s||}{d_k}\right), i=1,\dots,k</code>
+</p>
+ 
+<p>where K is the weighting function given by <code>weight.func</code>, <code class="reqn">||x_i-x_s||</code> 
+is the euclidian distance of <code class="reqn">x_i</code> and <code class="reqn">x_s</code> 
+and <code class="reqn">d_k</code> is the euclidian distance of <code class="reqn">x_s</code> 
+to its <code class="reqn">k</code>-th nearest neighbour. 
+With these weights for each class <code class="reqn">A_g, g=1,\dots,G</code>, 
+its weighted empirical mean <code class="reqn">\hat{\mu}_g</code> and weighted empirical 
+covariance matrix are computed. The estimated pooled (weighted) covariance matrix 
+<code class="reqn">\hat{\Sigma}</code> is then calculated from the individual weighted 
+empirical class covariance matrices. If <code>weighted.apriori</code> is <code>TRUE</code> (the default), 
+prior class probabilities are estimated according to: 
+</p>
+<p style="text-align: center;"><code class="reqn">prior_g := \frac{\sum_{i=1}^k \left(w_i \cdot I (x_i \in A_g)\right)}{\sum_{i=1}^k \left( w_i \right)}</code>
+</p>
+ 
+<p>where I is the indicator function. If <code>FALSE</code>, equal priors for all classes are used. 
+In analogy to Linear Discriminant Analysis, the decision rule for <code class="reqn">x_s</code> is 
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{A} := argmax_{g \in 1,\dots,G} (posterior_g)</code>
+</p>
+ 
+<p>where </p>
+<p style="text-align: center;"><code class="reqn">posterior_g := prior_g \cdot \exp{\left( (-\frac{1}{2}) t(x_s-\hat{\mu}_g)\hat{\Sigma}^{-1}(x_s-\hat{\mu}_g)\right)} </code>
+</p>
+
+<p>If <code class="reqn">posterior_g &lt; 10^{(-150)} \forall g \in \{1,\dots,G\}</code>, 
+<code class="reqn">posterior_g</code> is set to <code class="reqn">\frac{1}{G}</code> for all <code class="reqn">g \in 1,\dots,G</code> 
+and the test observation <code class="reqn">x_s</code> is simply assigned to the class whose weighted mean has the lowest 
+euclidian distance to <code class="reqn">x_s</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>loclda</code> containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The (matched) function call.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>learn</code></td>
+<td>
+<p>Matrix containing the values of the explanatory variables for all train observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grouping</code></td>
+<td>
+<p>Factor specifying the class for each train observation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight.func</code></td>
+<td>
+<p>Value of the argument <code>weight.func</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Value of the argument <code>k</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weighted.apriori</code></td>
+<td>
+<p>Value of the argument <code>weighted.apriori</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Marc Zentgraf (<a href="mailto:marc-zentgraf@gmx.de">marc-zentgraf@gmx.de</a>) and Karsten Luebke (<a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a>)</p>
+
+
+<h3>References</h3>
+
+<p>Tutz, G. and Binder, H. (2005): Localized classification. <em>Statistics and Computing</em> 15, 155-166.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>predict.loclda</code>,
+<code>lda</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">benchB3("lda")$l1co.error
+benchB3("loclda")$l1co.error
+</code></pre>
+
+
+</div>

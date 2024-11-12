@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lang.support.en</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Language support for English</h2>
+
+<h3>Description</h3>
+
+<p>This function adds support for English to the koRpus package. You should not
+need to call it manually, as that is done automatically when this package is
+being loaded.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lang.support.en(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments for <code>set.lang.support</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The POS tags cover tag definitions from multiple sources. Please note that there is one tag,
+"PRP", that
+is defined in both PENN[3] and BNC[4] tagsets,
+but with different meanings: The PENN tag marks
+personal pronouns,
+whereas the BNC tag marks prepositions (except "of"). Since the conflicting tag
+is not being used by TreeTagger's PENN parameter set, but in its BNC set,
+koRpus also uses the BNC
+definition. Keep this in mind if you use this language support package with alternative taggers.
+</p>
+<p>In particular, this function adds the following:
+</p>
+
+<ul>
+<li> <p><code>lang</code>: The additional language "en" to be used with koRpus
+</p>
+</li>
+<li> <p><code>treetag</code>: The additional preset "en",
+implemented according to the respective TreeTagger[1] script
+</p>
+</li>
+<li> <p><code>POS tags</code>: An additional set of tags,
+implemented using the documentation for the corresponding
+TreeTagger parameter set[2], additional tags from the PENN treebank project[3],
+and the BNC tagset[4] used in
+an alternative TreeTagger parameter set.
+</p>
+</li>
+</ul>
+<p>Hyphenation patterns are provided by means of the <code>sylly.en</code> package.
+</p>
+
+
+<h3>References</h3>
+
+<p>[1] <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/</a>
+</p>
+<p>[2] <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf">http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/Penn-Treebank-Tagset.pdf</a>
+</p>
+<p>[3] <a href="https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html">https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html</a>
+</p>
+<p>[4] <a href="http://www.natcorp.ox.ac.uk/docs/c5spec.html">http://www.natcorp.ox.ac.uk/docs/c5spec.html</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lang.support.en()
+</code></pre>
+
+
+</div>

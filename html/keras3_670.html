@@ -1,0 +1,202 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rnn_cell_simple</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cell class for SimpleRNN.</h2>
+
+<h3>Description</h3>
+
+<p>This class processes one step within the whole time sequence input, whereas
+<code>layer_simple_rnn()</code> processes the whole sequence.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rnn_cell_simple(
+  units,
+  activation = "tanh",
+  use_bias = TRUE,
+  kernel_initializer = "glorot_uniform",
+  recurrent_initializer = "orthogonal",
+  bias_initializer = "zeros",
+  kernel_regularizer = NULL,
+  recurrent_regularizer = NULL,
+  bias_regularizer = NULL,
+  kernel_constraint = NULL,
+  recurrent_constraint = NULL,
+  bias_constraint = NULL,
+  dropout = 0,
+  recurrent_dropout = 0,
+  seed = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>Positive integer, dimensionality of the output space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use.
+Default: hyperbolic tangent (<code>tanh</code>).
+If you pass <code>NULL</code>, no activation is applied
+(ie. "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>Boolean, (default <code>TRUE</code>), whether the layer
+should use a bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_initializer</code></td>
+<td>
+<p>Initializer for the <code>kernel</code> weights matrix,
+used for the linear transformation of the inputs. Default:
+<code>"glorot_uniform"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_initializer</code></td>
+<td>
+<p>Initializer for the <code>recurrent_kernel</code>
+weights matrix, used for the linear transformation
+of the recurrent state. Default: <code>"orthogonal"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector. Default: <code>"zeros"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the <code>kernel</code> weights
+matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the
+<code>recurrent_kernel</code> weights matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector.
+Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>kernel</code> weights
+matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_constraint</code></td>
+<td>
+<p>Constraint function applied to the
+<code>recurrent_kernel</code> weights matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector.
+Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+linear transformation of the inputs. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop
+for the linear transformation of the recurrent state. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Random seed for dropout.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>Layer</code> instance, which is intended to be used with <code>layer_rnn()</code>.
+</p>
+
+
+<h3>Call Arguments</h3>
+
+
+<ul>
+<li> <p><code>sequence</code>: A 2D tensor, with shape <code style="white-space: pre;">⁠(batch, features)⁠</code>.
+</p>
+</li>
+<li> <p><code>states</code>: A 2D tensor with shape <code style="white-space: pre;">⁠(batch, units)⁠</code>, which is the state
+from the previous time step.
+</p>
+</li>
+<li> <p><code>training</code>: Python boolean indicating whether the layer should behave in
+training mode or in inference mode. Only relevant when <code>dropout</code> or
+<code>recurrent_dropout</code> is used.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>inputs &lt;- random_uniform(c(32, 10, 8))
+rnn &lt;- layer_rnn(cell = rnn_cell_simple(units = 4))
+output &lt;- rnn(inputs)  # The output has shape `(32, 4)`.
+rnn &lt;- layer_rnn(
+    cell = rnn_cell_simple(units = 4),
+    return_sequences=TRUE,
+    return_state=TRUE
+)
+# whole_sequence_output has shape `(32, 10, 4)`.
+# final_state has shape `(32, 4)`.
+c(whole_sequence_output, final_state) %&lt;-% rnn(inputs)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other rnn cells: <br><code>layer_rnn()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br></p>
+<p>Other simple rnn layers: <br><code>layer_simple_rnn()</code> <br></p>
+<p>Other rnn layers: <br><code>layer_bidirectional()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_gru()</code> <br><code>layer_lstm()</code> <br><code>layer_rnn()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_time_distributed()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cells_stack()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

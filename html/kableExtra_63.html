@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>xtable2kable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert xtable to a kable object</h2>
+
+<h3>Description</h3>
+
+<p>This function allow users to turn an xtable object into a kable
+so they can use most of kableExtra's functions with their xtable code without
+making too many changes. Note that although I tested many cases and it seems
+to work, this function may not be functional in some other cases. I'm not
+a regular xtable user and can only provide very limited support for this
+function.
+</p>
+<p>You should use this table in the same way as <code>print.xtable</code>. All the options
+you provided to this function will be sent to <code>print.xtable</code>. Instead of
+printing out the result, this function will return the LaTeX or HTML as
+text and a kable object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">xtable2kable(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an xtable object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>options for print.xtable</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+library(xtable)
+xtable(mtcars) %&gt;%
+  xtable2kable(booktabs = TRUE) %&gt;%
+  kable_styling(latex_options = "striped")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

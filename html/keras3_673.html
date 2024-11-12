@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_model_config</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save and load model configuration as JSON</h2>
+
+<h3>Description</h3>
+
+<p>Save and re-load models configurations as JSON. Note that the representation
+does not include the weights, only the architecture.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_model_config(model, filepath = NULL, overwrite = FALSE)
+
+load_model_config(filepath, custom_objects = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Model object to save</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filepath</code></td>
+<td>
+<p>path to json file with the model config.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Whether we should overwrite any existing model configuration json
+at <code>filepath</code>, or instead ask the user
+via an interactive prompt.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_objects</code></td>
+<td>
+<p>Optional named list mapping names to custom classes or
+functions to be considered during deserialization.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Note: <code>save_model_config()</code> serializes the model to JSON using
+<code>serialize_keras_object()</code>, not <code>get_config()</code>. <code>serialize_keras_object()</code>
+returns a superset of <code>get_config()</code>, with additional information needed to
+create the class object needed to restore the model. See example for how to
+extract the <code>get_config()</code> value from a saved model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>This is called primarily for side effects. <code>model</code> is returned,
+invisibly, to enable usage with the pipe.
+</p>
+
+
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>model &lt;- keras_model_sequential(input_shape = 10) |&gt; layer_dense(10)
+file &lt;- tempfile("model-config-", fileext = ".json")
+save_model_config(model, file)
+
+# load a new model instance with the same architecture but different weights
+model2 &lt;- load_model_config(file)
+
+stopifnot(exprs = {
+  all.equal(get_config(model), get_config(model2))
+
+  # To extract the `get_config()` value from a saved model config:
+  all.equal(
+      get_config(model),
+      structure(jsonlite::read_json(file)$config,
+                "__class__" = keras_model_sequential()$`__class__`)
+  )
+})
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>layer_tfsm()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model()</code> <br><code>save_model_weights()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

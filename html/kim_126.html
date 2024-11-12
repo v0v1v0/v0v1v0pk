@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tabulate_vector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tabulate vector</h2>
+
+<h3>Description</h3>
+
+<p>Shows frequency and proportion of unique values in a table format
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tabulate_vector(
+  vector = NULL,
+  na.rm = TRUE,
+  sort_by_decreasing_count = NULL,
+  sort_by_increasing_count = NULL,
+  sort_by_decreasing_value = NULL,
+  sort_by_increasing_value = NULL,
+  total_included = TRUE,
+  sigfigs = NULL,
+  round_digits_after_decimal = NULL,
+  output_type = "dt"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a character or numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>if <code>TRUE</code>, NA values will be removed before calculating
+frequencies and proportions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort_by_decreasing_count</code></td>
+<td>
+<p>if <code>TRUE</code>, the output table will
+be sorted in the order of decreasing frequency.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort_by_increasing_count</code></td>
+<td>
+<p>if <code>TRUE</code>, the output table will
+be sorted in the order of increasing frequency.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort_by_decreasing_value</code></td>
+<td>
+<p>if <code>TRUE</code>, the output table will
+be sorted in the order of decreasing value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort_by_increasing_value</code></td>
+<td>
+<p>if <code>TRUE</code>, the output table will
+be sorted in the order of increasing value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>total_included</code></td>
+<td>
+<p>if <code>TRUE</code>, the output table will include
+a row for total counts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_digits_after_decimal</code></td>
+<td>
+<p>round to nth digit after decimal
+(alternative to <code>sigfigs</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>if <code>output_type = "df"</code>, return a data.frame.
+By default, <code>output_type = "dt"</code>, which will return a data.table.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>if <code>output_type = "dt"</code>, which is the default, the output
+will be a data.table showing the count and proportion (percent) of each
+element in the given vector; if <code>output_type = "df"</code>, the output will
+be a data.frame showing the count and proportion (percent) of each value
+in the given vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tabulate_vector(c("a", "b", "b", "c", "c", "c", NA))
+tabulate_vector(c("a", "b", "b", "c", "c", "c", NA),
+  sort_by_increasing_count = TRUE
+)
+tabulate_vector(c("a", "b", "b", "c", "c", "c", NA),
+  sort_by_decreasing_value = TRUE
+)
+tabulate_vector(c("a", "b", "b", "c", "c", "c", NA),
+  sort_by_increasing_value = TRUE
+)
+tabulate_vector(c("a", "b", "b", "c", "c", "c", NA),
+  sigfigs = 4
+)
+tabulate_vector(c("a", "b", "b", "c", "c", "c", NA),
+  round_digits_after_decimal = 1
+)
+tabulate_vector(c("a", "b", "b", "c", "c", "c", NA),
+  output_type = "df"
+)
+</code></pre>
+
+
+</div>

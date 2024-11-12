@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Normal_CI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence Interval using Normal Approximation</h2>
+
+<h3>Description</h3>
+
+<p>'Normal_CI()' computes the Confidence Interval (CI) of a performance measure
+(for instance, accuracy) using normal approximation. Thus, it is advisable
+that the test has a size of, at least, 30 instances.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Normal_CI(value, ntest, confidence = 95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>Performance value (a single value).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ntest</code></td>
+<td>
+<p>Test set size (a single value).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confidence</code></td>
+<td>
+<p>Confidence level; for instance, 95% or 99%. (Defaults: 95).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector containing the CI.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Computing accuracy
+y &lt;- c(rep("a",30),rep("b",20))
+y_pred &lt;- c(rep("a",20),rep("b",30))
+ct &lt;- table(y,y_pred)
+accuracy &lt;- Acc(ct)
+# Computing 95%CI
+Normal_CI(accuracy, ntest=length(y), confidence=95)
+</code></pre>
+
+
+</div>

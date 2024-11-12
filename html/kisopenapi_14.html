@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kis_order</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KIS order</h2>
+
+<h3>Description</h3>
+
+<p>Order stocks.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kis_order(
+  stock_code,
+  order_qty,
+  order_price,
+  prdt_code,
+  order_type = "00",
+  buy_flag = TRUE
+)
+
+kis_buy(stock_code, order_qty, order_price, prdt_code, order_type = "00")
+
+kis_sell(stock_code, order_qty, order_price, prdt_code, order_type = "00")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>stock_code</code></td>
+<td>
+<p>A string specifying stock code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_qty</code></td>
+<td>
+<p>A numeric or string specifying order quantity</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_price</code></td>
+<td>
+<p>A numeric or string specifying order price</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prdt_code</code></td>
+<td>
+<p>A string specifying account product code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_type</code></td>
+<td>
+<p>A string specifying order type</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>buy_flag</code></td>
+<td>
+<p>A boolean specifying flag</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list contains rt_cd: return code, msg_cd: message code,
+msg1: message
+</p>
+<p>An order result
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+## buy
+kis_buy(
+  stock_code = "stock code",
+  order_qty = "your order quantity",
+  order_price = "your order price"
+)
+## sell
+kis_sell(
+  stock_code = "stock code",
+  order_qty = "your order quantity",
+  order_price = "your order price"
+)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

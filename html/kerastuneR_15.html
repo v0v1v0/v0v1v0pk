@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Oracle</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Oracle</h2>
+
+<h3>Description</h3>
+
+<p>Implements a hyperparameter optimization algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Oracle(
+  objective = NULL,
+  max_trials = NULL,
+  hyperparameters = NULL,
+  allow_new_entries = TRUE,
+  tune_new_entries = TRUE,
+  seed = NULL,
+  max_retries_per_trial = 0,
+  max_consecutive_failed_trials = 3
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>objective</code></td>
+<td>
+<p>A string, 'keras_tuner.Objective' instance, or a list of 'keras_tuner.Objective's and strings. If a string, the direction of the optimization (min or max) will be inferred. If a list of 'keras_tuner.Objective', we will minimize the sum of all the objectives to minimize subtracting the sum of all the objectives to maximize. The 'objective' argument is optional when 'Tuner.run_trial()' or 'HyperModel.fit()' returns a single float as the objective to minimize.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_trials</code></td>
+<td>
+<p>Integer, the total number of trials (model configurations) to test at most. Note that the oracle may interrupt the search before 'max_trial' models have been tested if the search space has been exhausted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hyperparameters</code></td>
+<td>
+<p>Optional 'HyperParameters' instance. Can be used to override (or register in advance) hyperparameters in the search space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allow_new_entries</code></td>
+<td>
+<p>Boolean, whether the hypermodel is allowed to request hyperparameter entries not listed in 'hyperparameters'. Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tune_new_entries</code></td>
+<td>
+<p>Boolean, whether hyperparameter entries that are requested by the hypermodel but that were not specified in 'hyperparameters' should be added to the search space, or not. If not, then the default value for these parameters will be used. Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Int. Random seed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_retries_per_trial</code></td>
+<td>
+<p>Integer. Defaults to 0. The maximum number of times to retry a 'Trial' if the trial crashed or the results are invalid.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_consecutive_failed_trials</code></td>
+<td>
+<p>Integer. Defaults to 3. The maximum number of consecutive failed 'Trial's. When this number is reached, the search will be stopped. A 'Trial' is marked as failed when none of the retries succeeded.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In a parallel tuning setting, there is only one 'Oracle' instance. The
+workers would communicate with the centralized 'Oracle' instance with gPRC
+calls to the 'Oracle' methods. 'Trial' objects are often used as the communication packet through the gPRC
+calls to pass information between the worker 'Tuner' instances and the
+'Oracle'. For example, 'Oracle.create_trial()' returns a 'Trial' object, and
+'Oracle.end_trial()' accepts a 'Trial' in its arguments. New copies of the same 'Trial' instance are reconstructed as it going
+through the gRPC calls. The changes to the 'Trial' objects in the worker
+'Tuner's are synced to the original copy in the 'Oracle' when they are
+passed back to the 'Oracle' by calling 'Oracle.end_trial()'.
+</p>
+
+
+<h3>Value</h3>
+
+<p>None
+</p>
+
+
+</div>

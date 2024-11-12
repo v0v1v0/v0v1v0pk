@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>solveforc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Solve for Choice Coefficients in KRLS 
+</h2>
+
+<h3>Description</h3>
+
+<p>Internal function that computes choice coefficients for KRLS given a fixed value for lambda (the parameter that governs the tradeoff between model fit and complexity in KRLS).
+This function is called internally by <code>krls</code>. It would normally not be called by the user directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">solveforc(y = NULL, Eigenobject = NULL,
+lambda = NULL,eigtrunc=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>n by 1 matrix of outcomes.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Eigenobject</code></td>
+<td>
+
+<p>Object from call to <code>eigen</code> that contains spectral decomposition of the n by n Kernel matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+
+<p>Positive scalar value for lamnbda parameter.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eigtrunc</code></td>
+<td>
+
+<p>Positive scalar value that determines truncation of eigenvalues for lamnda search window. See <code>krls</code> for details. Default is <code>NULL</code> which means no truncation.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function relies on fast eigenvalue decomposition method described in  method Rifkin and Lippert (2007).
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coeffs </code></td>
+<td>
+<p>n by 1 one matrix of choice coefficients for KRLS model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Le </code></td>
+<td>
+<p>n by 1 matrix of errors from leave-one-out validation.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>References</h3>
+
+<p>Rifkin, Ryan M. and Lippert, Ross A. (2007). Notes on Regularized Least Squares. MIT-CSAIL-TR-2007-025. CBCL-268
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krls</code>
+</p>
+
+
+</div>

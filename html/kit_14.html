@@ -1,0 +1,165 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parallel-funs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parallel (Statistical) Functions</h2>
+
+<h3>Description</h3>
+
+<p>Vector-valued (statistical) functions operating in parallel over vectors passed as arguments, or a single list of vectors (such as a data frame). Similar to <code>pmin</code> and <code>pmax</code>, except that these functions do not recycle vectors. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  psum(..., na.rm = FALSE)
+  pprod(..., na.rm = FALSE)
+  pmean(..., na.rm = FALSE)
+  pfirst(...)  # (na.rm = TRUE)
+  plast(...)   # (na.rm = TRUE)
+  pall(..., na.rm = FALSE)
+  pallNA(...)
+  pallv(..., value)
+  pany(..., na.rm = FALSE)
+  panyNA(...)
+  panyv(..., value)
+  pcount(..., value)
+  pcountNA(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p> suitable (atomic) vectors of the same length, or a single list of vectors (such as a <code>data.frame</code>). See Details on the allowed data types for each function, and Examples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p> A logical indicating whether missing values should be removed. Default value is <code>FALSE</code>, except for <code>pfirst</code> and <code>plast</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p> A non <code>NULL</code> value of length 1. </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Functions <code>psum</code>, <code>pprod</code> work for integer, logical, double and complex types. <code>pmean</code> only supports integer, logical and double types. All 3 functions will error if used with factors.
+</p>
+<p><code>pfirst</code>/<code>plast</code> select the first/last non-missing value (or non-empty or <code>NULL</code> value for list-vectors). They accept all vector types with defined missing values + lists, but can only jointly handle integer and double types (not numeric and complex or character and factor). If factors are passed, they all need to have identical levels.
+</p>
+<p><code>pany</code> and <code>pall</code> are derived from base functions <code>all</code> and <code>any</code> and only allow logical inputs.
+</p>
+<p><code>pcount</code> counts the occurrence of <code>value</code>, and expects arguments of the same data type (except for <code>value = NA</code>). <code>pcountNA</code> is equivalent to <code>pcount</code> with <code>value = NA</code>, and they both allow <code>NA</code> counting in mixed-type data. <code>pcountNA</code> additionally supports list vectors and counts empty or <code>NULL</code> elements as <code>NA</code>. 
+</p>
+<p>Functions <code>panyv/pallv</code> are wrappers around <code>pcount</code>, and <code>panyNA/pallNA</code> are wrappers around <code>pcountNA</code>. They return a logical vector instead of the integer count. 
+</p>
+<p>None of these functions recycle vectors i.e. all input vectors need to have the same length. All functions support long vectors with up to <code>2^64-1</code> elements.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>psum/pprod/pmean</code> return the sum, product or mean of all arguments. The value returned will be of the highest argument type (integer &lt; double &lt; complex). <code>pprod</code> only returns double or complex. <code>pall[v/NA]</code> and <code>pany[v/NA]</code> return a logical vector. <code>pcount[NA]</code> returns an integer vector. <code>pfirst/plast</code> return a vector of the same type as the inputs. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgan Jacob and Sebastian Krantz</p>
+
+
+<h3>See Also</h3>
+
+<p>Package 'collapse' provides column-wise and scalar-valued analogues to many of these functions.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x = c(1, 3, NA, 5)
+y = c(2, NA, 4, 1)
+z = c(3, 4, 4, 1)
+
+# Example 1: psum 
+psum(x, y, z, na.rm = FALSE)
+psum(x, y, z, na.rm = TRUE)
+
+# Example 2: pprod
+pprod(x, y, z, na.rm = FALSE)
+pprod(x, y, z, na.rm = TRUE)
+
+# Example 3: pmean
+pmean(x, y, z, na.rm = FALSE)
+pmean(x, y, z, na.rm = TRUE)
+
+# Example 4: pfirst and plast
+pfirst(x, y, z)
+plast(x, y, z)
+
+# Adjust x, y, and z to use in pall and pany
+x = c(TRUE, FALSE, NA, FALSE)
+y = c(TRUE, NA, TRUE, TRUE)
+z = c(TRUE, TRUE, FALSE, NA)
+
+# Example 5: pall
+pall(x, y, z, na.rm = FALSE)
+pall(x, y, z, na.rm = TRUE)
+
+# Example 6: pany
+pany(x, y, z, na.rm = FALSE)
+pany(x, y, z, na.rm = TRUE)
+
+# Example 7: pcount
+pcount(x, y, z, value = TRUE)
+pcountNA(x, y, z)
+
+# Example 8: list/data.frame as an input
+pprod(iris[,1:2])
+psum(iris[,1:2])
+pmean(iris[,1:2])
+
+# Benchmarks
+# ----------
+# n = 1e8L
+# x = rnorm(n) # 763 Mb
+# y = rnorm(n)
+# z = rnorm(n)
+# 
+# microbenchmark::microbenchmark(
+#   kit=psum(x, y, z, na.rm = TRUE),
+#   base=rowSums(do.call(cbind,list(x, y, z)), na.rm=TRUE),
+#   times = 5L, unit = "s"
+# )
+# Unit: Second
+# expr  min   lq mean median   uq  max neval
+# kit  0.52 0.52 0.65   0.55 0.83 0.84     5
+# base 2.16 2.27 2.34   2.35 2.43 2.49     5
+#
+# x = sample(c(TRUE, FALSE, NA), n, TRUE) # 382 Mb
+# y = sample(c(TRUE, FALSE, NA), n, TRUE)
+# z = sample(c(TRUE, FALSE, NA), n, TRUE)
+# 
+# microbenchmark::microbenchmark(
+#   kit=pany(x, y, z, na.rm = TRUE),
+#   base=sapply(1:n, function(i) any(x[i],y[i],z[i],na.rm=TRUE)),
+#   times = 5L
+# )
+# Unit: Second
+# expr    min     lq   mean   median     uq    max neval
+# kit    1.07   1.09   1.15     1.10   1.23   1.23     5
+# base 111.31 112.02 112.78   112.97 113.55 114.03     5
+</code></pre>
+
+
+</div>

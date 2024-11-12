@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compare_effect_sizes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compare effect sizes</h2>
+
+<h3>Description</h3>
+
+<p>Compares effect sizes
+See p. 156 of Borenstein et al. (2009, ISBN: 978-0-470-05724-7).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compare_effect_sizes(
+  effect_sizes = NULL,
+  effect_size_variances = NULL,
+  round_stats = TRUE,
+  round_p = 3,
+  round_se = 2,
+  round_z = 2,
+  pretty_round_p_value = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>effect_sizes</code></td>
+<td>
+<p>a vector of estimated effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effect_size_variances</code></td>
+<td>
+<p>a vector of variances of the effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_stats</code></td>
+<td>
+<p>logical. Should the statistics be rounded?
+(default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_p</code></td>
+<td>
+<p>number of decimal places to which to round
+p-values (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_se</code></td>
+<td>
+<p>number of decimal places to which to round the
+standard errors of the difference (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_z</code></td>
+<td>
+<p>number of decimal places to which to round the
+z-statistic (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pretty_round_p_value</code></td>
+<td>
+<p>logical. Should the p-values be rounded
+in a pretty format (i.e., lower threshold: "&lt;.001").
+By default, <code>pretty_round_p_value = TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+compare_effect_sizes(
+effect_sizes = c(0.6111, 0.3241, 0.5),
+effect_size_variances = c(.0029, 0.0033, 0.01))
+
+</code></pre>
+
+
+</div>

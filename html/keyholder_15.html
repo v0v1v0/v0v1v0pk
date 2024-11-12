@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyed-df-two-tbl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Two-table verbs from dplyr for keyed_df</h2>
+
+<h3>Description</h3>
+
+<p>Defined methods for dplyr generic join functions. All of
+them preserve 'keyed_df' class and 'keys' attribute <strong>of the first
+argument</strong>. Also these methods modify rows in keys according to the rows
+modification in first argument (if any).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keyed_df'
+inner_join(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
+
+## S3 method for class 'keyed_df'
+left_join(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
+
+## S3 method for class 'keyed_df'
+right_join(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
+
+## S3 method for class 'keyed_df'
+full_join(x, y, by = NULL, copy = FALSE,
+  suffix = c(".x", ".y"), ...)
+
+## S3 method for class 'keyed_df'
+semi_join(x, y, by = NULL, copy = FALSE, ...)
+
+## S3 method for class 'keyed_df'
+anti_join(x, y, by = NULL, copy = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x, y, by, copy, suffix, ...</code></td>
+<td>
+<p>Parameters for join functions.</p>
+</td>
+</tr></table>
+<h3>See Also</h3>
+
+<p>One-table verbs
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+dplyr::band_members %&gt;% key_by(band) %&gt;%
+  dplyr::semi_join(dplyr::band_instruments, by = "name") %&gt;%
+  keys()
+
+</code></pre>
+
+
+</div>

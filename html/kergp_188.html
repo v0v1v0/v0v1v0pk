@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulPar</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generic function: Draw Random Values for the Parameters of a
+Covariance Kernel
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function to draw random values for the parameters of a
+covariance kernel object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  simulPar(object, nsim = 1L, seed = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>A covariance kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+
+<p>Number of drawings.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+
+<p>Seed for the random generator.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments for methods.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Draw random values for the parameters of a covariance kernel object
+using the informations <code>coefLower</code> and <code>coefUpper</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix with <code>nsim</code> rows and <code>npar(object)</code> columns.
+</p>
+
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ktd_predict</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict outcome using fitted kernel Tweedie model</h2>
+
+<h3>Description</h3>
+
+<p><code>ktd_predict()</code> predicts the outcome with fitted <code>ktweedie</code> or <code>sktweedie</code> model at the user supplied new data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ktd_predict(model, newdata, which.lam1 = 1, type = "link")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Fitted model from <code>ktd_estimate</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>New x matrix for the prediction. If not provided, it will be the x matrix used to fit <code>model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which.lam1</code></td>
+<td>
+<p>The index of the <code>lam1</code> in <code>model</code> used in the prediction. Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of prediction to be made - "<code>link</code>" for the linear predictor and "<code>response</code>" for the predicted outcome. Default is "<code>link</code>".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>ktd_predict()</code> uses the fitted model from <code>ktd_estimate</code> to estimate the mean outcome for new data points.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list named <code>prediction</code> containing the vector of predicted outcomes.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ktd_estimate</code>, <code>ktd_cv</code>, <code>ktd_cv2d</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Fit a ktweedie model
+fit &lt;- ktd_estimate(x = dat$x, y = dat$y,
+                    kern = rbfdot(sigma = 1e-6),
+                    lam1 = 10^(-5:1))
+# Generate newx at which predictions are to be made.
+# The newdata should have the same dimension as the original trainig data.
+newx &lt;- matrix(rnorm(10 * ncol(dat$x)), nrow = 10)
+pred &lt;- ktd_predict(model = fit, newdata = newx,
+                    which.lam1 = 3, type = "link")
+</code></pre>
+
+
+</div>

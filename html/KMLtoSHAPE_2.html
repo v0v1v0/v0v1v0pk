@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kml_to_shape_gen</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conversion from KML to Shapefile after Extracting Attributes from a Description String based on a List of Attribute Names</h2>
+
+<h3>Description</h3>
+
+<p>Conversion from KML to Shapefile after Extracting Attributes from a Description String based on a List of Attribute Names
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kml_to_shape_gen(data_kml, outputShape, attribute_names)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data_kml</code></td>
+<td>
+<p>Path to the KML file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outputShape</code></td>
+<td>
+<p>Path to save the output shapefile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>attribute_names</code></td>
+<td>
+<p>A character vector of attribute names to extract</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A shapefile with extracted attributes
+</p>
+
+
+<h3>References</h3>
+
+<p>1. Flores, G. &amp; Gallardo, C. (2021). Creating Shapefile Files in ArcMap from KML File Generated in My Maps. In Advances in Emerging Trends and Technologies: Proceedings of ICAETT 2020 (pp. 193-204). Springer International Publishing..&lt;DOI:10.1007/978-3-030-63665-4_15&gt;
+2. Kumar et al. (2023). SpatGRID:Spatial Grid Generation from Longitude and Latitude List. R package version 0.1.0.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(KMLtoSHAPE)
+# Example usage:
+data_kml &lt;- system.file("extdata", "testkml.kml", package = "KMLtoSHAPE")
+outputShape &lt;- file.path(tempdir(), "shapedata.shp")
+# Delete existing shapefile if it exists
+if(file.exists(outputShape)) file.remove(outputShape)
+# Specify attribute names
+attribute_names &lt;- c("pH", "EC", "OC", "N", "P", "K")
+# convert kml to shapefile
+test_data&lt;-kml_to_shape_gen(data_kml, outputShape,attribute_names)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KHQ5DFreq</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cumulative frequency analysis</h2>
+
+<h3>Description</h3>
+
+<p>Function used to calculate the frequency, percentage, cumulative
+frequency and cumulative percentage for each health profile in an KHQ5D dataset
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KHQ5DFreq(
+  scores,
+  save.xlsx = FALSE,
+  filename = NULL,
+  sheetName = NULL,
+  ignore.invalid = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>scores</code></td>
+<td>
+<p>data.frame with colnames RL, PL, SL, E, and S representing
+Role limitation, Physical limitation, Social Limitation, Emotions
+and Sleep. Alternatively a data.frame with the KHQ5D health profiles can be
+provided in a five digit format e.g., data.frame(state = c(11111, 22432,
+34241, 43332)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save.xlsx</code></td>
+<td>
+<p>logical to indicate whether or not save the results; Default: FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>string specifying the file name if save.xlsx = TRUE;
+Default: "Res_KHQ5D_Frequency.xlsx".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sheetName</code></td>
+<td>
+<p>string specifying the sheet name if save.xlsx = TRUE;
+Default: "Frequency".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore.invalid</code></td>
+<td>
+<p>logical to indicate whether to ignore items data
+with invalid, incomplete or missing data; Default: FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Named vector RL, PL, SL, E and S represent Role limitation,
+Physical limitation, Social Limitation, Emotions and Sleep, respectfully.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with the Health states, Frequency, Percentage, Cumulative
+frequency and Cumulative percentage for each five digit profile in an KHQ5D
+dataset.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KHQConvKHQ5D</code> and <code>KHQ5D</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">scores.df &lt;- data.frame(
+  RL = c(1,2,3,4,2), 
+  PL = c(4,3,4,3,2), 
+  SL = c(1,2,2,4,1), 
+  E = c(1,3,4,3,4), 
+  S = c(1,2,1,2,1))
+
+KHQ5DFreq(scores = scores.df, ignore.invalid = TRUE)
+
+scores.df2 &lt;- data.frame(state = c(11111, 22432, 34241, 43332, 22141))
+
+KHQ5DFreq(scores = scores.df2, ignore.invalid = TRUE)
+
+KHQ5DFreq(scores = scores.df2$state, ignore.invalid = TRUE)
+
+KHQ5DFreq(scores = c(11111,11111,22432, 34241, 43332, 22141), 
+  ignore.invalid = TRUE)
+
+KHQ5DFreq(scores = KHQ5D_data, ignore.invalid = TRUE)
+
+KHQ5DFreq(scores = scores.df, save.xlsx = FALSE, 
+  filename = "Res_KHQ5D_Frequency.xlsx", 
+  sheetName = "Frequency", 
+  ignore.invalid = TRUE)
+
+</code></pre>
+
+
+</div>

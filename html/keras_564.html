@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>text_hashing_trick</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts a text to a sequence of indexes in a fixed-size hashing space.</h2>
+
+<h3>Description</h3>
+
+<p>Converts a text to a sequence of indexes in a fixed-size hashing space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">text_hashing_trick(
+  text,
+  n,
+  hash_function = NULL,
+  filters = "!\"#$%&amp;()*+,-./:;&lt;=&gt;?@[\\]^_`{|}~\t\n",
+  lower = TRUE,
+  split = " "
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>Input text (string).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Dimension of the hashing space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hash_function</code></td>
+<td>
+<p>if <code>NULL</code> uses the Python <code>hash()</code> function. Otherwise can be <code>'md5'</code> or
+any function that takes in input a string and returns an int. Note that
+<code>hash</code> is not a stable hashing function, so it is not consistent across
+different runs, while <code>'md5'</code> is a stable hashing function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filters</code></td>
+<td>
+<p>Sequence of characters to filter out such as
+punctuation. Default includes basic punctuation, tabs, and newlines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>Whether to convert the input to lowercase.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>split</code></td>
+<td>
+<p>Sentence split marker (string).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Two or more words may be assigned to the same index, due to possible
+collisions by the hashing function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of integer word indices (unicity non-guaranteed).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other text preprocessing: 
+<code>make_sampling_table()</code>,
+<code>pad_sequences()</code>,
+<code>skipgrams()</code>,
+<code>text_one_hot()</code>,
+<code>text_to_word_sequence()</code>
+</p>
+
+
+</div>

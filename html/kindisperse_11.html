@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>axpermute_subtract</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subtract axial distributions with confidence intervals</h2>
+
+<h3>Description</h3>
+
+<p>Finds the difference between two different empirical axial distributions with confidence intervals.
+This is most useful when one distribution subsumes another and includes a unique dispersal event that needs to be extracted.
+For example, the FS category is subsumed by the 1C category, which can be written 'FS + PO'.
+In this circumstance, subtracting FS from 1C will yield an estimate of the PO kernel (the basic intergenerational dispersal kernel).
+Confidence intervals are assigned via bootstrapping, or optionally the
+vector of all bootstrapped results can be outputted by setting <code>output</code> to <code>'vect'</code>, enabling its passing to other
+functions or external statistical analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">axpermute_subtract(
+  bigvals,
+  smallvals,
+  nreps = 1000,
+  nsamp = "std",
+  composite = 2,
+  output = "confs"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>bigvals</code></td>
+<td>
+<p>numeric. Vector of distance distributions of the larger (subsuming) distribution (e.g. 1C)  OR object of class KinPairData.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smallvals</code></td>
+<td>
+<p>numeric. Vector of distance distributions of the smaller (subsumed) distribution (e.g. FS)  OR object of class KinPairData.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nreps</code></td>
+<td>
+<p>numeric. Number of permutations to perform when generating confidence intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsamp</code></td>
+<td>
+<p>numeric. number of kin pairs to subsample for each permutation. Either "std" or an integer.
+If "std" will be computed as equal to the sample size. (default "std")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>composite</code></td>
+<td>
+<p>numeric. The number of separate 'draws' (dispersal events)
+from the kernel required to produce the final positions of the measured individuals.
+For example, the displacement of a child from parent at the same lifestage would involve 1 draw and thus be composite = 1.
+Two full siblings would be two draws (composite = 2) from the FS kernel. Non-symmetric relationships (e.g. AV, 1C)
+should not be decomposed using this method, nor should any assumptions be made about different kernels
+(e.g. the 1C relationship would appropriately be given the value 2, but not 4)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>character. What kind of output to return.
+Either 'confs' (default -&gt; confidence intervals) or 'vect -&gt; vector of axial distances</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If output = 'confs' returns <code>numeric vector</code> of 95% confidence intervals and mean axial value.
+If output = 'vect' returns <code>numeric vector</code> of individual axial estimates from each permutation
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other axial_helpers: 
+<code>axials_add()</code>,
+<code>axials_decompose()</code>,
+<code>axials_subtract()</code>,
+<code>axials()</code>,
+<code>axpermute()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">firstcous &lt;- rexp(100, 1 / 80)
+fullsibs &lt;- rexp(100, 1 / 50)
+axpermute_subtract(firstcous, fullsibs)
+</code></pre>
+
+
+</div>

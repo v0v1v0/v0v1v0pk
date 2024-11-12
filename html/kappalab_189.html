@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>superclass.capacity-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "superclass.capacity"</h2>
+
+<h3>Description</h3>
+
+<p>Virtual class, superclass of all <code>*.capacity</code> classes. Used to define a common <code>summary</code> method for <code>*.capacity</code> classes. Contains no slots.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>A virtual Class: No objects may be created from it.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>summary</dt>
+<dd>
+<p><code>signature(object = "superclass.capacity")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>summary-methods</code>,
+<br><code>capacity-class</code>, <br><code>Mobius.capacity-class</code>, 
+<br><code>card.capacity-class</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## three capacities
+mu1 &lt;- uniform.capacity(5)
+mu2 &lt;- capacity(c(0,0,0:13))
+a &lt;- Mobius(mu2)
+
+## compute indices to summarize them
+summary(mu1)
+summary(mu2)
+summary(a)
+</code></pre>
+
+
+</div>

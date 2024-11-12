@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>setup_r_env</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set up R environment</h2>
+
+<h3>Description</h3>
+
+<p>Set up R environment by (1) clearing the console; (2) removing all
+objects in the global environment; (3) setting the working directory
+to the active document (in RStudio only); (4) unloading and
+loading the kim package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">setup_r_env(
+  clear_console = TRUE,
+  clear_global_env = TRUE,
+  setwd_to_active_doc = TRUE,
+  prep_kim = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>clear_console</code></td>
+<td>
+<p>if <code>TRUE</code>, clear the console (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clear_global_env</code></td>
+<td>
+<p>if <code>TRUE</code>, remove all objects in the
+global environment (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>setwd_to_active_doc</code></td>
+<td>
+<p>if <code>TRUE</code>, set the working
+directory to the active document in RStudio (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prep_kim</code></td>
+<td>
+<p>if <code>TRUE</code>, unload and load the kim package
+(default = TRUE)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+setup_r_env()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

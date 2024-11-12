@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kNNvs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k Nearest Neighbors with Grid Search Variable Selection</h2>
+
+<h3>Description</h3>
+
+<p>k Nearest Neighbors with Grid Search Variable Selection
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kNNvs(
+  train_x,
+  test_x,
+  cl_train,
+  cl_test,
+  k,
+  model = c("regression", "classifiation")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>train_x</code></td>
+<td>
+<p>matrix or data frame of training set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test_x</code></td>
+<td>
+<p>matrix or data frame of test set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cl_train</code></td>
+<td>
+<p>factor of true classifications of training set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cl_test</code></td>
+<td>
+<p>factor of true classifications of test set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>the number of neighbors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>regression or classifiation</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>kNNvs is simply use add one and then compare acc to pick the best variable set for the knn model
+</p>
+
+
+<h3>Value</h3>
+
+<p>ACC or MSE, best variable combination, estimate value yhat
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">{
+   data(iris3)
+   train_x &lt;- rbind(iris3[1:25,,1], iris3[1:25,,2], iris3[1:25,,3])
+   test_x &lt;- rbind(iris3[26:50,,1], iris3[26:50,,2], iris3[26:50,,3])
+   cl_train&lt;- cl_test&lt;- factor(c(rep("s",25), rep("c",25), rep("v",25)))
+   k&lt;- 5
+   # cl_test is not null
+   mymodel&lt;-kNNvs(train_x,test_x,cl_train,cl_test,k,model="classifiation")
+   mymodel
+   # cl_test is null
+   mymodel&lt;-kNNvs(train_x,test_x,cl_train,cl_test=NULL,k,model="classifiation")
+   mymodel
+   }
+</code></pre>
+
+
+</div>

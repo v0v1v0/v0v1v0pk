@@ -1,0 +1,172 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kdevinecop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel estimation of vine copula densities</h2>
+
+<h3>Description</h3>
+
+<p>The function estimates a vine copula density using kernel estimators for the
+pair copulas (based on the kdecopula package).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kdevinecop(
+  data,
+  matrix = NA,
+  method = "TLL2",
+  renorm.iter = 3L,
+  mult = 1,
+  test.level = NA,
+  trunc.level = NA,
+  treecrit = "tau",
+  cores = 1,
+  info = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>(<code class="reqn">n x d</code>) matrix of copula data (have to lie in <code class="reqn">[0,1^d]</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matrix</code></td>
+<td>
+<p>R-Vine matrix (<code class="reqn">n x d</code>) specifying the structure of the vine;
+if <code>NA</code> (default) the structure selection heuristic of Dissman et al.
+(2013) is applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>see <code>kdecop</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>renorm.iter</code></td>
+<td>
+<p>see <code>kdecop</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mult</code></td>
+<td>
+<p>see <code>kdecop</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test.level</code></td>
+<td>
+<p>significance level for independence test. If you provide a
+number in <code class="reqn">[0, 1]</code>, an independence test
+(<code>BiCopIndTest</code>) will be performed for
+each pair; if the null hypothesis of independence cannot be rejected, the
+independence copula will be set for this pair. If <code>test.level = NA</code>
+(default), no independence test will be performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trunc.level</code></td>
+<td>
+<p>integer; the truncation level. All pair copulas in trees
+above the truncation level will be set to independence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>treecrit</code></td>
+<td>
+<p>criterion for structure selection; defaults to <code>"tau"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cores</code></td>
+<td>
+<p>integer; if <code>cores &gt; 1</code>, estimation will be parallized
+within each tree (using <code>foreach</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>info</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, additional information about the
+estimate will be gathered (see <code>kdecop</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>kdevinecop</code>. That is, a list containing
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>T1, T2, ...</code></td>
+<td>
+<p>lists of the estimted pair copulas in each tree,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matrix</code></td>
+<td>
+<p>the structure matrix of the vine,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>info</code></td>
+<td>
+<p>additional information about the fit (if <code>info = TRUE</code>).</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Nagler, T., Czado, C. (2016) <br> Evading the curse of
+dimensionality in nonparametric density estimation with simplified vine
+copulas. <br><em>Journal of Multivariate Analysis 151, 69-89
+(doi:10.1016/j.jmva.2016.07.003)</em>
+</p>
+<p>Nagler, T., Schellhase, C. and Czado, C. (2017) <br> Nonparametric
+estimation of simplified vine copula models: comparison of methods
+arXiv:1701.00845
+</p>
+<p>Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). <br>
+Selecting and estimating regular vine copulae and application to financial
+returns. <br>
+Computational Statistics &amp; Data Analysis, 59(0):52–69.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dkdevinecop</code>,
+<code>kdecop</code>,
+<code>BiCopIndTest</code>,
+<code>foreach</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc, package = "kdecopula")
+# rank-transform to copula data (margins are uniform)
+u &lt;- VineCopula::pobs(wdbc[, 5:7], ties = "average")
+
+fit &lt;- kdevinecop(u)                   # estimate density
+dkdevinecop(c(0.1, 0.1, 0.1), fit)     # evaluate density estimate
+contour(fit)                           # contour matrix (Gaussian scale)
+pairs(rkdevinecop(500, fit))           # plot simulated data
+
+</code></pre>
+
+
+</div>

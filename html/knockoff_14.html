@@ -1,0 +1,182 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knockoff.filter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Knockoff Filter</h2>
+
+<h3>Description</h3>
+
+<p>This function runs the Knockoffs procedure from start to finish, selecting variables
+relevant for predicting the outcome of interest.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knockoff.filter(
+  X,
+  y,
+  knockoffs = create.second_order,
+  statistic = stat.glmnet_coefdiff,
+  fdr = 0.1,
+  offset = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>n-by-p matrix or data frame of predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>response vector of length n.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>knockoffs</code></td>
+<td>
+<p>method used to construct knockoffs for the <code class="reqn">X</code> variables.
+It must be a function taking a n-by-p matrix as input and returning a n-by-p matrix of knockoff variables. 
+By default, approximate model-X Gaussian knockoffs are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>statistics used to assess variable importance. By default, 
+a lasso statistic with cross-validation is used. See the Details section for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fdr</code></td>
+<td>
+<p>target false discovery rate (default: 0.1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>either 0 or 1 (default: 1). This is the offset used to compute the rejection threshold on the
+statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
+controls the false discovery rate (FDR) according to the usual definition, 
+while an offset of 0 controls a modified FDR.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function creates the knockoffs, computes the importance statistics, 
+and selects variables. 
+It is the main entry point for the knockoff package.
+</p>
+<p>The parameter <code>knockoffs</code> controls how knockoff variables are created.
+By default, the model-X scenario is assumed and a multivariate normal distribution 
+is fitted to the original variables <code class="reqn">X</code>. The estimated mean vector and the covariance 
+matrix are used to generate second-order approximate Gaussian knockoffs.
+In general, the function <code>knockoffs</code> should take a n-by-p matrix of
+observed variables <code class="reqn">X</code> as input and return a n-by-p matrix of knockoffs.
+Two default functions for creating knockoffs are provided with this package.
+</p>
+<p>In the model-X scenario, under the assumption that the rows of <code class="reqn">X</code> are distributed 
+as a multivariate Gaussian with known parameters, then the function 
+<code>create.gaussian</code> can be used to generate Gaussian knockoffs, 
+as shown in the examples below.
+</p>
+<p>In the fixed-X scenario, one can create the knockoffs using the function 
+<code>create.fixed</code>. This requires <code class="reqn">n \geq p</code> and it assumes 
+that the response <code class="reqn">Y</code> follows a homoscedastic linear regression model.
+</p>
+<p>For more information about creating knockoffs, type <code>??create</code>.
+</p>
+<p>The default importance statistic is stat.glmnet_coefdiff.
+For a complete list of the statistics provided with this package, 
+type <code>??stat</code>.
+</p>
+<p>It is possible to provide custom functions for the knockoff constructions 
+or the importance statistics. Some examples can be found in the vignette.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class "knockoff.result". This object is a list 
+containing at least the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>matrix of original variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xk</code></td>
+<td>
+<p>matrix of knockoff variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>computed test statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>computed selection threshold</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selected</code></td>
+<td>
+<p>named vector of selected variables</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
+arXiv:1610.02351 (2016).
+<a href="https://web.stanford.edu/group/candes/knockoffs/index.html">https://web.stanford.edu/group/candes/knockoffs/index.html</a>
+</p>
+<p>Barber and Candes,
+Controlling the false discovery rate via knockoffs. 
+Ann. Statist. 43 (2015), no. 5, 2055–2085.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(2022)
+p=100; n=80; k=15
+mu = rep(0,p); Sigma = diag(p)
+X = matrix(rnorm(n*p),n)
+nonzero = sample(p, k)
+beta = 3.5 * (1:p %in% nonzero)
+y = X %*% beta + rnorm(n)
+
+# Basic usage with default arguments
+result = knockoff.filter(X, y)
+print(result$selected)
+
+# Advanced usage with custom arguments
+knockoffs = function(X) create.gaussian(X, mu, Sigma)
+k_stat = function(X, Xk, y) stat.glmnet_coefdiff(X, Xk, y, nfolds=5)
+result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
+print(result$selected)
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PolarDerivative</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Derivative of the polar coordinate transformation</h2>
+
+<h3>Description</h3>
+
+<p>This function compute the Jacobian matrix of the polar transformation
+theta=g(v), i.e., the transformation from the the rectangular coordinate
+representation of the directional vector to its angular representation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PolarDerivative(v)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>A <code>d</code>-dimensional directional vector of length 1.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>See Lemma 3 of Tang and Li (2024).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The Jacobian matrix of the polar transformation theta=g(v), with
+<code>d-1</code> rows and <code>d</code> columns.
+</p>
+
+
+<h3>References</h3>
+
+<p><cite>Tang, Y. and Li, B. (2024), “A nonparametric test for elliptical
+distribution based on kernel embedding of probabilities,”
+<a href="https://arxiv.org/abs/2306.10594">https://arxiv.org/abs/2306.10594</a></cite>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">X=c(3,1,3)
+V=X/sqrt(sum(X^2))
+PolarDerivative(V)
+
+</code></pre>
+
+
+</div>

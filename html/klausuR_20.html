@@ -1,0 +1,289 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausur.report</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate individual reports on multipe choice test results</h2>
+
+<h3>Description</h3>
+
+<p><code>klausur.report</code> takes (at least) an object of class klausuR (or klausuR.mult) and a matriculation number to generate personal test results
+in LaTeX and/or PDF format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klausur.report(
+  klsr,
+  matn,
+  save = FALSE,
+  pdf = FALSE,
+  path = NULL,
+  file.name = "matn",
+  hist = list(points = FALSE, marks = FALSE),
+  hist.merge = list(),
+  hist.points = "hist_points.pdf",
+  hist.marks = "hist_marks.pdf",
+  descr = list(title = NULL, name = NULL, date = NULL),
+  marks.info = list(points = FALSE, percent = FALSE),
+  lang = "en",
+  alt.candy = TRUE,
+  anon.glob.file = "anon.tex",
+  decreasing = TRUE,
+  sort.by = "Points",
+  NRET.legend = FALSE,
+  table.size = "auto",
+  merge = FALSE,
+  quiet = FALSE,
+  fancyhdr = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>klsr</code></td>
+<td>
+<p>An object of class klausuR or klausuR.mult. To create reports from more than one object with the same configuration,
+you can
+also give them in one list here,
+which will cause the function to call itself recursively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matn</code></td>
+<td>
+<p>Matriculation number, "all" (produces individuall documents for all subjects),
+"anon" (produces anonymous feedback)
+or "glob" (produces a global results document).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save</code></td>
+<td>
+<p>Logical: If TRUE,
+files are saved to disk (scheme: "<code>path</code>/<code>matn</code>.tex").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pdf</code></td>
+<td>
+<p>Logical: If TRUE, LaTeX reports will be converted to PDF automatically,
+using <code>texi2dvi</code>.
+If <code>save</code> is FALSE, a temporary directory is used,
+that is only the PDF files will be saved.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Path for <code>save</code> and <code>hist</code> files.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file.name</code></td>
+<td>
+<p>File name scheme for the reports,
+either "matn" (matriculation number) or "name" (name and firstname).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hist</code></td>
+<td>
+<p>A list with the logical elements <code>points</code> and <code>marks</code>: If TRUE,
+the reports will include histograms
+of the distribution of points and/or marks. The needed PDF files will be created by <code>plot</code> and saved as well.
+(see <code>path</code>, <code>hist.points</code> and <code>hist.marks</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hist.merge</code></td>
+<td>
+<p>If you need/want to combine results from several <code>klausuR</code> class objects for the histograms,
+provide them all in a list here.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hist.points</code></td>
+<td>
+<p>File name for the histogram of points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hist.marks</code></td>
+<td>
+<p>File name for the histogram of marks.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>descr</code></td>
+<td>
+<p>Details on the test: List with the elements <code>title</code> (title of the test),
+<code>name</code> (your name) and <code>date</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks.info</code></td>
+<td>
+<p>A list with the logical elements <code>points</code> and <code>percent</code>: If TRUE,
+the reports will include a table showing
+how marks were assigned to points achieved and/or percent solved, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>Set to "de" for reports in German, English is the default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.candy</code></td>
+<td>
+<p>If TRUE,
+a comma will be inserted for items with multiple alternatives ("235" becomes "2, 3, 5" in the printout)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>anon.glob.file</code></td>
+<td>
+<p>If <code>matn="anon"</code> or <code>matn="glob"</code>,
+you can specify a filename for this particular report.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decreasing</code></td>
+<td>
+<p>Logical,
+whether sorting of output should be done increasing or decreasing (only relevant for <code>matn="anon"</code> or
+<code>matn="glob"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort.by</code></td>
+<td>
+<p>Character string naming a variable to sort the results by. Defaults to <code>"Marks"</code> (only relevant for <code>matn="anon"</code> or
+<code>matn="glob"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>NRET.legend</code></td>
+<td>
+<p>Logical, If ET/NRET data is reported,
+you can demand a legend in the table caption by setting this to true.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>table.size</code></td>
+<td>
+<p>Character string to shrink the tables, must be one of <code>"auto"</code>,
+<code>"normalsize"</code>, <code>"small"</code>,
+<code>"footnotesize"</code>,
+<code>"scriptsize"</code> or <code>"tiny"</code>. The default <code>table.size="auto"</code> tries to decide between
+<code>"normalsize"</code> and <code>"footnotesize"</code> to avoid pages with only one or two rows. If that fails,
+try to manually set the size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>merge</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> no individual PDFs will be saved,
+but one large file with all reports. Uses the "pdfpages" package,
+and only useful if <code>pdf=TRUE</code> as well.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Logical,
+if <code>TRUE</code> no feedback messages on the current status are given.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fancyhdr</code></td>
+<td>
+<p>Logical,
+if <code>TRUE</code> additional information is printed in the header and footer of the LaTeX/PDF files.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The report contains, next to the individual results,
+a table with all given and correct  answers (using <code>xtable</code>),
+as well as nice histograms showing the distribution of the test results (points and/or marks are supportet). If the matriculation numer
+is set to "all",
+reports for all subjects are produced. Setting it to "anon" will get you a printable version of the anonymized results.
+</p>
+<p>By default output is sent to standard out. To save them to disk in LaTeX format a "save" parameter is provided. Alternatively,
+the reports
+can be converted to PDF format as well. <code>klausur.report</code> is calling <code>texi2dvi</code> from the <code>tools</code> package for that.
+</p>
+<p>If the object is of class klausuR.mult,
+only the global results for tests with several test forms are evaluated. In case you'd rather like
+reports on each test form,
+call <code>klausur.report</code> with the single slots from that object accordingly.
+</p>
+
+
+<h3>Value</h3>
+
+<p>One or several LaTeX and/or PDF documents. If defined two histograms will be plotted.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>, <code>xtable</code>,
+<code>texi2dvi</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(antworten)
+
+# vector with correct answers:
+richtig &lt;- c(Item01=3, Item02=2, Item03=2, Item04=2, Item05=4,
+ Item06=3, Item07=4, Item08=1, Item09=2, Item10=2, Item11=4,
+ Item12=4, Item13=2, Item14=3, Item15=2, Item16=3, Item17=4,
+ Item18=4, Item19=3, Item20=5, Item21=3, Item22=3, Item23=1,
+ Item24=3, Item25=1, Item26=3, Item27=5, Item28=3, Item29=4,
+ Item30=4, Item31=13, Item32=234)
+
+# vector with assignement of marks:
+notenschluessel &lt;- c()
+# scheme of assignments: marks[points_from:to] &lt;- mark
+notenschluessel[0:12]  &lt;- 5.0
+notenschluessel[13:15] &lt;- 4.0
+notenschluessel[16:18] &lt;- 3.7
+notenschluessel[19:20] &lt;- 3.3
+notenschluessel[21]    &lt;- 3.0
+notenschluessel[22]    &lt;- 2.7
+notenschluessel[23]    &lt;- 2.3
+notenschluessel[24]    &lt;- 2.0
+notenschluessel[25:26] &lt;- 1.7
+notenschluessel[27:29] &lt;- 1.3
+notenschluessel[30:32] &lt;- 1.0
+
+data.obj &lt;- klausur.data(answ=antworten, corr=richtig, marks=notenschluessel)
+klsr.obj &lt;- klausur(data.obj)
+
+## Not run: 
+klausur.report(klsr=klsr.obj, matn="all", descr=list(title="Klausur Tatort",
+  name="Dr. T. Aeter", date="24.09.2010"))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

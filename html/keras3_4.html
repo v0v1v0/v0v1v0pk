@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>%&lt;-active%</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make an Active Binding</h2>
+
+<h3>Description</h3>
+
+<p>Make an Active Binding
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sym %&lt;-active% value
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sym</code></td>
+<td>
+<p>symbol to bind</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>A function to call when the value of <code>sym</code> is accessed.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Active bindings defined in a <code>%py_class%</code> are converted to
+<code style="white-space: pre;">⁠@property⁠</code> decorated methods.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>value</code>, invisibly
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>makeActiveBinding()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1234)
+x %&lt;-active% function(value) {
+  message("Evaluating function of active binding")
+  if(missing(value))
+    runif(1)
+  else
+   message("Received: ", value)
+}
+x
+x
+x &lt;- "foo"
+x &lt;- "foo"
+x
+rm(x) # cleanup
+</code></pre>
+
+
+</div>

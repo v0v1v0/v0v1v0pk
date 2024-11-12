@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_random_binomial</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Returns a tensor with random binomial distribution of values.</h2>
+
+<h3>Description</h3>
+
+<p><code>k_random_binomial()</code> and <code>k_random_bernoulli()</code> are aliases for the same
+function. Both are maintained for backwards compatibility. New code
+should prefer <code>k_random_bernoulli()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_random_binomial(shape, p = 0, dtype = NULL, seed = NULL)
+
+k_random_bernoulli(shape, p = 0, dtype = NULL, seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>A list of integers, the shape of tensor to create.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>A float, <code style="white-space: pre;">⁠0. &lt;= p &lt;= 1⁠</code>, probability of binomial distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>String, dtype of returned tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Integer, random seed.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

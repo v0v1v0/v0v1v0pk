@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GWASdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>S4 class for an object representing a Genome-wide Assocaition Study.</h2>
+
+<h3>Description</h3>
+
+<p>S4 class for an object representing a Genome-wide Assocaition Study.
+</p>
+<p><code>'GWASdata'</code> is a GWASdata object constructor.
+</p>
+<p><code>show</code> displays basic information on <code>GWASdata</code> object
+</p>
+<p><code>summary</code> summarizes the content of a <code>GWASdata</code> object 
+and gives an overview about the information included in a 
+<code>GWASdata</code> object. Summary statistics for phenotype and genotype 
+data are calculated.
+</p>
+<p><code>GeneSNPsize</code> creates a <code>data.frame</code> of <code>pathway</code>
+names with numbers of snps and genes in each <code>pathway</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GWASdata(object, ...)
+
+## S4 method for signature 'ANY'
+GWASdata(geno, anno, pheno = NULL, desc = "")
+
+## S4 method for signature 'GWASdata'
+show(object)
+
+## S4 method for signature 'GWASdata'
+summary(object)
+
+## S4 method for signature 'GWASdata'
+GeneSNPsize(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>GWASdata</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments can be added to the function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geno</code></td>
+<td>
+<p>An object of any type, including the genotype information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>anno</code></td>
+<td>
+<p>A <code>data.frame</code> containing the annotation file for the 
+<code>GWASdata</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pheno</code></td>
+<td>
+<p>A <code>data.frame</code> specifying individual IDs, phenotypes and
+covariates to be included in the regression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+<p>A <code>character</code> giving the GWAS description, e.g. name of study.</p>
+</td>
+</tr>
+</table>
+<h3>Methods (by generic)</h3>
+
+
+<ul><li> <p><code>GeneSNPsize(GWASdata)</code>: creates a <code>data.frame</code> of <code>pathway</code> names with numbers 
+of snps and genes in each pathway.
+</p>
+</li></ul>
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>geno</code></dt>
+<dd>
+<p>An object of any type, including genotype information. The format
+needs to be one line per individual and on colum per SNP in minor-allele 
+coding (0,1,2). Other values between 0 and 2, as from impute dosages, are 
+allowed. Missing values must be imputed prior to creation of a <code>GWASdata</code> object.</p>
+</dd>
+<dt><code>anno</code></dt>
+<dd>
+<p>A <code>data.frame</code> mapping SNPs to genes and genes to
+pathways. Needs to include the columns 'pathway' (pathway ID, e.g. hsa
+number from KEGG database), 'gene' (gene name (hgnc_symbol)), 'chr'
+(chromosome), 'snp' (rsnumber) and 'position' (base pair position of SNP).</p>
+</dd>
+<dt><code>pheno</code></dt>
+<dd>
+<p>A <code>data.frame</code> specifying individual IDs, phenotypes and
+covariates to be included in the regression model e.g. ID, pheno, sex,
+pack.years. Note: IDs have to be in the first column!</p>
+</dd>
+<dt><code>desc</code></dt>
+<dd>
+<p>A <code>character</code> giving the GWAS description, e.g. name of study.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Juliane Manitz, Stefanie Friedrichs
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># create gwas data object
+data(pheno)
+data(geno)
+data(anno)
+gwas &lt;- new('GWASdata', pheno=pheno, geno=geno, anno=anno, desc="some study") 
+# show and summary methods
+gwas
+summary(gwas)
+# SNPs and genes in pathway
+GeneSNPsize(gwas)
+</code></pre>
+
+
+</div>

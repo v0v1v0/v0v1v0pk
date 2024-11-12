@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_scheme</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Color Scheme</h2>
+
+<h3>Description</h3>
+
+<p>Shows colors in a plot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_scheme(x, colours = FALSE, names = FALSE, size = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>character</code> vector of colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colours</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the hexadecimal representation of
+the colors be displayed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the name of the colors be
+displayed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>A <code>numeric</code> value giving the amount by which plotting text
+should be magnified relative to the default. Works the same as <code>cex</code>
+parameter of <code>graphics::par()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>plot_scheme()</code> is called for its side-effects: it results in a graphic
+being displayed (invisibly returns <code>x</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other diagnostic tools: 
+<code>change()</code>,
+<code>compare()</code>,
+<code>plot.color_scheme()</code>,
+<code>plot_map()</code>,
+<code>plot_scheme_colourblind()</code>,
+<code>plot_tiles()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">plot(colour("bright")(7))
+plot(colour("smooth rainbow")(256))
+
+## Plot colour schemes
+plot_scheme(colour("bright")(7))
+plot_scheme(colour("sunset")(11))
+plot_scheme(colour("YlOrBr")(9))
+plot_scheme(colour("discrete rainbow")(14))
+
+## Plot diagnostic maps
+plot_map(colour("bright")(7))
+plot_map(colour("sunset")(11))
+plot_map(colour("YlOrBr")(9))
+plot_map(colour("discrete rainbow")(14))
+
+## Plot diagnostic images
+plot_tiles(colour("discrete rainbow")(14), n = 256)
+plot_tiles(colour("discrete rainbow")(23), n = 256)
+plot_tiles(colour("smooth rainbow")(256), n = 256)
+</code></pre>
+
+
+</div>

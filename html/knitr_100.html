@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rand_seed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An unevaluated expression to return .Random.seed if exists</h2>
+
+<h3>Description</h3>
+
+<p>This expression returns <code>.Random.seed</code> when <code>eval(rand_seed)</code> and
+<code>NULL</code> otherwise.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rand_seed
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>It is designed to work with <code>opts_chunk$set(cache.extra = rand_seed)</code>
+for reproducibility of chunks that involve with random number generation. See
+references.
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="https://yihui.org/knitr/demo/cache/">https://yihui.org/knitr/demo/cache/</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">eval(rand_seed)
+rnorm(1)  # .Random.seed is created (or modified)
+eval(rand_seed)
+</code></pre>
+
+
+</div>

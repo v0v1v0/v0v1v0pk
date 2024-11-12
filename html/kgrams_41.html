@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>query</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Query k-gram frequency tables or dictionaries</h2>
+
+<h3>Description</h3>
+
+<p>Return the frequency count of k-grams in a k-gram frequency table, or
+whether words are contained in a dictionary.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">query(object, x)
+
+## S3 method for class 'kgram_freqs'
+query(object, x)
+
+## S3 method for class 'kgrams_dictionary'
+query(object, x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a <code>kgram_freqs</code> or <code>dictionary</code> class object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a character vector. A list of k-grams if <code>object</code> is of class
+<code>kgram_freqs</code>, a list of words if <code>object</code> is a <code>dictionary</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This generic has slightly different behaviors when querying
+for the presence of words in a dictionary and for k-gram counts
+in a frequency table respectively.
+For words, <code>query()</code> looks for exact matches between the input and the
+dictionary entries. Queries of Begin-Of-Sentence (<code>BOS()</code>) and
+End-Of-Sentence (<code>EOS()</code>) tokens always return <code>TRUE</code>, and queries
+of the Unknown-Word token return <code>FALSE</code>
+(see special_tokens).
+</p>
+<p>On the other hand, queries of k-gram counts first perform a word level
+tokenization, so that anything separated by one or more space characters
+in the input is considered as a single word (thus, for instance queries of
+strings such as <code>"i love you"</code>, <code>" i love you"</code>), or
+<code>"i love you "</code>) all produce the same outcome). Moreover,
+querying for any word outside the underlying dictionary returns the counts
+corresponding to the Unknown-Word token (<code>UNK()</code>) (e.g., if
+the word <code>"prcsrn"</code> is outside the dictionary, querying
+<code>"i love prcsrn"</code> is the same as querying
+<code>paste("i love", UNK())</code>). Queries from k-grams of order <code>k &gt; N</code>
+will return <code>NA</code>.
+</p>
+<p>A subsetting equivalent of query, with synthax <code>object[x]</code> is available
+(see the examples).
+<code>query(object, x)</code>. The query of the empty string <code>""</code> returns the
+total count of words, including the <code>EOS</code> and <code>UNK</code> tokens, but not
+the <code>BOS</code> token.
+</p>
+<p>See also the examples below.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an integer vector, containing k-gram counts of <code>x</code>, if
+<code>object</code> is a <code>kgram_freqs</code> class object, a logical vector if
+<code>object</code> is a <code>dictionary</code>. Vectorized over <code>x</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Querying a k-gram frequency table
+f &lt;- kgram_freqs("a a b a b b a b", N = 2)
+query(f, c("a", "b")) # query single words
+query(f, c("a b")) # query a 2-gram
+identical(query(f, "c"), query(f, "d"))  # TRUE, both "c" and "d" are &lt;UNK&gt;
+identical(query(f, UNK()), query(f, "c")) # TRUE
+query(f, EOS()) # 1, since text is a single sentence
+f[c("b b", "b")] # query with subsetting synthax 
+f[""] # 9 (includes the EOS token)
+
+# Querying a dictionary
+d &lt;- as_dictionary(c("a", "b"))
+query(d, c("a", "b", "c")) # query some words
+query(d, c(BOS(), EOS(), UNK())) # c(TRUE, TRUE, FALSE)
+d["a"] # query with subsetting synthax
+
+</code></pre>
+
+
+</div>

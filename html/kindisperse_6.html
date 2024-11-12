@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>axials_decompose</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decompose an axial distribution into simple components</h2>
+
+<h3>Description</h3>
+
+<p>Decomposes an axial distribution into simple components. Note that this should only be used in the simplest situations.
+It assumes all composite dispersal events are of identical magnitude and have happened equivalently to both branches of a 'symmetric'
+pedigree leading to the final kin dyad. (it can be used to derive e.g.full-sibling dispersal parameters from the distribution of
+full-siblings, or equivalent for first cousins, but <strong>not</strong> to divide the 'avuncular' kernel into its
+component parts (uncle/aunt &amp; niece/nephew have different dispersal paths from their common ancestor)).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">axials_decompose(ax, n_composites = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ax</code></td>
+<td>
+<p>numeric. The axial value to be decomposed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_composites</code></td>
+<td>
+<p>numeric. The number of separate 'draws' (dispersal events)
+from the kernel required to produce the final positions of the measured individuals.
+For example, the displacement of a child from parent at the same life stage would involve 1 draw and thus be composite = 1.
+Two full siblings would be two draws (composite = 2) from the FS kernel. Non-symmetric relationships (e.g. AV, 1C)
+should not be decomposed using this method, nor should any assumptions be made about different kernels
+(e.g. the 1C relationship would appropriately be given the value 2, but not 4)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns the (numeric) axial distribution value of the underlying dispersal kernel from which the composite kernel was (or could be) created.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other axial_helpers: 
+<code>axials_add()</code>,
+<code>axials_subtract()</code>,
+<code>axials()</code>,
+<code>axpermute_subtract()</code>,
+<code>axpermute()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fs_vect &lt;- c(10, 11, 12)
+fs_axial_raw &lt;- axials(fs_vect, composite = 1) # composite hasn't corrected for two dispersal events
+# inherent to this kin category!
+fs_axial_final &lt;- axials_decompose(fs_axial_raw, n_composites = 2)
+</code></pre>
+
+
+</div>

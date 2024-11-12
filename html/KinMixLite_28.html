@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>protected</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Catch numerical errors, and return -Inf</h2>
+
+<h3>Description</h3>
+
+<p>Attempts to catch numerical erros in evaluating the expression <code>x</code>, delivering a default result instead of NaN or other failures</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">protected(x,default=-Inf) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>expression to be evaluated, typically the log-likelihood of a modified mixture model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default</code></td>
+<td>
+<p>value to be delivered if numerical errors are encountered</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns -Inf in case of error, otherwise the value of <code>x</code></p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+</div>

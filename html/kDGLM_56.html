@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>multnom_pred</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>multnom_pred</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the values for the predictive distribution given the values of the parameter of the conjugated distribution of the linear predictor.
+The data is assumed to have Multinomial distribution with known number of trial N and the probability vector having distribution Dirichlet with parameters alpha_i.
+In this scenario, the marginal distribution of the data is Dirichlet-Multinomial with parameters N and alpha_i.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">multnom_pred(conj.param, outcome, parms = list(), pred.cred = 0.95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>List or data.frame: The parameters of the conjugated distributions of the linear predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcome</code></td>
+<td>
+<p>Vector or matrix: The observed values at the current time. The value passed is used to compute N.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>List (optional): A list of extra parameters for the model. Not used in this function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>Numeric: the desired credibility for the credibility interval.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the following values:
+</p>
+
+<ul>
+<li>
+<p> pred vector/matrix: the mean of the predictive distribution of a next observation. Same type and shape as the parameter in model.
+</p>
+</li>
+<li>
+<p> var.pred vector/matrix: the variance of the predictive distribution of a next observation. Same type and shape as the parameter in model.
+</p>
+</li>
+<li>
+<p> icl.pred vector/matrix: the percentile of 100*((1-pred.cred)/2)
+</p>
+</li>
+<li>
+<p> icu.pred vector/matrix: the percentile of 100*(1-(1-pred.cred)/2)
+</p>
+</li>
+<li>
+<p> log.like vector: the The log likelihood for the outcome given the conjugated parameters.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Multinomial outcome: 
+<code>convert_Multinom_Normal()</code>,
+<code>convert_Normal_Multinom()</code>,
+<code>update_Multinom()</code>
+</p>
+
+
+</div>

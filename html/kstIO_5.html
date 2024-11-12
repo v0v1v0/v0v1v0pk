@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_kdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read a response patterns file</h2>
+
+<h3>Description</h3>
+
+<p>Read a set of response patterns from
+a file. The file formats are described in the kstIO-package
+information page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  read_kdata(filename, format = "auto", as.letters = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>A character string specifying the name of the data file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>Specification of the files format. Can be "SRBT", "KST",
+"matrix", "CSV", or "auto" (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as.letters</code></td>
+<td>
+<p>logical, should the elements of the sets be letters
+or numbers?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>format</code> values <code>"SRBT"</code>, <code>"KST"</code>, and 
+<code>"matrix"</code> refer to the different generations of file formats 
+described in kstIO-package.  The value <code>"auto"</code> (default)
+requests an automatic detection of the format by thje <code>read_XXX</code>
+function. 
+</p>
+<p>If <code>as.letters</code> is <code>TRUE</code> the elements of the sets are letters,
+otherwise numbers.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A binary matrix with the response patterns.</p>
+
+
+<h3>Note</h3>
+
+<p>In automatic format detection, the distinction between <code>"matrix"</code>
+and <code>"KST"</code> formats work somewhat heuristic. In other words, in rare
+cases the automatic detection might give the wrong result.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cord Hockemeyer <a href="mailto:cord.hockemeyer@uni-graz.at">cord.hockemeyer@uni-graz.at</a></p>
+
+
+<h3>References</h3>
+
+<p>Hockemeyer, C. (2001). <em>KST Tools User Manual</em> (2nd ed.). 
+<a href="https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf</a>.
+</p>
+<p>Poetzi, S. &amp; Wesiak, G. (2001). SRbT Tools User Manual.
+<a href="https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kstIO-package
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Produce a data file
+d &lt;- getwd()
+setwd(tempdir())
+data(DoignonFalmagne7)
+df &lt;- as.binmat(DoignonFalmagne7$N.R)
+write_kdata(df, "DF7.dat", "matrix") # matrix format (without any headers)
+# Read file
+read_kdata("DF7.dat") # Automatic format detection (default)
+read_kdata("DF7.dat", "matrix") # Explicit ormat specification
+setwd(d)
+</code></pre>
+
+
+</div>

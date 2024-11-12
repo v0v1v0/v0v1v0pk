@@ -1,0 +1,174 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kerseg1</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel-based change-point detection for single change-point alternatives</h2>
+
+<h3>Description</h3>
+
+<p>This function finds a break point in the sequence where the underlying distribution changes.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kerseg1(n, K, r1=1.2, r2=0.8, n0=0.05*n, n1=0.95*n,
+   pval.appr=TRUE, skew.corr=TRUE, pval.perm=FALSE, B=100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>The number of observations in the sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>The kernel matrix of observations in the sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>The constant in the test statistics <code class="reqn">\textrm{Z}_{W,r1}(t)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r2</code></td>
+<td>
+<p>The constant in the test statistics <code class="reqn">\textrm{Z}_{W,r2}(t)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n0</code></td>
+<td>
+<p>The starting index to be considered as a candidate for the change-point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n1</code></td>
+<td>
+<p>The ending index to be considered as a candidate for the change-point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pval.appr</code></td>
+<td>
+<p>If it is TRUE, the function outputs the p-value approximation based on asymptotic properties.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skew.corr</code></td>
+<td>
+<p>This argument is useful only when pval.appr=TRUE. If skew.corr is TRUE, the p-value approximation would incorporate skewness correction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pval.perm</code></td>
+<td>
+<p>If it is TRUE, the function outputs the p-value from doing B permutations, where B is another argument that you can specify. Doing permutation could be time consuming, so use this argument with caution as it may take a long time to finish the permutation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>This argument is useful only when pval.perm=TRUE. The default value for B is 100.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list <code>stat</code> containing the each scan statistic, <code>tauhat</code> containing the estimated location of change-point, <code>appr</code> containing the approximated p-values of the fast tests when argument ‘pval.appr’ is TRUE, and <code>perm</code> containing the permutation p-values of the fast tests and GKCP when argument ‘pval.perm’ is TRUE. See below for more details.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>seq</code></td>
+<td>
+<p>A vector of each scan statistic (standardized counts).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Zmax</code></td>
+<td>
+<p>The test statistics (maximum of the scan statistics).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tauhat</code></td>
+<td>
+<p>An estimate of the location of the change-point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGKCP1_bon</code></td>
+<td>
+<p>The p-value of <code class="reqn">\textrm{fGKCP}_{1}</code> obtained by the Bonferroni procedure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGKCP1_sim</code></td>
+<td>
+<p>The p-value of <code class="reqn">\textrm{fGKCP}_{1}</code> obtained by the Simes procedure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGKCP2_bon</code></td>
+<td>
+<p>The p-value of <code class="reqn">\textrm{fGKCP}_{2}</code> obtained by the Bonferroni procedure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGKCP2_sim</code></td>
+<td>
+<p>The p-value of <code class="reqn">\textrm{fGKCP}_{2}</code> obtained by the Simes procedure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>GKCP</code></td>
+<td>
+<p>The p-value of GKCP obtained by the random permutation.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>kerSeg-package</code>, <code>kerseg1</code>, <code>gaussiankernel</code>, <code>kerseg2</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Sequence 1: change in the mean in the middle of the sequence.
+d = 50
+mu = 2
+tau = 25
+n = 50
+set.seed(1)
+y = rbind(matrix(rnorm(d*tau),tau), matrix(rnorm(d*(n-tau),mu/sqrt(d)), n-tau))
+K = gaussiankernel(y) # Gaussian kernel matrix
+a = kerseg1(n, K, pval.perm=TRUE, B=1000)
+# output results based on the permutation and the asymptotic results.
+# the scan statistics can be found in a$scanZ.
+# the approximated p-values can be found in a$appr.
+# the permutation p-values can be found in a$perm.
+
+## Sequence 2: change in both the mean and variance away from the middle of the sequence.
+d = 50
+mu = 2
+sigma = 0.7
+tau = 35
+n = 50
+set.seed(1)
+y = rbind(matrix(rnorm(d*tau),tau), matrix(rnorm(d*(n-tau),mu/sqrt(d),sigma), n-tau))
+K = gaussiankernel(y)
+a = kerseg1(n, K, pval.perm=TRUE, B=1000)
+</code></pre>
+
+
+</div>

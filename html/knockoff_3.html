@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create.second_order</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Second-order Gaussian knockoffs</h2>
+
+<h3>Description</h3>
+
+<p>This function samples second-order multivariate Gaussian knockoff variables.
+First, a multivariate Gaussian distribution is fitted to the observations of X.
+Then, Gaussian knockoffs are generated according to the estimated model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create.second_order(X, method = c("asdp", "equi", "sdp"), shrink = F)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>n-by-p matrix of original variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>either "equi", "sdp" or "asdp" (default: "asdp").
+This determines the method that will be used to minimize the correlation between the original variables and the knockoffs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shrink</code></td>
+<td>
+<p>whether to shrink the estimated covariance matrix (default: F).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the argument <code>shrink</code> is set to T, a James-Stein-type shrinkage estimator for
+the covariance matrix is used instead of the traditional maximum-likelihood estimate. This option
+requires the package <code>corpcor</code>. See <code>cov.shrink</code> for more details.
+</p>
+<p>Even if the argument <code>shrink</code> is set to F, in the case that the estimated covariance 
+matrix is not positive-definite, this function will apply some shrinkage.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A n-by-p matrix of knockoff variables.
+</p>
+
+
+<h3>References</h3>
+
+<p>Candes et al., Panning for Gold: Model-free Knockoffs for High-dimensional Controlled Variable Selection,
+arXiv:1610.02351 (2016).
+<a href="https://web.stanford.edu/group/candes/knockoffs/index.html">https://web.stanford.edu/group/candes/knockoffs/index.html</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other create: 
+<code>create.fixed()</code>,
+<code>create.gaussian()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(2022)
+p=100; n=80; k=15
+rho = 0.4
+Sigma = toeplitz(rho^(0:(p-1)))
+X = matrix(rnorm(n*p),n) %*% chol(Sigma)
+nonzero = sample(p, k)
+beta = 3.5 * (1:p %in% nonzero)
+y = X %*% beta + rnorm(n)
+
+# Basic usage with default arguments
+result = knockoff.filter(X, y, knockoffs=create.second_order)
+print(result$selected)
+
+# Advanced usage with custom arguments
+knockoffs = function(X) create.second_order(X, method='equi')
+result = knockoff.filter(X, y, knockoffs=knockoffs)
+print(result$selected)   
+  
+</code></pre>
+
+
+</div>

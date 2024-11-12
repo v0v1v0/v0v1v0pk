@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PREp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Percent Relative Error
+</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the percent relative error (PRE) between an equated distribution and the reference distribution for the first ten moments.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PREp(eq, obs, r, s)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>eq</code></td>
+<td>
+
+<p>A numeric vector containing the equated values from X to Y or Y to X.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs</code></td>
+<td>
+
+<p>The score vector of test Y or X.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+
+<p>A vector of probabilities corresponding to the equated values.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+
+<p>A vector of probabilities corresponding to the score values of test Y or X.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If we equate test X to test Y, then we have equated values eYx with estimated probabilities r and estimated probabilities s for the score values on Y. To compare the moments between these two distributions, we can calculate the percent relative error (PRE) between them. If we denote the p:th moment of Y and eYx by <code class="reqn">\mu(Y)</code> and <code class="reqn">\mu(eYx)</code> respectively, the PRE for moment p is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">PRE(p) = \frac{100 \mu(eYx)-\mu(Y)}{\mu(Y)}.</code>
+</p>
+
+
+
+<h3>Value</h3>
+
+<p>A numeric  vector containing the percentage relative error for the first ten moments.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Andersson, B., Branberg, K., Wiberg, M. (2013). Performing the Kernel Method of Test Equating with the Package <b>kequate</b>. <em>Journal of Statistical Software</em>, <b>55(6)</b>, 1–25. &lt;doi: 10.18637/jss.v055.i06&gt;
+</p>
+<p>von Davier, A.A., Holland, P.W., Thayer, D.T. (2004). <em>The Kernel Method of Test Equating.</em> Springer-Verlag New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>glm</code>
+<code>kequate</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">P&lt;-c(5, 20, 35, 25, 15)
+Q&lt;-c(10, 30, 30, 20, 10)
+x&lt;-0:4
+glmx&lt;-glm(P~I(x)+I(x^2), family="poisson", x=TRUE)
+glmy&lt;-glm(Q~I(x)+I(x^2), family="poisson", x=TRUE)
+keEG&lt;-kequate("EG", 0:4, 0:4, glmx, glmy)
+PREp(getEq(keEG), 0:4, glmx$fitted.values/100, glmy$fitted.values/100)
+</code></pre>
+
+
+</div>

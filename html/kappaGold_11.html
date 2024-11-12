@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stagingData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Staging of colorectal carcinoma</h2>
+
+<h3>Description</h3>
+
+<p>Staging of carcinoma is done by different medical professions. Gold standard
+is the (histo-)pathological rating of a tissue sample but this information
+typically only becomes available late, after surgery. However prior to
+surgery the carcinoma is also staged by radiologists in the clinical setting
+on the basis of MRI scans.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stagingData
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 21 observations and 6 variables:
+</p>
+
+<dl>
+<dt>patho</dt>
+<dd>
+<p>the (histo-)pathological staging (gold standard) with categories I, II or III</p>
+</dd>
+<dt>rad1</dt>
+<dd>
+<p>the clinical staging with categories I, II or III by radiologist 1</p>
+</dd>
+<dt>rad2</dt>
+<dd>
+<p>the clinical staging with categories I, II or III by radiologist 2</p>
+</dd>
+<dt>rad3</dt>
+<dd>
+<p>the clinical staging with categories I, II or III by radiologist 3</p>
+</dd>
+<dt>rad4</dt>
+<dd>
+<p>the clinical staging with categories I, II or III by radiologist 4</p>
+</dd>
+<dt>rad5</dt>
+<dd>
+<p>the clinical staging with categories I, II or III by radiologist 5</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>These fictitious data were inspired by the OCUM trial. The simulation uses
+the following two assumptions: over-staging occurs more frequently than
+under-staging and an error by two categories is less likely than an error by
+only one category.
+</p>
+<p>Stages conform to the UICC classification according to the TNM
+classification. Note that cases in stage IV do not appear in this data set
+and that the following description of stages is simplified.
+</p>
+
+<ol>
+<li> <p><strong>I</strong> Until T2, N0, M0
+</p>
+</li>
+<li> <p><strong>II</strong> From T3, N0, M0
+</p>
+</li>
+<li> <p><strong>III</strong> Any T, N1/N2, M0
+</p>
+</li>
+</ol>
+<h3>Source</h3>
+
+<p>simulated data
+</p>
+
+
+<h3>References</h3>
+
+<p>Kreis, M. E. et al., MRI-Based Use of Neoadjuvant
+Chemoradiotherapy in Rectal Carcinoma: Surgical Quality and
+Histopathological Outcome of the OCUM Trial
+<a href="https://doi.org/10.1245/s10434-019-07696-y">doi:10.1245/s10434-019-07696-y</a>
+</p>
+
+
+</div>

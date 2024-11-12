@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>J1</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>J1</h2>
+
+<h3>Description</h3>
+
+<p>Eq. (15.16) in Eichner (2017) as a result of Cardano's formula.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">J1(u, cc = sqrt(5/3))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>Numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cc</code></td>
+<td>
+<p>Numeric constant, defaults to <code class="reqn">\sqrt(5/3)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Using, for brevity's sake, <code class="reqn">J_{1a}(u, c) := -q_c(u)</code> and
+<code class="reqn">J_{1b}(u, c) := J_{1a}(u, c)^2 + p_c^3</code>, the definition of
+<code class="reqn">J_1</code> reads:
+</p>
+<p><code class="reqn">J_1(u, c) :=   [J_{1a}(u, c) + \sqrt(J_{1b}(u, c))]^{1/3}
+                  + [J_{1a}(u, c) - \sqrt(J_{1b}(u, c))]^{1/3}</code>.
+</p>
+<p>For implementation details of <code class="reqn">q_c(u)</code> and <code class="reqn">p_c</code> see
+<code>qc</code> and <code>pc</code>, respectively.
+</p>
+<p>For further mathematical details see Eichner (2017) and/or Eichner
+&amp; Stute (2013).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Vector of same length and mode as <code>u</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Eq. (15.16) in Eichner (2017), and hence <code class="reqn">J_1(u, c)</code>, requires
+<code class="reqn">c</code> to be in <code class="reqn">[\sqrt(5/3), 3)</code>. If <code>cc</code> does
+not satisfy this requirement a warning (only) is issued.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>J_admissible</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+u &lt;- seq(0, 1, by = 0.01)
+c0 &lt;- expression(sqrt(5/3))
+c1 &lt;- expression(sqrt(3) - 0.01)
+cgrid &lt;- c(1.35, seq(1.4, 1.7, by = 0.1))
+cvals &lt;- c(eval(c0), cgrid, eval(c1))
+
+Y &lt;- sapply(cvals, function(cc, u) J1(u, cc = cc), u = u)
+cols &lt;- rainbow(ncol(Y), end = 9/12)
+matplot(u, Y, type = "l", lty = "solid", col = cols,
+  ylab = expression(J[1](u, c)))
+abline(h = 0)
+legend("topleft", title = "c", legend = c(c0, cgrid, c1),
+  lty = 1, col = cols, cex = 0.8)
+
+
+</code></pre>
+
+
+</div>

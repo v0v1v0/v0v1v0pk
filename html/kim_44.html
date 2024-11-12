@@ -1,0 +1,376 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>floodlight_2_by_continuous</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Floodlight 2 by Continuous</h2>
+
+<h3>Description</h3>
+
+<p>Conduct a floodlight analysis for 2 x Continuous design.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">floodlight_2_by_continuous(
+  data = NULL,
+  iv_name = NULL,
+  dv_name = NULL,
+  mod_name = NULL,
+  covariate_name = NULL,
+  interaction_p_include = TRUE,
+  iv_level_order = NULL,
+  output = "reg_lines_plot",
+  jitter_x_y_percent = 0,
+  jitter_x_percent = 0,
+  jitter_y_percent = 0,
+  dot_alpha = 0.5,
+  dot_size = 4,
+  interaction_p_value_font_size = 8,
+  jn_point_label_add = TRUE,
+  jn_point_font_size = 8,
+  jn_point_label_hjust = NULL,
+  lines_at_mod_extremes = FALSE,
+  interaction_p_vjust = -3,
+  plot_margin = ggplot2::unit(c(75, 7, 7, 7), "pt"),
+  legend_position = "right",
+  reg_line_types = c("solid", "dashed"),
+  jn_line_types = c("solid", "solid"),
+  jn_line_thickness = 1.5,
+  colors_for_iv = c("red", "blue"),
+  sig_region_color = "green",
+  sig_region_alpha = 0.08,
+  nonsig_region_color = "gray",
+  nonsig_region_alpha = 0.08,
+  x_axis_title = NULL,
+  y_axis_title = NULL,
+  legend_title = NULL,
+  round_decimals_int_p_value = 3,
+  line_of_fit_thickness = 1,
+  round_jn_point_labels = 2
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_name</code></td>
+<td>
+<p>name of the binary independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mod_name</code></td>
+<td>
+<p>name of the continuous moderator variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariate_name</code></td>
+<td>
+<p>name of the variables to control for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interaction_p_include</code></td>
+<td>
+<p>logical. Should the plot include a
+p-value for the interaction term?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_level_order</code></td>
+<td>
+<p>order of levels in the independent
+variable for legend. By default, it will be set as levels of the
+independent variable ordered using R's base function <code>sort</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>type of output (default = "reg_lines_plot").
+Possible inputs: "interactions_pkg_results", "simple_effects_plot",
+"jn_points", "regions", "reg_lines_plot"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter_x_y_percent</code></td>
+<td>
+<p>horizontally and vertically jitter dots
+by a percentage of the respective ranges of x and y values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter_x_percent</code></td>
+<td>
+<p>horizontally jitter dots by a percentage of the
+range of x values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter_y_percent</code></td>
+<td>
+<p>vertically jitter dots by a percentage of the
+range of y values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_alpha</code></td>
+<td>
+<p>opacity of the dots (0 = completely transparent,
+1 = completely opaque). By default, <code>dot_alpha = 0.5</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_size</code></td>
+<td>
+<p>size of the dots (default = 4)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interaction_p_value_font_size</code></td>
+<td>
+<p>font size for the interaction
+p value (default = 8)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jn_point_label_add</code></td>
+<td>
+<p>logical. Should the labels for
+Johnson-Neyman point labels be added to the plot? (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jn_point_font_size</code></td>
+<td>
+<p>font size for Johnson-Neyman point labels
+(default = 8)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jn_point_label_hjust</code></td>
+<td>
+<p>a vector of hjust values for
+Johnson-Neyman point labels. By default, the hjust value will be 0.5 for
+all the points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lines_at_mod_extremes</code></td>
+<td>
+<p>logical. Should vertical lines be
+drawn at the observed extreme values of the moderator if those values
+lie in siginificant region(s)?
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interaction_p_vjust</code></td>
+<td>
+<p>By how much should the label for the
+interaction p-value be adjusted vertically?
+By default, <code>interaction_p_vjust = -3</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot_margin</code></td>
+<td>
+<p>margin for the plot
+By default <code>plot_margin = ggplot2::unit(c(75, 7, 7, 7), "pt")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_position</code></td>
+<td>
+<p>position of the legend (default = "right").
+If <code>legend_position = "none"</code>, the legend will be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reg_line_types</code></td>
+<td>
+<p>types of the regression lines for the two levels
+of the independent variable.
+By default, <code>reg_line_types = c("solid", "dashed")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jn_line_types</code></td>
+<td>
+<p>types of the lines for Johnson-Neyman points.
+By default, <code>jn_line_types = c("solid", "solid")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jn_line_thickness</code></td>
+<td>
+<p>thickness of the lines at Johnson-Neyman points
+(default = 1.5)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colors_for_iv</code></td>
+<td>
+<p>colors for the two values of the
+independent variable (default = c("red", "blue"))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig_region_color</code></td>
+<td>
+<p>color of the significant region, i.e., range(s)
+of the moderator variable for which simple effect of the independent
+variable on the dependent variable is statistically significant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig_region_alpha</code></td>
+<td>
+<p>opacity for <code>sig_region_color</code>.
+(0 = completely transparent, 1 = completely opaque).
+By default, <code>sig_region_alpha = 0.08</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nonsig_region_color</code></td>
+<td>
+<p>color of the non-significant region,
+i.e., range(s) of the moderator variable for which simple effect of
+the independent variable on the dependent variable is not
+statistically significant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nonsig_region_alpha</code></td>
+<td>
+<p>opacity for <code>nonsig_region_color</code>.
+(0 = completely transparent, 1 = completely opaque).
+By default, <code>nonsig_region_alpha = 0.08</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_title</code></td>
+<td>
+<p>title of the x axis. By default, it will be set
+as input for <code>mod_name</code>. If <code>x_axis_title = FALSE</code>, it will
+be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title</code></td>
+<td>
+<p>title of the y axis. By default, it will be set
+as input for <code>dv_name</code>. If <code>y_axis_title = FALSE</code>, it will
+be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_title</code></td>
+<td>
+<p>title of the legend. By default, it will be set
+as input for <code>iv_name</code>. If <code>legend_title = FALSE</code>, it will
+be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_decimals_int_p_value</code></td>
+<td>
+<p>To how many digits after the
+decimal point should the p value for the interaction term be
+rounded? (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_of_fit_thickness</code></td>
+<td>
+<p>thickness of the lines of fit (default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_jn_point_labels</code></td>
+<td>
+<p>To how many digits after the
+decimal point should the jn point labels be rounded? (default = 2)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following package(s) must be installed prior to running this function:
+Package 'interactions' v1.1.1 (or possibly a higher version) by
+Jacob A. Long (2020),
+<a href="https://cran.r-project.org/package=interactions">https://cran.r-project.org/package=interactions</a>
+See the following references:
+Spiller et al. (2013) <a href="https://doi.org/10.1509/jmr.12.0420">doi:10.1509/jmr.12.0420</a>
+Kim (2021) <a href="https://doi.org/10.5281/zenodo.4445388">doi:10.5281/zenodo.4445388</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# typical example
+floodlight_2_by_continuous(
+data = mtcars,
+iv_name = "am",
+dv_name = "mpg",
+mod_name = "qsec")
+# add covariates
+floodlight_2_by_continuous(
+data = mtcars,
+iv_name = "am",
+dv_name = "mpg",
+mod_name = "qsec",
+covariate_name = c("cyl", "hp"))
+# adjust the jn point label positions
+floodlight_2_by_continuous(
+data = mtcars,
+iv_name = "am",
+dv_name = "mpg",
+mod_name = "qsec",
+jn_point_label_hjust = c(1, 0))
+# return regions of significance and nonsignificance
+floodlight_2_by_continuous(
+data = mtcars,
+iv_name = "am",
+dv_name = "mpg",
+mod_name = "qsec",
+output = "regions")
+# draw lines at the extreme values of the moderator
+# if they are included in the significant region
+floodlight_2_by_continuous(
+data = mtcars,
+iv_name = "am",
+dv_name = "mpg",
+mod_name = "qsec",
+lines_at_mod_extremes = TRUE)
+#' # remove the labels for jn points
+floodlight_2_by_continuous(
+data = mtcars,
+iv_name = "am",
+dv_name = "mpg",
+mod_name = "qsec",
+jn_point_label_add = FALSE)
+
+</code></pre>
+
+
+</div>

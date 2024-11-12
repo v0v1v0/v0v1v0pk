@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lookup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Look up kanji</h2>
+
+<h3>Description</h3>
+
+<p>Return readings and meanings or information from <code>kbase</code> or <code>kmorph</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lookup(kanji, what = c("readmean", "basic", "morphologic"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kanji</code></td>
+<td>
+<p>a (vector of) character strings containing kanji.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>what</code></td>
+<td>
+<p>the sort of information to display.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a very basic interface for a quick lookup information based on exact
+knowledge of the kanji (provided by a Japanese input method or its UTF-8 code).
+Most of the information is based on the KANJIDIC2 file by EDRDG (see thank you page)
+Please use one of the many excellent online kanji dictionaries (see e.g.) more
+sophisticated lookup methods and more detailed results.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>what</code> is "readmean" the information is output with cat and there is no return value (invisible NULL)
+In the other cases the appropriate subsets of the tables kbase and kmorph are returned
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dominic Schuhmacher <a href="mailto:schuhmacher@math.uni-goettingen.de">schuhmacher@math.uni-goettingen.de</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lookup(c("\u6674", "\u66c7", "\u96e8"))  
+lookup("\u6674\u66c7\u96e8")   # same
+
+</code></pre>
+
+
+</div>

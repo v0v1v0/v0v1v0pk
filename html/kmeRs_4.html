@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmeRs_show_alignment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate and Show Alignment Between Two Compared K-mers</h2>
+
+<h3>Description</h3>
+
+<p>The <code>kmeRs_show_alignment</code> function aligns and shows calculated
+alignment between two DNA or RNA sequences
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmeRs_show_alignment(
+  kmer_A,
+  kmer_B,
+  seq.type = "AA",
+  submat = ifelse(test = (match.arg(toupper(seq.type), c("DNA", "AA")) == "AA"), yes =
+    "BLOSUM62", no = NA),
+  na.match = ifelse(is.na(submat), yes = 2, no = NA),
+  na.mismatch = ifelse(is.na(submat), yes = -3, no = NA),
+  align.type = "global",
+  verbose = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kmer_A</code></td>
+<td>
+<p>given k-mer A</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kmer_B</code></td>
+<td>
+<p>given k-mer B</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.type</code></td>
+<td>
+<p>type of sequence in question, either 'DNA' or 'AA' (default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>submat</code></td>
+<td>
+<p>substitution matrix version, defaults to 'BLOSUM62'; other
+choices include 'BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM100',
+'PAM30', 'PAM40', 'PAM70', 'PAM120' and 'PAM250'; this parameter is ignored
+if <code>na.match</code> and <code>na.mismatch</code> are specified</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.match</code></td>
+<td>
+<p>for DNA sequences, what should the score for exact match be?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.mismatch</code></td>
+<td>
+<p>for DNA sequences, what should the score for mismatches be?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align.type</code></td>
+<td>
+<p>"global" or "local"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>= TRUE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters, e.g. gap opening/extension penalties (<code>gapOpening</code>,
+<code>gapExtension</code>) for generating a DNA base substitution matrix</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>alignment is returned as a data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example DNA alignment with gap opening and extension penalties of 1 and 0
+# with default base match/mismatch values
+
+kmeRs_show_alignment(kmer_A = "AAATTTCCCGGG", kmer_B = "TCACCC",
+    seq.type = "DNA", gapOpening = 1, gapExtension = 0)
+    
+</code></pre>
+
+
+</div>

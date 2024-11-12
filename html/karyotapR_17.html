@@ -1,0 +1,189 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>createTapestriExperiment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create <code>TapestriExperiment</code> object from Tapestri Pipeline output</h2>
+
+<h3>Description</h3>
+
+<p><code>createTapestriExperiment()</code> constructs a <code>TapestriExperiment</code> container object from data stored in the <code>.h5</code> file output by the Tapestri Pipeline.
+Read count matrix (probe x cell barcode) is stored in the "counts" <code>assay</code> slot of the top-level experiment.
+Allele frequency matrix (variant x cell barcode) is stored in the "alleleFrequency" <code>assay</code> slot of the "alleleFrequency" <code>altExp</code> (alternative experiment) slot.
+<code>panel.id</code> is an optional shortcut to set special probe identities for specific custom panels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">createTapestriExperiment(
+  h5.filename,
+  panel.id = NULL,
+  get.cytobands = TRUE,
+  genome = "hg19",
+  move.non.genome.probes = TRUE,
+  filter.variants = TRUE,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>h5.filename</code></td>
+<td>
+<p>File path for <code>.h5</code> file from Tapestri Pipeline output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>panel.id</code></td>
+<td>
+<p>Character, Tapestri panel ID, either CO261, CO293, CO610, or <code>NULL</code>. Initializes <code>barcodeProbe</code> and <code>grnaProbe</code> slots. Default <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>get.cytobands</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), retrieve and add chromosome cytobands and chromosome arms to <code>rowData</code> (probe metadata).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>genome</code></td>
+<td>
+<p>Character, reference genome for pulling cytoband coordinates and chromosome arm labels (see <code>getCytobands()</code>). Only "hg19" (default) is currently supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>move.non.genome.probes</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), move counts and metadata from non-genomic probes to <code>altExp</code> slots (see <code>moveNonGenomeProbes()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filter.variants</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), only stores variants that have passed Tapestri Pipeline filters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), metadata is output in message text.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> object containing data from Tapestri Pipeline output.
+</p>
+
+
+<h3>Panel ID Shortcuts</h3>
+
+<p><code>panel.id</code> is an optional shortcut to set the <code>barcodeProbe</code> and <code>grnaProbe</code> slots in <code>TapestriExperiment</code> for specific custom Tapestri panels.
+</p>
+
+
+<h4>CO261</h4>
+
+
+<ul>
+<li> <p><code>barcodeProbe</code> = "not specified"
+</p>
+</li>
+<li> <p><code>grnaProbe</code> = "not specified"
+</p>
+</li>
+</ul>
+<h4>CO293</h4>
+
+
+<ul>
+<li> <p><code>barcodeProbe</code> = "AMPL205334"
+</p>
+</li>
+<li> <p><code>grnaProbe</code> = "AMPL205666"
+</p>
+</li>
+</ul>
+<h4>CO610</h4>
+
+
+<ul>
+<li> <p><code>barcodeProbe</code> = "CO610_AMP351"
+</p>
+</li>
+<li> <p><code>grnaProbe</code> = "CO610_AMP350"
+</p>
+</li>
+</ul>
+<h3>Automatic Operations</h3>
+
+
+
+<h4>Raw Data</h4>
+
+<p>Read count and allele frequency matrices are imported to their appropriate slots as described above.
+<code>filter.variants == TRUE</code> (default) only loads allele frequency variants that have passed internal filters in the Tapestri Pipeline.
+This greatly reduces the number of variants from tens of thousands to hundreds of likely more consequential variants,
+saving RAM and reducing operation time.
+</p>
+
+
+
+<h4>Metadata</h4>
+
+<p>Several metadata sets are copied or generated and then stored in the appropriate <code>TapestriExperiment</code> slot during construction.
+</p>
+
+<ul>
+<li>
+<p> Probe panel metadata stored in the <code>.h5</code> file are copied to <code>rowData</code>.
+</p>
+</li>
+<li>
+<p> Basic QC stats (e.g. total number of reads per probe) are added to <code>rowData.</code>
+</p>
+</li>
+<li>
+<p> Basic QC stats (e.g. total number of reads per cell barcode) are added to <code>colData.</code>
+</p>
+</li>
+<li>
+<p> Experiment-level metadata is stored in <code>metadata</code>.
+</p>
+</li>
+</ul>
+<h3>Optional Operations</h3>
+
+<p>Two additional major operations are called by default during <code>TapestriExperiment</code> construction for convenience.
+<code>get.cytobands == TRUE</code> (default) calls <code>getCytobands()</code>, which retrieves the chromosome arm and cytoband for each probe based on stored positional data and saves them in <code>rowData</code>.
+Some downstream smoothing and plotting functions may fail if chromosome arms are not present in <code>rowData</code>, so this generally should always be run.
+<code>move.non.genome.probes</code> calls <code>moveNonGenomeProbes()</code>, which moves probes corresponding to the specified tags to <code>altExp</code> (alternative experiment) slots in the <code>TapestriExperiment</code> object.
+The exception is probes on chromosome Y; CNVs of chrY are more rare, so we move it to an <code>altExp</code> for separate analysis.
+Probes corresponding to the <code>barcodeProbe</code> and <code>grnaProbe</code> slots, which are specified by the <code>panel.id</code> shortcut or manually (see Custom Slot Getters and Setters),
+are automatically moved to <code>altExp</code> by this operation as well.
+If such probes are not present, the function will only generate a warning message, so it is always safe (and recommended) to run by default.
+Any remaining probes that are not targeting a human chromosome and are not specified by the shortcut tags are moved to the <code>otherProbeCounts</code> slot.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>moveNonGenomeProbes()</code>, <code>getCytobands()</code>, which are run as part of this function by default.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+tapExperiment &lt;- createTapestriExperiment("myh5file.h5", "CO293")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

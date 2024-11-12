@@ -1,0 +1,38 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>paternity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Dataset for a paternity case</h2>
+
+<h3>Description</h3>
+
+<p>A list of two pedigrees forming the hypotheses in a paternity case: H1 (<code>AF</code> is
+the father of <code>CH</code>) and H2 (unrelated). <code>AF</code> and <code>CH</code> are genotyped with 11
+markers, with allele frequencies from <code>forrel::NorwegianFrequencies</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">paternity
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A list of two pedigrees, named H1 and H2.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">pedtools::plotPedList(paternity, marker = "SE33")
+markerSummary(paternity)
+
+forrel::kinshipLR(paternity)
+</code></pre>
+
+
+</div>

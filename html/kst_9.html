@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kassess</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Assess Individuals</h2>
+
+<h3>Description</h3>
+
+<p>Assigns individuals to their corresponding knowledge states.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  kassess(x, rpatterns=NULL, method="deterministic")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rpatterns</code></td>
+<td>
+<p>A binary data frame or matrix where each row specifies
+the response pattern of one individual to the set of domain problems in <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>The desired assessment method. Currently only
+<code>"deterministic"</code> assessment is implemented.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>kassess</code> assigns individuals to their corresponding knowledge state
+in a knowledge structure.
+</p>
+<p>Assessing individuals based on a <code>"deterministic"</code> procedure
+starts by determining a domain problem <em>a</em>, which is contained in
+approximately half of the available knowledge states. If the individual
+being assessed has successfully solved the respective domain problem <em>a</em>,
+all knowledge states that do not contain domain problem <em>a</em> are
+removed from the set of potential knowledge states of the individual. If,
+on the other hand, the individual has not solved the respective domain
+problem <em>a</em>, all knowledge states that do contain domain problem <em>a</em>
+are removed from the set of potential knowledge states of the individual.
+From the remaining knowledge states a domain problem <em>b</em>, which again
+is contained in approximately half of the still available knowledge states,
+is selected. If the individual has successfully solved the respective
+domain problem <em>b</em>, all knowledge states that do not contain domain
+problem <em>b</em> are removed from the set of potential knowledge states
+of the individual. If, on the other hand, the individual has solved the
+respective domain problem <em>b</em>, all knowledge states that do contain
+domain problem <em>b</em> are removed from the set of potential knowledge
+states of the individual. This procedure is repeated until only one
+knowledge state is left. This is the knowledge state the individual is
+currently located in.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list where each element represents the knowledge state of one respondent.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># deterministic assessment
+kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+rp &lt;- data.frame(a=c(1,1,0,1,1,1,1,0,0,0),b=c(0,1,0,1,0,1,0,1,0,0),
+   c=c(0,0,0,0,1,1,1,0,1,0),d=c(0,0,1,1,1,1,0,0,0,1), e=c(0,0,1,1,1,1,0,0,0,0))
+kassess(kst, rpatterns=rp, method="deterministic")
+</code></pre>
+
+
+</div>

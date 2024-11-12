@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>%out%</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Inverted match</h2>
+
+<h3>Description</h3>
+
+<p><code style="white-space: pre;">⁠%out%⁠</code> is an inverted version of the infix <code>%in%</code> operator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">x %out% table
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector: the values to be matched. Long vectors are supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>table</code></td>
+<td>
+<p>vector or <code>NULL</code>: the values to be matched against.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code style="white-space: pre;">⁠%out%⁠</code> is currently defined as
+<code>"%out%" &lt;- function(x, table) match(x, table, nomatch = 0) == 0</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>logical; if <code>x</code> is not present in <code>table</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">c("A", "B", "3") %out% LETTERS
+</code></pre>
+
+
+</div>

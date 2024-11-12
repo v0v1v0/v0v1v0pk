@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>inckmed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Increasing number of clusters in k-medoids algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function runs the increasing number of  clusters in
+the k-medoids algorithm proposed by Yu et. al. (2018).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">inckmed(distdata, ncluster, iterate = 10, alpha = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>distdata</code></td>
+<td>
+<p>A distance matrix (n x n) or dist object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncluster</code></td>
+<td>
+<p>A number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterate</code></td>
+<td>
+<p>A number of iterations for the clustering algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>A stretch factor to determine the range of initial medoid
+selection (see <strong>Details</strong>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This algorithm is claimed to manage with the weakness of the
+simple and fast-kmedoids (<code>fastkmed</code>). The origin of the
+algorithm is a centroid-based algorithm by applying the Euclidean distance.
+Then, Bbecause the function is a medoid-based algorithm, the object mean
+(centroid) and variance are redefined into medoid and deviation, respectively.
+</p>
+<p>The <code>alpha</code> argument is a stretch factor, i.e. a constant defined by
+the user. It is applied to determine a set of medoid candidates. The medoid
+candidates are calculated by
+<code class="reqn">O_c = </code>{<code class="reqn">X_i</code>| <code class="reqn">\sigma_i \leq \alpha \sigma,
+i = 1, 2, \ldots, n</code> },
+where <code class="reqn">\sigma_i</code>  is the average deviation of object i, and
+<code class="reqn">\sigma</code> is the average deviation of the data set. They are computed by
+</p>
+<p style="text-align: center;"><code class="reqn">\sigma = \sqrt{\frac{1}{n-1} \sum_{i=1}^n d(O_i, v_1)}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">\sigma_i = \sqrt{\frac{1}{n-1} \sum_{i=1}^n d(O_i, O_j)}</code>
+</p>
+
+<p>where n is the number of objects, <code class="reqn">O_i</code> is the object i,
+and <code class="reqn">v_1</code> is the most centrally located object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a list of components:
+</p>
+<p><code>cluster</code> is the clustering memberships result.
+</p>
+<p><code>medoid</code> is the id medoids.
+</p>
+<p><code>minimum_distance</code> is the distance of all objects to their cluster
+medoid.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Yu, D., Liu, G., Guo, M., Liu, X., 2018. An improved K-medoids
+algorithm based on step increasing and optimizing medoids. Expert Systems
+with Applications 92, pp. 464-473.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+result &lt;- inckmed(mrwdist, ncluster = 3, iterate = 50, alpha = 1.5)
+table(result$cluster, iris[,5])
+
+
+</code></pre>
+
+
+</div>

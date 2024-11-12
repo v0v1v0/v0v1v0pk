@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_learning_rate_scheduler</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Learning rate scheduler.</h2>
+
+<h3>Description</h3>
+
+<p>Learning rate scheduler.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_learning_rate_scheduler(schedule)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>schedule</code></td>
+<td>
+<p>a function that takes an epoch index as input (integer,
+indexed from 0) and current learning rate and returns a new learning rate
+as output (float).</p>
+</td>
+</tr></table>
+<h3>See Also</h3>
+
+<p>Other callbacks: 
+<code>callback_csv_logger()</code>,
+<code>callback_early_stopping()</code>,
+<code>callback_lambda()</code>,
+<code>callback_model_checkpoint()</code>,
+<code>callback_progbar_logger()</code>,
+<code>callback_reduce_lr_on_plateau()</code>,
+<code>callback_remote_monitor()</code>,
+<code>callback_tensorboard()</code>,
+<code>callback_terminate_on_naan()</code>
+</p>
+
+
+</div>

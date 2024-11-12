@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>train_on_batch</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Single gradient update or model evaluation over one batch of samples.</h2>
+
+<h3>Description</h3>
+
+<p>Single gradient update or model evaluation over one batch of samples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">train_on_batch(object, x, y, class_weight = NULL, sample_weight = NULL)
+
+test_on_batch(object, x, y, sample_weight = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>input data, as an array or list of arrays (if the model has multiple
+inputs).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>labels, as an array.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_weight</code></td>
+<td>
+<p>named list mapping classes to a weight value, used for
+scaling the loss function (during training only).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample_weight</code></td>
+<td>
+<p>sample weights, as an array.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Scalar training or test loss (if the model has no metrics) or list of scalars
+(if the model computes other metrics). The property <code>model$metrics_names</code>
+will give you the display labels for the scalar outputs.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>fit_generator()</code>,
+<code>get_config()</code>,
+<code>get_layer()</code>,
+<code>keras_model()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_generator()</code>,
+<code>predict_on_batch()</code>,
+<code>predict_proba()</code>,
+<code>summary.keras.engine.training.Model()</code>
+</p>
+
+
+</div>

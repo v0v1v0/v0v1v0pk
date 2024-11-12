@@ -1,0 +1,154 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Power5Cats</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Power-Based Approach for the Number of Subjects Required for a Study of Interobserver Agreement with Five Outcome Categories</h2>
+
+<h3>Description</h3>
+
+<p>This function provides detailed sample size estimation information to determine
+the number of subjects that are required to test the hypothesis <code class="reqn">H_0: \kappa = \kappa_0</code> vs. <code class="reqn">H_1: \kappa = \kappa_1</code>, at two-sided 
+significance level <code class="reqn">\alpha</code>, with power, <code class="reqn">1 - \beta</code>.  This version assumes that the outcome is multinomial with five levels.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Power5Cats(kappa0, kappa1, props, raters=2, alpha=0.05, power=0.80)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kappa0</code></td>
+<td>
+<p>The null hypothesis for the <code class="reqn">\kappa</code> hypothesis test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa1</code></td>
+<td>
+<p>The alternate hypothesis for the <code class="reqn">\kappa</code> hypothesis test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>props</code></td>
+<td>
+<p>The anticipated prevalence of the desired traits.  Note that this five element vector must sum to one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raters</code></td>
+<td>
+<p>The number of raters that are available.  This function allows between
+2 and 6 raters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The desired type I error rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power</code></td>
+<td>
+<p>The desired level of power, recall power = 1 - type II error.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function provides detailed sample size estimation tools for studies
+of interobserver agreement with five levels.  This function employs the
+power approach, rejecting <code class="reqn">\kappa_0</code> in favour of <code class="reqn">\kappa_1</code> for a pre-specified significance
+level and power.  Note that a warning message is provided if any of the expected cell counts are less than 5.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>The calculated sample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa0</code></td>
+<td>
+<p>The specified null hypothesis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa1</code></td>
+<td>
+<p>The specified alternative hypothesis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>props</code></td>
+<td>
+<p>The anticipated proportion of individuals with the outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raters</code></td>
+<td>
+<p>The number of raters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The desired type I error rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power</code></td>
+<td>
+<p>The desired level of power, recall power = 1 - type II error.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Michael Rotondi, <a href="mailto:mrotondi@yorku.ca">mrotondi@yorku.ca</a></p>
+
+
+<h3>References</h3>
+
+<p>Rotondi MA, Donner A.  (2012).  A Confidence Interval Approach to Sample Size Estimation for Interobserver Agreement Studies with Multiple Raters and Outcomes.  Journal of Clinical Epidemiology, 65:778-784.
+</p>
+<p>Donner A, Rotondi MA.  (2010).  Sample Size Requirements for Interval Estimation of the Kappa Statistic for Interobserver Agreement Studies with a Binary Outcome and Multiple Raters.  International Journal of Biostatistics 6:31. 
+</p>
+<p>Altaye M, Donner A, Klar N.  (2001). Procedures for Assessing Interobserver Agreement among Multiple Raters.  Biometrics 57:584-588.
+</p>
+<p>Donner A.  (1999).  Sample Size Requirements for Interval Estimation of the Intraclass Kappa Statistic.  Communication in Statistics 28:415-429.
+</p>
+<p>Bartfay E, Donner A. (2001).  Statistical Inferences for Interobserver Agreement Studies with Nominal Outcome Data.  The Statistician 50:135-146.
+</p>
+<p>Donner A, Eliasziw M. (1987) Sample size requirements for reliability studies. Statistics in Medicine 6:441-448.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>CI5Cats</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: Suppose an investigator would like to determine the required sample size to test 
+kappa0=0.4 vs. kappa1=0.6 with alpha=0.05 and power=0.80 in a study of 
+interobserver agreement.  Further suppose that the prevalence of the categories is 
+0.30, 0.20, 0.10, 0.30 and 0.10.
+## End(Not run)
+Power5Cats(kappa0=0.4, kappa1=0.6, props=c(0.30, 0.20, 0.10, 0.30, 0.10), alpha=0.05, power=0.80);
+</code></pre>
+
+
+</div>

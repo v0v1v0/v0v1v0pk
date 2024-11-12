@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KnockoffTrio</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate KnockoffTrio's feature statistics</h2>
+
+<h3>Description</h3>
+
+<p>Calculate KnockoffTrio's feature statistics using original and knockoff genotype data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KnockoffTrio(
+  dat,
+  dat.ko = NA,
+  pos,
+  start = NA,
+  end = NA,
+  size = c(1, 1000, 5000, 10000, 20000, 50000),
+  p_value_only = FALSE,
+  adjust_for_cov = FALSE,
+  y = NA,
+  chr = "1",
+  xchr = FALSE,
+  sex = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>A 3n*p matrix for the original genotype data, in which n is the number of trios and p is the number of variants. Each trio must consist of father, mother, and offspring (in this order). The genotypes must be coded as 0, 1, or 2. Missing genotypes are not allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dat.ko</code></td>
+<td>
+<p>A 3n*p*M array for the knockoff genotype data created by function create_knockoff. M is the number of knockoffs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pos</code></td>
+<td>
+<p>A numeric vector of length p for the position of p variants.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>An integer for the first position of sliding windows. If NA, start=min(pos). Only used if you would like to use the same starting position for different cohorts/analyses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end</code></td>
+<td>
+<p>An integer for the last position of sliding windows. If NA, end=max(pos). Only used if you would like to use the same ending position for different cohorts/analyses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>A numeric vector for the size(s) of sliding windows when scanning the genome</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p_value_only</code></td>
+<td>
+<p>A logical value indicating whether to perform the knockoff analysis. When p_value_only is TRUE, only the ACAT-combined p-values are to be calculated for each window. When p_value_only is FALSE, dat.ko is required and KnockoffTrio's feature statistics are to be calculated for each window in addition to the p-values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adjust_for_cov</code></td>
+<td>
+<p>A logical value indicating whether to adjust for covariates. When adjust_for_cov is TRUE, y is required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A numeric vector of length n for the residual Y-Y_hat. Y_hat is the predicted value from the regression model in which the quantitative trait Y is regressed on the covariates. If Y is dichotomous, you may treat Y as quantitative when applying the regression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>chr</code></td>
+<td>
+<p>A character for the name of the chromosome, e.g., "1", "2", ..., "22", and "X".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xchr</code></td>
+<td>
+<p>A logical value indicating whether the analysis is for the X chromosome. When xchr is TRUE, the analysis is for the X chromosome and sex is required. When xchr is FALSE, the analysis is for the autosomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sex</code></td>
+<td>
+<p>A numeric vector of length n for the sex of offspring. 0s indicate females and 1s indicate males. Sex is required when xchr is TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame for the analysis results. Each row contains the p-values and, if p_value_only is FALSE, KnockoffTrio's feature statistics for a window.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(KnockoffTrio.example)
+dat.ko&lt;-create_knockoff(KnockoffTrio.example$dat.hap,KnockoffTrio.example$pos,M=10)
+window&lt;-KnockoffTrio(KnockoffTrio.example$dat,dat.ko,KnockoffTrio.example$pos)
+</code></pre>
+
+
+</div>

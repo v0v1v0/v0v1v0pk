@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kappam_fleiss</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fleiss' kappa for multiple nominal-scale raters</h2>
+
+<h3>Description</h3>
+
+<p>When multiple raters judge subjects on a nominal scale we can assess their agreement with Fleiss' kappa.
+It is a generalization of Cohen's Kappa for two raters and there are different variants how to assess chance agreement.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kappam_fleiss(
+  ratings,
+  variant = c("fleiss", "conger", "robust", "uniform"),
+  detail = FALSE,
+  ratingScale = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ratings</code></td>
+<td>
+<p>matrix (subjects by raters), containing the ratings</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variant</code></td>
+<td>
+<p>Which variant of kappa? Default is Fleiss (1971). Other options are Conger (1980) or robust variant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>detail</code></td>
+<td>
+<p>Should category-wise Kappas be computed? Only available for the Fleiss (1971) variant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ratingScale</code></td>
+<td>
+<p>Specify possible levels for the rating. Default <code>NULL</code> means to use all unique levels from the sample.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Different <strong>variants</strong> of Fleiss' kappa are implemented.
+By default (<code>variant="fleiss"</code>), the original Fleiss Kappa (1971) is calculated, together with an asymptotic standard error and test for kappa=0.
+It assumes that the raters involved are not assumed to be the same (one-way ANOVA setting).
+The marginal category proportions determine the chance agreement.
+Setting <code>variant="conger"</code> gives the variant of Conger (1980) that reduces to Cohen's kappa when m=2 raters.
+It assumes identical raters for the different subjects (two-way ANOVA setting).
+The chance agreement is based on the category proportions of each rater separately.
+Typically, the Conger variant yields slightly higher values than Fleiss kappa.
+<code>variant="robust"</code> assumes a chance agreement of two raters to be simply 1/q, where q is the number of categories (uniform model).
+</p>
+
+
+<h3>Value</h3>
+
+<p>list containing Fleiss's kappa agreement measure (value) or <code>NULL</code> if no subjects
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>irr::kappam.fleiss()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 4 subjects were rated by 3 raters in categories "1", "2" or "3"
+# organize ratings as matrix with subjects in rows and raters in columns
+m &lt;- matrix(c("3", "2", "3",
+              "2", "2", "1",
+              "1", "3", "1",
+              "2", "2", "3"), ncol = 3, byrow = TRUE)
+kappam_fleiss(m)
+
+# show category-wise kappas -----
+kappam_fleiss(m, detail = TRUE)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,332 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>factorial_anova_2_way</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Factorial ANOVA 2-Way (Two-Way Factorial ANOVA)</h2>
+
+<h3>Description</h3>
+
+<p>Conduct a two-way factorial analysis of variance (ANOVA).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">factorial_anova_2_way(
+  data = NULL,
+  dv_name = NULL,
+  iv_1_name = NULL,
+  iv_2_name = NULL,
+  iv_1_values = NULL,
+  iv_2_values = NULL,
+  sigfigs = 3,
+  robust = FALSE,
+  iterations = 2000,
+  plot = TRUE,
+  error_bar = "ci",
+  error_bar_range = 0.95,
+  error_bar_tip_width = 0.13,
+  error_bar_thickness = 1,
+  error_bar_caption = TRUE,
+  line_colors = c("red", "blue"),
+  line_types = NULL,
+  line_thickness = 1,
+  dot_size = 3,
+  position_dodge = 0.13,
+  x_axis_title = NULL,
+  y_axis_title = NULL,
+  y_axis_title_vjust = 0.85,
+  legend_title = NULL,
+  legend_position = "right",
+  output = "anova_table",
+  png_name = NULL,
+  width = 7000,
+  height = 4000,
+  units = "px",
+  res = 300,
+  layout_matrix = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_name</code></td>
+<td>
+<p>name of the first independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_name</code></td>
+<td>
+<p>name of the second independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_values</code></td>
+<td>
+<p>restrict all analyses to observations having
+these values for the first independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_values</code></td>
+<td>
+<p>restrict all analyses to observations having
+these values for the second independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to which to round
+values in anova table (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+<p>if <code>TRUE</code>, conduct a robust ANOVA in addition.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterations</code></td>
+<td>
+<p>number of bootstrap samples for robust ANOVA.
+The default is set at 2000, but consider increasing the number
+of samples to 5000, 10000, or an even larger number, if slower
+handling time is not an issue.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>if <code>TRUE</code>, print a plot and enable returning an output
+(default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar</code></td>
+<td>
+<p>if <code>error_bar = "se"</code>; error bars will be +/-1
+standard error; if <code>error_bar = "ci"</code> error bars will be a
+confidence interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_range</code></td>
+<td>
+<p>width of the confidence interval
+(default = 0.95 for 95 percent confidence interval).
+This argument will not apply when <code>error_bar = "se"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_tip_width</code></td>
+<td>
+<p>graphically, width of the segments
+at the end of error bars (default = 0.13)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_thickness</code></td>
+<td>
+<p>thickness of the error bars (default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_caption</code></td>
+<td>
+<p>should a caption be included to indicate
+the width of the error bars? (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_colors</code></td>
+<td>
+<p>colors of the lines connecting means (default = NULL)
+If the second IV has two levels, then by default,
+<code>line_colors = c("red", "blue")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_types</code></td>
+<td>
+<p>types of the lines connecting means (default = NULL)
+If the second IV has two levels, then by default,
+<code>line_types = c("solid", "dashed")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_thickness</code></td>
+<td>
+<p>thickness of the lines connecting group means,
+(default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_size</code></td>
+<td>
+<p>size of the dots indicating group means (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>position_dodge</code></td>
+<td>
+<p>by how much should the group means and error bars
+be horizontally offset from each other so as not to overlap?
+(default = 0.13)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_title</code></td>
+<td>
+<p>a character string for the x-axis title. If no
+input is entered, then, by default, the first value of
+<code>iv_name</code> will be used as the x-axis title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title</code></td>
+<td>
+<p>a character string for the y-axis title. If no
+input is entered, then, by default, <code>dv_name</code> will be used
+as the y-axis title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title_vjust</code></td>
+<td>
+<p>position of the y axis title (default = 0.85).
+By default, <code>y_axis_title_vjust = 0.85</code>, which means that the
+y axis title will be positioned at 85% of the way up from the bottom
+of the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_title</code></td>
+<td>
+<p>a character for the legend title. If no input
+is entered, then, by default, the second value of <code>iv_name</code>
+will be used as the legend title. If <code>legend_title = FALSE</code>,
+then the legend title will be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_position</code></td>
+<td>
+<p>position of the legend:
+<code>"none", "top", "right", "bottom", "left", "none"</code>
+(default = <code>"right"</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output type can be one of the following:
+<code>"anova_table"</code>, <code>"group_stats"</code>, <code>"plot"</code>,
+<code>"robust_anova_results"</code>, <code>"robust_anova_post_hoc_results"</code>,
+<code>"robust_anova_post_hoc_contrast"</code>, <code>"all"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>png_name</code></td>
+<td>
+<p>name of the PNG file to be saved.
+If <code>png_name = TRUE</code>, the name will be "factorial_anova_2_way_"
+followed by a timestamp of the current time.
+The timestamp will be in the format, jan_01_2021_1300_10_000001,
+where "jan_01_2021" would indicate January 01, 2021;
+1300 would indicate 13:00 (i.e., 1 PM); and 10_000001 would
+indicate 10.000001 seconds after the hour.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>width of the PNG file (default = 7000)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>height of the PNG file (default = 4000)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>the units for the <code>width</code> and <code>height</code> arguments.
+Can be <code>"px"</code> (pixels), <code>"in"</code> (inches), <code>"cm"</code>,
+or <code>"mm"</code>. By default, <code>units = "px"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+<p>The nominal resolution in ppi which will be recorded
+in the png file, if a positive integer. Used for units
+other than the default. If not specified, taken as 300 ppi
+to set the size of text and line widths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layout_matrix</code></td>
+<td>
+<p>The layout argument for arranging plots and tables
+using the <code>grid.arrange</code> function.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following package(s) must be installed prior to running this function:
+Package 'car' v3.0.9 (or possibly a higher version) by
+Fox et al. (2020),
+<a href="https://cran.r-project.org/package=car">https://cran.r-project.org/package=car</a>
+</p>
+<p>If robust ANOVA is to be conducted, the following package(s)
+must be installed prior to running the function:
+Package 'WRS2' v1.1-1 (or possibly a higher version) by
+Mair &amp; Wilcox (2021),
+<a href="https://cran.r-project.org/package=WRS2">https://cran.r-project.org/package=WRS2</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>by default, the output will be <code>"anova_table"</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+factorial_anova_2_way(
+  data = mtcars, dv_name = "mpg", iv_1_name = "vs",
+  iv_2_name = "am", iterations = 100)
+anova_results &lt;- factorial_anova_2_way(
+  data = mtcars, dv_name = "mpg", iv_1_name = "vs",
+  iv_2_name = "am", output = "all")
+anova_results
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reducedDimPlot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scatter plot for dimensional reduction results</h2>
+
+<h3>Description</h3>
+
+<p>Plots a scatter plot of the indicated dimensional reduction results.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reducedDimPlot(
+  TapestriExperiment,
+  alt.exp = "alleleFrequency",
+  dim.reduction,
+  dim.x = 1,
+  dim.y = 2,
+  group.label = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.exp</code></td>
+<td>
+<p>Character, <code>altExp</code> to use, <code>NULL</code> uses top-level/main experiment. Default "alleleFrequency".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.reduction</code></td>
+<td>
+<p>Character, dimension reduction to plot, either "PCA" or "UMAP".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.x</code></td>
+<td>
+<p>Numeric, index of dimensional reduction data to plot on X axis. Default 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.y</code></td>
+<td>
+<p>Numeric, index of dimensional reduction data to plot on Y axis. Default 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.label</code></td>
+<td>
+<p>Character, <code>colData</code> column for grouping samples by color. Default <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>ggplot2 object, scatter plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- runPCA(tap.object, alt.exp = "alleleFrequency")
+reducedDimPlot(tap.object, dim.reduction = "pca")
+</code></pre>
+
+
+</div>

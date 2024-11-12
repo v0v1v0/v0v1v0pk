@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lmkkmeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Localised multiple kernel k-means</h2>
+
+<h3>Description</h3>
+
+<p>Perform the training step of the localised multiple kernel k-means.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lmkkmeans(Km, parameters, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Km</code></td>
+<td>
+<p>An array of size N x N x M containing M different N x N kernel
+matrices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A list of parameters containing the desired number of
+clusters, <code>cluster_count</code>, and the number of iterations of the
+algorithm to be run, <code>iteration_count</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Boolean flag. If TRUE, at each iteration the iteration number
+is printed. Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function returns a list containing:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>clustering</code></td>
+<td>
+<p>the cluster labels for each element (i.e. row/column) of
+the kernel matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objective</code></td>
+<td>
+<p>the value of the objective function for the given
+clustering.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>same parameters as in the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Theta</code></td>
+<td>
+<p>N x M matrix of weights, each row corresponds to an observation
+and each column to one of the kernels.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Mehmet Gonen
+</p>
+
+
+<h3>References</h3>
+
+<p>Gonen, M. and Margolin, A.A., 2014. Localized data fusion for
+kernel k-means clustering with application to cancer biology. In Advances in
+Neural Information Processing Systems (pp. 1305-1313).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if(requireNamespace("Rmosek", quietly = TRUE) &amp;&amp;
+(!is.null(utils::packageDescription("Rmosek")$Configured.MSK_VERSION))){
+
+# Initialise 100 x 100 x 3 array containing M kernel matrices
+# representing three different types of similarities between 100 data points
+km &lt;- array(NA, c(100, 100, 3))
+# Load kernel matrices
+km[,,1] &lt;- as.matrix(read.csv(system.file('extdata',
+'kernel_matrix1.csv', package = 'klic'), row.names = 1))
+km[,,2] &lt;- as.matrix(read.csv(system.file('extdata',
+'kernel_matrix2.csv', package = 'klic'), row.names = 1))
+km[,,3] &lt;- as.matrix(read.csv(system.file('extdata',
+'kernel_matrix3.csv', package = 'klic'), row.names = 1))
+
+# Initalize the parameters of the algorithm
+parameters &lt;- list()
+# Set the number of clusters
+parameters$cluster_count &lt;- 4
+# Set the number of iterations
+parameters$iteration_count &lt;- 10
+
+# Perform training
+state &lt;- lmkkmeans(km, parameters)
+
+# Display the clustering
+print(state$clustering)
+# Display the kernel weights
+print(state$Theta)
+}
+</code></pre>
+
+
+</div>

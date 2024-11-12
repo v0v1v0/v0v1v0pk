@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tkonfound_fig</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw Figures for Change in Effect Size in 2x2 Tables</h2>
+
+<h3>Description</h3>
+
+<p>This function generates plots illustrating how the change in effect size 
+is influenced by switching or replacing outcomes in a 2x2 table. It produces
+two plots: one showing all possibilities (switching) and another zoomed in 
+the area for positive RIR (Relative Impact Ratio).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tkonfound_fig(
+  a,
+  b,
+  c,
+  d,
+  thr_p = 0.05,
+  switch_trm = TRUE,
+  test = "fisher",
+  replace = "control"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>Number of cases in the control group with unsuccessful outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>Number of cases in the control group with successful outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+<p>Number of cases in the treatment group with unsuccessful outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>Number of cases in the treatment group with successful outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thr_p</code></td>
+<td>
+<p>P-value threshold for statistical significance, default is 0.05.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>switch_trm</code></td>
+<td>
+<p>Whether to switch the two cells in the treatment or 
+control row, default is TRUE (treatment row).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>Type of statistical test used, either "Fisher's Exact Test"
+(default) or "Chi-square test".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>Indicates whether to use the entire sample or just the control
+group for calculating the base rate, default is "control".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns two plots showing the effect of hypothetical case switches 
+on the effect size in a 2x2 table.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tkonfound_fig(14, 17, 6, 25, test = "chisq")
+
+</code></pre>
+
+
+</div>

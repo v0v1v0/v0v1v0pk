@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>spectrumShift</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Spectrum shift</h2>
+
+<h3>Description</h3>
+
+<p>Make a symmetric matrix positive semi-definite.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">spectrumShift(kernelMatrix, coeff = 1.2, shift = NULL, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kernelMatrix</code></td>
+<td>
+<p>symmetric matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeff</code></td>
+<td>
+<p>Coefficient by which the minimum eigenvalue is multiplied when
+shifting the eigenvalues, in order to avoid numeric problems. Default is 1.2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shift</code></td>
+<td>
+<p>Value of the constant added to the diagonal, if known a priori.
+Default is NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Boolean flag: if TRUE, information about the shift is printed
+to screen. Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function returns the matrix <code>kernelMatrix</code> after applying
+the required spectrum shift.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Alessandra Cabassi <a href="mailto:alessandra.cabassi@mrc-bsu.cam.ac.uk">alessandra.cabassi@mrc-bsu.cam.ac.uk</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Load one dataset with 300 observations, 2 variables, 6 clusters
+data &lt;- as.matrix(read.csv(system.file("extdata", "dataset1.csv",
+package = "klic"), row.names = 1))
+
+# Compute consensus clustering with K=4 clusters
+cm &lt;- coca::consensusCluster(data, 4)
+
+# Shift eigenvalues of the matrix by a constant: (min eigenvalue) * (coeff)
+km &lt;- spectrumShift(cm, coeff = 1.05)
+</code></pre>
+
+
+</div>

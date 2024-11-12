@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keysRecordInput</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a keys recorder input control</h2>
+
+<h3>Description</h3>
+
+<p>Create a key input that can be used to record keys pressed by
+the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keysRecordInput(inputId)
+
+recordKeys(inputId, session = shiny::getDefaultReactiveDomain())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputId</code></td>
+<td>
+<p>The input slot that will be used to access the value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>The <code>session</code> object passed to function given to
+<code>shinyServer</code>. Default is <code>getDefaultReactiveDomain()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (interactive()) {
+  library(shiny)
+
+  ui &lt;- fluidPage(
+    useKeys(),
+    keysRecordInput("recorder"),
+    keysInput("keys", "command+shift+k"),
+    actionButton("record", "Record keys")
+  )
+
+  server &lt;- function(input, output, session) {
+    observeEvent(input$record, {
+      print("recording keys...")
+      recordKeys("recorder")
+    })
+    observeEvent(input$recorder, {
+      print("adding keys...")
+      addKeys("keys", input$recorder)
+    })
+    observeEvent(input$keys, {
+      print(input$keys)
+    })
+  }
+
+  shinyApp(ui, server)
+}
+</code></pre>
+
+
+</div>

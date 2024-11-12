@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getK</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>getK</h2>
+
+<h3>Description</h3>
+
+<p><code>getK</code> calculates the kernel matrix between X and itself and returns a n by n matrix. Alternatively, it calculates the kernel matrix between X and X2 and returns a n by n2 matrix. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getK (X,kernel,para=NULL,X2=NULL,C = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>covariate matrix with dimension n by d. Note this is not the paired difference of covariate matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>string specifying type of kernel:
+polynomial or p (1 + &lt;x,y&gt;)^para, <br>
+rbf or r exp(-para*||x-y||^2), <br>
+linear or l &lt;x,y&gt;, <br>
+ibs or i 0.5*mean(2.0 - |x-y|) or sum(w*(2.0 - |x-y|))/sum(w), with x[i],y[i] in {0,1,2} and weights 'w' given in 'para'. <br>
+hamming or h for sum(x == y) with x[i],y[i] binary, <br>
+no default.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>para</code></td>
+<td>
+<p>parameter of the kernel fucntion. for <code>ibs</code> or <code>hamming</code>, para can be a vector of weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X2</code></td>
+<td>
+<p>optional second covariate matrix with dimension n2 by d</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>logical. If TRUE, kernels are computed by custom routines in C, which may be more memory efficient, and faster too for ibs and hamming kernels.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>IBS stands for 'Identical By State'. If 'x','y' are in in {0,1,2} then <br>
+IBS(x,y) = 0 if |x-y|=2, 1 if |x-y|=1, 2 if |x-y|=0, or IBS(x,y) = 2.0 - |x-y|. <br>
+K(u,v) = sum(IBS(u[i],v[i])) / 2K where K = length(u). <br>
+The 'hamming' kernel is the equivalent of the 'ibs' kernel for binary data. 
+Note that 'hamming' kernel is based on hamming similarity(!), not on dissimilarity distance.
+</p>
+<p>Within in the code, C is default to TRUE for ibs and hamming kernels and FALSE otherwise.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A kernel matrix.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Youyi Fong <a href="mailto:youyifong@gmail.com">youyifong@gmail.com</a><br>
+Krisztian Sebestyen <a href="mailto:ksebestyen@gmail.com">ksebestyen@gmail.com</a><br>
+Shuxin Yin <br></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+X = cbind(x1=rnorm(n=5), x2=rnorm(n=5))
+dim(X)
+X2 = cbind(x1=rnorm(n=3), x2=rnorm(n=3))
+dim(X2)
+
+K = getK(X,"linear")
+dim(K)
+
+K = getK(X,"linear",X2=X2)
+dim(K)
+K1 = getK(X2,"l",X2=X)
+dim(K1)
+all(K==t(K1))
+
+
+# RBF kernel
+K = getK(X,"rbf",para=1,X2=X2)
+K1 = getK(X2,"r",para=1,X2=X)
+all(K==t(K1))
+
+
+# IBS kernel for ternary data 
+X &lt;- as.matrix(expand.grid(0:2,0:2))
+K = getK(X,kernel = 'ibs')
+
+# add weight
+w = runif(ncol(X))
+K = getK(X,kernel = 'ibs',para = w) 
+
+
+# IBS kernel for binary data via option 'h' for 'hamming similarity measure'
+X &lt;- as.matrix(expand.grid(0:1,0:1))
+K=getK(X,kernel = 'h')
+
+</code></pre>
+
+
+</div>

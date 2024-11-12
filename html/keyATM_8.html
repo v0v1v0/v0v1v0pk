@@ -1,0 +1,110 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyATMvb</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>keyATM with Collapsed Variational Bayes</h2>
+
+<h3>Description</h3>
+
+<p><strong>Experimental feature:</strong> Fit keyATM base with Collapsed Variational Bayes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyATMvb(
+  docs,
+  model,
+  no_keyword_topics,
+  keywords = list(),
+  model_settings = list(),
+  vb_options = list(),
+  priors = list(),
+  options = list(),
+  keep = list()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>docs</code></td>
+<td>
+<p>texts read via <code>keyATM_read()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>keyATM model: <code>base</code>, <code>covariates</code>, and <code>dynamic</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>no_keyword_topics</code></td>
+<td>
+<p>the number of regular topics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keywords</code></td>
+<td>
+<p>a list of keywords</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_settings</code></td>
+<td>
+<p>a list of model specific settings (details are in the online documentation)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vb_options</code></td>
+<td>
+<p>a list of settings for Variational Bayes </p>
+
+<ul>
+<li> <p><strong>convtol</strong>: the default is <code>1e-4</code>
+</p>
+</li>
+<li> <p><strong>init</strong>: <code>mcmc</code> (default) or <code>random</code>
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>a list of priors of parameters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>a list of options same as <code>keyATM()</code>. Options are used when initialization method is <code>mcmc</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep</code></td>
+<td>
+<p>a vector of the names of elements you want to keep in output</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>keyATM_output</code> object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://keyatm.github.io/keyATM/articles/pkgdown_files/keyATMvb.html">https://keyatm.github.io/keyATM/articles/pkgdown_files/keyATMvb.html</a>
+</p>
+
+
+</div>

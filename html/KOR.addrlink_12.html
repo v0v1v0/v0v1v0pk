@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>split_address</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Split Adresses Into Street, House Number And Additional Letter</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a character vector where each element is made up from a concatenation of 
+street name, house number and possibly an additional letter and splits it into its parts. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">split_address(x, debug = FALSE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A character vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>debug</code></td>
+<td>
+<p>If true, all records will be printed to the console</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the function fails, consider using <code>debug = TRUE</code>. This will print the record, which caused the error. 
+Consider filing an issue on the linked git project (see DESCRIPTION).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data.frame with three columns
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Strasse</code></td>
+<td>
+<p>A character column containing the extracted street names</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hausnummer</code></td>
+<td>
+<p>House number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hausnummernzusatz</code></td>
+<td>
+<p>Additional letter</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>For a more advanced, general purpose solution see libpostal.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Schürmann</p>
+
+
+<h3>See Also</h3>
+
+<p><code>split_number</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">split_address(c("Teststr. 8-9 a", "Erster Weg 1-2", "Ahornallee 100a-102c"))
+</code></pre>
+
+
+</div>

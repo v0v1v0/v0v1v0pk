@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>figr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Code Chunk Reference</h2>
+
+<h3>Description</h3>
+
+<p>Reference a code chunk.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">figr(label, prefix, link, type)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>The code chunk label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix</code></td>
+<td>
+<p>Logical: return the prefix (chunk type) along with the rank.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>### Logical: Place an HTML link to the anchor?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of the referenced chunk.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A text or url reference to the code chunk.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">figr("test", type="reference")
+figr("test")
+figr("test", TRUE, link=FALSE)
+if(interactive()){
+  require(knitr)
+  opts_knit$set(kfigr.prefix=TRUE, kfigr.link=TRUE)
+  figr("test")
+}
+
+</code></pre>
+
+
+</div>

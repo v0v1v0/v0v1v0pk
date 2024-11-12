@@ -1,0 +1,152 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Tuner_class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tuner</h2>
+
+<h3>Description</h3>
+
+<p>Tuner class for Keras models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Tuner_class(
+  oracle,
+  hypermodel,
+  max_model_size = NULL,
+  optimizer = NULL,
+  loss = NULL,
+  metrics = NULL,
+  distribution_strategy = NULL,
+  directory = NULL,
+  project_name = NULL,
+  logger = NULL,
+  tuner_id = NULL,
+  overwrite = FALSE,
+  executions_per_trial = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>oracle</code></td>
+<td>
+<p>Instance of Oracle class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hypermodel</code></td>
+<td>
+<p>Instance of HyperModel class (or 
+callable that takes hyperparameters and returns a 
+Model instance).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_model_size</code></td>
+<td>
+<p>Int. Maximum size of weights 
+(in floating point coefficients) for a valid models. 
+Models larger than this are rejected.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimizer</code></td>
+<td>
+<p>Optional. Optimizer instance. May be 
+used to override the 'optimizer' argument in the 'compile' 
+step for the models. If the hypermodel does not compile 
+the models it generates, then this argument must be specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loss</code></td>
+<td>
+<p>Optional. May be used to override the 'loss' 
+argument in the 'compile' step for the models. If the 
+hypermodel does not compile the models it generates, 
+then this argument must be specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metrics</code></td>
+<td>
+<p>Optional. May be used to override the 'metrics' 
+argument in the 'compile' step for the models. If the hypermodel 
+does not compile the models it generates, then this argument 
+must be specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distribution_strategy</code></td>
+<td>
+<p>Optional. A TensorFlow 'tf$distribute' 
+DistributionStrategy instance. If specified, each trial will run 
+under this scope. For example, ‘tf$distribute.MirroredStrategy([’/gpu:0, /'gpu:1])' 
+will run each trial on two GPUs. Currently only single-worker strategies are supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>directory</code></td>
+<td>
+<p>String. Path to the working directory (relative).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>project_name</code></td>
+<td>
+<p>Name to use as prefix for files saved by this Tuner.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logger</code></td>
+<td>
+<p>Optional. Instance of Logger class, used for 
+streaming data to Cloud Service for monitoring.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tuner_id</code></td>
+<td>
+<p>tuner_id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Bool, default 'FALSE'. If 'FALSE', reloads an 
+existing project of the same name if one is found. Otherwise, overwrites the project.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>executions_per_trial</code></td>
+<td>
+<p>Integer, the number of executions 
+(training a model from scratch, starting from a new initialization) to run per trial 
+(model configuration). Model metrics may vary greatly depending on random initialization, 
+hence it is often a good idea to run several executions per trial 
+in order to evaluate the performance of a given set of hyperparameter values. 
+**kwargs: Arguments for 'BaseTuner'.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>May be subclassed to create new tuners.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a tuner object
+</p>
+
+
+</div>

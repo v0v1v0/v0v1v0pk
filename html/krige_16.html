@@ -1,0 +1,154 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>exponential.semivariance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parametric Exponential Semivariance</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the value of a parametric powered exponential semivariogram 
+given the values of the parameters and the distance between observations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">exponential.semivariance(...)
+
+## S3 method for class 'krige'
+exponential.semivariance(object, ...)
+
+## Default S3 method:
+exponential.semivariance(nugget, decay, partial.sill, distance, power = 2, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>krige</code> object of which the values of the estimates are used 
+to calculate the exponential semivariance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nugget</code></td>
+<td>
+<p>The value of the non-spatial variance, or nugget term.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decay</code></td>
+<td>
+<p>The value of the decay term that sets the level of correlation given distance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>partial.sill</code></td>
+<td>
+<p>The value of the spatial variance, or partial sill term.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distance</code></td>
+<td>
+<p>The distance among observations for which the semivariance value is desired.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power</code></td>
+<td>
+<p>The exponent specified in the powered exponential semivariogram. 
+Defaults to 2, which corresponds to a Gaussian semivariance function.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The models estimated by the <code>krige</code> package assume a powered exponential 
+covariance structure. Each parametric covariance function for kriging models 
+corresponds to a related semivariance function, given that highly correlated 
+values will have a small variance in differences while uncorrelated values 
+will vary widely. More specifically, semivariance is equal to half of the 
+variance of the difference in a variable's values at a given distance. That is, 
+the semivariance is defined as: <code class="reqn">\gamma(h)=0.5*E[X(s+h)-X(s)]^2</code>, where <code class="reqn">X</code> 
+is the variable of interest, s is a location, and h is the distance from s 
+to another location. 
+</p>
+<p>The powered exponential covariance structure implies that the semivariance 
+follows the specific functional form of <code class="reqn">\gamma(d)=\tau^2+\sigma^2(1-\exp(-|\phi d|^p))</code> 
+(Banerjee, Carlin, and Gelfand 2015, 27). A perk of this structure is that 
+the special case of <em>p=1</em> implies the commonly-used exponential semivariogram, 
+and the special case of <em>p=2</em> implies the commonly-used Gaussian semivariogram. 
+Upon estimating a model, it is advisable to graph the functional form of the 
+implied parametric semivariance structure. By substituting estimated values 
+of the <code>nugget</code>, <code>decay</code>, and <code>partial.sill</code> terms, as well 
+as specifying the correct <code>power</code> argument, it is possible to compute 
+the implied semivariance from the model. The <code>distance</code> argument easily 
+can be a vector of observed distance values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A semivariance object. It will be a numeric vector with each bin's value 
+of the semivariance.
+</p>
+
+
+<h3>References</h3>
+
+<p>Sudipto Banerjee, Bradley P. Carlin, and Alan E. Gelfand. 2015. <em>Hierarchical 
+Modeling and Analysis for Spatial Data</em>. 2nd ed. Boca Raton, FL: CRC Press.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>semivariogram</code>, <code>plot.semivariance</code>, <code>exponential.semivariance</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize data
+summary(ContrivedData)
+
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+  data = ContrivedData, n.iter = M, range.tol = 0.05)
+  
+# Parametric powered exponential semivariogram
+exponential.semivariance(contrived.run)
+
+#OLS Model for Residuals
+contrived.ols&lt;-lm(y~x.1+x.2,data=ContrivedData)
+
+# Residual semivariance
+(resid.semivar &lt;- semivariance(contrived.ols, coords = c("s.1", "s.2"), terms = "residual"))
+
+# Parametric exponential semivariance
+exponential.semivariance(nugget=0.5,decay=2.5,partial.sill=0.5, 
+                         distance=as.numeric(names(resid.semivar)))
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

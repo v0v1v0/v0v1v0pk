@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_backup_and_restore</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Callback to back up and restore the training state</h2>
+
+<h3>Description</h3>
+
+<p>Callback to back up and restore the training state
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_backup_and_restore(backup_dir, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>backup_dir</code></td>
+<td>
+<p>String, path to store the checkpoint.
+e.g. <code>backup_dir = normalizePath('./backup')</code>
+This is the directory in which the system stores temporary files to
+recover the model from jobs terminated unexpectedly. The directory
+cannot be reused elsewhere to store other files, e.g. by
+<code>BackupAndRestore</code> callback of another training, or by another callback
+(<code>ModelCheckpoint</code>) of the same training.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For backwards and forwards compatibility</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>BackupAndRestore</code> callback is intended to recover training from an
+interruption that has happened in the middle of a <code>fit(model)</code> execution, by
+backing up the training states in a temporary checkpoint file (with the help
+of a <code>tf.train.CheckpointManager</code>), at the end of each epoch. Each backup
+overwrites the previously written checkpoint file, so at any given time there
+is at most one such checkpoint file for backup/restoring purpose.
+</p>
+<p>If training restarts before completion, the training state (which includes the
+<code>Model</code> weights and epoch number) is restored to the most recently saved state
+at the beginning of a new <code>fit()</code> run. At the completion of a <code>fit()</code>
+run, the temporary checkpoint file is deleted.
+</p>
+<p>Note that the user is responsible to bring jobs back after the interruption.
+This callback is important for the backup and restore mechanism for fault
+tolerance purpose, and the model to be restored from an previous checkpoint is
+expected to be the same as the one used to back up. If user changes arguments
+passed to compile or fit, the checkpoint saved for fault tolerance can become
+invalid.
+</p>
+<p>Note:
+</p>
+
+<ol>
+<li>
+<p> This callback is not compatible with eager execution disabled.
+</p>
+</li>
+<li>
+<p> A checkpoint is saved at the end of each epoch. After restoring,
+<code>fit()</code> redoes any partial work during the unfinished epoch in which the
+training got restarted (so the work done before the interruption doesn't
+affect the final model state).
+</p>
+</li>
+<li>
+<p> This works for both single worker and multi-worker modes. When <code>fit()</code>
+is used with <code>tf.distribute</code>, it supports <code>tf.distribute.MirroredStrategy</code>,
+<code>tf.distribute.MultiWorkerMirroredStrategy</code>, <code>tf.distribute.TPUStrategy</code>, and
+<code>tf.distribute.experimental.ParameterServerStrategy</code>.
+</p>
+</li>
+</ol>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/BackupAndRestore">https://www.tensorflow.org/api_docs/python/tf/keras/callbacks/BackupAndRestore</a>
+</p>
+</li></ul>
+</div>

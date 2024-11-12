@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>assign_fn_parameters_as_vars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Assign function parameters as values</h2>
+
+<h3>Description</h3>
+
+<p>Take a function and assign all the parameters defined within it
+as values in the specified environment (e.g., global environment)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">assign_fn_parameters_as_vars(fun = NULL, envir = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fun</code></td>
+<td>
+<p>a function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>envir</code></td>
+<td>
+<p>an environment in which to assign the parameters as
+values (default = <code>.GlobalEnv</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function can be useful when you are testing a function and
+you need to set all the function's parameters in a single operation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+assign_fn_parameters_as_vars(pm)
+assign_fn_parameters_as_vars(mean)
+assign_fn_parameters_as_vars(sum)
+assign_fn_parameters_as_vars(lm)
+assign_fn_parameters_as_vars(floodlight_2_by_continuous)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

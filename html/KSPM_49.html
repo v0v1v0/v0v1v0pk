@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stepKSPM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Choose a model by AIC or BIC in a Stepwise Algorithm</h2>
+
+<h3>Description</h3>
+
+<p>Performs stepwise model selection for Kernel Semi Parametric Model by AIC or BIC.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stepKSPM(object, data = NULL, linear.lower = NULL,
+  linear.upper = NULL, kernel.lower = NULL, kernel.upper = NULL,
+  direction = "both", k = 2, kernel.param = "fixed", trace = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm" with only one kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear.lower</code></td>
+<td>
+<p>one side formula corresponding to the smallest set of variables that should be included in the linear part of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear.upper</code></td>
+<td>
+<p>one side formula corresponding to the largest set of variables that may be included in the linear part of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.lower</code></td>
+<td>
+<p>one side formula corresponding to the smallest set of variables that should be included in the kernel part of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.upper</code></td>
+<td>
+<p>one side formula corresponding to the  largest set of variables that may be included in the kernel part of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>direction</code></td>
+<td>
+<p>the mode of stepwise search, can be one of "both" (default), "backward", or "forward".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>type of information criteria used for the variable selection. If <code>k=2</code> AIC is used (default), if <code>k=log(n)</code>, BIC is used instead.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.param</code></td>
+<td>
+<p>define if hyperparameters should be fixed (<code>"fixed"</code>) or reestimated at each iteration (<code>"change"</code>). Tu use the last option, hyperparameter of model provided in <code>object</code> should have been estimated by the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>integer. If positive, information is printed during the running of step.kspm. Larger values may give more information on the fitting process.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This procedure may be done on <code>kspm</code> object defined with only one kernel part and for which a data frame including all variables was provided. Selection may be done on linear part only, on kernel part only or on both at the same time. To perform selection on linear (resp. kernel) part only, <code>kernel.lower</code> and <code>kernel.upper</code> (resp. <code>linear.lower</code> and <code>linear.upper</code>) should contain all the variables that should stay in the model for kernel (resp. linear) part.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>stepKSPM</code> returns the selected model.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>extractAIC.kspm
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+z1 &lt;- runif(15, 1, 6)
+z2 &lt;- rnorm(15, 1, 4)
+z3 &lt;- rnorm(15, 6, 2)
+z4 &lt;- runif(15, -10, 2)
+y &lt;- 3*x + (z1 + z2)^2 + rnorm(15, 0, 2)
+dfrm &lt;- data.frame(x = x, z1 = z1, z2 = z2, z3 = z3, z4 = z4, y = y)
+fit &lt;- kspm(y, linear = ~ x, kernel = ~ Kernel(~ z1 + z2 + z3 + z4,
+kernel.function = "polynomial", d= 2, rho = 1, gamma = 0), data = dfrm)
+stepKSPM(fit, k = 2, data = dfrm)
+
+</code></pre>
+
+
+</div>

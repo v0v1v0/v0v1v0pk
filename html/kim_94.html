@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pretty_round_p_value</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pretty round p-value</h2>
+
+<h3>Description</h3>
+
+<p>Round p-values to the desired number of decimals and remove
+leading 0s before the decimal.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pretty_round_p_value(
+  p_value_vector = NULL,
+  round_digits_after_decimal = 3,
+  include_p_equals = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p_value_vector</code></td>
+<td>
+<p>one number or a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_digits_after_decimal</code></td>
+<td>
+<p>how many digits after the decimal
+point should the p-value be rounded to?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include_p_equals</code></td>
+<td>
+<p>if <code>TRUE</code>, output will be a string of
+mathematical expression including "p", e.g., "p &lt; .01" (default = FALSE)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a character vector with p values, e.g.,
+a vector of strings like "&lt; .001" (or "p &lt; .001").
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">pretty_round_p_value(0.00001)
+pretty_round_p_value(0.00001, round_digits_after_decimal = 4)
+pretty_round_p_value(0.00001, round_digits_after_decimal = 5)
+# WARNING: the line of code below adding precision that may be unwarranted
+pretty_round_p_value(0.00001, round_digits_after_decimal = 6)
+pretty_round_p_value(
+  p_value_vector = 0.049,
+  round_digits_after_decimal = 2, include_p_equals = FALSE)
+pretty_round_p_value(c(0.0015, 0.0014, 0.0009), include_p_equals = TRUE)
+</code></pre>
+
+
+</div>

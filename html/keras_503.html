@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>model_from_saved_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Load a Keras model from the Saved Model format</h2>
+
+<h3>Description</h3>
+
+<p>Load a Keras model from the Saved Model format
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">model_from_saved_model(saved_model_path, custom_objects = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>saved_model_path</code></td>
+<td>
+<p>a string specifying the path to the SavedModel directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_objects</code></td>
+<td>
+<p>Optional dictionary mapping string names to custom classes
+or functions (e.g. custom loss functions).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a Keras model.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This functionality is experimental and only works with TensorFlow
+version &gt;= "2.0".
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other saved_model: 
+<code>model_to_saved_model()</code>
+</p>
+
+
+</div>

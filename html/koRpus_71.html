@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>DRP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Degrees of Reading Power (DRP)</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">DRP(txt.file, word.list, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>word.list</code></td>
+<td>
+<p>A vector or matrix (with exactly one column) which defines familiar words. For valid results
+the long Dale-Chall list with 3000 words should be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculates the Degrees of Reading Power,
+using the Bormuth Mean Cloze Score. In contrast to
+<code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+<p>This formula doesn't need syllable count.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  DRP(tagged.text, word.list=new.dale.chall.wl)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

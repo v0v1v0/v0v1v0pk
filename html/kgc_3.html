@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>genCoords</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>genCoords</h2>
+
+<h3>Description</h3>
+
+<p>This function will generate a list of coordinates for the 'fine' resolution climate zone map data, stored in 'kgz.rda'.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">genCoords(latlong = "lat", full = FALSE, latdim = 6480, londim = 12960)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>latlong</code></td>
+<td>
+<p>Whether a vector of latitude values, or longitude values, is being created.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>full</code></td>
+<td>
+<p>Specify whether to generate a full list of all coords in the full image, or just one row/column (default FALSE, means just one row/column).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>latdim</code></td>
+<td>
+<p>The number of pixels in the image in the latitude dimension (y)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>londim</code></td>
+<td>
+<p>The number of pixels in the image in the longitude dimension (x)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector of latitude or longitude coordinate values (default for a map 12960x 6480y).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ccoords &lt;- genCoords(latlong='lon',full='true')
+</code></pre>
+
+
+</div>

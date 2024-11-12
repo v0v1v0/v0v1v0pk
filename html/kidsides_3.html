@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>download_sqlite_db</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Download the Pediatric Drug Safety database</h2>
+
+<h3>Description</h3>
+
+<p>Download the database published in Giangreco et al. 2022. This function will prompt to download the database, so the cache directory will be identified and the database will be downloaded to it only after consent. Warning, the size of the uncompressed 'sqlite' file is close to 0.9GB or 900 MB. Use with caution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">download_sqlite_db(
+  method = "auto",
+  quiet = FALSE,
+  timeout = 1000,
+  force = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>The method to download the sqlite database. See <code>download.file</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Whether to download quietly. See <code>download.file</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeout</code></td>
+<td>
+<p>Extended download session for downloading this file. Default is 1000 seconds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>Whether to force the download of the database. Defaults to FALSE. Needs to be TRUE for database to download. The function will prompt for confirmation.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>TRUE, invisibly
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if(FALSE){
+download_sqlite_db() #set force=TRUE if desired to download 0.9GB file to machine
+}
+</code></pre>
+
+
+</div>

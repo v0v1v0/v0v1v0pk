@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KTA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel-target alignment</h2>
+
+<h3>Description</h3>
+
+<p>'KTA()' computes the alignment between a kernel matrix and a target variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KTA(K, y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A kernel matrix (class: "matrix").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>The target variable. A numeric vector or a factor with two levels.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Alignment value.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">K1 &lt;- RBF(iris[1:100,1:4],g=0.1)
+y &lt;- factor(iris[1:100,5])
+KTA(K1,y)
+</code></pre>
+
+
+</div>

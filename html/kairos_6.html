@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>IncrementTest-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Frequency Increment Test</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to represent a Frequency Increment Test results.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>statistic</code></dt>
+<dd>
+<p>A <code>numeric</code> vector giving the values of the t-statistic.</p>
+</dd>
+<dt><code>parameter</code></dt>
+<dd>
+<p>An <code>integer</code> giving the degrees of freedom for the
+t-statistic.</p>
+</dd>
+<dt><code>p_value</code></dt>
+<dd>
+<p>A <code>numeric</code> vector giving the the p-value for the test.</p>
+</dd>
+</dl>
+<h3>Coerce</h3>
+
+<p>In the code snippets below, <code>x</code> is an <code>IncrementTest</code> object.
+</p>
+
+<dl>
+<dt><code>as.data.frame(x)</code></dt>
+<dd>
+<p>Coerces to a <code>data.frame</code>.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This class inherits from <code>aion::TimeSeries</code>: dates are internally
+stored as <em>rata die</em>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other classes: 
+<code>AoristicSum-class</code>,
+<code>CountApportion-class</code>,
+<code>EventDate-class</code>,
+<code>MeanDate-class</code>,
+<code>PermutationOrder-class</code>,
+<code>RateOfChange-class</code>,
+<code>RefinePermutationOrder-class</code>
+</p>
+
+
+</div>

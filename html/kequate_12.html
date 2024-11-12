@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getEqirt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve Equated Values From an IRT-Equating</h2>
+
+<h3>Description</h3>
+
+<p>Function to retrieve the equated values of the IRT observed score equating from an object of class keout created by kequate.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getEqirt(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object of class keout as created by the function kequate.
+</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A vector containing the equated values of the IRT-equating.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kequate</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">irtmatX&lt;-matrix(0, 4, 3)
+irtmatX[,1]&lt;-c(0.1, 0.3, 0.2, 0.5)
+irtmatX[,2]&lt;-c(0.2, 0.5, 0.4, 0.7)
+irtmatX[,3]&lt;-c(0.3, 0.7, 0.6, 0.9)
+irtmatY&lt;-matrix(0, 4, 3)
+irtmatY[,1]&lt;-c(0.15, 0.2, 0.1, 0.4)
+irtmatY[,2]&lt;-c(0.2, 0.4, 0.3, 0.6)
+irtmatY[,3]&lt;-c(0.25, 0.6, 0.5, 0.8)
+irtX&lt;-c(12, 32, 54, 22, 10)
+irtY&lt;-c(24, 36, 48, 12, 10)
+xirt=0:4
+glmXirt&lt;-glm(irtX~xirt+I(xirt^2), family="poisson", x=TRUE)
+glmYirt&lt;-glm(irtY~xirt+I(xirt^2), family="poisson", x=TRUE)
+keEGirt&lt;-kequate("EG", 0:4, 0:4, glmXirt, glmYirt, irtx=irtmatX, irty=irtmatY)
+getEqirt(keEGirt)
+</code></pre>
+
+
+</div>

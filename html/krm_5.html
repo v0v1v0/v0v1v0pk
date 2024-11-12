@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>readFastaFile</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Read a Fasta Sequence File
+</h2>
+
+<h3>Description</h3>
+
+<p>Read a Fasta Sequence File
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">readFastaFile(fileName, sep = " ")
+writeFastaFile (seqList, fileName)
+aa2arabic (seq1) 
+string2arabic (seqList) 
+fastaFile2arabicFile (fastaFile, arabicFile, removeGapMajor=FALSE)
+selexFile2arabicFile (selexFile, arabicFile, removeGapMajor=FALSE)
+stringList2arabicFile (seqList, arabicFile, removeGapMajor=FALSE)
+arabic2arabicFile (alignment, arabicFile) 
+readSelexFile (fileName)
+readSelexAsMatrix (fileName) 
+arabic2fastaFile (alignment, fileName)
+readArabicFile (fileName) 
+readBlockFile (fileName) 
+
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fileName</code></td>
+<td>
+<p>string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fastaFile</code></td>
+<td>
+<p>string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>arabicFile</code></td>
+<td>
+<p>string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selexFile</code></td>
+<td>
+<p>string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq1</code></td>
+<td>
+<p>string. A string of amino acids</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seqList</code></td>
+<td>
+<p>list of string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>removeGapMajor</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alignment</code></td>
+<td>
+<p>matrix of arabic representation of sequences (1 based)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>string2arabic returns a matrix of arabic numbers representing aa.
+readSelexFile return a list of strings.
+readArabicFile return a matrix of n by p alignment.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(RUnit)
+fileName=paste(system.file(package="krm")[1],'/misc/SETpfamseed_aligned_for_testing.fasta', sep="")
+seqs = readFastaFile (fileName, sep=" ")
+checkEquals(length(seqs),11)
+
+</code></pre>
+
+
+</div>

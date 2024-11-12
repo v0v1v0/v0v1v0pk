@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_helper</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Helper function for the plot methods.</h2>
+
+<h3>Description</h3>
+
+<p>A helper function for the plot methods that does most of the work under
+the hood.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_helper(
+  x,
+  range = NULL,
+  plot_start = FALSE,
+  zero_line = TRUE,
+  ptype = c("plot", "lines", "points"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>kdensity</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>An optional range vector; like <code>x</code> in <code>plot.default</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot_start</code></td>
+<td>
+<p>Logical; if <code>TRUE</code>, plots the parametric start only.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zero_line</code></td>
+<td>
+<p>Logical; if <code>TRUE</code>, adds a line at <code>y = 0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ptype</code></td>
+<td>
+<p>The kind of plot to make</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed to plot.default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>None.
+</p>
+
+
+</div>

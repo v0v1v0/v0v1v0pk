@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>escape</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Text that is to be included as content in documents is cleaned
+(escaped) to prevent errors</h2>
+
+<h3>Description</h3>
+
+<p>This is for fixing up "untrusted text" that is to be passed into a
+file as content. It protects against "bad" text strings in 3
+contexts, 1) LaTeX documents, 2) HTML documents, or 3) text in a
+file name. It converts content text to an improved string that
+will not cause failures in the eventual document.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">escape(x, type = "tex")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a string, or vector of strings (each of which is
+processed separately)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>"tex" is default, could be "filename" or "html"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The special in-document LaTeX symbols like percent sign or dollar sign
+are "
+session, these will appear as double-backslashed symbols, while in
+a saved text file, there will only be the one desired slash.
+</p>
+<p>If type = "html", we only clean up &lt;, &gt;, / and &amp;, and quote
+characters.  If document is in unicode, we don't need to do the
+gigantic set anymore.
+</p>
+<p>If type = "filename", then symbols that are not allowed in file
+names, such as "\", "*", are replaced. Do not use this on a
+full path, since it will obliterate path separators.
+</p>
+
+
+<h3>Value</h3>
+
+<p>corrected character vector
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x1 &lt;- c("_asdf&amp;_&amp;$", "asd adf asd_", "^ % &amp; $asdf_")
+escape(x1)
+x2 &lt;- c("a&gt;b", "a&lt;b", "a &lt; c", 'Paul "pj" Johnson')
+escape(x2, type = "tex")
+escape(x2, type = "html")
+escape(x2, type = "filename")
+</code></pre>
+
+
+</div>

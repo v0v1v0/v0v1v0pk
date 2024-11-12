@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kitagawa-utilities</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>General utility functions</h2>
+
+<h3>Description</h3>
+
+<p>General utility functions
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">.nullchk(X)
+
+.in0to1(X)
+
+is.wrsp(X)
+
+is.owrsp(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>something to be checked (vector, scalar, wrsp object, ...)</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p><code>.nullchk</code> quickly checks for <code>NULL</code> and <code>NA</code>,
+and raises an error if <code>TRUE</code>; 
+<em>This function is not likely to be needed by the user.</em>
+</p>
+<p><code>.in0to1</code> checks if values are numeric and in [0,1] (inclusive).
+</p>
+<p><code>is.wrsp</code> and <code>is.owrsp</code> report whether an object 
+has S3 class 'wrsp' or 'owrsp', respectively.  Such an object
+would be returned by, for example, <code>well_response</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kitagawa-package</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+.nullchk(1:10) # OK
+.nullchk(NULL) # error
+.nullchk(c(1:10,NULL)) # error
+.nullchk(NA) # error
+.nullchk(c(1:10,NA)) # error
+
+.in0to1(1:10) # error
+.in0to1(NULL) # error
+.in0to1(c(1:10,NULL)) # error
+.in0to1(NA) # error
+.in0to1(c(1:10,NA)) # error
+.in0to1(c(1,NA)) # error
+
+is.wrsp(1) # FALSE
+
+## End(Not run)
+</code></pre>
+
+
+</div>

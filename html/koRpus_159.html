@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>maas</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Lexical diversity: Maas' indices</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>lex.div</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">maas(txt, char = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt</code></td>
+<td>
+<p>An object of class <code>kRp.text</code> containing the tagged text to be analyzed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>char</code></td>
+<td>
+<p>Logical,
+defining whether data for plotting characteristic curves should be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>lex.div</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function calculates Maas' indices (<code class="reqn">a^2</code> &amp; <code class="reqn">\lg{V_0}</code>). In contrast to
+<code>lex.div</code>,
+which by default calculates all possible measures and
+their progressing characteristics, this function will only calculate the index values,
+and characteristics are
+off by default.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.TTR</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kRp.POS.tags</code>,
+<code>kRp.text</code>,
+<code>kRp.TTR</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+maas(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

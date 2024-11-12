@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knn.forecast.randomsearch.tuning</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tune <code>knn.forecast()</code> Hyperparameters with Random Search</h2>
+
+<h3>Description</h3>
+
+<p>A simplistic automated hyperparameter tuning function which randomly
+generates a grid of hyperparameter sets used to build corresponding <code>S_w</code> similarity matrices
+which are used in <code>knn.forecast()</code> test against the last <code>test.h</code> points of <code>y.in</code> after
+any <code>val.holdout.len</code> points are removed from the end of <code>y.in</code>. The best performing set of
+parameters based on MAPE over over the forecast horizon of <code>test.h</code> points are returned as part of a list
+alongside the 'optimum' weighted similarity matrix <code>Sw.opt</code>, the <code>Grid</code> of tested sets, and the MAPE
+results. MAPE is the average of absolute percent errors for each point calculated as: <code>abs((test.actuals - test.forecast.i) / test.actuals) * 100</code>. Where <code>test.forecast.i</code>
+and <code>test.actuals</code> are both numeric vectors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knn.forecast.randomsearch.tuning(
+  grid.len = 100,
+  St.in,
+  Sp.in,
+  Sx.in,
+  y.in,
+  test.h = 1,
+  max.k = NULL,
+  val.holdout.len = 0,
+  min.k = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>grid.len</code></td>
+<td>
+<p>integer value representing the number of hyperparameter sets to generate and test, must be <code>&gt;= 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>St.in</code></td>
+<td>
+<p>numeric and symmetric matrix of similarities, can be generated with <code>StMatrixCalc()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sp.in</code></td>
+<td>
+<p>numeric and symmetric matrix of similarities, can be generated with <code>SpMatrixCalc()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sx.in</code></td>
+<td>
+<p>numeric and symmetric matrix of similarities, can be generated with <code>SxMatrixCalc()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.in</code></td>
+<td>
+<p>numeric vector of the response series to be forecast.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test.h</code></td>
+<td>
+<p>integer value representing the number of points in the test forecast horizon, must be <code>&gt;= 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.k</code></td>
+<td>
+<p>integer value representing the maximum value of k, <code>knn.forecast()</code> should use, will be set to <code>min(floor((length(y.in)) * .4), length(y.in) - val.holdout.len - test.h)</code> if <code>NULL</code> or <code>NA</code> is passed. Note this <code>NA</code> behavior differs from <code>knnwtsim</code> version 0.1.0.
+If a numeric value is passed it must be <code>&gt;= 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>val.holdout.len</code></td>
+<td>
+<p>integer value representing the number of observations at the end of the series to be removed in testing forecast if desired to leave a validation set after tuning, must be <code>&gt;= 0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.k</code></td>
+<td>
+<p>integer value representing the minimum value of k, <code>knn.forecast()</code> should use, must be <code>&gt;= 1</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of the following components:
+</p>
+
+<dl>
+<dt>weight.opt</dt>
+<dd>
+<p>numeric vector of the 3 weights to generate <code>Sw.opt</code> in alpha, beta, gamma order which achieved the best performance in terms of MAPE.</p>
+</dd>
+<dt>k.opt</dt>
+<dd>
+<p>integer value of neighbors used in <code>knn.forecast()</code> which achieved the best performance in terms of MAPE.</p>
+</dd>
+<dt>Sw.opt</dt>
+<dd>
+<p>numeric matrix of similarities calculated using <code>S_w</code>, with the best performing set of hyperparameters.</p>
+</dd>
+<dt>Test.MAPE</dt>
+<dd>
+<p>numeric value of the MAPE result for the optimum hyperparamter set achieved on the test points.</p>
+</dd>
+<dt>MAPE.all</dt>
+<dd>
+<p>numeric vector of MAPE results, each observation corresponds to the row in <code>Grid</code> of the same index.</p>
+</dd>
+<dt>Grid</dt>
+<dd>
+<p>dataframe of all hyperparameter sets tested in the tuning.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+
+<ul>
+<li>
+<p> Trupiano (2021) arXiv:2112.06266 for information on the formulation of <code>S_w</code>.
+</p>
+</li>
+<li> <p><code>StMatrixCalc()</code> for information on the calculation of <code>S_t</code>.
+</p>
+</li>
+<li> <p><code>SpMatrixCalc()</code> for information on the calculation of <code>S_p</code>.
+</p>
+</li>
+<li> <p><code>SxMatrixCalc()</code> for information on the calculation of <code>S_x</code>.
+</p>
+</li>
+<li> <p><code>knn.forecast()</code> for the function called to perform knn regression.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("simulation_master_list")
+series.index &lt;- 15
+ex.series &lt;- simulation_master_list[[series.index]]$series.lin.coef.chng.x
+
+df &lt;- data.frame(ex.series)
+# Generate vector of time orders
+df$t &lt;- c(1:nrow(df))
+# Generate vector of periods
+nperiods &lt;- simulation_master_list[[series.index]]$seasonal.periods
+df$p &lt;- rep(1:nperiods, length.out = nrow(df))
+# Pull corresponding exogenous predictor(s)
+X &lt;- as.matrix(simulation_master_list[[series.index]]$x.chng)
+
+St.ex &lt;- StMatrixCalc(df$t)
+Sp.ex &lt;- SpMatrixCalc(df$p, nPeriods = nperiods)
+Sx.ex &lt;- SxMatrixCalc(X)
+
+tuning.test &lt;- knn.forecast.randomsearch.tuning(
+  grid.len = 10,
+  y.in = ex.series,
+  St.in = St.ex,
+  Sp.in = Sp.ex,
+  Sx.in = Sx.ex,
+  test.h = 3,
+  max.k = 10,
+  val.holdout.len = 3
+)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>score_scale_items</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Score scale items</h2>
+
+<h3>Description</h3>
+
+<p>Score items in a scale (e.g., Likert scale items) by computing the
+sum or mean of the items.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">score_scale_items(
+  item_list = NULL,
+  reverse_item_list = NULL,
+  operation = "mean",
+  na.rm = FALSE,
+  na_summary = TRUE,
+  reverse_code_minuend = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>item_list</code></td>
+<td>
+<p>a list of scale items (i.e., list of vectors of ratings)
+to code normally (as opposed to reverse coding).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse_item_list</code></td>
+<td>
+<p>a list of scale items to reverse code.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>operation</code></td>
+<td>
+<p>if <code>operation = "mean"</code>, mean of the scale items
+will be calculated; if <code>operation = "sum"</code>, sum of the scale items
+will be calculated (default = "mean").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>logical. The <code>na.rm</code> argument that will be passed
+onto the base R's <code>rowMeans</code> or <code>rowSums</code> function (default = FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na_summary</code></td>
+<td>
+<p>logical. If <code>na_summary = TRUE</code> a summary of
+NA values will be printed; if <code>na_summary = FALSE</code> the summary
+will not be printed (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse_code_minuend</code></td>
+<td>
+<p>required for reverse coding; the number
+from which to subtract item ratings when reverse-coding. For example,
+if the items to reverse code are measured on a 7-point scale, enter
+<code>reverse_code_minuend = 8</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">score_scale_items(item_list = list(1:5, rep(3, 5)),
+reverse_item_list = list(rep(5, 5)), reverse_code_minuend = 6)
+score_scale_items(item_list = list(c(1, 1), c(1, 5)),
+reverse_item_list = list(c(5, 3)),
+reverse_code_minuend = 6, na_summary = FALSE)
+score_scale_items(item_list = list(c(1, 1), c(1, 5)),
+reverse_item_list = list(c(5, 1)),
+reverse_code_minuend = 6, operation = "sum")
+score_scale_items(item_list = list(1:5, rep(3, 5)))
+score_scale_items(item_list = list(c(1, NA, 3), c(NA, 2, 3)))
+score_scale_items(item_list = list(c(1, NA, 3), c(NA, 2, 3)), na.rm = TRUE)
+</code></pre>
+
+
+</div>

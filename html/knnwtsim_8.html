@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SeasonalAbsDissimilarity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Seasonal Absolute Dissimilarity</h2>
+
+<h3>Description</h3>
+
+<p>Calculate seasonal dissimilarity measure between the respective seasonal period
+two points, given the number of periods in one full seasonal cycle.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SeasonalAbsDissimilarity(p1, p2, nPeriods)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p1</code></td>
+<td>
+<p>numeric value representing a seasonal period.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p2</code></td>
+<td>
+<p>numeric value representing a seasonal period.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nPeriods</code></td>
+<td>
+<p>numeric value representing the maximum value <code>p1</code> or <code>p2</code> can take on.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric value of the seasonal dissimilarity between <code>p1</code> and <code>p2</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Trupiano (2021) arXiv:2112.06266 for information on the formulation of this seasonal dissimilarity measure.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SeasonalAbsDissimilarity(1, 4, 4)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rmSlopeOutliers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+rmSlopeOutliers: slope filter
+</h2>
+
+<h3>Description</h3>
+
+<p>This function filters the slope (difference) outliers in a time series. It finds the greater outlier, it removes the value causing it and it tries to re-fill value by linear interpolation. Then the greater outlier in the modified time series is found and so on. It is used internally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rmSlopeOutliers(tS = NULL, origMxPosSlope = NULL, origMxNegSlope = NULL, filling = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tS</code></td>
+<td>
+
+<p>The time series
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>origMxPosSlope</code></td>
+<td>
+
+<p>The maximum allowed positive slope. Greater slopes are considered as outliers.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>origMxNegSlope</code></td>
+<td>
+
+<p>The maximum allowed negative slope. Greater slopes (in absolute value) are considered as outliers.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filling</code></td>
+<td>
+
+<p>The positions in the time series corresponding to filled values(that is, not actual observations).When this argument is not null, the actual observations remain untouched whether if they cause outliers or not. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The smoothed time series. The function stops when there are no more outliers or when it reaches 100000 iterations. This is a safety measure to avoid infinite loops.If the time series still contains outliers, run the function again.  
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez andreu
+</p>
+
+
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simK</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel matrix similarity</h2>
+
+<h3>Description</h3>
+
+<p>'simK()' computes the similarity between kernel matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simK(Klist)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>Klist</code></td>
+<td>
+<p>A list of <em>M</em> kernel matrices with identical <em>NxN</em> dimension.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>It is a wrapper of 'Frobenius()'.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Kernel matrix (dimension: <em>MxM</em>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">K1 &lt;- Linear(matrix(rnorm(7500),ncol=150,nrow=50))
+K2 &lt;- Linear(matrix(rnorm(7500),ncol=150,nrow=50))
+K3 &lt;- Linear(matrix(rnorm(7500),ncol=150,nrow=50))
+
+simK(list(K1,K2,K3))
+</code></pre>
+
+
+</div>

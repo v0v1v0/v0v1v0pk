@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>contour.kdevinecop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Contour plots of pair copula kernel estimates</h2>
+
+<h3>Description</h3>
+
+<p>Contour plots of pair copula kernel estimates
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kdevinecop'
+contour(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>kdevinecop</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tree</code></td>
+<td>
+<p><code>"ALL"</code> or integer vector; specifies which trees are
+plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xylim</code></td>
+<td>
+<p>numeric vector of length 2; sets <code>xlim</code> and <code>ylim</code>
+for the contours.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.nums</code></td>
+<td>
+<p>numeric; expansion factor for font of the numbers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments passed to <code>contour.kdecopula</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc, package = "kdecopula")                     # load data
+u &lt;- VineCopula::pobs(wdbc[, 5:7], ties = "average")  # rank-transform
+
+# estimate density
+fit &lt;- kdevinecop(u)
+
+# contour matrix
+contour(fit)
+
+</code></pre>
+
+
+</div>

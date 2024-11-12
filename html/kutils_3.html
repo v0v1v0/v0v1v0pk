@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>alphaOnly</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Keep only alpha-numeric symbols</h2>
+
+<h3>Description</h3>
+
+<p>From a text string, keep ASCII letters, numbers, as well as "'",
+" ", "_" "(", ")", "-", and "+". For maximum compatability with
+the cross-platform file-naming standard. Obliterates all
+characters that migth be mistaken for shell symbols, like "^",
+"$", "@" and so forth.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">alphaOnly(x, also)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>text string, or vector of strings (each of which is
+processed separately)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>also</code></td>
+<td>
+<p>A named vector of other symbols that the user wants to
+remove, along with replacements. For example, c(" " = "_",
+"-" = "", "+" = "") to replace space with underscore and minus
+and plus signs with nothing.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Removes trailing spaces.
+</p>
+<p>This version allows internal spaces in the string, by default. The
+also argument can be used to eliminate spaces or other hated symbols.
+</p>
+
+
+<h3>Value</h3>
+
+<p>cleaned text string
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c("[]kansas(city) Missouri", "percent%slash/",
+       "\back{squiggle}_under(paren)", "*star-minus+plus")
+alphaOnly(x)
+alphaOnly(x, also = c(" " = "_", "+" = "_"))
+alphaOnly(x, also = c("(" = "[", ")" = "]"))
+</code></pre>
+
+
+</div>

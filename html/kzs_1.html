@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Kolmogorov-Zurbenko Spline </h2>
+
+<h3>Description</h3>
+
+<p>This is a one-dimensional iterative smoothing algorithm based on convolutions of rectangular kernels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzs(y, x, smooth, scale, k = 1, edges = TRUE, plot = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+  
+<p>a one-dimensional vector of real values representing the response variable to be smoothed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+ 
+<p>a one-dimensional vector of real values representing the input variable.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth</code></td>
+<td>
+ 
+<p>a real number defining the width of the smoothing window, i.e., the width of the rectangular kernel.   
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+ 
+<p>for an irregularly spaced <code>x</code>, <code>scale</code> is a positive real number that will define a uniform
+scale along <code>x</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+ 
+<p>an integer specifying the number of iterations <code>kzs</code> will execute; <code>k</code> may also be 
+interpreted as the order of smoothness (as a polynomial of degree <code>k-1</code>). By default, <code>k = 1</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edges</code></td>
+<td>
+ 
+<p>a logical indicating whether or not to display the outcome data beyond the initial range of <code>x</code>. By 
+default, <code>edges = TRUE</code>. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+  
+<p>a logical indicating whether or not to produce a plot of the <code>kzs</code> outcome. This is <code>TRUE</code>
+by default.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The relation between variables Y and X as a function of a current value of X = x [namely, Y(x)] is 
+often desired as a result of practical research. Usually we search for some simple function, Y(x), 
+when given a data set of pairs (Xi, Yi). When plotted, these pairs frequently resemble a noisy plot, 
+and thus Y(x) is desired to be a smooth outcome that captures patterns or long-term trends in the 
+original data, while suppressing the noise. The <code>kzs</code> function is based on convolutions of the
+rectangular kernel, which is equilvalent to repeated applications of a moving average. According to 
+the Central Limit Theorem, repeated convolutions with rectangular kernels will converge to the Gaussian
+kernel; the resulting kernel will have finite support equal to <code>smooth*k</code>, which will result in a 
+smooth outcome with diminished noise leakage, which is a feature that the standard Gaussian kernel does
+not exhibit. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>a two-column data frame of paired values <code>(xk, yk)</code>:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>xk </code></td>
+<td>
+<p><code>x</code> values in increments of <code>scale</code> </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yk </code></td>
+<td>
+<p>smoothed response values resulting from <code>k</code> iterations of <code>kzs</code> </p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+ 
+<p>Data set (Xi, Yi) must be provided, usually as some observations that occur at certain times; <code>kzs</code>
+is designed for the general situation, including time series data. In many applications where the input 
+variable, <code>x</code>, can be time, <code>kzs</code> is resolving the problem of missing values in time series or 
+irregularly observed values in longitudinal data analysis.<br></p>
+<p><code>kzs</code> may take time to completely run depending on the size of the data set used and the number of 
+iterations specified.<br></p>
+<p>For more information on the restrictions imposed on <code>delta</code> and <code>d</code>, consult <code>kzs.params</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Derek Cyr <a href="mailto:cyr.derek@gmail.com">cyr.derek@gmail.com</a> and Igor Zurbenko <a href="mailto:igorg.zurbenko@gmail.com">igorg.zurbenko@gmail.com</a></p>
+
+
+<h3>References</h3>
+
+<p> Zurbenko, I.G. (1986). <em>The Spectral Analysis of Time Series</em>. North Holland Series in 
+Statistics and Probability, Elsevier Science, Amsterdam. </p>
+
+
+<h3>See Also</h3>
+
+ <p><code>kzs.params</code>, <code>kzs.2d</code>, <code>kzs.md</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Total time t
+t &lt;- seq(from = -round(400*pi), to = round(400*pi), by = .25) 
+
+# Construct the signal over time
+ts &lt;- 0.5*sin(sqrt((2*pi*abs(t))/200))
+signal &lt;- ifelse(t &lt; 0, -ts, ts)
+
+# Bury the signal in noise [randomly, from N(0, 1)]
+et &lt;- rnorm(length(t), mean = 0, sd = 1)
+yt &lt;- et + signal
+
+# Data frame of (t, yt) 
+pts &lt;- data.frame(cbind(t, yt))
+
+
+### EXAMPLE 1 - Apply kzs to the signal buried in noise                 
+
+# Plot of the true signal
+plot(signal ~ t, xlab = "t", ylab = "Signal", main = "True Signal",
+type = "l")
+
+# Plot of signal + noise
+plot(yt ~ t, ylab = "yt", main = "Signal buried in noise", type = "p")
+
+# Apply 3 iterations of kzs
+kzs(y = pts[,2], x = pts[,1], smooth = 80, scale = .2, k = 3, edges = TRUE,
+plot = TRUE)
+lines(signal ~ t, col = "red")
+title(main = "kzs(smooth = 80, scale = .2, k = 3, edges = TRUE)")
+legend("topright", c("True signal","kzs estimate"), cex = 0.8,
+col = c("red", "black"), lty = 1:1, lwd = 2, bty = "n")
+
+### EXAMPLE 2 - Irregularly observed data over time
+
+# Cancel a random 20 percent of (t, yt) leaving irregularly observed time points
+obs &lt;- seq(1:length(t))
+t20 &lt;- sample(obs, size = length(obs)/5)
+pts20 &lt;- pts[-t20,]        
+
+# Plot of (t,yt) with 20 percent of the data removed
+plot(pts20$yt ~ pts20$t, main = "Signal buried in noise\n20 percent of 
+(t, yt) deleted", xlab = "t", ylab = "yt", type = "p")
+
+# Apply 3 iterations of kzs
+kzs(y = pts20[,2], x = pts20[,1], smooth = 80, scale = .2, k = 3, edges = TRUE, 
+plot = TRUE)
+lines(signal ~ t, col = "red")
+title(main = "kzs(smooth = 80, scale = .2, k = 3, edges = TRUE)")
+legend("topright", c("True signal","kzs estimate"), cex = 0.8, 
+col = c("red", "black"), lty = 1:1, lwd = 2, bty = "n")  
+</code></pre>
+
+
+</div>

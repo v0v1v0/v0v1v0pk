@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tknz_sent</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sentence tokenizer</h2>
+
+<h3>Description</h3>
+
+<p>Extract sentences from a batch of text lines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tknz_sent(input, EOS = "[.?!:;]+", keep_first = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>a character vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EOS</code></td>
+<td>
+<p>a regular expression matching an End-Of-Sentence delimiter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_first</code></td>
+<td>
+<p>TRUE or FALSE? Should the first character of the matches
+be appended to the returned sentences (with a space)?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>tknz_sent()</code> splits text into sentences, where sentence delimiters are
+specified by a regular expression through the <code>EOS</code> argument.
+Specifically, when an EOS token is found, the next sentence begins at the
+first position in the input string not containing any of the EOS tokens
+<em>or white space</em> (so that entries like <code>"Hi there!!!"</code> or
+<code>"Hello . . ."</code> are both recognized as a single sentence).
+</p>
+<p>If <code>keep_first</code> is <code>FALSE</code>, the delimiters are stripped off from
+the returned sequences. Otherwise, the first character of the substrings
+matching the <code>EOS</code> regular expressions are appended to the corresponding
+sentences, preceded by a white space.
+</p>
+<p>In the absence of any <code>EOS</code> delimiter, <code>tknz_sent()</code>
+returns the input as is, since parts of text corresponding to different
+entries of the input vector <code>x</code> are understood as parts of separate
+sentences.
+</p>
+<p><strong>Note.</strong> This function, as well as preprocess, are included
+in the library for illustrative purposes only, and are not optimized for
+performance. Furthermore (for performance reasons) the function has a
+separate implementation for Windows and UNIX OS types, respectively, so that
+results obtained in the two cases may differ slightly.
+In contexts that require full reproducibility, users are encouraged to define
+their own preprocessing and tokenization custom functions - or to work with
+externally processed data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a character vector, each entry of which corresponds to a single
+sentence.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tknz_sent("Hi there! I'm using kgrams.")
+</code></pre>
+
+
+</div>

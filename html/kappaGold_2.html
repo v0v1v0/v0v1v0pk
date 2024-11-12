@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>diagnoses</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Psychiatric diagnoses</h2>
+
+<h3>Description</h3>
+
+<p>N = 30 patients were given one of k = 5 diagnoses by some n = 6
+psychiatrists out of 43 psychiatrists in total. The diagnoses are
+</p>
+
+<ol>
+<li>
+<p> Depression
+</p>
+</li>
+<li>
+<p> PD (=Personality Disorder)
+</p>
+</li>
+<li>
+<p> Schizophrenia
+</p>
+</li>
+<li>
+<p> Neurosis
+</p>
+</li>
+<li>
+<p> Other
+</p>
+</li>
+</ol>
+<h3>Usage</h3>
+
+<pre><code class="language-R">diagnoses
+</code></pre>
+
+
+<h3>Format</h3>
+
+
+
+<h4><code>diagnoses</code></h4>
+
+<p>A matrix with 30 rows and 6 columns:
+</p>
+
+<dl>
+<dt>rater1</dt>
+<dd>
+<p>1st rating of some six raters</p>
+</dd>
+<dt>rater2</dt>
+<dd>
+<p>2nd rating of some six raters</p>
+</dd>
+<dt>rater3</dt>
+<dd>
+<p>3rd rating of some six raters</p>
+</dd>
+<dt>rater4</dt>
+<dd>
+<p>4th rating of some six raters</p>
+</dd>
+<dt>rater5</dt>
+<dd>
+<p>5th rating of some six raters</p>
+</dd>
+<dt>rater6</dt>
+<dd>
+<p>6th rating of some six raters</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>A total of 43 psychiatrists provided diagnoses. In the actual
+study (Sandifer, Hordern, Timbury, &amp; Green, 1968), between 6 and 10
+psychiatrists from the pool of 43 were unsystematically selected to diagnose
+a subject. Fleiss randomly selected six diagnoses per subject to bring the
+number of assignments per patient down to a constant of six.
+</p>
+<p>As there is not a fixed set of six raters the ratings from the same column
+are not related to each other. Therefore, compared to the dataset with the
+same name in package <code>irr</code>, we applied a permutation of the six ratings.
+</p>
+
+
+<h3>References</h3>
+
+<p>Sandifer, M. G., Hordern, A., Timbury, G. C., &amp; Green, L. M.
+Psychiatric diagnosis: A comparative study in North Carolina, London and
+Glasgow. British Journal of Psychiatry, 1968, 114, 1-9.
+</p>
+<p>Fleiss, J. L. Measuring nominal scale agreement among many
+raters. Psychological Bulletin, 1971, 76(5), 378–382.
+<a href="https://doi.org/10.1037/h0031619">doi:10.1037/h0031619</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>This dataset is also available as <code>diagnoses</code> in the irr-package on
+CRAN.
+</p>
+
+
+</div>

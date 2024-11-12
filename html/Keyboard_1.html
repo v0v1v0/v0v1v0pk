@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>decision.finding</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Return Dose Escalation or De-escalation Decision Given Number of Toxicity and Responses</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the decision given the decision table, the total number of patients, the number of patients who experienced toxicity and the number of responses.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">decision.finding(out.matrix, n, t, r)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>out.matrix</code></td>
+<td>
+<p>A decision matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>The number of enrolled subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>The number of subjects experienced dose limiting toxicities (DLT).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>The number of responses.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>decision.finding()</code> is a helper function to <code>get.decision.obd.kb()</code>  and <code>get.decision.obd2.kb()</code>. <code>decision.finding()</code> returns the decision given the decision table, the total number of patients, the number of patients who experienced toxicity and the number of responses. If the number of subjects enrolled is n, then the number of possible combination for subjects who experienced toxicity and efficacy is (n+1) x (n+1).  For n = 30, the number of entries is 961. Finding the decision given a scenario is tedious.  <code>decision.finding()</code> resolves this challenge by helping users to obtain the decision easily with the input of the decision table (output from <code>get.decision.obd.kb()</code>  and <code>get.decision.obd2.kb()</code>), the total number of patients, the number of patients who experienced toxicity and the number of responses.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function <code>decision.finding()</code> returns the decision.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Xiaomeng Yuan, Chen Li, Hongying Sun, Li Tang and Haitao Pan
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> output.matrix &lt;- get.decision.obd.kb( toxicity.low = 0.15,
+                 toxicity.moderate= 0.25,
+                 toxicity.high = 0.35,
+                 efficacy.low = 0.25,
+                 efficacy.moderate = 0.45,
+                 efficacy.high = 0.65,
+                 target.toxicity=0.20,
+                 target.efficacy=0.40,
+                 cohortsize=3, ncohort=10)$decision.matrix
+decision &lt;- decision.finding (out.matrix=output.matrix, n=6, t=1, r=3)
+decision
+</code></pre>
+
+
+</div>

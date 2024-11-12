@@ -1,0 +1,167 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>evaluate.keras.src.models.model.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate a Keras Model</h2>
+
+<h3>Description</h3>
+
+<p>This functions returns the loss value and metrics values for the model in
+test mode.
+Computation is done in batches (see the <code>batch_size</code> arg.)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.src.models.model.Model'
+evaluate(
+  object,
+  x = NULL,
+  y = NULL,
+  ...,
+  batch_size = NULL,
+  verbose = getOption("keras.verbose", default = "auto"),
+  sample_weight = NULL,
+  steps = NULL,
+  callbacks = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input data. It could be:
+</p>
+
+<ul>
+<li>
+<p> An R array (or array-like), or a list of arrays
+(in case the model has multiple inputs).
+</p>
+</li>
+<li>
+<p> A tensor, or a list of tensors
+(in case the model has multiple inputs).
+</p>
+</li>
+<li>
+<p> A named list mapping input names to the corresponding array/tensors,
+if the model has named inputs.
+</p>
+</li>
+<li>
+<p> A <code>tf.data.Dataset</code>. Should return a tuple
+of either <code style="white-space: pre;">⁠(inputs, targets)⁠</code> or
+<code style="white-space: pre;">⁠(inputs, targets, sample_weights)⁠</code>.
+</p>
+</li>
+<li>
+<p> A generator returning
+<code style="white-space: pre;">⁠(inputs, targets)⁠</code> or <code style="white-space: pre;">⁠(inputs, targets, sample_weights)⁠</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Target data. Like the input data <code>x</code>, it could be either R
+array(s) or backend-native tensor(s).
+If <code>x</code> is a <code>tf.data.Dataset</code> or generator function,
+<code>y</code> should not be specified
+(since targets will be obtained from the iterator/dataset).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Integer or <code>NULL</code>. Number of samples per batch of
+computation. If unspecified, <code>batch_size</code> will default to <code>32</code>. Do
+not specify the <code>batch_size</code> if your data is in the form of a
+a tf dataset or generator
+(since they generate batches).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p><code>"auto"</code>, <code>0</code>, <code>1</code>, or <code>2</code>. Verbosity mode.
+<code>0</code> = silent, <code>1</code> = progress bar, <code>2</code> = single line.
+<code>"auto"</code> becomes <code>1</code> for most cases,
+<code>2</code> if in a knitr render or running on a distributed training server.
+Note that the progress bar is not
+particularly useful when logged to a file, so <code>verbose=2</code> is
+recommended when not running interactively
+(e.g. in a production environment). Defaults to <code>"auto"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample_weight</code></td>
+<td>
+<p>Optional array of weights for the test samples,
+used for weighting the loss function. You can either pass a flat
+(1D) R array with the same length as the input samples
+(1:1 mapping between weights and samples), or in the case of
+temporal data, you can pass a 2D array with shape <code style="white-space: pre;">⁠(samples, sequence_length)⁠</code>, to apply a different weight to every
+timestep of every sample. This argument is not supported when
+<code>x</code> is a tfdataset, instead pass sample weights as the third
+element of <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>Integer or <code>NULL</code>. Total number of steps (batches of samples)
+before declaring the evaluation round finished. Ignored with the
+default value of <code>NULL</code>. If <code>x</code> is a <code>tf.data.Dataset</code> and
+<code>steps</code> is <code>NULL</code>, evaluation will run until the dataset
+is exhausted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>callbacks</code></td>
+<td>
+<p>List of <code>Callback</code> instances.
+List of callbacks to apply during evaluation.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Scalar test loss (if the model has a single output and no metrics)
+or list of scalars (if the model has multiple outputs
+and/or metrics). The attribute <code>model$metrics_names</code> will give you
+the display labels for the scalar outputs.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_training_apis#evaluate-method">https://keras.io/api/models/model_training_apis#evaluate-method</a>
+</p>
+</li></ul>
+<p>Other model training: <br><code>compile.keras.src.models.model.Model()</code> <br><code>predict.keras.src.models.model.Model()</code> <br><code>predict_on_batch()</code> <br><code>test_on_batch()</code> <br><code>train_on_batch()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>genpolygon</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate the Classes to Build a Frequency Polygon</h2>
+
+<h3>Description</h3>
+
+<p>Constructs the histogram of a feature by using a selected binning rule, returns the middle values and frequencies of classes for further works on the frequency polygon.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">genpolygon(x, binrule, nbins, disp = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector containing the observations for a feature.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binrule</code></td>
+<td>
+<p>name of the rule in order to compute the number of bins to build the histogram.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbins</code></td>
+<td>
+<p>an integer representing the number of bins which is computed by using the selected binning rule. Default rule is <span class="option">sturges</span>. Depending on the selected rule <code>nbins</code> equals to (In the formulae, <code>n</code> is the number of observations.):
+</p>
+
+<ul>
+<li> <p><code>floor(sqrt(n))</code> if the rule is <span class="option">sqr</span>,
+</p>
+</li>
+<li> <p><code>ceiling(1+log(n, 2))</code> if the rule is <span class="option">sturges</span>,
+</p>
+</li>
+<li> <p><code>ceiling(1+3.332*log(n, 10))</code> if the rule is <span class="option">huntsberger</span>,
+</p>
+</li>
+<li> <p><code>ceiling(5*log(n, 10))</code> if the rule is <span class="option">bc</span>,
+</p>
+</li>
+<li> <p><code>ceiling(n^(1/3))</code> if the rule is <span class="option">cencov</span>,
+</p>
+</li>
+<li> <p><code>ceiling(2*n^(1/3))</code> if the rule is <span class="option">rice</span>,
+</p>
+</li>
+<li> <p><code>ceiling((2*n)^(1/3))</code> if the rule is <span class="option">ts</span>,
+</p>
+</li>
+<li> <p><code>ceiling(((max(x)-min(x))/(3.5*sqrt(var(x))*n^(-1/3))))</code> if the rule is <span class="option">scott</span>,
+</p>
+</li>
+<li> <p><code>ceiling(((max(x)-min(x))/(2*IQR(x)*n^(-1/3)))</code> if the rule is <span class="option">fd</span>,
+</p>
+</li>
+<li> <p><code>ceiling(1+log(n,2)+log(1+abs(skewness(x))/(6*(n-2)/((n+1)*(n+3))^0.5),2))</code> if the rule is <span class="option">doane</span>,
+</p>
+</li>
+<li> <p><code>ceiling(log(n)/2*pi)</code> if the rule is <span class="option">cebeci</span>,
+</p>
+</li>
+<li>
+<p> a user-specified integer if the rule is <span class="option">usr</span>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>disp</code></td>
+<td>
+<p>a logical value should be set to <code>TRUE</code> to display the histogram.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>According to Hyndman (1995), Sturges's rule was the first rule to calculate <var>k</var>, the number of classes to build a histogram. Most of the statistical packages use this simple rule for determining the number of classes in constructing histograms. Brooks &amp; Carruthers (1953) proposed a rule using <code class="reqn">log_{10}</code> instead of <code class="reqn">log_{2}</code> giving always larger <var>k</var> when compared to Sturges's rule.  The rule by Huntsberger (1962) yields nearly equal result to those of Sturges's rule. These two rules work well if <var>n</var> is less than 200. Scott (1992) argued that Sturges's rule leads to generate oversmoothed histograms in case of large number of <var>n</var>. In his rule, Cencov (1962) used the cube root of <var>n</var> simply. This rule was followed by its extensions, i.e., Rice rule and Terrell &amp; Scott (1985) rule.  When compared to the others, the square root rule produces larger <var>k</var> (Davies &amp; Goldsmith, 1980).<br><br>
+Most of the rules simply include only <var>n</var> as the input argument. On the other hand, the rules using variation and shape of data distributions can provide more optimal <var>k</var> values. For instance, Doane (1976) extended the Sturges's rule by adding the standardized skewness in order to overcome the problem with non-normal distributions need more classes. In order to estimate optimal <var>k</var> values, Scott (1979) added the standard deviation to his formula. Freedman and Diaconis (1981) proposed to use the interquartile range (IQR) statistic which is less sensitive to outliers than the standard deviation. In a study on unsupervised discretization methods, Cebeci &amp; Yildiz (2017) tested a binning rule formula based on the ten-base logarithm of <var>n</var> divided by <code>2*pi</code>. They also argued that the rules Freedman-Diaconis and Doane were slightly performed better than the other rules based on the training model accuracies on a chicken egg quality traits dataset. Therefore, using the above mentioned rules may be more effective in determining the peaks of a frequency polygon. 
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>xm</code></td>
+<td>
+<p>a numeric vector containing the middle values of bins.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xc</code></td>
+<td>
+<p>an integer vector containing the frequencies of the bins.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbins</code></td>
+<td>
+<p>an integer containing the number of bins to build the histogram.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Zeynel Cebeci, Cagatay Cebeci</p>
+
+
+<h3>References</h3>
+
+<p>Brooks C E P &amp; Carruthers N (1953). Handbook of statistical methods in meteorology. H M Stationary Office, London.
+</p>
+<p>Cebeci Z &amp; Yildiz F (2017). Unsupervised discretization of continuous variables in a chicken egg quality traits dataset. <em>Turk. J Agriculture-Food Sci. &amp; Tech.</em> 5(4): 315-320. doi: <a href="https://doi.org/10.24925/turjaf.v5i4.315-320.1056">10.24925/turjaf.v5i4.315-320.1056</a>.
+</p>
+<p>Cebeci Z &amp; Cebeci C (2018). "A novel technique for fast determination of K in partitioning cluster analysis", <em>Journal of Agricultural Informatics</em>, 9(2), 1-11. 
+doi: <a href="https://doi.org/10.17700/jai.2018.9.2.442">10.17700/jai.2018.9.2.442</a>.
+</p>
+<p>Cebeci Z &amp; Cebeci C (2018). "kpeaks: An R package for quick selection of k for cluster analysis", In <em>2018 Int. Conf. on Artificial Intelligence and Data Processing (IDAP)</em>, IEEE. doi: <a href="https://doi.org/10.1109/IDAP.2018.8620896">10.1109/IDAP.2018.8620896</a>.
+</p>
+<p>Cencov N N (1962). Evaluation of an unknown distribution density from observations. <em>Soviet Mathematics</em> 3: 1559-1562.
+</p>
+<p>Davies O L &amp; Goldsmith P L (1980). Statistical methods in research and production. 4th edn, Longman: London.
+</p>
+<p>Doane D P (1976). Aesthetic frequency classification. <em>American Statistician</em> 30(4):181-183.
+</p>
+<p>Freedman D &amp; Diaconis P (1981). On the histogram as a density estimator: L2 Theory. <em>Zeit. Wahr. ver. Geb.</em> 57(4):453-476.
+</p>
+<p>Hyndman R J (1995). The problem with Sturges rule for constructing histograms. url:<a href="http://robjhyndman.com/papers/sturges.pdf">http://robjhyndman.com/papers/sturges.pdf</a>. 
+</p>
+<p>Huntsberger D V (1962). Elements of statistical inference. London: Prentice-Hall.
+</p>
+<p>Scott D W (1992). Multivariate density estimation: Theory, Practice and Visualization. John Wiley &amp; Sons: New York.
+</p>
+<p>Sturges H (1926). The choice of a class-interval. <em>J Amer. Statist. Assoc.</em> 21(153):65-66.
+</p>
+<p>Terrell G R &amp; Scott D W (1985). Oversmoothed nonparametric density estimates. <em>J Amer. Statist. Assoc.</em> 80(389):209-214. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>findk</code>, 
+<code>findpolypeaks</code>, 
+<code>plotpolygon</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- rnorm(n=100, mean=5, sd=0.5)
+# Construct the histogram of x according to the Sturges rule with no display
+hvals &lt;- genpolygon(x, binrule = "sturges")
+print(hvals)
+
+# Plot the histogram of x by using the user-specified number of classes
+hvals &lt;- genpolygon(x, binrule = "usr", nbins = 20, disp = TRUE)
+print(hvals)
+
+# Plot the histogram of the second feature in iris dataset 
+# by using the Freedman-Diaconis (fd) rule
+data(iris)
+hvals &lt;- genpolygon(iris[,2], binrule = "fd", disp = TRUE)
+print(hvals)
+</code></pre>
+
+
+</div>

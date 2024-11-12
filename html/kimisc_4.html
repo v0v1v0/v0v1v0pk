@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cut_format</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert Numeric to Factor, with custom formatting</h2>
+
+<h3>Description</h3>
+
+<p>This is an enhanced version of <code>base::cut()</code> that allows a custom
+formatting to be applied to the values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cut_format(x, breaks, include.lowest = FALSE, right = TRUE,
+  ordered_result = FALSE, ..., format_fun = format, sep = ", ",
+  paren = c("(", "[", ")", "]"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector which is to be converted to a factor by cutting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p><code>[numeric]</code><br>
+A vector of two or more unique cut points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.lowest</code></td>
+<td>
+<p>logical, indicating if an ‘x[i]’ equal to
+the lowest (or highest, for <code>right = FALSE</code>) ‘breaks’
+value should be included.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>right</code></td>
+<td>
+<p>logical, indicating if the intervals should be closed on
+the right (and open on the left) or vice versa.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ordered_result</code></td>
+<td>
+<p>logical: should the result be an ordered factor?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed to <code>cut()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format_fun</code></td>
+<td>
+<p><code>[function(x): character]</code><br>
+A vectorized function that performs the desired formatting.  Default:
+<code>base::format()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p><code>[character(1)]</code><br>
+The separator between lower and upper end of the interval. Default:
+<code>", "</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paren</code></td>
+<td>
+<p><code>[character(4)]</code><br>
+Opening and closing parentheses in two variants. Default:
+<code>c("(", "[", ")", "]")</code></p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><a href="http://stackoverflow.com/q/14456371/946850">http://stackoverflow.com/q/14456371/946850</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">cut_format(runif(10), seq(0, 1, by = 0.25), format_fun = function(x) paste(x * 100, "%"))
+cut_format(runif(10), seq(0, 1, by = 0.25), paren = c("&lt;", "{", "&gt;", "}"))
+</code></pre>
+
+
+</div>

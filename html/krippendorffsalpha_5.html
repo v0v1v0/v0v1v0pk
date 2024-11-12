@@ -1,0 +1,247 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>krippendorffs.alpha</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Apply Krippendorff's Alpha.</h2>
+
+<h3>Description</h3>
+
+<p>Apply Krippendorff's Alpha.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">krippendorffs.alpha(
+  data,
+  level = c("interval", "nominal", "ordinal", "ratio"),
+  method = c("analytical", "customary"),
+  confint = TRUE,
+  verbose = FALSE,
+  control = list()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a matrix of scores. Each row corresponds to a unit, each column to a coder.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>the level of measurement, one of <code>"nominal"</code>, <code>"ordinal"</code>, <code>"interval"</code>, or <code>"ratio"</code>; or a user-defined distance function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the methodology to apply, either <code>"analytical"</code> or <code>"customary"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confint</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a confidence interval is computed. For <code>method = "analytical"</code> the interval is a jackknife interval. For <code>method = "customary"</code> the interval is a bootstrap interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, various messages are printed to the console. Note that if <code>confint = TRUE</code> a progress bar (<code>pblapply</code>) is displayed (if possible) during the bootstrap or jackknife computation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control parameters.
+</p>
+
+<dl>
+<dt><code>bootit</code></dt>
+<dd>
+<p>the size of the bootstrap sample. This applies when <code>confint = TRUE</code> and <code>method = "customary"</code>. Defaults to 1,000.</p>
+</dd>
+<dt><code>nodes</code></dt>
+<dd>
+<p>the desired number of nodes in the cluster.</p>
+</dd>
+<dt><code>parallel</code></dt>
+<dd>
+<p>logical; if <code>TRUE</code> (the default), bootstrapping or jackknife estimation is done in parallel (for <code>confint = TRUE</code>).</p>
+</dd>
+<dt><code>type</code></dt>
+<dd>
+<p>one of the supported cluster types for <code>makeCluster</code>. Defaults to <code>"SOCK"</code>.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is the package's flagship function. It applies the Krippendorff's Alpha methodology for nominal, ordinal, interval, or ratio levels of measurement, and, if desired, produces confidence intervals. Parallel computing is supported, when applicable.
+</p>
+<p>If the level of measurement is nominal, the discrete metric (<code>nominal.dist</code>) is employed by default. If the level of measurement is interval or ordinal, the squared-difference distance function (<code>interval.dist</code>) is employed by default. (For the ordinal level of measurement, using the squared-difference distance function may be inappropriate, in which case the user should supply his/her own distance function.) If the level of measurement is ratio, a ratio distance function (<code>ratio.dist</code>) is applied. Alternatively, the user may supply his/her own distance function. Said function must handle <code>NA</code>'s gracefully; see the above mentioned built-in distance functions for examples.
+</p>
+<p>Argument <code>method</code> is used to choose between the customary Alpha methodology and the analytical methodology developed by Hughes: <code>method = "analytical"</code> or <code>method = "customary"</code>. For smaller samples Hughes' methodology should be strongly preferred because that approach reduces bias for point estimation and provides much better performing confidence intervals—jackknife intervals, to be precise. For large samples Krippendorff's customary methodology can safely be used for inference, and speeds computation considerably relative to Hughes' jackknife method.
+</p>
+<p>If argument <code>confint</code> is set to <code>TRUE</code>, a confidence interval is computed. For Hughes' methodology a jackknife interval is produced. For the customary methodology a bootstrap interval is produced. The bootstrap is done by resampling, with replacement, the rows of <code>data</code> and then computing the alpha statistic for the resulting matrix. The elements of argument <code>control</code> are used to control the interval computation.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function <code>krippendorffs.alpha</code> returns an object of class <code>"krippendorffsalpha"</code>, which is a list comprising the following elements.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>alpha.hat</code></td>
+<td>
+<p>the estimate of alpha.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boot.sample</code></td>
+<td>
+<p>when applicable, the bootstrap sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>the matched call.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coders</code></td>
+<td>
+<p>the number of coders.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confint</code></td>
+<td>
+<p>the value of argument <code>confint</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>the list of control parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the matrix of scores, where rows represent units and columns represent coders.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta.hat</code></td>
+<td>
+<p>when <code>method = "analytical"</code>, <code class="reqn">log(MSA / MSE)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>when <code>method = "analytical"</code>, the lower 95% confidence limit for alpha.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>the level of measurement, or a user-dfined distance function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MSA</code></td>
+<td>
+<p>when <code>method = "analytical"</code>, the estimate of between-unit variation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MSE</code></td>
+<td>
+<p>the estimate of within-unit variation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MST</code></td>
+<td>
+<p>when <code>method = "customary"</code>, the estimate of total variation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the value of argument <code>method</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_</code></td>
+<td>
+<p>when <code>method = "analytical"</code>, the average number of scores per row of the data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se</code></td>
+<td>
+<p>when <code>method = "analytical"</code>, the jackknife standard error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>U</code></td>
+<td>
+<p>when <code>method = "analytical"</code>, the upper 95% confidence limit for alpha.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>the number of units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>the value of argument <code>verbose</code>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Krippendorff, K. (2013). Computing Krippendorff's alpha-reliability. Technical report, University of Pennsylvania.
+</p>
+<p>Hughes, J. (2022). Toward improved inference for Krippendorff's Alpha agreement coefficient. arXiv.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># The following data were presented in Krippendorff (2013). This example
+# applies Hughes' methodology (the default) to these data. A jackknife
+# confidence interval is produced (confint = TRUE). The fit is then
+# summarized, and a 99% interval is given.
+
+nominal = matrix(c(1,2,3,3,2,1,4,1,2,NA,NA,NA,
+                   1,2,3,3,2,2,4,1,2,5,NA,3,
+                   NA,3,3,3,2,3,4,2,2,5,1,NA,
+                   1,2,3,3,2,4,4,1,2,5,1,NA), 12, 4)
+nominal
+fit.nom = krippendorffs.alpha(nominal, level = "nominal", confint = TRUE, verbose = TRUE,
+                              control = list(parallel = FALSE))
+summary(fit.nom)
+confint(fit.nom, level = 0.99)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rubikclust</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Unsupervised clustering to detect rough structures and outliers.</h2>
+
+<h3>Description</h3>
+
+<p>Handle and operate on Nx3 matrix, where N is the number of
+samples and data are collected on 3 variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rubikclust(X, min.space = 0.4, rotation = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A data matrix for which rows represent samples and the 3 columns
+represent features. Missingness is not allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.space</code></td>
+<td>
+<p>A value to specify a minimum space between 2 consecutive
+projected values. Default = 0.4.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rotation</code></td>
+<td>
+<p>To specify if rotation is enabled or not. Default = TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function rubikClust is able to take up to 3 variables
+(N x 3 matrix). In case, a matrix contains more than 3 columns, only the
+first three columns are used; the other columns are ignored.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The returned value is a vector of numbers representing cluster
+memberships.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Load simulated dataset
+data(example_SNP)
+
+PCs &lt;- cal.pc.linear(simsnp$snp, no.pc = 3)
+
+#Run rubikclust with the default parameters
+groups &lt;- rubikclust(PCs$PC)
+#Check clustering results
+print(groups)
+
+#Check cluster's distribution
+table(groups)
+
+#Check the plot, highlight the points according to the clustering result
+mylabels &lt;- paste0("group", as.factor(groups))
+plot3views( PCs$PC, labels = mylabels)
+
+#Run rubikclust with min.space = 0.02
+groups &lt;- rubikclust(PCs$PC, min.space = 0.02)
+#Check clustering results
+print(groups)
+
+#Check cluster's distribution
+table(groups)
+
+#Check the plot, highlight the points according to the clustering result
+mylabels &lt;- paste0("group", as.factor(groups))
+plot3views( PCs$PC, labels = mylabels)
+</code></pre>
+
+
+</div>

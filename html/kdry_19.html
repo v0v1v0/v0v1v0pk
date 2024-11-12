@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rep_median_iqr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>rep_median_iqr</h2>
+
+<h3>Description</h3>
+
+<p>Reporting helper function: computes and formats median and
+interquartile range from a numeric vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rep_median_iqr(
+  x,
+  digits = 2,
+  na.rm = TRUE,
+  collapse = "to",
+  iqr_brackets = c("round", "square"),
+  iqr_prefix = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer indicating the number of decimal places.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>A logical indicating if missings should be removed from <code>x</code>
+before computing the distributional parameters (default: <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>collapse</code></td>
+<td>
+<p>A character which is placed between the lower and the upper
+confidence bound in the formatted output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iqr_brackets</code></td>
+<td>
+<p>A character. Either <code>"round"</code> (default) or <code>"square"</code> to
+indicate the type of brackets to surround the confidence interval in the
+formatted output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iqr_prefix</code></td>
+<td>
+<p>A logical. If <code>TRUE</code> (default), the confidence interval is
+prefixed with <code>"IQR: "</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is just a special case of <code>rep_median_ci()</code> with the parameter
+<code>conf_int</code> set to <code>50</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character with the formatted output.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>rep_median_ci()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(123)
+x &lt;- rnorm(1000)
+rep_median_iqr(x)
+rep_median_iqr(rep(1, 10))
+rep_median_iqr(x, collapse = "-")
+rep_median_iqr(x, iqr_brackets = "square")
+rep_median_iqr(x, iqr_brackets = "square", iqr_prefix = FALSE)
+rep_median_iqr(x, collapse = ";", iqr_prefix = FALSE)
+
+</code></pre>
+
+
+</div>

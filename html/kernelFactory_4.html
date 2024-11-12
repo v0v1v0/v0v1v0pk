@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.kernelFactory</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict method for kernelFactory objects</h2>
+
+<h3>Description</h3>
+
+<p>Prediction of new data using kernelFactory.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kernelFactory'
+predict(object, newdata = NULL, predict.all = FALSE,
+  ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>kernelFactory</code>, as created by the function <code>kernelFactory</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>A data frame with the same predictors as in the training data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predict.all</code></td>
+<td>
+<p>TRUE or FALSE. If TRUE and rp and cp are 1 then the individual predictions of the random forest are returned. If TRUE and any of rp and cp or bigger than 1 then the predictions of all the members are returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Not used currently.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector containing the response probabilities.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Authors: Michel Ballings and Dirk Van den Poel, Maintainer: <a href="mailto:Michel.Ballings@GMail.com">Michel.Ballings@GMail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Ballings, M. and Van den Poel, D. (2013), Kernel Factory: An Ensemble of Kernel Machines. Expert Systems With Applications, 40(8), 2904-2913.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kernelFactory</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Credit Approval data available at UCI Machine Learning Repository
+data(Credit)
+#take subset (for the purpose of a quick example) and train and test
+Credit &lt;- Credit[1:100,]
+train.ind &lt;- sample(nrow(Credit),round(0.5*nrow(Credit)))
+
+#Train Kernel Factory on training data
+kFmodel &lt;- kernelFactory(x=Credit[train.ind,names(Credit)!= "Response"],
+          y=Credit[train.ind,"Response"], method=random)
+
+#Deploy Kernel Factory to predict response for test data
+predictedresponse &lt;- predict(kFmodel, newdata=Credit[-train.ind,names(Credit)!= "Response"])
+</code></pre>
+
+
+</div>

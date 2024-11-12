@@ -1,0 +1,175 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>locpvs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pairwise variable selection for classification in local models</h2>
+
+<h3>Description</h3>
+
+<p>Performs pairwise variable selection on subclasses.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">locpvs(x, subclasses, subclass.labels, prior=NULL, method="lda", 
+    vs.method = c("ks.test", "stepclass", "greedy.wilks"),
+    niveau=0.05, fold=10, impr=0.1, direct="backward", out=FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>matrix or data frame containing the explanatory variables. x must consist of numerical data only. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subclasses</code></td>
+<td>
+<p>vector indicating the subclasses (a factor) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subclass.labels</code></td>
+<td>
+<p>must be a matrix with 2 coloumns, where the first coloumn specifies the subclass and the second coloumn the according upper class </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prior</code></td>
+<td>
+<p>prior probabilites for the classes. If not specified the prior probabilities will be set according to proportion in “subclasses”. If specified the order of prior 
+probabilities must be the same as in “subclasses”. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>character, name of classification function (e.g. “<code>lda</code>” (default)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vs.method</code></td>
+<td>
+<p>character, name of variable selection method. Must be one of “<code>ks.test</code>” (default),
+“<code>stepclass</code>” or “<code>greedy.wilks</code>”. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>niveau</code></td>
+<td>
+<p>used niveau for “<code>ks.test</code>”</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fold</code></td>
+<td>
+<p>parameter for cross-validation, if “<code>stepclass</code>” is chosen ‘<code>vs.method</code>’</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impr</code></td>
+<td>
+<p>least improvement of performance measure desired to include or exclude any variable (&lt;=1), if “<code>stepclass</code>” is chosen ‘<code>vs.method</code>’ </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>direct</code></td>
+<td>
+<p>direction of variable selection, if “<code>stepclass</code>” is chosen ‘<code>vs.method</code>’. 
+Must be one if “<code>forward</code>”, “<code>backward</code>” (default) or “<code>both</code>”. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out</code></td>
+<td>
+<p>indicator (logical) for textoutput during computation (slows down computation!), if “<code>stepclass</code>” is chosen ‘<code>vs.method</code>’ </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further parameters passed to classification function (‘<code>method</code>’) or variable selection method (‘<code>vs.method</code>’) </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A call on <code>pvs</code> is performed using “subclasses” as grouping variable. See <code>pvs</code> for further details.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class ‘<code>locpvs</code>’ containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>pvs.result</code></td>
+<td>
+<p>the complete output of the call to <code>pvs</code> (see <code>pvs</code> for further details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subclass.labels</code></td>
+<td>
+<p>the subclass.labels as specified in function call</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Gero Szepannek, <a href="mailto:szepannek@statistik.tu-dortmund.de">szepannek@statistik.tu-dortmund.de</a>, Christian Neumann</p>
+
+
+<h3>References</h3>
+
+<p>Szepannek, G. and Weihs, C. (2006) Local Modelling in Classification on Different Feature Subspaces. 
+In <em>Advances in Data Mining.</em>, ed Perner, P., LNAI 4065, pp. 226-234. Springer, Heidelberg.</p>
+
+
+<h3>See Also</h3>
+
+<p><code>predict.locpvs</code> for predicting ‘<code>locpvs</code>’ models and <code>pvs</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## this example might be a bit artificial, but it sufficiently shows how locpvs has to be used
+
+## learn a locpvs-model on the Vehicle dataset
+
+library("mlbench")
+data("Vehicle")
+
+subclass &lt;- Vehicle$Class # use four car-types in dataset as subclasses
+## aggregate "bus" and "van" to upper-class "big" and "saab" and "opel" to upper-class "small"
+subclass_class &lt;- matrix(c("bus","van","saab","opel","big","big","small","small"),ncol=2) 
+
+## learn now a locpvs-model for the subclasses:
+model &lt;- locpvs(Vehicle[,1:18], subclass, subclass_class) 
+model # short summary, showing the class-pairs of the submodels 
+# together with the selected variables and the relation of sub- to upperclasses
+
+## predict:
+pred &lt;- predict(model, Vehicle[,1:18])
+
+## now you can look at the predicted classes:
+pred$class
+## or at the posterior probabilities:
+pred$posterior
+## or at the posterior probabilities for the subclasses:
+pred$subclass.posteriors
+
+</code></pre>
+
+
+</div>

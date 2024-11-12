@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>update_NG2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>update_NG</h2>
+
+<h3>Description</h3>
+
+<p>Calculate posterior parameter for the Normal-Gamma, assuming that the observed values came from a Normal model from which the prior distribution for the mean and the precision have joint distribution Normal-Gamma
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">update_NG2(conj.param, ft, Qt, y, parms = list())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>list: A vector containing the parameters of the Normal-Gamma (mu0,c0,alpha,beta).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ft</code></td>
+<td>
+<p>numeric: A vector representing the means from the normal distribution. Not used in the default method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qt</code></td>
+<td>
+<p>matrix: A matrix representing the covariance matrix of the normal distribution. Not used in the default method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric: A vector containing the observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list: A list of extra known parameters of the distribution. Not used in this kernel.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The parameters of the posterior distribution.
+</p>
+
+
+</div>

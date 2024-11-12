@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>register_keras_serializable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Registers a custom object with the Keras serialization framework.</h2>
+
+<h3>Description</h3>
+
+<p>This function registers a custom class or function with the Keras custom
+object registry, so that it can be serialized and deserialized without
+needing an entry in the user-provided <code>custom_objects</code> argument. It also injects a
+function that Keras will call to get the object's serializable string key.
+</p>
+<p>Note that to be serialized and deserialized, classes must implement the
+<code>get_config()</code> method. Functions do not have this requirement.
+</p>
+<p>The object will be registered under the key <code>'package&gt;name'</code> where <code>name</code>,
+defaults to the object name if not passed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">register_keras_serializable(object, name = NULL, package = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A keras object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>The name to serialize this class under in this package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>package</code></td>
+<td>
+<p>The package that this class belongs to. This is used for the
+<code>key</code> (which is <code>"package&gt;name"</code>) to identify the class.
+Defaults to the current package name, or <code>"Custom"</code> outside of a package.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>object</code> is returned invisibly, for convenient piping. This is
+primarily called for side effects.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># Note that `'my_package'` is used as the `package` argument here, and since
+# the `name` argument is not provided, `'MyDense'` is used as the `name`.
+layer_my_dense &lt;- Layer("MyDense")
+register_keras_serializable(layer_my_dense, package = "my_package")
+
+MyDense &lt;- environment(layer_my_dense)$`__class__` # the python class obj
+stopifnot(exprs = {
+  get_registered_object('my_package&gt;MyDense') == MyDense
+  get_registered_name(MyDense) == 'my_package&gt;MyDense'
+})
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>layer_tfsm()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>save_model()</code> <br><code>save_model_config()</code> <br><code>save_model_weights()</code> <br><code>with_custom_object_scope()</code> <br></p>
+<p>Other serialization utilities: <br><code>deserialize_keras_object()</code> <br><code>get_custom_objects()</code> <br><code>get_registered_name()</code> <br><code>get_registered_object()</code> <br><code>serialize_keras_object()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

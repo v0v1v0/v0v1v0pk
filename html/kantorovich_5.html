@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kantorovich_CVX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes Kantorovich distance with CVX</h2>
+
+<h3>Description</h3>
+
+<p>Kantorovich distance using the <code>CVXR</code> package
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kantorovich_CVX(
+  mu,
+  nu,
+  dist,
+  solution = FALSE,
+  stop_if_fail = TRUE,
+  solver = "ECOS",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>(row margins) probability measure in numeric mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>(column margins) probability measure in numeric mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist</code></td>
+<td>
+<p>matrix defining the distance to be minimized on average</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>solution</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the solution is returned in the
+<code>"solution"</code> attributes of the output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stop_if_fail</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, an error is returned in the
+case when no solution is found; if <code>FALSE</code>, the output of
+<code>psolve</code> is returned with a warning</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>solver</code></td>
+<td>
+<p>the <code>CVX</code> solver, passed to <code>psolve</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments passed to <code>psolve</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c(1.5, 2, -3)
+mu &lt;- c(1/7, 2/7, 4/7)
+y &lt;- c(4, 3.5, 0, -2)
+nu &lt;- c(1/4, 1/4, 1/4, 1/4)
+M &lt;- outer(x, y, FUN = function(x, y) abs(x - y))
+kantorovich_CVX(mu, nu, dist = M)
+
+</code></pre>
+
+
+</div>

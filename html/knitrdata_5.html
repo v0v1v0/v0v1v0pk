@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.file.binary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Functions to assess if files are binary, DOS text or UNIX text format</h2>
+
+<h3>Description</h3>
+
+<p>These functions attempt to determine if a file is binary or text. In
+addition, <code>file.type</code> attempts to determine the newline character(s)
+used in the file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">is.file.binary(file, bin.ints = c(1:8, 14:25), nbytes = 1000, nbin = 2)
+
+file.type(file, bin.ints = c(1:8, 14:25), nbytes = 1000, nbin = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>The path to the file to be examined</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin.ints</code></td>
+<td>
+<p>List of integers with the ASCII values of control characters
+that are to be considered when when looking for signs a file is binary.
+Default includes most ASCII control characters except things like NULL, LF,
+CR and HT that might actually appear in an ASCII file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbytes</code></td>
+<td>
+<p>Number of bytes to read in from the beginning of the file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbin</code></td>
+<td>
+<p>An integer indicating the threshold on the number of control
+characters above which a file is considered binary. Defaults to 2.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A file is assessed to be binary using a heuristic based on finding more than
+<code>nbin</code> ASCII control (i.e., non-printing) characters in the first
+<code>nbytes</code> of the file. This works well for standard ASCII text, but it
+may be less effective for complex UTF8 text (e.g., Chinese).
+</p>
+<p>For text files, line endings are assessed by <code>file.type</code> by searching
+first for DOS line endings (<code>\r\n</code>) in the first <code>nbytes</code> of the
+input file, and then by searching for UNIX line endings (<code>\n</code>). If
+neither is found, then <code>NA_character_</code> is returned for the line ending.
+</p>
+
+
+<h3>Value</h3>
+
+<p>For <code>is.file.binary</code>, a boolean value is returned, whereas a
+list is returned for <code>file.type</code>.
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>is.file.binary</code>: A boolean that will be <code>TRUE</code> if a file is considered to be
+binary.
+</p>
+</li>
+<li> <p><code>file.type</code>: Returns a list with up to two elements:
+<code>type</code> &amp; <code>newline</code>. <code>type</code> can either by <code>"binary"</code> or
+<code>"text"</code>. <code>newline</code> will be <code>NULL</code> for binary files,
+<code>"\r\n"</code> for DOS formatted text files, <code>"\n"</code> for UNIX
+formatted text files and <code>NA_character_</code> for text files without any
+newline characters in the first <code>nbytes</code> of the file.
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>David M. Kaplan <a href="mailto:dmkaplan2000@gmail.com">dmkaplan2000@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>platform.newline</code>.
+</p>
+
+
+</div>

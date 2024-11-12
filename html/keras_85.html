@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dataset_boston_housing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Boston housing price regression dataset</h2>
+
+<h3>Description</h3>
+
+<p>Dataset taken from the StatLib library which is maintained at Carnegie Mellon
+University.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dataset_boston_housing(
+  path = "boston_housing.npz",
+  test_split = 0.2,
+  seed = 113L
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Path where to cache the dataset locally (relative to
+~/.keras/datasets).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test_split</code></td>
+<td>
+<p>fraction of the data to reserve as test set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Random seed for shuffling the data before computing the test
+split.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Lists of training and test data: <code style="white-space: pre;">⁠train$x, train$y, test$x, test$y⁠</code>.
+</p>
+<p>Samples contain 13 attributes of houses at different locations around
+the Boston suburbs in the late 1970s. Targets are the median values of the
+houses at a location (in k$).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other datasets: 
+<code>dataset_cifar10()</code>,
+<code>dataset_cifar100()</code>,
+<code>dataset_fashion_mnist()</code>,
+<code>dataset_imdb()</code>,
+<code>dataset_mnist()</code>,
+<code>dataset_reuters()</code>
+</p>
+
+
+</div>

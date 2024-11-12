@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ContrivedData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Contrived Example Data</h2>
+
+<h3>Description</h3>
+
+<p>These data are a simulated point-referenced geospatial data that serve to provide 
+a clean example of a kriging model. There are 500 observations with coordinates 
+located on a unit square.
+</p>
+
+
+<h3>Format</h3>
+
+<p>The <code>ContrivedData</code> dataset has 500 observations and 5 variables.
+</p>
+
+<dl>
+<dt><code>y</code></dt>
+<dd>
+<p>The outcome variable. Its true population functional form is 
+<code class="reqn">y_s=0+1 x_{1s}+2 x_{2s}+\omega_{s}+\epsilon_{s}</code>. The true variance of 
+<code class="reqn">\omega</code> is <code class="reqn">\sigma^2=0.5</code> and of <code class="reqn">\epsilon</code> is <code class="reqn">\tau^2=0.5</code>. 
+The decay term that shapes spatial correlation levels is <code class="reqn">\phi=2.5</code>.</p>
+</dd>
+<dt><code>x.1</code></dt>
+<dd>
+<p>A predictor with a standard uniform distribution.</p>
+</dd>
+<dt><code>x.2</code></dt>
+<dd>
+<p>A predictor with a standard normal distribution.</p>
+</dd>
+<dt><code>s.1</code></dt>
+<dd>
+<p>Coordinate in eastings for each observation, distributed 
+standard uniform.</p>
+</dd>
+<dt><code>s.2</code></dt>
+<dd>
+<p>Coordinate in northings for each observation, distributed 
+standard uniform.</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize example data
+summary(ContrivedData)
+
+# Initial OLS model
+contrived.ols&lt;-lm(y~x.1+x.2,data=ContrivedData)
+# summary(contrived.ols)
+
+# Set seed
+set.seed(1241060320)
+
+#For simple illustration, we set to few iterations.
+#In this case, a 10,000-iteration run converges to the true parameters.
+#If you have considerable time and hardware, delete the # on the next line.
+#10,000 iterations took 39 min. with 8 GB RAM &amp; a 1.5 GHz Quad-Core processor.
+M &lt;- 100
+#M&lt;-10000
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+   data = ContrivedData, n.iter = M, n.burnin=20, range.tol = 0.05)
+# Alternatively, use burnin() after estimation  
+#contrived.run &lt;- burnin(contrived.run, n.burnin=20)
+
+# Summarize the results and examine results against true coefficients	
+summary(contrived.run)
+(TRUTH&lt;-c(0.5,2.5,0.5,0,1,2))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

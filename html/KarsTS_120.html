@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>myScale</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+myScale: scaling function
+</h2>
+
+<h3>Description</h3>
+
+<p>This function is used to scale one or more variables with the possibility of removing the attributes from the base::scale output. It is also possible to perform a robust scaling using the median and the median absolute deviation instead of the mean and the standard deviation. It is used internally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">myScale(inputMatrix, scaleType = "Robust", outputType = c("outDef", "outList", "outNo"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputMatrix</code></td>
+<td>
+
+<p>Matrix containing the variables to scale.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaleType</code></td>
+<td>
+
+<p>Robust scaling or not
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outputType</code></td>
+<td>
+
+<p>Three types of outputs: output as in base::scale, attributes removed but stored in a list and no attributes at all. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

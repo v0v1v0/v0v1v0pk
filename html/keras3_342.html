@@ -1,0 +1,153 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_categorical_crossentropy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the crossentropy metric between the labels and predictions.</h2>
+
+<h3>Description</h3>
+
+<p>This is the crossentropy metric class to be used when there are multiple
+label classes (2 or more). It assumes that labels are one-hot encoded,
+e.g., when labels values are <code>c(2, 0, 1)</code>, then
+<code>y_true</code> is <code style="white-space: pre;">⁠rbind(c([0, 0, 1), c(1, 0, 0), c(0, 1, 0))⁠</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_categorical_crossentropy(
+  y_true,
+  y_pred,
+  from_logits = FALSE,
+  label_smoothing = 0,
+  axis = -1L,
+  ...,
+  name = "categorical_crossentropy",
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>Tensor of one-hot true targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>Tensor of predicted targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from_logits</code></td>
+<td>
+<p>(Optional) Whether output is expected to be
+a logits tensor. By default, we consider that output
+encodes a probability distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_smoothing</code></td>
+<td>
+<p>(Optional) Float in <code style="white-space: pre;">⁠[0, 1]⁠</code>.
+When &gt; 0, label values are smoothed, meaning the confidence
+on label values are relaxed. e.g. <code>label_smoothing=0.2</code> means
+that we will use a value of 0.1 for label
+"0" and 0.9 for label "1".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>(Optional) Defaults to <code>-1</code>.
+The dimension along which entropy is computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>y_true</code> and <code>y_pred</code> are missing, a <code>Metric</code>
+instance is returned. The <code>Metric</code> instance that can be passed directly to
+<code>compile(metrics = )</code>, or used as a standalone object. See <code>?Metric</code> for
+example usage. If <code>y_true</code> and <code>y_pred</code> are provided, then a tensor with
+the computed value is returned.
+</p>
+
+
+<h3>Examples</h3>
+
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre># EPSILON = 1e-7, y = y_true, y` = y_pred
+# y` = clip_op_clip_by_value(output, EPSILON, 1. - EPSILON)
+# y` = rbind(c(0.05, 0.95, EPSILON), c(0.1, 0.8, 0.1))
+# xent = -sum(y * log(y'), axis = -1)
+#      = -((log 0.95), (log 0.1))
+#      = [0.051, 2.302]
+# Reduced xent = (0.051 + 2.302) / 2
+
+m &lt;- metric_categorical_crossentropy()
+m$update_state(rbind(c(0, 1, 0), c(0, 0, 1)),
+               rbind(c(0.05, 0.95, 0), c(0.1, 0.8, 0.1)))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(1.1769392, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre># 1.1769392
+</pre></div>
+<div class="sourceCode r"><pre>m$reset_state()
+m$update_state(rbind(c(0, 1, 0), c(0, 0, 1)),
+               rbind(c(0.05, 0.95, 0), c(0.1, 0.8, 0.1)),
+               sample_weight = c(0.3, 0.7))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(1.6271976, shape=(), dtype=float32)
+
+</pre></div>
+<p>Usage with <code>compile()</code> API:
+</p>
+<div class="sourceCode r"><pre>model %&gt;% compile(
+  optimizer = 'sgd',
+  loss = 'mse',
+  metrics = list(metric_categorical_crossentropy()))
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/metrics/probabilistic_metrics#categoricalcrossentropy-class">https://keras.io/api/metrics/probabilistic_metrics#categoricalcrossentropy-class</a>
+</p>
+</li></ul>
+<p>Other losses: <br><code>Loss()</code> <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_focal_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_dice()</code> <br><code>loss_hinge()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_log_cosh()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+<p>Other probabilistic metrics: <br><code>metric_binary_crossentropy()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br></p>
+
+
+</div>

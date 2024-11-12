@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_knockoff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create knockoff genotype data in trio designs</h2>
+
+<h3>Description</h3>
+
+<p>Create knockoff genotype data using phased haplotype data in trio designs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_knockoff(
+  dat.hap,
+  pos,
+  M = 10,
+  maxcor = 0.7,
+  maxbp = 90000,
+  phasing.dad = NULL,
+  phasing.mom = NULL,
+  seed = 100
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat.hap</code></td>
+<td>
+<p>A 6n*p matrix for the haplotype data, in which n is the number of trios and p is the number of variants. Each trio must consist of father, mother, and offspring (in this order). The haplotypes must be coded as 0 or 1. Missing haplotypes are not allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pos</code></td>
+<td>
+<p>A numeric vector of length p for the position of p variants.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>A positive integer for the number of knockoffs. The default is 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxcor</code></td>
+<td>
+<p>A real number in a range of [0,1] for the correlation threshold in hierarchical clustering, such that variants from two different clusters do not have a correlation greater than maxcor when constructing knockoff parents. The default is 0.7.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxbp</code></td>
+<td>
+<p>A positive integer for the size of neighboring base pairs used to generate knockoff parents. The default is 90000.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phasing.dad</code></td>
+<td>
+<p>A numeric vector of length n that contains 1 or 2 to indicate which paternal haplotype was transmitted to offspring in each trio. If NA, the function will calculate the phasing information based on the input haplotype matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phasing.mom</code></td>
+<td>
+<p>A numeric vector of length n that contains 1 or 2 to indicate which maternal haplotype was transmitted to offspring in each trio. If NA, the function will calculate the phasing information based on the input haplotype matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>An integer for the random seed in the knockoff generation. The default is 100.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A 3n*p*M array for the knockoff genotype data.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(KnockoffHybrid.example)
+dat.ko&lt;-create_knockoff(KnockoffHybrid.example$dat.hap,KnockoffHybrid.example$pos,M=10)
+</code></pre>
+
+
+</div>

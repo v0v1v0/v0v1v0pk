@@ -1,0 +1,176 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>max_infill_criterion</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimizer for the infill criteria</h2>
+
+<h3>Description</h3>
+
+<p>Optimization, of the chosen infill criterion (maximization or minimization, depending on the case)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">max_infill_criterion(lower, upper, optimcontrol = NULL, 
+method, T, model, method.param = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+
+<p>Vector containing the lower bounds of the design space.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+
+<p>Vector containing the upper bounds of the design space.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimcontrol</code></td>
+<td>
+
+<p>Optional list of control parameters for the optimization of the sampling criterion. The field <code>method</code> defines which optimization method is used. It can be either <code>"genoud"</code> (default) for an optimization using the genoud algorithm, or <code>"discrete"</code> for an optimization over a specified discrete set. 
+If the field <code>method</code> is set to <code>"genoud"</code>, one can set some parameters of this algorithm: 
+<code>pop.size</code>  (default : 50*d),  <code>max.generations</code> (10*d), <code>wait.generations</code> (2),  <code>BFGSburnin</code> (2) and the mutations <code>P1</code>, <code>P2</code>, up to <code>P9</code> (see <code>genoud</code>). Numbers into brackets are the default values.
+If the field <code>method</code> is set to <code>"discrete"</code>, one can set the field <code>optim.points</code>: p * d matrix corresponding to the p points where the criterion will be evaluated. If nothing is specified, 100*d points are chosen randomly. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+
+<p>Criterion used for choosing observations: <code>"ranjan"</code> (default) , <code>"bichon"</code>, <code>"tsee"</code>, or <code>"tmse"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Array containing one or several thresholds. The <code>"tmse"</code> criterion can be used with multiple thresholds. The <code>"ranjan"</code>, <code>"bichon"</code>, <code>"tsee"</code> criteria can be used with only one threshold.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>A Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method.param</code></td>
+<td>
+
+<p>Optional tolerance value (scalar). Default value is 1 for <code>"ranjan"</code> and <code>"bichon"</code>, and 0 for <code>"tmse"</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+<p>The best set of parameters found.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>The value of the chosen criterion at par.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allvalues</code></td>
+<td>
+<p>If an optimization on a discrete set of points is chosen, the value of the criterion at all these points.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Victor Picheny (INRA, Toulouse, France)
+</p>
+<p>David Ginsbourger (IDIAP Martigny and University of Bern, Switzerland)
+</p>
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Bect J., Ginsbourger D., Li L., Picheny V., Vazquez E. (2012), <em>Sequential design of computer experiments for the estimation of a probability of failure</em>, Statistics and Computing vol. 22(3), pp 773-793
+</p>
+<p>Picheny V., Ginsbourger D., Roustant O., Haftka R.T., (2010) <em>Adaptive designs of experiments for accurate approximation of a target region</em>, J. Mech. Des. vol. 132(7)
+</p>
+<p>Bichon B.J., Eldred M.S., Swiler L.P., Mahadevan S., McFarland J.M. (2008) <em>Efficient global reliability analysis for nonlinear implicit performance functions</em>, AIAA Journal 46(10), pp 2459-2468
+</p>
+<p>Ranjan P., Bingham D., Michailidis G. (2008) <em>Sequential experiment design for contour estimation from complex computer codes</em> Technometrics 50(4), pp 527-541
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>EGI</code>,<code>ranjan_optim</code>,<code>tmse_optim</code>,<code>bichon_optim</code>,<code>tsee_optim</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#max_infill_criterion
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- 80 #threshold
+testfun &lt;- branin
+lower &lt;- c(0,0)
+upper &lt;- c(1,1)
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+optimcontrol &lt;- list(method="genoud",pop.size=50)
+
+## Not run: 
+obj &lt;- max_infill_criterion(lower=lower,upper=upper,optimcontrol=optimcontrol,
+                             method="bichon",T=T,model=model)
+
+obj$par;obj$value
+new.model &lt;- update(object=model,newX=obj$par,newy=testfun(obj$par),cov.reestim=TRUE)
+
+par(mfrow=c(1,2))
+print_uncertainty(model=model,T=T,type="pn",lower=lower,upper=upper,
+cex.points=2.5,main="probability of excursion")
+
+print_uncertainty(model=new.model,T=T,type="pn",lower=lower,upper=upper,
+new.points=1,col.points.end="red",cex.points=2.5,main="updated probability of excursion")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

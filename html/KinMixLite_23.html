@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>make.profile</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert genotype profile to reference profile format</h2>
+
+<h3>Description</h3>
+
+<p>Convert genotype profile to reference profile format</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">make.profile(gt,name='K')
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>gt</code></td>
+<td>
+<p>genotype profile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>character string used to name profile in output data frame</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data frame containing reference profile</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+S1prof&lt;-make.profile(S1gt,'S1')
+C&lt;-0.001
+mixD&lt;-DNAmixture(list(epg),k=3,K='S1',reference.profile=S1prof,C=list(C),database=db)
+</code></pre>
+
+
+</div>

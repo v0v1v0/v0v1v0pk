@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_uniform_gaussian</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Analytical KL divergence between a uniform and a Gaussian distribution</h2>
+
+<h3>Description</h3>
+
+<p>This function computes <code class="reqn">D_{KL}(p||q)</code>, where <code class="reqn">p\sim \text{U}(a,b)</code>
+and <code class="reqn">q\sim \mathcal{N}(\mu,\sigma^2)</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_uniform_gaussian(a = 0, b = 1, mu = 0, sigma2 = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>a, b</code></td>
+<td>
+<p>Parameters of uniform (true) distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu, sigma2</code></td>
+<td>
+<p>Parameters of Gaussian (approximate) distribution</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar (the Kullback-Leibler divergence)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kld_uniform_gaussian(a = 0, b = 1, mu = 0, sigma2 = 1)
+</code></pre>
+
+
+</div>

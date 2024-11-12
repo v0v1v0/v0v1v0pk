@@ -1,0 +1,162 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mreach.closeness</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the M-reach Closeness Centrality Score in a Netwrok</h2>
+
+<h3>Description</h3>
+
+<p><code>mreach.closeness</code> refines the <code>mreach.degree</code> centrality by
+using the (inverse) geodistance as weights.
+The edge values should be properly interpreted as distances.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mreach.closeness(
+  adj.matrix,
+  node,
+  M = Inf,
+  binary = FALSE,
+  cmode = "all",
+  large = TRUE,
+  geodist.precomp = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>Matrix indicating the adjacency matrix of the network.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>node</code></td>
+<td>
+<p>Integer indicating the column index of the chosen player
+in the adjacenncy matrix. If not specified, scores for all nodes will be reported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>Number indicating the maximum geodistance between two nodes,
+above witch the two nodes are considered disconnected.
+M hence defines the reachable set. The default is <code>Inf</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary</code></td>
+<td>
+<p>Logical scalar. If <code>TRUE</code>, the adjacency matrix is binarized.
+If <code>FALSE</code>, the edge values are considered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmode</code></td>
+<td>
+<p>String indicating the type of centrality being evaluated.
+<code>"outdegree"</code>, <code>"indegree"</code>, and <code>"total"</code> refer to
+indegree, outdegree, and (total) degree respectively. <code>"all"</code> reports
+all the above measures and is the default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>large</code></td>
+<td>
+<p>Logical scalar, whether the computation method for large network is
+implemented. If <code>TRUE</code> (the default), the method implmented in <span class="pkg">igraph</span> is
+used; otherwise the method implemented in <span class="pkg">sna</span> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geodist.precomp</code></td>
+<td>
+<p>Geodistance precomputed for the graph to be
+analyzed (optional).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>mreach.closeness</code> refines the <code>mreach.degree</code> centrality
+by using the (inverse) geodistance as weights, just as <code>closeness</code>
+centrality refines <code>degree</code> centrality.
+It captures the degree centrality when M is properly set (e.g. M=1 in a binarized network).
+It captures the Gil-Schmidt power index (Gil and Schmidt, 1996)
+and the cohesion centrality (Borgatti, 2006) when M is sufficiently large
+(unconstrained). The normalization factor takes care of non-binary
+edge values. Also note that the geodistance matrix does
+not necessarily to be symmetric.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector indicating the outdegree, indegree, or total-degree
+cohesion score of the chosen player; or a data frame containing all
+the above information. Note that the outdegree and indegree scores are normalized
+to [0,1]. This means that the total-degree score is between [0,2].
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weihua An <a href="mailto:weihua.an@emory.edu">weihua.an@emory.edu</a>; Yu-Hsin Liu <a href="mailto:ugeneliu@meta.com">ugeneliu@meta.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>An, Weihua and Yu-Hsin Liu (2016). "keyplayer: An R Package for Locating Key Players in Social Networks."
+<em>The R Journal</em>, 8(1): 257-268.<br></p>
+<p>Borgatti, Stephen P. (2006). "Identifying Sets of Key Players in a Network."
+<em>Computational, Mathematical and Organizational Theory</em>, 12(1):21-34.<br></p>
+<p>Butts, Carter T. (2014). sna: Tools for Social Network Analysis. R package
+version 2.3-2. <a href="https://cran.r-project.org/package=sna">https://cran.r-project.org/package=sna</a><br></p>
+<p>Csardi, G and Nepusz, T (2006). "The igraph software package for complex network research."
+InterJournal, Complex Systems 1695. <a href="https://igraph.org/">https://igraph.org/</a> <br></p>
+<p>Gil, J and Schmidt, S (1996). "The Origin of the Mexican Network of Power."
+Proceedings of the International Social Network Conference, Charleston, SC, 22-25.<br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>geodist</code>;
+<code>shortest.paths</code>;
+<code>mreach.degree</code>;
+<code>kpcent</code>;
+<code>kpset</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Create a 5x5 weighted and directed adjacency matrix, where edge values
+# represent the strength of tie
+W &lt;- matrix(
+  c(0,1,3,0,0,
+    0,0,0,4,0,
+    1,1,0,2,0,
+    0,0,0,0,3,
+    0,2,0,0,0),
+    nrow=5, ncol=5, byrow = TRUE)
+
+# Transform the edge value to distance interpretaion
+A &lt;- W
+A[W!=0] &lt;- 1/W[W!=0]
+
+# List all types of 2-reach closeness scores for every node
+mreach.closeness(A,M=2,cmode="all",large=FALSE)
+
+</code></pre>
+
+
+</div>

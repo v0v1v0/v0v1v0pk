@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>delete_kirby21_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Delete Kirby21 Imaging Data</h2>
+
+<h3>Description</h3>
+
+<p>This function allows users to remove specific
+modalities for Kirby21 data sets.  This allows this package to be 
+on CRAN
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">delete_kirby21_data(modality = kirby21.base::all_modalities(), outdir = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>modality</code></td>
+<td>
+<p>modality of images that are to be downloaded.  You
+must have the package downloaded for that modality.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outdir</code></td>
+<td>
+<p>output directory for files to download.  It will
+default to the directory of the corresponding package for the data.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Nothing is returned
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">on_cran = !identical(Sys.getenv("NOT_CRAN"), "true")
+on_ci &lt;- nzchar(Sys.getenv("CI"))
+local_run = grepl("musch", tolower(Sys.info()[["user"]]))
+run_example = !on_cran || on_ci || local_run
+if (run_example) {
+outdir = tempdir()
+res = download_kirby21_data("SURVEY", outdir = outdir, force = TRUE)
+delete_kirby21_data("SURVEY", outdir = outdir)
+}
+</code></pre>
+
+
+</div>

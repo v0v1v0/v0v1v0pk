@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>card.capacity-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "card.capacity"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing a cardinal capacity, i.e. a capacity whose
+values 
+depend only on the cardinality of subsets (also called <em>symmetric capacity</em>).</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the functions <code>card.capacity</code>, <code>lower.capacity</code>, <code>upper.capacity</code>, <code>uniform.capacity</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal
+to the number of elements of the set on which the cardinal game is defined.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>n+1</code> containing the coefficients of the cardinal capacity. We necessarily have
+<code>data[1]=0</code> and <code>data[i+1]-data[i]&gt;0</code>.</p>
+</dd> 
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>card.game</code>, directly.
+Class <code>superclass.capacity</code>, directly.
+Class <code>card.set.func</code>, by class <code>card.game</code>.
+Class <code>superclass.set.func</code>, by class <code>card.game</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.capacity</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>conjugate</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>entropy</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>favor</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>is.normalized</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd> 
+<dt>normalize</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>orness</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>variance</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+<dt>veto</dt>
+<dd>
+<p><code>signature(object = "card.capacity")</code> </p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>capacity-class</code>, <br><code>card.capacity</code>,
+<br><code>as.capacity-methods</code>, <br><code>conjugate-methods</code>, 
+<br><code>entropy-methods</code>, <br><code>favor-methods</code>, 
+<br><code>is.normalized-methods</code>, <br><code>orness-methods</code>, 
+<br><code>variance-methods</code>, <br><code>veto-methods</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- card.capacity(0:6/6)
+## the same
+mu &lt;- uniform.capacity(6)
+
+# the attributes of the object
+mu@n
+mu@data
+
+## a test
+is.normalized(mu)
+normalize(mu)
+
+## a transformation
+conjugate(mu)
+
+## some summary indices
+orness(mu)
+veto(mu)
+favor(mu)
+variance(mu)
+entropy(mu)
+## the same
+summary(mu)
+</code></pre>
+
+
+</div>

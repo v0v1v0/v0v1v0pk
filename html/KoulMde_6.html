@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KoulLrMde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Minimum distance estimation in linear regression model.</h2>
+
+<h3>Description</h3>
+
+<p>Estimates the regression coefficients in the model <code class="reqn">Y=X\beta + \epsilon</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KoulLrMde(Y, X, D, b0, IntMeasure, TuningConst = 1.345)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>- Vector of response variables in linear regression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>- Design matrix of explanatory variables in linear regression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>- Weight Matrix. Dimension of D should match that of X. Default value is XA where A=(X'X)^(-1/2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b0</code></td>
+<td>
+<p>- Initial value for beta.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>IntMeasure</code></td>
+<td>
+<p>- Symmetric and <code class="reqn">\sigma</code>-finite measure: Lebesgue, Degenerate, and Robust</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TuningConst</code></td>
+<td>
+<p>- Used only for Robust measure.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>betahat    - Minimum distance estimator of <code class="reqn">\beta</code>.
+</p>
+<p>residual   - Residuals after minimum distance estimation.
+</p>
+<p>ObjVal     - Value of the objective function at minimum distance estimator.
+</p>
+
+
+<h3>References</h3>
+
+<p>[1] Kim, J. (2018). A fast algorithm for the coordinate-wise minimum distance estimation. J. Stat. Comput. Simul., 3: 482 - 497
+</p>
+<p>[2] Kim, J. (2020). Minimum distance estimation in linear regression model with strong mixing errors. Commun. Stat. - Theory Methods., 49(6): 1475 - 1494
+</p>
+<p>[3] Koul, H. L (1985). Minimum distance estimation in linear regression with unknown error distributions. Statist. Probab. Lett., 3: 1-8.
+</p>
+<p>[4] Koul, H. L (1986). Minimum distance estimation and goodness-of-fit tests in first-order autoregression. Ann. Statist., 14 1194-1213.
+</p>
+<p>[5] Koul, H. L (2002). Weighted empirical process in nonlinear dynamic models. Springer, Berlin, Vol. 166
+</p>
+
+
+<h3>See Also</h3>
+
+<p>KoulArMde() and Koul2StageMde()
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">####################
+n &lt;- 10
+p &lt;- 3
+X &lt;- matrix(runif(n*p, 0,50), nrow=n, ncol=p)  #### Generate n-by-p design matrix X
+beta &lt;- c(-2, 0.3, 1.5)                        #### Generate true beta = (-2, 0.3, 1.5)'
+eps &lt;- rnorm(n, 0,1)                           #### Generate errors from N(0,1)
+Y &lt;- X%*%beta + eps
+
+D &lt;- "default"                                 #### Use the default weight matrix
+b0 &lt;- solve(t(X)%*%X)%*%(t(X)%*%Y)             #### Set initial value for beta
+IntMeasure &lt;- "Lebesgue"                       ##### Define Lebesgue measure
+
+
+MDEResult &lt;- KoulLrMde(Y,X,D, b0, IntMeasure, TuningConst=1.345)
+
+betahat &lt;- MDEResult$betahat                   ##### Obtain minimum distance estimator
+resid &lt;- MDEResult$residual                    ##### Obtain residual
+objVal &lt;- MDEResult$ObjVal                     ##### Obtain the value of the objective function
+
+
+IntMeasure &lt;- "Degenerate"                     ##### Define degenerate measure at 0
+
+MDEResult &lt;- KoulLrMde(Y,X,D, b0, IntMeasure, TuningConst=1.345)
+betahat &lt;- MDEResult$betahat                   ##### Obtain minimum distance estimator
+resid &lt;- MDEResult$residual                    ##### Obtain residual
+objVal &lt;- MDEResult$ObjVal                     ##### Obtain the value of the objective function
+
+
+
+IntMeasure &lt;- "Robust"                        ##### Define "Robust" measure
+TuningConst &lt;- 3                              ##### Define the tuning constant
+MDEResult &lt;- KoulLrMde(Y,X,D, b0, IntMeasure, TuningConst)
+
+
+betahat &lt;- MDEResult$betahat                   ##### Obtain minimum distance estimator
+resid &lt;- MDEResult$residual                    ##### Obtain residual
+objVal &lt;- MDEResult$ObjVal                     ##### Obtain the value of the objective function
+</code></pre>
+
+
+</div>

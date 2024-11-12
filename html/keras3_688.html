@@ -1,0 +1,100 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to_categorical</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts a class vector (integers) to binary class matrix.</h2>
+
+<h3>Description</h3>
+
+<p>E.g. for use with <code>loss_categorical_crossentropy()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">to_categorical(x, num_classes = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Array-like with class values to be converted into a matrix
+(integers from 0 to <code>num_classes - 1</code>).
+R factors are coerced to integer and offset to be 0-based, i.e.,
+<code>as.integer(x) - 1L</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_classes</code></td>
+<td>
+<p>Total number of classes. If <code>NULL</code>, this would be inferred
+as <code>max(x) + 1</code>. Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A binary matrix representation of the input as an R array. The class
+axis is placed last.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>a &lt;- to_categorical(c(0, 1, 2, 3), num_classes=4)
+print(a)
+</pre></div>
+<div class="sourceCode"><pre>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    0    1
+
+</pre></div>
+<div class="sourceCode r"><pre>b &lt;- array(c(.9, .04, .03, .03,
+              .3, .45, .15, .13,
+              .04, .01, .94, .05,
+              .12, .21, .5, .17),
+              dim = c(4, 4))
+loss &lt;- op_categorical_crossentropy(a, b)
+loss
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([0.41284522 0.45601739 0.54430155 0.80437282], shape=(4), dtype=float64)
+
+</pre></div>
+<div class="sourceCode r"><pre>loss &lt;- op_categorical_crossentropy(a, a)
+loss
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([1.00000005e-07 1.00000005e-07 1.00000005e-07 1.00000005e-07], shape=(4), dtype=float64)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>op_one_hot()</code>, which does the same operation as <code>to_categorical()</code>, but
+operating on tensors.
+</p>
+</li>
+<li> <p><code>loss_sparse_categorical_crossentropy()</code>, which can
+accept labels (<code>y_true</code>) as an integer vector, instead of as a dense one-hot
+matrix.
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/utils/python_utils#tocategorical-function">https://keras.io/api/utils/python_utils#tocategorical-function</a>
+</p>
+</li>
+</ul>
+<p>Other numerical utils: <br><code>normalize()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>zip_lists()</code> <br></p>
+
+
+</div>

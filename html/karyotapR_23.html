@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getTidyData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get tidy-style data from <code>TapestriExperiment</code> objects</h2>
+
+<h3>Description</h3>
+
+<p><code>getTidyData()</code> pulls data from the indicated <code>assay</code> and/or <code>altExp</code> slot(s), and rearranges it into tidy format.
+<code>colData</code> (cell metadata) from the top-level/main experiment is included.
+<code>rowData</code> (probe metadata) from the indicated <code>assay</code> and/or <code>altExp</code> slot(s) is included.
+Attempts are made to sort by "chr" and "start.pos" columns if they are present to simplify plotting and other downstream operations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getTidyData(
+  TapestriExperiment,
+  alt.exp = NULL,
+  assay = NULL,
+  feature.id.as.factor = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.exp</code></td>
+<td>
+<p>Character, <code>altExp</code> slot to use. <code>NULL</code> (default) uses top-level/main experiment.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>assay</code></td>
+<td>
+<p>Character, <code>assay</code> slot to use. <code>NULL</code> (default) uses first-indexed assay (often "counts").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>feature.id.as.factor</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), the feature.id column is returned as a factor.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>tibble</code> of tidy data with corresponding metadata from <code>colData</code> and <code>rowData</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tidy.data &lt;- getTidyData(tap.object, alt.exp = "alleleFrequency")
+</code></pre>
+
+
+</div>

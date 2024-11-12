@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lTab</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Produces a latex longtable</h2>
+
+<h3>Description</h3>
+
+<p>Produces a latex longtable
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lTab(x, label = NULL, caption.firsthead = NULL, caption.head = NULL,
+  caption.foot = NULL, caption.lastfoot = NULL,
+  booktabs = .op("kLat.lTab.booktabs", "kLat.booktabs", FALSE),
+  toprule = .book("kLat.toprule", booktabs, "\\toprule", "\\hline"),
+  bottomrule = .book("kLat.bottomrule", booktabs, "\\bottomrule",
+  "\\hline"), midrule = .book("kLat.midrule", booktabs, "\\midrule",
+  "\\hline"), align = .op("kLat.lTab.align", "kLat.align", "center"),
+  envir = getOption("kLat.lTab.envir", "longtable"),
+  colsep = .op("kLat.lTab.colsep", "kLat.colsep", ""), coldef = .coldef(x,
+  colsep), rowsep = .op("kLat.lTab.rowsep", "kLat.rowsep", ""),
+  rows = .op("kLat.lTab.rows", "kLat.rows", FALSE), head = .header(x, rows),
+  firsthead = NULL, foot = bottomrule, lastfoot = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a data.frame or matrix to form the base of the table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>set the table's label, defaults to an empty string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>caption.firsthead,caption.head,caption.foot,caption.lastfoot</code></td>
+<td>
+<p>paces the caption in the
+firsthead, head, foot, or lastfoot respectively. It is important not to set a
+caption in an otherwise NULL section (although an empty string is acceptable)
+or strange bugs can occur. It is accaptable if the section was set by default
+as in head and foot. Consult the longtable documentation for a more detailed
+explanation of these options.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>booktabs</code></td>
+<td>
+<p>logical value, if not set will use value of
+kLat.(xTab|sTab|lTab).booktabs, if not set will use value of kLat.booktabs,
+if not set defaults to FALSE. When TRUE toprule defaults to '\toprule',
+midrule to '\midrule', and botrule to '\bottomrule', when FALSE those
+values all default to '\hline'. Has no effect when toprule, midrule, and
+botrule are individually set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toprule</code></td>
+<td>
+<p>sets the value for the top rule, if not set will be
+determined by the value of booktabs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bottomrule</code></td>
+<td>
+<p>sets the value for the bottom rule, if not set will
+be determined by the value of booktabs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>midrule</code></td>
+<td>
+<p>sets the value for the mid rule, if not set will
+be determined by the value of booktabs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align</code></td>
+<td>
+<p>set the alignment of the environment, if not set will use value
+of kLat.(xTab|sTab|lTab).align, if not will use value of kLat.align, if not set
+defaults to 'center'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>envir</code></td>
+<td>
+<p>set the environment for the table, if not set will use the value
+of kLat.(xTab|sTab|lTab).envir, if not set defaults to 'tabular',
+'supertabular', and 'longtable' for xTab, sTab, and lTab respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colsep</code></td>
+<td>
+<p>separator to be used between columns (i.e. '|'), if not set
+will use the value of kLat.(xTab|sTab|lTab).colsep, if not set will use the
+value of kLat.colsep, if not set defaults to an empty string. If coldef is
+set this value is ignored and the separators must be specificed in the coldef</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coldef</code></td>
+<td>
+<p>sets column definition i.e. \begin{tabular}{'align'},
+if not set defaults to numeric = right, character = left</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowsep</code></td>
+<td>
+<p>the separaotr to be used between rows (i.e. '\hline'), if not
+set will use the value of kLat.(xTab|sTab|lTab).rowsep, if not set will use
+the value of kLat.rowsep, if not set defaults to an empty string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rows</code></td>
+<td>
+<p>logical value to determine if rownames are included in table, if
+not set will use the value of kLat.(xTab|sTab|lTab).rows, if not set will use
+the value of kLat.rows, if not set defaults to FALSE, if TRUE the column name
+for the rownames column defaults to an empty string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>head</code></td>
+<td>
+<p>sets the value for the table header, defaults to the column
+names; if you set this be sure to end with '\\\\'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>firsthead</code></td>
+<td>
+<p>header on first page of table only; defaults to header; if you
+set this, you are responsible for setting any \hline, \toprule, or \midrule
+lines</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>foot</code></td>
+<td>
+<p>sets value of the table footer, defaults to the value of
+botrule</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lastfoot</code></td>
+<td>
+<p>footer on last page of table only</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>caption</code></td>
+<td>
+<p>the caption for the table, unlinke xTab and sTab, there is no
+caption.top or caption.bottom option in longtable</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">lTab(mtcars)
+</code></pre>
+
+
+</div>

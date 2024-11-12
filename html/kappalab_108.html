@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.normalized-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test method</h2>
+
+<h3>Description</h3>
+
+<p>Tests whether a capacity is normalized, i.e., if its value on the
+universal set is 1. The capacity can be
+given either under the form of an object of class <code>capacity</code>,
+<code>card.capacity</code> or <code>Mobius.capacity</code>.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.capacity" </dt>
+<dd>
+<p>Returns a <code>logical</code>.</p>
+</dd>
+<dt>object = "capacity" </dt>
+<dd>
+<p>Returns a <code>logical</code>.</p>
+</dd>
+<dt>object = "card.capacity" </dt>
+<dd>
+<p>Returns a <code>logical</code>.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>capacity-class</code>,
+<br><code>Mobius.capacity-class</code>,
+<br><code>card.capacity-class</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(0:15)
+is.normalized(mu)
+normalize(mu)
+
+## its Mobius transform
+a &lt;- Mobius(mu)
+is.normalized(a)
+normalize(a)
+
+## a cardinal capacity
+mu &lt;- uniform.capacity(7)
+is.normalized(mu)
+</code></pre>
+
+
+</div>

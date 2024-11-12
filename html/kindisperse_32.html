@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>elongate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Change the shape (aspect ratio) of a rectangle while preserving area</h2>
+
+<h3>Description</h3>
+
+<p>This function is used to manipulate the dimensions parameter in other package functions, which control site dimentions.
+These geometries can be entered innto functions in a few ways: (a) a single numeric value, which will be interpreted as the length of the side of a square;
+(b) a numeric vector of length two, which will be interpreted as the length &amp; width of the sample site; (c) either of the above passed
+to this function, which takes the rectangular site dimensions and alters their <code>aspect ratio</code> (ratio of
+length to width) while preserving the underlying area the study site covers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">elongate(dims, aspect = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dims</code></td>
+<td>
+<p>Original rectangle dimensions - either single number (length of side of square) or length 2 numeric vector (lengths of sides x and y of rectangle)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aspect</code></td>
+<td>
+<p>Aspect ratio of side lengths x &amp; y (i.e. x/y) in the new rectangle</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a numeric vector containing the side lengths c(x, y) of a transformed rectangle with preserved area
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">elongate(10, 100)
+elongate(c(5, 125), 4)
+</code></pre>
+
+
+</div>

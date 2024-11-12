@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mutual_inf_cc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mutual information estimation</h2>
+
+<h3>Description</h3>
+
+<p>Estimate the mutual information MI(X;Y) of the target <code>X</code> and features <code>Y</code>
+where <code>X</code> and <code>Y</code> are both continuous using k-nearest neighbor distances.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mutual_inf_cc(target, features, k = 3L)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>target</code></td>
+<td>
+<p>input vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>features</code></td>
+<td>
+<p>input vector or matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Integer number of nearest neighbors. The default value is 3.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The features argument is a vector of the same size as the target vector, or a matrix whose column dimension matches
+the size of the target vector.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns the estimated mutual information. The return value is a vector of size 1 if the features argument
+is a vector. If the features argument is a matrix then the return value is a vector whose size matches the
+number of rows in the matrix.
+</p>
+
+
+<h3>References</h3>
+
+<p>Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Phys. Rev. E <strong>69</strong>, 066138 (2004).
+<a href="https://doi.org/10.1103/PhysRevE.69.066138">doi:10.1103/PhysRevE.69.066138</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(mutual_info_df)
+set.seed(654321)
+mutual_inf_cc(mutual_info_df$Yc, t(mutual_info_df$Zc_XcYc))
+mutual_inf_cc(mutual_info_df$Xc, t(mutual_info_df$Zc_XcYc), k=5)
+
+
+
+</code></pre>
+
+
+</div>

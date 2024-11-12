@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>acciones</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Acciones que Karel puede realizar</h2>
+
+<h3>Description</h3>
+
+<p><code>avanzar()</code>, <code>girar_izquierda()</code>, <code>juntar_coso()</code> y
+<code>poner_coso()</code> son las cuatro actividades básicas que Karel sabe
+realizar. Si se habilitan los superpoderes de Karel con
+<code>cargar_super_karel()</code>, entonces también puede <code>girar_derecha()</code> y
+<code>darse_vuelta()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">avanzar()
+
+girar_izquierda()
+
+poner_coso()
+
+juntar_coso()
+
+girar_derecha()
+
+darse_vuelta()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>Estas funciones no devuelven nada, pero realizan cambios en el mundo
+de Karel que se ven cuando se ejecutan todas las acciones con
+<code>ejecutar_acciones()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cargar_super_karel</code> <code>generar_mundo</code>
+<code>ejecutar_acciones</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generar_mundo("mundo001")
+avanzar()
+juntar_coso()
+girar_izquierda()
+poner_coso()
+ejecutar_acciones()
+
+</code></pre>
+
+
+</div>

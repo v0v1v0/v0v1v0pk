@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>varVec-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Covariance Matrix for a Covariance Kernel Object
+</h2>
+
+<h3>Description</h3>
+
+<p>Covariance matrix for a covariance kernel object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'covMan'
+varVec(object, X, compGrad = FALSE, 
+       checkNames = NULL, index = -1L, ...)
+
+## S4 method for signature 'covTS'
+varVec(object, X, compGrad = FALSE, 
+       checkNames = TRUE, index = -1L, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object with S4 class corresponding to a covariance kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>The usual matrix of spatial design points, with <code class="reqn">n</code> rows and
+<code class="reqn">d</code> cols where <code class="reqn">n</code> is the number of spatial points and
+<code class="reqn">d</code> is the 'spatial' dimension.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> a derivative with respect to the vector of
+parameters will be computed and returned as an attribute of the
+result. For the <code>covMan</code> class, this is possible only when the
+gradient of the kernel is computed and returned as a
+<code>"gradient"</code> attribute of the result.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkNames</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), check the compatibility of
+<code>X</code> with <code>object</code>, see <code>checkX</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+
+<p>Integer giving the index of the derivation parameter in the official
+order.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Not used yet.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The variance vector is computed in a C program using the <code>.Call</code>
+interface. The R kernel function is evaluated within the C code using
+<code>eval</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of length <code>nrow(X)</code> with general element <code class="reqn">V_{i} :=
+  K(\mathbf{x}_{i},\,\mathbf{x}_{i};\,\boldsymbol{\theta})</code> where
+<code class="reqn">K(\mathbf{x}_1,\,\mathbf{x}_2;\,\boldsymbol{\theta})</code> is the covariance kernel function.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The value of the parameter <code class="reqn">\boldsymbol{\theta}</code> can be
+extracted from the object with the <code>coef</code> method.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coef</code> method
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">myCov &lt;- covTS(inputs = c("Temp", "Humid", "Press"),
+               kernel = "k1PowExp",
+               dep = c(range = "cst", shape = "cst"),
+               value = c(shape = 1.8, range = 1.1))
+n &lt;- 100; X &lt;- matrix(runif(n*3), nrow = n, ncol = 3)
+try(V1 &lt;- varVec(myCov, X = X)) ## bad colnames
+colnames(X) &lt;- inputNames(myCov)
+V2 &lt;- varVec(myCov, X = X)
+
+Xnew &lt;- matrix(runif(n * 3), nrow = n, ncol = 3)
+colnames(Xnew) &lt;- inputNames(myCov)
+V2 &lt;- varVec(myCov, X = X)
+
+</code></pre>
+
+
+</div>

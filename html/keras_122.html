@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_layer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieves a layer based on either its name (unique) or index.</h2>
+
+<h3>Description</h3>
+
+<p>Indices are based on order of horizontal graph traversal (bottom-up) and are
+1-based. If <code>name</code> and <code>index</code> are both provided, <code>index</code> will take
+precedence.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_layer(object, name = NULL, index = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name of layer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>Integer, index of layer (1-based). Also valid are negative
+values, which count from the end of model.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A layer instance.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>fit_generator()</code>,
+<code>get_config()</code>,
+<code>keras_model()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_generator()</code>,
+<code>predict_on_batch()</code>,
+<code>predict_proba()</code>,
+<code>summary.keras.engine.training.Model()</code>,
+<code>train_on_batch()</code>
+</p>
+
+
+</div>

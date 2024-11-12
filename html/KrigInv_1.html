@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bichon_optim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Bichon et al.'s Expected Feasibility criterion
+</h2>
+
+<h3>Description</h3>
+
+<p>Evaluation of Bichon's Expected Feasibility criterion. To be used in optimization routines, like in <code>max_infill_criterion</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bichon_optim(x, model, T, method.param = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>Input vector at which one wants to evaluate the criterion. 
+This argument can be either a vector of size d (for an evaluation at a single point) or a p*d matrix (for p simultaneous evaluations of the criterion at p different points).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>An object of class <code>km</code> (Kriging model).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Target value (scalar).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method.param</code></td>
+<td>
+
+<p>Scalar tolerance around the target T. Default value is 1.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Bichon EF criterion.
+When the argument <code>x</code> is a vector, the function returns a scalar.
+When the argument <code>x</code> is a p*d matrix, the function returns a vector of size p.
+</p>
+
+
+<h3>Author(s)</h3>
+
+ 
+<p>Victor Picheny (INRA, Toulouse, France)
+</p>
+<p>David Ginsbourger (IDIAP Martigny and University of Bern, Switzerland)
+</p>
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Bichon B.J., Eldred M.S., Swiler L.P., Mahadevan S., McFarland J.M. (2008) <em>Efficient global reliability analysis for nonlinear implicit performance functions</em>, AIAA Journal 46(10), pp 2459-2468
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>EGI</code>, <code>max_infill_criterion</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#bichon_optim
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- 80 #threshold
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance 
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+x &lt;- c(0.5,0.4) #one evaluation of the bichon criterion
+bichon_optim(x=x,T=T,model=model)
+
+n.grid &lt;- 20 # resolution. You may use a larger value.
+x.grid &lt;- y.grid &lt;- seq(0,1,length=n.grid)
+x &lt;- expand.grid(x.grid, y.grid)
+bichon.grid &lt;- bichon_optim(x=x,T=T,model=model)
+z.grid &lt;- matrix(bichon.grid, n.grid, n.grid)
+
+#plots: contour of the criterion, DOE points and new point
+image(x=x.grid,y=y.grid,z=z.grid,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid,25,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+
+i.best &lt;- which.max(bichon.grid)
+points(x[i.best,], col="blue", pch=17, lwd=4,cex=3)
+
+#plots the real (unknown in practice) curve f(x)=T
+testfun.grid &lt;- apply(x,1,testfun)
+z.grid.2 &lt;- matrix(testfun.grid, n.grid, n.grid)
+contour(x.grid,y.grid,z.grid.2,levels=T,col="blue",add=TRUE,lwd=5)
+title("Contour lines of Bichon criterion (black) and of f(x)=T (blue)")
+</code></pre>
+
+
+</div>

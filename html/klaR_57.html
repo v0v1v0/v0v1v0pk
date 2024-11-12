@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.woe</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot information values</h2>
+
+<h3>Description</h3>
+
+<p>Barplot of information values to compare dicriminator of the transformed variables.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'woe'
+plot(x, type = c("IV", "woes"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of class <code>woe</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Character to specify the plot type, see below. Either <code>"IV"</code> (default) or <code>"woes"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to the barplot function.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For <code>type=="IV"</code> a barplot of information values for all transformed variables. 
+A thumb rule of interpretation is that Values above 0.3 are considered as strongly discrimative where values below 0.02 are considered to characterize unpredictive variables. 
+For <code>type=="woes"</code> for each variable the relative frequencies of all transformed levels are plotted.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No value is returned.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Gero Szepannek</p>
+
+
+<h3>References</h3>
+
+<p>Good, I. (1950): <em>Probability and the Weighting of Evidences.</em> Charles Griffin, London.
+</p>
+<p>Kullback, S. (1959): <em>Information Theory and Statistics.</em> Wiley, New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>woe</code>, <code>predict.woe</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># see examples in ?woe
+</code></pre>
+
+
+</div>

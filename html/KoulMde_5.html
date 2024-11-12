@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KoulArMde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Minimum distance estimation in the autoregression model of the known order.</h2>
+
+<h3>Description</h3>
+
+<p>Estimates the autoressive coefficients in the <code class="reqn">X_t = \rho' Z_t + \xi_t </code> where <code class="reqn">Z_t</code> is the vector of <code class="reqn">q</code> observations at times <code class="reqn">t-1,...,t-q</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KoulArMde(X, AR_Order, IntMeasure, TuningConst = 1.345)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>- Vector of <code>n</code> observed values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>AR_Order</code></td>
+<td>
+<p>- Order of the autoregression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>IntMeasure</code></td>
+<td>
+<p>- Symmetric and <code class="reqn">\sigma</code>-finite measure: Lebesgue, Degenerate, and Robust</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TuningConst</code></td>
+<td>
+<p>- Used only for Robust measure.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>rhohat     - Minimum distance estimator of <code class="reqn">\rho</code>.
+</p>
+<p>residual   - Residuals after minimum distance estimation.
+</p>
+<p>ObjVal     - Value of the objective function at minimum distance estimator.
+</p>
+
+
+<h3>References</h3>
+
+<p>[1] Kim, J. (2018). A fast algorithm for the coordinate-wise minimum distance estimation. J. Stat. Comput. Simul., 3: 482 - 497
+</p>
+<p>[2] Kim, J. (2020). Minimum distance estimation in linear regression model with strong mixing errors. Commun. Stat. - Theory Methods., 49(6): 1475 - 1494
+</p>
+<p>[3] Koul, H. L (1985). Minimum distance estimation in linear regression with unknown error distributions. Statist. Probab. Lett., 3: 1-8.
+</p>
+<p>[4] Koul, H. L (1986). Minimum distance estimation and goodness-of-fit tests in first-order autoregression. Ann. Statist., 14 1194-1213.
+</p>
+<p>[5] Koul, H. L (2002). Weighted empirical process in nonlinear dynamic models. Springer, Berlin, Vol. 166
+</p>
+
+
+<h3>See Also</h3>
+
+<p>KoulLrMde() and Koul2StageMde()
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">##### Generate stationary AR(2) process with 10 observations
+n &lt;- 10
+q &lt;- 2
+rho &lt;- c(-0.2, 0.8)    ##### Generate true parameters rho = (-0.2, 0.8)'
+eps &lt;- rnorm(n, 0,1)   ##### Generate innovations from N(0,1)
+X &lt;- rep(0, times=n)
+for (i in 1:n){
+ tempCol &lt;- rep(0, times=q)
+ for (j in 1:q){
+   if(i-j&lt;=0){
+     tempCol[j] &lt;- 0
+   }else{
+     tempCol[j] &lt;- X[i-j]
+   }
+ }
+X[i] &lt;- t(tempCol)%*% rho + eps[i]
+}
+
+IntMeasure &lt;- "Lebesgue"                       ##### Define Lebesgue measure
+
+MDEResult &lt;- KoulArMde(X, q, IntMeasure, TuningConst=1.345)
+rhohat &lt;- MDEResult$rhohat                     ##### Obtain minimum distance estimator
+resid  &lt;- MDEResult$residual                   ##### Obtain residual
+objVal &lt;- MDEResult$ObjVal                     ##### Obtain the value of the objective function
+
+
+IntMeasure &lt;- "Degenerate"                     ##### Define degenerate measure at 0
+MDEResult &lt;- KoulArMde(X, q, IntMeasure, TuningConst=1.345)
+rhohat &lt;- MDEResult$rhohat                     ##### Obtain minimum distance estimator
+resid &lt;- MDEResult$residual                    ##### Obtain residual
+objVal &lt;- MDEResult$ObjVal                     ##### Obtain the value of the objective function
+
+
+IntMeasure &lt;- "Robust"                         ##### Define "Robust" measure at 0
+TuningConst &lt;- 3                               ##### Define the tuning constant
+MDEResult &lt;- KoulArMde(X, q, IntMeasure, TuningConst)
+
+resid &lt;- MDEResult$residual                    ##### Obtain residual
+objVal &lt;- MDEResult$ObjVal                     ##### Obtain the value of the objective function
+
+</code></pre>
+
+
+</div>

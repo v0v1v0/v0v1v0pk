@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_model_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract model fit</h2>
+
+<h3>Description</h3>
+
+<p>Model fit indices extracted from k-folds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_model_fit(models, index = "default", by.fold = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>models</code></td>
+<td>
+<p>an object returned from <code>kfa</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>character; one or more fit indices to summarize in the report. Use <code>index_available</code> to see choices.
+Chi-square value and degrees of freedom are always reported. Default is CFI and RMSEA (naive, scaled, or robust version depends on estimator used in <code>models</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by.fold</code></td>
+<td>
+<p>Should each element in the returned lists be a fold (default) or a factor model?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>list</code> of data.frames with average model fit for each factor model
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(example.kfa)
+
+# customize fit indices to report
+k_model_fit(example.kfa, index = c("chisq", "cfi", "rmsea", "srmr"))
+
+# organize results by factor model rather than by fold
+k_model_fit(example.kfa, by.fold = FALSE)
+
+</code></pre>
+
+
+</div>

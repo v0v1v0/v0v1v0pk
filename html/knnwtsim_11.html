@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>StMatrixCalc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Temporal Similarity Matrix</h2>
+
+<h3>Description</h3>
+
+<p>Generates and returns an n x n matrix by calculating the absolute difference
+for each possible pair of points in a vector of the time orders of each point in a series,
+then converts dissimilarity matrix to a similarity matrix using 1 / (D_t + 1).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">StMatrixCalc(v)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>numeric vector with the time order corresponding to each point in the response series.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>numeric matrix of temporal similarities for the vector <code>v</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>TempAbsDissimilarity()</code> for the function used to calculate
+absolute differences.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">StMatrixCalc(c(1, 2, 3))
+</code></pre>
+
+
+</div>

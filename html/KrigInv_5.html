@@ -1,0 +1,411 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>EGIparallel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Efficient Global Inversion: parallel version to get batchsize locations at each iteration
+</h2>
+
+<h3>Description</h3>
+
+<p>Sequential sampling based on the optimization of a kriging-based criterion, with model update after each iteration. The criterias aim at identifying an excursion set or one/many level sets. At each iteration batchsize new locations are evaluated.
+Different criteria are available for selecting experiments. The pointwise criteria are <code>"bichon"</code>, <code>"ranjan"</code>, <code>"tmse"</code>, <code>"tsee"</code>  and are fast to compute. These criteria can be used only with batchsize = 1. In addition, integral criteria require numerical integration and can potentially deliver more than one new location per iteration. Available integral criteria are <code>"imse"</code>, <code>"timse"</code>, <code>"sur"</code>, <code>"jn"</code>, <code>"vorob"</code>, <code>"vorobCons"</code>, <code>"vorobVol"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">EGIparallel(T, model, method = NULL, method.param=NULL,
+fun, iter, batchsize = 1,
+lower, upper, new.noise.var = 0,
+optimcontrol = NULL, kmcontrol = NULL, integcontrol = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Array containing one or several thresholds. The criteria which can be used with multiple thresholds are <code>"tmse"</code>, <code>"timse"</code>, <code>"sur"</code>, <code>"jn"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>A Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+
+<p>Criterion used for choosing observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method.param</code></td>
+<td>
+
+<p>Optional method parameters. For methods</p>
+
+<ul>
+<li>
+<p><code>"ranjan"</code>, <code>"bichon"</code>, <br><code>"tmse"</code> and <code>"timse"</code>: the tolerance value (scalar). If not provided, default value is used (1 for ranjan and bichon, 0 for tmse and timse).
+</p>
+</li>
+<li>
+<p><code>"vorob"</code>: a list containing <code>penalization</code> (scalar, default=1), type I penalization, and <code>typeEx</code>,(character, default="&gt;") either "&gt;" or "&lt;" denoting the type of excursion. 
+</p>
+</li>
+<li>
+<p><code>"vorobCons"</code> and <code>"vorobVol"</code>: a list containing  <code>penalization</code> (scalar, default =1), <code>typeEx</code> (character, default = "&gt;"), <code>consLevel</code> (scalar, default=0.95), <code>n_discrete_design</code> (scalar, default=500*model@d), <code>design</code> (data.frame, default=<code>as.data.frame(sobol (n = method.param$n_discrete_design, dim = model@d))</code> ), <code>pred</code> (result of <code>predict.km</code> on <code>model</code> at <code>design</code>) and <code>consVorbLevel</code>, the conservative estimate Vorob'ev quantile computed from <code>pred</code>. See also the arguments <code>alpha</code>, <code>pred</code>, <code>design</code>, <code>type</code> from the function <code>conservativeEstimate</code>, package <code>anMC</code>, for more details. 
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+
+<p>Number of points to sample simultaneously. The sampling criterion will return <code>batchsize</code> points at each iteration. Some criteria can be used only with batchsize = 1 (see description).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.noise.var</code></td>
+<td>
+
+<p>Optional scalar value of the noise variance of the new observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fun</code></td>
+<td>
+
+<p>Objective function.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+
+<p>Number of iterations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+
+<p>Vector containing the lower bounds of the variables to be optimized over.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+
+<p>Vector containing the upper bounds of the variables to be optimized over.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimcontrol</code></td>
+<td>
+
+<p>Optional list of control parameters for the optimization of the sampling criterion. The field <code>method</code> defines which optimization method is used: it can be either <code>"genoud"</code> (default) for an optimisation using the genoud algorithm, or <code>"discrete"</code> for an optimisation over a specified discrete set.
+If the field <code>method</code> is set to <code>"genoud"</code>, one can set some parameters of this algorithm:
+<code>pop.size</code>  (default : 50*d),  <code>max.generations</code> (default : 10*d), <br><code>wait.generations</code> (2),  <code>BFGSburnin</code> (2) and the mutations <code>P1</code>, <code>P2</code>, up to <code>P9</code> (see <code>genoud</code>). Numbers into brackets are the default values.
+If the field <code>method</code> is set to <code>"discrete"</code>, one can set the field <code>optim.points</code>: p * d matrix corresponding to the p points where the criterion will be evaluated. If nothing is specified, 100*d points are chosen randomly.
+Finally, one can control the field optim.option in order to decide how to optimize the sampling criterion.
+If <code>optim.option</code> is set to 2 (default), batchsize sequential optimizations in dimension d are performed to find the optimum.
+If <code>optim.option</code> is set to 1, only one optimization in dimension batchsize*d is performed. This option is only available with <code>"genoud"</code>. This option might provide more global and accurate solutions, but is a lot more expensive.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kmcontrol</code></td>
+<td>
+
+<p>Optional list representing the control variables for the re-estimation of the kriging model once new points are sampled.
+The items are the same as in <code>km</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integcontrol</code></td>
+<td>
+
+<p>Optional list specifying the procedure to build the integration points and weights. Many options are possible.
+A) If nothing is specified, 100*d points are chosen using the Sobol sequence. <br>
+B) One can directly set the field <code>integration.points</code> (a p * d matrix) for prespecified integration points. In this case these integration points and the corresponding vector <code>integration.weights</code> will be used for all the iterations of the algorithm.
+C) If the field <code>integration.points</code> is not set then the integration points are renewed at each iteration.
+In that case one can control the number of integration points <code>n.points</code> (default: 100*d) and a specific distribution <code>distrib</code>. Possible values for <code>distrib</code> are:
+<code>"sobol"</code>, <code>"MC"</code>, <code>"timse"</code>, <code>"imse"</code>, <code>"sur"</code> and <code>"jn"</code> (default: <code>"sobol"</code>).
+C.1) The choice <code>"sobol"</code> corresponds to integration points chosen with the Sobol sequence in dimension d (uniform weight).
+C.2) The choice <code>"MC"</code> corresponds to points chosen randomly, uniformly on the domain.
+C.3) The choices <code>"timse"</code>, <code>"imse"</code>, <code>"sur"</code> and <code>"jn"</code> correspond to importance sampling distributions (unequal weights). It is strongly recommended to use the importance sampling distribution corresponding to the chosen sampling criterion.
+When important sampling procedures are chosen, <code>n.points</code> points are chosen using importance sampling among a discrete set of <code>n.candidates</code> points (default: <code>n.points*10</code>) which are distributed according to a distribution <br><code>init.distrib</code> (default: <code>"sobol"</code>). Possible values for <code>init.distrib</code> are the space filling distributions <code>"sobol"</code> and <code>"MC"</code> or an user defined distribution <code>"spec"</code>.
+The <code>"sobol"</code> and <code>"MC"</code> choices correspond to quasi random and random points in the domain.
+If the <code>"spec"</code> value is chosen the user must fill in manually the field <code>init.distrib.spec</code> to specify himself a n.candidates * d matrix of points in dimension d.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments of the target function <code>fun</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function used to build the integration points and weights (based on the options specified in <code>integcontrol</code>) is the function <code>integration_design</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+<p>The added observations ((iter*batchsize) * d matrix)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>The value of <code>fun</code> at the added observations (size: iter*batchsize)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsteps</code></td>
+<td>
+<p>The number of added observations (=iter*batchsize).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lastmodel</code></td>
+<td>
+<p>The current (last) kriging model of <code>km</code> class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lastvalue</code></td>
+<td>
+<p>The value of the criterion at the last added batch of points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allvalues</code></td>
+<td>
+<p>If an optimization on a discrete set of points is chosen, the value of the criterion at all these points, for the last iteration, for the last point of the batch.</p>
+</td>
+</tr>
+</table>
+<p>If <code>method="vorobCons"</code> or <code>method="vorobVol"</code> the list also has components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>current.CE</code></td>
+<td>
+<p>Conservative estimate computed on <code>lastmodel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allCE_lvs</code></td>
+<td>
+<p>The conservative estimate levels computed at each iteration.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+<p>Victor Picheny (INRA, Toulouse, France)
+</p>
+<p>David Ginsbourger (IDIAP Martigny and University of Bern, Switzerland)
+</p>
+<p>Dario Azzimonti (IDSIA, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Azzimonti, D., Ginsbourger, D., Chevalier, C., Bect, J., and Richet, Y. (2018). <em>Adaptive design of experiments for conservative estimation of excursion sets</em>. Under revision. Preprint at <a href="https://hal.archives-ouvertes.fr/hal-01379642">hal-01379642</a>
+</p>
+<p>Chevalier C., Bect J., Ginsbourger D., Vazquez E., Picheny V., Richet Y. (2014), <em>Fast parallel kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>, Technometrics, vol. 56(4), pp 455-465
+</p>
+<p>Picheny V., Ginsbourger D., Roustant O., Haftka R.T., (2010) <em>Adaptive designs of experiments for accurate approximation of a target region</em>, J. Mech. Des. vol. 132(7)
+</p>
+<p>Chevalier C. (2013) <em>Fast uncertainty reduction strategies relying on Gaussian process models</em> Ph.D Thesis, University of Bern
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>EGI</code>, <code>max_sur_parallel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#EGIparallel
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- c(20,60) #thresholds
+testfun &lt;- branin
+lower &lt;- c(0,0)
+upper &lt;- c(1,1)
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design,
+            response = response,covtype="matern3_2")
+
+optimcontrol &lt;- list(method="genoud",pop.size=50)
+integcontrol &lt;- list(distrib="sur",n.points=50)
+iter &lt;- 1
+batchsize &lt;- 6
+
+## Not run: 
+  obj &lt;- EGIparallel(T=T,model=model,method="sur",batchsize=batchsize,
+                     fun=testfun,iter=iter,lower=lower,upper=upper,
+                     optimcontrol=optimcontrol,integcontrol=integcontrol)
+
+  par(mfrow=c(1,2))
+  print_uncertainty_2d(model=model,T=T,main="probability of excursion",
+                       type="pn",new.points=0,cex.points=2)
+
+  print_uncertainty_2d(model=obj$lastmodel,T=T,
+                       main="probability of excursion, parallel sur sampling",
+                       type="pn",new.points=iter*batchsize,col.points.end="red",cex.points=2)
+
+## End(Not run)
+
+##############
+#same example with noisy initial observations and noisy new observations
+branin.noise &lt;- function(x) return(branin(x)+rnorm(n=1,sd=30))
+
+set.seed(9)
+N &lt;- 20;T &lt;- c(20,60)
+testfun &lt;- branin.noise
+lower &lt;- c(0,0);upper &lt;- c(1,1)
+
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response.noise &lt;- apply(design,1,testfun)
+response.noise - response
+
+model.noise &lt;- km(formula=~., design = design, response = response.noise,
+                  covtype="matern3_2",noise.var=rep(30*30,times=N))
+
+optimcontrol &lt;- list(method="genoud",pop.size=50)
+integcontrol &lt;- list(distrib="sur",n.points=50)
+iter &lt;- 1
+batchsize &lt;- 6
+
+## Not run: 
+  obj &lt;- EGIparallel(T=T,model=model.noise,method="sur",batchsize=batchsize,
+                     fun=testfun,iter=iter,lower=lower,upper=upper,
+                     optimcontrol=optimcontrol,integcontrol=integcontrol,
+                     new.noise.var=10*10)
+
+
+  par(mfrow=c(1,2))
+  print_uncertainty_2d(model=model.noise,T=T,
+                       main="probability of excursion, noisy obs.",
+                       type="pn",new.points=0,cex.points=2)
+
+  print_uncertainty_2d(model=obj$lastmodel,T=T,
+                       main="probability of excursion, parallel sur sampling, noisy obs.",
+                       type="pn",new.points=iter*batchsize,col.points.end="red",cex.points=2)
+
+## End(Not run)
+
+
+##############
+# Conservative estimates with non-noisy initial observations
+## Not run: 
+  testfun &lt;- branin
+  # The conservative sampling strategies
+  # only work with 1 threshold
+  T &lt;- 20
+  ## Minimize Type II error sampling
+
+  # The list method.param contains all parameters for the
+  # conservative estimate and the conservative sequential
+  # strategy. Below are parameters for a type II strategy
+  # with conservative estimates at 0.95
+  method.param = list(penalization=0, # Type II strategy
+                      typeEx="&gt;", consLevel = 0.95,
+                      n_discrete_design=500*model@d)
+  # If the CE for the initial model is already computed
+  # it is possible to pass the conservative Vorob'ev quantile
+  # level with method.param$consVorbLevel
+
+  obj_T2 &lt;- EGIparallel(T=T,model=model,method="vorobCons",batchsize=batchsize,
+                        fun=testfun,iter=iter,lower=lower,upper=upper,
+                        optimcontrol=optimcontrol,
+                        integcontrol=integcontrol,method.param=method.param)
+
+  par(mfrow=c(1,2))
+  print_uncertainty_2d(model=model,T=T,main="probability of excursion",
+                       type="pn",new.points=0,cex.points=2,consQuantile = obj_T2$allCE_lvs[1])
+
+  print_uncertainty_2d(model=obj_T2$lastmodel,T=T,
+                       main="probability of excursion, parallel Type II sampling",
+                       type="pn",new.points=iter*batchsize,col.points.end="red",
+                       cex.points=2,consQuantile = obj_T2$allCE_lvs[2])
+
+  ## Maximize conservative estimate's volume
+  # Set up method.param
+  # Here we pass the conservative level computed
+  # in the previous step for the initial model
+  method.param = list(typeEx="&gt;", consLevel = 0.95,
+                      n_discrete_design=500*model@d,
+                      consVorbLevel=obj_T2$allCE_lvs[1]
+  )
+
+  obj_consVol &lt;- EGIparallel(T=T,model=model,method="vorobVol",batchsize=batchsize,
+                             fun=testfun,iter=iter,lower=lower,upper=upper,
+                             optimcontrol=optimcontrol,
+                             integcontrol=integcontrol,method.param=method.param)
+
+  par(mfrow=c(1,2))
+  print_uncertainty_2d(model=model,T=T,main="probability of excursion",
+                       type="pn",new.points=0,cex.points=2,consQuantile = obj_consVol$allCE_lvs[1])
+
+  print_uncertainty_2d(model=obj_consVol$lastmodel,T=T,
+                       main="probability of excursion, parallel consVol sampling",
+                       type="pn",new.points=iter*batchsize,col.points.end="red",
+                       cex.points=2,consQuantile = obj_consVol$allCE_lvs[2])
+
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,175 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzs.md</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Spatial Kolmogorov-Zurbenko Spline </h2>
+
+<h3>Description</h3>
+
+<p>The <code>kzs.md</code> function is an extension of the <code>kzs</code> function to <em>d</em> input variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzs.md(y, x, smooth, scale, k = 1, edges = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>a one-dimensional vector of real values representing the response variable to be smoothed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+ 
+<p>a <em>d</em>-dimensional matrix of real values containing the input variables X = (X1, X2, ..., X<em>d</em>);
+i.e., each column of the matrix is an input variable.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth</code></td>
+<td>
+ 
+<p>a real-valued vector of size <em>d</em> in which each element defines the range of smoothing for each 
+corresponding variable in <code>x</code>. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+ 
+<p>a real-valued vector of size <em>d</em> in which each element defines a uniform scale along its 
+corresponding input variable.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+ 
+<p>an integer specifying the number of iterations <code>kzs.md</code> will execute. By default, <code>k = 1</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edges</code></td>
+<td>
+ 
+<p>a logical indicating whether or not to display the outcome data beyond the ranges of the <em>d</em>
+input variables in <code>x</code>. By default, <code>edges = TRUE</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The details for this function are nearly identical to that of <code>kzs</code>, except now extended to
+<em>d</em>-dimensional space. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>a (<em>d</em>+1)-column data frame of the form <code>(x1, x2, ...,xd, yk)</code>. See <code>kzs.2d</code> for the general
+interpretations of these results.
+</p>
+
+
+<h3>Note</h3>
+
+ 
+<p>In many applications where input variables can be space, <code>kzs.md</code> can resolve the problem of missing values 
+in time series or or irregularly observed valuesin Geographical Information Systems (GIS) data analysis. For these 
+applications, <code>scale</code> is especially advantageous because it can create a uniform space over a geographic region
+to which the algorithm will be applied. Additionally, <code>kzs.md</code> can be recommended as a diagnostic tool before 
+applying multiple linear regression analysis due to its capability of displaying nonlinearities of the outcome over 
+the input variables.<br></p>
+<p>There is no graphical output for this function; for two input variables, <code>kzs.2d</code> will produce a 3-dimensional
+plot. For three input variables, a 4-dimensional movie can be constructed over time.<br></p>
+<p>In general, <code>kzs</code>, <code>kzs.2d</code> and <code>kzs.md</code> are all linear operations, and linear operations are
+commutative. Thus, for example, the outcome of a <code>kzs.2d</code> operation is equivalent to <code>kzs.1d</code> + <code>kzs.1d</code>; 
+likewise, the outcome of a <code>kzs.3d</code> operation is equivalent to a <code>kzs.2d</code> + <code>kzs.1d</code>, etc...  
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Derek Cyr <a href="mailto:cyr.derek@gmail.com">cyr.derek@gmail.com</a> and Igor Zurbenko <a href="mailto:igorg.zurbenko@gmail.com">igorg.zurbenko@gmail.com</a> </p>
+
+
+<h3>See Also</h3>
+
+ <p><code>kzs</code>; For more on the parameter restrictions, see <code>kzs.params</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># This example is an extension of the example documented in kzs.2d. We make 
+# use of the Sinc function to filter a signal buried in noise over 3-dimensional 
+# input variables. See the "Details" section of the "kzs.3d_data" data frame 
+# documentation for specific details. 
+require(lattice)
+
+# Gridded data for X = (X1, X2) input variables
+x1 &lt;- seq(-1.5*pi, 1.5*pi, length = 50)
+x2 &lt;- x1	
+df &lt;- expand.grid(x1 = x1, x2 = x2)
+	
+# Time dimension
+time &lt;- 1:50
+
+# Change the amplitude of the original function to change from 0 to 1 along time
+amplitude &lt;- sort(round(seq(0.02, 1, 0.02), digits = 2))
+
+# Store the time and amplitude together in a data frame
+t_amp &lt;- data.frame(cbind(time, amplitude))
+
+# Create the data set of Sinc function outcomes for each amplitude
+sinc &lt;- array(0, dim = c(nrow(df), length(amplitude)))
+for (i in 1:length(amplitude)) {
+	sinc[,i] &lt;- round(amplitude[i]*sin(sqrt(df$x1^2 + df$x2^2)) / 
+		    	sqrt(df$x1^2 + df$x2^2)) 
+	sinc[,i][is.na(sinc[,i])] &lt;- amplitude[i]
+}
+
+# Add noise to distort the signal 
+for (j in 1:ncol(sinc)) {
+	ez &lt;- rnorm(nrow(sinc), mean = 0, sd = 1)
+	sinc[,j] &lt;- sinc[,j] + ez
+}
+
+# Change to a data frame and add the gridded input data 
+kzs.2d_data &lt;- as.data.frame(cbind(df, sinc)) 
+
+### Movie of the signal buried in noise
+grayscale = colorRampPalette(c("white", "gray", "black"))
+for (u in 1:50) {
+	plot(levelplot(kzs.2d_data[,u+2] ~ x1*x2, kzs.2d_data, 
+		col.regions = grayscale, colorkey = FALSE))
+}
+
+### Movie of KZS 4-dimensional KZS outcome
+data(kzs.3d_data)
+bluered = colorRampPalette(c("blue", "cyan2", "green", 
+			     "yellow", "red", "firebrick"), space = "rgb")
+for (j in 1:50) {
+	plot(levelplot(kzs.3d_data[,j+2] ~ x1*x2, kzs.3d_data, 
+           at = do.breaks(c(-0.3, 1.0), 100), col.regions = bluered))
+} 
+</code></pre>
+
+
+</div>

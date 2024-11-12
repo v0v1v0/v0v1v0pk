@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write.bibtex</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>write a bibtex file</h2>
+
+<h3>Description</h3>
+
+<p>write a bibtex file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write.bibtex(entry = NULL, file = "knitcitations.bib", append = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>entry</code></td>
+<td>
+<p>a 'bibentry' object or list of bibentry objects.
+If NULL, writes all that have currently been cited.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>output bibtex file. Will automatically append '.bib' if not
+added. if 'NULL' will use stdout.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>append</code></td>
+<td>
+<p>a logical indicating that bibtex entries be added the the
+file.  If FALSE (default), the file is overwritten.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments to WriteBib</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a list of citation information, invisibly
+</p>
+
+
+<h3>See Also</h3>
+
+<p>read.bib citep citet
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> tmp &lt;- tempfile(fileext=".bib")
+ write.bibtex(c(citation("knitr"),
+                citation("knitcitations"),
+                citation("httr")),
+               file = tmp)
+ bib &lt;- read.bibtex(tmp)
+</code></pre>
+
+
+</div>

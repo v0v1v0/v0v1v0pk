@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_metadata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get Metadata from a DHIS2 Instance</h2>
+
+<h3>Description</h3>
+
+<p><code>get_metadata</code> retrieves metadata for a specified endpoint of a DHIS2 instance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_metadata(
+  endpoint,
+  ...,
+  fields = c("id", "name"),
+  retry = 2,
+  verbosity = 0,
+  timeout = 60,
+  call = caller_env()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>endpoint</code></td>
+<td>
+<p>The DHIS2 API endpoint for the metadata of interest
+(e.g., <code>dataElements</code>, <code>organisationUnits</code> endpoints).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>One or more <code>metadata_filter()</code> parameters in key-value pairs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fields</code></td>
+<td>
+<p>The specific columns to be returned in the data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>retry</code></td>
+<td>
+<p>Number of times to retry the API call in case of failure
+(defaults to 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbosity</code></td>
+<td>
+<p>Level of HTTP information to print during the call:
+</p>
+
+<ul>
+<li>
+<p> 0: No output
+</p>
+</li>
+<li>
+<p> 1: Show headers
+</p>
+</li>
+<li>
+<p> 2: Show headers and bodies
+</p>
+</li>
+<li>
+<p> 3: Show headers, bodies, and CURL status message.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeout</code></td>
+<td>
+<p>Maximum number of seconds to wait for the DHIS2 API response.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The caller environment</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble containing the DHIS2 metadata response.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Get the categories metadata
+get_metadata('categories')
+
+# Get the datasets metadata with fields 'id,name,organisationUnits' and filter
+# only the datasets with id 'WWh5hbCmvND'
+get_metadata('dataSets',
+             fields = 'id,name,organisationUnits[id,name,path]',
+             id %.eq% 'WWh5hbCmvND')
+
+# Get data elements filtered by dataElementGroups id
+get_metadata('dataElements',
+             dataElementGroups.id %.eq% 'IXd7DXxZqzL',
+             fields = ':all')
+
+</code></pre>
+
+
+</div>

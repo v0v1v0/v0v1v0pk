@@ -1,0 +1,253 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covRadial</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creator for the Class <code>"covRadial"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Creator for the class <code>"covRadial"</code>, which describes <em>radial
+kernels</em>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+   covRadial(k1Fun1 = k1Fun1Gauss,
+             cov = c("corr", "homo"), 
+             iso = 0, hasGrad = TRUE,
+             inputs = NULL, d = NULL,
+             parNames, par = NULL,
+             parLower = NULL, parUpper = NULL,
+             label = "Radial kernel",
+             ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>k1Fun1</code></td>
+<td>
+
+<p>A function of a <em>scalar</em> numeric variable, and possibly of an
+extra "shape" parameter. This function should return the first-order
+derivative or the two-first order derivatives as an attribute with
+name <code>"der"</code> and with a matrix content. When an extra shape
+parameter exists, the gradient should also be returned as an
+attribute with name <code>"gradient"</code>, see <b>Examples</b>
+later. The name of the function can be given as a character string.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>A character string specifying the kind of covariance kernel:
+correlation kernel (<code>"corr"</code>) or kernel of a homoscedastic GP
+(<code>"homo"</code>).  Partial matching is allowed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iso</code></td>
+<td>
+
+<p>Integer. The value <code>1L</code> corresponds to an isotropic covariance,
+with all the inputs sharing the same range value.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hasGrad</code></td>
+<td>
+
+<p>Integer or logical. Tells if the value returned by the function
+<code>k1Fun1</code> has an attribute named <code>"der"</code> giving the
+derivative(s).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+
+<p>Character. Names of the inputs.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>Integer. Number of inputs.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>par, parLower, parUpper</code></td>
+<td>
+
+<p>Optional numeric values for the lower bounds on the parameters. Can be
+<code>NA</code> for <code>par</code>, can be <code>-Inf</code> for <code>parLower</code> and
+<code>Inf</code> for <code>parUpper</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parNames</code></td>
+<td>
+
+<p>Names of the parameters. By default, ranges are prefixed
+<code>"theta_"</code> in the non-iso case and the range is named
+<code>"theta"</code> in the iso case.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+
+<p>A short description of the kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments passed to the method <code>new</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A radial kernel on the <code class="reqn">d</code>-dimensional Euclidean space
+takes the form 
+</p>
+<p style="text-align: center;"><code class="reqn">K(\mathbf{x},\,\mathbf{x}') = \sigma^2 k_1(r)</code>
+</p>
+
+<p>where <code class="reqn">k_1(r)</code> is a suitable correlation kernel for a
+one-dimensional input, and <code class="reqn">r</code> is given by
+</p>
+<p style="text-align: center;"><code class="reqn">r = \left\{\sum_{\ell = 1}^d [x_\ell - x'_\ell]^2 / \theta_\ell^2
+    \right\}^{1/2}.</code>
+</p>
+
+<p>In this default form, the radial kernel depends on <code class="reqn">d + 1</code> parameters:
+the <em>ranges</em> <code class="reqn">\theta_\ell &gt;0</code>  and the
+variance <code class="reqn">\sigma^2</code>.
+</p>
+<p>An <em>isotropic</em> form uses the same range <code class="reqn">\theta</code> for
+all inputs, i.e. sets <code class="reqn">\theta_\ell =
+      \theta</code> for all <code class="reqn">\ell</code>. This is obtained
+by using <code>iso = TRUE</code>.
+</p>
+<p>A <em>correlation</em> version uses <code class="reqn">\sigma^2 = 1</code>. This
+is obtained by using <code>cov = "corr"</code>.
+</p>
+<p>Finally, the correlation kernel <code class="reqn">k_1(r)</code> can depend on a
+"shape" parameter, e.g. have the form <code class="reqn">k_1(r;\,\alpha)</code>. The extra shape parameter <code class="reqn">\alpha</code> will be
+considered then as a parameter of the resulting radial kernel, making
+it possible to estimate it by ML along with the range(s) and the
+variance.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with class <code>"covRadial"</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>When <code>k1Fun1</code> has more than one formal argument, its arguments
+with position <code>&gt; 1</code> are assumed to be "shape" parameters of the
+model. Examples are functions with formals <code>function(x, shape =
+  1.0)</code> or <code>function(x, alpha = 2.0, beta = 3.0)</code>, corresponding to
+vector of parameter names <code>c("shape")</code> and <code>c("alpha",
+  "beta")</code>.  Using more than one shape parameter has not been tested
+yet.
+</p>
+<p>Remind that using a one-dimensional correlation kernel
+<code class="reqn">k_1(r)</code> here <em>does not</em> warrant that a positive
+semi-definite kernel will result for <em>any</em> dimension
+<code class="reqn">d</code>. This question relates to Schoenberg's theorem and the concept
+of completely monotone functions.
+</p>
+
+
+<h3>References</h3>
+
+<p>Gregory Fassauher and Michael McCourt (2016) <em>Kernel-based
+Approximation Methods using MATLAB</em>. World Scientific.  
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>k1Fun1Exp</code>, <code>k1Fun1Matern3_2</code>,
+<code>k1Fun1Matern5_2</code> or <code>k1Fun1Gauss</code> for
+examples of functions that can be used as values for the <code>k1Fun1</code>
+formal.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(123)
+d &lt;- 2; ng &lt;- 20
+xg &lt;- seq(from = 0, to = 1, length.out = ng)
+X &lt;- as.matrix(expand.grid(x1 = xg, x2 = xg))
+
+## ============================================================================
+## A radial kernel using the power-exponential one-dimensional
+## function
+## ============================================================================
+
+d &lt;- 2
+myCovRadial &lt;- covRadial(k1Fun1 = k1Fun1PowExp, d = 2, cov = "homo", iso = 1)
+coef(myCovRadial)
+inputNames(myCovRadial) &lt;- colnames(X)
+coef(myCovRadial) &lt;- c(alpha = 1.8, theta = 2.0, sigma2 = 4.0)
+y &lt;- simulate(myCovRadial, X = X, nsim = 1)
+persp(x = xg, y = xg, z = matrix(y, nrow = ng))
+
+## ============================================================================
+## Define the inverse multiquadric kernel function. We return the first two
+## derivatives and the gradient as attributes of the result.
+## ============================================================================
+
+myk1Fun &lt;- function(x, beta = 2) {
+    prov &lt;- 1 + x * x
+    res &lt;- prov^(-beta)
+    der &lt;- matrix(NA, nrow = length(x), ncol = 2)
+    der[ , 1] &lt;- - beta * 2 * x * res / prov
+    der[ , 2] &lt;- -2 * beta * (1 - (1 + 2 * beta) * x * x) * res / prov / prov
+    grad &lt;- -log(prov) * res
+    attr(res, "gradient") &lt;- grad
+    attr(res, "der") &lt;- der
+    res
+}
+
+myCovRadial1 &lt;- covRadial(k1Fun1 = myk1Fun, d = 2, cov = "homo", iso = 1)
+coef(myCovRadial1)
+inputNames(myCovRadial1) &lt;- colnames(X)
+coef(myCovRadial1) &lt;- c(beta = 0.2, theta = 0.4, sigma2 = 4.0)
+y1 &lt;- simulate(myCovRadial1, X = X, nsim = 1)
+persp(x = xg, y = xg, z = matrix(y1, nrow = ng))
+
+
+</code></pre>
+
+
+</div>

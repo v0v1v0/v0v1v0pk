@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>q1CompSymm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Qualitative Correlation or Covariance Kernel with one Input and
+Compound Symmetric Correlation
+</h2>
+
+<h3>Description</h3>
+
+<p>Qualitative correlation or covariance kernel with one input and
+compound symmetric correlation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+q1CompSymm(factor, input = "x", cov = c("corr", "homo"), intAsChar = TRUE)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+
+<p>A factor with the wanted levels for the covariance kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+
+<p>Name of (qualitative) input for the kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>Character telling if the kernel is a correlation kernel or a
+homoscedastic covariance kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intAsChar</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), an integer-valued input will be
+coerced into a character. Otherwise, it will be coerced into a factor.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object with class <code>"covQual"</code> with <code>d = 1</code>
+qualitative input.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Correlation kernels are needed in tensor products because
+the tensor product of two covariance kernels each with unknown
+variance would not be identifiable.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>corLevCompSymm</code> function used to compute
+the correlation matrix and its gradients w.r.t. the correlation
+parameters.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">School &lt;- factor(1L:3L, labels = c("Bad", "Mean" , "Good"))
+myCor &lt;- q1CompSymm(School, input = "School")
+coef(myCor) &lt;- 0.26
+plot(myCor, type = "cor")
+
+## Use a data.frame with a factor
+set.seed(246)
+newSchool &lt;- factor(sample(1L:3L, size = 20, replace = TRUE),
+                    labels = c("Bad", "Mean" , "Good"))
+C1 &lt;- covMat(myCor, X = data.frame(School = newSchool),
+             compGrad = FALSE, lowerSQRT = FALSE)
+
+</code></pre>
+
+
+</div>

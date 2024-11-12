@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>conditions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conditions that Karel can test</h2>
+
+<h3>Description</h3>
+
+<p>These group of functions return a logical value <code>TRUE</code> o <code>FALSE</code> according to Karel's evaluation of her world.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">front_is_clear()
+
+front_is_blocked()
+
+left_is_clear()
+
+left_is_blocked()
+
+right_is_clear()
+
+right_is_blocked()
+
+beepers_present()
+
+no_beepers_present()
+
+karel_has_beepers()
+
+karel_has_no_beepers()
+
+facing_east()
+
+facing_west()
+
+facing_north()
+
+facing_south()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>The functions <code>front_is_clear()</code>, <code>front_is_blocked()</code>, <code>left_is_clear()</code>, <code>left_is_blocked()</code>, <code>right_is_clear()</code> y <code>right_is_blocked()</code> test if there is a wall in front of Karel, to her left or to her right, respectively. The functions <code>beepers_present()</code> y <code>no_beepers_present()</code> test if there are or there are not <code>beepers</code> at Karel's current position. The functions <code>karel_has_beepers()</code> y <code>karel_has_no_beepers()</code> test if Karel has or hasn't got  <code>beepers</code> in her bag (not visible in the plot). The functions <code>facing_east()</code>, <code>facing_west()</code>, <code>facing_north()</code> y <code>facing_south()</code> test the direction to which Karel is facing right now.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Logical value TRUE or FALSE.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>generate_world</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generate_world("mundo001")
+front_is_clear()
+front_is_blocked()
+left_is_clear()
+left_is_blocked()
+right_is_clear()
+right_is_blocked()
+beepers_present()
+no_beepers_present()
+karel_has_beepers()
+karel_has_no_beepers()
+facing_east()
+facing_west()
+facing_north()
+facing_south()
+
+</code></pre>
+
+
+</div>

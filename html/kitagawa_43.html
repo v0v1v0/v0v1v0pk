@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sensing_volume</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate volume of fluids in the sensing region of the borehole.</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the volume of fluid in the screened section, 
+namely <strong>Equation 2</strong> in Kitagawa et al (2011).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sensing_volume(rad_grout, len_grout, rad_screen, len_screen)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rad_grout</code></td>
+<td>
+<p>radius of the grouting  <code class="reqn">[m]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>len_grout</code></td>
+<td>
+<p>length of the grouting  <code class="reqn">[m]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rad_screen</code></td>
+<td>
+<p>radius of the screened interval  <code class="reqn">[m]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>len_screen</code></td>
+<td>
+<p>length of the screened interval  <code class="reqn">[m]</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Although typical scientific boreholes with water-level sensors are 
+drilled very deeply, pore-fluids are only allowed to flow through
+a relatively short section, known as the "screened" section.  The
+calculation assumes two pairs of radii and lengths: one for the cemented (grout)
+section, and another for the screened section.
+</p>
+<p>The volume calculated is
+</p>
+<p style="text-align: center;"><code class="reqn">
+\pi R_C^2 (L_C - L_S) + \pi R_S^2 L_S
+</code>
+</p>
+
+<p>where 
+<code class="reqn">R</code> and <code class="reqn">L</code> denote radius and length respectively, and subscripts
+<code class="reqn">C</code> and <code class="reqn">S</code> denote the cemented and screened sections respectively.
+</p>
+<p>This calculation assumes the measurement is for a sealed well.
+</p>
+
+
+<h3>Value</h3>
+
+<p>scalar, with units of <code class="reqn">[m^3]</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>well_response</code>
+</p>
+<p>Other utilities: 
+<code>omega_norm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#### dummy example
+sensing_volume(1, 1, 1, 1)
+#
+#### a more physically realistic calculation:
+# Physical params applicable for B084 borehole
+# (see: http://pbo.unavco.org/station/overview/B084/ for details)
+#
+Rc &lt;- 0.0508   # m, radius of water-sensing (2in)
+Lc &lt;- 146.9    # m, length of grouted region (482ft)
+Rs &lt;- 3*Rc     # m, radius of screened region (6in)
+Ls &lt;- 9.14     # m, length of screened region (30ft)
+#
+# calculate the sensing volume for the given well parameters
+sensing_volume(Rc, Lc, Rs, Ls) # m**3, ~= 1.8
+</code></pre>
+
+
+</div>

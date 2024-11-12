@@ -1,0 +1,223 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kpcent</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute Group Centraltiy in a Network</h2>
+
+<h3>Description</h3>
+
+<p><code>kpcent</code> reports the group-level centrality scores.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kpcent(
+  adj.matrix,
+  nodes,
+  type,
+  M = Inf,
+  T = ncol(adj.matrix),
+  method,
+  binary = FALSE,
+  cmode,
+  large = TRUE,
+  geodist.precomp = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>Matrix indicating the adjacency matrix of the network or the probability matrix in the case of calculating diffusion centrality.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nodes</code></td>
+<td>
+<p>Integer indicating the column index of the chosen player
+in the adjacenncy matrix. If there are multiple players,
+use <code>c(index1,index2,...)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p><code>type="betweenness"</code> for <code>betweenness</code> centrality. <br><code>type="closeness"</code> for <code>closeness</code> centrality. <br><code>type="degree"</code> for <code>degree</code> centraslity. <br><code>type="diffusion"</code> for <code>diffusion</code> centrality. <br><code>type="evcent"</code> for <code>evcent</code> (eigenvector) centrality. <br><code>type="fragment"</code> for <code>fragment</code> centrality. <br><code>type="mreach.degree"</code> for <code>mreach.degree</code> centrality. <br><code>type="mreach.closeness"</code> for <code>mreach.closeness</code> centrality. <br></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>Positive number indicating the maximum geodistance between two nodes,
+above witch the two nodes are considered disconnected. The default is
+<code>Inf</code>. The option is applicable to mreach.degree, mreach.closeness,
+and fragmentation centralities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>Integer indicating the maximum number of iterations
+of communication process. For diffusion centrality only. By default, T is the network size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Indication of which grouping criterion should be used. <br><code>"min"</code> indicates the "minimum" criterion and is the default for
+betweenness, closeness, fragmentation, and M-reach centralities. <br><code>"max"</code> indicates the "maximum" criterion and is the default for
+degree and eigenvector centralities.<br><code>"add"</code> indicates the "addition" criterion.<br><code>"union"</code> indicates the "union" criterion and is the default for
+diffusion centrality.<br>
+See Details section for explanations on grouping method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary</code></td>
+<td>
+<p>If <code>TRUE</code>, the adjacency matrix is binarized.
+If <code>FALSE</code>, the edge values are considered. By default, <code>binary=FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmode</code></td>
+<td>
+<p>String indicating the type of centrality being evaluated.
+The option is applicable to degree and M-reach centralities.
+<code>"outdegree"</code>, <code>"indegree"</code>, and <code>"total"</code> refer to
+indegree, outdegree, and (total) degree respectively. <code>"all"</code> reports
+all the above measures. The default is to report the total degree.
+Note for closeness centrality, we use the Gil-Schmidt power index when <code>large=FALSE</code>.
+See <code>closeness</code> for explanation. When
+large=<code>TRUE</code>, the function reports the standard closeness score.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>large</code></td>
+<td>
+<p>Logical scalar, whether the computation method for large network is
+implemented. If <code>TRUE</code> (the default), the method implmented in <span class="pkg">igraph</span> is
+used; otherwise the method implemented in <span class="pkg">sna</span> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geodist.precomp</code></td>
+<td>
+<p>Geodistance precomputed for the graph to be
+analyzed (optional).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The basic idea of measuring the group-level centrality is to treat
+a group of nodes as a large pseudo-node. We propose several methods to measure
+the tie status between this pseudo node and other nodes, responding to several
+common edge value interpretations (An and Liu, 2015).
+</p>
+<p>Minimum Criterion: the edge value between a group and an outside node
+is measured as the minimal value among all the (nonzero) edge values between
+any node in the group and the outside node. Suggested if edge values are
+interpreted as distances.<br><em>Example: suppose node A to C has distance 2 and B to C has distance 1,
+then according to the minimum criterion, the distance between C and
+the merged set AB is 1. Note that if B and C are not connected,
+the algorithm takes the distance between A and C to describe
+the distance between AB and C.</em>
+</p>
+<p>Maximun Criterion: the edge value between a group and an outside node
+is measured as the maximal value among all the (nonzero) edge values between
+any node in the group and the outside node. Suggested if edge values are
+interpreted as non-cummulative strengths. <br><em>Example: we keep using the above example, but the figure now indicates
+the strength of tie. According to the maximum criterion, the strength of tie
+between AB and C is 2.</em>
+</p>
+<p>Addition Criterion: the edge value between a group and an outside node
+is measured as the sum of all the edge values between any node in the group
+and the outside node. Suggested if edge values are as cummulative strengths. <br><em>Example: according to the addition criterion, the strength of tie between
+AB and C is 3</em>
+</p>
+<p>Union Criterion: the edge value between a group and an outside node is measured
+as the probability that there is at least one path connecting the group with
+the outside node. Suggested if edge values are as probability. <br><em>Example: suppose A has probability 0.2 to reach C and B has probability
+0.5 to reach C, then C can be reached from merged AB with probability
+1-(1-0.2)*(1-0.5)=0.6 according to the union criterion.</em>
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector indicating the centrality score of a group.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weihua An <a href="mailto:weihua.an@emory.edu">weihua.an@emory.edu</a>; Yu-Hsin Liu <a href="mailto:ugeneliu@meta.com">ugeneliu@meta.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>An, Weihua. (2015). "Multilevel Meta Network Analysis with Application to Studying Network Dynamics of Network Interventions." <em>Social Networks</em> 43: 48-56.<br></p>
+<p>An, Weihua and Yu-Hsin Liu (2016). "keyplayer: An R Package for Locating Key Players in Social Networks."
+<em>The R Journal</em>, 8(1): 257-268.<br></p>
+<p>Banerjee, A., A. Chandrasekhar, E. Duflo, and M. Jackson (2013):
+"Diffusion of Microfinance," <em>Science</em>, Vol. 341. p.363<br></p>
+<p>Banerjee, A., A. Chandrasekhar, E. Duflo, and M. Jackson (2014):
+"Gossip: Identifying Central Individuals in a Social Network,"
+Working Paper.<br></p>
+<p>Borgatti, Stephen P. (2006). "Identifying Sets of Key Players in a Network."
+<em>Computational, Mathematical and Organizational Theory</em>, 12(1):21-34.<br></p>
+<p>Butts, Carter T. (2014). sna: Tools for Social Network Analysis. R package
+version 2.3-2. <a href="https://cran.r-project.org/package=sna">https://cran.r-project.org/package=sna</a><br></p>
+<p>Csardi, G and Nepusz, T (2006). "The igraph software package for complex network research."
+InterJournal, Complex Systems 1695. <a href="https://igraph.org/">https://igraph.org/</a> <br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>contract</code>
+<code>kpset</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Create a 5x5 weighted and directed adjacency matrix,
+# where edge values represent the strength of tie
+W &lt;- matrix(
+  c(0,1,3,0,0,
+    0,0,0,4,0,
+    1,1,0,2,0,
+    0,0,0,0,3,
+    0,2,0,0,0),
+    nrow=5, ncol=5, byrow = TRUE)
+
+# List the degree centrality for group of node 2 and 3
+kpcent(W,c(2,3),type="degree")
+
+# Transform the edge value to distance interpretaion
+# Compute the fragmentation centrality for node 2
+A &lt;- W
+A[W!=0] &lt;- 1/W[W!=0]
+kpcent(A,2,type="fragment")
+
+# Replicate the group-level degree centrality (normalized) when the weights
+# are given by the inverse distances and report the outgoing score only
+kpcent(A,c(2,3),type="mreach.closeness",binary=TRUE,M=1,cmode="outdegree")
+
+# Transform the edge value to probability interpretation
+# Compute the diffusion centrality with number of iteration 20
+P &lt;- 0.1*W
+kpcent(P,c(2,3),type="diffusion",T=20)
+
+</code></pre>
+
+
+</div>

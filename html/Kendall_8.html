@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.Kendall</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>summary Method for Class 'Kendall' </h2>
+
+<h3>Description</h3>
+
+<p>In addition to
+the value of Kendall's tau and its two-sided p-value are displayed,
+the Kendall score, its variance and the value of the denominator
+for Kendall tau are printed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'Kendall'
+summary(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>output from Kendall, MannKendall or SeasonalMannKendall </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>any additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>NULL
+</p>
+
+
+<h3>Note</h3>
+
+<p> If you want to use the output from Kendall or the other functions,
+save the result as in res&lt;-Kendall(x,y) and then select from res the
+value(s) needed. </p>
+
+
+<h3>Author(s)</h3>
+
+<p> A.I. McLeod, aimcleod@uwo.ca </p>
+
+
+<h3>See Also</h3>
+
+ <p><code>summary.Kendall</code>, <code>Kendall</code>,
+<code>MannKendall</code>,<code>SeasonalMannKendall</code>,
+<code>print.Kendall</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x&lt;-1:10
+y&lt;-rnorm(10)
+out&lt;-Kendall(x,y)
+out
+summary(out)
+</code></pre>
+
+
+</div>

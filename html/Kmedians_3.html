@@ -1,0 +1,146 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Kmeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kmeans</h2>
+
+<h3>Description</h3>
+
+<p>A K-means algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Kmeans(X,nclust=1:15,ninit=1,niter=20,par=TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A numerical matrix giving the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclust</code></td>
+<td>
+<p>A vector of positive integers giving the possible numbers of clusters. Default is <code>1:15</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ninit</code></td>
+<td>
+<p>A non negative integer giving the number of random initializations. Default is <code>1</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>niter</code></td>
+<td>
+<p>A positive integer giving the number of iterations for the EM algorirthms. Default is <code>20</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+<p>A logical argument telling if the parallelization of the algorithm is allowed. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>bestresults</code></td>
+<td>
+<p>A list giving all the results for the clustering selected by <code>'capushe'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allresults</code></td>
+<td>
+<p>A list containing all the results.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>SE</code></td>
+<td>
+<p>A vector giving the Sum of Errors for each considered number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cap</code></td>
+<td>
+<p>The results given by the function <code>'capushe'</code> if <code>nclust</code> is  of length larger than <code>10</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ksel</code></td>
+<td>
+<p>An integer giving the number of clusters selected by <code>capushe</code> if <code>nclust</code> is  of length larger than <code>10</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A numerical matrix giving the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclust</code></td>
+<td>
+<p>A vector of positive integers giving the considered numbers of clusters.</p>
+</td>
+</tr>
+</table>
+<p>For the lists <code>bestresult</code> and <code>allresults</code>:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>A vector of positive integers giving the clustering.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centers</code></td>
+<td>
+<p>A numerical matrix giving the centers of the clusteres.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>SE</code></td>
+<td>
+<p>An integer giving the Sum of Errors.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>See also <code>Kmedians</code>, <code>Kplot</code> and <code>gen_K</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+n &lt;- 500
+K &lt;- 3
+pcont &lt;- 0.2
+ech &lt;- gen_K(n=n,K=K,pcont=pcont)
+X &lt;-ech$X
+res &lt;- Kmeans(X,par=FALSE)
+Kplot(res)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

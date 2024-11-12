@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knit_patterns</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Patterns to match and extract R code in a document</h2>
+
+<h3>Description</h3>
+
+<p>Patterns are regular expressions and will be used in functions like
+<code>base::grep()</code> to extract R code and chunk options. The object
+<code>knit_patterns</code> controls the patterns currently used; see the references
+and examples for usage.  All built-in patterns are available in the list
+all_patterns.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knit_patterns
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>list</code> of length 7.
+</p>
+
+
+<h3>References</h3>
+
+<p>Usage: <a href="https://yihui.org/knitr/objects/">https://yihui.org/knitr/objects/</a>
+</p>
+<p>Components in <code>knit_patterns</code>: <a href="https://yihui.org/knitr/patterns/">https://yihui.org/knitr/patterns/</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>all_patterns</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(knitr)
+opat = knit_patterns$get()  # old pattern list (to restore later)
+
+apats = all_patterns  # a list of all built-in patterns
+str(apats)
+knit_patterns$set(apats[["rnw"]])  # set pattern list from apats
+
+knit_patterns$get(c("chunk.begin", "chunk.end", "inline.code"))
+
+# a customized pattern list; has to empty the original patterns first!
+knit_patterns$restore()
+# we may want to use this in an HTML document
+knit_patterns$set(list(chunk.begin = "&lt;!--helloR\\s+(.*)", chunk.end = "^byeR--&gt;"))
+str(knit_patterns$get())
+
+knit_patterns$set(opat)  # put the old patterns back
+</code></pre>
+
+
+</div>

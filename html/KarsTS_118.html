@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>myApplyVector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+myApplyVector: apply type function
+</h2>
+
+<h3>Description</h3>
+
+<p>This function applies a function to the elements of a vector so that the result for each element is located in a row in a matrix. It is used internally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">myApplyVector(FUN = NULL, dataVector = NULL, out.ncols = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+
+<p>the function to apply
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataVector</code></td>
+<td>
+
+<p>The vector to which elements apply the function
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out.ncols</code></td>
+<td>
+
+<p>Number of columns for the output matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Further arguments to passed
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+exampleF &lt;- function(X){c(X + 5, X*5)}
+myApplyVector(FUN = exampleF, dataVector = 1:10, out.ncols = 2)
+
+</code></pre>
+
+
+</div>

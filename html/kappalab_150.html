@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pdf.Choquet.unif-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Distribution of the Choquet integral for evaluations uniformly
+distributed on the unit hypercube</h2>
+
+<h3>Description</h3>
+
+<p>Methods for computing the probability density and cumulative
+distribution functions of the Choquet integral with respect to a game
+for evaluations uniformly distributed on the unit hypercube.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "game", y = "numeric" </dt>
+<dd>
+<p>Returns the value of the
+p.d.f. or the c.d.f. at <code>y</code>.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>J-L. Marichal and I. Kojadinovic (2007), <em>The distribution of linear
+combinations of lattice polynomials from the uniform distribution</em>,
+submitted. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>game-class</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## a capacity
+mu &lt;- capacity(c(0,0.1,0.6,rep(0.9,4),1))
+## the cdf of the Choquet integral at 0.7
+cdf.Choquet.unif(mu,0.7)
+
+## the same but empirically
+m &lt;- 10000
+ch &lt;- numeric(m)
+for (i in 1:m) {
+     f &lt;- runif(3) 
+     ch[i] &lt;- Choquet.integral(mu,f)
+}
+sum(ifelse(ch&lt;=0.7,1,0))/m
+</code></pre>
+
+
+</div>

@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.krls</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Predict method for Kernel-based Regularized Least Squares (KRLS) Model Fits
+</h2>
+
+<h3>Description</h3>
+
+<p>Predicted values and standard errors based on krls model object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R"> ## S3 method for class 'krls'
+predict(object, newdata, se.fit = FALSE , ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Fitted KRLS model, i.e. an object of class <code>krls</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>A data frame or matrix with variables values at which to predict the outcome. Number and order of columns in <code>newdata</code> have to match the corresponding predictors used in the fitted krls model given in <code>object</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.fit</code></td>
+<td>
+<p>logical flag if standard errors should be computed for pointwise predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments affecting the predictions produced.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function produces predicted values, obtained by evaluating the fitted krls function with 
+the newdata (ie. the test points). The prediction at a new test point <code class="reqn">x_i</code> is based on 
+</p>
+<p style="text-align: center;"><code class="reqn">f(x_i)= \sum_j=1^n c_j K_{x_j}(x_i)</code>
+</p>
+ 
+<p>where <code class="reqn">K</code> is the kernel matrix and thus <code class="reqn">K_{x_j}</code>
+is a vector whose j-th entry is <code class="reqn">K(x_j,x_i)</code> (e.g. the distance between the test point <code class="reqn">x_i</code> and the training point <code class="reqn">x_j</code>). The training points are passed to the function with the krls fit in <code>object</code>.
+</p>
+<p>When data are missing in <code>newdata</code> during prediction, the value of each <code class="reqn">k(x_i,x_j)</code> is computed by using an adjusted Euclidean distance in the kernel definition. Assume <code class="reqn">x</code> is <var>D</var>-dimensional but a given pair of observations <code class="reqn">x_i</code> and <code class="reqn">x_j</code> have only <code class="reqn">D' &lt; D</code> non-missing dimensions in common. The adjusted Euclidean distance computes the sum of squared differences over the <code class="reqn">D'</code> non-missing dimensions, rescales this sum by <code class="reqn">D/D'</code>, and takes the square root.   The result corresponds to an assumption that conditional on the observed data, the missing values would not have contributed new information predictive of the outcome.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p><var>M</var> by 1 vector of fitted values for <var>M</var> test points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.fit</code></td>
+<td>
+<p><var>M</var> by 1 vector of standard errors for the fitted values for <var>M</var> test points (<code>NULL</code> unless <code>se.fit=TRUE</code> is specified).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vcov.fit</code></td>
+<td>
+<p><var>M</var> by <var>M</var> variance-covariance matrix for the fitted values for <var>M</var> test points (<code>NULL</code> unless <code>se.fit=TRUE</code> is specified).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p><var>M</var> by <var>D</var> data matrix of of <var>M</var> test points with <var>D</var> predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdataK</code></td>
+<td>
+<p><var>M</var> by <var>N</var> data matrix for pairwise Gauss Kernel distances between <var>M</var> test points and <var>N</var> training points from krls model fit in <code>object</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krls</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# make up data
+X &lt;- seq(-3,3,.1)
+Y &lt;- sin(X) + rnorm(length(X),.1)
+
+# fit krls
+krlsout &lt;- krls(y=Y,X=X)
+
+# get in-sample prediction 
+predin &lt;- predict(krlsout,newdata=X,se.fit=TRUE)
+
+# get out-of-sample prediction
+X2 &lt;- runif(5)
+predout &lt;- predict(krlsout,newdata=X2,se.fit=TRUE)
+
+# plot true function and predictions
+plot(y=sin(X),x=X,type="l",col="red",ylim=c(-1.8,1.8),lwd=2,ylab="f(X)")
+points(y=predin$fit,x=X,col="blue",pch=19)
+arrows(y1=predin$fit+2*predin$se.fit,
+       y0=predin$fit-2*predin$se.fit,
+       x1=X,x0=X,col="blue",length=0)
+       
+points(y=predout$fit,x=X2,col="green",pch=17)
+arrows(y1=predout$fit+2*predout $se.fit,
+       y0=predout$fit-2*predout $se.fit,
+       x1=X2,x0=X2,col="green",length=0)
+
+legend("bottomright",
+       legend=c("true f(x)=sin(X)",
+                "KRLS fitted in-sample",
+                "KRLS fitted out-of-sample"),
+       lty=c(1,NA,NA),pch=c(NA,19,17),
+       lwd=c(2,NA,NA),
+       col=c("red","blue","green"),
+       cex=.8)
+
+</code></pre>
+
+
+</div>

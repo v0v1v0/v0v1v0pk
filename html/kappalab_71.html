@@ -1,0 +1,110 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>entropy.capa.ident</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Unsupervised identification of a capacity from profiles</h2>
+
+<h3>Description</h3>
+
+<p>This function estimates a capacity using as argument a set
+of data under the form: datum=(score on attribute 1, ..., score on attribute
+n). The approach roughly consists in replacing the subjective notion
+of <em>importance</em> of a subset of attributes by that of
+<em>information content</em> of a subset of attributes, which is estimated
+from the data by means of a parametric entropy measure. For
+more details, see the references hereafter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">entropy.capa.ident(d, entropy = "renyi", parameter = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>An object of class <code>data.frame</code> containing the
+discretized data. Each column of the <code>data.frame</code> must
+be a <code>factor</code>. Each line corresponds to a datum.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>entropy</code></td>
+<td>
+<p>An object of class <code>character</code> containg the name
+of the parametric entropy measure to be used for the estimation. The
+allowed values are "renyi" and "havrda.charvat".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameter</code></td>
+<td>
+<p>An object of class <code>numeric</code> containing he value
+of the parameter of the choosen entropy. The parameter value must be
+a positive real number. If equal to 1, the Shannon entropy is used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns an object of class <code>capacity</code>.</p>
+
+
+<h3>References</h3>
+
+<p>I. Kojadinovic (2004), <em>Estimation of the weights of interacting
+criteria from the set of profiles by means of information-theoretic
+functionals</em>, European Journal of Operational Research 155:3, pages 741-751.
+</p>
+<p>I. Kojadinovic (2005), <em>Unusupervised aggregation of commensurate
+correlated attributes by means of the Choquet integral and entropy
+functionals</em>, International Journal of Intelligent Systems, in press.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>capacity-class</code>,
+<br><code>lin.prog.capa.ident</code>,
+<br><code>mini.var.capa.ident</code>,
+<br><code>mini.dist.capa.ident</code>,
+<br><code>least.squares.capa.ident</code>,
+<br><code>heuristic.ls.capa.ident</code>,
+<br><code>ls.sorting.capa.ident</code>,
+<br><code>ls.ranking.capa.ident</code>.  
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a set of randomly generated data
+## for instance, marks on a [0,20] scale
+p &lt;- data.frame(matrix(runif(500,0,20),100,5))
+names(p) &lt;- c("Stat","Prob","Alg","Cal","Eng")
+
+## discretization
+p[p &lt;= 5] &lt;- 1  
+p[p &gt; 5 &amp; p &lt;= 10] &lt;- 2 
+p[p &gt; 10 &amp; p &lt;= 15] &lt;- 3 
+p[p &gt; 15] &lt;- 4
+
+d &lt;- data.frame(factor(p[[1]]),
+                factor(p[[2]]),
+                factor(p[[3]]),
+                factor(p[[4]]),
+                factor(p[[5]]))
+
+## associated unsupervised capacity
+mu &lt;- entropy.capa.ident(d)
+mu
+</code></pre>
+
+
+</div>

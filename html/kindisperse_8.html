@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>axials_subtract</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subtract axial distributions</h2>
+
+<h3>Description</h3>
+
+<p>Subtract axial distributions, finding the difference (under an additive variance framework).
+This is most useful when one distribution subsumes another and includes a unique dispersal event that needs to be extracted.
+For example, the FS category is subsumed by the 1C category, which can be written 'FS + PO'.
+In this circumstance, subtracting FS from 1C will yield an estimate of the PO kernel (the basic intergenerational dispersal kernel)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">axials_subtract(abig, asmall)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>abig</code></td>
+<td>
+<p>numeric. The axial dispersal distance of the larger (subsuming) distribution (e.g. 1C).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>asmall</code></td>
+<td>
+<p>numeric. The axial dispersal distance of the smaller (subsumed) distribution (e.g. FS).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>numeric</code> Returns an estimate of the axial dispersal distance of those dispersal elements that are unique to the larger dispersal distribution (e.g. PO).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other axial_helpers: 
+<code>axials_add()</code>,
+<code>axials_decompose()</code>,
+<code>axials()</code>,
+<code>axpermute_subtract()</code>,
+<code>axpermute()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">axials_subtract(100, 70)
+</code></pre>
+
+
+</div>

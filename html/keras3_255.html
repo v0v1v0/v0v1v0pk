@@ -1,0 +1,485 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_integer_lookup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer that maps integers to (possibly encoded) indices.</h2>
+
+<h3>Description</h3>
+
+<p>This layer maps a set of arbitrary integer input tokens into indexed integer
+output via a table-based vocabulary lookup. The layer's output indices will
+be contiguously arranged up to the maximum vocab size, even if the input
+tokens are non-continguous or unbounded. The layer supports multiple options
+for encoding the output via <code>output_mode</code>, and has optional support for
+out-of-vocabulary (OOV) tokens and masking.
+</p>
+<p>The vocabulary for the layer must be either supplied on construction or
+learned via <code>adapt()</code>. During <code>adapt()</code>, the layer will analyze a data set,
+determine the frequency of individual integer tokens, and create a
+vocabulary from them. If the vocabulary is capped in size, the most frequent
+tokens will be used to create the vocabulary and all others will be treated
+as OOV.
+</p>
+<p>There are two possible output modes for the layer.  When <code>output_mode</code> is
+<code>"int"</code>, input integers are converted to their index in the vocabulary (an
+integer).  When <code>output_mode</code> is <code>"multi_hot"</code>, <code>"count"</code>, or <code>"tf_idf"</code>,
+input integers are encoded into an array where each dimension corresponds to
+an element in the vocabulary.
+</p>
+<p>The vocabulary can optionally contain a mask token as well as an OOV token
+(which can optionally occupy multiple indices in the vocabulary, as set
+by <code>num_oov_indices</code>).
+The position of these tokens in the vocabulary is fixed. When <code>output_mode</code>
+is <code>"int"</code>, the vocabulary will begin with the mask token at index 0,
+followed by OOV indices, followed by the rest of the vocabulary. When
+<code>output_mode</code> is <code>"multi_hot"</code>, <code>"count"</code>, or <code>"tf_idf"</code> the vocabulary will
+begin with OOV indices and instances of the mask token will be dropped.
+</p>
+<p><strong>Note:</strong> This layer uses TensorFlow internally. It cannot
+be used as part of the compiled computation graph of a model with
+any backend other than TensorFlow.
+It can however be used with any backend when running eagerly.
+It can also always be used as part of an input preprocessing pipeline
+with any backend (outside the model itself), which is how we recommend
+to use this layer.
+</p>
+<p><strong>Note:</strong> This layer is safe to use inside a <code>tf.data</code> pipeline
+(independently of which backend you're using).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_integer_lookup(
+  object,
+  max_tokens = NULL,
+  num_oov_indices = 1L,
+  mask_token = NULL,
+  oov_token = -1L,
+  vocabulary = NULL,
+  vocabulary_dtype = "int64",
+  idf_weights = NULL,
+  invert = FALSE,
+  output_mode = "int",
+  sparse = FALSE,
+  pad_to_max_tokens = FALSE,
+  name = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_tokens</code></td>
+<td>
+<p>Maximum size of the vocabulary for this layer. This should
+only be specified when adapting the vocabulary or when setting
+<code>pad_to_max_tokens=TRUE</code>. If NULL, there is no cap on the size of
+the vocabulary. Note that this size includes the OOV
+and mask tokens. Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_oov_indices</code></td>
+<td>
+<p>The number of out-of-vocabulary tokens to use.
+If this value is more than 1, OOV inputs are modulated to
+determine their OOV value.
+If this value is 0, OOV inputs will cause an error when calling
+the layer. Defaults to <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mask_token</code></td>
+<td>
+<p>An integer token that represents masked inputs. When
+<code>output_mode</code> is <code>"int"</code>, the token is included in vocabulary
+and mapped to index 0. In other output modes,
+the token will not appear in the vocabulary and instances
+of the mask token in the input will be dropped.
+If set to NULL, no mask term will be added. Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>oov_token</code></td>
+<td>
+<p>Only used when <code>invert</code> is <code>TRUE</code>. The token to return
+for OOV indices. Defaults to <code>-1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vocabulary</code></td>
+<td>
+<p>Optional. Either an array of integers or a string path to a
+text file. If passing an array, can pass a list, list,
+1D NumPy array, or 1D tensor containing the integer vocbulary terms.
+If passing a file path, the file should contain one line per term
+in the vocabulary. If this argument is set,
+there is no need to <code>adapt()</code> the layer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vocabulary_dtype</code></td>
+<td>
+<p>The dtype of the vocabulary terms, for example
+<code>"int64"</code> or <code>"int32"</code>. Defaults to <code>"int64"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idf_weights</code></td>
+<td>
+<p>Only valid when <code>output_mode</code> is <code>"tf_idf"</code>.
+A list, list, 1D NumPy array, or 1D tensor or the same length
+as the vocabulary, containing the floating point inverse document
+frequency weights, which will be multiplied by per sample term
+counts for the final TF-IDF weight.
+If the <code>vocabulary</code> argument is set, and <code>output_mode</code> is
+<code>"tf_idf"</code>, this argument must be supplied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>invert</code></td>
+<td>
+<p>Only valid when <code>output_mode</code> is <code>"int"</code>.
+If <code>TRUE</code>, this layer will map indices to vocabulary items
+instead of mapping vocabulary items to indices.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_mode</code></td>
+<td>
+<p>Specification for the output of the layer. Values can be
+<code>"int"</code>, <code>"one_hot"</code>, <code>"multi_hot"</code>, <code>"count"</code>, or <code>"tf_idf"</code>
+configuring the layer as follows:
+</p>
+
+<ul>
+<li> <p><code>"int"</code>: Return the vocabulary indices of the input tokens.
+</p>
+</li>
+<li> <p><code>"one_hot"</code>: Encodes each individual element in the input into an
+array the same size as the vocabulary,
+containing a 1 at the element index. If the last dimension
+is size 1, will encode on that dimension.
+If the last dimension is not size 1, will append a new
+dimension for the encoded output.
+</p>
+</li>
+<li> <p><code>"multi_hot"</code>: Encodes each sample in the input into a single
+array the same size as the vocabulary,
+containing a 1 for each vocabulary term present in the sample.
+Treats the last dimension as the sample dimension,
+if input shape is <code style="white-space: pre;">⁠(..., sample_length)⁠</code>,
+output shape will be <code style="white-space: pre;">⁠(..., num_tokens)⁠</code>.
+</p>
+</li>
+<li> <p><code>"count"</code>: As <code>"multi_hot"</code>, but the int array contains
+a count of the number of times the token at that index
+appeared in the sample.
+</p>
+</li>
+<li> <p><code>"tf_idf"</code>: As <code>"multi_hot"</code>, but the TF-IDF algorithm is
+applied to find the value in each token slot.
+For <code>"int"</code> output, any shape of input and output is supported.
+For all other output modes, currently only output up to rank 2
+is supported. Defaults to <code>"int"</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sparse</code></td>
+<td>
+<p>Boolean. Only applicable to <code>"multi_hot"</code>, <code>"count"</code>, and
+<code>"tf_idf"</code> output modes. Only supported with TensorFlow
+backend. If <code>TRUE</code>, returns a <code>SparseTensor</code>
+instead of a dense <code>Tensor</code>. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pad_to_max_tokens</code></td>
+<td>
+<p>Only applicable when <code>output_mode</code> is <code>"multi_hot"</code>,
+<code>"count"</code>, or <code>"tf_idf"</code>. If <code>TRUE</code>, the output will have
+its feature axis padded to <code>max_tokens</code> even if the number
+of unique tokens in the vocabulary is less than <code>max_tokens</code>,
+resulting in a tensor of shape <code style="white-space: pre;">⁠(batch_size, max_tokens)⁠</code>
+regardless of vocabulary size. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p><strong>Creating a lookup layer with a known vocabulary</strong>
+</p>
+<p>This example creates a lookup layer with a pre-existing vocabulary.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- op_array(rbind(c(12, 1138, 42),
+                      c(42, 1000, 36)))  # Note OOV tokens
+out &lt;- data |&gt; layer_integer_lookup(vocabulary = vocab)
+out
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[1 3 4]
+##  [4 0 2]], shape=(2, 3), dtype=int64)
+
+</pre></div>
+<p><strong>Creating a lookup layer with an adapted vocabulary</strong>
+</p>
+<p>This example creates a lookup layer and generates the vocabulary by
+analyzing the dataset.
+</p>
+<div class="sourceCode r"><pre>data &lt;- op_array(rbind(c(12, 1138, 42),
+                      c(42, 1000, 36)))  # Note OOV tokens
+layer &lt;- layer_integer_lookup()
+layer |&gt; adapt(data)
+layer |&gt; get_vocabulary() |&gt; str()
+</pre></div>
+<div class="sourceCode"><pre>## List of 6
+##  $ : int -1
+##  $ : num 42
+##  $ : num 1138
+##  $ : num 1000
+##  $ : num 36
+##  $ : num 12
+
+</pre></div>
+<p>Note that the OOV token -1 have been added to the vocabulary. The remaining
+tokens are sorted by frequency (42, which has 2 occurrences, is first) then
+by inverse sort order.
+</p>
+<div class="sourceCode r"><pre>layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[5 2 1]
+##  [1 3 4]], shape=(2, 3), dtype=int64)
+
+</pre></div>
+<p><strong>Lookups with multiple OOV indices</strong>
+</p>
+<p>This example demonstrates how to use a lookup layer with multiple OOV
+indices.  When a layer is created with more than one OOV index, any OOV
+tokens are hashed into the number of OOV buckets, distributing OOV tokens in
+a deterministic fashion across the set.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- op_array(rbind(c(12, 1138, 42),
+                      c(37, 1000, 36)))  # Note OOV tokens
+out &lt;- data |&gt;
+  layer_integer_lookup(vocabulary = vocab,
+                       num_oov_indices = 2)
+out
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[2 4 5]
+##  [1 0 3]], shape=(2, 3), dtype=int64)
+
+</pre></div>
+<p>Note that the output for OOV token 37 is 1, while the output for OOV token
+1000 is 0. The in-vocab terms have their output index increased by 1 from
+earlier examples (12 maps to 2, etc) in order to make space for the extra
+OOV token.
+</p>
+<p><strong>One-hot output</strong>
+</p>
+<p>Configure the layer with <code>output_mode='one_hot'</code>. Note that the first
+<code>num_oov_indices</code> dimensions in the ont_hot encoding represent OOV values.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- op_array(c(12, 36, 1138, 42, 7), 'int32')  # Note OOV tokens
+layer &lt;- layer_integer_lookup(vocabulary = vocab,
+                              output_mode = 'one_hot')
+layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0 1 0 0 0]
+##  [0 0 1 0 0]
+##  [0 0 0 1 0]
+##  [0 0 0 0 1]
+##  [1 0 0 0 0]], shape=(5, 5), dtype=int64)
+
+</pre></div>
+<p><strong>Multi-hot output</strong>
+</p>
+<p>Configure the layer with <code>output_mode = 'multi_hot'</code>. Note that the first
+<code>num_oov_indices</code> dimensions in the multi_hot encoding represent OOV tokens
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- op_array(rbind(c(12, 1138, 42, 42),
+                      c(42,    7, 36,  7)), "int64")  # Note OOV tokens
+layer &lt;- layer_integer_lookup(vocabulary = vocab,
+                              output_mode = 'multi_hot')
+layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0 1 0 1 1]
+##  [1 0 1 0 1]], shape=(2, 5), dtype=int64)
+
+</pre></div>
+<p><strong>Token count output</strong>
+</p>
+<p>Configure the layer with <code>output_mode='count'</code>. As with multi_hot output,
+the first <code>num_oov_indices</code> dimensions in the output represent OOV tokens.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- rbind(c(12, 1138, 42, 42),
+              c(42,    7, 36,  7)) |&gt; op_array("int64")
+layer &lt;- layer_integer_lookup(vocabulary = vocab,
+                              output_mode = 'count')
+layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0 1 0 1 2]
+##  [2 0 1 0 1]], shape=(2, 5), dtype=int64)
+
+</pre></div>
+<p><strong>TF-IDF output</strong>
+</p>
+<p>Configure the layer with <code>output_mode='tf_idf'</code>. As with multi_hot output,
+the first <code>num_oov_indices</code> dimensions in the output represent OOV tokens.
+</p>
+<p>Each token bin will output <code>token_count * idf_weight</code>, where the idf weights
+are the inverse document frequency weights per token. These should be
+provided along with the vocabulary. Note that the <code>idf_weight</code> for OOV
+tokens will default to the average of all idf weights passed in.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+idf_weights &lt;- c(0.25, 0.75, 0.6, 0.4)
+data &lt;- rbind(c(12, 1138, 42, 42),
+              c(42,    7, 36,  7)) |&gt; op_array("int64")
+layer &lt;- layer_integer_lookup(output_mode = 'tf_idf',
+                              vocabulary = vocab,
+                              idf_weights = idf_weights)
+layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0.   0.25 0.   0.6  0.8 ]
+##  [1.   0.   0.75 0.   0.4 ]], shape=(2, 5), dtype=float32)
+
+</pre></div>
+<p>To specify the idf weights for oov tokens, you will need to pass the entire
+vocabulary including the leading oov token.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(-1, 12, 36, 1138, 42) |&gt; as.integer()
+idf_weights &lt;- c(0.9, 0.25, 0.75, 0.6, 0.4)
+data &lt;- rbind(c(12, 1138, 42, 42),
+              c(42,    7, 36,  7)) |&gt; op_array("int64")
+layer &lt;- layer_integer_lookup(output_mode = 'tf_idf',
+                              vocabulary = vocab,
+                              idf_weights = idf_weights)
+layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0.   0.25 0.   0.6  0.8 ]
+##  [1.8  0.   0.75 0.   0.4 ]], shape=(2, 5), dtype=float32)
+
+</pre></div>
+<p>When adapting the layer in <code>"tf_idf"</code> mode, each input sample will
+be considered a document, and IDF weight per token will be
+calculated as:
+<code>log(1 + num_documents / (1 + token_document_count))</code>.
+</p>
+<p><strong>Inverse lookup</strong>
+</p>
+<p>This example demonstrates how to map indices to tokens using this layer.
+(You can also use <code>adapt()</code> with <code>inverse = TRUE</code>, but for simplicity we'll
+pass the vocab in this example.)
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- op_array(c(1, 3, 4,
+                  4, 0, 2)) |&gt; op_reshape(c(2,-1)) |&gt; op_cast("int32")
+layer &lt;- layer_integer_lookup(vocabulary = vocab, invert = TRUE)
+layer(data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[  12 1138   42]
+##  [  42   -1   36]], shape=(2, 3), dtype=int64)
+
+</pre></div>
+<p>Note that the first index correspond to the oov token by default.
+</p>
+<p><strong>Forward and inverse lookup pairs</strong>
+</p>
+<p>This example demonstrates how to use the vocabulary of a standard lookup
+layer to create an inverse lookup layer.
+</p>
+<div class="sourceCode r"><pre>vocab &lt;- c(12, 36, 1138, 42) |&gt; as.integer()
+data &lt;- op_array(rbind(c(12, 1138, 42), c(42, 1000, 36)), "int32")
+layer &lt;- layer_integer_lookup(vocabulary = vocab)
+i_layer &lt;- layer_integer_lookup(vocabulary = get_vocabulary(layer),
+                                invert = TRUE)
+int_data &lt;- layer(data)
+i_layer(int_data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[  12 1138   42]
+##  [  42   -1   36]], shape=(2, 3), dtype=int64)
+
+</pre></div>
+<p>In this example, the input token 1000 resulted in an output of -1, since
+1000 was not in the vocabulary - it got represented as an OOV, and all OOV
+tokens are returned as -1 in the inverse layer. Also, note that for the
+inverse to work, you must have already set the forward layer vocabulary
+either directly or via <code>adapt()</code> before calling <code>get_vocabulary()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/preprocessing_layers/categorical/integer_lookup#integerlookup-class">https://keras.io/api/layers/preprocessing_layers/categorical/integer_lookup#integerlookup-class</a>
+</p>
+</li></ul>
+<p>Other categorical features preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_string_lookup()</code> <br></p>
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_feature_space()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_normalization()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br><code>layer_text_vectorization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

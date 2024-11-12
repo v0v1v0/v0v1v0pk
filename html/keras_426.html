@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>learning_rate_schedule_exponential_decay</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A LearningRateSchedule that uses an exponential decay schedule</h2>
+
+<h3>Description</h3>
+
+<p>A LearningRateSchedule that uses an exponential decay schedule
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">learning_rate_schedule_exponential_decay(
+  initial_learning_rate,
+  decay_steps,
+  decay_rate,
+  staircase = FALSE,
+  ...,
+  name = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>initial_learning_rate</code></td>
+<td>
+<p>A scalar <code>float32</code> or <code>float64</code> <code>Tensor</code> or a R
+number. The initial learning rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decay_steps</code></td>
+<td>
+<p>A scalar <code>int32</code> or <code>int64</code> <code>Tensor</code> or an R number. Must
+be positive.  See the decay computation above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decay_rate</code></td>
+<td>
+<p>A scalar <code>float32</code> or <code>float64</code> <code>Tensor</code> or an R number.
+The decay rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>staircase</code></td>
+<td>
+<p>Boolean.  If <code>TRUE</code> decay the learning rate at discrete
+intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For backwards and forwards compatibility</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String. Optional name of the operation.  Defaults to
+'ExponentialDecay'.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When training a model, it is often useful to lower the learning rate as
+the training progresses. This schedule applies an exponential decay function
+to an optimizer step, given a provided initial learning rate.
+</p>
+<p>The schedule is a 1-arg callable that produces a decayed learning
+rate when passed the current optimizer step. This can be useful for changing
+the learning rate value across different invocations of optimizer functions.
+It is computed as:
+</p>
+<div class="sourceCode r"><pre>decayed_learning_rate &lt;- function(step)
+  initial_learning_rate * decay_rate ^ (step / decay_steps)
+</pre></div>
+<p>If the argument <code>staircase</code> is <code>TRUE</code>, then <code>step / decay_steps</code> is
+an integer division (<code>%/%</code>) and the decayed learning rate follows a
+staircase function.
+</p>
+<p>You can pass this schedule directly into a optimizer
+as the learning rate (see example)
+Example: When fitting a Keras model, decay every 100000 steps with a base
+of 0.96:
+</p>
+<div class="sourceCode R"><pre>initial_learning_rate &lt;- 0.1
+lr_schedule &lt;- learning_rate_schedule_exponential_decay(
+    initial_learning_rate,
+    decay_steps = 100000,
+    decay_rate = 0.96,
+    staircase = TRUE)
+
+model %&gt;% compile(
+  optimizer= optimizer_sgd(learning_rate = lr_schedule),
+  loss = 'sparse_categorical_crossentropy',
+  metrics = 'accuracy')
+
+model %&gt;% fit(data, labels, epochs = 5)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/schedules/ExponentialDecay">https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/schedules/ExponentialDecay</a>
+</p>
+</li></ul>
+</div>

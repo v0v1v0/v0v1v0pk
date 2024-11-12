@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernel functions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Functions</h2>
+
+<h3>Description</h3>
+
+<p>Kernel functions provided in the R package <code>kernlab</code>. Details can be seen in the reference below.<br>
+The Gaussian RBF kernel <code class="reqn">k(x,x') = \exp(-\sigma \|x - x'\|^2)</code> <br>
+The Polynomial kernel <code class="reqn">k(x,x') = (scale &lt;x, x'&gt; + offset)^{degree}</code><br>
+The Linear kernel <code class="reqn">k(x,x') = &lt;x, x'&gt;</code><br>
+The Laplacian kernel <code class="reqn">k(x,x') = \exp(-\sigma \|x - x'\|)</code> <br>
+The Bessel kernel <code class="reqn">k(x,x') = (- \mathrm{Bessel}_{(\nu+1)}^n \sigma \|x - x'\|^2)</code> <br>
+The ANOVA RBF kernel <code class="reqn">k(x,x') = \sum_{1\leq i_1 \ldots &lt; i_D \leq N} 
+  \prod_{d=1}^D k(x_{id}, {x'}_{id})</code> where k(x, x) is a Gaussian RBF kernel. <br>
+The Spline kernel <code class="reqn"> \prod_{d=1}^D 1 + x_i x_j + x_i x_j \min(x_i,
+    x_j)  - \frac{x_i + x_j}{2} \min(x_i,x_j)^2 +
+    \frac{\min(x_i,x_j)^3}{3}</code>.
+The parameter <code>sigma</code> used in <code>rbfdot</code> can be selected by <code>sigest()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rbfdot(sigma = 1)
+polydot(degree = 1, scale = 1, offset = 1)
+vanilladot()
+laplacedot(sigma = 1)
+besseldot(sigma = 1, order = 1, degree = 1)
+anovadot(sigma = 1, degree = 1)
+splinedot()
+sigest(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>The inverse kernel width used by the Gaussian, the
+Laplacian, the Bessel, and the ANOVA kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>degree</code></td>
+<td>
+<p>The degree of the polynomial, bessel or ANOVA
+kernel function. This has to be an positive integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>The scaling parameter of the polynomial kernel function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>The offset used in a polynomial kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>The order of the Bessel function to be used as a kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The design matrix used in <code>kerndwd</code> when <code>sigest</code> is called to estimate <code>sigma</code> in <code>rbfdot()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These R functions and descriptions are directly duplicated and/or adapted from the R package <code>kernlab</code>.</p>
+
+
+<h3>Value</h3>
+
+<p>Return an S4 object of class <code>kernel</code> which can be used as the argument of <code>kern</code> when fitting a <code>kerndwd</code> model.
+</p>
+
+
+<h3>References</h3>
+
+<p>Wang, B. and Zou, H. (2018)
+“Another Look at Distance Weighted Discrimination," 
+<em>Journal of Royal Statistical Society, Series B</em>, <b>80</b>(1), 177–198. <br><a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244">https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244</a><br></p>
+<p>Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
+“kernlab – An S4 Package for Kernel Methods in R", 
+<em>Journal of Statistical Software</em>, <b>11</b>(9), 1–20.<br><a href="https://www.jstatsoft.org/v11/i09/paper">https://www.jstatsoft.org/v11/i09/paper</a><br></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(BUPA)
+# generate a linear kernel
+kfun = vanilladot()
+
+# generate a Laplacian kernel function with sigma = 1
+kfun = laplacedot(sigma=1)
+
+# generate a Gaussian kernel function with sigma estimated by sigest()
+kfun = rbfdot(sigma=sigest(BUPA$X))
+
+# set kern=kfun when fitting a kerndwd object
+data(BUPA)
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
+lambda = 10^(seq(-3, 3, length.out=10))
+m1 = kerndwd(BUPA$X, BUPA$y, kern=kfun,
+  qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+</code></pre>
+
+
+</div>

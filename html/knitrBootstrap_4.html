@@ -1,0 +1,37 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knitrBootstrap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+<span class="pkg">knitrBootstrap</span> A framework to create Bootstrap 3 HTML reports from knitr
+Rmarkdown.
+Knitr Bootstrap includes a <code>bootstrap_document</code> custom
+rendering function for use with the rmarkdown
+<a href="https://rmarkdown.rstudio.com/">https://rmarkdown.rstudio.com/</a>) package.</h2>
+
+<h3>Description</h3>
+
+<p>You can also specify the options in your YAML front-matter, see the
+rmarkdown documentation for examples.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+library(rmarkdown)
+library(knitrBootstrap)
+
+render('input.Rmd', bootstrap_document())
+
+#with some options
+render('input.Rmd', bootstrap_document(title='Test', highlight='Github',
+  theme='Slate', theme.chooser=TRUE, highlight.chooser=TRUE))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

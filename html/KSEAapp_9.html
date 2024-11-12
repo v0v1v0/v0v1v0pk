@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KSEA.Scores.3</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>One of the 3 datasets for heatmap plotting</h2>
+
+<h3>Description</h3>
+
+<p>A sample KSEA.Scores output generated from the KSEA.Scores() function 
+(or alternatively, the "KSEA Kinase Scores.csv" output from the KSEA.Complete() function, loaded into R)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(KSEA.Scores.3)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>dataframe containing 7 columns in the exact order as listed below.
+</p>
+
+<ul>
+<li>
+<p>"KinaseGene" the HUGO gene name of the kinase
+</p>
+</li>
+<li>
+<p>"mS" the mean log2FC of all the kinase's identified substrates
+</p>
+</li>
+<li>
+<p>"Enrichment" the enrichment score (refer to Casado et al. (2013) Sci. Signal., 6, rs6-rs6)
+</p>
+</li>
+<li>
+<p>"m" the number of experimentally-identifed substrates annotating to that kinase
+</p>
+</li>
+<li>
+<p>"z.score" the normalized kinase score
+</p>
+</li>
+<li>
+<p>"p.value" the statistical assessment of the kinase score
+</p>
+</li>
+<li>
+<p>"FDR" the p-value adjusted for multiple hypothesis testing by the Benjamin-Hochberg method
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>unpublished data
+</p>
+
+
+</div>

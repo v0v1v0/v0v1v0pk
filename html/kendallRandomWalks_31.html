@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulate_kendall_rw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate multiple trajectories of Kendall random walk</h2>
+
+<h3>Description</h3>
+
+<p>Object returned by this has print and plot methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simulate_kendall_rw(number_of_simulations, trajectory_length, step_dist,
+  alpha, symmetric = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>number_of_simulations</code></td>
+<td>
+<p>number of trajectories to generate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trajectory_length</code></td>
+<td>
+<p>length of trajectories.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step_dist</code></td>
+<td>
+<p>function returning random numbers from step dist.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>alpha parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symmetric</code></td>
+<td>
+<p>If TRUE, random walk on the whole real line will be simulated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>parameters for step distribution.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Object of class kendall_simulation. It is a list that consists of
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>simulation</code></td>
+<td>
+<p>Tibble with simulation id and simulated values,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step_distribution</code></td>
+<td>
+<p>Name of the step distribution,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Value of alpha parameter,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>is_symmetric</code></td>
+<td>
+<p>Logical value indicating if this is a symmetric Kendall R.W.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">kendall_simulations &lt;- simulate_kendall_rw(10, 1000, runif, 0.5)
+# Kendall R.W. on positive half-line with uniform step distribution - 10 trajectories.
+only_simulations &lt;- kendall_simulations$simulation # tibble with simulated values
+kendall_simulations
+
+
+</code></pre>
+
+
+</div>

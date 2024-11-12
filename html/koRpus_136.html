@@ -1,0 +1,194 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kRp.TTR,-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>S4 Class kRp.TTR</h2>
+
+<h3>Description</h3>
+
+<p>This class is used for objects that are returned by <code>lex.div</code> and its wrapper functions
+(like <code>TTR</code>, <code>MSTTR</code>, <code>MTLD</code>, etc.).
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>param</code></dt>
+<dd>
+<p>Relevant parameters of the given analysis,
+as given to the function call, see <code>lex.div</code> for details.</p>
+</dd>
+<dt><code>tt</code></dt>
+<dd>
+<p>The analyzed text in tokenized form, with eight elements ("tokens",
+"types", "lemmas", "type.in.txt", "type.in.result", "num.tokens", "num.types", "num.lemmas").</p>
+</dd>
+<dt><code>TTR</code></dt>
+<dd>
+<p>Value of the classic type-token ratio. NA if not calculated.</p>
+</dd>
+<dt><code>MSTTR</code></dt>
+<dd>
+<p>Mean segmental type-token ratio, including the actual "MSTTR",
+TTR values of each segment ("TTR.seg"),
+and the number of dropped words due to segment size ("dropped"). NA if not calculated.</p>
+</dd>
+<dt><code>MATTR</code></dt>
+<dd>
+<p>Moving-average type-token ratio, including the actual "MATTR",
+TTR values of each window ("TTR.win"),
+and standard deviation of TTRs ("sd"). NA if not calculated.</p>
+</dd>
+<dt><code>C.ld</code></dt>
+<dd>
+<p>Herdan's C. NA if not calculated.</p>
+</dd>
+<dt><code>R.ld</code></dt>
+<dd>
+<p>Guiraud's R. NA if not calculated.</p>
+</dd>
+<dt><code>CTTR</code></dt>
+<dd>
+<p>Carroll's CTTR. NA if not calculated.</p>
+</dd>
+<dt><code>U.ld</code></dt>
+<dd>
+<p>Uber Index. NA if not calculated.</p>
+</dd>
+<dt><code>S.ld</code></dt>
+<dd>
+<p>Summer's S. NA if not calculated.</p>
+</dd>
+<dt><code>K.ld</code></dt>
+<dd>
+<p>Yule's K. NA if not calculated.</p>
+</dd>
+<dt><code>Maas</code></dt>
+<dd>
+<p>Maas' a. NA if not calculated.</p>
+</dd>
+<dt><code>lgV0</code></dt>
+<dd>
+<p>Maas' <code class="reqn">\lg{V_0}</code>. NA if not calculated.</p>
+</dd>
+<dt><code>lgeV0</code></dt>
+<dd>
+<p>Maas' <code class="reqn">\lg{}_{e}{V_0}</code>. NA if not calculated.</p>
+</dd>
+<dt><code>Maas.grw</code></dt>
+<dd>
+<p>Maas' relative type growth <code class="reqn">V'</code>. NA if not calculated.</p>
+</dd>
+<dt><code>HDD</code></dt>
+<dd>
+<p>The actual HD-D value ("HDD"),
+a vector with the probabilies for each type ("type.probs"), a "summary"
+on these probabilities and their standard deviation "sd".</p>
+</dd>
+<dt><code>MTLD</code></dt>
+<dd>
+<p>Measure of textual lexical diversity, including the actual "MTLD",
+two matrices with detailed
+information on forward and backward factorization ("all.forw" &amp; "all.back"),
+a named vector holding both calculated
+factors values ("factors"),
+and a named list with information on the number or tokens in each factor, both
+forward and backward,
+as well as their mean and standard deviation ("lengths"). NA if not calculated.</p>
+</dd>
+<dt><code>MTLDMA</code></dt>
+<dd>
+<p>Moving-average MTLD, including the actual "MTLDMA",
+its standard deviation, a list ("all") with detailed
+information on factorization, the step size,
+and a named list with information on the number or tokens in each factor,
+as well as their mean and standard deviation ("lengths"). NA if not calculated.</p>
+</dd>
+<dt><code>TTR.char</code></dt>
+<dd>
+<p>TTR values, starting with the first steplength of tokens,
+then adding the next one, progressing until
+the whole text is analyzed. The matrix has two colums,
+one for the respective step ("token") and one for the actual values
+("value"). Can be used to plot TTR characteristic curves. NA if not calculated.</p>
+</dd>
+<dt><code>MATTR.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using MATTR algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>C.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Herdan's C algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>R.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Guiraud's R algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>CTTR.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Carroll's CTTR algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>U.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using the Uber Index algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>S.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Summer's S algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>K.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Yule's K algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>Maas.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Maas' a algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>lgV0.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Maas' <code class="reqn">\lg{V_0}</code> algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>lgeV0.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using Maas' <code class="reqn">\lg{}_{e}{V_0}</code> algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>HDD.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using the HD-D algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>MTLD.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using the MTLD algorithm. NA if not calculated.</p>
+</dd>
+<dt><code>MTLDMA.char</code></dt>
+<dd>
+<p>Equivalent to TTR.char,
+but calculated using the moving-average MTLD algorithm. NA if not calculated.</p>
+</dd>
+</dl>
+<h3>Contructor function</h3>
+
+<p>Should you need to manually generate objects of this class (which should rarely be the case),
+the contructor function 
+<code>kRp_TTR(...)</code> can be used instead of
+<code>new("kRp.TTR", ...)</code>.
+</p>
+
+
+</div>

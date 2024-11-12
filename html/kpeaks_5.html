@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotpolygon</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot Frequency Polygons
+</h2>
+
+<h3>Description</h3>
+
+<p>Plots the frequency polygon and histogram of a feature with some options.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotpolygon(x, nbins, ptype, bcol = "gray", pcol = "blue")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>a numeric vector containing the observations of a feature, or a numeric matrix when <code>ptype</code> is <span class="option">sp</span>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbins</code></td>
+<td>
+
+<p>an integer for the number of classes in the frequency polygon.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bcol</code></td>
+<td>
+
+<p>a string for the color of bins. Default is <span class="option">gray</span>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcol</code></td>
+<td>
+
+<p>a string for the color of polygon lines. Default is <span class="option">blue</span>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ptype</code></td>
+<td>
+
+<p>a string specifying the type of plot. Use <span class="option">p</span> for plotting the polygon only or <span class="option">ph</span> for plotting the polygon with the histogram. Default is <span class="option">sp</span> for the scatterplots between the pairs of features and the polygons on the diagonal panel.
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Zeynel Cebeci, Cagatay Cebeci
+</p>
+
+
+<h3>References</h3>
+
+<p>Cebeci, Z. &amp; Cebeci, C. (2018). "A novel technique for fast determination of K in partitioning cluster analysis", <em>Journal of Agricultural Informatics</em>, 9(2), 1-11. 
+doi: <a href="https://doi.org/10.17700/jai.2018.9.2.442">10.17700/jai.2018.9.2.442</a>.
+</p>
+<p>Cebeci, Z. &amp; Cebeci, C. (2018). "kpeaks: An R Package for Quick Selection of K for Cluster Analysis", In <em>2018 International Conference on Artificial Intelligence and Data Processing (IDAP)</em>, IEEE. 
+doi: <a href="https://doi.org/10.1109/IDAP.2018.8620896">10.1109/IDAP.2018.8620896</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>genpolygon</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># plot the frequency polygon of the 2nd feature in x5p4c data set
+data(x5p4c)
+hvals &lt;- genpolygon(x5p4c[,2], binrule="usr", nbins=20)
+
+# plot the frequency polygon of the 2nd feature in x5p4c data set
+plotpolygon(x5p4c[,2], nbins=hvals$nbins, ptype="p")
+
+# plot the histogram and frequency polygon of the 2nd feature in x5p4c data set
+plotpolygon(x5p4c[,2], nbins=hvals$nbins, ptype="ph", bcol="orange", pcol="blue")
+
+# plot the pairwise scatter plots of the features in x5p4c data set
+pairs(x5p4c, diag.panel=plotpolygon, upper.panel=NULL, cex.labels=1.5)
+
+# plot the histogram and frequency polygon of Petal.Width in iris data set 
+data(iris)
+hvals &lt;- genpolygon(iris$Petal.Width, binrule="doane")
+plotpolygon(iris$Petal.Width, nbins=hvals$nbins, ptype="ph")
+</code></pre>
+
+
+</div>

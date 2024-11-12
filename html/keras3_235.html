@@ -1,0 +1,251 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_einsum_dense</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A layer that uses <code>einsum</code> as the backing computation.</h2>
+
+<h3>Description</h3>
+
+<p>This layer can perform einsum calculations of arbitrary dimensionality.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_einsum_dense(
+  object,
+  equation,
+  output_shape,
+  activation = NULL,
+  bias_axes = NULL,
+  kernel_initializer = "glorot_uniform",
+  bias_initializer = "zeros",
+  kernel_regularizer = NULL,
+  bias_regularizer = NULL,
+  kernel_constraint = NULL,
+  bias_constraint = NULL,
+  lora_rank = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>equation</code></td>
+<td>
+<p>An equation describing the einsum to perform.
+This equation must be a valid einsum string of the form
+<code style="white-space: pre;">⁠ab,bc-&gt;ac⁠</code>, <code style="white-space: pre;">⁠...ab,bc-&gt;...ac⁠</code>, or
+<code style="white-space: pre;">⁠ab...,bc-&gt;ac...⁠</code> where 'ab', 'bc', and 'ac' can be any valid einsum
+axis expression sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_shape</code></td>
+<td>
+<p>The expected shape of the output tensor
+(excluding the batch dimension and any dimensions
+represented by ellipses). You can specify <code>NA</code> or <code>NULL</code> for any dimension
+that is unknown or can be inferred from the input shape.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use. If you don't specify anything,
+no activation is applied
+(that is, a "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_axes</code></td>
+<td>
+<p>A string containing the output dimension(s)
+to apply a bias to. Each character in the <code>bias_axes</code> string
+should correspond to a character in the output portion
+of the <code>equation</code> string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_initializer</code></td>
+<td>
+<p>Initializer for the <code>kernel</code> weights matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the <code>kernel</code> weights
+matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>kernel</code> weights
+matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lora_rank</code></td>
+<td>
+<p>Optional integer. If set, the layer's forward pass
+will implement LoRA (Low-Rank Adaptation)
+with the provided rank. LoRA sets the layer's kernel
+to non-trainable and replaces it with a delta over the
+original kernel, obtained via multiplying two lower-rank
+trainable matrices
+(the factorization happens on the last dimension).
+This can be useful to reduce the
+computation cost of fine-tuning large dense layers.
+You can also enable LoRA on an existing
+<code>EinsumDense</code> layer by calling <code>layer$enable_lora(rank)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Base layer keyword arguments, such as <code>name</code> and <code>dtype</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p><strong>Biased dense layer with einsums</strong>
+</p>
+<p>This example shows how to instantiate a standard Keras dense layer using
+einsum operations. This example is equivalent to
+<code>layer_Dense(64, use_bias=TRUE)</code>.
+</p>
+<div class="sourceCode r"><pre>input &lt;- layer_input(shape = c(32))
+output &lt;- input |&gt;
+  layer_einsum_dense("ab,bc-&gt;ac",
+                     output_shape = 64,
+                     bias_axes = "c")
+output # shape(NA, 64)
+</pre></div>
+<div class="sourceCode"><pre>## &lt;KerasTensor shape=(None, 64), dtype=float32, sparse=False, name=keras_tensor_1&gt;
+
+</pre></div>
+<p><strong>Applying a dense layer to a sequence</strong>
+</p>
+<p>This example shows how to instantiate a layer that applies the same dense
+operation to every element in a sequence. Here, the <code>output_shape</code> has two
+values (since there are two non-batch dimensions in the output); the first
+dimension in the <code>output_shape</code> is <code>NA</code>, because the sequence dimension
+<code>b</code> has an unknown shape.
+</p>
+<div class="sourceCode r"><pre>input &lt;- layer_input(shape = c(32, 128))
+output &lt;- input |&gt;
+  layer_einsum_dense("abc,cd-&gt;abd",
+                     output_shape = c(NA, 64),
+                     bias_axes = "d")
+output  # shape(NA, 32, 64)
+</pre></div>
+<div class="sourceCode"><pre>## &lt;KerasTensor shape=(None, None, 64), dtype=float32, sparse=False, name=keras_tensor_3&gt;
+
+</pre></div>
+<p><strong>Applying a dense layer to a sequence using ellipses</strong>
+</p>
+<p>This example shows how to instantiate a layer that applies the same dense
+operation to every element in a sequence, but uses the ellipsis notation
+instead of specifying the batch and sequence dimensions.
+</p>
+<p>Because we are using ellipsis notation and have specified only one axis, the
+<code>output_shape</code> arg is a single value. When instantiated in this way, the
+layer can handle any number of sequence dimensions - including the case
+where no sequence dimension exists.
+</p>
+<div class="sourceCode r"><pre>input &lt;- layer_input(shape = c(32, 128))
+output &lt;- input |&gt;
+  layer_einsum_dense("...x,xy-&gt;...y",
+                     output_shape = 64,
+                     bias_axes = "y")
+
+output  # shape(NA, 32, 64)
+</pre></div>
+<div class="sourceCode"><pre>## &lt;KerasTensor shape=(None, 32, 64), dtype=float32, sparse=False, name=keras_tensor_5&gt;
+
+</pre></div>
+
+
+<h3>Methods</h3>
+
+
+<ul>
+<li>
+<div class="sourceCode r"><pre>enable_lora(
+  rank,
+  a_initializer = 'he_uniform',
+  b_initializer = 'zeros'
+)
+</pre></div>
+</li>
+<li>
+<div class="sourceCode r"><pre>quantize(mode, type_check = TRUE)
+</pre></div>
+</li>
+</ul>
+<h3>Readonly properties:</h3>
+
+
+<ul><li> <p><code>kernel</code>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+<p>Other core layers: <br><code>layer_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_identity()</code> <br><code>layer_lambda()</code> <br><code>layer_masking()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

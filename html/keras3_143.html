@@ -1,0 +1,398 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_feature_space</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>One-stop utility for preprocessing and encoding structured data.</h2>
+
+<h3>Description</h3>
+
+<p><strong>Available feature types:</strong>
+</p>
+<p>Note that all features can be referred to by their string name,
+e.g. <code>"integer_categorical"</code>. When using the string name, the default
+argument values are used.
+</p>
+<div class="sourceCode r"><pre># Plain float values.
+feature_float(name = NULL)
+
+# Float values to be preprocessed via featurewise standardization
+# (i.e. via a `layer_normalization()` layer).
+feature_float_normalized(name = NULL)
+
+# Float values to be preprocessed via linear rescaling
+# (i.e. via a `layer_rescaling` layer).
+feature_float_rescaled(scale = 1., offset = 0., name = NULL)
+
+# Float values to be discretized. By default, the discrete
+# representation will then be one-hot encoded.
+feature_float_discretized(
+  num_bins,
+  bin_boundaries = NULL,
+  output_mode = "one_hot",
+  name = NULL
+)
+
+# Integer values to be indexed. By default, the discrete
+# representation will then be one-hot encoded.
+feature_integer_categorical(
+  max_tokens = NULL,
+  num_oov_indices = 1,
+  output_mode = "one_hot",
+  name = NULL
+)
+
+# String values to be indexed. By default, the discrete
+# representation will then be one-hot encoded.
+feature_string_categorical(
+  max_tokens = NULL,
+  num_oov_indices = 1,
+  output_mode = "one_hot",
+  name = NULL
+)
+
+# Integer values to be hashed into a fixed number of bins.
+# By default, the discrete representation will then be one-hot encoded.
+feature_integer_hashed(num_bins, output_mode = "one_hot", name = NULL)
+
+# String values to be hashed into a fixed number of bins.
+# By default, the discrete representation will then be one-hot encoded.
+feature_string_hashed(num_bins, output_mode = "one_hot", name = NULL)
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_feature_space(
+  object,
+  features,
+  output_mode = "concat",
+  crosses = NULL,
+  crossing_dim = 32L,
+  hashing_dim = 32L,
+  num_discretization_bins = 32L,
+  name = NULL,
+  feature_names = NULL
+)
+
+feature_cross(feature_names, crossing_dim, output_mode = "one_hot")
+
+feature_custom(dtype, preprocessor, output_mode)
+
+feature_float(name = NULL)
+
+feature_float_rescaled(scale = 1, offset = 0, name = NULL)
+
+feature_float_normalized(name = NULL)
+
+feature_float_discretized(
+  num_bins,
+  bin_boundaries = NULL,
+  output_mode = "one_hot",
+  name = NULL
+)
+
+feature_integer_categorical(
+  max_tokens = NULL,
+  num_oov_indices = 1,
+  output_mode = "one_hot",
+  name = NULL
+)
+
+feature_string_categorical(
+  max_tokens = NULL,
+  num_oov_indices = 1,
+  output_mode = "one_hot",
+  name = NULL
+)
+
+feature_string_hashed(num_bins, output_mode = "one_hot", name = NULL)
+
+feature_integer_hashed(num_bins, output_mode = "one_hot", name = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>see description</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>features</code></td>
+<td>
+<p>see description</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_mode</code></td>
+<td>
+<p>A string.
+</p>
+
+<ul>
+<li>
+<p> For <code>layer_feature_space()</code>, one of <code>"concat"</code> or <code>"dict"</code>. In concat mode, all
+features get concatenated together into a single vector.
+In dict mode, the <code>FeatureSpace</code> returns a named list of individually
+encoded features (with the same names as the input list names).
+</p>
+</li>
+<li>
+<p> For the <code style="white-space: pre;">⁠feature_*⁠</code> functions, one of: <code>"int"</code> <code>"one_hot"</code> or <code>"float"</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crosses</code></td>
+<td>
+<p>List of features to be crossed together, e.g.
+<code>crosses=list(c("feature_1", "feature_2"))</code>. The features will be
+"crossed" by hashing their combined value into
+a fixed-length vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crossing_dim</code></td>
+<td>
+<p>Default vector size for hashing crossed features.
+Defaults to <code>32</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hashing_dim</code></td>
+<td>
+<p>Default vector size for hashing features of type
+<code>"integer_hashed"</code> and <code>"string_hashed"</code>. Defaults to <code>32</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_discretization_bins</code></td>
+<td>
+<p>Default number of bins to be used for
+discretizing features of type <code>"float_discretized"</code>.
+Defaults to <code>32</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>feature_names</code></td>
+<td>
+<p>Named list mapping the names of your features to their
+type specification, e.g. <code>list(my_feature = "integer_categorical")</code>
+or <code>list(my_feature = feature_integer_categorical())</code>.
+For a complete list of all supported types, see
+"Available feature types" paragraph below.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>string, the output dtype of the feature. E.g., "float32".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>preprocessor</code></td>
+<td>
+<p>A callable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale, offset</code></td>
+<td>
+<p>Passed on to <code>layer_rescaling()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_bins, bin_boundaries</code></td>
+<td>
+<p>Passed on to <code>layer_discretization()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_tokens, num_oov_indices</code></td>
+<td>
+<p>Passed on to <code>layer_integer_lookup()</code> by <code>feature_integer_categorical()</code> or to <code>layer_string_lookup()</code> by <code>feature_string_categorical()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p><strong>Basic usage with a named list of input data:</strong>
+</p>
+<div class="sourceCode r"><pre>raw_data &lt;- list(
+  float_values = c(0.0, 0.1, 0.2, 0.3),
+  string_values = c("zero", "one", "two", "three"),
+  int_values = as.integer(c(0, 1, 2, 3))
+)
+
+dataset &lt;- tfdatasets::tensor_slices_dataset(raw_data)
+
+feature_space &lt;- layer_feature_space(
+  features = list(
+    float_values = "float_normalized",
+    string_values = "string_categorical",
+    int_values = "integer_categorical"
+  ),
+  crosses = list(c("string_values", "int_values")),
+  output_mode = "concat"
+)
+
+# Before you start using the feature_space(),
+# you must `adapt()` it on some data.
+feature_space |&gt; adapt(dataset)
+
+# You can call the feature_space() on a named list of
+# data (batched or unbatched).
+output_vector &lt;- feature_space(raw_data)
+</pre></div>
+<p><strong>Basic usage with <code>tf.data</code>:</strong>
+</p>
+<div class="sourceCode r"><pre>library(tfdatasets)
+# Unlabeled data
+preprocessed_ds &lt;- unlabeled_dataset |&gt;
+  dataset_map(feature_space)
+
+# Labeled data
+preprocessed_ds &lt;- labeled_dataset |&gt;
+  dataset_map(function(x, y) tuple(feature_space(x), y))
+</pre></div>
+<p><strong>Basic usage with the Keras Functional API:</strong>
+</p>
+<div class="sourceCode r"><pre># Retrieve a named list of Keras layer_input() objects
+(inputs &lt;- feature_space$get_inputs())
+</pre></div>
+<div class="sourceCode"><pre>## $float_values
+## &lt;KerasTensor shape=(None, 1), dtype=float32, sparse=False, name=float_values&gt;
+##
+## $string_values
+## &lt;KerasTensor shape=(None, 1), dtype=string, sparse=False, name=string_values&gt;
+##
+## $int_values
+## &lt;KerasTensor shape=(None, 1), dtype=int32, sparse=False, name=int_values&gt;
+
+</pre></div>
+<div class="sourceCode r"><pre># Retrieve the corresponding encoded Keras tensors
+(encoded_features &lt;- feature_space$get_encoded_features())
+</pre></div>
+<div class="sourceCode"><pre>## &lt;KerasTensor shape=(None, 43), dtype=float32, sparse=False, name=keras_tensor_7&gt;
+
+</pre></div>
+<div class="sourceCode r"><pre># Build a Functional model
+outputs &lt;- encoded_features |&gt; layer_dense(1, activation = "sigmoid")
+model &lt;- keras_model(inputs, outputs)
+</pre></div>
+<p><strong>Customizing each feature or feature cross:</strong>
+</p>
+<div class="sourceCode r"><pre>feature_space &lt;- layer_feature_space(
+  features = list(
+    float_values = feature_float_normalized(),
+    string_values = feature_string_categorical(max_tokens = 10),
+    int_values = feature_integer_categorical(max_tokens = 10)
+  ),
+  crosses = list(
+    feature_cross(c("string_values", "int_values"), crossing_dim = 32)
+  ),
+  output_mode = "concat"
+)
+</pre></div>
+<p><strong>Returning a dict (a named list) of integer-encoded features:</strong>
+</p>
+<div class="sourceCode r"><pre>feature_space &lt;- layer_feature_space(
+  features = list(
+    "string_values" = feature_string_categorical(output_mode = "int"),
+    "int_values" = feature_integer_categorical(output_mode = "int")
+  ),
+  crosses = list(
+    feature_cross(
+      feature_names = c("string_values", "int_values"),
+      crossing_dim = 32,
+      output_mode = "int"
+    )
+  ),
+  output_mode = "dict"
+)
+</pre></div>
+<p><strong>Specifying your own Keras preprocessing layer:</strong>
+</p>
+<div class="sourceCode r"><pre># Let's say that one of the features is a short text paragraph that
+# we want to encode as a vector (one vector per paragraph) via TF-IDF.
+data &lt;- list(text = c("1st string", "2nd string", "3rd string"))
+
+# There's a Keras layer for this: layer_text_vectorization()
+custom_layer &lt;- layer_text_vectorization(output_mode = "tf_idf")
+
+# We can use feature_custom() to create a custom feature
+# that will use our preprocessing layer.
+feature_space &lt;- layer_feature_space(
+  features = list(
+    text = feature_custom(preprocessor = custom_layer,
+                          dtype = "string",
+                          output_mode = "float"
+    )
+  ),
+  output_mode = "concat"
+)
+feature_space |&gt; adapt(tfdatasets::tensor_slices_dataset(data))
+output_vector &lt;- feature_space(data)
+</pre></div>
+<p><strong>Retrieving the underlying Keras preprocessing layers:</strong>
+</p>
+<div class="sourceCode r"><pre># The preprocessing layer of each feature is available in `$preprocessors`.
+preprocessing_layer &lt;- feature_space$preprocessors$feature1
+
+# The crossing layer of each feature cross is available in `$crossers`.
+# It's an instance of layer_hashed_crossing()
+crossing_layer &lt;- feature_space$crossers[["feature1_X_feature2"]]
+</pre></div>
+<p><strong>Saving and reloading a FeatureSpace:</strong>
+</p>
+<div class="sourceCode r"><pre>feature_space$save("featurespace.keras")
+reloaded_feature_space &lt;- keras$models$load_model("featurespace.keras")
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/utils/feature_space#featurespace-class">https://keras.io/api/utils/feature_space#featurespace-class</a>
+</p>
+</li></ul>
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_normalization()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br><code>layer_text_vectorization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+
+
+</div>

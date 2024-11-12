@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loadFamFile</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Load .fam file</h2>
+
+<h3>Description</h3>
+
+<p>Load .fam file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loadFamFile(path, fallbackModel = "equal", withParams = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>The path to a .fam file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fallbackModel</code></td>
+<td>
+<p>The name of a mutation model; passed on to
+<code>pedFamilias::readFam()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>withParams</code></td>
+<td>
+<p>A logical indicating if the Familias parameters should be
+included in the output. (See <code>pedFamilias::readFam()</code>.)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of two <code>ped</code> objects.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fam = system.file("extdata/halfsib-test.fam", package = "KLINK")
+peds = loadFamFile(fam)
+pedtools::plotPedList(peds)
+
+</code></pre>
+
+
+</div>

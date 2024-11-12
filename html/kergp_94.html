@@ -1,0 +1,242 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covQualNested</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Nested Qualitative Covariance</h2>
+
+<h3>Description</h3>
+
+<p>Nested Qualitative Covariance
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+covQualNested(input = "x",
+              groupList = NULL,
+              group = NULL,
+              nestedLevels = NULL,
+              between = "Symm",
+              within = "Diag",
+              covBet = c("corr", "homo", "hete"), 
+              covWith = c("corr", "homo", "hete"),
+              compGrad = TRUE,
+              contrasts = contr.helmod,
+              intAsChar = TRUE)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+
+<p>Name of the input, i.e. name of the column in the
+data frame when the covariance kernel is evaluated with the
+<code>covMat,covQual-method</code> method.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>groupList</code></td>
+<td>
+
+<p>A list giving the groups, see <b>Examples</b>. Groups of
+size 1 are accepted. Note that the group values should be given in
+some order, with no gap between repeated values, see <b>Examples</b>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+
+<p>Inactive if <code>groupList</code> is used. 
+A factor or vector giving the groups, see <b>Examples</b>. Groups of
+size 1 are accepted. Note that the group values should be given in
+some order, with no gap between repeated values, see
+<b>Examples</b>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nestedLevels</code></td>
+<td>
+
+<p>Inactive if <code>groupList</code> is used. 
+A factor or a vector giving the (nested) levels within the group for
+each level of <code>group</code>. If this is missing, each element of
+<code>group</code> is assumed to correspond to one nested level within the
+group and the levels within the group are taken as integers in the order
+of <code>group</code> elements.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>between</code></td>
+<td>
+
+<p>Character giving the type of structure to use for the <em>between</em>
+part. For now this can be one of the three choices <code>"Diag"</code>,
+the diagonal structure of <code>q1Diag</code>, <code>"Symm"</code> for
+the general covariance of <code>q1Symm</code>, or <code>"CompSymm"</code>
+for the Compound Symmetry covariance of <code>q1CompSymm</code>.
+Default is <code>Symm</code>, corresponding to a specific correlation
+value for each pair of groups. On the other hand, <code>Diag</code>
+corresponds to a common correlation value for all pairs of groups.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>within</code></td>
+<td>
+
+<p>Character vector giving the type of structure to use for the
+<em>within</em> part. The choices are the same as for
+<code>between</code>. The character vector is recycled to have length
+<code class="reqn">G</code> so the <em>within</em> covariances can differ across groups.
+Default is <code>"Diag"</code>, corresponding to a compound symmetry matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covBet,covWith</code></td>
+<td>
+
+<p>Character vector indicating the type of covariance matrix to be used
+for the generator between- or within- matrices, 
+as in <code>q1Diag</code>, <code>q1Symm</code> or <code>q1CompSymm</code>:
+correlation ("corr"), homoscedastic ("homo") or heteroscedastic ("hete").
+Partial matching is allowed. 
+This is different from the form of the resulting covariance matrix, see section
+<b>Caution</b>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrasts</code></td>
+<td>
+
+<p>Object of class <code>"function"</code>. This function is similar to the
+<code>contr.helmert</code> or
+<code>contr.treatment</code> functions, but it must return
+an <em>orthogonal</em> matrix. For a given integer <code>n</code>, it
+returns a matrix with <code>n</code> rows and <code>n - 1</code> columns forming
+a basis for the supplementary of a vector of ones in the
+<code class="reqn">n</code>-dimensional Euclidean space. The <code>contr.helmod</code>
+can be used to obtain an orthogonal matrix hence defining an
+orthonormal basis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intAsChar</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), an integer-valued input will be
+coerced into a character. Otherwise, it will be coerced into a
+factor.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object with class <code>"covQualNested"</code>.
+</p>
+
+
+<h3>Caution</h3>
+
+<p>When <code>covBet</code> and <code>covWith</code> are zero, the resulting matrix
+<em>is not a correlation matrix</em>, due to the mode of
+construction. The "between" covariance matrix is a correlation but
+diagonal blocks are added to the extended matrix obtained by re-sizing
+the "between" covariance into a <code class="reqn">n \times n</code> matrix.
+</p>
+
+
+<h3>Note</h3>
+
+<p>For now the replacement method such as <code>'coef&lt;-'</code> are inherited
+from the class <code>covQuall</code>. Consequently when these methods are
+used they do not update the covariance structure in the <code>between</code>
+slot nor those in the <code>within</code> (list) slot.
+</p>
+<p>This covariance kernel involves <code>two</code> categorical (i.e. factor)
+inputs, but these are nested. It could be aliased in the future as
+<code>q1Nested</code> or <code>q2Nested</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+### Ex 1. See the vignette "groupKernel" for an example 
+###       inspired from computer experiments.
+
+### Ex 2. Below an example in data analysis.
+
+country &lt;- c("B", "B", "B", "F", "F" ,"F", "D", "D", "D")
+cities &lt;- c("AntWerp", "Ghent" , "Charleroi", "Paris", "Marseille",
+            "Lyon", "Berlin", "Hamburg", "Munchen")
+myGroupList &lt;- list(B = cities[1:3],
+                    F = cities[4:6],
+                    D = cities[7:9])
+
+## create a nested covariance. 
+# first way, with argument 'groupList':
+
+nest1 &lt;- covQualNested(input = "ccities",
+                       groupList = myGroupList,
+                       between = "Symm", within = "Diag",
+                       compGrad = TRUE,
+                       covBet = "corr", covWith = "corr")
+
+# second way, with arguments 'group' and 'nestedLevels'
+nest2 &lt;- covQualNested(input = "ccities",
+                       group = country, nestedLevels = cities,
+                       between = "Symm", within = "Diag",
+                       compGrad = TRUE,
+                       covBet = "corr", covWith = "corr")
+
+
+## 'show' and 'plot' method as automatically invocated
+nest2
+plot(nest2, type = "cor")
+
+## check that the covariance matrices match for nest1 and nest2
+max(abs(covMat(nest1) - covMat(nest2)))
+
+
+## When the groups are not given in order, an error occurs!
+
+countryBad &lt;- c("B", "B", "F", "F", "F", "D", "D", "D", "B")
+cities &lt;- c("AntWerp", "Ghent", "Paris", "Marseille", "Lyon",
+            "Berlin", "Hamburg", "Munchen", "Charleroi")
+
+nestBad &lt;- try(covQualNested(input = "ccities",
+                             group = countryBad, nestedLevels = cities,
+                             between = "Symm", within = "Diag",
+                             compGrad = TRUE,
+                             covBet = "corr", covWith = "corr"))
+
+
+</code></pre>
+
+
+</div>

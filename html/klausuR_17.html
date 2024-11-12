@@ -1,0 +1,218 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausur.mufo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate multiple choice tests with several test forms</h2>
+
+<h3>Description</h3>
+
+<p>This function can be used to evaluate tests that have several test forms. Please be aware that its results only make sense
+if each test form uses the same items, only in a different order.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klausur.mufo(
+  data,
+  marks = NULL,
+  mark.labels = NULL,
+  items = NULL,
+  wght = NULL,
+  score = "solved",
+  matn = NULL,
+  na.rm = TRUE,
+  cronbach = TRUE,
+  item.analysis = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>An object of class <code>klausuR.answ-class</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks</code></td>
+<td>
+<p>A vector assigning marks to points achieved (see details). Alternatively,
+set it to <code>"suggest"</code> to let
+<code>klausur.gen.marks</code> calculate suggestions under the assumption of normal distribution.
+If <code>NULL</code>, this value must be set in the <code>data</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mark.labels</code></td>
+<td>
+<p>If <code>marks="suggest"</code>, use these as the marks you want to give.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items</code></td>
+<td>
+<p>Indices of a subset of variables in <code>answ</code> to be taken as items.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wght</code></td>
+<td>
+<p>A vector with weights for each item (named also according to <code>Item###</code>). If <code>NULL</code>,
+the value from the <code>data</code> object
+will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score</code></td>
+<td>
+<p>Specify the scoring policy, must be one of <code>"solved"</code> (default),
+<code>"partial"</code>, <code>"liberal"</code>,
+<code>"NR"</code>, <code>"ET"</code>, <code>"NRET"</code>, or <code>"NRET+"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matn</code></td>
+<td>
+<p>A matriculation number of a subject,
+to receive detailed results for that subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>Logical,
+whether cases with NAs should be ignored in <code>data</code>. Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cronbach</code></td>
+<td>
+<p>Logical. If TRUE, Cronbach's alpha will be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>item.analysis</code></td>
+<td>
+<p>Logical. If TRUE,
+some usual item statistics like difficulty and discriminatory power will be calculated.
+If <code>cronbach</code> is TRUE, too,
+it will include the alpha values if each item was deleted.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Firstly, <code>klausur.mufo</code> will compute partial results for each parallel form,
+and in the end combine these to global
+results. Cronbach alpha and item analysis will be calculated for all subjects accordingly,
+therefore the test items of
+all tests will be re-ordered to fit the order of the first given test form (this does not apply to the partial results).
+</p>
+<p>The parameters are mostly the same as those for <code>klausur</code>. However,
+in the <code>data</code> object the
+slot <code>corr</code> must also contain <code>corr.key</code>,
+to communicate the order of items in each test form, and the slot <code>id</code>
+needs one additional variable called <code>Form</code>.
+</p>
+<p>An example: You have prepared a test in two different parallel forms "A" an "B",
+So in addition to the variables in <code>data@id</code>
+you need to create a variable called <code>Form</code>,
+to document which test subject was given which test form. Since form "B" holds the same
+items as form "A", only in a different order,
+we only need to define these positions and we're done. Therefore <code>corr.key</code> must
+be a matrix or data.frame, again with a column called "Form", one column for each item,
+and one row of data for each test form. That is, you'd need
+one row for test form "A" and one for test form "B",
+giving an index for each item where it is placed in the form. For "A" this is
+simply ascending numbers from 1 to how many questions you asked,
+but for row "B" each number indicates at which position an item
+of "A" is to be found. See the example below.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>klausuR.mult-class</code> with the following slots.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>forms</code></td>
+<td>
+<p>A character vector naming all test forms</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>results.part</code></td>
+<td>
+<p>A list of objects of class <code>klausuR</code>,
+holding all partial results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>results.glob</code></td>
+<td>
+<p>An object of class <code>klausuR</code> with the global results</p>
+</td>
+</tr>
+</table>
+<p>Not all slots are shown by default (refer to <code>show</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>, <code>klausur.data</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># this will create the data.frame "antworten.mufo"
+# and the matrix "corr.key"
+data(antworten.mufo)
+
+# vector with correct answers:
+richtig &lt;- c(Item01=3, Item02=2, Item03=2, Item04=2, Item05=4,
+ Item06=3, Item07=4, Item08=1, Item09=2, Item10=2, Item11=4,
+ Item12=4, Item13=2, Item14=3, Item15=2, Item16=3, Item17=4,
+ Item18=4, Item19=3, Item20=5, Item21=3, Item22=3, Item23=1,
+ Item24=3, Item25=1, Item26=3, Item27=5, Item28=3, Item29=4,
+ Item30=4, Item31=13, Item32=234)
+
+# vector with assignement of marks:
+notenschluessel &lt;- c()
+# scheme of assignments: marks[points_from:to] &lt;- mark
+notenschluessel[0:12]  &lt;- 5.0
+notenschluessel[13:15] &lt;- 4.0
+notenschluessel[16:18] &lt;- 3.7
+notenschluessel[19:20] &lt;- 3.3
+notenschluessel[21]    &lt;- 3.0
+notenschluessel[22]    &lt;- 2.7
+notenschluessel[23]    &lt;- 2.3
+notenschluessel[24]    &lt;- 2.0
+notenschluessel[25:26] &lt;- 1.7
+notenschluessel[27:29] &lt;- 1.3
+notenschluessel[30:32] &lt;- 1.0
+
+# now combine all test data into one object of class klausur.answ
+mufo.data.obj &lt;- klausur.data(answ=antworten.mufo, corr=richtig, marks=notenschluessel,
+      corr.key=corr.key)
+# expect some warnings here, because some items have no variance
+# in their subtest results, hence item analysis fails on them
+klsr.mufo.obj &lt;- klausur.mufo(mufo.data.obj)
+</code></pre>
+
+
+</div>

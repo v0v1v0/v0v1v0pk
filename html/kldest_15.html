@@ -1,0 +1,100 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_est_kde2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>2-D kernel density-based estimation of Kullback-Leibler divergence</h2>
+
+<h3>Description</h3>
+
+<p>This estimation method approximates the densities of the unknown bivariate
+distributions <code class="reqn">P</code> and <code class="reqn">Q</code> by kernel density estimates using function
+'bkde' from package 'KernSmooth'. If 'KernSmooth' is not installed, a message
+is issued and the (much) slower function 'kld_est_kde' is used instead.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_est_kde2(
+  X,
+  Y,
+  MC = FALSE,
+  hX = NULL,
+  hY = NULL,
+  rule = c("Silverman", "Scott"),
+  eps = 1e-05
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>2</code> and <code>m</code>-by-<code>2</code> matrices, representing <code>n</code> samples from
+the bivariate true distribution <code class="reqn">P</code> and <code>m</code> samples from the approximate
+distribution <code class="reqn">Q</code>, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MC</code></td>
+<td>
+<p>A boolean: use a Monte Carlo approximation instead of numerical
+integration via the trapezoidal rule (default: <code>FALSE</code>)? Currently, this
+option is not implemented, i.e. a value of <code>TRUE</code> results in an error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hX, hY</code></td>
+<td>
+<p>Bandwidths for the kernel density estimates of <code class="reqn">P</code> and <code class="reqn">Q</code>,
+respectively. The default <code>NULL</code> means they are determined by argument <code>rule</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rule</code></td>
+<td>
+<p>A heuristic to derive parameters <code>hX</code> and <code>hY</code>, default is
+<code style="white-space: pre;">⁠"Silverman", which means that ⁠</code></p>
+<p style="text-align: center;"><code class="reqn">h_i = \sigma_i\left(\frac{4}{(2+d)n}\right)^{1/(d+4)}.</code>
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>A nonnegative scalar; if <code>eps &gt; 0</code>, <code class="reqn">Q</code> is estimated as a mixture
+between the kernel density estimate and a uniform distribution on the computational
+grid. The weight of the uniform component is <code>eps</code> times the maximum density
+estimate of <code class="reqn">Q</code>. This increases the robustness of the estimator at the
+expense of an additional bias. Defaults to <code>eps = 1e-5</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar, the estimated Kullback-Leibler divergence <code class="reqn">\hat D_{KL}(P||Q)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># KL-D between two samples from 2-D Gaussians:
+set.seed(0)
+X1 &lt;- rnorm(1000)
+X2 &lt;- rnorm(1000)
+Y1 &lt;- rnorm(1000)
+Y2 &lt;- Y1 + rnorm(1000)
+X &lt;- cbind(X1,X2)
+Y &lt;- cbind(Y1,Y2)
+kld_gaussian(mu1 = rep(0,2), sigma1 = diag(2),
+             mu2 = rep(0,2), sigma2 = matrix(c(1,1,1,2),nrow=2))
+kld_est_kde2(X,Y)
+</code></pre>
+
+
+</div>

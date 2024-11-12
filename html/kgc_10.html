@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>TranslateZipCode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>TranslateZipCode</h2>
+
+<h3>Description</h3>
+
+<p>This function will return the data frame with the longitude and latitude of the zip codes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">TranslateZipCode(number)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>number</code></td>
+<td>
+<p>A dataframe that contains zip codes in a column labeled 'zip'</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The original data frame, with two additional columns for the corresponding latitude and longitude
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">example &lt;- data.frame("zip" = c(44106,638, 1106))
+TranslateZipCode(example)
+</code></pre>
+
+
+</div>

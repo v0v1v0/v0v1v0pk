@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>load_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Loads a model saved via <code>save_model()</code>.</h2>
+
+<h3>Description</h3>
+
+<p>Loads a model saved via <code>save_model()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">load_model(model, custom_objects = NULL, compile = TRUE, safe_mode = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>string, path to the saved model file,
+or a raw vector, as returned by <code>save_model(filepath = NULL)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_objects</code></td>
+<td>
+<p>Optional named list mapping names
+to custom classes or functions to be
+considered during deserialization.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compile</code></td>
+<td>
+<p>Boolean, whether to compile the model after loading.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safe_mode</code></td>
+<td>
+<p>Boolean, whether to disallow unsafe <code>lambda</code> deserialization.
+When <code>safe_mode=FALSE</code>, loading an object has the potential to
+trigger arbitrary code execution. This argument is only
+applicable to the Keras v3 model format. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A Keras model instance. If the original model was compiled,
+and the argument <code>compile = TRUE</code> is set, then the returned model
+will be compiled. Otherwise, the model will be left uncompiled.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>model &lt;- keras_model_sequential(input_shape = c(3)) |&gt;
+  layer_dense(5) |&gt;
+  layer_activation_softmax()
+
+model |&gt; save_model("model.keras")
+loaded_model &lt;- load_model("model.keras")
+</pre></div>
+<div class="sourceCode r"><pre>x &lt;- random_uniform(c(10, 3))
+stopifnot(all.equal(
+  model |&gt; predict(x),
+  loaded_model |&gt; predict(x)
+))
+</pre></div>
+<p>Note that the model variables may have different name values
+(<code>var$name</code> property, e.g. <code>"dense_1/kernel:0"</code>) after being reloaded.
+It is recommended that you use layer attributes to
+access specific variables, e.g. <code>model |&gt; get_layer("dense_1") |&gt; _$kernel</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_saving_apis/model_saving_and_loading#loadmodel-function">https://keras.io/api/models/model_saving_apis/model_saving_and_loading#loadmodel-function</a>
+</p>
+</li></ul>
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>layer_tfsm()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model()</code> <br><code>save_model_config()</code> <br><code>save_model_weights()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

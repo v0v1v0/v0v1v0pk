@@ -1,0 +1,163 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bracket</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw a bracket on a ggplot</h2>
+
+<h3>Description</h3>
+
+<p>Draw a square bracket with a label on a ggplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bracket(
+  xmin = NULL,
+  xmax = NULL,
+  ymin = NULL,
+  ymax = NULL,
+  vertical = NULL,
+  horizontal = NULL,
+  open = NULL,
+  bracket_shape = NULL,
+  thickness = 2,
+  bracket_color = "black",
+  label = NULL,
+  label_hjust = NULL,
+  label_vjust = NULL,
+  label_font_size = 5,
+  label_font_face = "bold",
+  label_color = "black",
+  label_parse = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>xmin</code></td>
+<td>
+<p>xmin</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmax</code></td>
+<td>
+<p>xmax</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ymin</code></td>
+<td>
+<p>ymin</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ymax</code></td>
+<td>
+<p>ymax</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vertical</code></td>
+<td>
+<p>vertical</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>horizontal</code></td>
+<td>
+<p>horizontal</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>open</code></td>
+<td>
+<p>open</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bracket_shape</code></td>
+<td>
+<p>bracket_shape</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thickness</code></td>
+<td>
+<p>thickness</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bracket_color</code></td>
+<td>
+<p>bracket_color</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_hjust</code></td>
+<td>
+<p>label_hjust</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_vjust</code></td>
+<td>
+<p>label_vjust</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_font_size</code></td>
+<td>
+<p>label_font_size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_font_face</code></td>
+<td>
+<p>label_font_face</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_color</code></td>
+<td>
+<p>label_font_face</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_parse</code></td>
+<td>
+<p>label_parse</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a ggplot object; there will be no meaningful output from
+this function. Instead, this function should be used with another
+ggplot object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(ggplot2)
+ggplot(mtcars, aes(x = cyl, y = mpg)) + geom_point() +
+bracket(6.1, 6.2, 17, 22, bracket_shape = "]", label = "abc")
+
+</code></pre>
+
+
+</div>

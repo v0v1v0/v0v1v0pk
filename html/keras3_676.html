@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_custom_objects</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get/set the currently registered custom objects.</h2>
+
+<h3>Description</h3>
+
+<p>Custom objects set using <code>custom_object_scope()</code> are not added to the
+global list of custom objects, and will not appear in the returned
+list.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_custom_objects()
+
+set_custom_objects(objects = named_list(), clear = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>objects</code></td>
+<td>
+<p>A named list of custom objects, as returned by
+<code>get_custom_objects()</code> and <code>set_custom_objects()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clear</code></td>
+<td>
+<p>bool, whether to clear the custom object registry before
+populating it with <code>objects</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An R named list mapping registered names to registered objects.
+<code>set_custom_objects()</code> returns the registry values before updating, invisibly.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>get_custom_objects()
+</pre></div>
+<p>You can use <code>set_custom_objects()</code> to restore a previous registry state.
+</p>
+<div class="sourceCode r"><pre># within a function, if you want to temporarily modify the registry,
+function() {
+  orig_objects &lt;- set_custom_objects(clear = TRUE)
+  on.exit(set_custom_objects(orig_objects))
+
+  ## temporarily modify the global registry
+  # register_keras_serializable(....)
+  # ....  &lt;do work&gt;
+  # on.exit(), the previous registry state is restored.
+}
+</pre></div>
+
+
+<h3>Note</h3>
+
+<p><code>register_keras_serializable()</code> is preferred over <code>set_custom_objects()</code> for
+registering new objects.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other serialization utilities: <br><code>deserialize_keras_object()</code> <br><code>get_registered_name()</code> <br><code>get_registered_object()</code> <br><code>register_keras_serializable()</code> <br><code>serialize_keras_object()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

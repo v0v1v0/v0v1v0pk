@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ks_test_stat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal KScorrect Function.</h2>
+
+<h3>Description</h3>
+
+<p>Internal function not intended to be called directly by users.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ks_test_stat(x, y, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a character string naming a cumulative distribution function or an
+actual cumulative distribution function such as pnorm. Only continuous CDFs
+are valid. See /codeLcKS for accepted functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>parameters of the distribution specified (as a character string)
+by y.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Simplified and faster <code>ks.test</code> function that calculates just the
+two-sided test statistic D.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Calculating the Kolmogorov-Smirnov test statistic D by itself is faster
+than calculating the other ouput that that function produces.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ks.test</code>
+</p>
+
+
+</div>

@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>benchB3</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Benchmarking on B3 data</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates the performance of a classification method on the <code>B3</code> data. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">benchB3(method, prior = rep(1/4, 4), sv = "4", scale = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>classification method to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prior</code></td>
+<td>
+<p>prior probabilities of classes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sv</code></td>
+<td>
+<p>class of the start of a business cycle</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>logical, whether to use <code>scale</code> first</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>furhter arguments passed to <code>method</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The performance of classification methods on cyclic data can be measured by a special form 
+of cross-validation: Leave-One-Cycle-Out. That means that a complete cycle is used as test data 
+and the others are used as training data. This is repeated for all complete cycles in the data. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>MODEL</code></td>
+<td>
+<p>list with the model returned by <code>method</code> of the training data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error</code></td>
+<td>
+<p>vector of test error rates in cycles</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l1co.error</code></td>
+<td>
+<p>leave-one-cycle-out error rate</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>B3</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">perLDA &lt;- benchB3("lda")
+## Not run: 
+## due to parameter optimization rda takes a while 
+perRDA &lt;- benchB3("rda")
+library(rpart)
+## rpart will not work with prior argument:
+perRpart &lt;- benchB3("rpart", prior = NULL)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

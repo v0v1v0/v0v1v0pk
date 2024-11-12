@@ -1,0 +1,466 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regression.model.functions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Regression Model Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>getFormattedSummary prints a table of regression coefficient estimates and standard errors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+getFormattedSummary(fits, type = 12, est.digits = 2, se.digits = 2,
+ robust, random = FALSE, VE = FALSE, to.trim = FALSE,
+ rows = NULL, coef.direct = FALSE, trunc.large.est =
+ TRUE, scale.factor = 1, p.digits = 3, remove.leading0
+ = FALSE, p.adj.method = "fdr", ...)
+
+getVarComponent(object, ...)
+
+getFixedEf(object, ...)
+
+risk.cal(risk, binary.outcome, weights = NULL, ngroups = NULL, 
+    cuts = NULL, main = "", add = FALSE, show.emp.risk = TRUE, 
+    lcol = 2, ylim = NULL, scale = c("logit", "risk"))
+interaction.table(fit, v1, v2, v1.type = "continuous", v2.type = "continuous",
+logistic.regression = TRUE)
+
+
+## S3 method for class 'coxph'
+getFixedEf(object, exp=FALSE,robust=FALSE, ...)
+
+## S3 method for class 'gam'
+getFixedEf(object, ...)
+
+## S3 method for class 'gee'
+getFixedEf(object, exp = FALSE, ...)
+
+## S3 method for class 'geese'
+getFixedEf(object, robust = TRUE, ...)
+## S3 method for class 'tps'
+getFixedEf(object, exp=FALSE, robust=TRUE, ...)
+
+## S3 method for class 'glm'
+ getFixedEf(object, exp = FALSE, robust = TRUE, ret.robcov = FALSE, 
+    ...)  
+
+## S3 method for class 'svyglm'
+ getFixedEf(object, exp = FALSE, robust = TRUE, ...)  
+## S3 method for class 'svy_vglm'
+ getFixedEf(object, exp = FALSE, robust = TRUE, ...)  
+
+## S3 method for class 'svycoxph'
+ getFixedEf(object, exp = FALSE, robust = TRUE, ...)  
+
+## S3 method for class 'inla'
+getFixedEf(object, ...)
+
+## S3 method for class 'lm'
+getFixedEf(object, ...)
+
+## S3 method for class 'lme'
+getFixedEf(object, ...)
+
+## S3 method for class 'logistf'
+getFixedEf(object, exp = FALSE, ...)
+
+## S3 method for class 'matrix'
+getFixedEf(object, ...)
+
+## S3 method for class 'MIresult'
+getFixedEf(object, ...)
+
+## S3 method for class 'hyperpar.inla'
+getVarComponent(object, transformation = NULL, ...)
+
+## S3 method for class 'matrix'
+getVarComponent(object, ...)
+
+## S3 method for class 'geese'
+coef(object, ...)
+## S3 method for class 'tps'
+coef(object, ...)
+
+## S3 method for class 'geese'
+predict(object, x, ...)
+## S3 method for class 'tps'
+predict(object, newdata = NULL, type = c("link", "response"), ...)
+
+## S3 method for class 'geese'
+residuals(object, y, x,...)
+
+## S3 method for class 'geese'
+vcov(object, ...)
+## S3 method for class 'tps'
+vcov(object, robust, ...)
+
+## S3 method for class 'logistf'
+vcov(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>tbdobject
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coef.direct</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+<p>Boolean, whether to return robust variance estimate
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exp</code></td>
+<td>
+
+<p>tbdexp
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.leading0</code></td>
+<td>
+
+<p>tbdexp
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.adj.method</code></td>
+<td>
+
+<p>tbdexp
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cuts</code></td>
+<td>
+
+<p>tbdfits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ret.robcov</code></td>
+<td>
+
+<p>tbdfits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fits</code></td>
+<td>
+
+<p>tbdfits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>tbdtype
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>est.digits</code></td>
+<td>
+
+<p>tbdest.digits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.digits</code></td>
+<td>
+
+<p>tbdse.digits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.digits</code></td>
+<td>
+
+<p>tbdse.digits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random</code></td>
+<td>
+
+<p>tbdrandom
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>VE</code></td>
+<td>
+
+<p>tbdrandom
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transformation</code></td>
+<td>
+
+<p>tbdtransformation
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+
+<p>tbdv1
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v1</code></td>
+<td>
+
+<p>tbdv1
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v2</code></td>
+<td>
+
+<p>tbdv2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v1.type</code></td>
+<td>
+
+<p>tbdv1.type
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v2.type</code></td>
+<td>
+
+<p>tbdv2.type
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logistic.regression</code></td>
+<td>
+
+<p>tbdlogistic.regression
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to.trim</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rows</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>risk</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary.outcome</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ngroups</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show.emp.risk</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lcol</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trunc.large.est</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.factor</code></td>
+<td>
+
+<p>tbdfit
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>getFormattedSummary: from a list of fits, say lmer, inla fits, return formatted summary controlled by "type". For a matrix, return Monte Carlo variance
+random=TRUE returns variance components
+type=1: est
+type=2: est (se)
+type=3: est (2.5 percent, 97.5 percent)
+type=4: est   se
+</p>
+<p>getFixedEf returns a matrix, first column coef, second column se, 
+</p>
+<p>getFixedEf.matrix used to get mean and sd from a jags or winbugs sample, getVarComponent.matrix and getFixedEf.matrix do the same thing. Each column of samples is a variable
+</p>
+<p>interaction.table expects coef and vcov to work with fit.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Annette Dobson (1990) "An Introduction to Generalized Linear Models".
+## Page 9: Plant Weight Data.
+ctl &lt;- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt &lt;- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group &lt;- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight &lt;- c(ctl, trt)
+lm.D9 &lt;- lm(weight ~ group)
+glm.D9 &lt;- glm(weight ~ group)
+getFormattedSummary (list(lm.D9, glm.D9), robust=FALSE)
+
+</code></pre>
+
+
+</div>

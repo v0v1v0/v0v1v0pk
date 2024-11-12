@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>FTres</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Freeman-Tukey Residuals
+</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the Freeman-Tukey residuals for log-linear models of frequency data. If the frequencies 
+are assumed to be Poisson distributed, then the Freeman-Tukey residuals are approximately normal 
+distributed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">FTres(obs, fit)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obs</code></td>
+<td>
+
+<p>A numeric vector containing the observed frequencies.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+
+<p>A numeric vector containing the estimated frequencies.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For an observed frequency <code class="reqn">n_{i}</code> and the estimated frequency <code class="reqn">m_{i}</code>, the Freeman-Tukey residual <code class="reqn">FT_{i}</code> is defined as<br><code class="reqn">FT_{i} = \sqrt{n_{i}}+\sqrt{n_{i}+1}-\sqrt{4m_{i}+1}.</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector containing the Freeman-Tukey residuals.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Andersson, B., Branberg, K., and Wiberg, M. (2013). Performing the Kernel Method of Test Equating with the Package <b>kequate</b>. <em>Journal of Statistical Software</em>, <b>55(6)</b>, 1–25. &lt;doi:10.18637/jss.v055.i06&gt;
+</p>
+<p>Holland, P.W,  Thayer, D. (1998). Univariate and Bivariate Loglinear Models for Discrete Test Score Distributions <em>ETS Technical Report No</em> <b>98-1</b>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>glm</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Example data:
+P&lt;-c(5, 20, 35, 25, 15)
+x&lt;-0:4
+glmx&lt;-glm(P~I(x)+I(x^2), family="poisson", x=TRUE)
+res&lt;-FTres(glmx$y, glmx$fitted.values)
+</code></pre>
+
+
+</div>

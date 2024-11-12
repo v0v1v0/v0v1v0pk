@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_attention</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Dot-product attention layer, a.k.a. Luong-style attention</h2>
+
+<h3>Description</h3>
+
+<p>Dot-product attention layer, a.k.a. Luong-style attention
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_attention(
+  inputs,
+  use_scale = FALSE,
+  score_mode = "dot",
+  ...,
+  dropout = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+<p>List of the following tensors:
+</p>
+
+<ul>
+<li>
+<p> query: Query Tensor of shape <code style="white-space: pre;">⁠[batch_size, Tq, dim]⁠</code>.
+</p>
+</li>
+<li>
+<p> value: Value Tensor of shape <code style="white-space: pre;">⁠[batch_size, Tv, dim]⁠</code>.
+</p>
+</li>
+<li>
+<p> key: Optional key Tensor of shape <code style="white-space: pre;">⁠[batch_size, Tv, dim]⁠</code>. If not
+given, will use value for both key and value, which is the most common
+case.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_scale</code></td>
+<td>
+<p>If <code>TRUE</code>, will create a scalar variable to scale the attention
+scores.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score_mode</code></td>
+<td>
+<p>Function to use to compute attention scores, one of
+<code style="white-space: pre;">⁠{"dot", "concat"}⁠</code>. <code>"dot"</code> refers to the dot product between the query
+and key vectors. <code>"concat"</code> refers to the hyperbolic tangent of the
+concatenation of the query and key vectors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments (e.g., batch_size, dtype, name, trainable, weights)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+attention scores. Defaults to 0.0.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>inputs are <code>query</code> tensor of shape <code style="white-space: pre;">⁠[batch_size, Tq, dim]⁠</code>, <code>value</code> tensor
+of shape <code style="white-space: pre;">⁠[batch_size, Tv, dim]⁠</code> and <code>key</code> tensor of shape
+<code style="white-space: pre;">⁠[batch_size, Tv, dim]⁠</code>. The calculation follows the steps:
+</p>
+
+<ol>
+<li>
+<p> Calculate scores with shape <code style="white-space: pre;">⁠[batch_size, Tq, Tv]⁠</code> as a <code>query</code>-<code>key</code> dot
+product: <code>scores = tf$matmul(query, key, transpose_b=TRUE)</code>.
+</p>
+</li>
+<li>
+<p> Use scores to calculate a distribution with shape
+<code style="white-space: pre;">⁠[batch_size, Tq, Tv]⁠</code>: <code>distribution = tf$nn$softmax(scores)</code>.
+</p>
+</li>
+<li>
+<p> Use <code>distribution</code> to create a linear combination of <code>value</code> with
+shape <code style="white-space: pre;">⁠[batch_size, Tq, dim]⁠</code>:
+return <code>tf$matmul(distribution, value)</code>.
+</p>
+</li>
+</ol>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention">https://www.tensorflow.org/api_docs/python/tf/keras/layers/Attention</a>
+</p>
+</li></ul>
+<p>Other core layers: 
+<code>layer_activation()</code>,
+<code>layer_activity_regularization()</code>,
+<code>layer_dense()</code>,
+<code>layer_dense_features()</code>,
+<code>layer_dropout()</code>,
+<code>layer_flatten()</code>,
+<code>layer_input()</code>,
+<code>layer_lambda()</code>,
+<code>layer_masking()</code>,
+<code>layer_permute()</code>,
+<code>layer_repeat_vector()</code>,
+<code>layer_reshape()</code>
+</p>
+
+
+</div>

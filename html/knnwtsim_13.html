@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SxMatrixCalc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Similarity Matrix for Exogenous Predictors</h2>
+
+<h3>Description</h3>
+
+<p>Largely a wrapper function for the <code>stats::dist()</code> function. First calculates
+n x n distance matrix using specified method for an input matrix or vector using
+<code>stats::dist()</code>. Then converts the distance matrix to similarity matrix using 1 / (D_x + 1).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SxMatrixCalc(A, XdistMetric = "euclidean")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>numeric matrix or numeric vector where the columns represents exogenous predictor variables and the rows correspond to the points in the response series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XdistMetric</code></td>
+<td>
+<p>character describing the method <code>stats::dist()</code> should use.
+This must be one of <code>"euclidean"</code>, <code>"maximum"</code>, <code>"manhattan"</code>, <code>"canberra"</code>, <code>"binary"</code>, or <code>"minkowski"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric matrix of distances for <code>A</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">X &lt;- matrix(c(1, 1, 1, 2, 2, 2, 3, 3, 3), nrow = 3, ncol = 3, byrow = TRUE)
+SxMatrixCalc(X)
+</code></pre>
+
+
+</div>

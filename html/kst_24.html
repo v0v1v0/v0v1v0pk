@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ktrace</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Trace of Knowledge Structures</h2>
+
+<h3>Description</h3>
+
+<p>Computes the trace of knowledge structures.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  ktrace(x, items)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items</code></td>
+<td>
+<p>A set of items for which the trace is computed.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <em>trace</em> of a knowledge structure <em>K</em> on a set <em>A</em> is the
+substructure of the knowledge structure <em>K</em> on the set <em>A</em>, i.e.,
+the substructure resulting from restricting the knowledge structure
+<em>K</em> to the items specified in <em>A</em>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code> where each element
+represents one knowledge state of the knowledge structure on the item
+specified in <code>items</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+ktrace(kst, items=set("c","d","e"))
+</code></pre>
+
+
+</div>

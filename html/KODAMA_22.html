@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>normalization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Normalization Methods</h2>
+
+<h3>Description</h3>
+
+<p>Collection of Different Normalization Methods.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">normalization(Xtrain,Xtest=NULL, method = "pqn",ref=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Xtrain</code></td>
+<td>
+<p>a matrix of data (training data set).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xtest</code></td>
+<td>
+<p>a matrix of data (test data set).(by default = NULL).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the normalization method to be used. Choices are "<code>none</code>", "<code>pqn</code>", "<code>sum</code>", "<code>median</code>", "<code>sqrt</code>" (by default = "<code>pqn</code>"). A partial string sufficient to uniquely identify the choice is permitted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ref</code></td>
+<td>
+<p>Reference sample for Probabilistic Quotient Normalization. (by default = NULL).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A number of different normalization methods are provided:
+</p>
+
+<ul>
+<li>
+<p> "<code>none</code>": no normalization method is applied.
+</p>
+</li>
+<li>
+<p> "<code>pqn</code>": the Probabilistic Quotient Normalization is computed as described in <em>Dieterle, et al.</em> (2006).
+</p>
+</li>
+<li>
+<p> "<code>sum</code>": samples are normalized to the sum of the absolute value of all variables for a given sample.
+</p>
+</li>
+<li>
+<p> "<code>median</code>": samples are normalized to the median value of all variables for a given sample.
+</p>
+</li>
+<li>
+<p> "<code>sqrt</code>": samples are normalized to the root of the sum of the squared value of all variables for a given sample.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>The function returns a list with 2 items or 4 items (if a test data set is present):
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>newXtrain</code></td>
+<td>
+<p>a normalized matrix (training data set).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeXtrain</code></td>
+<td>
+<p>a vector of normalization coefficient of the training data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newXtest</code></td>
+<td>
+<p>a normalized matrix (test data set).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeXtest</code></td>
+<td>
+<p>a vector of normalization coefficient of the test data set.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore and Leonardo Tenori</p>
+
+
+<h3>References</h3>
+
+<p>Dieterle F,Ross A, Schlotterbeck G, Senn H.<br>
+Probabilistic Quotient Normalization as Robust Method to Account for Diluition of Complex Biological Mixtures. Application in 1H NMR Metabolomics.<br><em>Anal Chem</em> 2006;78:4281-90.
+<br><br>
+Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>scaling</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=normalization(u)$newXtrain
+u=scaling(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc=pca(u)
+plot(cc$x,pch=21,bg=class)
+</code></pre>
+
+
+</div>

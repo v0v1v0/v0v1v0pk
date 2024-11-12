@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KPCRKHS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel partial correlation with RKHS method</h2>
+
+<h3>Description</h3>
+
+<p>Compute estimate of Kernel partial correlation (KPC) coefficient using conditional mean embeddings in the reproducing kernel Hilbert spaces (RKHS).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KPCRKHS(
+  Y,
+  X = NULL,
+  Z,
+  ky = kernlab::rbfdot(1/(2 * stats::median(stats::dist(Y))^2)),
+  kx = kernlab::rbfdot(1/(2 * stats::median(stats::dist(X))^2)),
+  kxz = kernlab::rbfdot(1/(2 * stats::median(stats::dist(cbind(X, Z)))^2)),
+  eps = 0.001,
+  appro = FALSE,
+  tol = 1e-05
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a matrix (n by dy)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a matrix (n by dx) or <code>NULL</code> if <code class="reqn">X</code> is empty</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>a matrix (n by dz)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ky</code></td>
+<td>
+<p>a function <code class="reqn">k(y, y')</code> of class <code>kernel</code>. It can be the kernel implemented in <code>kernlab</code> e.g., Gaussian kernel: <code>rbfdot(sigma = 1)</code>, linear kernel: <code>vanilladot()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kx</code></td>
+<td>
+<p>the kernel function for <code class="reqn">X</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kxz</code></td>
+<td>
+<p>the kernel function for <code class="reqn">(X, Z)</code> or for <code class="reqn">Z</code> if <code class="reqn">X</code> is empty</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>a small positive regularization parameter for inverting the empirical cross-covariance operator</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>appro</code></td>
+<td>
+<p>whether to use incomplete Cholesky decomposition for approximation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>tolerance used for incomplete Cholesky decomposition (implemented by the function <code>inchol</code> in the package <code>kernlab</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The kernel partial correlation (KPC) coefficient measures the conditional dependence
+between <code class="reqn">Y</code> and <code class="reqn">Z</code> given <code class="reqn">X</code>, based on an i.i.d. sample of <code class="reqn">(Y, Z, X)</code>.
+It converges to the population quantity (depending on the kernel) which is between 0 and 1.
+A small value indicates low conditional dependence between <code class="reqn">Y</code> and <code class="reqn">Z</code> given <code class="reqn">X</code>, and
+a large value indicates stronger conditional dependence.
+If <code>X = NULL</code>, it measures the unconditional dependence between <code class="reqn">Y</code> and <code class="reqn">Z</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The algorithm returns a real number which is the estimated KPC.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KPCgraph</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n = 500
+set.seed(1)
+x = rnorm(n)
+z = rnorm(n)
+y = x + z + rnorm(n,1,1)
+library(kernlab)
+k = vanilladot()
+KPCRKHS(y, x, z, k, k, k, 1e-3/n^(0.4), appro = FALSE)
+# 0.4854383 (Population quantity = 0.5)
+KPCRKHS(y, x, z, k, k, k, 1e-3/n^(0.4), appro = TRUE, tol = 1e-5)
+# 0.4854383 (Population quantity = 0.5)
+</code></pre>
+
+
+</div>

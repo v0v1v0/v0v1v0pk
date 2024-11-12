@@ -1,0 +1,254 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_event</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Event Plot</h2>
+
+<h3>Description</h3>
+
+<p>Produces an activity or a tempo plot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'EventDate,missing'
+plot(
+  x,
+  type = c("activity", "tempo"),
+  event = FALSE,
+  calendar = getOption("kairos.calendar"),
+  select = 1,
+  n = 500,
+  eps = 1e-09,
+  col.accumulation = "black",
+  col.event = "red",
+  flip = FALSE,
+  ncol = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  main = NULL,
+  sub = NULL,
+  ann = graphics::par("ann"),
+  axes = TRUE,
+  frame.plot = axes,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <code>EventDate</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A <code>character</code> string indicating the type of plot.
+It must be one of "<code>activity</code>" (default) or "<code>tempo</code>" (see details).
+Any unambiguous substring can be given.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>event</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the distribution of the event date
+be displayed? Only used if type is "<code>activity</code>".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>select</code></td>
+<td>
+<p>A <code>numeric</code> or <code>character</code> vector giving the selection of
+the assemblage that are drawn.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A length-one non-negative <code>numeric</code> vector giving the desired
+length of the vector of quantiles for density computation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>A length-one <code>numeric</code> value giving the cutoff below which
+values will be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.accumulation</code></td>
+<td>
+<p>A color specification for the accumulation density
+curve.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.event</code></td>
+<td>
+<p>A color specification for the event density curve.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flip</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the y-axis (ticks and numbering) be
+flipped from side 2 (left) to 4 (right) from series to series when <code>facet</code>
+is "<code>multiple</code>"?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncol</code></td>
+<td>
+<p>An <code>integer</code> specifying the number of columns to use when
+<code>facet</code> is "<code>multiple</code>". Defaults to 1 for up to 4 series, otherwise to 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab, ylab</code></td>
+<td>
+<p>A <code>character</code> vector giving the x and y axis labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>A <code>character</code> string giving a main title for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sub</code></td>
+<td>
+<p>A <code>character</code> string giving a subtitle for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ann</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the default annotation (title and x
+and y axis labels) appear on the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>A <code>logical</code> scalar: should axes be drawn on the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frame.plot</code></td>
+<td>
+<p>A <code>logical</code> scalar: should a box be drawn around the
+plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further parameters to be passed to <code>panel</code>
+(e.g. graphical parameters).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>plot()</code> is called it for its side-effects: it results in a graphic being
+displayed (invisibly returns <code>x</code>).
+</p>
+
+
+<h3>Event and Acccumulation Dates</h3>
+
+<p><code>plot()</code> displays the probability estimate density curves of archaeological
+assemblage dates (<em>event</em> and <em>accumulation</em> dates; Bellanger and Husi
+2012). The <em>event</em> date is plotted as a line, while the <em>accumulation</em> date
+is shown as a grey filled area.
+</p>
+<p>The accumulation date can be displayed as a tempo plot (Dye 2016) or an
+activity plot (Philippe and Vibet 2020):
+</p>
+
+<dl>
+<dt><code>tempo</code></dt>
+<dd>
+<p>A tempo plot estimates the cumulative occurrence of
+archaeological events, such as the slope of the plot directly reflects the
+pace of change.</p>
+</dd>
+<dt><code>activity</code></dt>
+<dd>
+<p>An activity plot displays the first derivative of the
+tempo plot.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Bellanger, L. &amp; Husi, P. (2012). Statistical Tool for Dating and
+Interpreting Archaeological Contexts Using Pottery. <em>Journal of
+Archaeological Science</em>, 39(4), 777-790. <a href="https://doi.org/10.1016/j.jas.2011.06.031">doi:10.1016/j.jas.2011.06.031</a>.
+</p>
+<p>Dye, T. S. (2016). Long-Term Rhythms in the Development of Hawaiian
+Social Stratification. <em>Journal of Archaeological Science</em>, 71, 1-9.
+<a href="https://doi.org/10.1016/j.jas.2016.05.006">doi:10.1016/j.jas.2016.05.006</a>.
+</p>
+<p>Philippe, A. &amp; Vibet, M.-A. (2020). Analysis of Archaeological Phases Using
+the R Package ArchaeoPhases. <em>Journal of Statistical Software, Code
+Snippets</em>, 93(1), 1-25. <a href="https://doi.org/10.18637/jss.v093.c01">doi:10.18637/jss.v093.c01</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>event()</code>
+</p>
+<p><code>event()</code>
+</p>
+<p>Other plotting methods: 
+<code>plot_aoristic</code>,
+<code>plot_fit</code>,
+<code>plot_mcd</code>,
+<code>plot_time()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Peeples and Schachner 2012
+data("zuni", package = "folio")
+
+## Assume that some assemblages are reliably dated (this is NOT a real example)
+zuni_dates &lt;- c(
+  LZ0569 = 1097, LZ0279 = 1119, CS16 = 1328, LZ0066 = 1111,
+  LZ0852 = 1216, LZ1209 = 1251, CS144 = 1262, LZ0563 = 1206,
+  LZ0329 = 1076, LZ0005Q = 859, LZ0322 = 1109, LZ0067 = 863,
+  LZ0578 = 1180, LZ0227 = 1104, LZ0610 = 1074
+)
+
+## Model the event and accumulation date for each assemblage
+model &lt;- event(zuni, zuni_dates, rank = 10)
+plot(model, select = 1:10, event = TRUE, flip = TRUE)
+</code></pre>
+
+
+</div>

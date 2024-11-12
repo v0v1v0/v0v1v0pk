@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>card.game-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "card.game"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing a cardinal game, i.e. a game whose values depend
+only on the cardinality of subsets.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the function <code>card.game</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal
+to the number of elements of the set on which the cardinal game is defined.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>n+1</code> containing the coefficients of the cardinal game. We necessarily have
+<code>data[1]=0</code>.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>card.set.func</code>, directly.
+Class <code>superclass.set.func</code>, by class <code>card.set.func</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.game</dt>
+<dd>
+<p><code>signature(object = "card.game")</code> </p>
+</dd>
+<dt>Choquet.integral</dt>
+<dd>
+<p><code>signature(object = "card.game", f = "numeric")</code> </p>
+</dd>
+<dt>Sipos.integral</dt>
+<dd>
+<p><code>signature(object = "card.game", f = "numeric")</code> </p>
+</dd>
+<dt>Sugeno.integral</dt>
+<dd>
+<p><code>signature(object = "card.game", f = "numeric")</code> </p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>game-class</code>, <br><code>card.game</code>,
+<br><code>as.game-methods</code>, <br><code>Choquet.integral-methods</code>, 
+<br><code>Sipos.integral-methods</code>, <br><code>Sugeno.integral-methods</code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a cardinal game (which is a capacity)
+mu &lt;- card.game(c(0,rep(1,4)))
+
+# the attributes of the object
+mu@n
+mu@data
+
+## a conversion
+as.game(mu)
+
+## integral calculations 
+f &lt;- c(0.2,0.3,0.1,0.7)
+Choquet.integral(mu,f)
+Sugeno.integral(mu,f)
+f &lt;- c(0.2,-0.3,0.1,-0.7)
+Sipos.integral(mu,f)
+</code></pre>
+
+
+</div>

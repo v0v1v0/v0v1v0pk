@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit_groupwise_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit cosinor model</h2>
+
+<h3>Description</h3>
+
+<p>Fit cosinor model for one aspect of data. Called by main 'kronos' function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit_groupwise_model(data, group, time, period, verbose)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>input data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>A character string. Signifies which group will be assessed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>A string. Should be the column name containing the time values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>period</code></td>
+<td>
+<p>A numeric. The length of a period, in the same format as the <code>time</code> parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A boolean. Toggles whether to print diagnostic information while running. Useful for debugging errors on large data sets.</p>
+</td>
+</tr>
+</table>
+</div>

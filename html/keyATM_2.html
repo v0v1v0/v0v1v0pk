@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>by_strata_DocTopic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate document-topic distribution by strata (for covariate models)</h2>
+
+<h3>Description</h3>
+
+<p>Estimate document-topic distribution by strata (for covariate models)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">by_strata_DocTopic(x, by_var, labels, by_values = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the output from the covariate keyATM model (see <code>keyATM()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by_var</code></td>
+<td>
+<p>character. The name of the variable to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>character. The labels for the values specified in <code>by_var</code> (ascending order).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by_values</code></td>
+<td>
+<p>numeric. Specific values for <code>by_var</code>, ordered from small to large. If it is not specified, all values in <code>by_var</code> will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments passed on to the <code>predict.keyATM_output()</code> function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>strata_topicword object (a list).
+</p>
+
+
+</div>

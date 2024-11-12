@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_anno,snp_info,pathway_info-method</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Annotates SNPs via genes to pathways</h2>
+
+<h3>Description</h3>
+
+<p>A function to create the annotation for a <code>GWASdata</code> object. 
+It combines a <code>snp_info</code> and a <code>pathway_info</code>
+object into an annotation <code>data.frame</code> used for <code>pathway</code> 
+analysis on GWAS. SNPs are assigned to pathways via gene membership.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'snp_info,pathway_info'
+get_anno(object1, object2, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object1</code></td>
+<td>
+<p>A <code>snp_info</code> object with SNP information as returned
+by the <code>snp_info</code> function. The included <code>data frame</code> contains
+the columns 'chr', 'position' and 'snp'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object2</code></td>
+<td>
+<p>A <code>pathway_info</code> object with information on genes
+contained in pathways. It is created by the <code>pathway_info</code> 
+function and contains a <code>data frame</code> with columns 
+'pathway', 'gene_start', 'gene_end', 'chr', 'gene'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further argdata(hsa04020)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> mapping SNPs to genes and genes to
+pathways. It includes the columns 'pathway', 'gene', 'chr', 'snp' and 
+'position'.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs, Saskia Freytag, Ngoc-Thuy Ha
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>snp_info</code>, <code>pathway_info</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(hsa04022_info)  # pathway_info('hsa04020')
+data(rs10243170_info)# snp_info("rs10243170")
+get_anno(rs10243170_info, hsa04022_info)
+
+</code></pre>
+
+
+</div>

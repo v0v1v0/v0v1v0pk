@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Mobius.set.func</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create objects representing the Möbius transform of a set function.</h2>
+
+<h3>Description</h3>
+
+<p>These functions create objects of class
+<code>Mobius.set.func</code>, <code>Mobius.game</code>, or <br><code>Mobius.capacity</code> from an object of class <code>numeric</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Mobius.set.func(object, n, k)
+Mobius.game(object, n, k)
+Mobius.capacity(object, n, k)
+additive.capacity(v)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>An object of class <code>numeric</code> of length 1 equal to the
+cardinal of the set on which the Möbius representation is defined.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>An object of class <code>numeric</code> of length 1 equal to the
+order of truncation of the Möbius representation. Coefficients whose
+cardinal is superior to <code>k</code> are considered to be zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object of class <code>numeric</code> of length
+<code>choose(n,0) + ... + choose(n,k)</code> representing the
+coefficients of the truncated Möbius transform in
+"natural" order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>An object of class <code>numeric</code> containing the coefficients
+of the capacity on singletons.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return objects of class <code>Mobius.set.func</code>, <code>Mobius.game</code>, or <code>Mobius.capacity</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.capacity-class</code>,  
+<br><code>Mobius.game-class</code>,
+<br><code>Mobius.set.func-class</code>,
+<br><code>k.truncate.Mobius-methods</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Mobius.set.func(c(0,1,1,2,1,2,1,2,2,3,2),4,2)
+Mobius.game(c(0,1,1,2,1,2,1,2,2,3,2),4,2)
+Mobius.capacity(c(0,1,1,2,1,2,1,2,2,3,2),4,2)
+additive.capacity(c(1,2,3,4))
+</code></pre>
+
+
+</div>

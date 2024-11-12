@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ki_group_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get list of available groups</h2>
+
+<h3>Description</h3>
+
+<p>Returns a tibble containing metadata available groups. This can be used to
+further filter down other queries like 'ki_station_list'.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ki_group_list(hub, datasource = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>hub</code></td>
+<td>
+<p>The KiWIS database you are querying. Either one of the defaults or a URL.
+See <a href="https://github.com/rywhale/kiwisR">README</a>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>datasource</code></td>
+<td>
+<p>(Optional) The data source to be used, defaults to 0.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble with three columns: group_id, group_name and group_type.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+ki_group_list(hub = "swmc")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

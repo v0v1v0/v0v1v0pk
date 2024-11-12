@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covComp-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Class <code>"covComp"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Class <code>"covComp"</code> representing a composite kernel combining
+several kernels objects inheriting from the class <code>"covAll"</code>.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("covComp",
+    ...)</code> or by using <code>covComp</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>def</code>:</dt>
+<dd>
+<p>Object of class <code>"expression"</code> defining the
+This is a parsed and cleaned version of the value
+of the <code>formula</code> formal in <code>covComp</code>.
+</p>
+</dd>
+<dt>
+<code>covAlls</code>:</dt>
+<dd>
+<p>Object of class <code>"list"</code> containing the kernel
+objects used by the formula. The coefficients of these
+kernels can be changed.
+</p>
+</dd>
+<dt>
+<code>hasGrad</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>: can we differentiate
+the kernel w.r.t. all its parameters?
+</p>
+</dd>
+<dt>
+<code>label</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code> A label attached to the kernel
+to describe it.
+</p>
+</dd>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>: dimension (or number of inputs).
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>: number of parameters.
+</p>
+</dd>
+<dt>
+<code>parNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>: vector of parameter names. Its
+length is in slot <code>parN</code>.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>: names of the inputs used by
+the kernel.
+</p>
+</dd>
+<dt>
+<code>topParN</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>: number of <em>top</em> parameters.
+</p>
+</dd>
+<dt>
+<code>topParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Names of the top parameters.
+</p>
+</dd>
+<dt>
+<code>topPar</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Values of the top parameters.
+</p>
+</dd>
+<dt>
+<code>topParLower</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Lower bounds for the top
+parameters.
+</p>
+</dd>
+<dt>
+<code>topParUpper</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Upper bounds for the top
+parameters.
+</p>
+</dd>
+<dt>
+<code>parsedFormula</code>:</dt>
+<dd>
+<p>Object of class <code>"list"</code>. Ugly draft for some slots to be
+added in the next versions.
+</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>"covAll"</code>, directly.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.list</dt>
+<dd>
+<p><code>signature(object = "covComp")</code>: coerce <code>object</code> into a
+list of covariance kernels, each inheriting from the virual class
+<code>"covAll"</code>. This is useful e.g., to extract the coefficients
+or to plot a covariance component.
+</p>
+</dd>
+<dt>checkX</dt>
+<dd>
+<p><code>signature(object = "covComp", X = "data.frame")</code>: check that
+the inputs exist with suitable column names and suitable <em>factor</em>
+content. The levels should match the prescribed levels. Returns a
+matrix with the input columns in the order prescribed by
+<code>object</code>.
+</p>
+</dd>
+<dt>coef, coef&lt;-</dt>
+<dd>
+<p><code>signature(object = "covComp")</code>: extract or replace the
+vector of coefficients.
+</p>
+</dd>
+<dt>coefLower, coefUpper</dt>
+<dd>
+<p><code>signature(object = "covComp")</code>: extract the vector of Lower
+or Upper bounds on the coefficients.
+</p>
+</dd>
+<dt>scores</dt>
+<dd>
+<p><code>signature(object = "covComp")</code>: return the vector of
+scores, i.e. the derivative of the log-likelihood w.r.t. the
+parameter vector at the current parameter values.
+</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p>The <code>covComp</code> creator.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+showClass("covComp")
+
+</code></pre>
+
+
+</div>

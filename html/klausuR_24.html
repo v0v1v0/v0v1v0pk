@@ -1,0 +1,189 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nret.translator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert NRET/ET data between klausuR and other software</h2>
+
+<h3>Description</h3>
+
+<p>This function should help to interchange answer data between R and other statistical software packages – especially
+SPSS, but it's probably useful for other products as well.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nret.translator(
+  dat,
+  items = NULL,
+  spss = "out",
+  corr = FALSE,
+  num.alt = NULL,
+  klausuR.alt = c(is.true = "+", is.false = "-", missing = "0", err = "*"),
+  spss.alt = c(is.true = "2", is.false = "1", missing = "0", err = "3"),
+  rm.old.vars = TRUE,
+  items.only = FALSE,
+  klausuR.prefix = c(),
+  spss.prefix = c()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>A data.frame, the object to convert.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items</code></td>
+<td>
+<p>Optional vector defining the columns to convert. If <code>NULL</code>,
+the function will try to autodetect
+Items: <code>klausuR</code> type items are expected to be named <code>"ItemXXX"</code>,
+with XXX indicating the item number,
+SPSS type items <code>"itemXXXaYY"</code>,
+with XXX indicating the item number and YY the number of the answer alternative.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spss</code></td>
+<td>
+<p>Either "in" or "out", depending on the direction of conversion.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corr</code></td>
+<td>
+<p>Logical. Set to <code>TRUE</code> if <code>dat</code> is a vector with the correct answers. If <code>corr=TRUE</code> and
+<code>spss="in"</code>, you must also set <code>num.alt</code> accordingly!</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.alt</code></td>
+<td>
+<p>A numeric value definig the number of answer alternatives for each item. Can be a vector,
+if items
+have different numbers of options. If it is shorter than the number of items,
+it will be repeated for all items.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>klausuR.alt</code></td>
+<td>
+<p>A named vector defining the codes for <code>klausuR</code> type of answers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spss.alt</code></td>
+<td>
+<p>A named vector defining the codes for SPSS type of answers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rm.old.vars</code></td>
+<td>
+<p>Logical. If <code>TRUE</code>,
+the converted columns will not be returned. Only relevant if <code>corr=FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items.only</code></td>
+<td>
+<p>Logical. If <code>TRUE</code>,
+only the converted columns will be returned. Only relevant if <code>corr=FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>klausuR.prefix</code></td>
+<td>
+<p>A named character vector with two optional elements,
+<code>item</code> and <code>corr</code>, defining the name prefix
+used for the items in the test data and the vector with correct answers,
+respectively. Defaults to <code>item="Item"</code> and <code>corr="Item"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spss.prefix</code></td>
+<td>
+<p>Like <code>klausuR.prefix</code>,
+but for the SPSS data. Defaults to <code>item="item"</code> and <code>corr="corr"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>klausur</code> expects data in a special format if it should be evaluated according to (Number Right) Elimination
+Testing (NRET/ET),
+only one variable per item. Other software products might not be able to process this rather
+condensed format. In that case, you will most likely need several variables for each item,
+i.e. one per answer alternative.
+Adding to that, the coding of answers is by default done with "+", "-",
+"0" and "*" in <code>klausuR</code>, again a
+solution that might confuse other products.
+</p>
+<p>This function translates data in both directions,
+and does also convert vectors giving the correct answer. The latter
+will turn a <code>klausuR</code> type answer string into a number indicating the correct alternative (and the other way round).
+This means that it will only work if there's exactly one valid answer to each item. If you convert towards SPSS,
+the resulting list will also include SPSS syntax to define variables respectively.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>corr=FALSE</code>,
+a data.frame with more or less columns (depending on <code>rm.old.vars</code> and <code>items.only</code>).
+If <code>corr=TRUE</code>,
+returns a named vector if <code>spss="in"</code> and a list if <code>spss="out"</code> (containing SPSS syntax
+in the element <code>syntax</code> and also a named vector, called <code>answ</code>).
+</p>
+
+
+<h3>Note</h3>
+
+<p>The conversion is done on an object basis, that is,
+<code>nret.translator</code> will not open or write files,
+but take and return R objects. The function should ignore any other columns/variables in the object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# from SPSS to R
+data(spss.data)
+klausuR.data &lt;- nret.translator(spss.data, spss="in")
+spss.corr &lt;- c(
+   item01=2, item02=3, item03=3, item04=3, item05=2,
+   item06=2, item07=3, item08=1, item09=1, item10=2)
+klausuR.corr &lt;- nret.translator(spss.corr, spss="in", corr=TRUE, num.alt=3)
+
+# from R to SPSS
+spss.data &lt;- nret.translator(klausuR.data)
+spss.corr &lt;- nret.translator(klausuR.corr, corr=TRUE, num.alt=3)
+# if you find the syntax useful
+cat(spss.corr$syntax, file="~/somewhere/NRET.sps")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

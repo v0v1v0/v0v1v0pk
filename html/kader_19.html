@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nadwat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Classical Nadaraya-Watson Regression Estimator</h2>
+
+<h3>Description</h3>
+
+<p>In its arguments <code>x</code> and <code>dataX</code> vectorized function to compute
+the classical Nadaraya-Watson estimator (as it is <code class="reqn">m_n</code> in eq. (1.1)
+in Eichner &amp; Stute (2012)).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nadwat(x, dataX, dataY, K, h)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric vector with the location(s) at which the Nadaraya-Watson
+regression estimator is to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataX</code></td>
+<td>
+<p>Numeric vector <code class="reqn">(X_1, \ldots, X_n)</code> of the x-values from
+which (together with the pertaining y-values) the estimate is
+to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataY</code></td>
+<td>
+<p>Numeric vector <code class="reqn">(Y_1, \ldots, Y_n)</code> of the y-values from
+which (together with the pertaining x-values) the estimate is
+to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A kernel function (with vectorized in- &amp; output) to be used for the
+estimator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar for bandwidth <code class="reqn">h</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Implementation of the classical Nadaraya-Watson estimator as in eq. (1.1) in
+Eichner &amp; Stute (2012) at given location(s) in <code>x</code> for data <code class="reqn">(X_1,
+Y_1), \ldots, (X_n, Y_n)</code>, a kernel function <code class="reqn">K</code> and a bandwidth <code class="reqn">h</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector of the same length as <code>x</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+
+ # Regression function: a polynomial of degree 4 with one maximum (or
+ # minimum), one point of inflection, and one saddle point.
+ # Memo: for p(x) = a * (x - x1) * (x - x2)^3 + b the max. (or min.)
+ # is at x = (3*x1 + x2)/4, the point of inflection is at x =
+ # (x1 + x2)/2, and the saddle point at x = x2.
+m &lt;- function(x, x1 = 0, x2 = 8, a = 0.01, b = 0) {
+ a * (x - x1) * (x - x2)^3 + b
+ }
+ # Note: for m()'s default values a minimum is at x = 2, a point
+ # of inflection at x = 4, and a saddle point at x = 8.
+
+n &lt;- 100       # Sample size.
+set.seed(42)   # To guarantee reproducibility.
+X &lt;- runif(n, min = -3, max = 15)      # X_1, ..., X_n
+Y &lt;- m(X) + rnorm(length(X), sd = 5)   # Y_1, ..., Y_n
+
+x &lt;- seq(-3, 15, length = 51)   # Where the Nadaraya-Watson estimator
+                                # mn of m shall be computed.
+mn &lt;- nadwat(x = x, dataX = X, dataY = Y, K = dnorm, h = n^(-1/5))
+
+plot(x = X, y = Y);   rug(X)
+lines(x = x, y = mn, col = "blue")  # The estimator.
+curve(m, add = TRUE, col = "red")   # The "truth".
+
+</code></pre>
+
+
+</div>

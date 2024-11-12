@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>contr.dummy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Contrast Matrices</h2>
+
+<h3>Description</h3>
+
+<p>Returns a matrix of contrasts.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">contr.dummy(n, contrasts = TRUE)
+contr.ordinal(n, contrasts = TRUE)
+contr.metric(n, contrasts = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A vector containing levels of a factor, or the number of levels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrasts</code></td>
+<td>
+<p>A logical value indicating whether contrasts should be computed.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>contr.dummy</code> is standard dummy-coding, <code>contr.metric</code> has the same 
+effect like <code>as.numeric</code> (makes sense of course only for ordered variables). 
+<code>contr.ordinal</code> computes contrasts for ordinal variables.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix with <em>n</em> rows and <em>n-1</em> columns for <code>contr.ordinal</code>, 
+a matrix with <em>n</em> rows and <em>n</em> columns for <code>contr.dummy</code> 
+and a vector of length <em>n</em> for <code>contr.metric</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Klaus P. Schliep <a href="mailto:klaus.schliep@gmail.com">klaus.schliep@gmail.com</a> </p>
+
+
+<h3>References</h3>
+
+<p>Hechenbichler K. and Schliep K.P. (2004)  <em>Weighted k-Nearest-Neighbor Techniques and Ordinal Classification</em>, Discussion Paper 399, SFB 386, Ludwig-Maximilians University Munich
+(<a href="http://www.stat.uni-muenchen.de/sfb386/papers/dsp/paper399.ps">http://www.stat.uni-muenchen.de/sfb386/papers/dsp/paper399.ps</a>)</p>
+
+
+<h3>See Also</h3>
+
+<p><code>contrasts</code>, <code>contr.poly</code> and <code>contr.sdif</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">contr.metric(5)
+contr.ordinal(5)
+contr.dummy(5)
+</code></pre>
+
+
+</div>

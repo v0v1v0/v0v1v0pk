@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k.truncate.Mobius-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k-order truncation of the Möbius representation of a set function.</h2>
+
+<h3>Description</h3>
+
+<p>Truncates the Möbius representation of a set function by
+considering that the values of subsets whose cardinal is superior to <code>k</code>
+are zero. The result is at most <code>k</code>-additive. </p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "set.func", k = "numeric" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.set.func</code>. The Möbius representation of the set function is first computed and then <code>k</code>-truncated.</p>
+</dd>
+<dt>object = "Mobius.set.func", k = "numeric" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.set.func</code>.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>M. Grabisch (1997), <em>k-order additive discrete fuzzy measures and their
+representation</em>, Fuzzy Sets and Systems 92(2), pages 167-189.
+</p>
+<p>M. Grabisch (2000), <em>The interaction and Möbius
+representations of fuzzy measures on finites spaces, k-additive
+measures: a survey</em>, in: Fuzzy Measures and Integrals: Theory and
+Applications, M. Grabisch, T. Murofushi, and M. Sugeno Eds, Physica
+Verlag, pages 70-93.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.set.func-class</code>, 
+<br><code>set.func-class</code>, 
+<br><code>Mobius-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a set function
+mu &lt;- set.func(c(0,1,1,1,2,2,2,3))
+mu
+
+## 2-truncate it
+k.truncate.Mobius(mu,2)
+## 2-truncate it
+k.truncate.Mobius(Mobius(mu),2)
+</code></pre>
+
+
+</div>

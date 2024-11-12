@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Rec2Polar</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rectangular to polar coordinates</h2>
+
+<h3>Description</h3>
+
+<p>Given a <code>d</code>-dimensional vector <code>X</code> in rectangular coordinate, this
+function compute its polar coordinate <code>(R,Theta)</code>, where <code>R</code> is the
+length of <code>X</code> and the <code>(d-1)</code>-dimensional vector <code>Theta</code>
+contains the <code>d-1</code> angles of <code>X</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Rec2Polar(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A vector in rectangular coordinate. Suppose the dimension of
+<code>X</code> is <code>d</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The formula corresponds to theta=g(v) as in Lemma 1 of Tang and Li (2024).
+See also Anderson (2003).
+Note that when <code>d=2</code>, <code>V</code> will be <code>(sin(Theta),cos(Theta))</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of the following:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>The length of <code>X</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Theta</code></td>
+<td>
+<p>A vector of length <code>d-1</code>, containing the angles of <code>X</code>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p><cite>Tang, Y. and Li, B. (2024), “A nonparametric test for elliptical
+distribution based on kernel embedding of probabilities,”
+<a href="https://arxiv.org/abs/2306.10594">https://arxiv.org/abs/2306.10594</a></cite>
+<cite>Anderson, T. W. (2003). An Introduction to Multivariate Statistical
+Analysis. John Wiley &amp; Suns, Inc. Huboken, New Jersey.</cite>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">X=c(3,1,3)
+Rec2Polar(X)
+
+</code></pre>
+
+
+</div>

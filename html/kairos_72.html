@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_aoristic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Aoristic Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Plot Aoristic Analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'AoristicSum,missing'
+plot(
+  x,
+  calendar = getOption("kairos.calendar"),
+  type = c("bar"),
+  flip = FALSE,
+  ncol = NULL,
+  main = NULL,
+  sub = NULL,
+  ann = graphics::par("ann"),
+  axes = TRUE,
+  frame.plot = axes,
+  panel.first = NULL,
+  panel.last = NULL,
+  ...
+)
+
+## S4 method for signature 'AoristicSum'
+image(x, calendar = getOption("kairos.calendar"), ...)
+
+## S4 method for signature 'RateOfChange,missing'
+plot(
+  x,
+  calendar = getOption("kairos.calendar"),
+  level = 0.95,
+  flip = FALSE,
+  ncol = NULL,
+  main = NULL,
+  sub = NULL,
+  ann = graphics::par("ann"),
+  axes = TRUE,
+  frame.plot = axes,
+  panel.first = NULL,
+  panel.last = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <code>AoristicSum</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A <code>character</code> string specifying whether bar or density should
+be plotted? It must be one of "<code>bar</code>" or "<code>density</code>". Any unambiguous
+substring can be given.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flip</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the y-axis (ticks and numbering) be
+flipped from side 2 (left) to 4 (right) from series to series when <code>facet</code>
+is "<code>multiple</code>"?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncol</code></td>
+<td>
+<p>An <code>integer</code> specifying the number of columns to use when
+<code>facet</code> is "<code>multiple</code>". Defaults to 1 for up to 4 series, otherwise to 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>A <code>character</code> string giving a main title for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sub</code></td>
+<td>
+<p>A <code>character</code> string giving a subtitle for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ann</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the default annotation (title and x
+and y axis labels) appear on the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>A <code>logical</code> scalar: should axes be drawn on the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frame.plot</code></td>
+<td>
+<p>A <code>logical</code> scalar: should a box be drawn around the
+plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>panel.first</code></td>
+<td>
+<p>An <code>expression</code> to be evaluated after the plot axes are
+set up but before any plotting takes place. This can be useful for drawing
+background grids.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>panel.last</code></td>
+<td>
+<p>An <code>expression</code> to be evaluated after plotting has taken
+place but before the axes, title and box are added.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further parameters to be passed to <code>panel</code>
+(e.g. graphical parameters).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the confidence level.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>plot()</code> is called it for its side-effects: it results in a graphic being
+displayed (invisibly returns <code>x</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>aoristic()</code>, <code>roc()</code>
+</p>
+<p>Other plotting methods: 
+<code>plot_event</code>,
+<code>plot_fit</code>,
+<code>plot_mcd</code>,
+<code>plot_time()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Husi 2022
+data("loire", package = "folio")
+
+## Get time range
+loire_range &lt;- loire[, c("lower", "upper")]
+
+## Calculate aoristic sum (normal)
+aorist_raw &lt;- aoristic(loire_range, step = 50, weight = FALSE)
+plot(aorist_raw, col = "grey")
+
+## Calculate aoristic sum (weights)
+aorist_weighted &lt;- aoristic(loire_range, step = 50, weight = TRUE)
+plot(aorist_weighted, col = "grey")
+
+## Calculate aoristic sum (weights) by group
+aorist_groups &lt;- aoristic(loire_range, step = 50, weight = TRUE,
+                          groups = loire$area)
+plot(aorist_groups, flip = TRUE, col = "grey")
+image(aorist_groups)
+
+## Rate of change
+roc_weighted &lt;- roc(aorist_weighted, n = 30)
+plot(roc_weighted)
+
+## Rate of change by group
+roc_groups &lt;- roc(aorist_groups, n = 30)
+plot(roc_groups, flip = TRUE)
+</code></pre>
+
+
+</div>

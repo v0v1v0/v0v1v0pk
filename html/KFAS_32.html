@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sexratio</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Number of males and females born in Finland from 1751 to 2011</h2>
+
+<h3>Description</h3>
+
+<p>A time series object containing the number of males and females born in Finland from 1751 to 2011.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A time series object containing the number of males and females born in Finland from 1751 to 2011.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Statistics Finland <a href="https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/">https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("sexratio")
+model &lt;- SSModel(Male ~ SSMtrend(1, Q = NA), u = sexratio[, "Total"],
+  data = sexratio, distribution = "binomial")
+fit &lt;- fitSSM(model, inits = -15, method = "BFGS")
+fit$model["Q"]
+
+# Computing confidence intervals in response scale
+# Uses importance sampling on response scale (400 samples with antithetics)
+
+pred &lt;- predict(fit$model, type = "response", interval = "conf", nsim = 100)
+
+ts.plot(cbind(model$y/model$u, pred), col = c(1, 2, 3, 3), lty = c(1, 1, 2, 2))
+
+## Not run: 
+# Now with sex ratio instead of the probabilities:
+imp &lt;- importanceSSM(fit$model, nsim = 1000, antithetics = TRUE)
+sexratio.smooth &lt;- numeric(length(model$y))
+sexratio.ci &lt;- matrix(0, length(model$y), 2)
+w &lt;- imp$w/sum(imp$w)
+for(i in 1:length(model$y)){
+ sexr &lt;- exp(imp$sample[i, 1, ])
+ sexratio.smooth[i] &lt;- sum(sexr*w)
+ oo &lt;- order(sexr)
+ sexratio.ci[i, ] &lt;- c(sexr[oo][which.min(abs(cumsum(w[oo]) - 0.05))],
+                      sexr[oo][which.min(abs(cumsum(w[oo]) - 0.95))])
+}
+
+# Same by direct transformation:
+out &lt;- KFS(fit$model, smoothing = "signal", nsim = 1000)
+sexratio.smooth2 &lt;- exp(out$thetahat)
+sexratio.ci2 &lt;- exp(c(out$thetahat) + qnorm(0.025) *
+  sqrt(drop(out$V_theta))%o%c(1, -1))
+
+ts.plot(cbind(sexratio.smooth, sexratio.ci, sexratio.smooth2, sexratio.ci2),
+        col = c(1, 1, 1, 2, 2, 2), lty = c(1, 2, 2, 1, 2, 2))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

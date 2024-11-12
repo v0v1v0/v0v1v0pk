@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>krm.score.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Adjusted Score Test
+</h2>
+
+<h3>Description</h3>
+
+<p>Adjusted score test for kernel-based regression models. This function is typically not used directly, but is called within krm.most().
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">krm.score.test(formula, data, K, regression.type=c("logistic","linear"), verbose=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>a formula object. Model under null.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>a data frame
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+
+<p>a n by n kernel/correlation matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regression.type</code></td>
+<td>
+
+<p>a string
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>Boolean
+</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+dat=sim.liu.2008(n=100, a=0, seed=1)
+z=as.matrix(subset(dat, select=c(z.1,z.2,z.3,z.4,z.5)))
+rho=1
+K=kyotil::getK(z,kernel="rbf",para=rho^-2)
+krm.score.test (y~x, dat, K, regression.type="logistic") 
+
+
+</code></pre>
+
+
+</div>

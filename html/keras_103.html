@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit_image_data_generator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit image data generator internal statistics to some sample data.</h2>
+
+<h3>Description</h3>
+
+<p>Required for <code>featurewise_center</code>, <code>featurewise_std_normalization</code>
+and <code>zca_whitening</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit_image_data_generator(object, x, augment = FALSE, rounds = 1, seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p><code>image_data_generator()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>array, the data to fit on (should have rank 4). In case of grayscale data,
+the channels axis should have value 1, and in case of RGB data, it should have value 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>augment</code></td>
+<td>
+<p>Whether to fit on randomly augmented samples</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rounds</code></td>
+<td>
+<p>If <code>augment</code>, how many augmentation passes to do over the data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>random seed.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other image preprocessing: 
+<code>flow_images_from_data()</code>,
+<code>flow_images_from_dataframe()</code>,
+<code>flow_images_from_directory()</code>,
+<code>image_load()</code>,
+<code>image_to_array()</code>
+</p>
+
+
+</div>

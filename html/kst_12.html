@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kdomain</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Domain of Knowledge Structures or Bases</h2>
+
+<h3>Description</h3>
+
+<p>Computes the domain of knowledge structures or bases.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  kdomain(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>,
+<code>kbase</code>, or <code>kfamset</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>A <em>domain</em> is a set of questions or items representing a field of
+knowledge.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>set</code> of items, each representing one question of the
+knowledge domain.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>, <code>kbase</code>,
+<code>kfamset</code>, <code>set</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+kdomain(kst)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kbSkew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Khattree-Bahuguna's Univariate Skewness</h2>
+
+<h3>Description</h3>
+
+<p>Compute Khattree-Bahuguna's Univariate Skewness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kbSkew(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of original observations.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Given a univariate random sample of size <code class="reqn">n</code> consist of observations <code class="reqn">x_1, x_2, \ldots, x_n</code>, let <code class="reqn">x_{(1)} \le x_{(2)} \le \cdots \le x_{(n)}</code> be the order statistics of <code class="reqn">x_1, x_2, \ldots, x_n</code> after being centered by their mean. Define
+</p>
+<p style="text-align: center;"><code class="reqn">y_ i = \frac{x_{(i)} + x_{(n - i + 1)}}{2}</code>
+</p>
+
+<p>and
+</p>
+<p style="text-align: center;"><code class="reqn">w_ i = \frac{x_{(i)} - x_{(n - i + 1)}}{2}</code>
+</p>
+
+<p>The sample Khattree-Bahuguna's univariate skewness is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{\delta} = \frac{\sum y_i^2}{\sum y_i^2 + \sum w_i^2}.</code>
+</p>
+
+<p>It can be shown that <code class="reqn">0 \le \hat{\delta} \le \frac{1}{2}</code>. Values close to zero indicate, low skewness while those close to <code class="reqn">\frac{1}{2}</code> indicate the presence of high degree of skewness.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>kbSkew</code> gives the Khattree-Bahuguna's univariate skewness of the data.
+</p>
+
+
+<h3>References</h3>
+
+<p>Khattree, R. and Bahuguna, M. (2019). An alternative data analytic approach to measure the univariate and multivariate skewness. <em>International Journal of Data Science and Analytics</em>, Vol. 7, No. 1, 1-16.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute Khattree-Bahuguna's univariate skewness
+
+set.seed(2019)
+x &lt;- rnorm(1000) # Normal Distribution
+kbSkew(x)
+
+set.seed(2019)
+y &lt;- rlnorm(1000, meanlog = 1, sdlog = 0.25) # Log-normal Distribution
+kbSkew(y)
+
+</code></pre>
+
+
+</div>

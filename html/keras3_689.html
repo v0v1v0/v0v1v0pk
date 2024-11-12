@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>train_on_batch</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Runs a single gradient update on a single batch of data.</h2>
+
+<h3>Description</h3>
+
+<p>Runs a single gradient update on a single batch of data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">train_on_batch(object, x, y = NULL, sample_weight = NULL, class_weight = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input data. Must be array-like.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Target data. Must be array-like.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample_weight</code></td>
+<td>
+<p>Optional array of the same length as x, containing
+weights to apply to the model's loss for each sample.
+In the case of temporal data, you can pass a 2D array
+with shape <code style="white-space: pre;">⁠(samples, sequence_length)⁠</code>, to apply a different
+weight to every timestep of every sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_weight</code></td>
+<td>
+<p>Optional named list mapping class indices (integers, 0-based)
+to a weight (float) to apply to the model's loss for the samples
+from this class during training. This can be useful to tell the
+model to "pay more attention" to samples from an
+under-represented class. When <code>class_weight</code> is specified
+and targets have a rank of 2 or greater, either <code>y</code> must
+be one-hot encoded, or an explicit final dimension of 1
+must be included for sparse class labels.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar loss value (when no metrics),
+or a named list of loss and metric values
+(if there are metrics).
+The property <code>model$metrics_names</code>
+will give you the display labels for the scalar outputs.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_training_apis#trainonbatch-method">https://keras.io/api/models/model_training_apis#trainonbatch-method</a>
+</p>
+</li></ul>
+<p>Other model training: <br><code>compile.keras.src.models.model.Model()</code> <br><code>evaluate.keras.src.models.model.Model()</code> <br><code>predict.keras.src.models.model.Model()</code> <br><code>predict_on_batch()</code> <br><code>test_on_batch()</code> <br></p>
+
+
+</div>

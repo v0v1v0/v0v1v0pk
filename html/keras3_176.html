@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>initializer_glorot_uniform</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Glorot uniform initializer, also called Xavier uniform initializer.</h2>
+
+<h3>Description</h3>
+
+<p>Draws samples from a uniform distribution within <code style="white-space: pre;">⁠[-limit, limit]⁠</code>, where
+<code>limit = sqrt(6 / (fan_in + fan_out))</code> (<code>fan_in</code> is the number of input
+units in the weight tensor and <code>fan_out</code> is the number of output units).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">initializer_glorot_uniform(seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>An integer or instance of
+<code>random_seed_generator()</code>.
+Used to make the behavior of the initializer
+deterministic. Note that an initializer seeded with an integer
+or <code>NULL</code> (unseeded) will produce the same random values
+across multiple calls. To get different random values
+across multiple calls, use as seed an instance
+of <code>random_seed_generator()</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>An <code>Initializer</code> instance that can be passed to layer or variable
+constructors, or called directly with a <code>shape</code> to return a Tensor.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># Standalone usage:
+initializer &lt;- initializer_glorot_uniform()
+values &lt;- initializer(shape = c(2, 2))
+</pre></div>
+<div class="sourceCode r"><pre># Usage in a Keras layer:
+initializer &lt;- initializer_glorot_uniform()
+layer &lt;- layer_dense(units = 3, kernel_initializer = initializer)
+</pre></div>
+
+
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://proceedings.mlr.press/v9/glorot10a.html">Glorot et al., 2010</a>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/initializers#glorotuniform-class">https://keras.io/api/layers/initializers#glorotuniform-class</a>
+</p>
+</li></ul>
+<p>Other random initializers: <br><code>initializer_glorot_normal()</code> <br><code>initializer_he_normal()</code> <br><code>initializer_he_uniform()</code> <br><code>initializer_lecun_normal()</code> <br><code>initializer_lecun_uniform()</code> <br><code>initializer_orthogonal()</code> <br><code>initializer_random_normal()</code> <br><code>initializer_random_uniform()</code> <br><code>initializer_truncated_normal()</code> <br><code>initializer_variance_scaling()</code> <br></p>
+<p>Other initializers: <br><code>initializer_constant()</code> <br><code>initializer_glorot_normal()</code> <br><code>initializer_he_normal()</code> <br><code>initializer_he_uniform()</code> <br><code>initializer_identity()</code> <br><code>initializer_lecun_normal()</code> <br><code>initializer_lecun_uniform()</code> <br><code>initializer_ones()</code> <br><code>initializer_orthogonal()</code> <br><code>initializer_random_normal()</code> <br><code>initializer_random_uniform()</code> <br><code>initializer_truncated_normal()</code> <br><code>initializer_variance_scaling()</code> <br><code>initializer_zeros()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>EOS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Special Tokens</h2>
+
+<h3>Description</h3>
+
+<p>Return Begin-Of-Sentence, End-Of-Sentence and Unknown-Word special tokens.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">EOS()
+
+BOS()
+
+UNK()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>These functions return the internal representation of BOS, EOS and UNK tokens
+respectively. Their actual returned values are irrelevant and their only
+purpose is to simplify queries of k-gram counts and probabilities involving
+the special tokens, as shown in the examples.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a string representing the appropriate special token.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">f &lt;- kgram_freqs("a b b a b", 2)
+query(f, c(BOS(), EOS(), UNK()))
+
+m &lt;- language_model(f, "add_k", k = 1)
+probability(c("a", "b") %|% BOS(), m)
+probability("a b b a" %+% EOS(), m)
+
+# The actual values of BOS(), EOS() and UNK() are irrelevant
+c(BOS(), EOS(), UNK())
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Poisson</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Poisson outcome for kDGLM models</h2>
+
+<h3>Description</h3>
+
+<p>Creates an outcome with Poisson distribution with the chosen parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Poisson(lambda, data, offset = as.matrix(data)^0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>character: The name of the linear predictor associated with the rate (mean) parameter of the Poisson distribution. The parameter is treated as unknown and equal to the exponential of the associated linear predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>numeric: The values of the observed data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>numeric: The offset at each observation. Must have the same shape as data.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For evaluating the posterior parameters, we use the method proposed in Alves et al. (2024).
+</p>
+<p>For the details about the implementation see  dos Santos et al. (2024).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A object of the class dlm_distr
+</p>
+
+
+<h3>References</h3>
+
+<p>Mariane
+Branco Alves, Helio
+S. Migon, Raíra Marotta, Junior,
+Silvaneo
+Vieira dos Santos (2024).
+“k-parametric Dynamic Generalized Linear Models: a sequential approach via Information Geometry.”
+2201.05387.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p>Other auxiliary functions for a creating outcomes: 
+<code>Gamma()</code>,
+<code>Multinom()</code>,
+<code>Normal()</code>,
+<code>summary.dlm_distr()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- c(AirPassengers)
+
+level &lt;- polynomial_block(rate = 1, D = 0.95, order = 2)
+season &lt;- harmonic_block(rate = 1, period = 12, D = 0.975)
+
+outcome &lt;- Poisson(lambda = "rate", data = data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+summary(fitted.data)
+
+plot(fitted.data, plot.pkg = "base")
+
+</code></pre>
+
+
+</div>

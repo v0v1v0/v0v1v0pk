@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check.whatmap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check the validity of a whatmap argument</h2>
+
+<h3>Description</h3>
+
+<p>Not meant to be called directly by the user.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check.whatmap(x, whatmap)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>kohonen</code> object, or a
+list of data matrices that can be used as input data for SOM functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whatmap</code></td>
+<td>
+<p>An indication of a subset of the data; either by naming
+the elements, or giving indices. If <code>whatmap</code> equals NULL, the
+selection of <code>x</code> is used if <code>x</code> is a <code>kohonen</code>
+object, or else no selection is performed.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a numerical vector with the indices of the selected layers. An
+invalid selection leads to an error.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ron Wehrens</p>
+
+
+</div>

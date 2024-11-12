@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>remove-keys-scoped</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Remove selection of keys</h2>
+
+<h3>Description</h3>
+
+<p>These functions remove selection of keys using corresponding
+scoped variant of select. <code>.funs</code>
+argument is removed because of its redundancy.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">remove_keys_all(.tbl, ..., .unkey = FALSE)
+
+remove_keys_if(.tbl, .predicate, ..., .unkey = FALSE)
+
+remove_keys_at(.tbl, .vars, ..., .unkey = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.unkey</code></td>
+<td>
+<p>Whether to <code>unkey()</code> <code>.tbl</code> in case there are no keys left.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.predicate</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.vars</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">df &lt;- mtcars %&gt;% dplyr::as_tibble() %&gt;% key_by(vs, am, disp)
+df %&gt;% remove_keys_all()
+
+df %&gt;% remove_keys_all(.unkey = TRUE)
+
+df %&gt;% remove_keys_if(rlang::is_integerish)
+
+df %&gt;% remove_keys_at(c("vs", "am"))
+
+</code></pre>
+
+
+</div>

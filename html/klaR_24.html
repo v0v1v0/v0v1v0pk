@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hmm.sop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculation of HMM Sum of Path</h2>
+
+<h3>Description</h3>
+
+<p>A Hidden Markov Model for the classification of states in a time series. 
+Based on the transition probabilities and the so called emission probabilities
+(<code class="reqn">p(class|x)</code>) the ‘prior probablilities’ of states (classes) in time period <em>t</em> 
+given all past information in time period <em>t</em> are calculated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hmm.sop(sv, trans.matrix, prob.matrix)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sv</code></td>
+<td>
+<p>state at time 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trans.matrix</code></td>
+<td>
+<p>matrix of transition probabilities</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob.matrix</code></td>
+<td>
+<p>matrix of <code class="reqn">p(class|x)</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns the ‘prior probablilities’ of states. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Fischer, Reinald Oetsch</p>
+
+
+<h3>References</h3>
+
+<p>Garczarek, Ursula Maria (2002): Classification rules in standardized partition spaces.
+Dissertation, University of Dortmund. 
+URL <a href="http://hdl.handle.net/2003/2789">http://hdl.handle.net/2003/2789</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>calc.trans</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(MASS)
+data(B3)
+trans.matrix &lt;- calc.trans(B3$PHASEN)
+
+# Calculate posterior prob. for the classes via lda
+prob.matrix &lt;- predict(lda(PHASEN ~ ., data = B3))$post
+errormatrix(B3$PHASEN, apply(prob.matrix, 1, which.max))
+prior.prob &lt;- hmm.sop("2", trans.matrix, prob.matrix)
+errormatrix(B3$PHASEN, apply(prior.prob, 1, which.max))
+</code></pre>
+
+
+</div>

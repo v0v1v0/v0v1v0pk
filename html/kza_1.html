@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzft</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kolmogorov-Zurbenko Fourier Transform</h2>
+
+<h3>Description</h3>
+
+<p>Kolmogorov-Zurbenko Fourier Transform is an iterated Fourier transform.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzft(x, f=0, m=1, k=1) 
+coeff(m, k)
+transfer_function(m, k, lamda = seq(-0.5,0.5,by=0.01), omega = 0 )
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The raw data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>The frequency that KZFT is applied at.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>The window size for transform</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The number of iterations for applying the KZFT</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lamda</code></td>
+<td>
+<p>The frequencies used for the calculating the transfer function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>omega</code></td>
+<td>
+<p>The frequency that KZFT is applied at.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Kolmogorov-Zurbenko Fourier Transform (KZFT) is the Fourier transform applied 
+over every segment of length m iterated k times. The argument alg="F" will use 
+Fast Fourier Transforms written in C (fftw library). The alg="C" is a slow 
+Fourier Transform but has the advantage of being able to handle missing values. 
+It currently works in one dimension. The alg="R" is an R version of KZFT for 
+experimental purposes.The coeff function generates the coefficients for the KZFT 
+function.
+</p>
+<p>You will introduce a phase shift and decrease the fidelity of the signal if the product of f*m is not an integer.
+</p>
+
+
+<h3>References</h3>
+
+<p>I. G. Zurbenko, The spectral Analysis of Time Series. North-Holland, 1986.
+</p>
+<p>I. G. Zurbenko, P. S. Porter, Construction of high-resolution wavelets, Signal Processing 65: 315-327, 1998.
+</p>
+<p>R. Neagu, I. G. Zurbenko, Tracking and separating non-stationary multi-component chirp signals, J. Franklin Inst., 499-520, 2002.
+</p>
+<p>R. H. Shumway, D. S. Stoffer, Time Series Analysis and Its Applications: With R Examples, Springer, 2006.
+</p>
+<p>Wei Yang and Igor Zurbenko, kzft: Kolmogorov-Zurbenko Fourier Transform and Applications, R-Project 2007.
+</p>
+<p>Igor G. Zurbenko, Amy L. Potrzeba, Tidal Waves in Atmosphere and Their Effects, Acta Geophysica Volume 58, Number 2, 356-373
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kzp</code>,
+<code>kztp</code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># example taken from Wei Yang's KZFT package
+# coefficients of kzft(201,5)
+
+# function to calculate polnomial coefficients for kzft
+## Not run: 
+a&lt;-coeff(201,5);
+t&lt;-seq(1:1001)-501;
+z&lt;-cos(2*pi*0.025*t);
+plot(z*a,type="l",xlab="Time", ylab="Coefficient", main="Coefficients of the kzft");
+lines(a);
+lines(-1*a);
+
+## End(Not run)
+
+# example taken from Wei Yang's KZFT package
+# transfer function of the kzft(201,5) at frequency 0.025
+lamda&lt;-seq(-0.1,0.1,by=0.001)
+tf1&lt;-transfer_function(201,1,lamda,0.025)
+tf2&lt;-transfer_function(201,5,lamda,0.025)
+matplot(lamda,cbind(log(tf1),log(tf2)),type="l",ylim=c(-15,0),
+	ylab="Natural log transformation of the coefficients", 
+	xlab="Frequency (cycles/time unit)",
+    main="Transfer function of kzft(201,5) at frequency 0.025")
+
+# example with missing values
+set.seed(2)
+period=101
+f&lt;-1/period
+t&lt;-1:2000
+s&lt;-1*sin(2*pi*f*t)
+x&lt;-s
+noise&lt;-3*rnorm(length(t))
+x&lt;-s+noise
+m=101
+
+rand_idx &lt;- sample(t,100,replace=FALSE)
+x[rand_idx]&lt;-NA
+x&lt;-as.vector(na.omit(x))
+
+system.time(z1&lt;-kzft(x, m=m, k=1, f=f))
+system.time(z2&lt;-kzft(x, m=m, k=2, f=f))
+system.time(z3&lt;-kzft(x, m=m, k=3, f=f))
+
+par(mfrow=c(2,2))
+plot(x,type="l",main="Original time series",xlab="t", ylab="y")
+lines(s,col="blue")
+plot(2*Re(z1),type="l",main="kzft(101,1)",xlab="t", ylab="y", ylim=c(-6,6))
+lines(s,col="blue")
+plot(2*Re(z2),type="l",main="kzft(101,2)",xlab="t", ylab="y", ylim=c(-6,6))
+lines(s,col="blue")
+plot(2*Re(z3),type="l",main="kzft(101,3)",xlab="t", ylab="y", ylim=c(-6,6))
+lines(s,col="blue")
+par(mfrow=c(1,1))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_Normal_Poisson</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>convert_Normal_Poisson</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the parameters of the log-Normal that best approximates the given Gamma distribution.
+The approximation is the best in the sense that it minimizes the KL divergence from the Gamma to the log-Normal
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_Normal_Poisson(conj.param, parms)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>list: A vector containing the parameters of the Gamma (alpha,beta).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list: A list of extra known parameters of the distribution. Not used in this kernel.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The parameters of the Normal distribution of the linear predictor.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Poisson outcome: 
+<code>convert_Poisson_Normal()</code>,
+<code>poisson_pred()</code>,
+<code>update_Poisson()</code>
+</p>
+
+
+</div>

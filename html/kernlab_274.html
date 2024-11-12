@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot method for support vector object</h2>
+
+<h3>Description</h3>
+
+<p>Plot a binary classification support vector machine object.
+The <code>plot</code> function returns a contour plot of the decision values. </p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'ksvm'
+plot(object, data=NULL, grid = 50, slice = list())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a <code>ksvm</code> classification object created by the
+<code>ksvm</code> function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data frame or matrix containing data to be plotted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>granularity for the contour plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>slice</code></td>
+<td>
+<p>a list of named numeric values for the dimensions held
+constant (only needed if more than two variables are
+used). Dimensions not specified are fixed at 0. </p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Alexandros Karatzoglou<br><a href="mailto:alexandros.karatzoglou@ci.tuwien.ac.at">alexandros.karatzoglou@ci.tuwien.ac.at</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>ksvm</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Demo of the plot function
+x &lt;- rbind(matrix(rnorm(120),,2),matrix(rnorm(120,mean=3),,2))
+y &lt;- matrix(c(rep(1,60),rep(-1,60)))
+
+svp &lt;- ksvm(x,y,type="C-svc")
+plot(svp,data=x)
+
+</code></pre>
+
+
+</div>

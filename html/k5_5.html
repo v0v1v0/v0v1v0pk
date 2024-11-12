@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>count2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Count the way you want</h2>
+
+<h3>Description</h3>
+
+<p>A wrapper around <code>dplyr::count()</code> with <code>sort</code> set to <code>TRUE</code> by default and
+the an additional column created by default containing the proportional
+fraction each observation makes of the whole.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">count2(x, ..., wt = NULL, sort = TRUE, prop = TRUE, sum = NULL)
+
+count_vec(x, sort = TRUE, prop = TRUE, sum = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Variables to group by.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wt</code></td>
+<td>
+<p>Frequency weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort</code></td>
+<td>
+<p>If <code>TRUE</code>, will show the largest groups at the top.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prop</code></td>
+<td>
+<p>If <code>TRUE</code>, compute the fraction of marginal table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum</code></td>
+<td>
+<p>Column to replace with a cumulative sum (<code>n</code>, <code>p</code>, or <code>np</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble of element counts
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">count2(iris, Species)
+</code></pre>
+
+
+</div>

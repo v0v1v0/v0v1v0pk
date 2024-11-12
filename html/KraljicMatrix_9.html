@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SAVF_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot the single attribute value curve</h2>
+
+<h3>Description</h3>
+
+<p><code>SAVF_plot</code> plots the single attribute value curve along with the
+subject matter desired values for comparison
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SAVF_plot(desired_x, desired_v, x_low, x_high, rho)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>desired_x</code></td>
+<td>
+<p>Elicited input x value(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desired_v</code></td>
+<td>
+<p>Elicited value score related to elicited input value(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_low</code></td>
+<td>
+<p>Lower bound anchor point (can be different than <code>min(x)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_high</code></td>
+<td>
+<p>Upper bound anchor point (can be different than <code>max(x)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>Exponential constant for the value function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot that visualizes the single attribute value curve along with the
+subject matter desired values for comparison
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>SAVF_plot_rho_error</code> for plotting the rho squared error terms
+</p>
+<p><code>SAVF_score</code> for computing the exponential single attribute value score
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Given the single attribute x is bounded between 1 and 5 and the subject matter experts
+# prefer x values of 3, 4, &amp; 5 provide a utility score of .75, .90 &amp; 1.0 respectively,
+# the preferred rho is 0.54. We can visualize this value function:
+
+SAVF_plot(desired_x = c(3, 4, 5),
+          desired_v = c(.75, .9, 1),
+          x_low = 1,
+          x_high = 5,
+          rho = 0.54)
+
+</code></pre>
+
+
+</div>

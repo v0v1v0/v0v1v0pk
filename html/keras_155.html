@@ -1,0 +1,125 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>install_keras</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Install TensorFlow and Keras, including all Python dependencies</h2>
+
+<h3>Description</h3>
+
+<p>This function will install Tensorflow and all Keras dependencies. This is a
+thin wrapper around <code>tensorflow::install_tensorflow()</code>, with the only
+difference being that this includes by default additional extra packages that
+keras expects, and the default version of tensorflow installed by
+<code>install_keras()</code> may at times be different from the default installed
+<code>install_tensorflow()</code>. The default version of tensorflow installed by
+<code>install_keras()</code> is "2.15".
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">install_keras(
+  method = c("auto", "virtualenv", "conda"),
+  conda = "auto",
+  version = "default",
+  tensorflow = version,
+  extra_packages = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Installation method. By default, "auto" automatically finds a
+method that will work in the local environment. Change the default to force
+a specific installation method. Note that the "virtualenv" method is not
+available on Windows.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conda</code></td>
+<td>
+<p>The path to a <code>conda</code> executable. Use <code>"auto"</code> to allow
+<code>reticulate</code> to automatically find an appropriate <code>conda</code> binary.
+See <strong>Finding Conda</strong> and <code>conda_binary()</code> for more details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>version</code></td>
+<td>
+<p>TensorFlow version to install. Valid values include:
+</p>
+
+<ul>
+<li> <p><code>"default"</code> installs  2.16
+</p>
+</li>
+<li> <p><code>"release"</code> installs the latest release version of tensorflow (which may
+be incompatible with the current version of the R package)
+</p>
+</li>
+<li>
+<p> A version specification like <code>"2.4"</code> or <code>"2.4.0"</code>. Note that if the patch
+version is not supplied, the latest patch release is installed (e.g.,
+<code>"2.4"</code> today installs version "2.4.2")
+</p>
+</li>
+<li> <p><code>nightly</code> for the latest available nightly build.
+</p>
+</li>
+<li>
+<p> To any specification, you can append "-cpu" to install the cpu version
+only of the package (e.g., <code>"2.4-cpu"</code>)
+</p>
+</li>
+<li>
+<p> The full URL or path to a installer binary or python *.whl file.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tensorflow</code></td>
+<td>
+<p>Synonym for <code>version</code>. Maintained for backwards.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra_packages</code></td>
+<td>
+<p>Additional Python packages to install along with
+TensorFlow.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments passed to <code>reticulate::conda_install()</code> or
+<code>reticulate::virtualenv_install()</code>, depending on the <code>method</code> used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The default additional packages are:
+tensorflow-hub, tensorflow-datasets, scipy, requests, pyyaml, Pillow, h5py, pandas, pydot, with their
+versions potentially constrained for compatibility with the
+requested tensorflow version.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>tensorflow::install_tensorflow()</code>
+</p>
+
+
+</div>

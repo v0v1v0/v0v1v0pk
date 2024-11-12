@@ -1,0 +1,238 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corLevSymm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Correlation Matrix for a General Symmetric Correlation Structure
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute the correlation matrix for a general symmetric correlation
+structure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+corLevSymm(par, nlevels, levels, lowerSQRT = FALSE, compGrad = TRUE,
+           cov = 0, impl = c("C", "R"))
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+
+<p>A numeric vector with length <code>npCor + npVar</code> where
+<code>npCor = nlevels *</code> <code>(nlevels - 1) / 2</code> is the number of
+correlation parameters, and <code>npVar</code> is the number of variance
+parameters, which depends on the value of <code>cov</code>. The value of <code>npVar</code>
+is <code>0</code>, <code>1</code> or <code>nlevels</code> corresponding to the values
+of <code>cov</code>: <code>0</code>, <code>1</code> and <code>2</code>. The correlation
+parameters are assumed to be located at the head of <code>par</code>
+i.e. at indices <code>1</code> to <code>npCor</code>. The variance parameter(s)
+are assumed to be at the tail, i.e. at indices <code>npCor + 1 </code> to
+<code>npCor + npVar</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlevels</code></td>
+<td>
+
+<p>Number of levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>levels</code></td>
+<td>
+
+<p>Character representing the levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lowerSQRT</code></td>
+<td>
+
+<p>Logical. When <code>TRUE</code> the (lower) Cholesky root
+<code class="reqn">\mathbf{L}</code> of the correlation or covariance matrix
+<code class="reqn">\mathbf{C}</code> is returned instead of the correlation matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical. Should the gradient be computed? This is only possible for
+the C implementation.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>Integer <code>0</code>, <code>1</code> or <code>2</code>. If <code>cov</code> is <code>0</code>, the
+matrix is a <em>correlation</em> matrix (or its Cholesky root). If
+<code>cov</code> is <code>1</code> or <code>2</code>, the matrix is a <em>covariance</em>
+(or its Cholesky root) with constant variance vector for
+<code>code = 1</code> and with arbitrary variance for <code>code = 2</code>. The variance
+parameters <code>par</code> are located at the tail of the <code>par</code>
+vector, so at locations <code>npCor + 1</code> to <code>npCor + nlevels</code>
+when <code>code = 2</code> where <code>npCor</code> is the number of correlation
+parameters, i.e. <code>nlevels * (nlevels - 1) / 2</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impl</code></td>
+<td>
+
+<p>A character telling which of the C and R implementations should be
+chosen.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The correlation matrix with dimension <code class="reqn">n</code> is the <em>general
+symmetric correlation matrix</em> as described by Pinheiro and Bates and
+implemented in the <span class="pkg">nlme</span> package. It depends on <code class="reqn">n \times (n -
+    1) / 2</code> parameters <code class="reqn">\theta_{ij}</code> where
+the indices <code class="reqn">i</code> and <code class="reqn">j</code> are such that <code class="reqn">1 \leq j &lt; i \leq
+    n</code>.  The parameters <code class="reqn">\theta_{ij}</code> are
+angles and are to be taken to be in <code class="reqn">[0, \pi)</code> for a
+one-to-one parameterisation.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A correlation matrix (or its Cholesky root) with the optional
+<code>gradient</code> attribute.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function is essentially for internal use and the corresponding
+correlation or covariance kernels are created as <code>covQual</code>
+objects by using the <code>q1Symm</code> creator. 
+</p>
+<p>The parameters <code class="reqn">\theta_{ij}</code> are used <em>in
+row order</em> rather than in the column order as in the reference or in the
+<span class="pkg">nlme</span> package. This order simplifies the computation of the
+gradients.
+</p>
+
+
+<h3>References</h3>
+
+<p>Jose C. Pinheiro and Douglas M. Bates
+(1996). "Unconstrained Parameterizations for Variance-Covariance matrices".
+<em>Statistics and Computing</em>, 6(3) pp. 289-296.
+</p>
+<p>Jose C. Pinheiro and Douglas M. Bates (2000) <em>Mixed-Effects
+Models in S and S-PLUS</em>, Springer.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>corSymm</code> correlation structure in the <span class="pkg">nlme</span>
+package.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">checkGrad &lt;- TRUE
+nlevels &lt;- 12
+npar &lt;- nlevels * (nlevels - 1) / 2
+par &lt;- runif(npar, min = 0, max = pi)
+##============================================================================
+## Compare R and C implementations for 'lowerSQRT = TRUE'
+##============================================================================
+tR &lt;- system.time(TR &lt;- corLevSymm(nlevels = nlevels,
+                                   par = par, lowerSQRT = TRUE, impl = "R"))
+tC &lt;- system.time(T &lt;- corLevSymm(nlevels = nlevels, par = par,
+                                  lowerSQRT = TRUE))
+tC2 &lt;- system.time(T2 &lt;- corLevSymm(nlevels = nlevels, par = par,
+                                    lowerSQRT = TRUE, compGrad = FALSE))
+## time
+rbind(R = tR, C = tC, C2 = tC2)
+
+## results
+max(abs(T - TR))
+max(abs(T2 - TR))
+
+##============================================================================
+## Compare R and C implementations for 'lowerSQRT = FALSE'
+##============================================================================
+tR &lt;- system.time(TRF &lt;- corLevSymm(nlevels = nlevels, par = par,
+                                    lowerSQRT = FALSE, impl = "R"))
+tC &lt;- system.time(TCF &lt;- corLevSymm(nlevels = nlevels, par = par,
+                                    compGrad = FALSE, lowerSQRT = FALSE))
+tC2 &lt;- system.time(TCF2 &lt;- corLevSymm(nlevels = nlevels, par = par,
+                                      compGrad = TRUE, lowerSQRT = FALSE))
+rbind(R = tR, C = tC, C2 = tC2)
+max(abs(TCF - TRF))
+max(abs(TCF2 - TRF))
+
+##===========================================================================
+## Compare the gradients
+##===========================================================================
+
+if (checkGrad) {
+
+    library(numDeriv)
+
+    ##==================
+    ## lower SQRT case
+    ##==================
+    JR &lt;- jacobian(fun = corLevSymm, x = par, nlevels = nlevels,
+                   lowerSQRT = TRUE, method = "complex", impl = "R")
+    J &lt;- attr(T, "gradient")
+
+    ## redim and compare.
+    dim(JR) &lt;- dim(J)
+    max(abs(J - JR))
+    nG &lt;- length(JR)
+    plot(1:nG, as.vector(JR), type = "p", pch = 21, col = "SpringGreen3",
+         cex = 0.8, ylim = range(J, JR),
+         main = "gradient check, lowerSQRT = TRUE")
+    points(x = 1:nG, y = as.vector(J), pch = 16, cex = 0.6, col = "orangered")
+
+    ##==================
+    ## Symmetric case
+    ##==================
+    JR &lt;- jacobian(fun = corLevSymm, x = par, nlevels = nlevels,
+                   lowerSQRT = FALSE, impl = "R", method = "complex")
+    J &lt;- attr(TCF2, "gradient")
+
+    ## redim and compare.
+    dim(JR) &lt;- dim(J)
+    max(abs(J - JR))
+    nG &lt;- length(JR)
+    plot(1:nG, as.vector(JR), type = "p", pch = 21, col = "SpringGreen3",
+         cex = 0.8,
+         ylim = range(J, JR),
+         main = "gradient check, lowerSQRT = FALSE")
+    points(x = 1:nG, y = as.vector(J), pch = 16, cex = 0.6, col = "orangered")
+}
+</code></pre>
+
+
+</div>

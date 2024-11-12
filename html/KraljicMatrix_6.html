@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MAVF_score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multi-attribute value function</h2>
+
+<h3>Description</h3>
+
+<p><code>MAVF_score</code> computes the multi-attribute value score of <code>x</code> and <code>y</code>
+given their respective weights
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MAVF_score(x, y, x_wt, y_wt)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric vector of values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Numeric vector of values with compatible dimensions to <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_wt</code></td>
+<td>
+<p>Swing weight for <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_wt</code></td>
+<td>
+<p>Swing weight for <code>y</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector of the same length as <code>x</code> and <code>y</code> with the multi-attribute value scores
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>MAVF_sensitivity</code> to perform sensitivity analysis with a range of <code>x</code> and <code>y</code> swing weights
+</p>
+<p><code>SAVF_score</code> for computing the exponential single attribute value score
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Given the following \code{x} and \code{y} attribute values with \code{x} and
+# \code{y} swing weight values of 0.65 and 0.35 respectively, we can compute
+# the multi-attribute utility score:
+
+x_attribute &lt;- c(0.92, 0.79, 1.00, 0.39, 0.68, 0.55, 0.73, 0.76, 1.00, 0.74)
+y_attribute &lt;- c(0.52, 0.19, 0.62, 1.00, 0.55, 0.52, 0.53, 0.46, 0.61, 0.84)
+
+MAVF_score(x_attribute, y_attribute, x_wt = .65, y_wt = .35)
+
+
+</code></pre>
+
+
+</div>

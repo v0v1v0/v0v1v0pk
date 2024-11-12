@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.derivatives</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot derivatives of a kspm object</h2>
+
+<h3>Description</h3>
+
+<p>Plot of derivatives for kernel part of a kspm model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'derivatives'
+plot(x, subset = NULL, xlab = NULL,
+  ylab = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class "derivatives", usually, a result of a call to <code>derivatives</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>if a subset of the plots is required, specify the names of the variable for which plot of derivatives is required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>x label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>y label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>X axis represents the raw data used as input in kernel part of the model. Y axis represents the pointwise derivative values i.e. the derivatives of fitted value according to the variable of interest.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Kim, Choongrak, Byeong U. Park, and Woochul Kim. "Influence diagnostics in semiparametric regression models." Statistics and probability letters 60.1 (2002): 49:58.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>derivatives
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+z1 &lt;- runif(15, 1, 6)
+z2 &lt;- rnorm(15, 1, 2)
+y &lt;- 3*x + (z1 + z2)^2 + rnorm(15, 0, 2)
+fit &lt;- kspm(y, linear = ~ x, kernel = ~ Kernel(~ z1 + z2,
+kernel.function = "polynomial", d= 2, rho = 1, gamma = 0))
+plot(derivatives(fit))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>header_separate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Separate table headers and add additional header rows based on grouping</h2>
+
+<h3>Description</h3>
+
+<p>When you create a summary table for either model or basic
+summary stats in R, you usually end up having column names in the form of
+"a_mean", "a_sd", "b_mean" and "b_sd". This function streamlines the process
+of renaming these column names and adding extra header rows using
+<code>add_header_above</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">header_separate(kable_input, sep = "[^[:alnum:]]+", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kable_input</code></td>
+<td>
+<p>Output of <code>knitr::kable()</code> with <code>format</code> specified</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>A regular expression separator between groups. The default value
+is a regular expression that matches any sequence of non-alphanumeric values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional parameters passed to do.call.</p>
+</td>
+</tr>
+</table>
+</div>

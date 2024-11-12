@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>khis_cred</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sets DHIS2 Credentials</h2>
+
+<h3>Description</h3>
+
+<p><code>khis_cred()</code> sets the credentials for accessing a DHIS2 instance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">khis_cred(
+  username = NULL,
+  password = NULL,
+  server = NULL,
+  api_version = NULL,
+  config_path = NULL,
+  base_url = deprecated()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>username</code></td>
+<td>
+<p>The DHIS2 username. Only required if configuration file not
+provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>password</code></td>
+<td>
+<p>The DHIS2 password. Only required if configuration file not
+provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>server</code></td>
+<td>
+<p>The server URL of the DHIS2 instance. Only required if configuration
+file not provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>api_version</code></td>
+<td>
+<p>The API version of the DHIS2 instance (optional).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>config_path</code></td>
+<td>
+<p>An optional path to a configuration file containing username
+and password. This is considered more secure than providing credentials directly
+in code.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base_url</code></td>
+<td>
+<p>Deprecated. The base URL of the DHIS2 instance. Use <code>server</code> instead.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function allows you to set the credentials for interacting with a DHIS2
+server. You can either provide the username and password directly (less secure)
+or specify a path to a configuration file containing these credentials. Using
+a configuration file is recommended for improved security as it prevents
+credentials from being stored directly in your code.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Auth object
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other credential functions: 
+<code>khis_base_url()</code>,
+<code>khis_cred_clear()</code>,
+<code>khis_display_name()</code>,
+<code>khis_has_cred()</code>,
+<code>khis_username()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+    # Option 1: Using a configuration file (recommended)
+    # Assuming a configuration file named "credentials.json":
+    khis_cred(config_path = "path/to/credentials.json")
+
+    # Option 2: Providing credentials directly (less secure)
+    khis_cred(username = "your_username",
+              password = "your_password",
+              base_url='https://dhis2-instance/api')
+
+## End(Not run)
+</code></pre>
+
+
+</div>

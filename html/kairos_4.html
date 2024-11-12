@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CountApportion-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Count Apportioning</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to represent an artifact apportioning results. Gives the
+apportioning of artifact types (columns) per site (rows) and per period
+(dim. 3).
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>.Data</code></dt>
+<dd>
+<p>An <code class="reqn">m \times p \times k</code> <code>array</code> giving the
+proportion of an artifact type (<code class="reqn">p</code>) for a given period (<code class="reqn">k</code>).</p>
+</dd>
+<dt><code>p</code></dt>
+<dd>
+<p>An <code class="reqn">m \times p \times k</code> <code>array</code> giving the
+probability of apportioning an artifact type (<code class="reqn">p</code>) to a given period
+(<code class="reqn">k</code>).</p>
+</dd>
+<dt><code>method</code></dt>
+<dd>
+<p>A <code>character</code> string specifying the distribution used for
+apportioning (type popularity curve).</p>
+</dd>
+<dt><code>from</code></dt>
+<dd>
+<p>A length-one <code>numeric</code> vector giving the beginning of the
+period of interest (in years AD).</p>
+</dd>
+<dt><code>to</code></dt>
+<dd>
+<p>A length-one <code>numeric</code> vector giving the end of the period of
+interest (in years AD).</p>
+</dd>
+<dt><code>step</code></dt>
+<dd>
+<p>A length-one <code>numeric</code> vector giving the step size, i.e. the
+width of each time step for apportioning (in years AD).</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This class inherits from base <code>array</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other classes: 
+<code>AoristicSum-class</code>,
+<code>EventDate-class</code>,
+<code>IncrementTest-class</code>,
+<code>MeanDate-class</code>,
+<code>PermutationOrder-class</code>,
+<code>RateOfChange-class</code>,
+<code>RefinePermutationOrder-class</code>
+</p>
+
+
+</div>

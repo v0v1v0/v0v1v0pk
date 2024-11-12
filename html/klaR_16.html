@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>e.scal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to calculate e- or softmax scaled membership values</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the e- or softmax scaled membership values of an argmax based classification rule.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">e.scal(x, k = 1, tc = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>matrix of membership values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>parameter for e-scaling (1 for softmax)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tc</code></td>
+<td>
+<p>vector of true classes (required if <code>k</code> has to be optimized)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For any  membership vector y <code class="reqn">\exp(y\cdot k) / \sum\exp(y\cdot k)</code> is calculated. 
+If <code>k=1</code>, the classical softmax scaling is used. If the true classes are given, <code>k</code> is optimized 
+so that the apparent error rate is minimized.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing elements
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>sv</code></td>
+<td>
+<p>Scaled values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Optimal <code>k</code></p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>References</h3>
+
+<p>Garczarek, Ursula Maria (2002): Classification rules in standardized partition spaces.
+Dissertation, University of Dortmund. 
+URL <a href="http://hdl.handle.net/2003/2789">http://hdl.handle.net/2003/2789</a></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(MASS)
+data(iris)
+ldaobj &lt;- lda(Species ~ ., data = iris)
+ldapred &lt;- predict(ldaobj)$posterior
+e.scal(ldapred)
+e.scal(ldapred, tc = iris$Species)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corpora_to_word_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Corpora to Word List</h2>
+
+<h3>Description</h3>
+
+<p>Converts a collection of documents to a word list
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">corpora_to_word_list(
+  paths,
+  ascii_only = TRUE,
+  custom_regex = NA,
+  max_word_length = 20,
+  stopword_fn = DEFAULT_STOPWORDS,
+  min_word_count = 5,
+  max_size = 16^3,
+  min_word_length = 3,
+  output_file = NA,
+  json_path = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>paths</code></td>
+<td>
+<p>Paths of plaintext documents</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ascii_only</code></td>
+<td>
+<p>Will omit non-ascii characters if TRUE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_regex</code></td>
+<td>
+<p>If not NA, will override ascii_only and
+this will determine what a valid word
+consists of</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_word_length</code></td>
+<td>
+<p>Maximum length of extracted words</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stopword_fn</code></td>
+<td>
+<p>Filename containing stopwords to use or a list of
+stopwords (if length &gt; 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_word_count</code></td>
+<td>
+<p>Minimum number of occurrences for a
+word to be added to word list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_size</code></td>
+<td>
+<p>Maximum size of list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_word_length</code></td>
+<td>
+<p>Minimum length of words</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_file</code></td>
+<td>
+<p>File to write list to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>json_path</code></td>
+<td>
+<p>If input text is JSON, then it will be parsed as such
+if this is a character of JSON keys to follow</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A 'character' vector of words
+</p>
+
+
+</div>

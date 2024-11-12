@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>shorten</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reduce each in a vector of strings to a given length</h2>
+
+<h3>Description</h3>
+
+<p>This is a simple "chop" at k characters, no fancy truncation at
+spaces or such. Optionally, this will make unique the resulting
+truncated strings. That way, truncation at character 4 of
+"Washington" and "Wash" and "Washingham" will not result in 3
+values of "Wash", but rather "Wash", "Wash.1", and "Wash.2"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">shorten(x, k = 20, unique = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>character string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>integer limit on length of string. Default is 20</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unique</code></td>
+<td>
+<p>Default FALSE</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>vector of character variables no longer than k
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c("Washington", "Washingham", "Washmylaundry")
+shorten(x, 4)
+shorten(x, 4, unique = TRUE)
+</code></pre>
+
+
+</div>

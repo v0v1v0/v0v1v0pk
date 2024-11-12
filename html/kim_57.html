@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>holm_adjusted_p</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Holm-adjusted p-values</h2>
+
+<h3>Description</h3>
+
+<p>Adjust a vector of p-values using the method proposed by Holm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">holm_adjusted_p(p = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>a numeric vector of p-values</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>See the following reference:
+Holm 1979 <a href="https://www.jstor.org/stable/4615733">https://www.jstor.org/stable/4615733</a>
+Manual for the 'p.adjust' function in the 'stats' package
+<a href="https://stat.ethz.ch/R-manual/R-devel/library/stats/html/p.adjust.html">https://stat.ethz.ch/R-manual/R-devel/library/stats/html/p.adjust.html</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">holm_adjusted_p(c(.05, .01))
+holm_adjusted_p(c(.05, .05, .05))
+</code></pre>
+
+
+</div>

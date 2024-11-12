@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>inv_dis_wt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Inverse Distance Weighting</h2>
+
+<h3>Description</h3>
+
+<p>This function applies the Inverse Distance Weighting interpolation algorithm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">inv_dis_wt(data, num_fac = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis, see README for details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_fac</code></td>
+<td>
+<p>a numeric value for how many factors to analyze. Recommended to use 3 and default to 3.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data frame with interpolated data for the whole graph. Data frame has collumns: "C_X"   "C_Y"   "value" "FA": C_X, C_Y are coordinates and "value" is the value for the "FA" the relevant factor.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("Klovan_Row80")
+inv_dis_wt(Klovan_Row80, 4)
+inv_dis_wt(Klovan_Row80, 3)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>statint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Compute the test statistics, D and W, for the changed-interval alternatives.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function provides the test statistics, <code class="reqn">\textrm{D}(t_{1},t_{2})</code>, <code class="reqn">\textrm{W}(t_{1},t_{2})</code>, and the weighted <code class="reqn">\textrm{W}(t_{1},t_{2})</code> for the changed-interval alternatives.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">statint(K, Rtemp, R0, r1, r2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A kernel matrix of observations in the sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rtemp</code></td>
+<td>
+<p>A numeric vector of <code class="reqn">k_{i.}</code>, the sum of kernel values for each row i.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R0</code></td>
+<td>
+<p>The term <code class="reqn">R_{0}</code>, defined in the paper.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>The constant in the test statistics <code class="reqn">\textrm{Z}_{W,r1}(t_{1},t_{2})</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r2</code></td>
+<td>
+<p>The constant in the test statistics <code class="reqn">\textrm{Z}_{W,r2}(t_{1},t_{2})</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list of test statistics, <code class="reqn">\textrm{D}(t_{1},t_{2})</code>, <code class="reqn">\textrm{W}(t_{1},t_{2})</code>, <code class="reqn">\textrm{W}_{r1}(t_{1},t_{2})</code>, and <code class="reqn">\textrm{W}_{r2}(t_{1},t_{2})</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Sequence : change in the mean in the middle of the sequence.
+d = 50
+mu = 2
+tau = 50
+n = 100
+set.seed(1)
+y = rbind(matrix(rnorm(d*tau),tau), matrix(rnorm(d*(n-tau),mu/sqrt(d)), n-tau))
+K = gaussiankernel(y) # Gaussian kernel matrix
+R_temp = rowSums(K)
+R0 = sum(K)
+a = statint(K, R_temp, R0, r1=1.2, r2=0.8)
+</code></pre>
+
+
+</div>

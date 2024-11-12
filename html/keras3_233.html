@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_dot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes element-wise dot product of two tensors.</h2>
+
+<h3>Description</h3>
+
+<p>It takes a list of inputs of size 2, and the axes
+corresponding to each input along with the dot product
+is to be performed.
+</p>
+<p>Let's say <code>x</code> and <code>y</code> are the two input tensors with shapes
+<code style="white-space: pre;">⁠(2, 3, 5)⁠</code> and <code style="white-space: pre;">⁠(2, 10, 3)⁠</code>. The batch dimension should be
+of same size for both the inputs, and <code>axes</code> should correspond
+to the dimensions that have the same size in the corresponding
+inputs. e.g. with <code>axes = c(1, 2)</code>, the dot product of <code>x</code>, and <code>y</code>
+will result in a tensor with shape <code style="white-space: pre;">⁠(2, 5, 10)⁠</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_dot(inputs, ..., axes, normalize = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+<p>layers to combine</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Standard layer keyword arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>Integer or list of integers, axis or axes along which to
+take the dot product. If a list, should be two integers
+corresponding to the desired axis from the first input and the
+desired axis from the second input, respectively. Note that the
+size of the two selected axes must match.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>normalize</code></td>
+<td>
+<p>Whether to L2-normalize samples along the dot product axis
+before taking the dot product. If set to <code>TRUE</code>, then
+the output of the dot product is the cosine proximity
+between the two samples.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor, the dot product of the samples from the inputs.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>x &lt;- op_reshape(0:9,   c(1, 5, 2))
+y &lt;- op_reshape(10:19, c(1, 2, 5))
+layer_dot(x, y, axes=c(2, 3))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[[260 360]
+##   [320 445]]], shape=(1, 2, 2), dtype=int32)
+
+</pre></div>
+<p>Usage in a Keras model:
+</p>
+<div class="sourceCode r"><pre>x1 &lt;- op_reshape(0:9, c(5, 2)) |&gt; layer_dense(8)
+x2 &lt;- op_reshape(10:19, c(5, 2)) |&gt; layer_dense(8)
+shape(x1)
+</pre></div>
+<div class="sourceCode"><pre>## shape(5, 8)
+
+</pre></div>
+<div class="sourceCode r"><pre>shape(x2)
+</pre></div>
+<div class="sourceCode"><pre>## shape(5, 8)
+
+</pre></div>
+<div class="sourceCode r"><pre>y &lt;- layer_dot(x1, x2, axes=2)
+shape(y)
+</pre></div>
+<div class="sourceCode"><pre>## shape(5, 1)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/merging_layers/dot#dot-class">https://keras.io/api/layers/merging_layers/dot#dot-class</a>
+</p>
+</li></ul>
+<p>Other merging layers: <br><code>layer_add()</code> <br><code>layer_average()</code> <br><code>layer_concatenate()</code> <br><code>layer_maximum()</code> <br><code>layer_minimum()</code> <br><code>layer_multiply()</code> <br><code>layer_subtract()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ratio.dist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Apply a ratio distance function to two scores.</h2>
+
+<h3>Description</h3>
+
+<p>Apply a ratio distance function to two scores.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ratio.dist(x, y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a score.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a score.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function applies a ratio distance function to two scores. This may be an appropriate distance function for the ratio level of measurement. <code>NA</code>'s are handled gracefully.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code class="reqn">(x-y)^2/(x+y)^2</code>, or 0 if <code>x</code> or <code>y</code> is <code>NA</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>interval.dist</code>, <code>nominal.dist</code>
+</p>
+
+
+</div>

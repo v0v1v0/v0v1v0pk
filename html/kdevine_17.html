@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rkdevine</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate from a kdevine object</h2>
+
+<h3>Description</h3>
+
+<p>Simulate from a kdevine object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rkdevine(n, obj, quasi = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>a <code>kdevine</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quasi</code></td>
+<td>
+<p>logical; the default (<code>FALSE</code>) returns pseudo-random
+numbers, use <code>TRUE</code> for quasi-random numbers (generalized Halton, only
+works for fully nonparametric fits).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An <code class="reqn">n x d</code> matrix of simulated data from the <code>kdevine</code>
+object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdevine</code>,
+<code>rkdevinecop</code>,
+<code>rkde1d</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># load and plot data
+data(wdbc)
+
+# estimate density
+fit &lt;- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
+
+# plot simulated data
+pairs(rkdevine(nrow(wdbc), fit))
+
+</code></pre>
+
+
+</div>

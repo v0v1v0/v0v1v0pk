@@ -1,0 +1,194 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_flax_module_wrapper</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Keras Layer that wraps a <a href="https://flax.readthedocs.io">Flax</a> module.</h2>
+
+<h3>Description</h3>
+
+<p>This layer enables the use of Flax components in the form of
+<a href="https://flax.readthedocs.io/en/latest/api_reference/flax.linen/module.html"><code>flax.linen.Module</code></a>
+instances within Keras when using JAX as the backend for Keras.
+</p>
+<p>The module method to use for the forward pass can be specified via the
+<code>method</code> argument and is <code style="white-space: pre;">⁠__call__⁠</code> by default. This method must take the
+following arguments with these exact names:
+</p>
+
+<ul>
+<li> <p><code>self</code> if the method is bound to the module, which is the case for the
+default of <code style="white-space: pre;">⁠__call__⁠</code>, and <code>module</code> otherwise to pass the module.
+</p>
+</li>
+<li> <p><code>inputs</code>: the inputs to the model, a JAX array or a <code>PyTree</code> of arrays.
+</p>
+</li>
+<li> <p><code>training</code> <em>(optional)</em>: an argument specifying if we're in training mode
+or inference mode, <code>TRUE</code> is passed in training mode.
+</p>
+</li>
+</ul>
+<p><code>FlaxLayer</code> handles the non-trainable state of your model and required RNGs
+automatically. Note that the <code>mutable</code> parameter of
+<a href="https://flax.readthedocs.io/en/latest/api_reference/flax.linen/module.html#flax.linen.apply"><code>flax.linen.Module.apply()</code></a>
+is set to <code style="white-space: pre;">⁠DenyList(["params"])⁠</code>, therefore making the assumption that all
+the variables outside of the "params" collection are non-trainable weights.
+</p>
+<p>This example shows how to create a <code>FlaxLayer</code> from a Flax <code>Module</code> with
+the default <code style="white-space: pre;">⁠__call__⁠</code> method and no training argument:
+</p>
+<div class="sourceCode r"><pre># keras3::use_backend("jax")
+# py_install("flax", "r-keras")
+
+if(config_backend() == "jax" &amp;&amp;
+   reticulate::py_module_available("flax")) {
+
+flax &lt;- import("flax")
+
+MyFlaxModule(flax$linen$Module) %py_class% {
+  `__call__` &lt;- flax$linen$compact(\(self, inputs) {
+    inputs |&gt;
+      (flax$linen$Conv(features = 32L, kernel_size = tuple(3L, 3L)))() |&gt;
+      flax$linen$relu() |&gt;
+      flax$linen$avg_pool(window_shape = tuple(2L, 2L),
+                          strides = tuple(2L, 2L)) |&gt;
+      # flatten all except batch_size axis
+      (\(x) x$reshape(tuple(x$shape[[1]], -1L)))() |&gt;
+      (flax$linen$Dense(features = 200L))() |&gt;
+      flax$linen$relu() |&gt;
+      (flax$linen$Dense(features = 10L))() |&gt;
+      flax$linen$softmax()
+  })
+}
+
+# typical usage:
+input &lt;- keras_input(c(28, 28, 3))
+output &lt;- input |&gt;
+  layer_flax_module_wrapper(MyFlaxModule())
+
+model &lt;- keras_model(input, output)
+
+# to instantiate the layer before composing:
+flax_module &lt;- MyFlaxModule()
+keras_layer &lt;- layer_flax_module_wrapper(module = flax_module)
+
+input &lt;- keras_input(c(28, 28, 3))
+output &lt;- input |&gt;
+  keras_layer()
+
+model &lt;- keras_model(input, output)
+
+}
+</pre></div>
+<p>This example shows how to wrap the module method to conform to the required
+signature. This allows having multiple input arguments and a training
+argument that has a different name and values. This additionally shows how
+to use a function that is not bound to the module.
+</p>
+<div class="sourceCode r"><pre>flax &lt;- import("flax")
+
+MyFlaxModule(flax$linen$Module) \%py_class\% {
+  forward &lt;-
+    flax$linen$compact(\(self, inputs1, input2, deterministic) {
+      # do work ....
+      outputs # return
+    })
+}
+
+my_flax_module_wrapper &lt;- function(module, inputs, training) {
+  c(input1, input2) \%&lt;-\% inputs
+  module$forward(input1, input2,!training)
+}
+
+flax_module &lt;- MyFlaxModule()
+keras_layer &lt;- layer_flax_module_wrapper(module = flax_module,
+                                         method = my_flax_module_wrapper)
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_flax_module_wrapper(object, module, method = NULL, variables = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>module</code></td>
+<td>
+<p>An instance of <code>flax.linen.Module</code> or subclass.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>The method to call the model. This is generally a method in the
+<code>Module</code>. If not provided, the <code style="white-space: pre;">⁠__call__⁠</code> method is used. <code>method</code>
+can also be a function not defined in the <code>Module</code>, in which case it
+must take the <code>Module</code> as the first argument. It is used for both
+<code>Module.init</code> and <code>Module.apply</code>. Details are documented in the
+<code>method</code> argument of <a href="https://flax.readthedocs.io/en/latest/api_reference/flax.linen/module.html#flax.linen.apply"><code>flax.linen.Module.apply()</code></a>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>A <code>dict</code> (named R list) containing all the variables of the module in the
+same format as what is returned by <a href="https://flax.readthedocs.io/en/latest/api_reference/flax.linen/module.html#flax.linen.init"><code>flax.linen.Module.init()</code></a>.
+It should contain a <code>"params"</code> key and, if applicable, other keys for
+collections of variables for non-trainable state. This allows
+passing trained parameters and learned non-trainable state or
+controlling the initialization. If <code>NULL</code> is passed, the module's
+<code>init</code> function is called at build time to initialize the variables
+of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/FlaxLayer">https://www.tensorflow.org/api_docs/python/tf/keras/layers/FlaxLayer</a>
+</p>
+</li></ul>
+<p>Other wrapping layers: <br><code>layer_jax_model_wrapper()</code> <br><code>layer_torch_module_wrapper()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

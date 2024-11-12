@@ -1,0 +1,194 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>perplexity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Language Model Perplexities</h2>
+
+<h3>Description</h3>
+
+<p>Compute language model perplexities on a test corpus.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">perplexity(
+  text,
+  model,
+  .preprocess = attr(model, ".preprocess"),
+  .tknz_sent = attr(model, ".tknz_sent"),
+  exp = TRUE,
+  ...
+)
+
+## S3 method for class 'character'
+perplexity(
+  text,
+  model,
+  .preprocess = attr(model, ".preprocess"),
+  .tknz_sent = attr(model, ".tknz_sent"),
+  exp = TRUE,
+  detailed = FALSE,
+  ...
+)
+
+## S3 method for class 'connection'
+perplexity(
+  text,
+  model,
+  .preprocess = attr(model, ".preprocess"),
+  .tknz_sent = attr(model, ".tknz_sent"),
+  exp = TRUE,
+  batch_size = Inf,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>a character vector or connection. Test corpus from which
+language model perplexity is computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>an object of class <code>language_model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.preprocess</code></td>
+<td>
+<p>a function taking a character vector as input and
+returning a character vector as output. Preprocessing transformation
+applied to input before computing perplexity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.tknz_sent</code></td>
+<td>
+<p>a function taking a character vector as input and
+returning a character vector as output. Optional sentence tokenization step
+applied before computing perplexity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exp</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code>. If <code>TRUE</code>, returns the actual
+perplexity - exponential of cross-entropy per token - otherwise returns its
+natural logarithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to or from other methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>detailed</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code>. If <code>TRUE</code>, the output has
+a <code>"details"</code> attribute, which is a data-frame containing the
+cross-entropy of each individual sentence tokenized from <code>text</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>a length one positive integer or <code>Inf</code>.
+Size of text batches when reading text from a <code>connection</code>.
+If <code>Inf</code>, all input text is processed in a single batch.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These generic functions are used to compute a <code>language_model</code>
+perplexity on a test corpus, which may be either a plain character vector
+of text, or a connection from which text can be read in batches.
+The second option is useful if one wants to avoid loading
+the full text in physical memory, and allows to process text from
+different sources such as files, compressed files or URLs.
+</p>
+<p>"Perplexity" is defined here, following Ref.
+(Chen and Goodman 1999), as the exponential of the normalized
+language model cross-entropy with the test corpus. Cross-entropy is
+normalized by the total number of words in the corpus, where we include
+the End-Of-Sentence tokens, but not the Begin-Of-Sentence tokens, in the
+word count.
+</p>
+<p>The custom .preprocess and .tknz_sent arguments allow to apply
+transformations to the text corpus before the perplexity computation takes
+place. By default, the same functions used during model building are
+employed, c.f. kgram_freqs and language_model.
+</p>
+<p>A note of caution is in order. Perplexity is not defined for all language
+models available in kgrams. For instance, smoother
+<code>"sbo"</code> (i.e. Stupid Backoff (Brants et al. 2007))
+does not produce normalized probabilities,
+and this is signaled by a warning (shown once per session) if the user
+attempts to compute the perplexity for such a model.
+In these cases, when possible, perplexity computations are performed
+anyway case, as the results might still be useful (e.g. to tune the model's
+parameters), even if their probabilistic interpretation does no longer hold.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a number. Perplexity of the language model on the test corpus.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>References</h3>
+
+<p>Brants T, Popat AC, Xu P, Och FJ, Dean J (2007).
+“Large Language Models in Machine Translation.”
+In <em>Proceedings of the 2007 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning (EMNLP-CoNLL)</em>, 858–867.
+<a href="https://aclanthology.org/D07-1090/">https://aclanthology.org/D07-1090/</a>.<br><br> Chen SF, Goodman J (1999).
+“An empirical study of smoothing techniques for language modeling.”
+<em>Computer Speech &amp; Language</em>, <b>13</b>(4), 359–394.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Train 4-, 6-, and 8-gram models on Shakespeare's "Much Ado About Nothing",
+# compute their perplexities on the training and test corpora.
+# We use Shakespeare's "A Midsummer Night's Dream" as test.
+
+
+train &lt;- much_ado
+test &lt;- midsummer
+
+tknz &lt;- function(text) tknz_sent(text, keep_first = TRUE)
+f &lt;- kgram_freqs(train, 8, .tknz_sent = tknz)
+m &lt;- language_model(f, "kn", D = 0.75)
+
+# Compute perplexities for 4-, 6-, and 8-gram models 
+FUN &lt;- function(N) {
+        param(m, "N") &lt;- N
+        c(train = perplexity(train, m), test = perplexity(test, m))
+        }
+sapply(c("N = 4" = 4, "N = 6" = 6, "N = 8" = 8), FUN)
+
+
+</code></pre>
+
+
+</div>

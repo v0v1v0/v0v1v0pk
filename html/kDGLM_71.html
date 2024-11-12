@@ -1,0 +1,233 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regression_block</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Structural blocks for regressions</h2>
+
+<h3>Description</h3>
+
+<p>Creates a block for a (dynamic) regression for a covariate X_t.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regression_block(
+  ...,
+  max.lag = 0,
+  zero.fill = TRUE,
+  name = "Var.Reg",
+  D = 1,
+  h = 0,
+  H = 0,
+  a1 = 0,
+  R1 = 9,
+  monitoring = rep(FALSE, max.lag + 1)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Named values for the planning matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.lag</code></td>
+<td>
+<p>Non-negative integer: An optional argument providing the maximum lag for the explanatory variables. If a positive value is provided, this block will create additional latent states to measure the lagged effect of X_t up until the given value. See West and Harrison (1997), subsection 9.2.2 item (3).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zero.fill</code></td>
+<td>
+<p>boolean: A Boolean indicating if the block should fill the initial delay values with 0's. If TRUE and max.lag is positive, the block assumes that X_t=0 for all t&lt;1. If FALSE, the block assumes the user will provide X_t for all t, such that X_t will have size t+propagation_size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String: An optional argument providing the name for this block. Can be useful to identify the models with meaningful labels, also, the name used will be used in some auxiliary functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>Array, Matrix, vector or scalar: The values for the discount factors at each time. If D is a array, its dimensions should be n x n x t, where n is the order of the polynomial block and t is the length of the outcomes. If D is a matrix, its dimensions should be n x n and its values will be used for each time. If D is a vector or scalar, a discount factor matrix will be created as a diagonal matrix with the values of D in the diagonal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Matrix, vector or scalar: A drift to be add after the temporal evolution (can be interpreted as the mean of the random noise at each time). If a matrix, its dimension should be 2 x t, where t is the length of the series. If a vector, it should have size t, and each value will be applied to the first latent state (the one which affects the linear predictors) in their respective time. If a scalar, the passed value will be used for the first latent state at each time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>Array, Matrix, vector or scalar: The values for the covariance matrix for the noise factor at each time. If H is a array, its dimensions should be n x n x t, where n is the order of the polynomial block and t is the length of the outcomes. If H is a matrix, its dimensions should be n x n and its values will be used for each time. If H is a vector or scalar, a discount factor matrix will be created as a diagonal matrix with the values of H in the diagonal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a1</code></td>
+<td>
+<p>Vector or scalar: The prior mean for the latent states associated with this block at time 1. If a1 is a vector, its dimension should be equal to the order of the polynomial block. If a1 is a scalar, its value will be used for all latent states.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R1</code></td>
+<td>
+<p>Matrix, vector or scalar: The prior covariance matrix for the latent states associated with this block at time 1. If R1 is a matrix, its dimensions should be n x n. If R1 is a vector or scalar, a covariance matrix will be created as a diagonal matrix with the values of R1 in the diagonal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>monitoring</code></td>
+<td>
+<p>Vector: A vector of flags indicating which variables should be monitored (if automated monitoring is used). Its size should be n. The default is that no variable should be monitored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For the ..., D, H, a1 and R1 arguments, the user may set one or more of its values as a string.
+By doing so, the user will leave the block partially undefined.
+The user must then pass the undefined parameter values as named arguments to the <code>fit_model</code> function. Also, multiple values can be passed, allowing for a sensitivity analysis for the value of this parameter.
+</p>
+<p>For the details about the implementation see dos Santos et al. (2024).
+</p>
+<p>For the details about dynamic regression models in the context of DLM's, see West and Harrison (1997), chapters 6 and 9.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dlm_block object containing the following values:
+</p>
+
+<ul>
+<li>
+<p> FF Array: A 3D-array containing the regression matrix for each time. Its dimension should be n x k x t, where n is the number of latent states, k is the number of linear predictors in the model and t is the time series length.
+</p>
+</li>
+<li>
+<p> FF.labs Matrix: A n x k character matrix describing the type of value of each element of FF.
+</p>
+</li>
+<li>
+<p> G Matrix: A 3D-array containing the evolution matrix for each time. Its dimension should be n x n x t, where n is the number of latent states and t is the time series length.
+</p>
+</li>
+<li>
+<p> G.labs Matrix: A n x n character matrix describing the type of value of each element of G.
+</p>
+</li>
+<li>
+<p> D Array: A 3D-array containing the discount factor matrix for each time. Its dimension should be n x n x t, where n is the number of latent states and t is the time series length.
+</p>
+</li>
+<li>
+<p> h Matrix: The mean for the random noise of the temporal evolution. Its dimension should be n x t.
+</p>
+</li>
+<li>
+<p> H Array: A 3D-array containing the covariance matrix of the noise for each time. Its dimension should be the same as D.
+</p>
+</li>
+<li>
+<p> a1 Vector: The prior mean for the latent vector.
+</p>
+</li>
+<li>
+<p> R1 Matrix: The prior covariance matrix for the latent vector.
+</p>
+</li>
+<li>
+<p> var.names list: A list containing the variables indexes by their name.
+</p>
+</li>
+<li>
+<p> max.lag Positive integer: Same as argument.
+</p>
+</li>
+<li>
+<p> n Positive integer: The number of latent states associated with this block (2).
+</p>
+</li>
+<li>
+<p> t Positive integer: The number of time steps associated with this block. If 1, the block is compatible with blocks of any time length, but if t is greater than 1, this block can only be used with blocks of the same time length.
+</p>
+</li>
+<li>
+<p> k Positive integer: The number of outcomes associated with this block. This block can only be used with blocks with the same outcome length.
+</p>
+</li>
+<li>
+<p> pred.names Vector: The name of the linear predictors associated with this block.
+</p>
+</li>
+<li>
+<p> monitoring Vector: Same as argument.
+</p>
+</li>
+<li>
+<p> type Character: The type of block (Harmonic).
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Mike West, Jeff Harrison (1997).
+<em>Bayesian Forecasting and Dynamic Models (Springer Series in Statistics)</em>.
+Springer-Verlag.
+ISBN 0387947256.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p>Other auxiliary functions for structural blocks: 
+<code>TF_block()</code>,
+<code>block_mult()</code>,
+<code>block_rename()</code>,
+<code>block_superpos()</code>,
+<code>harmonic_block()</code>,
+<code>intervention()</code>,
+<code>noise_block()</code>,
+<code>polynomial_block()</code>,
+<code>specify.dlm_block()</code>,
+<code>summary.dlm_block()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+structure &lt;- (
+  polynomial_block(p = 1, order = 2, D = 0.95) +
+    harmonic_block(p = 1, period = 12, D = 0.95) +
+    regression_block(p = chickenPox$date &gt;= as.Date("2013-09-01"))
+  # Vaccine was introduced in September of 2013
+) * 4
+
+outcome &lt;- Multinom(p = structure$pred.names, data = chickenPox[, c(2, 3, 4, 6, 5)])
+fitted.data &lt;- fit_model(structure, chickenPox = outcome)
+summary(fitted.data)
+plot(coef(fitted.data), plot.pkg = "base")
+
+</code></pre>
+
+
+</div>

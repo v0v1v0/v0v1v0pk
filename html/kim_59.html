@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>id_across_datasets</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ID across datasets</h2>
+
+<h3>Description</h3>
+
+<p>Create an ID column in each of the data sets. The ID values will
+span across the data sets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">id_across_datasets(
+  dt_list = NULL,
+  id_col_name = "id",
+  id_col_position = "first",
+  silent = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dt_list</code></td>
+<td>
+<p>a list of data.table objects</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id_col_name</code></td>
+<td>
+<p>name of the column that will contain ID values.
+By default, <code>id_col_name = "id"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id_col_position</code></td>
+<td>
+<p>position of the newly created ID column.
+If <code>id_col_position = "first"</code>, the new ID column will
+be placed as the first column in respective data sets.
+If <code>id_col_position = "last"</code>, the new ID column will
+be placed as the last column in respective data sets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>If <code>silent = TRUE</code>, a summary of starting and
+ending ID values in each data set will not be printed.
+If <code>silent = FALSE</code>, a summary of starting and
+ending ID values in each data set will be printed. (default = FALSE)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a list of data.table objects.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# running the examples below requires importing the data.table package.
+prep(data.table)
+id_across_datasets(
+dt_list = list(setDT(copy(mtcars)), setDT(copy(iris))))
+id_across_datasets(
+dt_list = list(setDT(copy(mtcars)), setDT(copy(iris)), setDT(copy(women))),
+id_col_name = "newly_created_id_col",
+id_col_position = "last")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write_kindata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write <code>KinPairData</code> or <code>KinPairSimulation</code> object in <code>.kindata</code> format</h2>
+
+<h3>Description</h3>
+
+<p>This function is part of suite of functions handling file import/export for kinship dispersal objects.
+Writing to the custom <code>.kindata</code> format enables complete preservation of <code>KinPairData</code> &amp; <code>KinPairSimulation</code> formats
+without any loss of class attributes or metadata - ideal for saving simulation data that is intended for further in-package
+processing with kindisperse.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write_kindata(x, file)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Object of class <code>KinPairData</code> or <code>KinPairSimulation</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>The file path to write to. If is doesn't end it '<code>.kindata</code>', this will be added.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisibly returns the initial object
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other export_functions: 
+<code>kinpair_to_csv()</code>,
+<code>kinpair_to_tibble()</code>,
+<code>kinpair_to_tsv()</code>
+</p>
+
+
+</div>

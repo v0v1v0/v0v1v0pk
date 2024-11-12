@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>proportion_of_values_in_vector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Proportion of given values in a vector</h2>
+
+<h3>Description</h3>
+
+<p>Proportion of given values in a vector
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">proportion_of_values_in_vector(
+  values = NULL,
+  vector = NULL,
+  na.exclude = TRUE,
+  output_type = "proportion",
+  silent = FALSE,
+  conf.level = 0.95,
+  correct_yates = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+<p>a set of values that will count as successes (hits)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a numeric or character vector containing
+successes (hits) and failures (misses)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.exclude</code></td>
+<td>
+<p>if <code>TRUE</code>, NA values will be removed both from
+<code>vector</code> and <code>values</code> before calculation (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>By default, <code>output_type = "proportion"</code>.
+If <code>output_type = "proportion"</code>, the function will return
+the calculated proportion; if <code>output_type = "se"</code>, the function
+will return the standard error of the sample proportion;
+if <code>output_type = "dt"</code>, the function will return the
+the data table of proportion and confidence intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>If <code>silent = TRUE</code>, no message will be printed
+regarding number of NA values or confidence interval. (default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.level</code></td>
+<td>
+<p>confidence level of the returned confidence interval.
+Input to this argument will be passed onto the conf.level argument
+in the <code>prop.test</code> function from the default stats package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correct_yates</code></td>
+<td>
+<p>a logical indicating whether Yates' continuity
+correction should be applied where possible (default = TRUE).
+Input to this argument will be passed onto the <code>correct</code> argument
+in the <code>prop.test</code> function from the default stats package.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">proportion_of_values_in_vector(
+  values = 2:3, vector = c(rep(1:3, each = 10), rep(NA, 10))
+)
+proportion_of_values_in_vector(
+  values = 2:3, vector = c(rep(1:3, each = 10), rep(NA, 10)),
+  output_type = "se"
+)
+proportion_of_values_in_vector(
+  values = 2:3, vector = c(rep(1:3, each = 10), rep(NA, 10)),
+  conf.level = 0.99
+)
+proportion_of_values_in_vector(
+  values = c(2:3, NA), vector = c(rep(1:3, each = 10), rep(NA, 10)),
+  na.exclude = FALSE
+)
+</code></pre>
+
+
+</div>

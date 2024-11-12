@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regression</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Linear regression supervised classification method</h2>
+
+<h3>Description</h3>
+
+<p>Performs supervised classification using the linear regression method.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regression(train, test, class, intercept = TRUE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>train</code></td>
+<td>
+<p>Data set of training, without classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>Test data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>Vector with data classes names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intercept</code></td>
+<td>
+<p>Consider the intercept in the regression (default = TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>predict</code></td>
+<td>
+<p>The classified factors of the test set.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani</p>
+
+
+<h3>References</h3>
+
+<p>Charnet, R. at al. <em>Analise de modelos de regressao lienar,</em> 2a ed. Campinas: Editora da Unicamp, 2008. 357 p.
+</p>
+<p>Rencher, A. C. and Schaalje, G. B. <em>Linear models in statisctic.</em> 2th. ed. New Jersey: John &amp; Sons, 2008. 672 p.
+</p>
+<p>Rencher, A. C. <em>Methods of multivariate analysis.</em> 2th. ed. New York: J.Wiley, 2002. 708 p.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot_curve</code> and <code>results</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+data  &lt;- iris
+names &lt;- colnames(data)
+colnames(data) &lt;- c(names[1:4],"class")
+
+#### Start - hold out validation method ####
+dat.sample = sample(2, nrow(data), replace = TRUE, prob = c(0.7,0.3))
+data.train = data[dat.sample == 1,] # training data set
+data.test  = data[dat.sample == 2,] # test data set
+class.train = as.factor(data.train$class) # class names of the training data set
+class.test  = as.factor(data.test$class)  # class names of the test data set
+#### End - hold out validation method ####
+
+r &lt;- (ncol(data) - 1)
+res &lt;- regression(train = data.train[,1:r], test = data.test[,1:r], 
+                  class = class.train, intercept = TRUE)
+
+resp &lt;- results(orig.class = class.test, predict = res$predict)
+
+message("Mean squared error:"); resp$mse
+message("Mean absolute error:"); resp$mae
+message("Relative absolute error:"); resp$rae
+message("Confusion matrix:"); resp$conf.mtx  
+message("Hit rate: ", resp$rate.hits)
+message("Error rate: ", resp$rate.error)
+message("Number of correct instances: ", resp$num.hits)
+message("Number of wrong instances: ", resp$num.error)
+message("Kappa coefficient: ", resp$kappa)
+message("General results of the classes:"); resp$res.class
+
+</code></pre>
+
+
+</div>

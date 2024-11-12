@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>removeMatches</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Remove elements if they are in a target vector, possibly replacing with NA</h2>
+
+<h3>Description</h3>
+
+<p>If a vector has c("A", "b", "c") and we want to remove "b" and
+"c", this function can do the work. It can also replace "b" and
+"c" with the NA symbol.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">removeMatches(x, y, padNA = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector from which elements are to be removed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>shorter vector of elements to be removed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padNA</code></td>
+<td>
+<p>Default FALSE, Should removed items be replaced with NA values?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If elements in y are not members of x, they are silently ignored.
+</p>
+<p>The code for this is not complicated, but it is
+difficult to remember.  Here's the recipe to remove
+elements y from x: <code>x &lt;- x[!x %in% y[y %in% x]]</code>. It is
+easy to get that wrong when in a hurry, so we use this function
+instead.  The <code>padNA</code> was an afterthought, but it helps sometimes.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector with elements in y removed
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ben Kite &lt;bakite@ku.edu&gt; and Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c("a", "b", "c", "d", "e", "f")
+y &lt;- c("e", "a")
+removeMatches(x, y)
+y &lt;- c("q", "r", "s")
+removeMatches(x, y)
+</code></pre>
+
+
+</div>

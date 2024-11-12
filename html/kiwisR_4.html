@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ki_station_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get tibble containing station information.</h2>
+
+<h3>Description</h3>
+
+<p>Returns all available stations by default and allows for search terms and other filters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ki_station_list(
+  hub,
+  search_term,
+  bounding_box,
+  group_id,
+  return_fields,
+  datasource = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>hub</code></td>
+<td>
+<p>The KiWIS database you are querying. Either one of the defaults or a URL.
+See <a href="https://github.com/rywhale/kiwisR">README</a>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>search_term</code></td>
+<td>
+<p>(Optional) A station name to search for. Supports the use of * as a wildcard. Case doesn't matter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bounding_box</code></td>
+<td>
+<p>(Optional) A bounding box to search within for stations. Should be a vector or comma separated string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group_id</code></td>
+<td>
+<p>(Optional) A station group id (see ki_group_list).
+with the following format: (min_x, min_y, max_x, max_y).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_fields</code></td>
+<td>
+<p>(Optional) Specific fields to return. Consult your KiWIS hub services documentation for available options.
+Should be a comma separate string or a vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>datasource</code></td>
+<td>
+<p>(Optional) The data source to be used, defaults to 0.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Tibble containing station metadata.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+ki_station_list(hub = "swmc")
+ki_station_list(hub = "swmc", search_term = "A*")
+ki_station_list(hub = "swmc", bounding_box = "-131.7,-5.4,135.8,75.8")
+ki_station_list(hub = "swmc", group_id = "518247")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_recall_at_precision</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes best recall where precision is &gt;= specified value</h2>
+
+<h3>Description</h3>
+
+<p>Computes best recall where precision is &gt;= specified value
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_recall_at_precision(
+  ...,
+  precision,
+  num_thresholds = 200L,
+  class_id = NULL,
+  name = NULL,
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed on to the underlying metric. Used for forwards and backwards compatibility.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precision</code></td>
+<td>
+<p>A scalar value in range <code style="white-space: pre;">⁠[0, 1]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_thresholds</code></td>
+<td>
+<p>(Optional) Defaults to 200. The number of thresholds to
+use for matching the given precision.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_id</code></td>
+<td>
+<p>(Optional) Integer class ID for which we want binary metrics.
+This must be in the half-open interval <code style="white-space: pre;">⁠[0, num_classes)⁠</code>, where
+<code>num_classes</code> is the last dimension of predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For a given score-label-distribution the required precision might
+not be achievable, in this case 0.0 is returned as recall.
+</p>
+<p>This metric creates four local variables, <code>true_positives</code>, <code>true_negatives</code>,
+<code>false_positives</code> and <code>false_negatives</code> that are used to compute the recall
+at the given precision. The threshold for the given precision value is
+computed and used to evaluate the corresponding recall.
+</p>
+<p>If <code>sample_weight</code> is <code>NULL</code>, weights default to 1. Use <code>sample_weight</code> of 0
+to mask values.
+</p>
+<p>If <code>class_id</code> is specified, we calculate precision by considering only the
+entries in the batch for which <code>class_id</code> is above the threshold predictions,
+and computing the fraction of them for which <code>class_id</code> is indeed a correct
+label.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A (subclassed) <code>Metric</code> instance that can be passed directly to
+<code>compile(metrics = )</code>, or used as a standalone object. See <code>?Metric</code> for
+example usage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other metrics: 
+<code>custom_metric()</code>,
+<code>metric_accuracy()</code>,
+<code>metric_auc()</code>,
+<code>metric_binary_accuracy()</code>,
+<code>metric_binary_crossentropy()</code>,
+<code>metric_categorical_accuracy()</code>,
+<code>metric_categorical_crossentropy()</code>,
+<code>metric_categorical_hinge()</code>,
+<code>metric_cosine_similarity()</code>,
+<code>metric_false_negatives()</code>,
+<code>metric_false_positives()</code>,
+<code>metric_hinge()</code>,
+<code>metric_kullback_leibler_divergence()</code>,
+<code>metric_logcosh_error()</code>,
+<code>metric_mean()</code>,
+<code>metric_mean_absolute_error()</code>,
+<code>metric_mean_absolute_percentage_error()</code>,
+<code>metric_mean_iou()</code>,
+<code>metric_mean_relative_error()</code>,
+<code>metric_mean_squared_error()</code>,
+<code>metric_mean_squared_logarithmic_error()</code>,
+<code>metric_mean_tensor()</code>,
+<code>metric_mean_wrapper()</code>,
+<code>metric_poisson()</code>,
+<code>metric_precision()</code>,
+<code>metric_precision_at_recall()</code>,
+<code>metric_recall()</code>,
+<code>metric_root_mean_squared_error()</code>,
+<code>metric_sensitivity_at_specificity()</code>,
+<code>metric_sparse_categorical_accuracy()</code>,
+<code>metric_sparse_categorical_crossentropy()</code>,
+<code>metric_sparse_top_k_categorical_accuracy()</code>,
+<code>metric_specificity_at_sensitivity()</code>,
+<code>metric_squared_hinge()</code>,
+<code>metric_sum()</code>,
+<code>metric_top_k_categorical_accuracy()</code>,
+<code>metric_true_negatives()</code>,
+<code>metric_true_positives()</code>
+</p>
+
+
+</div>

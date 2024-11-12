@@ -1,0 +1,35 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gamKTS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+A function to fill values by means of a generalized additive model
+</h2>
+
+<h3>Description</h3>
+
+<p>This function is used to fill gaps using a generalized additive model (gam) with tensor smoothing. It is used through the Multivariate Splines in the Filling Menu. Although the gam model is not necessarily a multivariate spline, the button has this name because we think is more familiar to the users. 
+</p>
+
+
+<h3>Details</h3>
+
+<p>The user selects the time series to fill and a set of predictor time series. The function fits a generalized linear model a gap and uses the model to fill the gap. This is done for every gap in the gap set. It is used through the Multivariate Splines in the Filling Menu. The user can choose a fixed d.f. regression spline or a penalized regression spline. It is also possible to choose any of the smoothing bases allowed by the function mgcv::te. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>The filled time series in the environment KTSEnv and a summary of the results on the output window.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

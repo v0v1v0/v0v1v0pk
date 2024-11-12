@@ -1,0 +1,38 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>record_as_cited</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>record as cited</h2>
+
+<h3>Description</h3>
+
+<p>adds a BibEntry object to the works cited list even if not cited 
+with a call to citep/citet
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">record_as_cited(entry)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>entry</code></td>
+<td>
+<p>a BibEntry object (or something that can be coerced to one, like bibentry)</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Adds the object to the citation list, with a BibTex citation 
+key that does not duplicate any that are already in the record.  
+Invisibly returns the bibentry object.
+</p>
+
+
+</div>

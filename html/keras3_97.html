@@ -1,0 +1,232 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compile.keras.src.models.model.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Configure a model for training.</h2>
+
+<h3>Description</h3>
+
+<p>Configure a model for training.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.src.models.model.Model'
+compile(
+  object,
+  optimizer = "rmsprop",
+  loss = NULL,
+  metrics = NULL,
+  ...,
+  loss_weights = NULL,
+  weighted_metrics = NULL,
+  run_eagerly = FALSE,
+  steps_per_execution = 1L,
+  jit_compile = "auto",
+  auto_scale_loss = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimizer</code></td>
+<td>
+<p>String (name of optimizer) or optimizer instance. See
+<code style="white-space: pre;">⁠optimizer_*⁠</code> family.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loss</code></td>
+<td>
+<p>Loss function. May be:
+</p>
+
+<ul>
+<li>
+<p> a string (name of builtin loss function),
+</p>
+</li>
+<li>
+<p> a custom function, or
+</p>
+</li>
+<li>
+<p> a <code>Loss</code> instance (returned by the <code style="white-space: pre;">⁠loss_*⁠</code> family of functions).
+</p>
+</li>
+</ul>
+<p>A loss function is any callable with the signature
+<code>loss = fn(y_true, y_pred)</code>, where <code>y_true</code> are the ground truth
+values, and <code>y_pred</code> are the model's predictions.
+<code>y_true</code> should have shape <code style="white-space: pre;">⁠(batch_size, d1, .. dN)⁠</code>
+(except in the case of sparse loss functions such as
+sparse categorical crossentropy which expects integer arrays of
+shape <code style="white-space: pre;">⁠(batch_size, d1, .. dN-1)⁠</code>).
+<code>y_pred</code> should have shape <code style="white-space: pre;">⁠(batch_size, d1, .. dN)⁠</code>.
+The loss function should return a float tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metrics</code></td>
+<td>
+<p>List of metrics to be evaluated by the model during
+training and testing. Each of these can be:
+</p>
+
+<ul>
+<li>
+<p> a string (name of a
+built-in function),
+</p>
+</li>
+<li>
+<p> a function, optionally with a <code>"name"</code> attribute or
+</p>
+</li>
+<li>
+<p> a <code>Metric()</code>
+instance. See the <code style="white-space: pre;">⁠metric_*⁠</code> family of functions.
+</p>
+</li>
+</ul>
+<p>Typically you will use
+<code>metrics = c('accuracy')</code>. A function is any callable with the
+signature <code>result = fn(y_true, y_pred)</code>. To specify different
+metrics for different outputs of a multi-output model, you could
+also pass a named list, such as
+<code>metrics = list(a = 'accuracy', b = c('accuracy', 'mse'))</code>.
+You can also pass a list to specify a metric or a list of
+metrics for each output, such as
+<code>metrics = list(c('accuracy'), c('accuracy', 'mse'))</code>
+or <code>metrics = list('accuracy', c('accuracy', 'mse'))</code>. When you pass
+the strings <code>'accuracy'</code> or <code>'acc'</code>, we convert this to one of
+<code>metric_binary_accuracy()</code>,
+<code>metric_categorical_accuracy()</code>,
+<code>metric_sparse_categorical_accuracy()</code> based on the
+shapes of the targets and of the model output. A similar
+conversion is done for the strings <code>"crossentropy"</code>
+and <code>"ce"</code> as well.
+The metrics passed here are evaluated without sample weighting;
+if you would like sample weighting to apply, you can specify
+your metrics via the <code>weighted_metrics</code> argument instead.
+</p>
+<p>If providing an anonymous R function, you can customize the printed name
+during training by assigning <code style="white-space: pre;">⁠attr(&lt;fn&gt;, "name") &lt;- "my_custom_metric_name"⁠</code>,
+or by calling <code>custom_metric("my_custom_metric_name", &lt;fn&gt;)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to the <code>compile()</code> model method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loss_weights</code></td>
+<td>
+<p>Optional list (named or unnamed) specifying scalar
+coefficients (R numerics) to weight the loss contributions of
+different model outputs. The loss value that will be minimized
+by the model will then be the <em>weighted sum</em> of all individual
+losses, weighted by the <code>loss_weights</code> coefficients.  If an unnamed list,
+it is expected to have a 1:1 mapping to the model's outputs. If
+a named list, it is expected to map output names (strings) to scalar
+coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weighted_metrics</code></td>
+<td>
+<p>List of metrics to be evaluated and weighted by
+<code>sample_weight</code> or <code>class_weight</code> during training and testing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>run_eagerly</code></td>
+<td>
+<p>Bool. If <code>TRUE</code>, this model's forward pass
+will never be compiled. It is recommended to leave this
+as <code>FALSE</code> when training (for best performance),
+and to set it to <code>TRUE</code> when debugging.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps_per_execution</code></td>
+<td>
+<p>Int. The number of batches to run
+during each a single compiled function call. Running multiple
+batches inside a single compiled function call can
+greatly improve performance on TPUs or small models with a large
+R/Python overhead. At most, one full epoch will be run each
+execution. If a number larger than the size of the epoch is
+passed, the execution will be truncated to the size of the
+epoch. Note that if <code>steps_per_execution</code> is set to <code>N</code>,
+<code>Callback$on_batch_begin</code> and <code>Callback$on_batch_end</code> methods
+will only be called every <code>N</code> batches (i.e. before/after
+each compiled function execution).
+Not supported with the PyTorch backend.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jit_compile</code></td>
+<td>
+<p>Bool or <code>"auto"</code>. Whether to use XLA compilation when
+compiling a model. For <code>jax</code> and <code>tensorflow</code> backends,
+<code>jit_compile="auto"</code> enables XLA compilation if the model
+supports it, and disabled otherwise.
+For <code>torch</code> backend, <code>"auto"</code> will default to eager
+execution and <code>jit_compile=True</code> will run with <code>torch.compile</code>
+with the <code>"inductor"</code> backend.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auto_scale_loss</code></td>
+<td>
+<p>Bool. If <code>TRUE</code> and the model dtype policy is
+<code>"mixed_float16"</code>, the passed optimizer will be automatically
+wrapped in a <code>LossScaleOptimizer</code>, which will dynamically
+scale the loss to prevent underflow.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This is called primarily for the side effect of modifying <code>object</code>
+in-place. The first argument <code>object</code> is also returned, invisibly, to
+enable usage with the pipe.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>model |&gt; compile(
+  optimizer = optimizer_adam(learning_rate = 1e-3),
+  loss = loss_binary_crossentropy(),
+  metrics = c(metric_binary_accuracy(),
+              metric_false_negatives())
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_training_apis#compile-method">https://keras.io/api/models/model_training_apis#compile-method</a>
+</p>
+</li></ul>
+<p>Other model training: <br><code>evaluate.keras.src.models.model.Model()</code> <br><code>predict.keras.src.models.model.Model()</code> <br><code>predict_on_batch()</code> <br><code>test_on_batch()</code> <br><code>train_on_batch()</code> <br></p>
+
+
+</div>

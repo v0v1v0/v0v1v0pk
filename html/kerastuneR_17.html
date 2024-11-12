@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_tuner</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot the tuner results with 'plotly'</h2>
+
+<h3>Description</h3>
+
+<p>Plot the search space results
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_tuner(tuner, height = NULL, width = NULL, type = "plotly")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tuner</code></td>
+<td>
+<p>A tuner object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>height of the plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>width of the plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Type parameter has 2 options: <br> 
+* By default it uses 'plotly' <br> 
+* Second option is 'echarts4r' <br> 
+**Note** that 'echarts4r' ignores width and height parameters</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a list which contains a dataframe of results and a plot
+</p>
+
+
+</div>

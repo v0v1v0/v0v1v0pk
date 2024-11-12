@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_pool2d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>2D Pooling.</h2>
+
+<h3>Description</h3>
+
+<p>2D Pooling.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_pool2d(
+  x,
+  pool_size,
+  strides = c(1, 1),
+  padding = "valid",
+  data_format = NULL,
+  pool_mode = "max"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Tensor or variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pool_size</code></td>
+<td>
+<p>list of 2 integers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strides</code></td>
+<td>
+<p>list of 2 integers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>string, <code>"same"</code> or <code>"valid"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>string, <code>"channels_last"</code> or <code>"channels_first"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pool_mode</code></td>
+<td>
+<p>string, <code>"max"</code> or <code>"avg"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor, result of 2D pooling.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

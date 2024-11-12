@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>delete.DQnodes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Delete D and Q dummy nodes from all Bayes nets in mixture</h2>
+
+<h3>Description</h3>
+
+<p>Delete D and Q dummy nodes and associated edges from all Bayes nets in mixture, to save space; these nodes would 
+only be needed for specific follow-up analyses</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">delete.DQnodes(mixture,which="DQ")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A compiled DNAmixture object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>character string</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function removes the D and/or Q nodes from the DNAmixture object, depending on whether <code>which</code> includes "D", "Q" or both</p>
+
+
+<h3>Value</h3>
+
+<p>No value is returned, the function is called for its side effect</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+data(NGMDyes)
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(0.001),database=db,dyes=list(NGMDyes),
+	triangulate=FALSE,compile=FALSE)
+delete.DQnodes(mixD)
+replace.tables.for.UAF(mixD,40)
+size(mixD)
+</code></pre>
+
+
+</div>

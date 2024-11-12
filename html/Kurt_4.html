@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ExtKurBiv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ExtKurBiv: kurtosis-based projection pursuit for bivariate random vectors
+
+</h2>
+
+<h3>Description</h3>
+
+<p>Returns a projection of bivariate data with either maximal or minimal kurtosis. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ExtKurBiv(data, maxmin)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>data matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxmin</code></td>
+<td>
+<p>choice between maximal ("MAX") and minimal ("MIN") kurtosis
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>linearMAX</code></td>
+<td>
+<p>coefficients of the projections maximising kurtosis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>projectionMAX</code></td>
+<td>
+<p>projection with maximal kurtosis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kurtMAX</code></td>
+<td>
+<p>maximal kurtosis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linearMIN</code></td>
+<td>
+<p>coefficients of the projections minimising kurtosis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>projectionMIN</code></td>
+<td>
+<p>projection with minimal kurtosis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kurtMIN</code></td>
+<td>
+<p>minimal kurtosis</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Cinzia Franceschini and Nicola Loperfido
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+iris&lt;-data.matrix(iris)#returns the matrix obtained by converting the data frame to numeric mode
+
+ExtKurBiv(iris[,1:2],"MAX")# returns a projection of bivariate data with maximal kurtosis 
+</code></pre>
+
+
+</div>

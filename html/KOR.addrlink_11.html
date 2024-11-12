@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sanitize_street</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Clean Steet Names And Make Them Mergeable</h2>
+
+<h3>Description</h3>
+
+<p>This function replaces Umlauts, expands "str" to "strasse", 
+transliterates all non-ascii characters, removes punctuation and converts 
+to lower case.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sanitize_street(x)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A character vector containing the steet names</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This is an internal function used in <code>addrlink</code>. 
+Make sure house numbers have already been extracted. 
+Use <code>split_number</code> or <code>split_address</code> for that. 
+Only steet names can go into <code>sanitize_street</code>. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character vector of the same length as x containing the 
+sanitized street names. </p>
+
+
+<h3>Author(s)</h3>
+
+<p>Daniel Schürmann</p>
+
+
+<h3>See Also</h3>
+
+<p><code>split_address</code>, <code>split_number</code>, <code>addrlink</code>
+</p>
+
+
+</div>

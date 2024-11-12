@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knotoptim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimization of knot appearance</h2>
+
+<h3>Description</h3>
+
+<p>Optimization of knot appearance using user-definable objective functions
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knotoptim(svg, weights=1, symobj=NULL,
+  Mver = NULL, xver = NULL, Mhor = NULL, xhor = NULL, Mrot = NULL,
+  mcdonalds = FALSE, celtic = FALSE, ou, prob = 0, useNLM=TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>svg</code></td>
+<td>
+<p>Name of an svg file to read</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mver,xver,Mhor,xhor,Mrot,mcdonalds,celtic</code></td>
+<td>
+<p>Arguments passed to
+<code>symmetry_object()</code>, specifying the symmetry of the knot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symobj</code></td>
+<td>
+<p>A symmetry object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ou</code></td>
+<td>
+<p>An overunder object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>The probability of plotting a knotplot; this is slow so
+don't make this too big</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>A vector of weights, defaulting to all ones, passed to
+<code>badness()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>useNLM</code></td>
+<td>
+<p>Boolean, with default <code>TRUE</code> meaning to use
+<code>nlm()</code> and <code>FALSE</code> meaning to use <code>optim()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed to <code>nlm()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>knotoptim()</code> is a generic optimization routine that
+starts from an svg file and minimizes the knot's <code>badness()</code>.
+</p>
+<p>The <code>weights</code> argument is documented more fully at
+<code>badness.Rd</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns a knot object</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>symmetry_object</code>, <code>badness</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run:     #takes too long
+knotoptim(
+      svg = system.file("4_1_first_draft.svg",package="knotR"),
+     Mver = rbind(c(2,3),c(9,7),c(10,6),c(1,4),c(5,11)),
+     xver = 8,   # node on vertical axis
+     ou   = rbind( c(1,5), c(9,2), c(4,8),c(6,11)),
+     prob = 0.1,
+  iterlim = 100, print.level=2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

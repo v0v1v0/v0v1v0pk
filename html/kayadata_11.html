@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kaya_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kaya identity data for many countries and regions</h2>
+
+<h3>Description</h3>
+
+<p>A dataset containing Kaya identity parameters
+P, G, E, F, g, e, f, and ef for many countries
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kaya_data
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A tibble containing 5292 rows and 14 variables:
+</p>
+
+<dl>
+<dt>region</dt>
+<dd>
+<p>Country or region name</p>
+</dd>
+<dt>region_code</dt>
+<dd>
+<p>Three-letter country or region code</p>
+</dd>
+<dt>geography</dt>
+<dd>
+<p>Geographic category: "nation", "region", or "world"</p>
+</dd>
+<dt>year</dt>
+<dd>
+<p>The year</p>
+</dd>
+<dt>P</dt>
+<dd>
+<p>Population, in billions</p>
+</dd>
+<dt>G</dt>
+<dd>
+<p>Gross domestic product, in trillions of constant 2015 U.S. dollars.</p>
+</dd>
+<dt>E</dt>
+<dd>
+<p>Total primary energy consumption, in quads</p>
+</dd>
+<dt>F</dt>
+<dd>
+<p>CO2 emissions from fossil fuel consumption, in millions of tons</p>
+</dd>
+<dt>g</dt>
+<dd>
+<p>Per-capita GDP, in thousands of constant 2015 U.S. dollars per person.</p>
+</dd>
+<dt>e</dt>
+<dd>
+<p>Energy intensity of the economy, in quads per trillion dollars.</p>
+</dd>
+<dt>f</dt>
+<dd>
+<p>Emissions intensity of the energy supply, in million metric tons
+per quad.</p>
+</dd>
+<dt>ef</dt>
+<dd>
+<p>Emissions intensity of the economy, in metric tons per
+million dollars of GDP.</p>
+</dd>
+<dt>G_ppp</dt>
+<dd>
+<p>Gross domestic product adjusted for purchasing power parity,
+in trillions of constant 2017 international dollars</p>
+</dd>
+<dt>G_mer</dt>
+<dd>
+<p>Gross domestic product at market-exchange-rate,
+in trillions of constant 2015 U.S. dollars</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="https://data.worldbank.org/indicator/SP.POP.TOTL">https://data.worldbank.org/indicator/SP.POP.TOTL</a>,
+<a href="https://data.worldbank.org/indicator/NY.GDP.MKTP.KD">https://data.worldbank.org/indicator/NY.GDP.MKTP.KD</a>, and
+<a href="https://www.energyinst.org/statistical-review/resources-and-data-downloads">https://www.energyinst.org/statistical-review/resources-and-data-downloads</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>regions, <code>get_kaya_data()</code>
+</p>
+
+
+</div>

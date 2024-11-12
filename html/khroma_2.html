@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>change</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate Color-Blindness</h2>
+
+<h3>Description</h3>
+
+<p>Simulate Color-Blindness
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">change(x, mode)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A palette <code>function</code> that when called with a single
+integer argument (the number of levels) returns a vector of colors
+(see <code>color()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p>A <code>character</code> string giving the colorblind vision
+to be used. It must be one of "<code>deuteranopia</code>", "<code>protanopia</code>",
+"<code>tritanopia</code>" or "<code>achromatopsia</code>". Any unambiguous substring can be given.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A palette <code>function</code> that returns a vector of anomalized
+colors. All the attributes of the initial palette function are inherited,
+with a supplementary attribute "<code>mode</code>" giving the corresponding
+color-blind vision.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Brettel, H., Viénot, F. and Mollon, J. D. (1997). Computerized Simulation of
+Color Appearance for Dichromats. <em>Journal of the Optical Society of America
+A</em>, 14(10), p. 2647-2655. <a href="https://doi.org/10.1364/JOSAA.14.002647">doi:10.1364/JOSAA.14.002647</a>.
+</p>
+<p>Tol, P. (2018). <em>Colour Schemes</em>. SRON. Technical Note No.
+SRON/EPS/TN/09-002, issue 3.1.
+URL: <a href="https://personal.sron.nl/~pault/data/colourschemes.pdf">https://personal.sron.nl/~pault/data/colourschemes.pdf</a>
+</p>
+<p>Viénot, F., Brettel, H. and Mollon, J. D. (1999). Digital Video
+Colourmaps for Checking the Legibility of Displays by Dichromats.
+<em>Color Research &amp; Application</em>, 24(4), p. 243-52.
+<a href="https://doi.org/10.1002/%28SICI%291520-6378%28199908%2924%3A4%3C243%3A%3AAID-COL5%3E3.0.CO%3B2-3">doi:10.1002/(SICI)1520-6378(199908)24:4&lt;243::AID-COL5&gt;3.0.CO;2-3</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other diagnostic tools: 
+<code>compare()</code>,
+<code>plot.color_scheme()</code>,
+<code>plot_map()</code>,
+<code>plot_scheme()</code>,
+<code>plot_scheme_colourblind()</code>,
+<code>plot_tiles()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Trichromat
+pal &lt;- colour("bright")
+plot_scheme(pal(7))
+
+# Deuteranopia
+deu &lt;- change(pal, mode = "deuteranopia")
+plot_scheme(deu(7))
+
+# Protanopia
+pro &lt;- change(pal, mode = "protanopia")
+plot_scheme(pro(7))
+
+# Tritanopia
+tri &lt;- change(pal, mode = "tritanopia")
+plot_scheme(tri(7))
+
+# Achromatopsia
+ach &lt;- change(pal, mode = "achromatopsia")
+plot_scheme(ach(7))
+
+## Plot simulated color blindness
+plot_scheme_colorblind(pal(7))
+
+</code></pre>
+
+
+</div>

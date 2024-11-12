@@ -1,0 +1,207 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Loss</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subclass the base <code>Loss</code> class</h2>
+
+<h3>Description</h3>
+
+<p>Use this to define a custom loss class. Note, in most cases you do not need
+to subclass <code>Loss</code> to define a custom loss: you can also pass a bare R
+function, or a named R function defined with <code>custom_metric()</code>, as a loss
+function to <code>compile()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Loss(
+  classname,
+  call = NULL,
+  ...,
+  public = list(),
+  private = list(),
+  inherit = NULL,
+  parent_env = parent.frame()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>String, the name of the custom class. (Conventionally, CamelCase).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<div class="sourceCode r"><pre>function(y_true, y_pred)
+</pre></div>
+<p>Method to be implemented by subclasses:
+Function that contains the logic for loss calculation using
+<code>y_true</code>, <code>y_pred</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>..., public</code></td>
+<td>
+<p>Additional methods or public members of the custom class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>private</code></td>
+<td>
+<p>Named list of R objects (typically, functions) to include in
+instance private environments. <code>private</code> methods will have all the same
+symbols in scope as public methods (See section "Symbols in Scope"). Each
+instance will have it's own <code>private</code> environment. Any objects
+in <code>private</code> will be invisible from the Keras framework and the Python
+runtime.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit</code></td>
+<td>
+<p>What the custom class will subclass. By default, the base keras class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>The R environment that all class methods will have as a grandparent.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Example subclass implementation:
+</p>
+<div class="sourceCode r"><pre>loss_custom_mse &lt;- Loss(
+  classname = "CustomMeanSquaredError",
+  call = function(y_true, y_pred) {
+    op_mean(op_square(y_pred - y_true), axis = -1)
+  }
+)
+
+# Usage in compile()
+model &lt;- keras_model_sequential(input_shape = 10) |&gt; layer_dense(10)
+model |&gt; compile(loss = loss_custom_mse())
+
+# Standalone usage
+mse &lt;- loss_custom_mse(name = "my_custom_mse_instance")
+
+y_true &lt;- op_arange(20) |&gt; op_reshape(c(4, 5))
+y_pred &lt;- op_arange(20) |&gt; op_reshape(c(4, 5)) * 2
+(loss &lt;- mse(y_true, y_pred))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(123.5, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>loss2 &lt;- (y_pred - y_true)^2 |&gt;
+  op_mean(axis = -1) |&gt;
+  op_mean()
+
+stopifnot(all.equal(as.array(loss), as.array(loss2)))
+
+sample_weight &lt;-array(c(.25, .25, 1, 1))
+(weighted_loss &lt;- mse(y_true, y_pred, sample_weight = sample_weight))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(112.8125, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>weighted_loss2 &lt;- (y_true - y_pred)^2 |&gt;
+  op_mean(axis = -1) |&gt;
+  op_multiply(sample_weight) |&gt;
+  op_mean()
+
+stopifnot(all.equal(as.array(weighted_loss),
+                    as.array(weighted_loss2)))
+</pre></div>
+
+
+<h3>Value</h3>
+
+<p>A function that returns <code>Loss</code> instances, similar to the
+builtin loss functions.
+</p>
+
+
+<h3>Methods defined by base <code>Loss</code> class:</h3>
+
+
+<ul>
+<li>
+<div class="sourceCode r"><pre>initialize(name=NULL, reduction="sum_over_batch_size", dtype=NULL)
+</pre></div>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>name</code>: Optional name for the loss instance.
+</p>
+</li>
+<li> <p><code>reduction</code>: Type of reduction to apply to the loss. In almost all cases
+this should be <code>"sum_over_batch_size"</code>.
+Supported options are <code>"sum"</code>, <code>"sum_over_batch_size"</code> or <code>NULL</code>.
+</p>
+</li>
+<li> <p><code>dtype</code>: The dtype of the loss's computations. Defaults to <code>NULL</code>, which
+means using <code>config_floatx()</code>. <code>config_floatx()</code> is a
+<code>"float32"</code> unless set to different value
+(via <code>config_set_floatx()</code>). If a <code>keras$DTypePolicy</code> is
+provided, then the <code>compute_dtype</code> will be utilized.
+</p>
+</li>
+</ul>
+</li>
+<li>
+<div class="sourceCode"><pre>__call__(y_true, y_pred, sample_weight=NULL)
+</pre></div>
+<p>Call the loss instance as a function, optionally with <code>sample_weight</code>.
+</p>
+</li>
+<li>
+<div class="sourceCode r"><pre>get_config()
+</pre></div>
+</li>
+</ul>
+<h3>Readonly properties:</h3>
+
+
+<ul><li>
+<div class="sourceCode r"><pre>dtype
+</pre></div>
+</li></ul>
+<h3>Symbols in scope</h3>
+
+<p>All R function custom methods (public and private) will have the
+following symbols in scope:
+</p>
+
+<ul>
+<li> <p><code>self</code>: The custom class instance.
+</p>
+</li>
+<li> <p><code>super</code>: The custom class superclass.
+</p>
+</li>
+<li> <p><code>private</code>: An R environment specific to the class instance.
+Any objects assigned here are invisible to the Keras framework.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠__class__⁠</code> and <code>as.symbol(classname)</code>: the custom class type object.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other losses: <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_focal_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_dice()</code> <br><code>loss_hinge()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_log_cosh()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+
+
+</div>

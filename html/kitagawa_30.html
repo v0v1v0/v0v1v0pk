@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>omega_norm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Dimensionless frequency from diffusivity and depth</h2>
+
+<h3>Description</h3>
+
+<p>Dimensionless frequency from diffusivity and depth
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">omega_norm(omega, Diffusiv, z, invert = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>omega</code></td>
+<td>
+<p>numeric; angular frequency</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Diffusiv</code></td>
+<td>
+<p>numeric; hydraulic diffusivity</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>z</code></td>
+<td>
+<p>numeric; depth</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>invert</code></td>
+<td>
+<p>logical; should <code>omega</code> be taken as normalized
+frequency?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Dimensionless frequency <code class="reqn">Q</code> is defined as </p>
+<p style="text-align: center;"><code class="reqn">Q=\frac{z^2 \omega}{2 D}</code>
+</p>
+
+<p>where 
+<code class="reqn">z</code> is the well depth,
+<code class="reqn">\omega</code> is the angular frequency
+and <code class="reqn">D</code> is the hydraulic diffusivity.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>omega_norm</code> returns dimensionless frequency, unless <code>invert=TRUE</code>
+where it will assume <code>omega</code> is dimensionless frequency, and return radial frequency.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>open_well_response</code>, <code>kitagawa-package</code>
+</p>
+<p>Other utilities: 
+<code>sensing_volume()</code>
+</p>
+
+
+</div>

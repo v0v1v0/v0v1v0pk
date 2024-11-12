@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kriging</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform Kriging Interpolation</h2>
+
+<h3>Description</h3>
+
+<p>This function performs kriging interpolation on spatial data using ridge regression to calculate
+the kriging weights. It uses either regular inverse or generalized inverse with ridge regression
+based on the availability of regular inverse for the given covariance matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kriging(
+  data,
+  factor,
+  grid_cell_size = NA,
+  nugget,
+  sill,
+  range_val,
+  a,
+  model_name
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis, see README for details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>The target factor (FAC) to be interpolated using kriging.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_cell_size</code></td>
+<td>
+<p>The desired cell size for the grid. Default is NA, which will calculate the cell size based on the average distance between data points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nugget</code></td>
+<td>
+<p>The nugget effect parameter for the variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sill</code></td>
+<td>
+<p>The sill parameter for the variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range_val</code></td>
+<td>
+<p>The range parameter for the variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>Additional parameter (depends on the variogram model) use NA if not needed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_name</code></td>
+<td>
+<p>The name of the model to use for variogram fitting and kriging. Options include
+"Sph1", "Exp1", "Gau1", "Mat1", "Pow1", "Quad1", "Card1", "Gam1", "Cau1", "Sta1", "Ord1", "Tri1", and "Cos1".
+use function<code>print_model_names()</code> for more information</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame containing the interpolated values for the target factor (FAC).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Klovan_Row80)
+# Perform kriging interpolation for FAC1
+kriging_results &lt;- kriging(Klovan_Row80, factor = 1, grid_cell_size = NA,
+nugget=.0001, sill=2.5, range_val=1000, a=NA, model_name="Sph1")
+
+</code></pre>
+
+
+</div>

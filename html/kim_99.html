@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_csv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read a csv file</h2>
+
+<h3>Description</h3>
+
+<p>Read a csv file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_csv(name = NULL, head = FALSE, dirname = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>a character string of the csv file name without the
+".csv" extension. For example, if the csv file to read is "myfile.csv",
+enter <code>name = "myfile"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>head</code></td>
+<td>
+<p>logical. if <code>head = TRUE</code>, prints the first five
+rows of the data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dirname</code></td>
+<td>
+<p>a character string of the directory containing
+the csv file, e.g., <code>dirname = "c:/Users/Documents"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for the <code>fread</code> function
+from the data.table package. Any arguments for data.table's <code>fread</code>
+function can be used, e.g., <code>fill = TRUE</code>, <code>nrows = 100</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a data.table object, that is,
+an output from the data.table function, <code>fread</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+mydata &lt;- read_csv("myfile")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

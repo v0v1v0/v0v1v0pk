@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>xxt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate matrix multipication between a matrix and its
+transpose for large data.</h2>
+
+<h3>Description</h3>
+
+<p>Calculate matrix multiplication using "divide and
+conquer technique", which accelerates the computation to be faster.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">xxt(X, window.size = 5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>An input matrix to be processed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>window.size</code></td>
+<td>
+<p>The window size of matrices to be devided. The default
+value is 5.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The multiplication matrix of <code>X.t(X)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+#Use the example files embedded in the package.
+X &lt;-matrix(runif(100), ncol=20)
+R1  &lt;- xxt(X)
+
+#Show the result (R1)
+print(R1)
+R2 &lt;- X %*% t(X)
+
+#Show the result (R2)
+print(R2)
+
+
+
+</code></pre>
+
+
+</div>

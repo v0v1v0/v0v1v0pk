@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.strata_doctopic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot document-topic distribution by strata (for covariate models)</h2>
+
+<h3>Description</h3>
+
+<p>Plot document-topic distribution by strata (for covariate models)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'strata_doctopic'
+plot(
+  x,
+  show_topic = NULL,
+  var_name = NULL,
+  by = c("topic", "covariate"),
+  ci = 0.9,
+  method = c("hdi", "eti"),
+  point = c("mean", "median"),
+  width = 0.1,
+  show_point = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a strata_doctopic object (see <code>by_strata_DocTopic()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_topic</code></td>
+<td>
+<p>a vector or an integer. Indicate topics to visualize.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var_name</code></td>
+<td>
+<p>the name of the variable in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p><code>topic</code> or <code>covariate</code>. Default is by <code>topic</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>value of the credible interval (between 0 and 1) to be estimated. Default is <code>0.9</code> (90%).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method for computing the credible interval. The Highest Density Interval (<code>hdi</code>, default) or Equal-tailed Interval (<code>eti</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>point</code></td>
+<td>
+<p>method for computing the point estimate. <code>mean</code> (default) or <code>median</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>numeric. Width of the error bars.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_point</code></td>
+<td>
+<p>logical. Show point estimates. The default is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>keyATM_fig object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>save_fig()</code>, <code>by_strata_DocTopic()</code>
+</p>
+
+
+</div>

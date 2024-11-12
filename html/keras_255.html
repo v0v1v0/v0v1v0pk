@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_one_hot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the one-hot representation of an integer tensor.</h2>
+
+<h3>Description</h3>
+
+<p>Computes the one-hot representation of an integer tensor.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_one_hot(indices, num_classes)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>indices</code></td>
+<td>
+<p>nD integer tensor of shape <code style="white-space: pre;">⁠(batch_size, dim1, dim2, ... dim(n-1))⁠</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_classes</code></td>
+<td>
+<p>Integer, number of classes to consider.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>(n + 1)D one hot representation of the input with shape
+<code style="white-space: pre;">⁠(batch_size, dim1, dim2, ... dim(n-1), num_classes)⁠</code>
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

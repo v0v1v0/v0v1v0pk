@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>activation_elu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Exponential Linear Unit.</h2>
+
+<h3>Description</h3>
+
+<p>The exponential linear unit (ELU) with <code>alpha &gt; 0</code> is defined as:
+</p>
+
+<ul>
+<li> <p><code>x</code> if <code>x &gt; 0</code>
+</p>
+</li>
+<li> <p><code>alpha * exp(x) - 1</code> if <code>x &lt; 0</code>
+</p>
+</li>
+</ul>
+<p>ELUs have negative values which pushes the mean of the activations
+closer to zero.
+</p>
+<p>Mean activations that are closer to zero enable faster learning as they
+bring the gradient closer to the natural gradient.
+ELUs saturate to a negative value when the argument gets smaller.
+Saturation means a small derivative which decreases the variation
+and the information that is propagated to the next layer.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">activation_elu(x, alpha = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Numeric. See description for details.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor, the result from applying the activation to the input tensor <code>x</code>.
+</p>
+
+
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1511.07289">Clevert et al., 2016</a>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/activations#elu-function">https://keras.io/api/layers/activations#elu-function</a>
+</p>
+</li></ul>
+<p>Other activations: <br><code>activation_exponential()</code> <br><code>activation_gelu()</code> <br><code>activation_hard_sigmoid()</code> <br><code>activation_leaky_relu()</code> <br><code>activation_linear()</code> <br><code>activation_log_softmax()</code> <br><code>activation_mish()</code> <br><code>activation_relu()</code> <br><code>activation_relu6()</code> <br><code>activation_selu()</code> <br><code>activation_sigmoid()</code> <br><code>activation_silu()</code> <br><code>activation_softmax()</code> <br><code>activation_softplus()</code> <br><code>activation_softsign()</code> <br><code>activation_tanh()</code> <br></p>
+
+
+</div>

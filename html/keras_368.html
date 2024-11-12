@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_global_max_pooling_1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Global max pooling operation for temporal data.</h2>
+
+<h3>Description</h3>
+
+<p>Global max pooling operation for temporal data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_global_max_pooling_1d(
+  object,
+  data_format = "channels_last",
+  keepdims = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>One of <code>channels_last</code> (default) or <code>channels_first</code>.
+The ordering of the dimensions in the inputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keepdims</code></td>
+<td>
+<p>A boolean, whether to keep the spatial dimensions or not. If
+<code>keepdims</code> is <code>FALSE</code> (default), the rank of the tensor is reduced for
+spatial dimensions. If <code>keepdims</code> is <code>TRUE</code>, the spatial dimensions are
+retained with length 1. The behavior is the same as for <code>tf.reduce_mean</code> or
+<code>np.mean</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Input shape</h3>
+
+<p>3D tensor with shape: <code style="white-space: pre;">⁠(batch_size, steps, features)⁠</code>.
+</p>
+
+
+<h3>Output shape</h3>
+
+<p>2D tensor with shape: <code style="white-space: pre;">⁠(batch_size, channels)⁠</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other pooling layers: 
+<code>layer_average_pooling_1d()</code>,
+<code>layer_average_pooling_2d()</code>,
+<code>layer_average_pooling_3d()</code>,
+<code>layer_global_average_pooling_1d()</code>,
+<code>layer_global_average_pooling_2d()</code>,
+<code>layer_global_average_pooling_3d()</code>,
+<code>layer_global_max_pooling_2d()</code>,
+<code>layer_global_max_pooling_3d()</code>,
+<code>layer_max_pooling_1d()</code>,
+<code>layer_max_pooling_2d()</code>,
+<code>layer_max_pooling_3d()</code>
+</p>
+
+
+</div>

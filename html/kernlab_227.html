@@ -1,0 +1,163 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dots</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Functions</h2>
+
+<h3>Description</h3>
+
+<p>The kernel generating functions provided in kernlab. <br>
+The Gaussian RBF kernel <code class="reqn">k(x,x') = \exp(-\sigma \|x - x'\|^2)</code> <br>
+The Polynomial kernel <code class="reqn">k(x,x') = (scale &lt;x, x'&gt; + offset)^{degree}</code><br>
+The Linear kernel <code class="reqn">k(x,x') = &lt;x, x'&gt;</code><br>
+The Hyperbolic tangent kernel <code class="reqn">k(x, x') = \tanh(scale &lt;x, x'&gt; +  offset)</code><br>
+The Laplacian kernel <code class="reqn">k(x,x') = \exp(-\sigma \|x - x'\|)</code> <br>
+The Bessel kernel <code class="reqn">k(x,x') = (- Bessel_{(\nu+1)}^n \sigma \|x - x'\|^2)</code> <br>
+The ANOVA RBF kernel <code class="reqn">k(x,x') = \sum_{1\leq i_1 \ldots &lt; i_D \leq
+      N} \prod_{d=1}^D k(x_{id}, {x'}_{id})</code> where k(x,x) is a Gaussian
+RBF kernel. <br>
+The Spline kernel <code class="reqn"> \prod_{d=1}^D 1 + x_i x_j + x_i x_j min(x_i,
+    x_j)  - \frac{x_i + x_j}{2} min(x_i,x_j)^2 +
+    \frac{min(x_i,x_j)^3}{3}</code> \
+The String kernels (see <code>stringdot</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rbfdot(sigma = 1)
+
+polydot(degree = 1, scale = 1, offset = 1)
+
+tanhdot(scale = 1, offset = 1)
+
+vanilladot()
+
+laplacedot(sigma = 1)
+
+besseldot(sigma = 1, order = 1, degree = 1)
+
+anovadot(sigma = 1, degree = 1)
+
+splinedot()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>The inverse kernel width used by the Gaussian the
+Laplacian, the Bessel and the ANOVA kernel </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>degree</code></td>
+<td>
+<p>The degree of the polynomial, bessel or ANOVA
+kernel function. This has to be an positive integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>The scaling parameter of the polynomial and tangent
+kernel is a convenient way of normalizing
+patterns without the need to modify the data itself</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>The offset used in a polynomial or hyperbolic tangent
+kernel</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>The order of the Bessel function to be used as a kernel</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The kernel generating functions are used to initialize a kernel
+function
+which calculates the dot (inner) product between two feature vectors in a
+Hilbert Space. These functions can be passed as a <code>kernel</code> argument on almost all
+functions in <span class="pkg">kernlab</span>(e.g., <code>ksvm</code>, <code>kpca</code>  etc).
+</p>
+<p>Although using one of the existing kernel functions as a
+<code>kernel</code> argument in various functions in <span class="pkg">kernlab</span> has the
+advantage that optimized code is used to calculate various kernel expressions,
+any other function implementing a dot product of class <code>kernel</code> can also be used as a kernel
+argument. This allows the user to use, test and develop special kernels
+for a given data set or algorithm.
+For details on the string kernels see <code>stringdot</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Return an S4 object of class <code>kernel</code> which extents the
+<code>function</code> class. The resulting function implements the given
+kernel calculating the inner (dot) product between two vectors.
+</p>
+<table><tr style="vertical-align: top;">
+<td><code>kpar</code></td>
+<td>
+<p>a list containing the kernel parameters (hyperparameters)
+used.</p>
+</td>
+</tr></table>
+<p>The kernel parameters can be accessed by the <code>kpar</code> function.
+</p>
+
+
+<h3>Note</h3>
+
+<p>If the offset in the Polynomial kernel is set to $0$, we obtain homogeneous polynomial
+kernels, for positive values, we have inhomogeneous
+kernels. Note that for negative values the kernel does not satisfy Mercer's
+condition and thus the optimizers may fail. <br></p>
+<p>In the Hyperbolic tangent kernel if the offset is negative the likelihood of obtaining a kernel
+matrix that is not positive definite is much higher (since then even some
+diagonal elements may be negative), hence if this kernel has to be used, the
+offset should always be positive. Note, however, that this is no guarantee
+that the kernel will be positive.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Alexandros Karatzoglou<br><a href="mailto:alexandros.karatzoglou@ci.tuwien.ac.at">alexandros.karatzoglou@ci.tuwien.ac.at</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>stringdot</code>, <code>kernelMatrix </code>, <code>kernelMult</code>, <code>kernelPol</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">rbfkernel &lt;- rbfdot(sigma = 0.1)
+rbfkernel
+
+kpar(rbfkernel)
+
+## create two vectors
+x &lt;- rnorm(10)
+y &lt;- rnorm(10)
+
+## calculate dot product
+rbfkernel(x,y)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plt_parallel_coordinates</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plt_parallel_coordinates</h2>
+
+<h3>Description</h3>
+
+<p>Parallel coordinates plot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plt_parallel_coordinates(
+  data,
+  cols = NULL,
+  color_variable = NULL,
+  color_args = list(alpha = 0.6, begin = 0.1, end = 0.9, option = "inferno", direction =
+    1),
+  line_jitter = list(w = 0.04, h = 0.04),
+  text_label_size = 3.5
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data.table object with the columns containing the parameters to
+be plotted with the parallel coordinates plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols</code></td>
+<td>
+<p>A character vector with column names to subset <code>data</code> (default:
+<code>NULL</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color_variable</code></td>
+<td>
+<p>A character. The name of the column to be used to
+colorize the lines of the plot (default: <code>NULL</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color_args</code></td>
+<td>
+<p>A list with parameters for the color gradient (see
+details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_jitter</code></td>
+<td>
+<p>A list with the elements <code>w</code> and <code>h</code> to define a line
+jitter (default: <code>list(w = 0.04, h = 0.04)</code>), which are passed further on
+to define the position of <code>ggplot2::geom_line()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text_label_size</code></td>
+<td>
+<p>A numeric value to define the size of the text
+annotations (default: <code>3.5</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The color gradient of the plotted lines can be defined with a list
+provided to the argument <code>color_args</code>. Its default values are
+<code>alpha = 0.6</code>, <code>begin = .1</code>, <code>end = .9</code>, <code>option = "inferno"</code>, and
+<code>direction = 1</code> and are passed furhter on to
+<code>ggplot2::scale_color_viridis_c()</code>.
+The implementation to display categorical variables is still experimental.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns a parallel coordinates plot as <code>ggplot2</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ggplot2::scale_color_viridis_c()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (require("ggplot2")) {
+  data("iris")
+  plt_parallel_coordinates(
+    data = data.table::as.data.table(iris[, -5]),
+    cols = colnames(iris)[c(-1, -5)],
+    color_variable = "Sepal.Length"
+  )
+}
+</code></pre>
+
+
+</div>

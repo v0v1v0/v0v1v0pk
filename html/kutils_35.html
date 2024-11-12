@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keysPoolCheck</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compares keys from different data sets; finds differences classes of variables.
+This used to check for similarity of keys from various data sets,
+one precursor to either combining the keys or merging the data
+sets themselves.</h2>
+
+<h3>Description</h3>
+
+<p>When several supposedly "equivalent" data sets are used
+to generate variable keys, there may be trouble. If variables
+with same name have different classes, keyApply might fail
+when applied to one of the data sets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keysPoolCheck(keys, col = "class_old", excludere = "TEXT$")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>keys</code></td>
+<td>
+<p>A list with variable keys.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>Name of key column to check for equivalence. Default is "class_old", but
+"class_new" can be checked as well.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>excludere</code></td>
+<td>
+<p>Exclude variables matching a regular expression
+(re). Default example shows exclusion of variables that end in
+the symbol "TEXT".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This reports on differences in classes among keys. By default, it
+looks for differences in "class_old", because that's where we
+usually see trouble.
+</p>
+<p>The output here is diagnostic. The keys can be fixed manually, or the
+function keysPool can implement an automatic correction.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Data.frame summarizing class differences among keys
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(234)
+dat1 &lt;- data.frame(x1 = rnorm(100),
+                   x2 = sample(c("Male", "Female"), 100, replace = TRUE),
+                   x3_TEXT = "A", x4 = sample(1:10000, 100))
+dat2 &lt;- data.frame(x1 = rnorm(100), x2 = sample(c("Male", "Female"),
+                   100, replace = TRUE),
+                   x3_TEXT = sample(1:100, 100),
+                   stringsAsFactors = FALSE)
+key1 &lt;- keyTemplate(dat1)
+key2 &lt;- keyTemplate(dat2)
+keys &lt;- list(key1, key2)
+keysPoolCheck(keys)
+## See problem in class_old
+keysPoolCheck(keys, col = "class_old")
+## problems in class_new
+keysPoolCheck(keys, col = "class_new")
+keysPoolCheck(keys, excludere = "TEXT$")
+</code></pre>
+
+
+</div>

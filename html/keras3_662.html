@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regularizer_l1</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A regularizer that applies a L1 regularization penalty.</h2>
+
+<h3>Description</h3>
+
+<p>The L1 regularization penalty is computed as:
+<code>loss = l1 * reduce_sum(abs(x))</code>
+</p>
+<p>L1 may be passed to a layer as a string identifier:
+</p>
+<div class="sourceCode r"><pre>dense &lt;- layer_dense(units = 3, kernel_regularizer = 'l1')
+</pre></div>
+<p>In this case, the default value used is <code>l1=0.01</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regularizer_l1(l1 = 0.01)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>l1</code></td>
+<td>
+<p>float, L1 regularization factor.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code>Regularizer</code> instance that can be passed to layer constructors or
+used as a standalone object.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/regularizers#l1-class">https://keras.io/api/layers/regularizers#l1-class</a>
+</p>
+</li></ul>
+<p>Other regularizers: <br><code>regularizer_l1_l2()</code> <br><code>regularizer_l2()</code> <br><code>regularizer_orthogonal()</code> <br></p>
+
+
+</div>

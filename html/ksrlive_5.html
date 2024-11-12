@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KSR.list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a kinase substrate relationship list from a data frame</h2>
+
+<h3>Description</h3>
+
+<p><code>KSR.list</code> returns a list of kinase substrate relationships
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KSR.list(df, kinasefamilies = NULL, exclusive = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>data frame of kinase substrate relationships with substrate 
+identifier in the first column and kinase identifier in the second column.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinasefamilies</code></td>
+<td>
+<p>named list of kinase identifiers that have to be combined, 
+one list per kinase family, list will be named after first family member</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exclusive</code></td>
+<td>
+<p>logical, if TRUE only substrates exclusive to the kinase
+will be included in the list (substrates with multiple kinases will be excluded)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function KSR.list creates a list of kinase substrate relationships from
+a data frame and can combine kinase families into one list. Substrates occuring 
+in multiple lists can be excluded.
+</p>
+
+
+<h3>Value</h3>
+
+<p>named list of substrate identifiers, with the corresponding kinase
+identifiers as the list names
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(phosphonetworkdf)
+data(datakin)
+
+# first column has to be substrate id, second kinase id
+kin_data &lt;- KSR.list(phosphonetwork_df[, c("SUB_IDENT", "KIN_ACC_ID")]) 
+# Akt1 and Akt2 belong to the same kinase family, combine their substrates 
+# into one list and name the list after the first family member
+fam &lt;- list(akt = c("P31749", "P31751"))
+kin_data_fam &lt;- KSR.list(phosphonetwork_df[, c("SUB_IDENT", "KIN_ACC_ID")], 
+kinasefamilies = fam)
+
+# only include phosphosites appearing once
+kin_data_fam_exc &lt;- KSR.list(phosphonetwork_df[, c("SUB_IDENT", "KIN_ACC_ID")], 
+                             kinasefamilies = fam,
+                             exclusive = TRUE)
+</code></pre>
+
+
+</div>

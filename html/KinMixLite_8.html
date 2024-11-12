@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>checkpeaks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check and modify database to have positive frequencies for all observed peaks/alleles</h2>
+
+<h3>Description</h3>
+
+<p>Check whether database has positive frequencies for all peaks/alleles observed in epg and genotype profiles, and optionally modify db by addition of small positive frequencies so that it does, followed by renormalisation of frequencies for each allele to sum to 1.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">checkpeaks(x,db,fix=0.003)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data frame, the epg or genotype profile; see <code>formats</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>db</code></td>
+<td>
+<p>data frame, the db; see <code>formats</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fix</code></td>
+<td>
+<p>numeric: if positive, increment to db frequency for each identified discrepant peak</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>(possibly modified) db</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+db&lt;-checkpeaks(epg,db)
+db&lt;-checkpeaks(Cgt,db)
+
+Xgt&lt;-data.frame(marker=c('D10','D12'),allele1=c(8,13),allele2=c(13,10))
+db&lt;-checkpeaks(Xgt,db)
+db
+</code></pre>
+
+
+</div>

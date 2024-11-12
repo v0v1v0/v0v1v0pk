@@ -1,0 +1,165 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>utilities</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Various utilities for knots</h2>
+
+<h3>Description</h3>
+
+<p>Various utilities for knots including reading files and creating objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">controlpoints(x)
+inkscape(x)
+minobj(x)
+knotvec(x)
+make_controlpoints_from_ink(a)
+make_minobj_from_ink(a)
+make_minobj_from_vector(vec)
+make_ink_from_minobj(x)
+make_inkscape_from_controlpoints(b)
+make_minobj_from_knot(k)
+make_knotvec_from_minobj(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Suitable object for coercion; see details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>An <code>inkscape</code> object: a two column matrix with rows
+representing the positions of nodes and control points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>A controlpoints object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>An object of class knot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vec</code></td>
+<td>
+<p>A vector of reals</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Functions <code>inkscape()</code>, <code>minobj()</code>, and <code>knotvec()</code> are
+low-level functions; these are the only places that objects have their
+classes assigned directly.  These functions are not user-friendly and
+require very specific types of object; they perform some checks but
+are not really intended for the user.  Functions <code>as.foo()</code> are
+much more user-friendly, and are documented at <code>as.Rd</code>.
+</p>
+<p>Functions <code>make_foo_from_bar()</code> coerce <code>bar</code> objects into
+<code>foo</code> objects.  Functions that involve symmetry are documented at
+<code>symmetry.Rd</code>.
+</p>
+<p>Objects of class <strong><code>inkscape</code></strong> are in the form of a two-column
+matrix, with rows corresponding to 2D positions.  The rows correspond
+to the <code class="reqn">(x,y)</code> coordinates of points as held in the inkscape file.
+</p>
+<p>There is quite a lot of redundancy in an inkscape object:
+</p>
+
+<ul>
+<li>
+<p> The first row of an inkscape object is equal to the last row
+(this follows from the fact that the path is closed).
+</p>
+</li>
+<li>
+<p> If <code class="reqn">n=0</code> modulo 3, then
+<code>a[n+2,]-a[n+1,]==a[n+1,]-a[n]</code>, corresponding to the fact that
+the handles are symmetric in inkscape.  This is visualised best by
+<code>knotplot2(k4_1,ink=TRUE,seg=TRUE)</code>
+</p>
+</li>
+</ul>
+<p>Look at functions <code>make_inkscape_from_minobj()</code> and
+<code>make_minobj_from_ink()</code> to see this from a symbolic
+perspective.  The vignette also gives some details.
+</p>
+<p>The <strong><code>minobj</code></strong> class is a ‘MINimal OBJect’.
+Objects of class <strong><code>minobj</code></strong> are a list of two elements:
+<code>$node</code> and <code>$handle_A</code>.  Each element has rows
+corresponding to 2D positions, the same as <code>inkscape</code> objects.
+Element <code>$node</code> shows the positions of the nodes, and element
+<code>$handle_A</code> shows the positions of (one of) the handles; the
+other handle is symmetrically positioned with respect to its node.
+Use <code>knotplot2(k4_1,node=TRUE,seg=TRUE)</code> to see the meaning of
+the entries; the nodes are indicated by a square and the handles by
+circles.
+</p>
+<p>NB: objects of class <code>minobj</code> have no <em>redundancy</em> in the
+sense that changing any entry of either <code>$node</code> or
+<code>$handle_A</code> results in modifying the corresponding inkscape
+diagram.  However, doing this to a knot which has imposed symmetry
+conditions (ie a nontrivial <code>symobj</code>) may introduce asymmetry
+into the inkscape diagram.  For example, one might take a
+<code>minobj</code> object whose knot diagram is left-right mirror symmetric
+(eg <code>k6_2</code>) and alter one of the handle positions.  Then the
+resulting inkscape object will be asymmetric.  There is an example
+using <code>k6_2</code> below.
+</p>
+<p>An object of class <code>controlpoints</code> is a list of matrices of size
+4-by-2.  For each matrix, the four rows correspond to the points in 2D
+Cartesian space needed to specify a Bezier curve; further details and
+examples are given in <code>bezier.Rd</code>.  There is lots of redundancy
+in a <code>controlpoints</code> object because the inkscape nodes are
+symmetric nodes with diametrically opposed handles.
+</p>
+<p>The <strong><code>knotvec</code></strong> class is a named vector of independent
+reals suitable for use with optimization routines.
+</p>
+<p>None of the functions here deal with symmetry relations.  This is
+documented at <code>symmetry.Rd</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>as</code>,<code>symmetrize</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ a &lt;- as.minobj(k6_3)
+ plot(a$node,asp=1,pch=16)
+ segments(x0=a[[1]][,1],y0=a[[1]][,2],x1=a[[2]][,1],y1=a[[2]][,2],
+ main="handle direction follows the string path")
+ points(getstringpoints(a),type='l',col='gray',lwd=0.4)
+
+ 
+</code></pre>
+
+
+</div>

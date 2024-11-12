@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Beir</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fundamental solution to the Kelvin differential equation (J)</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the complex solution to the Kelvin differential
+equation using modified Bessel functions of the <em>first kind</em>, specifically
+those produced by <code>BesselJ</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Beir(x, ...)
+
+## Default S3 method:
+Beir(x, nu. = 0, nSeq. = 1, return.list = FALSE, ...)
+
+Bei(...)
+
+Ber(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric; values to evaluate the complex solution at</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments passed to <code>BesselK</code> or <code>Beir</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu.</code></td>
+<td>
+<p>numeric; value of <code class="reqn">\nu</code> in <code class="reqn">\mathcal{B}_\nu</code> solutions</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nSeq.</code></td>
+<td>
+<p>positive integer; equivalent to <code>nSeq</code> in <code>BesselJ</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return.list</code></td>
+<td>
+<p>logical; Should the result be a list instead of matrix?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>Ber</code> and <code>Bei</code> are wrapper functions
+which return the real and imaginary components of <code>Beir</code>, respectively.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>return.list==FALSE</code> (the default),
+a complex matrix with as many columns as using <code>nSeq.</code> creates.
+Otherwise the result is a list with matrices for
+Real and Imaginary components.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Andrew Barbour
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="http://mathworld.wolfram.com/KelvinFunctions.html">http://mathworld.wolfram.com/KelvinFunctions.html</a>
+</p>
+<p>Imaginary: <a href="http://mathworld.wolfram.com/Bei.html">http://mathworld.wolfram.com/Bei.html</a>
+</p>
+<p>Real: <a href="http://mathworld.wolfram.com/Ber.html">http://mathworld.wolfram.com/Ber.html</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kelvin-package</code>, <code>Keir</code>, <code>BesselJ</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+Beir(1:10)    # defaults to nu.=0
+Beir(1:10, nu.=2)
+Beir(1:10, nSeq.=2)
+Beir(1:10, nSeq.=2, return.list=TRUE)
+
+
+# Imaginary component only
+Bei(1:10)
+
+# Real component only
+Ber(1:10)
+</code></pre>
+
+
+</div>

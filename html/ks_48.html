@@ -1,0 +1,164 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Hpi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plug-in bandwidth selector</h2>
+
+<h3>Description</h3>
+
+<p>Plug-in bandwidth for for 1- to 6-dimensional data.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Hpi(x, nstage=2, pilot, pre="sphere", Hstart, binned, bgridsize,
+   amise=FALSE, deriv.order=0, verbose=FALSE, optim.fun="optim")
+Hpi.diag(x, nstage=2, pilot, pre="scale", Hstart, binned, bgridsize,
+   amise=FALSE, deriv.order=0, verbose=FALSE, optim.fun="optim")
+hpi(x, nstage=2, binned=TRUE, bgridsize, deriv.order=0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector or matrix of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nstage</code></td>
+<td>
+<p>number of stages in the plug-in bandwidth selector (1 or 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pilot</code></td>
+<td>
+<p>"amse" = AMSE pilot bandwidths <br>
+"samse" = single SAMSE pilot bandwidth <br> 
+"unconstr" = single unconstrained pilot bandwidth <br>
+"dscalar" = single pilot bandwidth for deriv.order &gt;= 0 <br>
+"dunconstr" = single unconstrained pilot bandwidth for deriv.order &gt;= 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pre</code></td>
+<td>
+<p>"scale" = <code>pre.scale</code>, "sphere" = <code>pre.sphere</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hstart</code></td>
+<td>
+<p>initial bandwidth matrix, used in numerical
+optimisation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>flag for binned kernel estimation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bgridsize</code></td>
+<td>
+<p>vector of binning grid sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>amise</code></td>
+<td>
+<p>flag to return the minimal scaled PI value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>flag to print out progress information. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optim.fun</code></td>
+<td>
+<p>optimiser function: one of <code>nlm</code> or <code>optim</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>hpi(,deriv.order=0)</code> is the univariate plug-in 
+selector of Wand &amp; Jones (1994), i.e. it is exactly the same as
+<span class="pkg">KernSmooth</span>'s <code>dpik</code>. For deriv.order&gt;0, the formula is
+taken from Wand &amp; Jones (1995). <code>Hpi</code> is a multivariate
+generalisation of this. Use <code>Hpi</code> for unconstrained bandwidth matrices and
+<code>Hpi.diag</code> for diagonal bandwidth matrices.
+</p>
+<p>The default pilot is <code>"samse"</code> for d=2,r=0, and
+<code>"dscalar"</code> otherwise.
+For AMSE pilot bandwidths, see Wand &amp; Jones (1994). For
+SAMSE pilot bandwidths, see Duong &amp; Hazelton (2003).  The latter is a
+modification of the former, in order to remove any possible problems
+with non-positive definiteness. Unconstrained and higher order
+derivative pilot bandwidths are from Chacon &amp; Duong (2010). 
+</p>
+<p>For d=1, 2, 3, 4 and <code>binned=TRUE</code>, 
+estimates are computed over a binning grid defined 
+by <code>bgridsize</code>. Otherwise it's computed exactly.  
+If <code>Hstart</code> is not given then it defaults to <code>Hns(x)</code>.
+</p>
+<p>For <span class="pkg">ks</span> <code class="reqn">\geq</code> 1.11.1, the default optimisation function is
+<code>optim.fun="optim"</code>. To reinstate the previous functionality, use
+<code>optim.fun="nlm"</code>.  
+</p>
+
+
+<h3>Value</h3>
+
+<p>Plug-in bandwidth. 
+If <code>amise=TRUE</code> then the minimal scaled PI value is returned too.</p>
+
+
+<h3>References</h3>
+
+<p>Chacon, J.E. &amp; Duong, T. (2010) Multivariate plug-in bandwidth
+selection with unconstrained pilot matrices. <em>Test</em>, <b>19</b>, 375-398.
+</p>
+<p>Duong, T. &amp; Hazelton, M.L. (2003) Plug-in bandwidth matrices for
+bivariate kernel density estimation. <em>Journal of Nonparametric
+Statistics</em>, <b>15</b>, 17-30.
+</p>
+<p>Sheather, S.J. &amp; Jones, M.C. (1991) A reliable data-based bandwidth selection
+method for kernel density estimation. <em>Journal of the Royal
+Statistical Society Series B</em>, <b>53</b>, 683-690.
+</p>
+<p>Wand, M.P. &amp; Jones, M.C. (1994) Multivariate plug-in bandwidth
+selection. <em>Computational Statistics</em>, <b>9</b>, 97-116.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Hbcv</code>, <code>Hlscv</code>, <code>Hscv</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(unicef)
+Hpi(unicef, pilot="dscalar")
+hpi(unicef[,1])
+</code></pre>
+
+
+</div>

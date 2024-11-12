@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>factor_analysis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform Factor Analysis</h2>
+
+<h3>Description</h3>
+
+<p>This function performs a Factor Analysis on a provided dataset using the "Varimax" orthogonal rotation method.
+It also calculates the factor scores for each factor.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">factor_analysis(data, num_fac = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis, see README for details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_fac</code></td>
+<td>
+<p>A numeric value indicating the number of factors to analyze.
+It's recommended to use 3, which is also the default value.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame containing the calculated factors.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("Klovan_Row80")
+factor_analysis(Klovan_Row80)
+factor_analysis(Klovan_Row80, 3)
+
+</code></pre>
+
+
+</div>

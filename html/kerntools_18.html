@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>heatK</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel matrix heatmap</h2>
+
+<h3>Description</h3>
+
+<p>'heatK()' plots the heatmap of a kernel matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">heatK(
+  K,
+  cos.norm = FALSE,
+  title = NULL,
+  color = c("red", "yellow"),
+  raster = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>Kernel matrix (class "matrix").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cos.norm</code></td>
+<td>
+<p>If TRUE, the cosine normalization is applied to the kernel matrix
+so its elements have a maximum value of 1. (Defaults: FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>Heatmap title (optional).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>A vector of length 2 containing two colors. The first color will be
+used to represent the minimum value and the second the maximum value of the kernel matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raster</code></td>
+<td>
+<p>In large kernel matrices, raster = TRUE will draw quicker and
+better-looking heatmaps. (Defaults=FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A 'ggplot2' heatmap.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- matrix(rnorm(150),ncol=50,nrow=30)
+K &lt;- Linear(data)
+heatK(K)
+</code></pre>
+
+
+</div>

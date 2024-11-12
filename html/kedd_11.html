@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>h.ccv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Complete Cross-Validation for Bandwidth Selection
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>h.ccv</code> computes the complete 
+cross-validation bandwidth selector of r'th derivative of 
+kernel density estimator one-dimensional.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">h.ccv(x, ...)
+## Default S3 method:
+h.ccv(x, deriv.order = 0, lower = 0.1 * hos, upper = hos, 
+         tol = 0.1 * lower, kernel = c("gaussian", "triweight", 
+         "tricube", "biweight", "cosine"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower, upper</code></td>
+<td>
+<p>range over which to minimize. The default is
+almost always satisfactory. <code>hos</code> (Over-smoothing) is calculated internally
+from an <code>kernel</code>, see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the convergence tolerance for <code>optimize</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, with default
+<code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>h.ccv</code> complete cross-validation implements for choosing the bandwidth <code class="reqn">h</code> 
+of a r'th derivative kernel density estimator.<br></p>
+<p>Jones and Kappenman (1991) proposed a so-called complete cross-validation (CCV)
+in kernel density estimator. This method can be extended to the estimation of 
+derivative of the density, basing our estimate of integrated squared density 
+derivative (Peter and Marron 1987) on the <code class="reqn">\bar{\theta}_{r}(h)</code>'s, 
+we get the following, start from <code class="reqn">R\left(\hat{f}_{h}^{(r)}\right) - \bar{\theta}_{r}(h)</code> as an estimate 
+of MISE. Thus, <code class="reqn">\hat{h}^{(r)}_{CCV}</code>, say, is the <code class="reqn">h</code> that minimises:
+</p>
+<p style="text-align: center;"><code class="reqn">CCV(h;r)=R\left(\hat{f}_{h}^{(r)}\right)-\bar{\theta}_{r}(h)+\frac{1}{2}\mu_{2}(K) h^{2} \bar{\theta}_{r+1}(h)+\frac{1}{24}\left(6\mu_{2}^{2}(K) -\delta(K)\right)h^{4}\bar{\theta}_{r+2}(h)</code>
+</p>
+ 
+<p>with 
+</p>
+<p style="text-align: center;"><code class="reqn">R\left(\hat{f}_{h}^{(r)}\right) = \int \left(\hat{f}_{h}^{(r)}(x)\right)^{2} dx = \frac{R\left(K^{(r)}\right)}{nh^{2r+1}} + \frac{(-1)^{r}}{n (n-1) h^{2r+1}} \sum_{i=1}^{n}\sum_{j=1;j \neq i}^{n} K^{(r)} \ast K^{(r)} \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>and
+</p>
+<p style="text-align: center;"><code class="reqn">\bar{\theta}_{r}(h)= \frac{(-1)^r}{n(n-1) h^{2r+1}} \sum_{i=1}^{n} \sum_{j=1;j \neq i}^{n} K^{(2r)} \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>and <code class="reqn">K^{(r)} \ast K^{(r)} (x)</code> is the convolution of the r'th derivative kernel function <code class="reqn">K^{(r)}(x)</code>
+(see <code>kernel.conv</code> and <code>kernel.fun</code>); <code class="reqn">R\left(K^{(r)}\right) = \int_{R} K^{(r)}(x)^{2} dx</code> and 
+<code class="reqn">\mu_{2}(K) = \int_{R}x^{2} K(x) dx</code>, <code class="reqn">\delta(K) = \int_{R}x^{4} K(x) dx</code>.<br></p>
+<p>The range over which to minimize is <code>hos</code> Oversmoothing bandwidth, the default is almost always 
+satisfactory. See George and Scott (1985), George (1990), Scott (1992, pp 165), Wand and Jones (1995, pp 61). 
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>the deparsed name of the <code>x</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the sample size after elimination of missing values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>value of bandwidth parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.ccv</code></td>
+<td>
+<p>the minimal CCV value.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Jones, M. C. and Kappenman, R. F. (1991). 
+On a class of kernel density estimate bandwidth selectors. 
+<em>Scandinavian Journal of Statistics</em>, <b>19</b>, 337–349.
+</p>
+<p>Peter, H. and Marron, J.S. (1987).
+Estimation of integrated squared density derivatives.
+<em>Statistics and Probability Letters</em>, <b>6</b>, 109–115.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.h.ccv</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Derivative order = 0
+
+h.ccv(kurtotic,deriv.order = 0)
+
+## Derivative order = 1
+
+h.ccv(kurtotic,deriv.order = 1)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Mobius.card.set.func-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "Mobius.card.set.func"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing the Möbius transform of a cardinal
+set function.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the function
+<code>Mobius.card.set.func</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal
+to the number of elements of the set on which the Möbius
+representation of a cardinal set function is defined.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>n+1</code> containing the coefficients of the Möbius
+representation of a cardinal set function.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>superclass.set.func</code>, directly.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.Mobius.set.func</dt>
+<dd>
+<p><code>signature(object =
+	"Mobius.card.set.func")</code></p>
+</dd>
+<dt>as.set.func</dt>
+<dd>
+<p><code>signature(object =
+	"Mobius.card.set.func")</code></p>
+</dd>
+<dt>as.card.set.func</dt>
+<dd>
+<p><code>signature(object = "Mobius.card.set.func")</code></p>
+</dd>
+<dt>to.data.frame</dt>
+<dd>
+<p><code>signature(object = "Mobius.card.set.func")</code></p>
+</dd>
+<dt>zeta</dt>
+<dd>
+<p><code>signature(object = "Mobius.card.set.func")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>Mobius.set.func-class</code>,
+<br><code>Mobius.card.set.func</code>,
+<br><code>as.Mobius.set.func-methods</code>, 
+<br><code>as.card.set.func-methods</code>,
+<br><code>as.set.func-methods</code>,
+<br><code>zeta-methods</code>, 
+<br><code>to.data.frame-methods</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## the Mobius representation of a cardinal set function
+a &lt;- Mobius.card.set.func(-3:2)
+
+# the attributes of the object
+a@n
+a@data
+
+## some transformations
+as.set.func(a)
+zeta(a)
+## let us check ...
+Mobius(zeta(a))
+</code></pre>
+
+
+</div>

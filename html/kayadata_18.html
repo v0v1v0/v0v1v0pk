@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>project_top_down</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get top-down projections of Kaya variables for one or more countries
+or regions for a given year</h2>
+
+<h3>Description</h3>
+
+<p>Get top-down projections of Kaya variables for one or more countries
+or regions for a given year
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">project_top_down(region_name, year, quiet = FALSE, region_code = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>region_name</code></td>
+<td>
+<p>The name of a country or region to look up</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>The year to project to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Suppress warnings if there is no data for that country or
+region.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>region_code</code></td>
+<td>
+<p>Optional three-letter country or region code to look up
+instead of the <code>region_name</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a tibble of values for <em>P</em>, <em>G</em>, <em>E</em>, <em>F</em>, <em>g</em>, <em>e</em>, <em>f</em>, and <em>ef</em>
+for each country or region:
+</p>
+
+<dl>
+<dt>region</dt>
+<dd>
+<p>The name of the country or region</p>
+</dd>
+<dt>year</dt>
+<dd>
+<p>The year</p>
+</dd>
+<dt>P</dt>
+<dd>
+<p>Population, in billions</p>
+</dd>
+<dt>G</dt>
+<dd>
+<p>Gross domestic product, in trillions of constant 2015 U.S.
+dollars.</p>
+</dd>
+<dt>E</dt>
+<dd>
+<p>Total primary energy consumption, in quads</p>
+</dd>
+<dt>F</dt>
+<dd>
+<p>CO2 emissions from fossil fuel consumption, in millions of metric
+tons </p>
+</dd>
+<dt>g</dt>
+<dd>
+<p>Per-capita GDP, in thousands of constant 2015 U.S. dollars per
+person.</p>
+</dd>
+<dt>e</dt>
+<dd>
+<p>Energy intensity of the economy, in quads per trillion dollars.</p>
+</dd>
+<dt>f</dt>
+<dd>
+<p>Emissions intensity of the energy supply, in million metric tons
+per quad.</p>
+</dd>
+<dt>ef</dt>
+<dd>
+<p>Emissions intensity of the economy, in metric tons per
+million dollars of GDP.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p>regions
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">project_top_down("China", 2037)
+project_top_down(region_code = "CHE", year = 2043)
+</code></pre>
+
+
+</div>

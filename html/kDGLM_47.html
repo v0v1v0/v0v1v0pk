@@ -1,0 +1,231 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>harmonic_block</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Structural blocks for seasonal trends and regressions</h2>
+
+<h3>Description</h3>
+
+<p>Creates the structure for a harmonic block with desired periodicity.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">harmonic_block(
+  ...,
+  period,
+  order = 1,
+  name = "Var.Sazo",
+  D = 1,
+  h = 0,
+  H = 0,
+  a1 = 0,
+  R1 = 4,
+  monitoring = rep(FALSE, order * 2)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Named values for the planning matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>period</code></td>
+<td>
+<p>Positive integer: The size of the harmonic cycle.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>Positive integer: The order of the harmonic structure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String: An optional argument providing the name for this block. Can be useful to identify the models with meaningful labels, also, the name used will be used in some auxiliary functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>Array, Matrix, vector or scalar: The values for the discount factors associated with the latent states at each time. If D is an array, its dimensions should be (2n) x (2n) x t, where n is the order of the harmonic block and t is the length of the outcomes. If D is a matrix, its dimensions should be (2n) x (2n) and the same discount matrix will be used in all observations. If D is a vector, it should have size t and it is interpreted as the discount factor at each observed time (same discount for all variable). If D is a scalar, the same discount will be used for all latent states at all times.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Matrix, vector or scalar: A drift to be add after the temporal evolution (can be interpreted as the mean of the random noise at each time). If a matrix, its dimension should be (2n) x t, where n is the order of the harmonic_block and t is the length of the series. If a vector, it should have size t, and each value will be applied to the first latent state (the one which affects the linear predictors) in their respective time. If a scalar, the passed value will be used for the first latent state at each time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>Array, Matrix, vector or scalar: The values for the covariance matrix for the noise factor at each time. If H is an array, its dimensions should be (2n) x (2n) x t, where n is the order of the harmonic block and t is the length of the series. If H is a matrix, its dimensions should be (2n) x (2n) and its values will be used for each time. If H is a vector or scalar, a discount factor matrix will be created as a diagonal matrix with the values of H in the diagonal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a1</code></td>
+<td>
+<p>Vector or scalar: The prior mean for the latent states associated with this block at time 1. If a1 is a vector, its dimension should be equal to two times the order of the harmonic block. If a1 is a scalar, its value will be used for all latent states.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R1</code></td>
+<td>
+<p>Matrix, vector or scalar: The prior covariance matrix for the latent states associated with this block at time 1. If R1 is a matrix, its dimensions should be (2n) x (2n). If R1 is a vector or scalar, a covariance matrix will be created as a diagonal matrix with the values of R1 in the diagonal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>monitoring</code></td>
+<td>
+<p>Vector: A vector of flags indicating which variables should be monitored (if automated monitoring is used). Its size should be 2n. The default is that only the first order component of this structure should be monitored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For the ..., D, H, a1 and R1 arguments, the user may set one or more of its values as a string.
+By doing so, the user will leave the block partially undefined.
+The user must then pass the undefined parameter values as named arguments to the <code>fit_model</code> function. Also, multiple values can be passed, allowing for a sensitivity analysis for the value of this parameter.
+</p>
+<p>For the details about the implementation see dos Santos et al. (2024).
+</p>
+<p>For the details about the modelling of seasonal trends using harmonics in the context of DLM's, see West and Harrison (1997), chapter 8.
+</p>
+<p>For the details about dynamic regression models in the context of DLM's, see West and Harrison (1997), chapters 6 and 9.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dlm_block object containing the following values:
+</p>
+
+<ul>
+<li>
+<p> FF Array: A 3D-array containing the regression matrix for each time. Its dimension should be n x k x t, where n is the number of latent states, k is the number of linear predictors in the model and t is the time series length.
+</p>
+</li>
+<li>
+<p> FF.labs Matrix: A n x k character matrix describing the type of value of each element of FF.
+</p>
+</li>
+<li>
+<p> G Matrix: A 3D-array containing the evolution matrix for each time. Its dimension should be n x n x t, where n is the number of latent states and t is the time series length.
+</p>
+</li>
+<li>
+<p> G.labs Matrix: A n x n character matrix describing the type of value of each element of G.
+</p>
+</li>
+<li>
+<p> D Array: A 3D-array containing the discount factor matrix for each time. Its dimension should be n x n x t, where n is the number of latent states and t is the time series length.
+</p>
+</li>
+<li>
+<p> h Matrix: The mean for the random noise of the temporal evolution. Its dimension should be n x t.
+</p>
+</li>
+<li>
+<p> H Array: A 3D-array containing the covariance matrix of the noise for each time. Its dimension should be the same as D.
+</p>
+</li>
+<li>
+<p> a1 Vector: The prior mean for the latent vector.
+</p>
+</li>
+<li>
+<p> R1 Matrix: The prior covariance matrix for the latent vector.
+</p>
+</li>
+<li>
+<p> var.names list: A list containing the variables indexes by their name.
+</p>
+</li>
+<li>
+<p> period Positive integer: Same as argument.
+</p>
+</li>
+<li>
+<p> n Positive integer: The number of latent states associated with this block (2).
+</p>
+</li>
+<li>
+<p> t Positive integer: The number of time steps associated with this block. If 1, the block is compatible with blocks of any time length, but if t is greater than 1, this block can only be used with blocks of the same time length.
+</p>
+</li>
+<li>
+<p> k Positive integer: The number of outcomes associated with this block. This block can only be used with blocks with the same outcome length.
+</p>
+</li>
+<li>
+<p> pred.names Vector: The name of the linear predictors associated with this block.
+</p>
+</li>
+<li>
+<p> monitoring Vector: Same as argument.
+</p>
+</li>
+<li>
+<p> type Character: The type of block (Harmonic).
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Mike West, Jeff Harrison (1997).
+<em>Bayesian Forecasting and Dynamic Models (Springer Series in Statistics)</em>.
+Springer-Verlag.
+ISBN 0387947256.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p>Other auxiliary functions for structural blocks: 
+<code>TF_block()</code>,
+<code>block_mult()</code>,
+<code>block_rename()</code>,
+<code>block_superpos()</code>,
+<code>intervention()</code>,
+<code>noise_block()</code>,
+<code>polynomial_block()</code>,
+<code>regression_block()</code>,
+<code>specify.dlm_block()</code>,
+<code>summary.dlm_block()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Creating seasonal structure for a model with 2 outcomes.
+# One block is created for each outcome
+# with each block being associated with only one of the outcomes.
+season.1 &lt;- harmonic_block(alpha1 = 1, period = 3)
+season.2 &lt;- harmonic_block(alpha2 = 1, period = 6)
+
+# Creating a block with shared effect between the outcomes
+season.3 &lt;- harmonic_block(alpha = 1, alpha2 = 1, period = 12)
+
+</code></pre>
+
+
+</div>

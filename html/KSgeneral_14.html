@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mixed_ks_c_cdf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Computes the complementary cumulative distribution function of the two-sided Kolmogorov-Smirnov statistic when the cdf under the null hypothesis is mixed
+</h2>
+
+<h3>Description</h3>
+
+<p>Computes the complementary cdf, <code class="reqn">P(D_{n} \ge q)</code> at a fixed <code class="reqn">q</code>, <code class="reqn">q\in[0, 1]</code>, of the one-sample two-sided Kolmogorov-Smirnov statistic,  when the cdf <code class="reqn">F(x)</code> under the null hypothesis is mixed, using the Exact-KS-FFT method expressing the p-value as a double-boundary non-crossing probability for a homogeneous Poisson process, which is then efficiently computed using FFT (see Dimitrova, Kaishev, Tan (2020)).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mixed_ks_c_cdf(q, n, jump_points, Mixed_dist, ..., tol = 1e-10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+
+<p>numeric value between 0 and 1, at which the complementary cdf <code class="reqn">P(D_{n} \ge q)</code> is computed
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>the sample size
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jump_points</code></td>
+<td>
+
+<p>a numeric vector containing the points of (jump) discontinuity, i.e. where the underlying cdf <code class="reqn">F(x)</code> has jump(s)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mixed_dist</code></td>
+<td>
+
+<p>a pre-specified (user-defined) mixed cdf, <code class="reqn">F(x)</code>, under the null hypothesis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>values of the parameters of the cdf, <code class="reqn">F(x)</code> specified (as a character string) by <code>Mixed_dist</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+
+<p>the value of <code class="reqn">\epsilon</code> that is used to compute the values of <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code>, <code class="reqn">i = 1, ..., n</code>, as detailed in Step 1 of Section 2.1 in Dimitrova, Kaishev and Tan (2020) (see also (ii) in the Procedure Exact-KS-FFT therein). By default, <code>tol = 1e-10</code>. Note that a value of <code>NA</code> or <code>0</code> will lead to an error!
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given a random sample <code class="reqn">\{X_{1}, ..., X_{n}\}</code> of size <code>n</code> with an empirical cdf <code class="reqn">F_{n}(x)</code>, the Kolmogorov-Smirnov goodness-of-fit statistic is defined as <code class="reqn">D_{n} = \sup | F_{n}(x) - F(x) | </code>, where <code class="reqn">F(x)</code> is the cdf of a prespecified theoretical distribution under the null hypothesis <code class="reqn">H_{0}</code>, that <code class="reqn">\{X_{1}, ..., X_{n}\}</code> comes from <code class="reqn">F(x)</code>.
+</p>
+<p>The function <code>mixed_ks_c_cdf</code> implements the Exact-KS-FFT method, proposed by Dimitrova, Kaishev, Tan (2020) to compute the complementary cdf <code class="reqn">P(D_{n} \ge q)</code> at a value <code class="reqn">q</code>, when <code class="reqn">F(x)</code> is mixed.
+This algorithm ensures a total worst-case run-time of order <code class="reqn">O(n^{2}log(n))</code>.
+</p>
+<p>We have not been able to identify alternative, fast and accurate, method (software) that has been developed/implemented when the hypothesized <code class="reqn">F(x)</code> is mixed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Numeric value corresponding to <code class="reqn">P(D_{n} \ge q)</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Dimitrina S. Dimitrova, Vladimir K. Kaishev, Senren Tan. (2020) "Computing the Kolmogorov-Smirnov Distribution When the Underlying CDF is Purely Discrete, Mixed or Continuous". Journal of Statistical Software, <b>95</b>(10): 1-42. doi:10.18637/jss.v095.i10.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute the complementary cdf of D_{n}
+# when the underlying distribution is a mixed distribution
+# with two jumps at 0 and log(2.5),
+# as in Example 3.1 of Dimitrova, Kaishev, Tan (2020)
+
+## Defining the mixed distribution
+
+Mixed_cdf_example &lt;- function(x)
+{
+     result &lt;- 0
+     if (x &lt; 0){
+         result &lt;- 0
+     }
+     else if (x == 0){
+         result &lt;- 0.5
+     }
+     else if (x &lt; log(2.5)){
+         result &lt;- 1 - 0.5 * exp(-x)
+     }
+     else{
+         result &lt;- 1
+     }
+
+     return (result)
+ }
+
+KSgeneral::mixed_ks_c_cdf(0.1, 25, c(0, log(2.5)), Mixed_cdf_example)
+
+
+## Not run: 
+## Compute P(D_{n} &gt;= q) for n = 5,
+## q = 1/5000, 2/5000, ..., 5000/5000
+## when the underlying distribution is a mixed distribution
+## with four jumps at 0, 0.2, 0.8, 1.0,
+## as in Example 2.8 of Dimitrova, Kaishev, Tan (2020)
+
+n &lt;- 5
+q &lt;- 1:5000/5000
+
+Mixed_cdf_example &lt;- function(x)
+{
+  result &lt;- 0
+  if (x &lt; 0){
+    result &lt;- 0
+  }
+  else if (x == 0){
+    result &lt;- 0.2
+  }
+  else if (x &lt; 0.2){
+    result &lt;- 0.2 + x
+  }
+  else if (x &lt; 0.8){
+    result &lt;- 0.5
+  }
+  else if (x &lt; 1){
+    result &lt;- x - 0.1
+  }
+  else{
+    result &lt;- 1
+  }
+
+  return (result)
+}
+
+plot(q, sapply(q, function(x) KSgeneral::mixed_ks_c_cdf(x, n,
+     c(0, 0.2, 0.8, 1.0), Mixed_cdf_example)), type='l')
+
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

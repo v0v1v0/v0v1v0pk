@@ -1,0 +1,199 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_gru_cell</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cell class for the GRU layer</h2>
+
+<h3>Description</h3>
+
+<p>Cell class for the GRU layer
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_gru_cell(
+  units,
+  activation = "tanh",
+  recurrent_activation = "sigmoid",
+  use_bias = TRUE,
+  kernel_initializer = "glorot_uniform",
+  recurrent_initializer = "orthogonal",
+  bias_initializer = "zeros",
+  kernel_regularizer = NULL,
+  recurrent_regularizer = NULL,
+  bias_regularizer = NULL,
+  kernel_constraint = NULL,
+  recurrent_constraint = NULL,
+  bias_constraint = NULL,
+  dropout = 0,
+  recurrent_dropout = 0,
+  reset_after = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>Positive integer, dimensionality of the output space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use. Default: hyperbolic tangent
+(<code>tanh</code>). If you pass <code>NULL</code>, no activation is applied
+(ie. "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_activation</code></td>
+<td>
+<p>Activation function to use for the recurrent step.
+Default: sigmoid (<code>sigmoid</code>). If you pass <code>NULL</code>, no activation is
+applied (ie. "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>Boolean, (default <code>TRUE</code>), whether the layer uses a bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_initializer</code></td>
+<td>
+<p>Initializer for the <code>kernel</code> weights matrix,
+used for the linear transformation of the inputs. Default:
+<code>glorot_uniform</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_initializer</code></td>
+<td>
+<p>Initializer for the <code>recurrent_kernel</code>
+weights matrix, used for the linear transformation of the recurrent state.
+Default: <code>orthogonal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector. Default: <code>zeros</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the <code>kernel</code> weights
+matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the
+<code>recurrent_kernel</code> weights matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector. Default:
+<code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>kernel</code> weights
+matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>recurrent_kernel</code>
+weights matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector. Default:
+<code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+linear transformation of the inputs. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for
+the linear transformation of the recurrent state. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reset_after</code></td>
+<td>
+<p>GRU convention (whether to apply reset gate after or
+before matrix multiplication). FALSE = "before",
+TRUE = "after" (default and CuDNN compatible).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>See <a href="https://www.tensorflow.org/guide/keras/rnn">the Keras RNN API guide</a>
+for details about the usage of RNN API.
+</p>
+<p>This class processes one step within the whole time sequence input, whereas
+<code>tf.keras.layer.GRU</code> processes the whole sequence.
+</p>
+<p>For example:
+</p>
+<div class="sourceCode r"><pre>inputs &lt;- k_random_uniform(c(32, 10, 8))
+output &lt;- inputs %&gt;% layer_rnn(layer_gru_cell(4))
+output$shape  # TensorShape([32, 4])
+
+rnn &lt;- layer_rnn(cell = layer_gru_cell(4),
+                 return_sequence = TRUE,
+                 return_state = TRUE)
+c(whole_sequence_output, final_state) %&lt;-% rnn(inputs)
+whole_sequence_output$shape # TensorShape([32, 10, 4])
+final_state$shape           # TensorShape([32, 4])
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/GRUCell">https://www.tensorflow.org/api_docs/python/tf/keras/layers/GRUCell</a>
+</p>
+</li></ul>
+<p>Other RNN cell layers: 
+<code>layer_lstm_cell()</code>,
+<code>layer_simple_rnn_cell()</code>,
+<code>layer_stacked_rnn_cells()</code>
+</p>
+
+
+</div>

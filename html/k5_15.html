@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>last_value</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Return the last value</h2>
+
+<h3>Description</h3>
+
+<p>A function shortcut for accessing .Last.value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">last_value(x = .Last.value)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The object to return, usually left as base::.Last.value.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The value of the internal evaluation of a top-level R expression is always
+assigned to .Last.value (in package:base) before further processing (e.g.,
+printing).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The same <code>.Last.value</code> as <em>before</em> viewing, invisibly.
+</p>
+
+
+</div>

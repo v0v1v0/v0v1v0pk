@@ -1,0 +1,100 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>binaryloess</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Using loess to Check Functional Form for Logistic Regression
+</h2>
+
+<h3>Description</h3>
+
+<p>This function plots a smoothed line of how the average value of Y changes with X in order to check functional form for logistic regression. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">binaryloess(x, y, scale = c("logit", "linear"), span = 0.7, weights = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+
+<p>tbdscale
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>span</code></td>
+<td>
+
+<p>smoothing parameter, passed to loess. If less than 1, the neighbourhood includes proportion a of the points. If greater than 1, all points are used, with the maximum distance assumed to be a^(1/p) times the actual maximum distance for p explanatory variables.
+<br>
+Missing records are removed first.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+
+<p>sampling weights, passed to loess
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>passed to plotting function
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function comes from Jonathan Bartlett ()https://thestatsgeek.com/2014/09/13/checking-functional-form-in-logistic-regression-using-loess/).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+set.seed(1234)
+n &lt;- 1000
+x &lt;- rnorm(n)
+xb &lt;- -2+x
+pr &lt;- exp(xb)/(1+exp(xb))
+y=rbern(n, pr)
+
+par(mfrow=c(1,2))
+binaryloess(x, y, scale = "logit", span = 0.7, weights = NULL, ylab="logit(p)")
+binaryloess(x, y, scale = "linear", span = 0.7, weights = NULL, ylab="prob")
+
+</code></pre>
+
+
+</div>

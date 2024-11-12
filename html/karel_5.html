@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cargar_super_karel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Habilitar los superpoderes de Karel</h2>
+
+<h3>Description</h3>
+
+<p>Luego de correr <code>cargar_super_karel()</code>, Karel también puede girar a la derecha y darse vuelta, a través de las acciones <code>girar_derecha()</code> y <code>darse_vuelta()</code>. Si no se cargan los superpoderes, estas dos funciones no están disponibles.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cargar_super_karel()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>No devuelve ningún valor, pero adjuntan al Global Environment las funciones <code>girar_derecha()</code> y <code>darse_vuelta()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>acciones</code> <code>generar_mundo</code> <code>ejecutar_acciones</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generar_mundo("mundo001")
+cargar_super_karel()
+darse_vuelta()
+girar_derecha()
+ejecutar_acciones()
+
+</code></pre>
+
+
+</div>

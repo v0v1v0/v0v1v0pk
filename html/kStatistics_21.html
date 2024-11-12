@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MFB2Set</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert the output of the MFB function into a vector
+</h2>
+
+<h3>Description</h3>
+
+<p>Secondary function useful for manipulating the result of the <code>MFB</code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MFB2Set(sExpr="")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>sExpr</code></td>
+<td>
+<p>the output of the <code>MFB</code> function</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>set</code></td>
+<td>
+<p>a set</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>MFB</code>,
+<code>Set2expr</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+# Run MFB(c(3),1) to generate f[3]g[1]^3 + 3f[2]g[1]g[2] + f[1]g[3]
+# Convert the output of the MFB(c(3),1) into a vector using
+# MFB2Set(MFB(c(3),1)). The result is the following:
+# "1" "1" "f" "3" "1"
+# "1" "1" "g" "1" "3"
+# "2" "3" "f" "2" "1"
+# "2" "1" "g" "1" "1"
+# "2" "1" "g" "2" "1"
+# "3" "1" "f" "1" "1"
+# "3" "1" "g" "3" "1"
+MFB2Set(MFB(c(3),1))
+</code></pre>
+
+
+</div>

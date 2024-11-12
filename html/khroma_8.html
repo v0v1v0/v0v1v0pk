@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>info</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Available Schemes</h2>
+
+<h3>Description</h3>
+
+<p>Returns information about the available schemes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">info()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with the following columns:
+</p>
+
+<dl>
+<dt><code>palette</code></dt>
+<dd>
+<p>Names of palette.</p>
+</dd>
+<dt><code>type</code></dt>
+<dd>
+<p>Types of schemes: sequential, diverging or qualitative.</p>
+</dd>
+<dt><code>max</code></dt>
+<dd>
+<p>Maximum number of colors that are contained in each
+palette. Only relevant for qualitative schemes.</p>
+</dd>
+<dt><code>missing</code></dt>
+<dd>
+<p>The hexadecimal color value for mapping missing values.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other color schemes: 
+<code>colour()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Get a table of available palettes
+info()
+</code></pre>
+
+
+</div>

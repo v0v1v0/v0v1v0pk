@@ -1,0 +1,172 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>silhouette</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Silhouette method to determine the optimal number of clusters.</h2>
+
+<h3>Description</h3>
+
+<p>Generates the silhouette graph and returns the ideal number of clusters in the k-means method.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">silhouette(data, k.cluster = 2:10, plot = TRUE, cut = TRUE,
+           title = NA, xlabel = NA, ylabel = NA, size = 1.1, grid = TRUE, 
+           color = TRUE, savptc = FALSE, width = 3236, height = 2000,
+           res = 300, casc = TRUE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data with x and y coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k.cluster</code></td>
+<td>
+<p>Cluster numbers for comparison in the k-means method (default = 2:10).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>Indicates whether to plot the silhouette graph (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cut</code></td>
+<td>
+<p>Indicates whether to plot the best cluster indicative line (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>Title of the graphic, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlabel</code></td>
+<td>
+<p>Names the X axis, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylabel</code></td>
+<td>
+<p>Names the Y axis, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>Size of points on the graph and line thickness (default = 1.1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>Put grid on graph (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>Colored graphic (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>savptc</code></td>
+<td>
+<p>Saves the graph image to a file (default = FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>Graphic image width when savptc = TRUE (defaul = 3236).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>Graphic image height when savptc = TRUE (default = 2000).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+<p>Nominal resolution in ppi of the graphic image when savptc = TRUE (default = 300).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>casc</code></td>
+<td>
+<p>Cascade effect in the presentation of the graphic (default = TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>k.ideal</code></td>
+<td>
+<p>Ideal number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eve.si</code></td>
+<td>
+<p>Vector with averages of silhouette indices of cluster groups (si). </p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani</p>
+
+
+<h3>References</h3>
+
+<p>Anitha, S.; Metilda, M. A. R. Y. An extensive investigation of outlier detection by cluster validation indices. <em>Ciencia e Tecnica Vitivinicola - A Science and Technology Journal</em>, v. 34, n. 2, p. 22-32, 2019. doi: 10.13140/RG.2.2.26801.63848
+</p>
+<p>Kaufman, L. and Rousseeuw, P. J. <em>Finding Groups in Data: An Introduction to Cluster Analysis</em>, New York: John Wiley &amp; Sons. 1990.
+</p>
+<p>Martinez, W. L.; Martinez, A. R.; Solka, J. <em>Exploratory data analysis with MATLAB</em>. 2nd ed. New York: Chapman &amp; Hall/CRC, 2010. 499 p.
+</p>
+<p>Rousseeuw P. J. Silhouettes: A Graphical Aid to the Interpretation and Validation of Cluster Analysis. <em>Journal of Computational and Applied Mathematics</em>, 20:53-65. 1987. doi: 10.1016/0377-0427(87)90125-7
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+res &lt;- silhouette(data = iris[,1:4], k.cluster = 2:10, cut = TRUE, 
+                  plot = TRUE, title = NA, xlabel = NA, ylabel = NA, 
+                  size = 1.1, grid = TRUE, savptc = FALSE, width = 3236, 
+                  color = TRUE, height = 2000, res = 300, casc = TRUE)
+             
+res$k.ideal # number of clusters
+res$eve.si  # vector with averages of si indices
+
+
+res &lt;- silhouette(data = iris[,1:4], k.cluster = 3, cut = TRUE, 
+                  plot = TRUE, title = NA, xlabel = NA, ylabel = NA, 
+                  size = 1.1, grid = TRUE, savptc = FALSE, width = 3236, 
+                  color = TRUE, height = 2000, res = 300, casc = TRUE)
+             
+res$k.ideal # number of clusters
+res$eve.si  # vector with averages of si indices
+</code></pre>
+
+
+</div>

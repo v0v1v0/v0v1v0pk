@@ -1,0 +1,37 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>list_available_sets</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>List Available Set Names and Their Description</h2>
+
+<h3>Description</h3>
+
+<p>This function is deprecated. Use <code>list_available_collections</code> instead.
+Sets are pre-defined lists of time series. Sets are the convenient alternative to concatenating many series in an URL.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">list_available_sets(api_key = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>api_key</code></td>
+<td>
+<p><strong>character</strong> Your API key. An API key is needed if accessing non-public timeseries. 
+If downloading public timeseries parameter can be omitted.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A data frame with the names, descriptions and public availability of datasets. These sets can be downloaded via get_dataset.
+</p>
+
+
+</div>

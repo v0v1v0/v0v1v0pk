@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_average_pooling_1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Average pooling for temporal data.</h2>
+
+<h3>Description</h3>
+
+<p>Downsamples the input representation by taking the average value over the
+window defined by <code>pool_size</code>. The window is shifted by <code>strides</code>.  The
+resulting output when using "valid" padding option has a shape of:
+<code style="white-space: pre;">⁠output_shape = (input_shape - pool_size + 1) / strides)⁠</code>
+</p>
+<p>The resulting output shape when using the "same" padding option is:
+<code>output_shape = input_shape / strides</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_average_pooling_1d(
+  object,
+  pool_size,
+  strides = NULL,
+  padding = "valid",
+  data_format = NULL,
+  name = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pool_size</code></td>
+<td>
+<p>int, size of the max pooling window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strides</code></td>
+<td>
+<p>int or <code>NULL</code>. Specifies how much the pooling window moves
+for each pooling step. If <code>NULL</code>, it will default to <code>pool_size</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>string, either <code>"valid"</code> or <code>"same"</code> (case-insensitive).
+<code>"valid"</code> means no padding. <code>"same"</code> results in padding evenly to
+the left/right or up/down of the input such that output has the same
+height/width dimension as the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>string, either <code>"channels_last"</code> or <code>"channels_first"</code>.
+The ordering of the dimensions in the inputs. <code>"channels_last"</code>
+corresponds to inputs with shape <code style="white-space: pre;">⁠(batch, steps, features)⁠</code>
+while <code>"channels_first"</code> corresponds to inputs with shape
+<code style="white-space: pre;">⁠(batch, features, steps)⁠</code>. It defaults to the <code>image_data_format</code>
+value found in your Keras config file at <code style="white-space: pre;">⁠~/.keras/keras.json⁠</code>.
+If you never set it, then it will be <code>"channels_last"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Input Shape</h3>
+
+
+<ul>
+<li>
+<p> If <code>data_format="channels_last"</code>:
+3D tensor with shape <code style="white-space: pre;">⁠(batch_size, steps, features)⁠</code>.
+</p>
+</li>
+<li>
+<p> If <code>data_format="channels_first"</code>:
+3D tensor with shape <code style="white-space: pre;">⁠(batch_size, features, steps)⁠</code>.
+</p>
+</li>
+</ul>
+<h3>Output Shape</h3>
+
+
+<ul>
+<li>
+<p> If <code>data_format="channels_last"</code>:
+3D tensor with shape <code style="white-space: pre;">⁠(batch_size, downsampled_steps, features)⁠</code>.
+</p>
+</li>
+<li>
+<p> If <code>data_format="channels_first"</code>:
+3D tensor with shape <code style="white-space: pre;">⁠(batch_size, features, downsampled_steps)⁠</code>.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p><code>strides=1</code> and <code>padding="valid"</code>:
+</p>
+<div class="sourceCode r"><pre>x &lt;- op_array(c(1., 2., 3., 4., 5.)) |&gt; op_reshape(c(1, 5, 1))
+output &lt;- x |&gt;
+  layer_average_pooling_1d(pool_size = 2,
+                           strides = 1,
+                           padding = "valid")
+output
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[[1.5]
+##   [2.5]
+##   [3.5]
+##   [4.5]]], shape=(1, 4, 1), dtype=float32)
+
+</pre></div>
+<p><code>strides=2</code> and <code>padding="valid"</code>:
+</p>
+<div class="sourceCode r"><pre>x &lt;- op_array(c(1., 2., 3., 4., 5.)) |&gt; op_reshape(c(1, 5, 1))
+output &lt;- x |&gt;
+  layer_average_pooling_1d(pool_size = 2,
+                           strides = 2,
+                           padding = "valid")
+output
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[[1.5]
+##   [3.5]]], shape=(1, 2, 1), dtype=float32)
+
+</pre></div>
+<p><code>strides=1</code> and <code>padding="same"</code>:
+</p>
+<div class="sourceCode r"><pre>x &lt;- op_array(c(1., 2., 3., 4., 5.)) |&gt; op_reshape(c(1, 5, 1))
+output &lt;- x |&gt;
+  layer_average_pooling_1d(pool_size = 2,
+                           strides = 1,
+                           padding = "same")
+output
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[[1.5]
+##   [2.5]
+##   [3.5]
+##   [4.5]
+##   [5. ]]], shape=(1, 5, 1), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/pooling_layers/average_pooling1d#averagepooling1d-class">https://keras.io/api/layers/pooling_layers/average_pooling1d#averagepooling1d-class</a>
+</p>
+</li></ul>
+<p>Other pooling layers: <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>samplekan</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sample kanji from a set</h2>
+
+<h3>Description</h3>
+
+<p>Sample kanji from a set
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">samplekan(
+  set = c("kyouiku", "jouyou", "jinmeiyou", "kanjidic"),
+  size = 1,
+  replace = FALSE,
+  prob = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>set</code></td>
+<td>
+<p>a character string specifying the set of kanjis to sample from.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>a positive number, the number of samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>logical. Sample with replacement?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>currently without effect.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a vector of length <code>size</code> containing the individual characters
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">(sam &lt;- samplekan(size = 10))
+lookup(sam)
+</code></pre>
+
+
+</div>

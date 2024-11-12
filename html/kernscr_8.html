@@ -1,0 +1,110 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernelEval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of kernels</h2>
+
+<h3>Description</h3>
+
+<p>Evaluation of kernels
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernelEval(tZ, kernel = c("linear", "poly", "gaussian"), ...)
+
+linKernelEval(tZ)
+
+gaussKernelEval(tZ, sigma = 1)
+
+polyKernelEval(tZ, a = 0, d = 2)
+
+genericKernelEval(tZ, kernel_func, ...)
+
+gaussKernelEval_multipleRhos(tZ, rho)
+
+polyKernelEval_multipleRhos(tZ, rho, d = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tZ</code></td>
+<td>
+<p>a <code>P x N</code> matrix of genomic covariates (i.e., the usual data array Z transposed)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>which kernel is evaluated by <code>kerneval</code>. Possible values include currently implemented kernels
+designated by a character string <code>"linear"</code>, <code>"poly"</code> and <code>"gaussian"</code>.
+Otherwise can also be a user-defined function (see <code>kernel_func</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments to be passed to be passed to the evaluated kernel function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>standard-deviation parameter for the <code>"gaussian"</code> kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>TODO of the polynomial for the <code>"poly"</code>. Default is <code>0</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>power of the polynomial.  Default is <code>2</code> (quadratic kernel).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_func</code></td>
+<td>
+<p>a function, whose first argument should be <code>tZ</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>either a single rho to evaluate the kernel at, or a vector of rhos</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>kernelEval</code> works only for gaussian, polynomial and linear kernels currently.
+</p>
+<p><code>genericKernelEval</code>
+</p>
+<p>For <code>polyKernelEval_multipleRhos</code>, one should have <code>rho</code> &gt; 0 to get
+basis of monomials up to degree <code>d</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>kernelEval</code>, <code>linKernelEval</code>, <code>gaussKernelEval</code>, and <code>genericKernelEval</code>
+return an <code>N x N</code> matrix with entries <code>K(Z[i,], Z[j,])</code> [persons i,j]
+</p>
+<p><code>gaussKernelEval_multipleRhos</code> and <code>polyKernelEval_multipleRhos</code> return
+a matrix of dimension <code>Q x N^2</code>, where <code>Q</code> is the <code>length</code> of <code>rho</code>,
+each row corresponds to a rho (puns!) to get the actual kernel matrix associated with a particular
+value of rho, if output is <code>G</code>, take <code>matrix(G[i,], N)</code>
+</p>
+
+
+</div>

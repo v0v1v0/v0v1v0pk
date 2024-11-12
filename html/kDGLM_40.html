@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>f_joint_root</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>f_joint_root</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the root of a function given an initial value and a function to calculate its derivatives.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">f_joint_root(f, start, tol = 1e-08, n.max = 1000)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>function: A function that receives a vector and return a vector of the same size and a matrix representing its derivatives.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>vector: The initial value to start the algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>numeric: The tolerance for the solution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.max</code></td>
+<td>
+<p>numeric: The maximum number of iterations allowed.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+
+<ul>
+<li>
+<p> root vector: The solution for the system f(x)=0.
+</p>
+</li>
+<li>
+<p> f.root vector: The function f evaluated at the root.
+</p>
+</li>
+<li>
+<p> iter numeric: The number of steps taken.
+</p>
+</li>
+</ul>
+</div>

@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_surmiserelation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read surmise relation file</h2>
+
+<h3>Description</h3>
+
+<p>Read a surmise relation from
+a file. The file formats are described in the kstIO-package
+information page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  read_surmiserelation(filename, format = "auto", as.letters = TRUE, close = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>A character string specifying the name of the base file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>Specification of the files format. Can be "SRBT", 
+"matrix", "CSV", or "auto" (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as.letters</code></td>
+<td>
+<p>logical, should the elements of the sets be letters
+or numbers? Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>close</code></td>
+<td>
+<p>logical, should the relation be closed under reflexivity
+and transitivity? Defaults to FALSE</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>format</code> values <code>"SRBT"</code> and 
+<code>"matrix"</code> refer to the different generations of file formats 
+described in kstIO-package.  The value <code>"auto"</code> (default)
+requests an automatic detection of the format by the <code>read_XXX</code>
+function. 
+</p>
+<p>If <code>as.letters</code> is <code>TRUE</code> (default), the elements of the sets are letters,
+otherwise numbers.
+</p>
+<p>If <code>close</code> is <code>TRUE</code> (default is <code>FALSE</code>), the relation is closed under
+reflexivity and transitivity, otherwise it is returned as is.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with two elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>relation</code></td>
+<td>
+<p>The surmise relation as object of class <code>relation</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matrix</code></td>
+<td>
+<p>The incidence matrix of the surmise relation.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Cord Hockemeyer <a href="mailto:cord.hockemeyer@uni-graz.at">cord.hockemeyer@uni-graz.at</a></p>
+
+
+<h3>References</h3>
+
+<p>Hockemeyer, C. (2001). <em>KST Tools User Manual</em> (2nd ed.). 
+<a href="https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf</a>.
+</p>
+<p>Poetzi, S. &amp; Wesiak, G. (2001). SRbT Tools User Manual.
+<a href="https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kstIO-package</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Produce a relation file
+library(kst)
+d &lt;- getwd()
+setwd(tempdir())
+data(DoignonFalmagne7)
+r &lt;- as.relation(kspace(kstructure(as.pattern(DoignonFalmagne7$K, as.set=TRUE))))
+write_surmiserelation(r, "DF7.rel", "SRBT") # SRBT format
+# Read file
+read_surmiserelation("DF7.rel") # Automatic format detection
+read_surmiserelation("DF7.rel", "SRBT") # Explicit format specification
+setwd(d)
+</code></pre>
+
+
+</div>

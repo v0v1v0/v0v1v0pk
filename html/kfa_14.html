@@ -1,0 +1,183 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>run_efa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conducts exploratory factor analysis</h2>
+
+<h3>Description</h3>
+
+<p>This function is intended for use on independent samples rather than integrated
+with k-fold cross-validation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">run_efa(
+  data,
+  variables = names(data),
+  m = floor(ncol(data)/4),
+  rotation = "oblimin",
+  simple = TRUE,
+  min.loading = NA,
+  single.item = c("keep", "drop", "none"),
+  identified = TRUE,
+  constrain0 = FALSE,
+  ordered = FALSE,
+  estimator = NULL,
+  missing = "listwise",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a <code>data.frame</code> containing the variables (i.e., items) to factor analyze</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>character vector of column names in <code>data</code> indicating the variables to factor analyze. Default is to use all columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>integer; maximum number of factors to extract. Default is 4 items per factor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rotation</code></td>
+<td>
+<p>character (case-sensitive); any rotation method listed in
+<code>rotations</code> in the <code>GPArotation</code> package. Default is "oblimin".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simple</code></td>
+<td>
+<p>logical; Should the perfect simple structure be returned (default) when converting EFA results to CFA syntax?
+If <code>FALSE</code>, items can cross-load on multiple factors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.loading</code></td>
+<td>
+<p>numeric between 0 and 1 indicating the minimum (absolute) value of the loading for a variable on a factor
+when converting EFA results to CFA syntax. Must be specified when <code>simple = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>single.item</code></td>
+<td>
+<p>character indicating how single-item factors should be treated.
+Use <code>"keep"</code> (default) to keep them in the model when generating the CFA syntax, <code>"drop"</code>
+to remove them, or <code>"none"</code> indicating the CFA syntax should not be generated for
+this model and <code>""</code> is returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>identified</code></td>
+<td>
+<p>logical; Should identification check for rotational uniqueness a la Millsap (2001) be performed?
+If the model is not identified <code>""</code> is returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constrain0</code></td>
+<td>
+<p>logical; Should variable(s) with all loadings below <code>min.loading</code> still be included in model syntax?
+If <code>TRUE</code>, variable(s) will load onto first factor with the loading constrained to 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ordered</code></td>
+<td>
+<p>logical; Should items be treated as ordinal and the
+polychoric correlations used in the factor analysis? When <code>FALSE</code> (default)
+the Pearson correlation matrix is used. A character vector of item names is
+also accepted to prompt estimation of the polychoric correlation matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>if <code>ordered = FALSE</code>, the default is "MLMVS". If
+<code>ordered = TRUE</code>, the default is "WLSMV". See <code>lavOptions</code> for other options.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>missing</code></td>
+<td>
+<p>default is "listwise". See <code>lavOptions</code> for other options.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments passed to <code>lavaan</code> functions. See <code>lavOptions</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When converting EFA results to CFA syntax (via <code>efa_cfa_syntax</code>), the simple structure is
+defined as each variable loading onto a single factor. This is determined using the largest factor loading for each variable.
+When <code>simple = FALSE</code>, variables are allowed to cross-load on multiple factors. In this case, all pathways with loadings
+above the <code>min.loading</code> are retained. However, allowing cross-loading variables can result in model under-identification.
+An identification check is run by default, but can be turned off by setting <code>identified = FALSE</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A three-element <code>list</code>:
+</p>
+
+<ul>
+<li> <p><strong>efas</strong> <code>lavaan</code> object for each <em>m</em> model
+</p>
+</li>
+<li> <p><strong>loadings</strong> (rotated) factor loading matrix for each <em>m</em> model
+</p>
+</li>
+<li> <p><strong>cfa.syntax</strong> CFA syntax generated from loadings
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Millsap, R. E. (2001). When trivial constraints are not trivial: The choice of uniqueness constraints in confirmatory factor analysis. <em>Structural Equation Modeling, 8</em>(1), 1-17. <a href="https://doi.org/10.1207/S15328007SEM0801_1">doi:10.1207/S15328007SEM0801_1</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# simulate data based on a 3-factor model with standardized loadings
+sim.mod &lt;- "f1 =~ .7*x1 + .8*x2 + .3*x3 + .7*x4 + .6*x5 + .8*x6 + .4*x7
+                f2 =~ .8*x8 + .7*x9 + .6*x10 + .5*x11 + .5*x12 + .7*x13 + .6*x14
+                f3 =~ .6*x15 + .5*x16 + .9*x17 + .4*x18 + .7*x19 + .5*x20
+                f1 ~~ .2*f2
+                f2 ~~ .2*f3
+                f1 ~~ .2*f3
+                x9 ~~ .2*x10"
+set.seed(1161)
+sim.data &lt;- simstandard::sim_standardized(sim.mod, n = 900,
+                                          latent = FALSE,
+                                          errors = FALSE)[c(2:9,1,10:20)]
+# Run 1-, 2-, and 3-factor models
+efas &lt;- run_efa(sim.data, m = 3)
+
+</code></pre>
+
+
+</div>

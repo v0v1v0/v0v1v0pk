@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getCRP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+getCRP: gets the correlation probability of recurrence
+</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the correlation probability of recurrence of two systems, given by their recurrece matrices. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getCRP(prob1, prob2, xLims, doPlot = FALSE, main = "plotTitle")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>prob1</code></td>
+<td>
+
+<p>Probability of recurrence of the first matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob2</code></td>
+<td>
+
+<p>Probability of recurrence of the second matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xLims</code></td>
+<td>
+
+<p>X range where the correlation probability will be calculated. The diagonals very close or very far from the main diagonal are usually discarded for estimating the CPR.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>doPlot</code></td>
+<td>
+
+<p>Get a plot (TRUE) or not (FALSE)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+
+<p>Title for the plot
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Correlation probability of recurrence (CPR)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>References</h3>
+
+<p>Romano, M. C. (2004). Synchronization Analysis by Means of Recurrences in Phase Space, Universitat Postdam. Doctoral dissertation.
+</p>
+
+
+</div>

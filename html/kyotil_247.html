@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>VEplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Vaccine Efficacy Plots</h2>
+
+<h3>Description</h3>
+
+<p>Vaccine efficacy plots. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+VEplot (object, ...) 
+ 
+## S3 method for class 'cox.zph'
+ VEplot(object, resid = TRUE, se = TRUE, df = 4, nsmo = 40, 
+    var, ylab="VE", xlab="Time", xaxt="s", cex.axis=1, ...) 
+
+## S3 method for class 'glm'
+VEplot(object, X1, X2, x, ...)
+
+## S3 method for class 'cox.zph'
+ myplot(object, resid = TRUE, se = TRUE, df = 4, nsmo = 40, var, 
+    coef.transform=NULL, 
+    ylab=NULL, 
+    xlab="Time", xaxt="s", cex.axis=1, 
+    ...) 
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resid</code></td>
+<td>
+<p>Boolean, whether to plot residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se</code></td>
+<td>
+<p>Boolean, whether to plot confidence band</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>degrees of freedom</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsmo</code></td>
+<td>
+<p>number of points used to plot the fitted spline</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+<p>estimated variance matrix from the Cox model fit</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>x label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xaxt</code></td>
+<td>
+<p>x axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis</code></td>
+<td>
+<p>cex for axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>y label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coef.transform</code></td>
+<td>
+<p>a function to transform Cox hazard ratio estimate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X1</code></td>
+<td>
+<p>a matrix of dimension k by p, where k is the length of x (see below) and p is the length of coef(object)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X2</code></td>
+<td>
+<p>a matrix of dimension k by p, where k is the length of x (see below) and p is the length of coef(object)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of length k that represents the x coordinate of the VE plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional parameters</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>VEplot and myplot.cox.zph are extensions of survival::plot.cox.zph to plot VE curve and other transformations.
+</p>
+<p>myplot.cox.zph adds the following parameters to the original list of parameters in plot.cox.zph:
+coef.transform: a function to transform the coefficients
+ylab: y axis label 
+xlab: x axis label
+</p>
+<p>VEplot.glm computes a series of k VEs: for i in 1...k, VE[i] = P(Y=1|X1[i,])/P(Y=1|X2[i,]). It returns a 3 by k matrix, whose first row contains VE estimates and the second and third rows contain lower and upper bounds, respectively.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Youyi Fong, Dennis Chao
+</p>
+
+
+<h3>References</h3>
+
+<p>Durham, Longini, Halloran, Clemens, Azhar and Rao (1998) "Estimation of vaccine efficacy in the presence of waning: application to cholera vaccines." American Journal of Epidemiology 147(10): 948-959.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(survival)
+vfit &lt;- coxph(Surv(time,status) ~ trt + factor(celltype) + 
+              karno + age, data=veteran, x=TRUE) 
+temp &lt;- cox.zph(vfit) 
+
+par(mfrow=c(2,2))
+for (v in c("trt","age")) {
+    VEplot(temp, var=v, resid=FALSE, main=v, ylab="VE", cex.axis=1.5)
+    plot(temp, var=v, resid=FALSE, main=v)
+}
+
+library(survival)
+fit &lt;- glm(status ~ trt + trt*age, data=veteran) 
+summary(fit)
+age=seq(min(veteran$age),max(veteran$age),length=10)
+out = VEplot(fit, X1=cbind(1,1,age,1*age), X2=cbind(1,0,age,0*age), x=age)
+out
+
+</code></pre>
+
+
+</div>

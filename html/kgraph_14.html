@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gen_df_notpairs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate null pairs</h2>
+
+<h3>Description</h3>
+
+<p>Generate null pairs
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gen_df_notpairs(
+  ids,
+  df_pairs = NULL,
+  n_notpairs = if (is.null(df_pairs)) 1000 else nrow(df_pairs)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>Identifiers to sample from</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_pairs</code></td>
+<td>
+<p>Known pairs data frame, to make sure no null pairs are in</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_notpairs</code></td>
+<td>
+<p>Direct parameter to set number of null pairs returned,
+bypasses parameter type.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Data frame with columns concept1, concept2, weight
+</p>
+
+
+</div>

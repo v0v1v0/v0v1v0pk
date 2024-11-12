@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>add.relative.likd.node</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Replace CPTs for mixture contributor a Father, given Child genotype, by ALN method</h2>
+
+<h3>Description</h3>
+
+<p>loop over markers, and alleles within markers
+to create node Rlikd for relative likelihood for individual i,
+for paternity model with only Child genotyped
+then compile all domains. Implements method ALN.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">add.relative.likd.node(mixture,aca,ind=1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A compiled DNAmixture object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aca</code></td>
+<td>
+<p>Child's genotype profile as an allele count array</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind</code></td>
+<td>
+<p>Index of contributor regarded as Parent (or Child): which ‘unknown’ contributor are we modelling by amending his/her CPTs?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No value is returned, the function is called for its side effect</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+# set threshold C
+C&lt;-0.001
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db)
+pars&lt;-mixpar(rho=list(2),eta=list(100),xi=list(0.1),phi=list(c(U1=0.7,U2=0.3)))
+baseline&lt;-logL(mixD)(pars)
+
+mixALN&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db,triangulate=FALSE,compile=FALSE)
+cgtcaca&lt;-gt2aca(mixALN,Cgt) 
+add.relative.likd.node(mixALN,cgtcaca,1)
+log10LR&lt;-(logLX(mixALN,
+	expr.make.findings(list(
+	list('Male',ind=1),
+	list('Rlikd',aca='cgtcaca',cgt='Cgt',evid='Revid')
+	))
+	)(pars)-baseline)/log(10)
+cat('log10 LR',log10LR,'\n') 
+</code></pre>
+
+
+</div>

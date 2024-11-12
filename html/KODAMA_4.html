@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>continuous.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Continuous Information</h2>
+
+<h3>Description</h3>
+
+<p>Summarization of the continuous information.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">continuous.test (name,
+                 x,    
+                 y,
+                 digits = 3,
+                 scientific = FALSE, 
+                 range = c("IQR","95%CI"), 
+                 logchange = FALSE,
+                 pos=2, 
+                 method=c("non-parametric","parametric"),
+                 total.column=FALSE, ...) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>the name of the feature.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the information to summarize.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the classification of the cohort.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>how many significant digits are to be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scientific</code></td>
+<td>
+<p>either a logical specifying whether result should be encoded in scientific format.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>the range to be visualized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logchange</code></td>
+<td>
+<p>either a logical specifying whether log2 of fold change  should be visualized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pos</code></td>
+<td>
+<p>a value indicating the position of range to be visualized. 1 for column, 2 for row.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>a character string indicating which test method is to be computed. "non-parametric" (default), or "parametric".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>total.column</code></td>
+<td>
+<p>option to visualize the total (by default = "<code>FALSE</code>")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to or from methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a table with the summarized information and the relative p-value. For non-parametric method, if the number of group is equal to two, the p-value is computed using the Wilcoxon rank-sum test, Kruskal-Wallis test otherwise. For parametric method, if the number of group is equal to two, the p-value is computed using the Student's t-Test, ANOVA one-way otherwise.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>correlation.test</code>, <code>categorical.test</code>, <code>txtsummary</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(clinical)
+
+hosp=clinical[,"Hospital"]
+gender=clinical[,"Gender"]
+GS=clinical[,"Gleason score"]
+BMI=clinical[,"BMI"]
+age=clinical[,"Age"]
+
+A=categorical.test("Gender",gender,hosp)
+B=categorical.test("Gleason score",GS,hosp)
+
+C=continuous.test("BMI",BMI,hosp,digits=2)
+D=continuous.test("Age",age,hosp,digits=1)
+
+rbind(A,B,C,D)
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>spin_child</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Spin a child R script</h2>
+
+<h3>Description</h3>
+
+<p>This function is similar to <code>knit_child()</code> but is used in R
+scripts instead. When the main R script is not called via
+<code>spin()</code>, this function simply executes the child script via
+<code>sys.source()</code>, otherwise it calls <code>spin()</code> to spin
+the child script into a source document, and uses <code>knit_child()</code>
+to compile it. You can call this function in R code, or using the syntax of
+inline R expressions in <code>spin()</code> (e.g.
+<code>{{knitr::spin_child('script.R')}}</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">spin_child(input, format)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>Filename of the input R script.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>Passed to <code>format</code> in <code>spin()</code>. If not
+provided, it will be guessed from the current knitting process.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character string of the knitted R script.
+</p>
+
+
+</div>

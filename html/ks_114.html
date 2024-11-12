@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pre.transform</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pre-sphering and pre-scaling</h2>
+
+<h3>Description</h3>
+
+<p>Pre-sphered or pre-scaled version of data.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pre.sphere(x, mean.centred=FALSE)
+pre.scale(x, mean.centred=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>matrix of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean.centred</code></td>
+<td>
+<p>flag to centre the data values to have zero mean. Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p> For pre-scaling, the data values are pre-multiplied by
+<code class="reqn">\mathbf{S}^{-1/2}</code> and for pre-scaling, by
+<code class="reqn">\mathbf{S}_D^{-1/2}</code> where
+<code class="reqn">\mathbf{S}</code> is the sample variance and <code class="reqn">\mathbf{S}_D</code>
+is <code class="reqn">\mathrm{diag} \, (S_1^2, S_2^2, \dots, S_d^2)</code> where
+<code class="reqn">S_i^2</code> is the i-th marginal sample variance. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>Pre-sphered or pre-scaled version of data. These
+pre-transformations are required for implementing the plug-in
+<code>Hpi</code> selectors and the smoothed cross validation
+<code>Hscv</code> selectors. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(unicef)
+unicef.sp &lt;- pre.sphere(as.matrix(unicef))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_learning_rate_scheduler</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Learning rate scheduler.</h2>
+
+<h3>Description</h3>
+
+<p>At the beginning of every epoch, this callback gets the updated learning
+rate value from <code>schedule</code> function provided, with the current
+epoch and current learning rate, and applies the updated learning rate on
+the optimizer.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_learning_rate_scheduler(schedule, verbose = 0L)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>schedule</code></td>
+<td>
+<p>A function that takes an epoch index (integer, indexed from 0)
+and current learning rate (float) as inputs and returns a new
+learning rate as output (float).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Integer. 0: quiet, 1: log update messages.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>Callback</code> instance that can be passed to <code>fit.keras.src.models.model.Model()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># This function keeps the initial learning rate steady for the first ten epochs
+# and decreases it exponentially after that.
+scheduler &lt;- function(epoch, lr) {
+  if (epoch &lt; 10)
+    return(lr)
+  else
+    return(lr * exp(-0.1))
+}
+
+model &lt;- keras_model_sequential() |&gt; layer_dense(units = 10)
+model |&gt; compile(optimizer = optimizer_sgd(), loss = 'mse')
+model$optimizer$learning_rate |&gt; as.array() |&gt; round(5)
+</pre></div>
+<div class="sourceCode"><pre>## [1] 0.01
+
+</pre></div>
+<div class="sourceCode r"><pre>callback &lt;- callback_learning_rate_scheduler(schedule = scheduler)
+history &lt;- model |&gt; fit(x = array(runif(100), c(5, 20)),
+                        y = array(0, c(5, 1)),
+                        epochs = 15, callbacks = list(callback), verbose = 0)
+model$optimizer$learning_rate |&gt; as.array() |&gt; round(5)
+</pre></div>
+<div class="sourceCode"><pre>## [1] 0.00607
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/callbacks/learning_rate_scheduler#learningratescheduler-class">https://keras.io/api/callbacks/learning_rate_scheduler#learningratescheduler-class</a>
+</p>
+</li></ul>
+<p>Other callbacks: <br><code>Callback()</code> <br><code>callback_backup_and_restore()</code> <br><code>callback_csv_logger()</code> <br><code>callback_early_stopping()</code> <br><code>callback_lambda()</code> <br><code>callback_model_checkpoint()</code> <br><code>callback_reduce_lr_on_plateau()</code> <br><code>callback_remote_monitor()</code> <br><code>callback_swap_ema_weights()</code> <br><code>callback_tensorboard()</code> <br><code>callback_terminate_on_nan()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>auc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>AUC</h2>
+
+<h3>Description</h3>
+
+<p>AUC methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'auc'
+coef(object, ...) 
+## S3 method for class 'auc'
+predict(object, newdata, case.percentage = NULL, ...) 
+## S3 method for class 'auc'
+print(x, ...) 
+## S3 method for class 'auc'
+summary(object, ...) 
+## S3 method for class 'auc'
+trainauc(fit, training.data = NULL, ...)
+## S3 method for class 'auc'
+ratio(fit)
+
+## S3 method for class 'glm'
+trainauc(fit, ...)
+## S3 method for class 'glm'
+ratio(fit)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p>an object that inherits from class 'auc' such as 'rauc' or 'sauc'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object that inherits from class 'auc' such as 'rauc' or 'sauc'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object that inherits from class 'auc' such as <code>rauc</code>, <code>sauc</code> or <code>sauc.dca</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>data at which to predict</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>case.percentage</code></td>
+<td>
+<p>used for class prediction, defaults to NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>training.data</code></td>
+<td>
+<p>data frame used to compute auc based on a fit obtained by a call to  <code>rauc</code>, <code>sauc</code> or <code>sauc.dca</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments passed to or from methods</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Youyi Fong <a href="mailto:youyifong@gmail.com">youyifong@gmail.com</a><br>
+Krisztian Sebestyen <br></p>
+
+
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>copy_last</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Copy the last object to the clipboard</h2>
+
+<h3>Description</h3>
+
+<p>Use <code>clipr::write_clip()</code> to write the last value as a character vector to
+the system clipboard.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">copy_last(x = .Last.value)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The object to view, usually left as base::.Last.value.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The value of the internal evaluation of a top-level R expression is always
+assigned to <code>.Last.value</code> before further processing (e.g., printing).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The same <code>.Last.value</code> as <em>before</em> copied, invisibly.
+</p>
+
+
+</div>

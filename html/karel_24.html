@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generar_mundo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generar el mundo de Karel</h2>
+
+<h3>Description</h3>
+
+<p>Esta función toma un "mundo" (es decir, una lista con información acerca de
+su tamaño, paredes, "cosos" presentes y la ubicación y dirección de Karel),
+lo grafica y prepara todo para que Karel pueda realizar sus acciones. Siempre
+debe ser evaluada antes de que Karel empiece a cumplir sus
+objetivos, en especial, si en algún momento hemos cometido un error, debemos
+comenzar de nuevo corriendo primero esta función.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generar_mundo(mundo)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>mundo</code></td>
+<td>
+<p>Un caracter de largo 1 indicando el nombre de uno de los mundos
+que ya vienen en el paquete o un objeto de tipo lista con todos los
+componentes que debe tener un mundo (ver más abajo en Detalles).</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Luego de correr <code>generar_mundo()</code>, se ejecutan las acciones de Karel y
+se pueden visualizar con la función <code>ejecutar_acciones()</code>.
+</p>
+<p>El argumento <code>mundo</code> puede consistir de un mundo creado (es
+decir, inventado) por cualquiera. En este caso, <code>mundo</code> debe ser una
+lista con los siguientes componentes:
+</p>
+
+<ol>
+<li> <p><code>nx</code>: TODO
+</p>
+</li>
+<li> <p><code>ny</code>:
+</p>
+</li>
+<li> <p><code>hor_walls</code>:
+</p>
+</li>
+<li> <p><code>ver_walls</code>:
+</p>
+</li>
+<li> <p><code>karel_x</code>:
+</p>
+</li>
+<li> <p><code>karel_y</code>:
+</p>
+</li>
+<li> <p><code>karel_dir</code>:
+</p>
+</li>
+<li> <p><code>beepers_x</code>:
+</p>
+</li>
+<li> <p><code>beepers_y</code>:
+</p>
+</li>
+<li> <p><code>beepers_n</code>:
+</p>
+</li>
+<li> <p><code>beepers_bag</code>:
+</p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p>Dibuja el estado inicial del mundo de Karel y deja todo preparado
+para comenzar a registrar sus acciones.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>acciones</code> <code>ejecutar_acciones</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generar_mundo("mundo001")
+
+</code></pre>
+
+
+</div>

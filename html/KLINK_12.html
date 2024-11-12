@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>writeResult</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write data and results to Excel</h2>
+
+<h3>Description</h3>
+
+<p>This function produces an Excel document containing the genotype data and
+various LR tables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">writeResult(
+  resultTable,
+  pedigrees,
+  linkageMap,
+  markerData,
+  outfile,
+  notes = NULL,
+  famname = NULL,
+  settings = NULL,
+  XML = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>resultTable</code></td>
+<td>
+<p>A data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pedigrees</code></td>
+<td>
+<p>A list of two <code>ped</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linkageMap</code></td>
+<td>
+<p>A data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>markerData</code></td>
+<td>
+<p>A data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outfile</code></td>
+<td>
+<p>The output file name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notes</code></td>
+<td>
+<p>A character vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>famname</code></td>
+<td>
+<p>The name of the input <code>.fam</code> file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>settings</code></td>
+<td>
+<p>A list of KLINK settings to be included in the output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XML</code></td>
+<td>
+<p>Optional data from .xml file.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Built-in dataset `paternity`
+peds = paternity
+map = LINKAGEMAP
+mdata = markerSummary(peds)
+
+# Result table
+LRtab = linkedLR(pedigrees = peds, linkageMap = map, markerData = mdata)
+
+# Write to excel
+tmp = paste0(tempfile(), ".xlsx")
+writeResult(LRtab,
+            pedigrees = peds,
+            linkageMap = map,
+            markerData = mdata,
+            outfile = tmp)
+
+# openxlsx::openXL(tmp)
+
+</code></pre>
+
+
+</div>

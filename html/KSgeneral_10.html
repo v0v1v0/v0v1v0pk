@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ks_c_cdf_Rcpp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+R function calling directly the C++ routines that compute the complementary cumulative distribution function of the two-sided (or one-sided, as a special case) Kolmogorov-Smirnov statistic, when the cdf under the null hypothesis is arbitrary (i.e., purely discrete, mixed or continuous)
+</h2>
+
+<h3>Description</h3>
+
+<p>Function calling directly the C++ routines that compute the complementary cdf for the one-sample two-sided Kolmogorov-Smirnov statistic, given the sample size <code>n</code> and the file "Boundary_Crossing_Time.txt" in the working directory.
+The latter file contains <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code>, <code class="reqn">i = 1, ..., n</code>, specified in Steps 1 and 2 of the Exact-KS-FFT method (see Equation (5) in Section 2 of Dimitrova, Kaishev, Tan (2020)).
+The latter values form the n-dimensional rectangular region for the uniform order statistics (see Equations (3), (5) and (6) in Dimitrova, Kaishev, Tan (2020)), namely
+<code class="reqn">P(D_{n}\ge q) = 1 - P(A_{i} \le U_{(i)} \le B_{i}, 1 \le i \le n) = 1 - P(g(t) \le nU_{n}(t) \le h(t), 0 \le t \le 1)</code>,
+where the upper and lower boundary functions <code class="reqn">h(t)</code>, <code class="reqn">g(t)</code> are defined as
+<code class="reqn">h(t) = \sum_{i=1}^{n}1_{(A_{i} &lt; t)}</code>, <code class="reqn">g(t) = \sum_{i=1}^{n}1_{(B_{i} \le t)}</code>,
+or equivalently, noting that <code class="reqn">h(t)</code> and <code class="reqn">g(t)</code> are correspondingly left and right continuous functions, we have
+<code class="reqn">\sup\{t\in[0,1]: h(t) &lt; i \} = A_{i}</code> and <code class="reqn">\inf\{t\in[0,1]: g(t) &gt; i-1 \} = B_{i}</code>.
+</p>
+<p>Note that on can also compute the (complementary) cdf for the one-sided KS statistics <code class="reqn">D_{n}^{-}</code> or <code class="reqn">D_{n}^{+}</code> (cf., Dimitrova, Kaishev, Tan (2020)) by appropriately specifying correspondingly <code class="reqn">A_{i} = 0</code> for all <code class="reqn">i</code> or <code class="reqn">B_{i} = 1</code> for all <code class="reqn">i</code>, in the function <code>ks_c_cdf_Rcpp</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ks_c_cdf_Rcpp(n)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>the sample size
+</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Note that all calculations here are done directly in C++ and output in R.
+That leads to faster computation time, as well as in some cases, possibly higher accuracy (depending on the accuracy of the pre-computed values <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code>, <code class="reqn">i = 1, ..., n</code>, provided in the file "Boundary_Crossing_Time.txt") compared to the functions <code>cont_ks_c_cdf</code>, <code>disc_ks_c_cdf</code>, <code>mixed_ks_c_cdf</code>.
+</p>
+<p>Given a random sample <code class="reqn">\{X_{1}, ..., X_{n}\}</code> of size <code>n</code> with an empirical cdf <code class="reqn">F_{n}(x)</code>, the two-sided Kolmogorov-Smirnov goodness-of-fit statistic is defined as <code class="reqn">D_{n} = \sup | F_{n}(x) - F(x) | </code>, where <code class="reqn">F(x)</code> is the cdf of a prespecified theoretical distribution under the null hypothesis <code class="reqn">H_{0}</code>, that <code class="reqn">\{X_{1}, ..., X_{n}\}</code> comes from <code class="reqn">F(x)</code>.
+The one-sided KS test statistics are correspondingly defined as <code class="reqn">D_{n}^{-} = \sup_{x} (F(x) - F_{n}(x))</code> and <code class="reqn">D_{n}^{+} = \sup_{x} (F_{n}(x) - F(x))</code>.
+</p>
+<p>The function <code>ks_c_cdf_Rcpp</code> implements the Exact-KS-FFT method, proposed by Dimitrova, Kaishev, Tan (2020), to compute the complementary cdf, <code class="reqn">P(D_{n} \ge q)</code> at a value <code class="reqn">q</code>, when <code class="reqn">F(x)</code> is arbitrary (i.e. purely discrete, mixed or continuous).
+It is based on expressing the complementary cdf as
+
+<code class="reqn">P(D_{n} \ge q) = 1 - P(A_{i} \le U_{(i)} \le B_{i}, 1 \le i \le n)</code>, where <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code> are defined as in Step 1 of Dimitrova, Kaishev, Tan (2020).
+</p>
+<p>The complementary cdf is then re-expressed in terms of the conditional probability that a homogeneous Poisson process, <code class="reqn">\xi_{n}(t)</code> with intensity <code class="reqn">n</code> will not cross an upper boundary <code class="reqn">h(t)</code> and a lower boundary <code class="reqn">g(t)</code>, given that <code class="reqn">\xi_{n}(1) = n</code> (see Steps 2 and 3 in Section 2.1 of Dimitrova, Kaishev, Tan (2020)). This conditional probability is evaluated using FFT in Step 4 of the method in order to obtain the value of the complementary cdf <code class="reqn">P(D_{n} \ge q)</code>.
+This algorithm ensures a total worst-case run-time of order <code class="reqn">O(n^{2}log(n))</code> which makes it highly computationally efficient compared to other known algorithms developed for the special cases of continuous or purely discrete <code class="reqn">F(x)</code>.
+</p>
+<p>The values <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code>, <code class="reqn">i = 1, ..., n</code>, specified in Steps 1 and 2 of the Exact-KS-FFT method (see Dimitrova, Kaishev, Tan (2020), Section 2) must be pre-computed (in R or, if needed, using alternative softwares offering high accuracy, e.g. Mathematica) and saved in a file with the name "Boundary_Crossing_Time.txt" (in the current working directory).
+</p>
+<p>The function <code>ks_c_cdf_Rcpp</code> is called in R and it first reads the file "Boundary_Crossing_Time.txt" and then computes the value for the complementaty cdf
+<code class="reqn">P(D_{n}\ge q) = 1 - P(A_{i} \le U_{(i)} \le B_{i}, 1 \le i \le n) = 1 - P(g(t) \le nU_{n}(t) \le h(t), 0 \le t \le 1)</code> in C++ and output in R (or as noted above, as a special case, computes the value of the complementary cdf <code class="reqn">P(D_{n}^{+} \ge q) = 1 - P(A_{i} \le U_{(i)} \le 1, 1 \le i \le n)</code> or <code class="reqn">P(D_{n}^{-} \ge q) = 1 - P(0 \le U_{(i)} \le B_{i}, 1 \le i \le n)</code>).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Numeric value corresponding to <code class="reqn">P(D_{n}\ge q) = 1 - P(A_{i} \le U_{(i)} \le B_{i}, 1 \le i \le n) = 1 - P(g(t) \le \eta_{n}(t) \le h(t), 0 \le t \le 1)</code> (or, as a special case, to <code class="reqn">P(D_{n}^{+} \ge q)</code> or <code class="reqn">P(D_{n}^{-} \ge q)</code>), given a sample size <code>n</code> and the file "Boundary_Crossing_Time.txt" containing <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code>, <code class="reqn">i = 1, ..., n</code>, specified in Steps 1 and 2 of the Exact-KS-FFT method (see Dimitrova, Kaishev, Tan (2020), Section 2).
+</p>
+
+
+<h3>References</h3>
+
+<p>Dimitrina S. Dimitrova, Vladimir K. Kaishev, Senren Tan. (2020) "Computing the Kolmogorov-Smirnov Distribution When the Underlying CDF is Purely Discrete, Mixed or Continuous". Journal of Statistical Software, <b>95</b>(10): 1-42. doi:10.18637/jss.v095.i10.
+</p>
+<p>Moscovich A., Nadler B. (2017). "Fast Calculation of Boundary Crossing Probabilities for Poisson Processes". Statistics and Probability Letters, <b>123</b>, 177-182.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Computing the complementary cdf P(D_{n} &gt;= q)
+## for n = 10 and q = 0.1, when F(x) is continuous,
+## In this case,
+## B_i = (i-1)/n + q
+## A_i =  i/n - q
+
+
+n &lt;- 10
+q &lt;- 0.1
+up_rec &lt;- ((1:n)-1)/n + q
+low_rec &lt;- (1:n)/n - q
+df &lt;- data.frame(rbind(up_rec, low_rec))
+write.table(df,"Boundary_Crossing_Time.txt", sep = ", ",
+                  row.names = FALSE, col.names = FALSE)
+ks_c_cdf_Rcpp(n)
+
+</code></pre>
+
+
+</div>

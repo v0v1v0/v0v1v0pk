@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>emissions_factors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get emission factors for different energy sources</h2>
+
+<h3>Description</h3>
+
+<p>Get emission factors for different energy sources
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">emissions_factors(collapse_renewables = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>collapse_renewables</code></td>
+<td>
+<p>Combine hydroelectricity and other renewables
+into a single category.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a tibble of values for emissions factors, in million metric
+tons of carbon dioxide per quad of energy.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>regions
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">e_fac &lt;- emissions_factors()
+e_fac
+</code></pre>
+
+
+</div>

@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stat.forward_selection</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Importance statistics based on forward selection</h2>
+
+<h3>Description</h3>
+
+<p>Computes the statistic
+</p>
+<p style="text-align: center;"><code class="reqn">W_j = \max(Z_j, Z_{j+p}) \cdot \mathrm{sgn}(Z_j - Z_{j+p}),</code>
+</p>
+
+<p>where <code class="reqn">Z_1,\dots,Z_{2p}</code> give the reverse order in which the 2p
+variables (the originals and the knockoffs) enter the forward selection 
+model.
+See the Details for information about forward selection.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stat.forward_selection(X, X_k, y, omp = F)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>n-by-p matrix of original variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_k</code></td>
+<td>
+<p>n-by-p matrix of knockoff variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric vector of length n, containing the response variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>omp</code></td>
+<td>
+<p>whether to use orthogonal matching pursuit (default: F).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In <em>forward selection</em>, the variables are chosen iteratively to maximize
+the inner product with the residual from the previous step. The initial
+residual is always <code>y</code>. In standard forward selection
+(<code>stat.forward_selection</code>), the next residual is the remainder after
+regressing on the selected variable; when orthogonal matching pursuit
+is used, the next residual is the remainder
+after regressing on <em>all</em> the previously selected variables.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of statistics <code class="reqn">W</code> of length p.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other statistics: 
+<code>stat.glmnet_coefdiff()</code>,
+<code>stat.glmnet_lambdadiff()</code>,
+<code>stat.lasso_coefdiff_bin()</code>,
+<code>stat.lasso_coefdiff()</code>,
+<code>stat.lasso_lambdadiff_bin()</code>,
+<code>stat.lasso_lambdadiff()</code>,
+<code>stat.random_forest()</code>,
+<code>stat.sqrt_lasso()</code>,
+<code>stat.stability_selection()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(2022)
+p=100; n=100; k=15
+mu = rep(0,p); Sigma = diag(p)
+X = matrix(rnorm(n*p),n)
+nonzero = sample(p, k)
+beta = 3.5 * (1:p %in% nonzero)
+y = X %*% beta + rnorm(n)
+knockoffs = function(X) create.gaussian(X, mu, Sigma)
+
+# Basic usage with default arguments
+result = knockoff.filter(X, y, knockoffs=knockoffs,
+                           statistic=stat.forward_selection)
+print(result$selected)
+
+# Advanced usage with custom arguments
+foo = stat.forward_selection
+k_stat = function(X, X_k, y) foo(X, X_k, y, omp=TRUE)
+result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
+print(result$selected)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,174 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>output_print</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Output printed text with formatting</h2>
+
+<h3>Description</h3>
+
+<p>This function outputs printed text for various indices such as RIR
+(Robustness of Inference to Replacement)
+and IT (Impact Threshold for a Confounding Variable) with specific formatting
+like bold, underline, and italic
+using functions from the crayon package. It handles different scenarios based
+on the effect difference,
+beta threshold, and other parameters, providing formatted
+output for each case.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">output_print(
+  n_covariates,
+  est_eff,
+  beta_threshhold,
+  bias = NULL,
+  sustain = NULL,
+  nu,
+  eff_thr,
+  recase,
+  obs_r,
+  critical_r,
+  r_con,
+  itcv,
+  alpha,
+  index,
+  far_bound,
+  sdx = NA,
+  sdy = NA,
+  R2 = NA,
+  rxcv = NA,
+  rycv = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n_covariates</code></td>
+<td>
+<p>number of covariates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>est_eff</code></td>
+<td>
+<p>The estimated effect.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_threshhold</code></td>
+<td>
+<p>The threshold value of beta, used for
+statistical significance determination.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias</code></td>
+<td>
+<p>The percentage of the estimate that could be due to bias (optional).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sustain</code></td>
+<td>
+<p>The percentage of the estimate necessary to sustain an inference (optional).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>The hypothesized effect size used in replacement analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eff_thr</code></td>
+<td>
+<p>Threshold for estimated effect.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recase</code></td>
+<td>
+<p>The number of cases that need to be replaced to change the inference.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs_r</code></td>
+<td>
+<p>The observed correlation coefficient in the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>critical_r</code></td>
+<td>
+<p>The critical correlation coefficient for statistical significance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r_con</code></td>
+<td>
+<p>The correlation coefficient of an omitted variable with both the outcome and the predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>itcv</code></td>
+<td>
+<p>The impact threshold for a confounding variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The level of statistical significance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>A character string indicating the index for which the output is generated ('RIR' or 'IT').</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>far_bound</code></td>
+<td>
+<p>Indicator whether the threshold is towards the other side of nu or 0, by default is zero (same side), alternative is one (the other side).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdx</code></td>
+<td>
+<p>Standard deviation of x.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdy</code></td>
+<td>
+<p>Standard deviation of y.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R2</code></td>
+<td>
+<p>the unadjusted, original R2 in the observed function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rxcv</code></td>
+<td>
+<p>the correlation between x and CV.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rycv</code></td>
+<td>
+<p>the correlation between y and CV.</p>
+</td>
+</tr>
+</table>
+</div>

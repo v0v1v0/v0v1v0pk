@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>match_number</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find Best House Number Match Within Given Street</h2>
+
+<h3>Description</h3>
+
+<p>This is an internal function. Please use <code>addrlink</code></p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">match_number(record, Adressen, weights = c(0.9, 0.1))</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>record</code></td>
+<td>
+<p>data.frame with one row and three columns (Strasse, Hausnummer, Hausnummernzusatz)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Adressen</code></td>
+<td>
+<p>data.frame of all valid addresses (same columns as record data.frame)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>The weighing factors between house number and additional letter</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If no house number and no additional letter is provided, a random address in 
+the given street is selected (qscore = 0).
+</p>
+<p>If only an additional letter but no house number is given and the letter is unique, 
+returns the corresponding record (qscore = 0.05). Otherwise returns a random one 
+as mentioned above (qscore = 0). 
+</p>
+<p>If no additional letter, but house number is provided and the maximum distance to 
+a valid house number is 4, return the closest match as calculated by 
+<code>l1score</code> (qscore is the result of l1score). Otherwise a random record 
+is returned (qscore = 0). 
+</p>
+<p>If additional letter and house number are available and the house number distance 
+is smaller then 4, calculates the l1scores of the house number distance and 
+addional letters distance and selects the best match (qscore is the sum of both 
+weighted l1scores). Otherwise a random record is selected (qscore = 0). 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data.frame
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>qscore</code></td>
+<td>
+<p>The quality score of the match</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Strasse</code></td>
+<td>
+<p>matched street</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hausnummer</code></td>
+<td>
+<p>matched house number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hausnummernzusatz</code></td>
+<td>
+<p>matched additional letter</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Daniel Schürmann</p>
+
+
+<h3>See Also</h3>
+
+<p><code>addrlink</code></p>
+
+
+</div>

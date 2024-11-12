@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kosis.setKey</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set KOSIS API Key</h2>
+
+<h3>Description</h3>
+
+<p>Save KOSIS API key for the current session. To set it permanently, please add
+the following line to your .Renvrion file:
+</p>
+<p>KOSIS_API_KEY = "YOUR API KEY"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kosis.setKey(apiKey)
+
+kosis.printKey()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>apiKey</code></td>
+<td>
+<p>A string specifying KOSIS API key</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>No return value, called to set api key
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Set API Key for the current session
+kosis.setKey("your_api_key")
+
+## Check API key
+kosis.printKey()
+
+</code></pre>
+
+
+</div>

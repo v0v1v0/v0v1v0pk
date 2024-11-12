@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>applyTheiler</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+applyTheiler: apply Theiler's window
+</h2>
+
+<h3>Description</h3>
+
+<p>It is used to apply a Theiler's window to a matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">applyTheiler(RM, thW)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>RM</code></td>
+<td>
+
+<p>The recurrence matrix, in KarsTS format
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thW</code></td>
+<td>
+
+<p>The window, in lags from the diagonal
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A recurrence matrix, in KarsTS format, where the diagonals from the main diagonal up to the distance given by the window have been removed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+RM &lt;- genRmExample(InKTSEnv = FALSE,plotRM = FALSE)
+
+RM1 &lt;- applyTheiler(RM,10)
+
+</code></pre>
+
+
+</div>

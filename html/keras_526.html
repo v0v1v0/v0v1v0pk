@@ -1,0 +1,148 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.keras.engine.training.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot a Keras model</h2>
+
+<h3>Description</h3>
+
+<p>Plot a Keras model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.engine.training.Model'
+plot(
+  x,
+  show_shapes = FALSE,
+  show_dtype = FALSE,
+  show_layer_names = TRUE,
+  ...,
+  rankdir = "TB",
+  expand_nested = FALSE,
+  dpi = 96,
+  layer_range = NULL,
+  show_layer_activations = FALSE,
+  to_file = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A Keras model instance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_shapes</code></td>
+<td>
+<p>whether to display shape information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_dtype</code></td>
+<td>
+<p>whether to display layer dtypes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_layer_names</code></td>
+<td>
+<p>whether to display layer names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>passed on to <code>keras$utils$plot_model()</code>. Used for forward and
+backward compatibility.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rankdir</code></td>
+<td>
+<p>a string specifying the format of the plot: <code>'TB'</code> creates a
+vertical plot; <code>'LR'</code> creates a horizontal plot. (argument passed to PyDot)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expand_nested</code></td>
+<td>
+<p>Whether to expand nested models into clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpi</code></td>
+<td>
+<p>Dots per inch. Increase this value if the image text appears
+excessively pixelated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layer_range</code></td>
+<td>
+<p><code>list</code> containing two character strings, which is the
+starting layer name and ending layer name (both inclusive) indicating the
+range of layers for which the plot will be generated. It also accepts regex
+patterns instead of exact name. In such case, start predicate will be the
+first element it matches to <code>layer_range[1]</code> and the end predicate will be
+the last element it matches to <code>layer_range[2]</code>. By default <code>NULL</code> which
+considers all layers of model. Note that you must pass range such that the
+resultant subgraph must be complete.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_layer_activations</code></td>
+<td>
+<p>Display layer activations (only for layers that
+have an <code>activation</code> property).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_file</code></td>
+<td>
+<p>File name of the plot image. If <code>NULL</code> (the default), the
+model is drawn on the default graphics device. Otherwise, a file is saved.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Nothing, called for it's side effects.
+</p>
+
+
+<h3>Raises</h3>
+
+<p>ValueError: if <code>plot_model</code> is called before the model is
+built, unless a <code style="white-space: pre;">⁠input_shape = ⁠</code> argument was supplied to
+<code>keras_model_sequential()</code>.
+</p>
+
+
+<h3>Requirements</h3>
+
+<p>This function requires pydot and graphviz.
+<code>pydot</code> is by default installed by <code>install_keras()</code>, but if you installed
+tensorflow by other means, you can install pydot directly with :
+</p>
+<div class="sourceCode"><pre>reticulate::py_install("pydot", pip = TRUE)
+</pre></div>
+<p>In a conda environment, you can install graphviz with:
+</p>
+<div class="sourceCode"><pre>reticulate::conda_install(packages = "graphviz")
+# Restart the R session after install.
+</pre></div>
+<p>Otherwise you can install graphviz from here:
+<a href="https://graphviz.gitlab.io/download/">https://graphviz.gitlab.io/download/</a>
+</p>
+
+
+</div>

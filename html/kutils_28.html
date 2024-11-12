@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyDiagnostic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Diagnose accuracy of result from applying variable key to data</h2>
+
+<h3>Description</h3>
+
+<p>Compare the old and new data frames, checking for accuracy of
+calculations in various ways.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyDiagnostic(
+  dfold,
+  dfnew,
+  keylist,
+  max.values = 20,
+  nametrunc = 18,
+  wide = 200,
+  confidential = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dfold</code></td>
+<td>
+<p>Original data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dfnew</code></td>
+<td>
+<p>The new recoded data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keylist</code></td>
+<td>
+<p>The imported variable key that was used to
+transform dfold into dfnew.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.values</code></td>
+<td>
+<p>Show up to this number of values for the old
+variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nametrunc</code></td>
+<td>
+<p>Truncate column and row names. Needed if there
+are long factor labels and we want to fit more information on
+table. Default = 18 for new name, old name is 10 more
+characters (18 + 10 = 28).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wide</code></td>
+<td>
+<p>Number of characters per row in printed
+output. Suggest very wide screen, default = 200.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confidential</code></td>
+<td>
+<p>Should numbers in table be rounded to nearest
+"10" to comply with security standard enforced by some
+American research departments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>CAUTION: This can print WIDE matrices.  Because the on-screen
+output will be WIDE, make the display window WIDE!
+</p>
+<p>Crosstabulate new variable versus old variable to see the coding
+mismatches.  For tables of up to 10 values or so, that will be
+satisfactory.
+</p>
+<p>For numeric variables, it appears there is no good thing to do
+except possibly to re-apply any transformations.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+</div>

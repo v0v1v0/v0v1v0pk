@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer.distances</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Assessing distances to winning units</h2>
+
+<h3>Description</h3>
+
+<p>Given a trained SOM, distances of individual objects to their closest
+units may be calculated with function <code>dist2WU</code>. Aggregation on
+the unit level is obtained through the function
+<code>layer.distances</code>. The latter function is the workhorse for the
+"quality" plots in function <code>plot.kohonen</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer.distances(kohobj, whatmap, data, classif = NULL)
+dist2WU(kohobj, whatmap, data, classif = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kohobj</code></td>
+<td>
+<p>A trained <code>kohonen</code> object. Data and mapping
+results should be included.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whatmap</code></td>
+<td>
+<p>What layers to take into account - default is to consider
+all layers used in training. Also single layers may be chosen. Note
+that although the underlying C code can also calculate results for
+any subset, currently subsets larger than one are forbidden.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data to use - default is to use the data from the trained SOM.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classif</code></td>
+<td>
+<p>Classification vector, corresponding to the
+<code>unit.classif</code> element of a <code>kohonen</code> object. It can also
+be provided explicitly.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The results will be weighted using both the user weights and
+distance weights. Summing all the results for individual layers
+therefore would lead to the <code>unit.classif</code> vector of the
+<code>kohonen</code> object.</p>
+
+
+<h3>Value</h3>
+
+<p>Function <code>dist2WU</code> returns a vector, representing for each
+object the distance to its winning unit. Function
+<code>layer.distances</code> returns (as a vector) for each unit the average
+distance of objects for which it is the winning unit.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ron Wehrens</p>
+
+
+<h3>See Also</h3>
+
+<p>Quality plots from <code>plot.kohonen</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(kohonen)
+data(wines)
+wines.sc &lt;- scale(wines)
+set.seed(7)
+xyf.wines &lt;- xyf(wines.sc, vintages, grid = somgrid(5, 5, "hexagonal"))
+dist2WU(xyf.wines, whatmap = 1)
+plot(xyf.wines, "quality", whatmap = 1)
+plot(xyf.wines, "property",
+     property = layer.distances(xyf.wines, whatmap = 1))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>zero_sum_prior</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Zero sum prior</h2>
+
+<h3>Description</h3>
+
+<p>Defines the prior of a structural block to be such that the latent states sum zero with probability one.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">zero_sum_prior(
+  block,
+  var.index = 1:block$n,
+  weights = rep(1, length(var.index))
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>block</code></td>
+<td>
+<p>dlm_block object: The structural block.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.index</code></td>
+<td>
+<p>integer: The index of the variables from which to set the prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>numeric: A vector indicating which linear transformation of the data is 0 with probability 1. Default is equivalent to a zero-sum restriction.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The covariance matrix of the evolution and the drift parameter are also altered to guarantee that the zero sum condition will always hold.
+The discount factor must be the same for all variables whose prior is being modified.
+For the details about the implementation see dos Santos et al. (2024).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dlm_block object with the desired prior.
+</p>
+
+
+<h3>References</h3>
+
+<p>Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for defining priors.: 
+<code>CAR_prior()</code>,
+<code>joint_prior()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+polynomial_block(mu = 1, D = 0.95) |&gt;
+  block_mult(5) |&gt;
+  zero_sum_prior()
+
+</code></pre>
+
+
+</div>

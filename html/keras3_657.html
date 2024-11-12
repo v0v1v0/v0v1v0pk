@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random_shuffle</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Shuffle the elements of a tensor uniformly at random along an axis.</h2>
+
+<h3>Description</h3>
+
+<p>Shuffle the elements of a tensor uniformly at random along an axis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random_shuffle(x, axis = 1L, seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The tensor to be shuffled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>An integer specifying the axis along which to shuffle. Defaults to
+<code>0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>An R integer or instance of
+<code>random_seed_generator()</code>.
+Used to make the behavior of the initializer
+deterministic. Note that an initializer seeded with an integer
+or <code>NULL</code> (unseeded) will produce the same random values
+across multiple calls. To get different random values
+across multiple calls, use as seed an instance
+of <code>random_seed_generator()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor, a copy of <code>x</code> with the <code>axis</code> axis shuffled.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other random: <br><code>random_beta()</code> <br><code>random_binomial()</code> <br><code>random_categorical()</code> <br><code>random_dropout()</code> <br><code>random_gamma()</code> <br><code>random_integer()</code> <br><code>random_normal()</code> <br><code>random_seed_generator()</code> <br><code>random_truncated_normal()</code> <br><code>random_uniform()</code> <br></p>
+
+
+</div>

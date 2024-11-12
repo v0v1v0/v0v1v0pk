@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ruvk</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Random generation from univariate kernel density</h2>
+
+<h3>Description</h3>
+
+<p>Random generation from univariate kernel density
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ruvk(
+  n,
+  y,
+  bw = bw.nrd0(y),
+  kernel = c("gaussian", "epanechnikov", "rectangular", "triangular", "biweight",
+    "cosine", "optcosine"),
+  weights = NULL,
+  adjust = 1,
+  shrinked = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of observations. If <code>length(n) &gt; 1</code>,
+the length is taken to be the number required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+<p>the smoothing bandwidth to be used. The kernels are scaled
+such that this is the standard deviation of the smoothing
+kernel (see <code>density</code> for details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used.
+This must partially match one of "gaussian", "rectangular",
+"triangular", "epanechnikov", "biweight", "cosine"
+or "optcosine", with default "gaussian", and may be abbreviated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>numeric vector of length equal to <code>length(y)</code>; must be
+non-negative.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adjust</code></td>
+<td>
+<p>scalar; the bandwidth used is actually <code>adjust*bw</code>.
+This makes it easy to specify values like 'half the default'
+bandwidth.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shrinked</code></td>
+<td>
+<p>if <code>TRUE</code> random generation algorithm preserves
+mean and variance of the original sample.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Univariate kernel density estimator is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">
+\hat{f_h}(x) = \sum_{i=1}^n w_i \, K_h(x-y_i)
+</code>
+</p>
+
+<p>where <code class="reqn">w</code> is a vector of weights such that all <code class="reqn">w_i \ge 0</code>
+and <code class="reqn">\sum_i w_i = 1</code> (by default uniform <code class="reqn">1/n</code> weights are used),
+<code class="reqn">K_h = K(x/h)/h</code> is kernel <code class="reqn">K</code> parametrized by bandwidth
+<code class="reqn">h</code> and <code class="reqn">y</code> is a vector of data points used for estimating the kernel density.
+</p>
+<p>For estimating kernel densities use the <code>density</code> function.
+</p>
+<p>The random generation algorithm is described in the documentation of
+<code>kernelboot</code> function.
+</p>
+
+
+<h3>References</h3>
+
+<p>Deng, H. and Wickham, H. (2011). Density estimation in R.
+<a href="http://vita.had.co.nz/papers/density-estimation.pdf">http://vita.had.co.nz/papers/density-estimation.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kernelboot</code>, <code>density</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# ruvk() produces samples from kernel densities as estimated using
+# density() function from base R
+
+hist(ruvk(1e5, mtcars$mpg), 100, freq = FALSE, xlim = c(5, 40))
+lines(density(mtcars$mpg, bw = bw.nrd0(mtcars$mpg)), col = "red")
+
+# when using 'shrinked = TRUE', the samples differ from density() estimates
+# since they are shrinked to have the same variance as the underlying data
+
+hist(ruvk(1e5, mtcars$mpg, shrinked = TRUE), 100, freq = FALSE, xlim = c(5, 40))
+lines(density(mtcars$mpg, bw = bw.nrd0(mtcars$mpg)), col = "red")
+
+# Comparison of different univariate kernels under standard parametrization
+
+kernels &lt;- c("gaussian", "epanechnikov", "rectangular", "triangular",
+             "biweight", "cosine", "optcosine")
+
+partmp &lt;- par(mfrow = c(2, 4), mar = c(3, 3, 3, 3))
+for (k in kernels) {
+  hist(ruvk(1e5, 0, 1, kernel = k), 25, freq = FALSE, main = k)
+  lines(density(0, 1, kernel = k), col = "red")
+}
+par(partmp)
+
+</code></pre>
+
+
+</div>

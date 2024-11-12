@@ -1,0 +1,255 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fitSSM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Maximum Likelihood Estimation of a State Space Model</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>fitSSM</code> finds the maximum likelihood estimates for unknown
+parameters of an arbitary state space model, given the user-defined model
+updating function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fitSSM(model, inits, updatefn, checkfn, update_args = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Model object of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inits</code></td>
+<td>
+<p>Initial values for <code>optim</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>updatefn</code></td>
+<td>
+<p>User defined function which updates the model given the
+parameters. Must be of form <code>updatefn(pars, model, ...)</code>,
+where <code>...</code> correspond to optional additional arguments.
+Function should return the original model with updated parameters.
+See details for description of the default <code>updatefn</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkfn</code></td>
+<td>
+<p>Optional function of form <code>checkfn(model)</code> for checking
+the validity of the model. Should return <code>TRUE</code> if the model is valid,
+and <code>FALSE</code> otherwise. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>update_args</code></td>
+<td>
+<p>Optional list containing additional arguments to <code>updatefn</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments for functions <code>optim</code> and
+<code>logLik.SSModel</code>, such as <code>nsim = 1000</code>, <code>marginal = TRUE</code>, 
+and <code>method = "BFGS"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Note that <code>fitSSM</code> actually minimizes <code>-logLik(model)</code>, so for
+example the Hessian matrix returned by <code>hessian = TRUE</code> has an opposite
+sign than expected.
+</p>
+<p>This function is simple wrapper around <code>optim</code>. For optimal performance in
+complicated problems, it is more efficient to use problem specific codes with
+calls to <code>logLik</code> method directly.
+</p>
+<p>In <code>fitSSM</code>, the objective function for <code>optim</code> first
+updates the model based on the current values of the parameters under optimization,
+using function <code>updatefn</code>. Then function <code>checkfn</code>
+is used for checking that the resulting model is valid
+(the default <code>checkfn</code> checks for non-finite values and overly large (&gt;1e7)
+values in covariance matrices). If <code>checkfn</code> returns <code>TRUE</code>,  the
+log-likelihood is computed using a call <code>-logLik(model,check.model = FALSE)</code>.
+Otherwise objective function returns value corresponding to
+<code>.Machine$double.xmax^0.75</code>.
+</p>
+<p>The default <code>updatefn</code> can be used to estimate the values marked as <code>NA</code>
+in unconstrained time-invariant covariance matrices Q and H. Note that the
+default <code>updatefn</code> function cannot be used with trigonometric seasonal
+components as its covariance structure is of form <code class="reqn">\sigma</code>I,
+i.e. not all <code>NA</code>'s correspond to unique value.
+</p>
+<p>The code for the default <code>updatefn</code> can be found in the examples.
+As can be seen from the function definition, it is assumed that
+unconstrained optimization method such as <code>BFGS</code> is used.
+</p>
+<p>Note that for non-Gaussian models derivative-free optimization methods such as
+Nelder-Mead might be more reliable than methods which use finite difference
+approximations. This is due to noise caused by the relative stopping criterion
+used for finding approximating Gaussian model. In most cases this does not
+seem to cause any problems though.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>optim.out</code></td>
+<td>
+<p>Output from function <code>optim</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Model with estimated parameters. </p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>logLik</code>, <code>KFAS</code>, 
+<code>boat</code>, <code>sexratio</code>,
+<code>GlobalTemp</code>, <code>SSModel</code>, 
+<code>importanceSSM</code>, <code>approxSSM</code> for more examples.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Example function for updating covariance matrices H and Q
+# (also used as a default function in fitSSM)
+
+updatefn &lt;- function(pars, model){
+  if(any(is.na(model$Q))){
+    Q &lt;- as.matrix(model$Q[,,1])
+    naQd  &lt;- which(is.na(diag(Q)))
+    naQnd &lt;- which(upper.tri(Q[naQd,naQd]) &amp; is.na(Q[naQd,naQd]))
+    Q[naQd,naQd][lower.tri(Q[naQd,naQd])] &lt;- 0
+    diag(Q)[naQd] &lt;- exp(0.5 * pars[1:length(naQd)])
+    Q[naQd,naQd][naQnd] &lt;- pars[length(naQd)+1:length(naQnd)]
+    model$Q[naQd,naQd,1] &lt;- crossprod(Q[naQd,naQd])
+  }
+ if(!identical(model$H,'Omitted') &amp;&amp; any(is.na(model$H))){#'
+   H&lt;-as.matrix(model$H[,,1])
+   naHd  &lt;- which(is.na(diag(H)))
+   naHnd &lt;- which(upper.tri(H[naHd,naHd]) &amp; is.na(H[naHd,naHd]))
+   H[naHd,naHd][lower.tri(H[naHd,naHd])] &lt;- 0
+   diag(H)[naHd] &lt;-
+     exp(0.5 * pars[length(naQd)+length(naQnd)+1:length(naHd)])
+   H[naHd,naHd][naHnd] &lt;-
+     pars[length(naQd)+length(naQnd)+length(naHd)+1:length(naHnd)]
+   model$H[naHd,naHd,1] &lt;- crossprod(H[naHd,naHd])
+   }
+ model
+}
+
+# Example function for checking the validity of covariance matrices.
+
+checkfn &lt;- function(model){
+  #test positive semidefiniteness of H and Q
+  !inherits(try(ldl(model$H[,,1]),TRUE),'try-error') &amp;&amp;
+  !inherits(try(ldl(model$Q[,,1]),TRUE),'try-error')
+}
+
+
+model &lt;- SSModel(Nile ~ SSMtrend(1, Q = list(matrix(NA))), H = matrix(NA))
+
+#function for updating the model
+update_model &lt;- function(pars, model) {
+  model["H"] &lt;- pars[1]
+  model["Q"] &lt;- pars[2]
+  model
+}
+
+#check that variances are non-negative
+check_model &lt;- function(model) {
+  (model["H"] &gt; 0 &amp;&amp; model["Q"] &gt; 0)
+}
+
+fit &lt;- fitSSM(inits = rep(var(Nile)/5, 2), model = model,
+                 updatefn = update_model, checkfn = check_model)
+
+# More complex model
+
+set.seed(1)
+
+n &lt;- 1000
+
+x1 &lt;- rnorm(n)
+x2 &lt;- rnorm(n)
+beta1 &lt;- 1 + cumsum(rnorm(n, sd = 0.1)) # time-varying regression effect
+beta2 &lt;- -0.3 # time-invariant effect
+
+# ARMA(2, 1) errors
+z &lt;- arima.sim(model = list(ar = c(0.7, -0.4), ma = 0.5), n = n, sd = 0.5)
+
+# generate data, regression part + ARMA errors
+y &lt;- beta1 * x1 + beta2 * x2 + z
+ts.plot(y)
+
+# build the model using just zeros for now
+# But note no extra white noise term so H is fixed to zero
+model &lt;- SSModel(y ~ SSMregression(~ x1 + x2, Q = 0, R = matrix(c(1, 0), 2, 1)) +
+  SSMarima(rep(0, 2), 0, Q = 0), H = 0) 
+
+# update function for fitSSM
+
+update_function &lt;- function(pars, model){
+
+  ## separate calls for model components, use exp to ensure positive variances
+  tmp_reg &lt;- SSMregression(~ x1 + x2, Q = exp(pars[1]), R = matrix(c(1, 0), 2, 1))
+  tmp_arima &lt;- try(SSMarima(artransform(pars[2:3]), 
+    artransform(pars[4]), Q = exp(pars[5])), silent = TRUE)
+  
+  # stationary check, see note in artransform docs
+  if(inherits(tmp_arima, "try-error")) {
+    model$Q[] &lt;- NA # set something to NA just in case original model is ok
+    return(model) # this goes to checkfn and causes rejection due to NA values
+  }
+  
+  model["Q", etas = "regression"] &lt;- tmp_reg$Q
+  model["Q", etas = "arima"] &lt;- tmp_arima$Q
+  
+  model["T", "arima"] &lt;- tmp_arima$T
+  model["R", states = "arima", etas = "arima"] &lt;- tmp_arima$R
+  model["P1", "arima"] &lt;- tmp_arima$P1
+  
+  # you could also directly build the whole model here again, i.e.
+  # model &lt;- SSModel(y ~ 
+  #   SSMregression(~ x1 + x2, Q = exp(pars[1]), R = matrix(c(1, 0), 2, 1)) +
+  #   SSMarima(artransform(pars[2:3]), artransform(pars[4]), Q = exp(pars[5])), 
+  #   H = 0)
+  
+  model
+  
+}
+fit  &lt;- fitSSM(model = model,
+  inits = rep(0.1, 5),
+  updatefn = update_function, method = "BFGS")
+
+ts.plot(cbind(beta1, KFS(fit$model)$alphahat[, "x1"]), col = 1:2)
+
+</code></pre>
+
+
+</div>

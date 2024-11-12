@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_map_fn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Map the function fn over the elements elems and return the outputs.</h2>
+
+<h3>Description</h3>
+
+<p>Map the function fn over the elements elems and return the outputs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_map_fn(fn, elems, name = NULL, dtype = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>Function that will be called upon each element in elems</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>elems</code></td>
+<td>
+<p>tensor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>A string name for the map node in the graph</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>Output data type.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Tensor with dtype <code>dtype</code>.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

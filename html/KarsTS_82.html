@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getGapsAfterFill</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+getGapsAfterFill: get the remaining gaps
+</h2>
+
+<h3>Description</h3>
+
+<p>This function identifies which gaps remain in a time series after applying a filling method. It is used internally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getGapsAfterFill(filledTS, selGap, envir = KTSEnv)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filledTS</code></td>
+<td>
+
+<p>The filled time series
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selGap</code></td>
+<td>
+
+<p>The gap set that was meant to be filled
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>envir</code></td>
+<td>
+
+<p>The environment
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>It returns a list containing two data frames: one of them lists the remaining gaps and the other, the filled gaps.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

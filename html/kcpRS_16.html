@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>runCorr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Running Correlations</h2>
+
+<h3>Description</h3>
+
+<p>Extracts the running correlations by sliding a window comprised of <code>wsize</code> time points, and in each window,
+the correlation of each pair of variables is computed.
+Each time the window is slid, the oldest time point is discarded and the latest time point is added.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">runCorr(data, wsize = 25)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p><em>N</em> x <em>v</em> dataframe where <em>N</em> is the no. of time points and <em>v</em> the no. of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wsize</code></td>
+<td>
+<p>window size</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Running correlations time series
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(MentalLoad)
+RS&lt;-runCorr(data=MentalLoad,wsize=25)
+ts.plot(RS, gpars=list(xlab="Window", ylab="Correlations", col=1:3,lwd=2))
+</code></pre>
+
+
+</div>

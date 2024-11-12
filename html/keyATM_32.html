@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_keywords</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert a quanteda dictionary to keywords</h2>
+
+<h3>Description</h3>
+
+<p>This function converts or reads a dictionary object from quanteda to a named list. "Glob"-style wildcard expressions (e.g. politic*) are resolved based on the available terms in your texts.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_keywords(file = NULL, docs = NULL, dictionary = NULL, split = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>file identifier for a foreign dictionary, e.g. path to a dictionary in YAML or LIWC format</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>docs</code></td>
+<td>
+<p>texts read via <code>keyATM_read()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dictionary</code></td>
+<td>
+<p>a quanteda dictionary object, ignore if file is not NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>split</code></td>
+<td>
+<p>boolean, if multi-word terms be seperated, e.g. "air force" splits into "air" and "force".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional parameters for <code>quanteda::dictionary()</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a named list which can be used as keywords for e.g. <code>keyATM()</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dictionary</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  library(keyATM)
+  library(quanteda)
+  ## using the moral foundation dictionary example from quanteda
+  dictfile &lt;- tempfile()
+  download.file("http://bit.ly/37cV95h", dictfile)
+  data(keyATM_data_bills)
+  bills_dfm &lt;- keyATM_data_bills$doc_dfm
+  keyATM_docs &lt;- keyATM_read(bills_dfm)
+  read_keywords(file = dictfile, docs = keyATM_docs, format = "LIWC")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

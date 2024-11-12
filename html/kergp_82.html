@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covMat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generic Function: Covariance or Cross-Covariance
+Matrix Between two Sets of Locations
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function returning a covariance or a cross-covariance matrix
+between two sets of locations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+covMat(object, X, Xnew, ...)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>Covariance kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>A matrix with <code>d</code> columns, where <code>d</code> is the number of inputs
+of the covariance kernel. The <code class="reqn">n_1</code> rows define a first set of sites or
+locations, typically used for learning.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xnew</code></td>
+<td>
+
+<p>A matrix with <code>d</code> columns, where <code>d</code> is the number of inputs
+of the covariance kernel. The <code class="reqn">n_2</code> rows define a second set of
+sites or locations, typically used for testing or prediction.
+If <code>Xnew = NULL</code> the same locations are used: <code>Xnew = X</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments for methods.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A rectangular matrix with <code>nrow(X)</code> rows and <code>nrow(Xnew)</code>
+columns containing the covariances <code class="reqn">K(\mathbf{x}_1,
+    \mathbf{x}_2)</code> for all the couples of sites
+<code class="reqn">\mathbf{x}_1</code> and <code class="reqn">\mathbf{x}_2</code>.
+</p>
+
+
+</div>

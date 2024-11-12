@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>med_sigma</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the Median Heuristic</h2>
+
+<h3>Description</h3>
+
+<p>This function provides the most popular bandwidth of the Gaussian kernel, the median heuristic.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">med_sigma(X, Y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>The first samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>The second samples.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a numeric value, the median heuristic, which is the median of all pairwise distances among pooled observations, as a bandwidth of the kernel.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kerTests-package</code>, <code>kertests</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Mean difference in Gaussian distribution.
+d = 100
+mu = 0.2
+sam = 100
+n = 200
+set.seed(500)
+X = matrix(rnorm(d*sam), sam)
+Y = matrix(rnorm(d*sam,mu), sam)
+
+sigma = med_sigma(X, Y) # median heuristic (bandwidth)
+</code></pre>
+
+
+</div>

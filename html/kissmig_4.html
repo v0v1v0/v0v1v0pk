@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kissmigOrigin</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Define a geographic origin</h2>
+
+<h3>Description</h3>
+
+<p><code>kissmigOrigin</code> is a support function to define the geographic origin for a <code>kissmig</code> call.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kissmigOrigin(grd, x, y, size)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>grd</code></td>
+<td>
+<p>a single RasterLayer as reference layer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>lower left x-coordinate of geographic origin</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>lower left y-coordinate of geographic origin</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>size of the quadratic origin</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>kissmigOrigin</code> returns a rasterLayer characterized by the reference
+<code>grd</code>. Cell values are set to zero, except for cells of the origin defined by
+<code>extent(x, x+size, y, y+size)</code> which are set to one.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kissmig</code>
+</p>
+
+
+</div>

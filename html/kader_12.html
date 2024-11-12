@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>J_admissible</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Admissible Rank Transformations of Eichner &amp; Stute (2013)</h2>
+
+<h3>Description</h3>
+
+<p>This is just a wrapper for the functions <code>J1</code>, <code>J2</code>,
+and <code class="reqn">u -&gt; \sqrt 3 * (2u - 1)</code> which implement the admissible
+transformations for the three cases for <code class="reqn">c</code>. For mathematical
+details see eq. (15.16) and (15.17) in Eichner (2017) and/or Eichner &amp;
+Stute (2013).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">J_admissible(u, cc = sqrt(5))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>Numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cc</code></td>
+<td>
+<p>Numeric constant, defaults to <code class="reqn">\sqrt 5</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Basically, for <code>cc</code> in <code class="reqn">[\sqrt(5/3), \sqrt 5]</code>:
+</p>
+<p><code>J_admissible(u, cc)</code> = <code>J1(u, cc)</code> if <code>cc</code> <code class="reqn">&lt; \sqrt 3</code>,
+</p>
+<p><code>J_admissible(u, cc)</code> = <code>J2(u, cc)</code> if <code>cc</code> <code class="reqn">&gt; \sqrt 3</code>,
+and
+</p>
+<p><code>J_admissible(u, cc)</code> = <code>sqrt(3) * (2*u - 1)</code> if <code>cc</code>
+<code class="reqn">= \sqrt 3</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Vector of same length and mode as <code>u</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The admissible rank transformations require <code class="reqn">c</code> to
+be in <code class="reqn">[\sqrt(5/3), \sqrt 5]</code>. If <code>cc</code> does
+not satisfy this requirement a warning (only) is issued.
+The default <code>cc = sqrt(5)</code>, i.e., <code class="reqn">c = \sqrt 5</code>,
+yields the optimal rank transformation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>J1</code> and <code>J2</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+par(mfrow = c(1, 2), mar = c(3, 3, 0.5, 0.5), mgp = c(1.7, 0.7, 0))
+example(J1)
+example(J2)
+
+
+</code></pre>
+
+
+</div>

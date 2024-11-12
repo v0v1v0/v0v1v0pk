@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit_embeds_kg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit embeddings to a kgraph object</h2>
+
+<h3>Description</h3>
+
+<p>Build a fit_kgraph object to act as an intermediate between the embeddings
+and the knowledge graph. If possible (i.e. if number of features is not too
+large) compute all pair-wise similarities, otherwise determine the similarity
+threshold using a number of random pairs. If a data frame of known pairs is
+available, call fit_embeds_to_pairs which will produce an AUC and use the
+threshold_projs parameter as the specificity threshold (e.g. the default
+specificity of 0.9 corresponds to 10 percent false positives). Otherwise take the
+quantile of similarity values corresponding to threshold_projs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit_embeds_kg(
+  m_embeds,
+  similarity = c("cosine", "inprod", "cov_simi", "norm_inprod"),
+  threshold_projs = 0.9,
+  df_pairs = NULL,
+  df_pairs_cols = 1:2,
+  max_concepts = 1000,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m_embeds</code></td>
+<td>
+<p>Embedding matrix, rownames must be able to be matched to
+concepts in df_pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>similarity</code></td>
+<td>
+<p>Similarity measure to be computed. One of 'inprod' (inner
+product), 'cosine', 'cov_simi' (covariance similarity),
+'norm_inprod' (normalized inner product).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold_projs</code></td>
+<td>
+<p>Specificity threshold to use for projections.
+(default 0.9 is equivalent to 10 percent false positives,
+and 0.95 to 5 percent false positives)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_pairs</code></td>
+<td>
+<p>Known relationships data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_pairs_cols</code></td>
+<td>
+<p>Columns of df_pairs for identifiers, that map to
+m_embeds rownames</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_concepts</code></td>
+<td>
+<p>Maximum number of concepts to compute all pair-wise
+similarities</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed to gen_df_notpairs</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Knowledge graph, list of slots df_nodes and df_links
+</p>
+
+
+</div>

@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>clustboot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bootstrap replications for clustering alorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function does bootstrap replications for a clustering
+algorithm. Any hard clustering algorithm is valid.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">clustboot(distdata, nclust = 2, algorithm = fastclust, nboot = 25, diss = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>distdata</code></td>
+<td>
+<p>A distance matrix (n x n)/ dist object or
+a data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclust</code></td>
+<td>
+<p>A number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>A clustering algorithm function (see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboot</code></td>
+<td>
+<p>A number of bootstrap replicates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diss</code></td>
+<td>
+<p>A logical if <code>distdata</code> is a distance matrix/ object or
+a data frame.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a function to obtain bootstrap evaluation for cluster results.
+The <code>algorithm</code> argument is a function where this function has two input
+arguments. The two input arguments are a distance matrix/ object or
+a data frame, and number of clusters. Then the output is only
+a vector of cluster memberships.
+</p>
+<p>The default <code>algorithm</code> is <code>fastclust</code> applying the
+<code>fastkmed</code> function. The code of the <code>fastclust</code> is
+</p>
+<p>fastclust &lt;- function(x, nclust) {
+</p>
+<p>res &lt;- fastkmed(x, nclust, iterate = 50)
+</p>
+<p>return(res$cluster)
+</p>
+<p>}
+</p>
+<p>For other examples, see <strong>Examples</strong>. It applies ward and kmeans
+algorithms. When kmeans is applied, for example, <code>diss</code> is set to be
+<code>FALSE</code> because the input of the <code>kmclust</code> and
+<code>clustboot</code> is a data frame instead of a distance.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a matrix of bootstrap replicates with a dimension of
+n x b, where n is the number of objects and b is the
+number of bootstrap replicates.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Dolnicar, S. and Leisch, F. 2010. Evaluation of structure
+and reproducibility of cluster solutions using the bootstrap.
+Marketing Letters 21 pp. 83-101.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+ward.D2 &lt;- function(x, nclust) {
+res &lt;- hclust(as.dist(x), method = "ward.D2")
+member &lt;- cutree(res, nclust)
+return(member)
+}
+kmclust &lt;- function(x, nclust) {
+res &lt;- kmeans(x, nclust)
+return(res$cluster)
+}
+irisfast &lt;- clustboot(mrwdist, nclust=3, nboot=7)
+head(irisfast)
+irisward &lt;- clustboot(mrwdist, nclust=3, algorithm = ward.D2, nboot=7)
+head(irisward)
+iriskmeans &lt;- clustboot(num, nclust=3, algorithm = kmclust, nboot=7, diss = FALSE)
+head(iriskmeans)
+
+</code></pre>
+
+
+</div>

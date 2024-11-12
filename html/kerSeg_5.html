@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>skew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Compute some components utilized in the third moment fomulas.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function provides some components used in the third moment fomulas.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">skew(K, Rtemp, Rtemp2, R0, R2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A kernel matrix of observations in the sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rtemp</code></td>
+<td>
+<p>A numeric vector of <code class="reqn">k_{i.}</code>, the sum of kernel values for each row i.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rtemp2</code></td>
+<td>
+<p>A numeric vector, the sum of squared kernel values for each row i.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R0</code></td>
+<td>
+<p>The term <code class="reqn">R_{0}</code>, defined in the paper.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R2</code></td>
+<td>
+<p>The term <code class="reqn">R_{2}</code>, defined in the paper.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list of components used in the third moment fomulas.
+</p>
+
+
+</div>

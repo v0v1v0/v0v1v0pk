@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>agg_rels</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Aggregated scale reliabilities</h2>
+
+<h3>Description</h3>
+
+<p>The factor reliabilities aggregated over k-folds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">agg_rels(models, flag = 0.6, digits = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>models</code></td>
+<td>
+<p>An object returned from <code>kfa</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flag</code></td>
+<td>
+<p>threshold below which reliability will be flagged</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>integer; number of decimal places to display in the report.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>data.frame</code> of mean factor (scale) reliabilities for each factor model and <code>vector</code> with count of folds with a flagged reliability
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(example.kfa)
+agg_rels(example.kfa)
+
+</code></pre>
+
+
+</div>

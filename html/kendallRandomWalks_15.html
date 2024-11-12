@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ladder_moment_pmf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Distribution of the first ladder moment.</h2>
+
+<h3>Description</h3>
+
+<p>Distribution of the first ladder moment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ladder_moment_pmf(n, level, alpha, step_cdf, step_pdf)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Argument to the PDF.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Level a to be crossed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Alpha parameter of Kendall random walk.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step_cdf</code></td>
+<td>
+<p>CDF of the step distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step_pdf</code></td>
+<td>
+<p>PDF of the step distribution.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Value of PMF of the distribution of first ladder moment
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">prob &lt;- ladder_moment_pmf(10, 1000, 0.5, pnorm, dnorm)
+prob
+
+
+</code></pre>
+
+
+</div>

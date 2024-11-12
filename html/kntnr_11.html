@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kntn_auth</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Authorization Header for 'kintone'</h2>
+
+<h3>Description</h3>
+
+<p><code>kntn_get_authorization_header()</code> constructs a header for authorization using add_headers.
+<code>kntn_set_auth()</code> interactivery asks for the type of authentication and the credential and store
+them as environmental variables <code>KNTN_URL</code>, <code>KNTN_AUTH_TYPE</code> and <code>KNTN_AUTH</code>.
+If you want to avoid interaction, please manually set these.
+<code>kntn_unset_auth()</code> unsets these environmental variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kntn_get_authorization_header()
+
+kntn_set_auth(auth_type = c("password", "token"), overwrite = FALSE)
+
+kntn_unset_auth()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>auth_type</code></td>
+<td>
+<p>Type of Authentication. <code>password</code> uses username and password.
+<code>token</code> uses per-app token.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>If <code>TRUE</code>, overwrite the existing environmental variables.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><a href="https://developer.kintone.io/hc/en-us/articles/212495188/#userauthentication">https://developer.kintone.io/hc/en-us/articles/212495188/#userauthentication</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# set KNTN_URL, KNTN_AUTH and KNTN_AUTH_TYPE interactively.
+# By default, auth_type is password.
+kntn_set_auth()
+
+Sys.getenv(c("KNTN_URL", "KNTN_AUTH", "KNTN_AUTH_TYPE"))
+
+# This will return `X-Cybozu-Authorization` header.
+kntn_get_authorization_header()
+
+# Clear environmental variables before trying to use another set of authorization info.
+kntn_unset_auth()
+kntn_set_auth(auth_type = "token")
+
+# This will return `X-Cybozu-API-Token` header.
+kntn_get_authorization_header()
+
+# To avoid interaction, set these environmental variables manually.
+Sys.setenv("KNTN_URL" = "https://example.cybozu.com/")
+Sys.setenv("KNTN_AUTH" = "abcdefg")
+Sys.setenv("KNTN_AUTH_TYPE" = "token")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

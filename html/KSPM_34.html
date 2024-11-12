@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logLik.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Log Likelihood of a kspm Object</h2>
+
+<h3>Description</h3>
+
+<p>Returns the Log Likelihood value of the kernel semi parametric model represented by <code>obect</code> evaluated at the estimated coefficients.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+logLik(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm", usually, a result of a call to kspm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional optional argument (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function returns the Log Likelihood computed as follow:  <code class="reqn">logLik = -\frac{1}{2} RSS</code> where <code class="reqn">RSS</code> is the residual sum of squares.
+</p>
+
+
+<h3>Value</h3>
+
+<p>logLik of kspm fit
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Liu, D., Lin, X., and Ghosh, D. (2007). Semiparametric regression of multidimensional genetic pathway data: least squares kernel machines and linear mixed models. Biometrics, 63(4), 1079:1088.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm, extractAIC.kspm, deviance.kspm
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+y &lt;- 3*x + rnorm(15, 0, 2)
+fit &lt;- kspm(y, kernel = ~ Kernel(x, kernel.function = "linear"))
+logLik(fit)
+
+</code></pre>
+
+
+</div>

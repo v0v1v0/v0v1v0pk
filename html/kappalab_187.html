@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.superclass.capacity-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "summary.superclass.capacity"</h2>
+
+<h3>Description</h3>
+
+<p>Class containing most of the indices that can be used to summarize an object of class <code>superclass.capacity</code>.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects are created by calls of the form <code>summary(...)</code> on objects of class <code>superclass.capacity</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>Shapley.value</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing the Shapley value of a set function.</p>
+</dd>
+<dt>
+<code>interaction.indices</code>:</dt>
+<dd>
+<p>Object of class <code>matrix</code> containing the Shapley interaction indices of a set function.</p>
+</dd>
+<dt>
+<code>orness</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containg the orness degree of the Choquet integral corresponding to the underlying capacity.</p>
+</dd>
+<dt>
+<code>veto</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing the veto indices of the Choquet integral corresponding to the underlying capacity.</p>
+</dd>
+<dt>
+<code>favor</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing the favor indices of the Choquet integral corresponding to the underlying capacity.</p>
+</dd>
+<dt>
+<code>variance</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing the variance of the underlying capacity.</p>
+</dd> 
+<dt>
+<code>entropy</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing the variance of the underlying capacity.</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "summary.superclass.capacity")</code>: ... </p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>superclass.capacity-class</code>, <br><code>summary-methods</code>,
+<br><code>Shapley.value-methods</code>, <br><code>interaction.indices-methods</code>, 
+<br><code>orness-methods</code>, <br><code>veto-methods</code>,
+<br><code>favor-methods</code>, <br><code>variance-methods</code>,
+<br><code>entropy-methods</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(c(0:13,13,13)/13)
+a &lt;- Mobius(mu)
+
+## its summary
+summary(mu)
+summary(a)
+</code></pre>
+
+
+</div>

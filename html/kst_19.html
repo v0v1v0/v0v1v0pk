@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knotions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Notions of Knowledge Structures or Bases</h2>
+
+<h3>Description</h3>
+
+<p>Computes notions of knowledge structures or bases.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  knotions(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code> or
+<code>kbase</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>A <em>notion</em> is a set of items always jointly contained in some
+knowledge states. Consequently, these items carry the same information
+and may therefore be considered equivalent. A knowledge structure where
+each notion contains only one item is considered discriminative.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>set</code> of sets, each representing one notion of the
+knowledge structure.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>reduction.kstructure</code>, <code>kstructure</code>, <code>set</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+knotions(kst)
+</code></pre>
+
+
+</div>

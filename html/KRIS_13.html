@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write.bed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write a list of SNP object to the binary PLINK format (BED, BIM, and FAM)</h2>
+
+<h3>Description</h3>
+
+<p>Write a SNP object to the files in the binary
+PLINK format. For more information about the binary PLINK format, please
+check in the manual of PLINK.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write.bed(object, file)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of SNP is a list consisting of 3 matrices, see the
+<em>Details</em> section for more details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>A prefix of output files for BED, BIM and FAM to be saved.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>object</code> should contain:
+</p>
+
+<ul>
+<li> <p><code>$snp</code> is a SNP matrix from BED file.
+</p>
+</li>
+<li> <p><code>$snp.info</code> is a data.frame of SNP information from BIM file.
+</p>
+</li>
+<li> <p><code>$ind.info</code> is a data.frame of individual information from FAM file.
+</p>
+</li>
+</ul>
+<p>For more details about the binary PLINK format, please check
+<a href="http://zzz.bwh.harvard.edu/plink/binary.shtml">http://zzz.bwh.harvard.edu/plink/binary.shtml</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>read.bed</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+#Load example data
+data(example_SNP)
+
+#Save 'simsnp' to the file as defined in 'save.file'
+save.file &lt;- file.path(tempdir(),"new_SNP")
+write.bed(simsnp , save.file)
+</code></pre>
+
+
+</div>

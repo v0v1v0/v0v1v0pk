@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sortStanza</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Move missing values to last row in long key block</h2>
+
+<h3>Description</h3>
+
+<p>Receive key stanza and sort the rows so that the missing
+values are last in the list. Leaves ordering of other rows
+unchanged otherwise.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sortStanza(
+  keyblock,
+  valvar = "value_new",
+  na.strings = c("\\.", "", "\\s+", "N/A")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>keyblock</code></td>
+<td>
+<p>a variable key, or section of rows</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>valvar</code></td>
+<td>
+<p>Default is "value_new", the column for sorting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>Stings to be treated as missing, along with R's
+NA symbol</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>keyblock, row re-arranged with missings last
+</p>
+
+
+</div>

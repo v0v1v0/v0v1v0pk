@@ -1,0 +1,349 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KinPairSimulation-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KinPairSimulation Class</h2>
+
+<h3>Description</h3>
+
+<p>The class <code>KinPairSimulation</code> is a formal (S4) class for storing kinship and dispersal
+distribution information derived from simulations in the <code>kindisperse</code> package.
+It is derived from the <code>KinPairData</code> class.
+The <code>KinPairSimulation</code> class is used to store information about the spatial distribution of kin dyads for use
+in calculating axial sigmas of intergenerational dispersal as initially implemented in Jasper et al. 2019
+(doi: <a href="https://doi.org/10.1111/1755-0998.13043">10.1111/1755-0998.13043</a>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'KinPairSimulation'
+show(object)
+
+## S4 method for signature 'KinPairSimulation'
+initialize(
+  .Object,
+  data = NULL,
+  kinship = NULL,
+  lifestage = NULL,
+  simtype = NULL,
+  kerneltype = NULL,
+  kernelshape = NULL,
+  posigma = NULL,
+  initsigma = NULL,
+  breedsigma = NULL,
+  gravsigma = NULL,
+  ovisigma = NULL,
+  customsigma = NULL,
+  cycle = NULL,
+  simdims = NULL,
+  call = NULL,
+  filtertype = NULL,
+  upper = NULL,
+  lower = NULL,
+  spacing = NULL,
+  samplenum = NULL,
+  sampledims = NULL,
+  model = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>object of class KinPairSimulation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.Object</code></td>
+<td>
+<p>object to be constructed into KinPairSimulation class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>tbl_df. tibble  of simulation values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>character - one of PO, FS, HS, AV, HAV, GG, 1C, H1C, GAV, HGAV, 1C1, H1C1, GGG, 2C, and H2C.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lifestage</code></td>
+<td>
+<p>character - one of 'unknown', 'immature' or 'ovipositional'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simtype</code></td>
+<td>
+<p>character - simulation type</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kerneltype</code></td>
+<td>
+<p>character. - 'Gaussian', 'Laplace' or 'vgamma' (variance-gamma)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernelshape</code></td>
+<td>
+<p>numeric. - value of kernel shape of simulation (if using kernel with shape parameter e.g. vgamma)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posigma</code></td>
+<td>
+<p>numeric - overall value of dispersal sigma (for simple kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initsigma</code></td>
+<td>
+<p>numeric.    - value of pre-breeding dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breedsigma</code></td>
+<td>
+<p>numeric.    - value of breeding dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gravsigma</code></td>
+<td>
+<p>numeric.    - value of post-breeding dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ovisigma</code></td>
+<td>
+<p>numeric.    - value of oviposition dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>customsigma</code></td>
+<td>
+<p>numeric.  - vector of named custom dispersal sigmas (for custom kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cycle</code></td>
+<td>
+<p>integer - number of breeding cycles sampled individual has survived (for custom kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simdims</code></td>
+<td>
+<p>numeric. - dimensions of sampling area (assumes one side of square)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>call. Call to create object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filtertype</code></td>
+<td>
+<p>character. whether the initial sim has been further filtered</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>numeric.       - FILTER: upper threshold used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>numeric.       - FILTER: lower threshold used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spacing</code></td>
+<td>
+<p>numeric.       - FILTER: spacing used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samplenum</code></td>
+<td>
+<p>numeric.       - FILTER: sample number used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sampledims</code></td>
+<td>
+<p>numeric.       - FILTER: sample dimensions used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>list - model information if custom simulation used to generate object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KinPairSimulation</code></td>
+<td>
+<p>an object of class KinPairSimulation</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This class is essentially wrapped around the <code>tbl_df</code> class but with (a) expectations around certain columns
+that must be present (<code>id1, id2, kinship</code>, &amp; <code>distance</code> - three 'character' &amp; one 'numeric' column), as
+well as (b) additional attributes (<code>kinship</code>, <code>lifestage</code>, &amp; <code>cycle</code>) characterizing the close-kin
+dyads being stored.These attributes, as well as the embedded vector of distances, can be accessed with the methods
+<code>kinship</code>, <code>lifestage</code>, <code>breeding_cycle</code> and <code>distances</code>.
+In addition to the above attributes (derived from the <code>KinPairData</code> class), this class contains attributes
+capturing the simulation type &amp; parameters used to generate the final distribution of kin dyads.
+</p>
+<p>Objects from this class are returned from the <code>simulate_kindist_composite</code>,
+<code>simulate_kindist_simple</code> and <code>simulate_kindist_custom</code> functions
+(&amp; related), and are directly constructed with the namesake <code>KinPairSimulation()</code> function.
+They can be passed to the <code>sample_kindist</code> function for filtering and subsampling, and to
+axial functions (including <code>axials_standard</code> and <code>axpermute_standard</code>) for estimation of
+axial dispersal.
+</p>
+
+
+<h3>Value</h3>
+
+<p>returns object of class <code>KinPairSimulation</code>
+</p>
+<p>No return value, called for side effects
+</p>
+<p>Returns an object of class <code>KinPairSimulation</code>
+</p>
+
+
+<h3>Methods (by generic)</h3>
+
+
+<ul>
+<li> <p><code>show</code>: print method
+</p>
+</li>
+<li> <p><code>initialize</code>: initialisation method
+</p>
+</li>
+</ul>
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>kinship</code></dt>
+<dd>
+<p>character - one of PO, FS, HS, AV, HAV, GG, 1C, H1C, GAV, HGAV, 1C1, H1C1, GGG, 2C, and H2C.</p>
+</dd>
+<dt><code>simtype</code></dt>
+<dd>
+<p>character. - one of 'simple', 'composite' or 'custom'</p>
+</dd>
+<dt><code>kerneltype</code></dt>
+<dd>
+<p>character. - 'Gaussian', 'Laplace' or 'vgamma' (variance-gamma)</p>
+</dd>
+<dt><code>posigma</code></dt>
+<dd>
+<p>numeric.       - overall value of dispersal sigma (for simple kernel)</p>
+</dd>
+<dt><code>initsigma</code></dt>
+<dd>
+<p>numeric.    - value of pre-breeding dispersal sigma (for composite kernel)</p>
+</dd>
+<dt><code>breedsigma</code></dt>
+<dd>
+<p>numeric.  - value of breeding dispersal sigma (for composite kernel)</p>
+</dd>
+<dt><code>gravsigma</code></dt>
+<dd>
+<p>numeric.   - value of post-breeding dispersal sigma (for composite kernel)</p>
+</dd>
+<dt><code>ovisigma</code></dt>
+<dd>
+<p>numeric.    - value of oviposition dispersal sigma (for composite kernel)</p>
+</dd>
+<dt><code>customsigma</code></dt>
+<dd>
+<p>numeric  - vector of named custom dispersal sigmas (for custom kernel)</p>
+</dd>
+<dt><code>simdims</code></dt>
+<dd>
+<p>numeric.        - dimensions of sampling area (assumes 1 side of square)</p>
+</dd>
+<dt><code>lifestage</code></dt>
+<dd>
+<p>character. - lifestage at sampling - either 'immature' or 'ovipositional'</p>
+</dd>
+<dt><code>cycle</code></dt>
+<dd>
+<p>integer - number of breeding cycles sampled individuals have survived (for custom kernel)</p>
+</dd>
+<dt><code>kernelshape</code></dt>
+<dd>
+<p>numeric.   - shape parameter if vgamma kerneltype</p>
+</dd>
+<dt><code>call</code></dt>
+<dd>
+<p>call.           - call to create initial simulation</p>
+</dd>
+<dt><code>tab</code></dt>
+<dd>
+<p>tbl_df.          - tibble of simulation values</p>
+</dd>
+<dt><code>filtertype</code></dt>
+<dd>
+<p>character. - whether the initial sim has been further filtered</p>
+</dd>
+<dt><code>upper</code></dt>
+<dd>
+<p>numeric.       - FILTER: upper threshold used</p>
+</dd>
+<dt><code>lower</code></dt>
+<dd>
+<p>numeric.       - FILTER: lower threshold used</p>
+</dd>
+<dt><code>spacing</code></dt>
+<dd>
+<p>numeric.     - FILTER: spacing used</p>
+</dd>
+<dt><code>samplenum</code></dt>
+<dd>
+<p>numeric.   - FILTER: sample number used</p>
+</dd>
+<dt><code>sampledims</code></dt>
+<dd>
+<p>numeric.  - FILTER: dimensions used</p>
+</dd>
+<dt><code>model</code></dt>
+<dd>
+<p><code>DispersalModel</code> - model of dispersal used to create object (with custom type)</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p>Other kdclasses: 
+<code>DispersalModel-class</code>,
+<code>KinPairData-class</code>
+</p>
+
+
+</div>

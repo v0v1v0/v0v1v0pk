@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PearsonSkew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pearson's coefficient of skewness</h2>
+
+<h3>Description</h3>
+
+<p>Compute Pearson's coefficient of skewness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PearsonSkew(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of original observations.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Pearson's coefficient of skewness is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\gamma_1 = \frac{E[(X - \mu)^3]}{(\sigma^3)}</code>
+</p>
+
+<p>where <code class="reqn">\mu = E(X)</code> and <code class="reqn">\sigma^2 = E[(X - \mu)^2]</code>. The sample version based on a random sample <code class="reqn">x_1,x_2,\ldots,x_n</code> is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{\gamma_1} = \frac{\sum_{i=1}^n (x_i - \bar{x})^3}{n s^3}</code>
+</p>
+
+<p>where <code class="reqn">\bar{x}</code> is the sample mean and <code class="reqn">s</code> is the sample standard deviation of the data, respectively.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>PearsonSkew</code> gives the sample Pearson's univariate skewness.
+</p>
+
+
+<h3>References</h3>
+
+<p>Pearson, K. (1894). Contributions to the mathematical theory of evolution. <em>Philos. Trans. R. Soc. Lond.</em> A 185, 71-110.
+</p>
+<p>Pearson, K. (1895). Contributions to the mathematical theory of evolution II: skew variation in homogeneous material. <em>Philos. Trans. R. Soc. Lond.</em> A 86, 343-414.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute Pearson's univariate skewness
+
+set.seed(2019)
+x &lt;- rnorm(1000) # Normal Distribution
+PearsonSkew(x)
+
+set.seed(2019)
+y &lt;- rlnorm(1000, meanlog = 1, sdlog = 0.25) # Log-normal Distribution
+PearsonSkew(y)
+
+</code></pre>
+
+
+</div>

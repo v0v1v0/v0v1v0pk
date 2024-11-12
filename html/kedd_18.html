@@ -1,0 +1,241 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>h.ucv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Unbiased (Least-Squares) Cross-Validation for Bandwidth Selection
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>h.ucv</code> computes the unbiased 
+(least-squares) cross-validation bandwidth selector
+of r'th derivative of kernel density estimator one-dimensional.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">h.ucv(x, ...)
+## Default S3 method:
+h.ucv(x, deriv.order = 0, lower = 0.1 * hos, upper = 2 * hos, 
+         tol = 0.1 * lower, kernel = c("gaussian", "epanechnikov", "uniform", 
+         "triangular", "triweight", "tricube", "biweight", "cosine"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower, upper</code></td>
+<td>
+<p>range over which to minimize. The default is
+almost always satisfactory. <code>hos</code> (Over-smoothing) is calculated internally
+from an <code>kernel</code>, see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the convergence tolerance for <code>optimize</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, with default
+<code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>h.ucv</code> unbiased (least-squares) cross-validation implements for choosing the bandwidth <code class="reqn">h</code> 
+of a r'th derivative kernel density estimator.<br></p>
+<p>Rudemo (1982) and Bowman (1984) proposed a so-called unbiased (least-squares)  cross-validation 
+(UCV) in kernel density estimator. An adaptation of unbiased cross-validation is proposed by 
+Wolfgang et al. (1990) for bandwidth choice in the r'th derivative of kernel density estimator. 
+The essential idea of this methods, for the estimation of <code class="reqn">f^{(r)}(x)</code> (<code class="reqn">r</code> is derivative order), 
+is to use the bandwidth <code class="reqn">h</code> which minimizes the function:
+</p>
+<p style="text-align: center;"><code class="reqn">UCV(h;r) = \int \left(\hat{f}_{h}^{(r)}(x)\right)^{2} - 2n^{-1}(-1)^{r}\sum_{i=1}^{n} \hat{f}_{h,i}^{(2r)}(X_{i})</code>
+</p>
+
+<p>The bandwidth minimizing this function is:
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{h}^{(r)}_{ucv} = \arg \min_{h^{(r)}} UCV(h;r)</code>
+</p>
+
+<p>for <code class="reqn">r = 0, 1, 2, \dots</code><br>
+where  
+</p>
+<p style="text-align: center;"><code class="reqn">\int \left(\hat{f}_{h}^{(r)}(x)\right)^{2} = \frac{R\left(K^{(r)}\right)}{nh^{2r+1}} + \frac{(-1)^{r}}{n (n-1) h^{2r+1}} \sum_{i=1}^{n}\sum_{j=1;j \neq i}^{n} K^{(r)} \ast K^{(r)} \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>and <code class="reqn">K^{(r)} \ast K^{(r)} (x)</code> is the convolution of the r'th derivative kernel function <code class="reqn">K^{(r)}(x)</code>
+(see <code>kernel.conv</code> and <code>kernel.fun</code>).<br>
+The estimate <code class="reqn">\hat{f}_{h,i}^{(2r)}(x)</code> on the subset <code class="reqn">\{X_{j}\}_{j \neq i}</code>
+denoting the leave-one-out estimator, can be written:
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}_{h,i}^{(2r)}(X_{i}) = \frac{1}{(n-1) h^{2r+1}} \sum_{j \neq i} K^{(2r)} \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>The function <code class="reqn">UCV(h;r)</code> is unbiased cross-validation in the sense that <code class="reqn">E[UCV]=MISE[\hat{f}_{h}^{(r)}(x)]-R(f^{(r)}(x))</code>
+(see, Scott and George 1987). Can be simplified to give the computationally:
+</p>
+<p style="text-align: center;"><code class="reqn">UCV(h;r) = \frac{R\left(K^{(r)}\right)}{nh^{2r+1}} + \frac{(-1)^{r}}{n (n-1) h^{2r+1}} \sum_{i=1}^{n}\sum_{j=1 ;j \neq i}^{n} \left(K^{(r)} \ast K^{(r)} -2K^{(2r)}\right) \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>where <code class="reqn">R\left(K^{(r)}\right) = \int_{R} K^{(r)}(x)^{2} dx</code>.<br></p>
+<p>The range over which to minimize is <code>hos</code> Oversmoothing bandwidth, the default is almost always 
+satisfactory. See George and Scott (1985), George (1990), Scott (1992, pp 165), Wand and Jones (1995, pp 61).    
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>the deparsed name of the <code>x</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the sample size after elimination of missing values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>value of bandwidth parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.ucv</code></td>
+<td>
+<p>the minimal UCV value.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+  
+<p>Bowman, A. (1984). 
+An alternative method of cross-validation for the smoothing 
+of kernel density estimates. 
+<em>Biometrika</em>, <b>71</b>, 353–360.
+</p>
+<p>Jones, M. C. and Kappenman, R. F. (1991). 
+On a class of kernel density estimate bandwidth selectors. 
+<em>Scandinavian Journal of Statistics</em>, <b>19</b>, 337–349.
+</p>
+<p>Jones, M. C., Marron, J. S. and Sheather,S. J. (1996).
+A brief survey of bandwidth selection for density estimation. 
+<em>Journal of the American Statistical Association</em>, <b>91</b>, 401–407.
+</p>
+<p>Peter, H. and Marron, J.S. (1987).
+Estimation of integrated squared density derivatives.
+<em>Statistics and Probability Letters</em>, <b>6</b>, 109–115.
+</p>
+<p>Rudemo, M. (1982). 
+Empirical choice of histograms and kernel density estimators. 
+<em>Scandinavian Journal of Statistics</em>, <b>9</b>, 65–78. 
+</p>
+<p>Scott, D.W. and George, R. T. (1987).
+Biased and unbiased cross-validation in density estimation. 
+<em>Journal of the American Statistical Association</em>, <b>82</b>, 1131–1146.  
+</p>
+<p>Sheather, S. J. (2004).
+Density estimation.
+<em>Statistical Science</em>, <b>19</b>, 588–597.
+</p>
+<p>Tarn, D. (2007).
+<a href="https://CRAN.R-project.org/package=ks"><span class="pkg">ks</span></a>: Kernel density estimation and kernel discriminant
+analysis for multivariate data in <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span>.
+<em>Journal of Statistical Software</em>, <b>21</b>(7), 1–16. 
+</p>
+<p>Wand, M. P. and Jones, M. C. (1995).
+<em>Kernel Smoothing</em>.
+Chapman and Hall, London.
+</p>
+<p>Wolfgang, H. (1991).
+<em>Smoothing Techniques</em>, 
+<em>With Implementation in S</em>.
+Springer-Verlag, New York. 
+</p>
+<p>Wolfgang, H., Marron, J. S. and Wand, M. P. (1990).
+Bandwidth choice for density derivatives.
+<em>Journal of the Royal Statistical Society, Series B</em>, 223–232. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.h.ucv</code>, see <code>bw.ucv</code> in package "stats" and 
+<code>ucv</code> in package <a href="https://CRAN.R-project.org/package=MASS"><span class="pkg">MASS</span></a> for Gaussian kernel only if <code>deriv.order = 0</code>,
+<code>hlscv</code> in package <a href="https://CRAN.R-project.org/package=ks"><span class="pkg">ks</span></a> for Gaussian kernel only if <code>0 &lt;= deriv.order &lt;= 5</code>, 
+<code>kdeb</code> in package <a href="https://CRAN.R-project.org/package=locfit"><span class="pkg">locfit</span></a> if <code>deriv.order = 0</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Derivative order = 0
+
+h.ucv(kurtotic,deriv.order = 0)
+
+## Derivative order = 1
+
+h.ucv(kurtotic,deriv.order = 1)
+</code></pre>
+
+
+</div>

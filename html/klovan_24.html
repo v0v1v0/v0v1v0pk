@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pc_cor_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Principal Component Correlation Plot</h2>
+
+<h3>Description</h3>
+
+<p>This function generates a correlation plot, also known as a "circle" plot, which compares the loadings from one principal component (PC) against another.
+It visualizes the similarity among original variables and their correlation with each PC, revealing potential clusters. The function also adds annotations for understanding positive and negative values in different quadrants.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pc_cor_plot(data, PC_1, PC_2, text_col = "red")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis, see README for details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PC_1</code></td>
+<td>
+<p>A string specifying the first PC for comparison, can be chosen from "PC1" to "PC10". For example, "PC1".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PC_2</code></td>
+<td>
+<p>A string specifying the second PC for comparison, can be chosen from "PC1" to "PC10". For example, "PC2".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text_col</code></td>
+<td>
+<p>An R color for the text labels. Defaults to "red".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A ggplot object representing the correlation plot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("Klovan_Row80")
+pc_cor_plot(Klovan_Row80, "PC1", "PC2")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>transformSSM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Transform Multivariate State Space Model for Sequential Processing</h2>
+
+<h3>Description</h3>
+
+<p><code>transformSSM</code> transforms the general multivariate Gaussian state space model
+to form suitable for sequential processing.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">transformSSM(object, type = c("ldl", "augment"), tol)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>State space model object from function <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Option <code>"ldl"</code> performs LDL decomposition for covariance matrix <code class="reqn">H_t</code>,
+and multiplies the observation equation with the <code class="reqn">L_t^{-1}</code>, so <code class="reqn">\epsilon_t^* 
+\sim N(0,D_t)</code>. Option <code>"augment"</code> adds 
+<code class="reqn">\epsilon_t</code> to the state vector, so <code class="reqn">Q_t</code> becomes block diagonal 
+with blocks <code class="reqn">Q_t</code> and <code class="reqn">H_t</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>Tolerance parameter for LDL decomposition (see <code>ldl</code>). Default is 
+<code>max(100, max(abs(apply(object$H, 3, diag)))) * .Machine$double.eps</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>As all the functions in KFAS use univariate approach i.e. sequential processing, 
+the covariance matrix <code class="reqn">H_t</code> of the observation equation needs to be 
+either diagonal or zero matrix. Function <code>transformSSM</code> performs either 
+the LDL decomposition of <code class="reqn">H_t</code>, or augments the state vector with
+the disturbances of the observation equation.
+</p>
+<p>In case of a LDL decomposition, the new <code class="reqn">H_t</code> contains the diagonal part of the 
+decomposition, whereas observations <code class="reqn">y_t</code> and system matrices <code class="reqn">Z_t</code> are 
+multiplied with the inverse of <code class="reqn">L_t</code>. Note that although the state estimates and 
+their error covariances obtained by Kalman filtering and smoothing are identical with those 
+obtained from ordinary multivariate filtering, the one-step-ahead errors 
+<code class="reqn">v_t</code> and their variances <code class="reqn">F_t</code> do differ. The typical 
+multivariate versions can be obtained from output of <code>KFS</code>
+using <code>mvInnovations</code> function.
+</p>
+<p>In case of augmentation of the state vector, some care is needed interpreting the 
+subsequent filtering/smoothing results: For example the <code>muhat</code> from the output of <code>KFS</code> 
+now contains also the smoothed observational level noise as that is part of the state vector.
+</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Transformed model.</p>
+</td>
+</tr></table>
+</div>

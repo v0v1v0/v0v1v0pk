@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dtr_matrix2df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>dtr_matrix2df</h2>
+
+<h3>Description</h3>
+
+<p>Data transformation: Converts a <code>matrix</code> to <code>data.table</code> and
+encodes categorical variables as <code>factor</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dtr_matrix2df(matrix, cat_vars = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>matrix</code></td>
+<td>
+<p>An R <code>matrix</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cat_vars</code></td>
+<td>
+<p>A character vector with colnames that should be converted to
+<code>factor</code> (default: NULL).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.table</code> is returned.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("iris")
+mat &lt;- data.matrix(iris)
+dataset &lt;- dtr_matrix2df(mat)
+str(dataset)
+
+dataset &lt;- dtr_matrix2df(mat, cat_vars = "Species")
+str(dataset)
+</code></pre>
+
+
+</div>

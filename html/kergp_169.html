@@ -1,0 +1,196 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covMan-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class <code>"covMan"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>S4 class representing a covariance kernel defined manually by a
+(semi-)positive definite function.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calling <code>new("covMan", ...)</code>
+or by using the <code>covMan</code> function.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>kernel</code>:</dt>
+<dd>
+<p>object of class <code>"function"</code> defining the kernel (supposed to
+be (semi-)positive definite).
+</p>
+</dd>
+<dt>
+<code>hasGrad</code>:</dt>
+<dd>
+<p>logical indicating whether <code>kernel</code> returns the gradient
+(w.r.t. the vector of parameters) as <code>"gradient"</code> attribute
+of the result.
+</p>
+</dd>
+<dt>
+<code>acceptMatrix</code>:</dt>
+<dd>
+<p>logical indicating whether <code>kernel</code> admits matrix
+arguments. Default is <code>FALSE</code>.
+</p>
+</dd>
+<dt>
+<code>label</code>:</dt>
+<dd>
+<p>object of class character, typically one or two words, used to
+describe the kernel.
+</p>
+</dd>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>object of class <code>"integer"</code>, the spatial dimension or number
+of inputs of the covariance.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>object of class <code>"character"</code>, vector of input names. Length
+<code>d</code>.
+</p>
+</dd>
+<dt>
+<code>parLower</code>:</dt>
+<dd>
+<p>, </p>
+</dd>
+<dt>
+<code>parUpper</code>:</dt>
+<dd>
+<p>object of class <code>"numeric"</code>, vector of (possibly infinite)
+lower/upper bounds on parameters.
+</p>
+</dd>
+<dt>
+<code>par</code>:</dt>
+<dd>
+<p>object of class <code>"numeric"</code>, numeric vector of parameter
+values.
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>object of class <code>"integer"</code>, total number of parameters.
+</p>
+</dd>
+<dt>
+<code>kernParNames</code>:</dt>
+<dd>
+<p>object of class <code>"character"</code>, name of the kernel
+parameters. 
+
+</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+
+
+
+<dl>
+<dt>coef&lt;-</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: replace the whole vector of
+coefficients, as required during ML estimation.
+</p>
+</dd>
+<dt>coefLower&lt;-</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: replacement method for lower
+bounds on covMan coefficients.
+</p>
+</dd>
+<dt>coefLower</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: extracts the numeric values of
+the lower bounds.
+</p>
+</dd>
+<dt>coef</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: extracts the numeric values
+of the covariance parameters.
+
+
+</p>
+</dd>
+<dt>coefUpper&lt;-</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: replacement method for upper
+bounds on covMan coefficients.
+</p>
+</dd>
+<dt>coefUpper</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: ...
+</p>
+</dd>
+<dt>covMat</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: builds the covariance matrix
+or the cross covariance matrix between two sets of locations for a
+<code>covMan</code> object.
+</p>
+</dd>
+<dt>scores</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: computes the scores
+(derivatives of the log-likelihood w.r.t. the covariance
+parameters.
+</p>
+</dd>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "covMan")</code>: prints in a custom format.
+</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>While the <code>coef&lt;-</code> replacement method is typically intended for
+internal use during likelihood maximization, the <code>coefLower&lt;-</code>
+and <code>coefUpper&lt;-</code> replacement methods can be used when some
+information is available on the possible values of the parameters.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Y. Deville, O. Roustant, D. Ginsbourger and N. Durrande.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>covMan</code> function providing a creator.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">showClass("covMan")
+</code></pre>
+
+
+</div>

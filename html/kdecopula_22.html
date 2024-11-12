@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulate.kdecopula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate data from a <code>kdecop()</code> fit.</h2>
+
+<h3>Description</h3>
+
+<p>See <code>rkdecop()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kdecopula'
+simulate(object, nsim = 1, seed = NULL, quasi = FALSE,
+  ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>kdecopula</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>integer; number of observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>integer; <code>set.seed(seed)</code> will be called prior to <code>rkdecop()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quasi</code></td>
+<td>
+<p>logical; the default (<code>FALSE</code>) returns pseudo-random
+numbers, use <code>TRUE</code> for quasi-random numbers (generalized Halton, see</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>unused.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Simulated data from the fitted <code>kdecopula</code> model.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc)
+udat &lt;- apply(wdbc[, -1], 2, function(x) rank(x) / (length(x) + 1))
+fit &lt;- kdecop(udat[, 5:6])
+plot(simulate(fit, 500))
+
+</code></pre>
+
+
+</div>

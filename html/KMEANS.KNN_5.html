@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KMEANS_FUNCTION</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KMEANS_FUNCTION</h2>
+
+<h3>Description</h3>
+
+<p>This function implements the K-Means algorithm for data clustering.
+It provides options for data preprocessing, such as normalization
+and imputation of missing values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KMEANS_FUNCTION(
+  data,
+  k,
+  max_iter = 100,
+  nstart = 25,
+  distance_metric = "euclidean",
+  scale_data = FALSE,
+  impute_data = "mean"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataframe containing the numerical data to be clustered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The number of clusters to form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_iter</code></td>
+<td>
+<p>The maximum number of iterations for the K-Means algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nstart</code></td>
+<td>
+<p>The number of times to randomly initialize the centroids.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distance_metric</code></td>
+<td>
+<p>The distance metric to use ('euclidean' or 'manhattan').</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale_data</code></td>
+<td>
+<p>A boolean indicating whether the data should be normalized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impute_data</code></td>
+<td>
+<p>The imputation method for missing values ('mean', 'median', 'mode').</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the following elements:
+- clusters: A vector indicating the cluster of each point.
+- centers: The coordinates of the centroids of each cluster.
+- additional_info: Additional information such as total distance and number of iterations.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+data_iris &lt;- iris[, -5] # Exclude the species column
+results &lt;- KMEANS_FUNCTION(data_iris, k = 3)
+print(results$clusters)
+</code></pre>
+
+
+</div>

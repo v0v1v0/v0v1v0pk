@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.cardinal-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test method</h2>
+
+<h3>Description</h3>
+
+<p>Tests whether a set function is cardinal, i.e., if its values
+depend only on the cardinality of subsets. The set function
+can be given either under the form of an object of class
+<code>set.func</code>, <code>card.set.func</code> or <code>Mobius.set.func</code>.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.set.func" </dt>
+<dd>
+<p>Returns an object of class <code>logical</code>.</p>
+</dd>
+<dt>object = "card.set.func" </dt>
+<dd>
+<p>Returns an object of class <code>logical</code>.</p>
+</dd>
+<dt>object = "set.func" </dt>
+<dd>
+<p>Returns an object of class <code>logical</code>.</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">is.cardinal(set.func(-7:8))
+is.cardinal(uniform.capacity(8))
+is.cardinal(Mobius.game(0:10,4,2))
+</code></pre>
+
+
+</div>

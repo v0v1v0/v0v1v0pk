@@ -1,0 +1,196 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kcca</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Canonical Correlation Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Computes the canonical correlation analysis in feature space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'matrix'
+kcca(x, y, kernel="rbfdot", kpar=list(sigma=0.1),
+gamma = 0.1, ncomps = 10, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a matrix containing data index by row</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a matrix containing data index by row</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>the kernel function used in training and predicting.
+This parameter can be set to any function, of class kernel,
+which computes a inner product in feature space between two
+vector arguments. kernlab provides the most popular kernel functions
+which can be used by setting the kernel parameter to the following
+strings:
+</p>
+
+<ul>
+<li> <p><code>rbfdot</code> Radial Basis kernel function "Gaussian"
+</p>
+</li>
+<li> <p><code>polydot</code> Polynomial kernel function
+</p>
+</li>
+<li> <p><code>vanilladot</code> Linear kernel function
+</p>
+</li>
+<li> <p><code>tanhdot</code> Hyperbolic tangent kernel function
+</p>
+</li>
+<li> <p><code>laplacedot</code> Laplacian kernel function
+</p>
+</li>
+<li> <p><code>besseldot</code> Bessel kernel function
+</p>
+</li>
+<li> <p><code>anovadot</code> ANOVA RBF kernel function
+</p>
+</li>
+<li> <p><code>splinedot</code> Spline kernel 
+</p>
+</li>
+</ul>
+<p>The kernel parameter can also be set to a user defined function of
+class kernel by passing the function name as an argument.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kpar</code></td>
+<td>
+<p>the list of hyper-parameters (kernel parameters).
+This is a list which contains the parameters to be used with the
+kernel function. Valid parameters for existing kernels are :
+</p>
+
+<ul>
+<li> <p><code>sigma</code> inverse kernel width for the Radial Basis
+kernel function "rbfdot" and the Laplacian kernel "laplacedot".
+</p>
+</li>
+<li> <p><code>degree, scale, offset</code> for the Polynomial kernel "polydot"
+</p>
+</li>
+<li> <p><code>scale, offset</code> for the Hyperbolic tangent kernel
+function "tanhdot"
+</p>
+</li>
+<li> <p><code>sigma, order, degree</code> for the Bessel kernel "besseldot". 
+</p>
+</li>
+<li> <p><code>sigma, degree</code> for the ANOVA kernel "anovadot".
+</p>
+</li>
+</ul>
+<p>Hyper-parameters for user defined kernels can be passed through the
+kpar parameter as well.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma</code></td>
+<td>
+<p>regularization parameter (default : 0.1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncomps</code></td>
+<td>
+<p>number of canonical components (default : 10) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional parameters for the <code>kpca</code> function</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The kernel version of canonical correlation analysis.
+Kernel Canonical Correlation Analysis (KCCA) is a non-linear extension
+of CCA. Given two random variables, KCCA aims at extracting the
+information which is shared by the two random variables. More
+precisely given <code class="reqn">x</code> and <code class="reqn">y</code> the purpose of KCCA is to provide
+nonlinear mappings <code class="reqn">f(x)</code> and <code class="reqn">g(y)</code> such that their
+correlation is maximized.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An S4 object containing the following slots:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>kcor</code></td>
+<td>
+<p>Correlation coefficients in feature space</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xcoef</code></td>
+<td>
+<p>estimated coefficients for the <code>x</code> variables in the
+feature space</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ycoef</code></td>
+<td>
+<p>estimated coefficients for the <code>y</code> variables in the
+feature space</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Alexandros Karatzoglou <br><a href="mailto:alexandros.karatzoglou@ci.tuwien.ac.at">alexandros.karatzoglou@ci.tuwien.ac.at</a>
+</p>
+
+
+<h3>References</h3>
+
+<p> Malte Kuss, Thore Graepel <br><em>The Geometry Of Kernel Canonical Correlation Analysis</em><br><a href="https://www.microsoft.com/en-us/research/publication/the-geometry-of-kernel-canonical-correlation-analysis/">https://www.microsoft.com/en-us/research/publication/the-geometry-of-kernel-canonical-correlation-analysis/</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>cancor</code>, <code>kpca</code>, <code>kfa</code>, <code>kha</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## dummy data
+x &lt;- matrix(rnorm(30),15)
+y &lt;- matrix(rnorm(30),15)
+
+kcca(x,y,ncomps=2)
+
+</code></pre>
+
+
+</div>

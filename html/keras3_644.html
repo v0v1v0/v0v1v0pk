@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.keras.src.models.model.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Print a summary of a Keras Model</h2>
+
+<h3>Description</h3>
+
+<p>Print a summary of a Keras Model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.src.models.model.Model'
+summary(object, ...)
+
+## S3 method for class 'keras.src.models.model.Model'
+format(
+  x,
+  line_length = getOption("width"),
+  positions = NULL,
+  expand_nested = FALSE,
+  show_trainable = NA,
+  ...,
+  layer_range = NULL,
+  compact = TRUE
+)
+
+## S3 method for class 'keras.src.models.model.Model'
+print(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object, x</code></td>
+<td>
+<p>Keras model instance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>for <code>summary()</code> and <code>print()</code>, passed on to <code>format()</code>. For
+<code>format()</code>, passed on to <code>model$summary()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_length</code></td>
+<td>
+<p>Total length of printed lines</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>positions</code></td>
+<td>
+<p>Relative or absolute positions of log elements in each line.
+If not provided, defaults to <code>c(0.33, 0.55, 0.67, 1.0)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expand_nested</code></td>
+<td>
+<p>Whether to expand the nested models. If not provided,
+defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_trainable</code></td>
+<td>
+<p>Whether to show if a layer is trainable. If not
+provided, defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layer_range</code></td>
+<td>
+<p>a list, tuple, or vector of 2 strings,
+which is the starting layer name and ending layer name
+(both inclusive) indicating the range of layers to be printed
+in summary. It also accepts regex patterns instead of exact
+name. In such case, start predicate will be the first element
+it matches to <code>layer_range[[1]]</code> and the end predicate will be
+the last element it matches to <code>layer_range[[1]]</code>.
+By default <code>NULL</code> which considers all layers of model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compact</code></td>
+<td>
+<p>Whether to remove white-space only lines from the model
+summary. (Default <code>TRUE</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>format()</code> returns a length 1 character vector. <code>print()</code> returns the
+model object invisibly. <code>summary()</code> returns the output of <code>format()</code>
+invisibly after printing it.
+</p>
+
+
+<h3>Enabling color output in Knitr (RMarkdown, Quarto)</h3>
+
+<p>In order to enable color output in a quarto or rmarkdown document with
+an html output format (include revealjs presentations), then you will need
+to do the following in a setup chunk:
+</p>
+<div class="sourceCode"><pre> ```{r setup, include = FALSE}
+ options(cli.num_colors = 256)
+ fansi::set_knit_hooks(knitr::knit_hooks)
+ options(width = 75) # adjust as needed for format
+ ```
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: <br><code>get_config()</code> <br><code>get_layer()</code> <br><code>keras_model()</code> <br><code>keras_model_sequential()</code> <br><code>pop_layer()</code> <br></p>
+
+
+</div>

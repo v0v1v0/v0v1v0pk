@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>powS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Power sums</h2>
+
+<h3>Description</h3>
+
+<p>The function returns the value of the power sum symmetric 
+polynomial, with fixed degrees and in one or more sets of variables, when the 
+variables are substituted with the input lists of numerical values.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">powS(vn = NULL, lvd = NULL) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vn</code></td>
+<td>
+<p>vector of integers (the powers of the indeterminates)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lvd</code></td>
+<td>
+<p>list of numerical values in place of the variables</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given the lists of numerical values <code>(x[1],x[2],...), (y[1],y[2],...), (z[1],z[2],...), ...</code> 
+in the input parameter <code>lvd</code> and the integers <code>(n,m,j,...)</code> in the input parameter <code>vn</code>, 
+the <code>powS</code> function returns the value of 
+<code>(x[1]^n)*(y[1]^m)*(z[1]^j)*...+(x[2]^n)*(y[2]^m)*(z[2]^j)*+...</code>. 
+</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>integer</code></td>
+<td>
+<p>the value of the polynomial</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>Called by the  <code>nKS</code>, <code>nKM</code>, <code>nPS</code> and <code>nPM</code> functions 
+in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) Symbolic computation of moments of sampling distributions. 
+Comp. Stat. Data Analysis. 52(11), 4909-4922. (download from <a href="https://arxiv.org/abs/0806.0129">https://arxiv.org/abs/0806.0129</a>) 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Return 1^3 + 2^3 + 3^3 = 36
+powS(c(3), list(c(1),c(2),c(3))) 
+
+# Return (1^3 * 4^2) + (2^3 * 5^2) + (3^3 * 6^2) = 1188
+powS(c(3,2),list(c(1,4),c(2,5),c(3,6))) 
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_var</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Variance of a tensor, alongside the specified axis.</h2>
+
+<h3>Description</h3>
+
+<p>Variance of a tensor, alongside the specified axis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_var(x, axis = NULL, keepdims = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A tensor or variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>An integer, the axis to compute the variance over (axis indexes
+are 1-based).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keepdims</code></td>
+<td>
+<p>A boolean, whether to keep the dimensions or not. If
+<code>keepdims</code> is <code>FALSE</code>, the rank of the tensor is reduced by 1. If
+<code>keepdims</code> is <code>TRUE</code>, the reduced dimension is retained with length 1.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor with the variance of elements of <code>x</code>.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

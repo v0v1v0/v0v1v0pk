@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_order_history</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>get order history</h2>
+
+<h3>Description</h3>
+
+<p>Get order history from start date to end date.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_order_history(sdt, edt, prdt_code, zip_flag = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sdt</code></td>
+<td>
+<p>A string specifying start date "YYYYMMDD"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edt</code></td>
+<td>
+<p>A string specifying end date "YYYYMMDD"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prdt_code</code></td>
+<td>
+<p>A string specifying account product code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zip_flag</code></td>
+<td>
+<p>A boolean specifying choosing important columns</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Order history data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># get order history
+## Not run: 
+get_order_history("20")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

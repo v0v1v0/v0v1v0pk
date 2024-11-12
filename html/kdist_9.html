@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>weiplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create Weibull Plot.</h2>
+
+<h3>Description</h3>
+
+<p>A special type of plot where Weibull distributed data plots as a straight
+line. This was also originally called Rayleigh paper. Both Rayleigh and
+exponential distributions also plot as straight lines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">weiplot(data, n = 70, type = "p", xlim = NULL, ylim = c(0.01, 10),
+  main = "Weibull Plot", sub = NULL, ylab = "log(1/1-F(x))",
+  ylab2 = "F(x)", xlab = "x", percent = "False")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data values from which a cumulative density function will be
+estimated using <code>ecdf(data)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of points required in plot (default n = 70).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>plot type</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+<p>the minimum and maximum to be used for the x-axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+<p>the minimum and maximum to be used for the y-axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>the title of the plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sub</code></td>
+<td>
+<p>the sub-title of the plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>the title of the left y-axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab2</code></td>
+<td>
+<p>the title of the right y-axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>the title of the x-axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>percent</code></td>
+<td>
+<p>logical; display right hand axis as percentages</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A Weibull plot uses log paper and has log(1/(1-F(x)) versus x,
+where the data values x have an empirical cdf of F(x). The plot
+margins may need to be adjusted so that the right hand axis is
+visible.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>weilines()</code> adds lines to a Weibull plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+graphics::par(mar = c(5, 5, 5, 5))
+r &lt;- rexp(100000)
+weiplot(r, xlim = c(1e-3, 10))
+x &lt;- 10^seq(-3, 2, length = 100)
+weilines(x, pexp(x))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nret.rescale</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rescale test evaluation results</h2>
+
+<h3>Description</h3>
+
+<p>By default <code>klausur</code> adds a constant to results of ET/NRET type tests. This ensures that the minimum value of
+points can't fall below zero. If you'd rather like to see the results without this constant,
+i.e. results can be negative,
+you can rescale them with this function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nret.rescale(
+  res.obj,
+  score = "NRET",
+  points = TRUE,
+  percent = TRUE,
+  marks = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>res.obj</code></td>
+<td>
+<p>An object of class <code>klausuR</code> with results of an ET/NRET coded test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score</code></td>
+<td>
+<p>Either <code>"NR"</code>, <code>"ET"</code>, <code>"NRET"</code> or <code>"NRET+"</code>,
+defining the scoring function used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>points</code></td>
+<td>
+<p>Logical, whether point values should be rescaled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>percent</code></td>
+<td>
+<p>Logical, whether the percentage of received points should be rescaled,
+so that 0 points are 0 percent.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks</code></td>
+<td>
+<p>Logical,
+whether the assigned marks should be rescaled to fit the rescaled points (probably a good idea).
+However, this will removed the attached mark assignment vecor,
+since its indices can't be negative.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>klausuR</code> with rescaled results.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+</div>

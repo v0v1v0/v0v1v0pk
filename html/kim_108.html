@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>robust_regression</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Robust regression (bootstrapped regression)</h2>
+
+<h3>Description</h3>
+
+<p>Estimate coefficients in a multiple regression model by bootstrapping.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">robust_regression(
+  data = NULL,
+  formula = NULL,
+  sigfigs = NULL,
+  round_digits_after_decimal = NULL,
+  iterations = 1000
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>a formula object for the regression equation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_digits_after_decimal</code></td>
+<td>
+<p>round to nth digit after decimal
+(alternative to <code>sigfigs</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterations</code></td>
+<td>
+<p>number of bootstrap samples. The default is set at 1000,
+but consider increasing the number of samples to 5000, 10000, or an
+even larger number, if slower handling time is not an issue.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following package(s) must be installed prior to running this function:
+Package 'boot' v1.3-26 (or possibly a higher version) by
+Canty &amp; Ripley (2021),
+<a href="https://cran.r-project.org/package=boot">https://cran.r-project.org/package=boot</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+robust_regression(
+  data = mtcars, formula = mpg ~ cyl * hp,
+  iterations = 100
+)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

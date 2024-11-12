@@ -1,0 +1,156 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>core_cpp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Maximization of Cross-Validateed Accuracy Methods</h2>
+
+<h3>Description</h3>
+
+<p>This function performs the maximization of cross-validated accuracy by an iterative process</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">core_cpp(x, 
+         xTdata=NULL,
+         clbest, 
+         Tcycle=20, 
+         FUN=c("PLS-DA","KNN"), 
+         fpar=2, 
+         constrain=NULL, 
+         fix=NULL, 
+         shake=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xTdata</code></td>
+<td>
+<p>a matrix for projections. This matrix contains samples that are not used for the maximization of the cross-validated accuracy. Their classification is obtained by predicting samples on the basis of the final classification vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clbest</code></td>
+<td>
+<p>a vector to optimize.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tcycle</code></td>
+<td>
+<p>number of iterative cycles that leads to the maximization of cross-validated accuracy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>classifier to be consider. Choices are "<code>KNN</code>" and "<code>PLS-DA</code>".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fpar</code></td>
+<td>
+<p>parameters of the classifier. If the classifier is <code>KNN</code>, <code>fpar</code> represents the number of neighbours. If the classifier is <code>PLS-DA</code>, <code>fpar</code> represents the number of components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constrain</code></td>
+<td>
+
+<p>a vector of <code>nrow(data)</code> elements. Supervised constraints can be imposed by linking some samples in such a way that if one of them is changed, all other linked samples change in the same way (<em>i.e.</em>, they are forced to belong to the same class) during the maximization of the cross-validation accuracy procedure. Samples with the same identifying constrain will be forced to stay together.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fix</code></td>
+<td>
+
+<p>a vector of <code>nrow(data)</code> elements. The values of this vector must  be <code>TRUE</code> or <code>FALSE</code>. By default all elements are <code>FALSE</code>. Samples with the <code>TRUE</code> fix value will not change the class label defined in <code>W</code> during the maximization of the cross-validation accuracy procedure. For more information refer to Cacciatore, <em>et al.</em> (2014).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shake</code></td>
+<td>
+<p>if <code>shake = FALSE</code> the cross-validated accuracy is computed with the class defined in <code>W</code>, before the maximization of the cross-validation accuracy procedure.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a list with 3 items:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>clbest</code></td>
+<td>
+<p>a classification vector with a maximized cross-validated accuracy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>accbest</code></td>
+<td>
+<p>the maximum cross-validated accuracy achieved.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vect_acc</code></td>
+<td>
+<p>a vector of all cross-validated accuracies obtained.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vect_proj</code></td>
+<td>
+<p>a prediction of samples in <code>xTdata</code> matrix using the vector clbest. This output is present only if <code>xTdata</code> is not <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore and Leonardo Tenori</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KODAMA.matrix</code>,<code>KODAMA.visualization</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Here, the famous (Fisher's or Anderson's) iris data set was loaded
+data(iris)
+u=as.matrix(iris[,-5])
+s=sample(1:150,150,TRUE)
+
+# The maximization of the accuracy of the vector s is performed
+results=core_cpp(u, clbest=s,fpar = 5)
+
+
+print(as.numeric(results$clbest))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>misc_argument_catcher</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>misc_argument_catcher</h2>
+
+<h3>Description</h3>
+
+<p>Miscellaneous helper function to type-save catch arguments
+passed with R's ellipsis ("...").
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">misc_argument_catcher(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Named arguments passed to a function.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function aims at catching arguments that have been passed to an
+R function using R's ellipsis ("..."). Its purpos is to catch these
+arguments even in the case, if a list with arguments was provided to the
+ellipsis.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>list</code> is returned.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">misc_argument_catcher(a = 1)
+misc_argument_catcher(a = 1, b = 2, c = 3, d = "car")
+misc_argument_catcher(list(a = 1, b = 2, c = 3, d = "car"))
+misc_argument_catcher(list(a = 1, b = 2, c = 3, d = "car"), f = 9)
+</code></pre>
+
+
+</div>

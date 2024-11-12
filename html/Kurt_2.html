@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Cum4</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cum4: fourth multivariate cumulant
+
+</h2>
+
+<h3>Description</h3>
+
+<p>returns a matrix containing the fourth cumulants of the given data
+
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Cum4(data, type, shape)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data matrix
+
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>type=0 uses original data, type=1 uses centered data, type=2 uses standardized data
+
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>if shape="square" the output is a d^2 x d^2 matrix. If shape="rectangular", the output is a d x d^3 matrix. Where d is the number of variables
+
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>K4 is the matrix containing the fourth cumulants of the given data
+
+
+
+
+
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cinzia Franceschini and Nicola Loperfido
+
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+iris&lt;-data.matrix(iris)#returns the matrix obtained by converting the data frame to numeric mode
+Cum4(iris[,1:4], 1, "square") # returns a matrix containing the fourth cumulants of the given data
+</code></pre>
+
+
+</div>

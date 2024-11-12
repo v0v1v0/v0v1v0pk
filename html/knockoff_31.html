@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stat.sqrt_lasso</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Importance statistics based on the square-root lasso</h2>
+
+<h3>Description</h3>
+
+<p>Computes the signed maximum statistic
+</p>
+<p style="text-align: center;"><code class="reqn">W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),</code>
+</p>
+
+<p>where <code class="reqn">Z_j</code> and <code class="reqn">\tilde{Z}_j</code> are the maximum values of 
+<code class="reqn">\lambda</code> at which the jth variable and its knockoff, respectively,
+enter the SQRT lasso model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stat.sqrt_lasso(X, X_k, y, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>n-by-p matrix of original variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_k</code></td>
+<td>
+<p>n-by-p matrix of knockoff variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>vector of length n, containing the response variables of numeric type.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments specific to <code>slim</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>With default parameters, this function uses the package <code>RPtests</code>
+to run the SQRT lasso. By specifying the appropriate optional parameters, 
+one can use different Lasso variants including Dantzig Selector, LAD Lasso,
+SQRT Lasso and Lq Lasso for estimating high dimensional sparse linear models.
+</p>
+<p>For a complete list of the available additional arguments, see <code>sqrt_lasso</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of statistics <code class="reqn">W</code> of length p.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other statistics: 
+<code>stat.forward_selection()</code>,
+<code>stat.glmnet_coefdiff()</code>,
+<code>stat.glmnet_lambdadiff()</code>,
+<code>stat.lasso_coefdiff_bin()</code>,
+<code>stat.lasso_coefdiff()</code>,
+<code>stat.lasso_lambdadiff_bin()</code>,
+<code>stat.lasso_lambdadiff()</code>,
+<code>stat.random_forest()</code>,
+<code>stat.stability_selection()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(2022)
+p=50; n=50; k=10
+mu = rep(0,p); Sigma = diag(p)
+X = matrix(rnorm(n*p),n)
+nonzero = sample(p, k)
+beta = 3.5 * (1:p %in% nonzero)
+y = X %*% beta + rnorm(n)
+knockoffs = function(X) create.gaussian(X, mu, Sigma)
+
+# Basic usage with default arguments
+result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=stat.sqrt_lasso)
+print(result$selected)
+
+# Advanced usage with custom arguments
+foo = stat.sqrt_lasso
+k_stat = function(X, X_k, y) foo(X, X_k, y, q=0.5)
+result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
+print(result$selected)
+
+</code></pre>
+
+
+</div>

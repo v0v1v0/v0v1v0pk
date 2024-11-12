@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pacoplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parallel Coordinates Plot for Clustering</h2>
+
+<h3>Description</h3>
+
+<p>Creates an interactive parallel coordinates plot detailing each
+dimension and the cluster associated with each observation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pacoplot(data, clusters, colorScheme = "schemeCategory10",
+  width = NULL, height = NULL, labelSizes = NULL, lineSize = NULL,
+  measures = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataframe of numeric columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clusters</code></td>
+<td>
+<p>A named integer matrix of clusters where names are the row names
+of the above dataframe and integers are the integer value of the row's associated cluster.
+This can be obtained from a function such as <code> stats::kmeans()$cluster </code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colorScheme</code></td>
+<td>
+<p>The color scheme of the plot. May be a pre-configured D3 ordinal color scheme
+or a vector of html colors (hex or named) of the same length as the number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>The width of the plot window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>The height of the plot window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labelSizes</code></td>
+<td>
+<p>A number or list of any combination of parameters shown that define the label sizes.
+<code> list(yaxis = 12, yticks = 10, tooltip = 15) </code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lineSize</code></td>
+<td>
+<p>A number to adjust the size of the lines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>measures</code></td>
+<td>
+<p>A list of functions that is any combination of parameters shown that define the measurements for intervals and average lines displayed.
+Defaults to the options shown (median and 1st and 3rd quartile). <br><code> list(avg = median, upper = function(x){return(quantile(x, c(0.75)))}, lower = function(x){return(quantile(x, c(0.25)))}) </code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li>
+<p> Hover over lines to display row label
+</p>
+</li>
+<li>
+<p> Click on a line to fade out all lines except the associated cluster
+</p>
+</li>
+<li>
+<p> Click on another line to bold this line as well
+</p>
+</li>
+<li>
+<p> Clicking a second time on a line will fade it out
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Barebones
+df &lt;- state.x77
+clus &lt;- kmeans(df, 5)$cluster
+pacoplot(data = df, clusters = clus)
+
+# With options
+df &lt;- state.x77
+clus &lt;- kmeans(df, 5)$cluster
+pacoplot(data = df, clusters = clus,
+         colorScheme = c("red", "green", "orange", "blue", "yellow"),
+         labelSizes = list(yaxis = 16, yticks = 12),
+         measures = list(avg = mean))
+
+
+</code></pre>
+
+
+</div>

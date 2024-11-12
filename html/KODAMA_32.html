@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>USA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>State of the Union Data Set</h2>
+
+<h3>Description</h3>
+
+<p>This dataset consists of the spoken, not written, addresses from 1900 until the sixth address by Barack Obama in 2014. Punctuation characters, numbers, words shorter than three characters, and stop-words (e.g., "that", "and", and "which") were removed from the dataset. This resulted in a dataset of 86 speeches containing 834 different meaningful words each. Term frequency-inverse document frequency (TF-IDF) was used to obtain feature vectors. It is often used as a weighting factor in information retrieval and text mining. The TF-IDF value increases proportionally to the number of times a word appears in the document, but is offset by the frequency of the word in the corpus, which helps to control for the fact that some words are generally more common than others.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(USA)</code></pre>
+
+
+<h3>Value</h3>
+
+<p>A list with the following elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>TF-IDF data. A matrix with 86 rows and 834 columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>Year index. A vector with 86 elements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>president</code></td>
+<td>
+<p>President index. A vector with 86 elements.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore and Leonardo Tenori</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Here is reported the analysis on the State of the Union
+# of USA president as shown in Cacciatore, et al. (2014)
+
+data(USA)
+kk=KODAMA.matrix(USA$data,FUN="KNN")
+cc=KODAMA.visualization(kk,"t-SNE",perplexity = 10)
+oldpar &lt;- par(cex=0.5,mar=c(15,6,2,2));
+plot(USA$year,cc[,1],axes=FALSE,pch=20,xlab="",ylab="First Component");
+axis(1,at=USA$year,labels=rownames(USA$data),las=2);
+axis(2,las=2);
+box()
+
+par(oldpar)
+
+
+</code></pre>
+
+
+</div>

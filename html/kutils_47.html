@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>naLast</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sort key so that non missing values are first in the
+value vector.</h2>
+
+<h3>Description</h3>
+
+<p>Sort key so that non missing values are first in the
+value vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">naLast(
+  key,
+  byvar = "name_new",
+  valvar = "value_new",
+  na.strings = c("\\.", "", "\\s+", "N/A")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>key, long or wide</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>byvar</code></td>
+<td>
+<p>Default is "name_new", the column for sorting into blocks.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>valvar</code></td>
+<td>
+<p>The value variable on which sorting is to be done, "value_new".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>vector of characters to be treated as NA</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>sorted key, with blocks that have the missings last
+</p>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>inputNames</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generic Function: Names of the Inputs of a Covariance Kernel
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function returning or setting the names of the inputs attached
+with a covariance kernel.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+inputNames(object, ...)
+
+## S4 replacement method for signature 'covAll'
+inputNames(object, ...) &lt;- value
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>A covariance kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+
+<p>A suitable character vector.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments for methods.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character vector with <em>distinct</em> input names that are used
+e.g. in prediction.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The input names are usually checked to control that they match the
+colnames of a spatial design matrix. They play an important role since
+in general the inputs are found among other columns of a data frame,
+and their order is not fixed. For instance in a data frame used as
+<code>newdata</code> formal in the <code>predict</code> method, the inputs are
+generally found at positions which differ from those in the data frame
+used at the creation of the object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>checkX</code>
+</p>
+
+
+</div>

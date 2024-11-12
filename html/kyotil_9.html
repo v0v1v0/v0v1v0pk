@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>age_calc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Age Calculation
+</h2>
+
+<h3>Description</h3>
+
+<p>Calculate age, by Jason P Becker, modified very slightly in how arguments are passed to the function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">age_calc(dob, enddate = Sys.Date(), units = c("days","months","years"), precise = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dob</code></td>
+<td>
+
+<p>POSIXlt or Date. Birthday 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>enddate</code></td>
+<td>
+
+<p>POSIXlt or Date. Date to compute age
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+
+<p>string. Choose a unit.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precise</code></td>
+<td>
+
+<p>Boolean. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jason P Becker
+</p>
+
+
+<h3>References</h3>
+
+<p>http://blog.jsonbecker.com/2013/12/calculating-age-with-precision-in-r.html
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+age_calc (dob=strptime("29OCT2002", format="%d%b%Y"), 
+    enddate=strptime("30OCT2003", format="%d%b%Y"), units='years', precise=TRUE)
+age_calc (dob=strptime("29OCT2002", format="%d%b%Y"), 
+    enddate=strptime("30DEC2003", format="%d%b%Y"), units='years', precise=FALSE)
+
+</code></pre>
+
+
+</div>

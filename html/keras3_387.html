@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>new_metric_class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Metric</h2>
+
+<h3>Description</h3>
+
+<p><code>new_metric_class()</code> is an alias for <code>Metric()</code>.
+See <code style="white-space: pre;">⁠?⁠</code><code>Metric()</code> for the full documentation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">new_metric_class(
+  classname,
+  initialize = NULL,
+  update_state = NULL,
+  result = NULL,
+  ...,
+  public = list(),
+  private = list(),
+  inherit = NULL,
+  parent_env = parent.frame()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>String, the name of the custom class. (Conventionally, CamelCase).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize, update_state, result</code></td>
+<td>
+<p>Recommended methods to implement. See description section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>..., public</code></td>
+<td>
+<p>Additional methods or public members of the custom class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>private</code></td>
+<td>
+<p>Named list of R objects (typically, functions) to include in
+instance private environments. <code>private</code> methods will have all the same
+symbols in scope as public methods (See section "Symbols in Scope"). Each
+instance will have it's own <code>private</code> environment. Any objects
+in <code>private</code> will be invisible from the Keras framework and the Python
+runtime.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit</code></td>
+<td>
+<p>What the custom class will subclass. By default, the base keras class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>The R environment that all class methods will have as a grandparent.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A function that returns <code>Metric</code> instances, similar to the
+builtin metric functions.
+</p>
+
+
+</div>

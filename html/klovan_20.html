@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kriging.auto</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Automatic Kriging Interpolation with Factor Analysis Preprocessing</h2>
+
+<h3>Description</h3>
+
+<p>This function performs automatic kriging interpolation with factor analysis
+preprocessing on input data. The optimization may not work as intended use higher
+num_init_test and num_fin_test values or run the function multiples times to
+ensure an accurate result.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kriging.auto(
+  data,
+  num_fac = 3,
+  grid_cell_size = NA,
+  num_init_test = 8,
+  num_fin_test = 200,
+  nugget_bounds = c(0, 0.2),
+  sill_bounds = c(0, 20000),
+  range_bounds = c(0, 25000)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_fac</code></td>
+<td>
+<p>A numeric value indicating the number of factors to analyze. Default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_cell_size</code></td>
+<td>
+<p>The desired cell size for the grid. Default is NA, which will calculate the cell size based on the average distance between data points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_init_test</code></td>
+<td>
+<p>The number of random starts for initial model optimization. Default is 8</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_fin_test</code></td>
+<td>
+<p>The number of random starts for final model optimization. Default is 200</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nugget_bounds</code></td>
+<td>
+<p>A numeric vector specifying the lower and upper bounds for the nugget parameter during optimization. Default is c(0, .2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sill_bounds</code></td>
+<td>
+<p>A numeric vector specifying the lower and upper bounds for the sill parameter during optimization. Default is c(0, 20000).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range_bounds</code></td>
+<td>
+<p>A numeric vector specifying the lower and upper bounds for the range parameter during optimization. Default is c(0, 25000).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame with interpolated data for the whole grid. Data frame has columns: "C_X",
+"C_Y", "value", "FA". "C_X" and "C_Y" are the coordinates, "value" is the interpolated value,
+and "FA" indicates the relevant factor the value corresponds to.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data("Klovan_Row80")
+kriging.auto(Klovan_Row80)
+
+
+</code></pre>
+
+
+</div>

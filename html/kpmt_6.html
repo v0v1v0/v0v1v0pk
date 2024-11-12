@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>validate_accuracy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Validate computational accuracy of Known Population Median Test algorithm</h2>
+
+<h3>Description</h3>
+
+<p>The implementation of the exact analytical solution of the Known Population Median Test
+involves approximations using the Stirling series and is therefore suspect for computational error.
+This function creates a population and empirically computes p-values via resampling.  It then
+compares these empirical p-values to those calculated by the Known Population Median Test, and returns
+the error in log(p).  WARNING!  Takes a long time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">validate_accuracy(N = 50, n = 10, nrep = 1e+08)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>population size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>sample size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nrep</code></td>
+<td>
+<p>number of resampling samples for empirically estimating p-values.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data frame with log(p) error and other information.
+</p>
+
+
+</div>

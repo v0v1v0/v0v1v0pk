@@ -1,0 +1,146 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kriging</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Ordinary Kriging</h2>
+
+<h3>Description</h3>
+
+<p>Simple and highly optimized ordinary kriging algorithm to plot geographical data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kriging(x, y, response, model = "spherical", lags = 10, pixels = 100, polygons = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of x-axis spatial points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>vector of y-axis spatial points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>response</code></td>
+<td>
+<p>vector of observed values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>specification of the variogram model. Choices are <code>"spherical"</code>, <code>"exponential"</code> or <code>"gaussian"</code>. Defaults to <code>"spherical"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lags</code></td>
+<td>
+<p>number of lags. Defaults to <code>10</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pixels</code></td>
+<td>
+<p>maximum number of points along either axis. Defaults to <code>100</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>polygons</code></td>
+<td>
+<p>list of polygons used to grid predicted values on to. The default value of <code>NULL</code> automatically generates an evenly spaced out rectangular grid of points spanning the range of the data.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The kriging algorithm assumes a minimum number of observations in order to fit the variogram model. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kriging</code> that inherits from <code>list</code> and is composed of:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>character; variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nugget</code></td>
+<td>
+<p>numeric; value of nugget parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>numeric; value of range parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sill</code></td>
+<td>
+<p>numeric; value of sill parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>map</code></td>
+<td>
+<p>data.frame; contains the predicted values along with the coordinate covariates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>semivariogram</code></td>
+<td>
+<p>data.frame; contains the distance and semivariance values.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Omar E. Olmedo
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>image.kriging, plot.kriging.</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Krige random data for a specified area using a list of polygons
+library(maps)
+usa &lt;- map("usa", "main", plot = FALSE)
+p &lt;- list(data.frame(usa$x, usa$y))
+
+# Create some random data
+x &lt;- runif(50, min(p[[1]][,1]), max(p[[1]][,1]))
+y &lt;- runif(50, min(p[[1]][,2]), max(p[[1]][,2]))
+z &lt;- rnorm(50)
+
+# Krige and create the map
+kriged &lt;- kriging(x, y, z, polygons=p, pixels=300)
+image(kriged, xlim = extendrange(x), ylim = extendrange(y))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_reduce_lr_on_plateau</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reduce learning rate when a metric has stopped improving.</h2>
+
+<h3>Description</h3>
+
+<p>Models often benefit from reducing the learning rate by a factor
+of 2-10 once learning stagnates. This callback monitors a
+quantity and if no improvement is seen for a 'patience' number
+of epochs, the learning rate is reduced.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_reduce_lr_on_plateau(
+  monitor = "val_loss",
+  factor = 0.1,
+  patience = 10L,
+  verbose = 0L,
+  mode = "auto",
+  min_delta = 1e-04,
+  cooldown = 0L,
+  min_lr = 0,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>monitor</code></td>
+<td>
+<p>String. Quantity to be monitored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>Float. Factor by which the learning rate will be reduced.
+<code>new_lr = lr * factor</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>patience</code></td>
+<td>
+<p>Integer. Number of epochs with no improvement after which
+learning rate will be reduced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Integer. 0: quiet, 1: update messages.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p>String. One of <code style="white-space: pre;">⁠{'auto', 'min', 'max'}⁠</code>. In <code>'min'</code> mode,
+the learning rate will be reduced when the
+quantity monitored has stopped decreasing; in <code>'max'</code> mode it will
+be reduced when the quantity monitored has stopped increasing; in
+<code>'auto'</code> mode, the direction is automatically inferred from the name
+of the monitored quantity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_delta</code></td>
+<td>
+<p>Float. Threshold for measuring the new optimum, to only focus
+on significant changes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cooldown</code></td>
+<td>
+<p>Integer. Number of epochs to wait before resuming normal
+operation after the learning rate has been reduced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_lr</code></td>
+<td>
+<p>Float. Lower bound on the learning rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>Callback</code> instance that can be passed to <code>fit.keras.src.models.model.Model()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>reduce_lr &lt;- callback_reduce_lr_on_plateau(monitor = 'val_loss', factor = 0.2,
+                                           patience = 5, min_lr = 0.001)
+model %&gt;% fit(x_train, y_train, callbacks = list(reduce_lr))
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/callbacks/reduce_lr_on_plateau#reducelronplateau-class">https://keras.io/api/callbacks/reduce_lr_on_plateau#reducelronplateau-class</a>
+</p>
+</li></ul>
+<p>Other callbacks: <br><code>Callback()</code> <br><code>callback_backup_and_restore()</code> <br><code>callback_csv_logger()</code> <br><code>callback_early_stopping()</code> <br><code>callback_lambda()</code> <br><code>callback_learning_rate_scheduler()</code> <br><code>callback_model_checkpoint()</code> <br><code>callback_remote_monitor()</code> <br><code>callback_swap_ema_weights()</code> <br><code>callback_tensorboard()</code> <br><code>callback_terminate_on_nan()</code> <br></p>
+
+
+</div>

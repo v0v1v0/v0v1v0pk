@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lpath</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Learning Paths in a Knowledge Structure</h2>
+
+<h3>Description</h3>
+
+<p>Computes learning paths in a knowledge structure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  lpath(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>A learning path in a knowledge structure is a maximal sequence of 
+knowledge states, which allows learners to gradually traverse a 
+knowledge structure from the empty set <em>{}</em> (or any other 
+bottom state) to the full set of domain problems <em>Q</em>. 
+Mathematically, it is represented as a set of states.
+</p>
+<p><code>lpath</code> takes an arbitrary knowledge structure and computes all 
+possible learning paths in the respective knowledge structure.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list where each element represents one learing path.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set(), set("a"), set("b"), set("a","b"), 
+   set("a","d"), set("b","c"), set("a","b","c"), set("a","b","d"), 
+   set("b","c","d"), set("a","b","c","d"), set("a","b","c","d","e")))
+lpath(kst)
+</code></pre>
+
+
+</div>

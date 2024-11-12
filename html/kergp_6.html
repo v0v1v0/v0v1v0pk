@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>checkX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generic function: Check the Compatibility of a Design Matrix with a
+Given Covariance Object
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function to check the compatibility of a design matrix with a
+covariance object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+   checkX(object, X, ...)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>A covariance kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>A design matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments for methods.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A matrix with columns taken from <code>X</code> and with column names
+identical to <code>inputNames(object)</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>inputNames</code> method.</p>
+
+
+</div>

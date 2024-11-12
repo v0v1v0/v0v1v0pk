@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SparsePlot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sparse plot</h2>
+
+<h3>Description</h3>
+
+<p>Create sparse plot to see the sparsity of the data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SparsePlot(Lt, interval, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Lt</code></td>
+<td>
+<p>A <code>list</code> of <em>n</em> vectors, where <em>n</em> is the sample size. Each entry contains the observation time in ascending order for each subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interval</code></td>
+<td>
+<p>A <code>vector</code> of length two denoting the supporting interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments passed into <code>plot</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For the sparse plot, x-axis is the observation time while y-axis represents various subjects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Create the corresponding sparse plot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate data
+n &lt;- 100
+interval &lt;- c(0, 10)
+lambda_1 &lt;- 9 #the first eigenvalue
+lambda_2 &lt;- 1.5 #the second eigenvalue
+eigfun &lt;- list()
+eigfun[[1]] &lt;- function(x){cos(pi * x/10)/sqrt(5)}
+eigfun[[2]] &lt;- function(x){sin(pi * x/10)/sqrt(5)}
+score &lt;- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
+# DataNew1 and DataNew2 have different sparsity
+DataNew1 &lt;- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
+                      meanfun = function(x){0}, score = score,
+                      eigfun = eigfun, sd = sqrt(0.1))
+DataNew2 &lt;- GenDataKL(n, interval = interval, sparse = 2:4, regular = FALSE,
+                      meanfun = function(x){0}, score = score,
+                      eigfun = eigfun, sd = sqrt(0.1))
+# Create sparse plots
+par(mfrow = c(1, 2))
+SparsePlot(DataNew1$Lt, interval = interval)
+SparsePlot(DataNew2$Lt, interval = interval)
+par(mfrow = c(1, 1))
+</code></pre>
+
+
+</div>

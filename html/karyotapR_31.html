@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>moveNonGenomeProbes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Move non-genome probes counts and metadata to altExp slots</h2>
+
+<h3>Description</h3>
+
+<p><code>moveNonGenomeProbes()</code> takes the probe IDs corresponding to <code>grnaProbe</code> and <code>barcodeProbe</code> slots of the <code>TapestriExperiment</code> object,
+as well as probes on chrY, and moves them to their own <code>altExp</code> slots in the object.
+This allows those counts and associated metadata to be manipulated separately without interfering with the probes used for CNV measurements which target the endogenous genome.
+<code>SingleCellExperiment::splitAltExps()</code> can be used for manual specification of probes to move to <code>altExp</code> slots if the shortcut slots are not used.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">moveNonGenomeProbes(TapestriExperiment)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p><code>moveNonGenomeProbes()</code> moves probes corresponding to the specified tags to <code>altExp</code> (alternative experiment) slots in the <code>TapestriExperiment</code> object.
+These probes should be those which do not correspond to a chromosome and therefore would not be used to call copy number variants.
+The exception is probes on chromosome Y; CNVs of chrY are more rare, so we move it to an <code>altExp</code> for separate analysis.
+Probes corresponding to the <code>barcodeProbe</code> and <code>grnaProbe</code> slots, which are specified by the <code>panel.id</code> shortcut or manually (see Custom Slot Getters and Setters),
+are automatically moved to <code>altExp</code> by this operation as well.
+If such probes are not present, the function will only generate a warning message, so it is always safe (and recommended) to run by default.
+Any remaining probes that are not targeting a human chromosome and are not specified by the shortcut tags are moved to the <code>otherProbeCounts</code> slot.
+This function is run automatically by default and with default behavior as part of <code>createTapestriExperiment()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> with <code>altExp</code> slots filled with counts and metadata for non-genomic probes.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>SingleCellExperiment::splitAltExps()</code> for manual specification of probes to move to <code>altExp</code> slots.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment
+tap.object &lt;- moveNonGenomeProbes(tap.object)
+</code></pre>
+
+
+</div>

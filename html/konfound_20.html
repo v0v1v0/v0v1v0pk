@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_correlation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Correlation Diagram</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a plot to illustrate the correlation between different 
+variables,specifically focusing on the confounding variable, predictor of 
+interest, and outcome.It uses ggplot2 for graphical representation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_correlation(r_con, obs_r, critical_r)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>r_con</code></td>
+<td>
+<p>Correlation coefficient related to the confounding variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs_r</code></td>
+<td>
+<p>Observed correlation coefficient.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>critical_r</code></td>
+<td>
+<p>Critical correlation coefficient for decision-making.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A ggplot object representing the correlation diagram.
+</p>
+
+
+</div>

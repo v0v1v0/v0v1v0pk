@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>verifyRealEntry</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+verifyRealEntry: verify character entries
+</h2>
+
+<h3>Description</h3>
+
+<p>This function reads a variable coming from a text entry and checks whether it is real or not.It is used internally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">verifyRealEntry(x, noValid = "isNoValid")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>The element to check
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noValid</code></td>
+<td>
+
+<p>The output the function will return when the input is not character.
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+verifyRealEntry("Strawberry", noValid = "isNoValid")
+verifyRealEntry(235, noValid = NA)
+verifyRealEntry(0235, noValid = NA)
+verifyRealEntry(235.6, noValid = NA)
+
+</code></pre>
+
+
+</div>

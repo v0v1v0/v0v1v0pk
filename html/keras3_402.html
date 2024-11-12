@@ -1,0 +1,228 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>optimizer_rmsprop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimizer that implements the RMSprop algorithm.</h2>
+
+<h3>Description</h3>
+
+<p>The gist of RMSprop is to:
+</p>
+
+<ul>
+<li>
+<p> Maintain a moving (discounted) average of the square of gradients
+</p>
+</li>
+<li>
+<p> Divide the gradient by the root of this average
+</p>
+</li>
+</ul>
+<p>This implementation of RMSprop uses plain momentum, not Nesterov momentum.
+</p>
+<p>The centered version additionally maintains a moving average of the
+gradients, and uses that average to estimate the variance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">optimizer_rmsprop(
+  learning_rate = 0.001,
+  rho = 0.9,
+  momentum = 0,
+  epsilon = 1e-07,
+  centered = FALSE,
+  weight_decay = NULL,
+  clipnorm = NULL,
+  clipvalue = NULL,
+  global_clipnorm = NULL,
+  use_ema = FALSE,
+  ema_momentum = 0.99,
+  ema_overwrite_frequency = NULL,
+  name = "rmsprop",
+  ...,
+  loss_scale_factor = NULL,
+  gradient_accumulation_steps = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>learning_rate</code></td>
+<td>
+<p>A float, a
+<code style="white-space: pre;">⁠learning_rate_schedule_*⁠</code> instance, or
+a callable that takes no arguments and returns the actual value to
+use. The learning rate. Defaults to <code>0.001</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>float, defaults to 0.9. Discounting factor for the old gradients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>momentum</code></td>
+<td>
+<p>float, defaults to 0.0. If not 0.0., the optimizer tracks the
+momentum value, with a decay rate equals to <code>1 - momentum</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>A small constant for numerical stability. This epsilon is
+"epsilon hat" in the Kingma and Ba paper (in the formula just before
+Section 2.1), not the epsilon in Algorithm 1 of the paper. Defaults
+to 1e-7.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centered</code></td>
+<td>
+<p>Boolean. If <code>TRUE</code>, gradients are normalized by the estimated
+variance of the gradient; if FALSE, by the uncentered second moment.
+Setting this to <code>TRUE</code> may help with training, but is slightly more
+expensive in terms of computation and memory. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_decay</code></td>
+<td>
+<p>Float. If set, weight decay is applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clipnorm</code></td>
+<td>
+<p>Float. If set, the gradient of each weight is individually
+clipped so that its norm is no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clipvalue</code></td>
+<td>
+<p>Float. If set, the gradient of each weight is clipped to be
+no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global_clipnorm</code></td>
+<td>
+<p>Float. If set, the gradient of all weights is clipped
+so that their global norm is no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_ema</code></td>
+<td>
+<p>Boolean, defaults to <code>FALSE</code>.
+If <code>TRUE</code>, exponential moving average
+(EMA) is applied. EMA consists of computing an exponential moving
+average of the weights of the model (as the weight values change after
+each training batch), and periodically overwriting the weights with
+their moving average.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ema_momentum</code></td>
+<td>
+<p>Float, defaults to 0.99. Only used if <code>use_ema=TRUE</code>.
+This is the momentum to use when computing
+the EMA of the model's weights:
+<code>new_average = ema_momentum * old_average + (1 - ema_momentum) * current_variable_value</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ema_overwrite_frequency</code></td>
+<td>
+<p>Int or NULL, defaults to NULL. Only used if
+<code>use_ema=TRUE</code>. Every <code>ema_overwrite_frequency</code> steps of iterations,
+we overwrite the model variable by its moving average.
+If NULL, the optimizer
+does not overwrite model variables in the middle of training, and you
+need to explicitly overwrite the variables at the end of training
+by calling <code>optimizer$finalize_variable_values()</code>
+(which updates the model
+variables in-place). When using the built-in <code>fit()</code> training loop,
+this happens automatically after the last epoch,
+and you don't need to do anything.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String. The name to use
+for momentum accumulator weights created by
+the optimizer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loss_scale_factor</code></td>
+<td>
+<p>Float or <code>NULL</code>. If a float, the scale factor will
+be multiplied the loss before computing gradients, and the inverse of
+the scale factor will be multiplied by the gradients before updating
+variables. Useful for preventing underflow during mixed precision
+training. Alternately, <code>optimizer_loss_scale()</code> will
+automatically set a loss scale factor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gradient_accumulation_steps</code></td>
+<td>
+<p>Int or <code>NULL</code>. If an int, model and optimizer
+variables will not be updated at every step; instead they will be
+updated every <code>gradient_accumulation_steps</code> steps, using the average
+value of the gradients since the last update. This is known as
+"gradient accumulation". This can be useful
+when your batch size is very small, in order to reduce gradient
+noise at each update step. EMA frequency will look at "accumulated"
+iterations value (optimizer steps // gradient_accumulation_steps).
+Learning rate schedules will look at "real" iterations value
+(optimizer steps).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an <code>Optimizer</code> instance
+</p>
+
+
+<h3>Usage</h3>
+
+<div class="sourceCode r"><pre>opt &lt;- optimizer_rmsprop(learning_rate=0.1)
+</pre></div>
+
+
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf">Hinton, 2012</a>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/optimizers/rmsprop#rmsprop-class">https://keras.io/api/optimizers/rmsprop#rmsprop-class</a>
+</p>
+</li></ul>
+<p>Other optimizers: <br><code>optimizer_adadelta()</code> <br><code>optimizer_adafactor()</code> <br><code>optimizer_adagrad()</code> <br><code>optimizer_adam()</code> <br><code>optimizer_adam_w()</code> <br><code>optimizer_adamax()</code> <br><code>optimizer_ftrl()</code> <br><code>optimizer_lamb()</code> <br><code>optimizer_lion()</code> <br><code>optimizer_loss_scale()</code> <br><code>optimizer_nadam()</code> <br><code>optimizer_sgd()</code> <br></p>
+
+
+</div>

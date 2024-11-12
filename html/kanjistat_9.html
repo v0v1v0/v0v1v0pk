@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fivebetas</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A sample list of kanjivec objects</h2>
+
+<h3>Description</h3>
+
+<p>A sample list of kanjivec objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fivebetas
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p><code>fivebetas</code> is a list of five <code>kanjivec</code> objects
+representing the basic kanji \u90e8,\u969c,\u966a,\u90f5,\u9663 containing  "beta" components,
+which come in fact from two different classical radicals:
+</p>
+
+<ul>
+<li>
+<p> \u961c–&gt;\u2ed6 on the left: mound, small village
+</p>
+</li>
+<li>
+<p> \u9091–&gt;\u2ecf on the right: large village
+</p>
+</li>
+</ul>
+<h3>Source</h3>
+
+<p>The list has been generated with the function <code>kanjivec</code>
+with parameter <code>flatten="intelligent"</code> from the corresponding files
+in the KanjiVG database by Ulrich Apel (<a href="https://kanjivg.tagaini.net/">https://kanjivg.tagaini.net/</a>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">oldpar &lt;- par(mfrow = c(1,5), mai = rep(0,4))
+invisible( lapply(fivebetas, plot, seg_depth = 2) )
+par(oldpar)
+  
+</code></pre>
+
+
+</div>

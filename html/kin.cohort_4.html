@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kin.cohort</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Analysis of kin-cohort data </h2>
+
+<h3>Description</h3>
+
+<p>This function estimates cumulative risk at given ages for carriers and noncarriers
+of a mutation based on the probands genotypes. It can use the Marginal Maximum
+Likelihood estimation method (Chatterjee and Wacholder, 2001) or the method of
+moments (Wacholder et al, 2001). Bootstrap confidence intervals can be requested.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kin.cohort(..., method = c("marginal", "mml", "chatterjee", 
+                             "moments",  "km",  "watcholder"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p> see <code>kc.marginal</code> and <code>kc.moments for details</code> </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p> choose estimation method: Marginal Maximum Likelihood
+(selected by "marginal", "mml", "chatterjee") or method of moments
+(selected by "moments", "km", "watcholder")</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a wrapper that will call <code>kc.marginal</code> or <code>kc.moments</code> depending on the argument method.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Victor Moreno, Nilanjan Chatterjee, Bhramar Mukherjee. 
+</p>
+<p>Maintainer: Victor Moreno &lt;v.moreno@iconcologia.net&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Wacholder S, Hartge P, Struewing JP, Pee D, McAdams M, Lawrence B, Tucker MA. The kin-cohort study for estimating penetrance. American Journal of Epidemiology. 1998; 148: 623-9.
+</p>
+<p>Chatterjee N and Wacholder S. A Marginal Likelihood Approach for Estimating Penetrance from Kin-Cohort Designs. Biometrics. 2001; 57: 245-52.
+</p>
+
+
+<h3>See Also</h3>
+
+ 
+<p><code>kc.marginal</code>, <code>kc.moments</code> 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(kin.data)
+attach(kin.data)
+
+res.k&lt;-   kin.cohort(age, cancer, gen1, rel, knots=c(30,40,50,60,70,80), f=0.02, 
+                     method="km")
+res.k          
+plot(res.k)
+plot(res.k,what="crr")
+
+set.seed(1)
+res.k.b&lt;- kin.cohort(age, cancer, gen1, rel, knots=c(30,40,50,60,70,80), f=0.02, 
+                     set=family, method="km", B=10)
+res.k.b
+plot(res.k.b)
+plot(res.k.b,what="crr")
+
+res.m&lt;-   kin.cohort(age, cancer, gen1, rel, knots=c(30,40,50,60,70,80), f=0.02, 
+                    method="mml")
+res.m
+plot(res.m)
+plot(res.m, what="hr")
+
+res.m2&lt;-  kin.cohort(age, cancer, data.frame(gen1,gen2), rel, 
+                     knots=c(30,40,50,60,70,80), f=c(0.02,0.01), method="mml")
+res.m2
+plot(res.m2)
+plot(res.m2, what="hr")
+
+set.seed(1)
+res.m.b&lt;- kin.cohort(age, cancer, gen1, rel, knots=c(30,40,50,60,70,80), f=0.02, 
+                     set=family, method="mml", B=10)
+res.m.b
+plot(res.m.b)
+plot(res.m.b, what="hr")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

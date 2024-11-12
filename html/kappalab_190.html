@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>superclass.set.func-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "superclass.set.func"</h2>
+
+<h3>Description</h3>
+
+<p>Virtual class, superclass of all <code>*.set.func</code> classes. Used to define common <code>show</code> and <code>summary</code> methods for <code>*.set.func</code> classes.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>A virtual Class: No objects may be created from it.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal
+to the number of elements of the set on which the
+set function is defined.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing the
+coefficients of the set function.</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "superclass.set.func")</code> </p>
+</dd>
+<dt>rnd</dt>
+<dd>
+<p><code>signature(x = "superclass.set.func", digits = "numeric")</code> </p>
+</dd>
+<dt>summary</dt>
+<dd>
+<p><code>signature(object = "superclass.set.func")</code> </p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>show-methods</code>,
+<br><code>rnd-methods</code>,
+<br><code>summary-methods</code>, 
+<br><code>set.func-class</code>,
+<br><code>Mobius.set.func-class</code>, 
+<br><code>card.set.func-class</code>,
+<br><code>Mobius.card.set.func-class</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## three set functions
+mu1 &lt;- card.set.func(-2:4)
+mu2 &lt;- set.func(c(-2,-2,-2:11/11))
+mu3 &lt;- Mobius.set.func(c(-7:6,6,6),4,4)
+
+## print mu1
+show(mu1)
+## the same
+mu1
+## the others
+mu2
+mu3
+
+## round mu2
+rnd(mu2,2)
+
+## compute indices to summarize them
+summary(mu1)
+summary(mu2)
+summary(mu3)
+</code></pre>
+
+
+</div>

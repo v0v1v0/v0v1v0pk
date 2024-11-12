@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dep_prev</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make later chunks depend on previous chunks</h2>
+
+<h3>Description</h3>
+
+<p>This function can be used to build dependencies among chunks so that all
+later chunks depend on previous chunks, i.e. whenever the cache of a previous
+chunk is updated, the cache of all its later chunks will be updated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dep_prev()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code>; the internal dependency structure is updated as a side
+effect.
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="https://yihui.org/knitr/demo/cache/">https://yihui.org/knitr/demo/cache/</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dep_auto</code>
+</p>
+
+
+</div>

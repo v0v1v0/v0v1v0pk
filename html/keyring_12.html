@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>b_wincred_get</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get a key from a Wincred keyring</h2>
+
+<h3>Description</h3>
+
+<p>Get a key from a Wincred keyring
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">b_wincred_get(self, private, service, username, keyring)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>service</code></td>
+<td>
+<p>Service name. Must not be empty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>username</code></td>
+<td>
+<p>Username. Might be empty.
+</p>
+
+<ol>
+<li>
+<p> We check if the key is on the default keyring.
+</p>
+</li>
+<li>
+<p> If yes, we just return it.
+</p>
+</li>
+<li>
+<p> Otherwise check if the keyring is locked.
+</p>
+</li>
+<li>
+<p> If locked, then unlock it.
+</p>
+</li>
+<li>
+<p> Get the AES key from the keyring.
+</p>
+</li>
+<li>
+<p> Decrypt the key with the AES key.
+</p>
+</li>
+</ol>
+<p>Additionally, users may specify an encoding to use when converting the
+password from a byte-string, for compatibility with other software such as
+python's keyring package. This is done via an option, or an environment variable.</p>
+</td>
+</tr>
+</table>
+</div>

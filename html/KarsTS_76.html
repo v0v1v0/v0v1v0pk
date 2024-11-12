@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>genTSExample</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+A function to generate an example time series
+</h2>
+
+<h3>Description</h3>
+
+<p>This function generates an example time series. The dates range from 2015 to 2016 and the sampling period is half an hour. The time series can be white noise or a random walk. It can be assigned to the KTSEnv environment. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">genTSExample(stationary = TRUE, name = "TS", InKTSEnv = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>stationary</code></td>
+<td>
+
+<p>Generate white noise (TRUE) or a random walk (FALSE)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+
+<p>A name for the time series. It defaults to TS. When InKTSEnv is FALSE, the name is not necessary.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>InKTSEnv</code></td>
+<td>
+
+<p>Assign to the environment KTSEnv (TRUE) or not (FALSE)
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The time series
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

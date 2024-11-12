@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regrXonS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Regress set of variables on its parents</h2>
+
+<h3>Description</h3>
+
+<p>Uses the generalised additive model gam to non-linearly and non-parametrically regress set of variables X on a set of variables S and returns residuals of X.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regrXonS(X, S)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>numeric matrix, set of variables to be regressed. Each column represents separate variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>numeric matrix, set of variables we will regress on. Each column represents separate variable</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the number of variables in S is <code class="reqn">\leq 5</code> we use frml.full.smooth as formula for gam to regress X on S, otherwise we use frml.additive.smooth.
+</p>
+
+
+<h3>Value</h3>
+
+<p>regrXonS() returns the residuals of X regressed on S.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kernelCItest
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(10)
+library(energy)
+z &lt;- 10*runif(300)
+w &lt;- 10*runif(300)
+x &lt;- sin(z) + runif(300)
+y &lt;- cos(z) + runif(300)
+data &lt;- cbind(x,y,z,w)
+
+hsic.gamma(x,y)
+hsic.perm(x,y)
+dcov.test(x,y)
+
+resid &lt;- regrXonS(cbind(x,y),cbind(z,w))
+
+hsic.gamma(resid[,1],resid[,2])
+hsic.perm(resid[,1],resid[,2])
+dcov.test(resid[,1],resid[,2])
+</code></pre>
+
+
+</div>

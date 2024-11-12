@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>active_property</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create an active property class method</h2>
+
+<h3>Description</h3>
+
+<p>Create an active property class method
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">active_property(fn)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>An R function</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>fn</code>, with an additional R attribute that will cause <code>fn</code> to be
+converted to an active property when being converted to a method of a
+custom subclass.
+</p>
+
+
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>layer_foo &lt;- Model("Foo", ...,
+  metrics = active_property(function() {
+    list(self$d_loss_metric,
+         self$g_loss_metric)
+  }))
+</pre></div>
+
+
+</div>

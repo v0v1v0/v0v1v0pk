@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subclass the base Keras <code>Model</code> Class</h2>
+
+<h3>Description</h3>
+
+<p>This is for advanced use cases where you need to subclass the base <code>Model</code>
+type, e.g., you want to override the <code>train_step()</code> method.
+</p>
+<p>If you just want to create or define a keras model, prefer <code>keras_model()</code>
+or <code>keras_model_sequential()</code>.
+</p>
+<p>If you just want to encapsulate some custom logic and state, and don't need
+to customize training behavior (besides calling <code>self$add_loss()</code> in the
+<code>call()</code> method), prefer <code>Layer()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Model(
+  classname,
+  initialize = NULL,
+  call = NULL,
+  train_step = NULL,
+  predict_step = NULL,
+  test_step = NULL,
+  compute_loss = NULL,
+  compute_metrics = NULL,
+  ...,
+  public = list(),
+  private = list(),
+  inherit = NULL,
+  parent_env = parent.frame()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>String, the name of the custom class. (Conventionally, CamelCase).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize, call, train_step, predict_step, test_step, compute_loss, compute_metrics</code></td>
+<td>
+<p>Optional methods that can be overridden.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>..., public</code></td>
+<td>
+<p>Additional methods or public members of the custom class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>private</code></td>
+<td>
+<p>Named list of R objects (typically, functions) to include in
+instance private environments. <code>private</code> methods will have all the same
+symbols in scope as public methods (See section "Symbols in Scope"). Each
+instance will have it's own <code>private</code> environment. Any objects
+in <code>private</code> will be invisible from the Keras framework and the Python
+runtime.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit</code></td>
+<td>
+<p>What the custom class will subclass. By default, the base keras class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>The R environment that all class methods will have as a grandparent.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A model constructor function, which you can call to create an
+instance of the new model type.
+</p>
+
+
+<h3>Symbols in scope</h3>
+
+<p>All R function custom methods (public and private) will have the
+following symbols in scope:
+</p>
+
+<ul>
+<li> <p><code>self</code>: The custom class instance.
+</p>
+</li>
+<li> <p><code>super</code>: The custom class superclass.
+</p>
+</li>
+<li> <p><code>private</code>: An R environment specific to the class instance.
+Any objects assigned here are invisible to the Keras framework.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠__class__⁠</code> and <code>as.symbol(classname)</code>: the custom class type object.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>active_property()</code> (e.g., for a <code>metrics</code> property implemented as a
+function).
+</p>
+
+
+</div>

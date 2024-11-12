@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pandoc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Renders math in HTML document</h2>
+
+<h3>Description</h3>
+
+<p>Reads an html file and substitutes elements of class <code>"math display"</code> and
+<code>"math inline"</code> with rendered html math. This is mainly intended as a
+post-processing step for pandoc, which generates such html for equations.
+As a result the math can be displayed without the need for including the
+mathjax library in the html document.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">render_math_in_html(
+  input,
+  output = NULL,
+  ...,
+  throwOnError = FALSE,
+  include_css = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>path to the html input file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>path to the output html file, or NULL to return as string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional html rendering options passed to
+<a href="https://katex.org/docs/options.html">katex.render</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>throwOnError</code></td>
+<td>
+<p>should invalid math raise an error in R? See <a href="https://katex.org/docs/options.html">katex options</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include_css</code></td>
+<td>
+<p>automatically inject the required katex css in the html head</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other katex: 
+<code>katex</code>,
+<code>math_to_rd()</code>
+</p>
+
+
+</div>

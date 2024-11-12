@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dataset_mnist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>MNIST database of handwritten digits</h2>
+
+<h3>Description</h3>
+
+<p>Dataset of 60,000 28x28 grayscale images of the 10 digits, along with a test set of 10,000 images.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dataset_mnist(path = "mnist.npz")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Path where to cache the dataset locally (relative to ~/.keras/datasets).</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Lists of training and test data: <code style="white-space: pre;">⁠train$x, train$y, test$x, test$y⁠</code>, where
+<code>x</code> is an array of grayscale image data with shape (num_samples, 28, 28) and <code>y</code>
+is an array of digit labels (integers in range 0-9) with shape (num_samples).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other datasets: <br><code>dataset_boston_housing()</code> <br><code>dataset_cifar10()</code> <br><code>dataset_cifar100()</code> <br><code>dataset_fashion_mnist()</code> <br><code>dataset_imdb()</code> <br><code>dataset_reuters()</code> <br></p>
+
+
+</div>

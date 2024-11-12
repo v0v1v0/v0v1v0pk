@@ -1,0 +1,216 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>histogram_w_outlier_bins</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Histogram with outlier bins</h2>
+
+<h3>Description</h3>
+
+<p>Create a histogram with outlier bins
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">histogram_w_outlier_bins(
+  vector = NULL,
+  bin_cutoffs = NULL,
+  outlier_bin_left = TRUE,
+  outlier_bin_right = TRUE,
+  x_tick_marks = NULL,
+  x_tick_mark_labels = NULL,
+  y_tick_marks = NULL,
+  outlier_bin_fill_color = "coral",
+  non_outlier_bin_fill_color = "cyan4",
+  border_color = "black",
+  y_axis_title_vjust = 0.85,
+  x_axis_title = NULL,
+  y_axis_title = NULL,
+  notify_na_count = NULL,
+  plot_proportion = TRUE,
+  plot_frequency = FALSE,
+  mean = TRUE,
+  ci = TRUE,
+  median = TRUE,
+  median_position = 15,
+  error_bar_size = 3
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_cutoffs</code></td>
+<td>
+<p>cutoff points for bins</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outlier_bin_left</code></td>
+<td>
+<p>logical. Should the leftmost bin treated
+as an outlier bin? (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outlier_bin_right</code></td>
+<td>
+<p>logical. Should the rightmost bin treated
+as an outlier bin? (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_tick_marks</code></td>
+<td>
+<p>a vector of values at which to place tick marks
+on the x axis. Note that the first bar spans from 0.5 to 1.5,
+second bar from 1.5 to 2.5, ... nth bar from n - 0.5 to n + 0.5.
+See the example. By default, tick marks will be placed at every
+cutoff point for bins</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_tick_mark_labels</code></td>
+<td>
+<p>a character vector to label tick marks.
+By default, the vector of cutoff points for bins will also be
+used as labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_tick_marks</code></td>
+<td>
+<p>a vector of values at which to place tick marks
+on the y axis (e.g., setting <code>y_tick_marks = seq(0, 10, 5)</code> will
+put tick marks at 0, 5, and 10.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outlier_bin_fill_color</code></td>
+<td>
+<p>color to fill inside of the
+outlier bins (default = "coral")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>non_outlier_bin_fill_color</code></td>
+<td>
+<p>color to fill inside of the
+non-outlier bins (default = "cyan4")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>border_color</code></td>
+<td>
+<p>color for borders of the bins (default = "black")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title_vjust</code></td>
+<td>
+<p>position of the y axis title (default = 0.85).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_title</code></td>
+<td>
+<p>title for x axis (default = "Value"). If
+<code>x_axis_title = FALSE</code>, x axis title will be removed from the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title</code></td>
+<td>
+<p>title for y axis. By default, it will be either
+"Proportion" or "Count".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notify_na_count</code></td>
+<td>
+<p>if <code>TRUE</code>, notify how many observations
+were removed due to missing values. By default, NA count will be printed
+only if there are any NA values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot_proportion</code></td>
+<td>
+<p>logical. Should proportions be plotted,
+as opposed to frequencies? (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot_frequency</code></td>
+<td>
+<p>logical. Should frequencies be plotted,
+as opposed to proportions? (default = FALSE).
+If <code>plot_frequency = TRUE</code>, <code>plot_proportion</code> will
+switch to be FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>logical. Should mean marked on the histogram?
+(default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>logical. Should 95% confidence interval marked on the histogram?
+(default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>median</code></td>
+<td>
+<p>logical. Should median marked on the histogram?
+(default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>median_position</code></td>
+<td>
+<p>position of the median label as a percentage of
+height of the tallest bin (default = 15)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_size</code></td>
+<td>
+<p>size of the error bars (default = 3)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a ggplot object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+histogram_w_outlier_bins(vector = 1:100, bin_cutoffs = seq(0, 100, 10))
+histogram_w_outlier_bins(vector = 0:89, bin_cutoffs = seq(0, 90, 10),
+x_tick_marks = seq(0.5, 9.5, 3), x_tick_mark_labels = seq(0, 90, 30))
+histogram_w_outlier_bins(vector = 1:10, bin_cutoffs = seq(0, 10, 2.5))
+histogram_w_outlier_bins(vector = 1:5, bin_cutoffs = seq(0, 10, 2.5))
+histogram_w_outlier_bins(vector = 1:15, bin_cutoffs = c(5.52, 10.5))
+
+</code></pre>
+
+
+</div>

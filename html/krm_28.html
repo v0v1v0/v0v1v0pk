@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calcPairwiseIdentity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Functions Related to Sequence Alignment
+</h2>
+
+<h3>Description</h3>
+
+<p>Functions related to sequence alignment
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calcPairwiseIdentity(alignment, dissimilarity, removeGap)
+alignment2count (alignment, level=20, weight=rep(1,nrow(alignment)))
+alignment2trancount (alignment, weight=rep(1,nrow(alignment)))
+removeGap (seq) 
+
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>alignment</code></td>
+<td>
+<p>matrix of arabic representation of sequences (1 based)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dissimilarity</code></td>
+<td>
+<p>Boolean.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>removeGap</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>integer. Size of alphabet</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+<p>numeric vector. Weights given to each sequence</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq</code></td>
+<td>
+<p>string. A string of amino acids</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>alignment2count return T by 20 matrix, where T is the number of column in the alignment.
+alignment2trancount return a T by 4 matrix, each row is the count of MM, MD, DM, DD for each position.
+</p>
+
+
+</div>

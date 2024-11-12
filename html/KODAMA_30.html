@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>transformy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conversion Classification Vector to Matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function converts a classification vector into a classification matrix.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">transformy(y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a vector or factor.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function converts a classification vector into a classification matrix.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore and Leonardo Tenori</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y=rep(1:10,3)
+print(y)
+z=transformy(y)
+print(z)
+</code></pre>
+
+
+</div>

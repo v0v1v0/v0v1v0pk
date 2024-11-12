@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_ctc_decode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decodes the output of a softmax.</h2>
+
+<h3>Description</h3>
+
+<p>Can use either greedy search (also known as best path) or a constrained
+dictionary search.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_ctc_decode(
+  y_pred,
+  input_length,
+  greedy = TRUE,
+  beam_width = 100L,
+  top_paths = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>tensor <code style="white-space: pre;">⁠(samples, time_steps, num_categories)⁠</code> containing the
+prediction, or output of the softmax.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_length</code></td>
+<td>
+<p>tensor <code style="white-space: pre;">⁠(samples, )⁠</code> containing the sequence length for
+each batch item in <code>y_pred</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>greedy</code></td>
+<td>
+<p>perform much faster best-path search if <code>TRUE</code>. This does not
+use a dictionary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beam_width</code></td>
+<td>
+<p>if <code>greedy</code> is <code>FALSE</code>: a beam search decoder will be used
+with a beam of this width.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top_paths</code></td>
+<td>
+<p>if <code>greedy</code> is <code>FALSE</code>, how many of the most probable paths
+will be returned.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>greedy</code> is <code>TRUE</code>, returns a list of one element
+that contains the decoded sequence. If <code>FALSE</code>, returns the <code>top_paths</code>
+most probable decoded sequences. Important: blank labels are returned as
+<code>-1</code>. Tensor <code>(top_paths)</code> that contains the log probability of each
+decoded sequence.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

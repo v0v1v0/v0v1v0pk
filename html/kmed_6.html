@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>consensusmatrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Consensus matrix from A matrix of bootstrap replicates</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a consensus matrix from a matrix of
+bootstrap replicates. It transforms an n x b matrix into an
+n x n matrix, where n is the number of objects and b
+is the number of bootstrap replicates.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">consensusmatrix(bootdata, nclust, reorder = fastclust)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>bootdata</code></td>
+<td>
+<p>A matrix of bootstrap replicate (n x b)
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclust</code></td>
+<td>
+<p>A number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reorder</code></td>
+<td>
+<p>Any distance-based clustering algorithm function
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a function to obtain a consensus matrix from a matrix of
+bootstrap replicates to evaluate the clustering result. The
+<code>bootdata</code> argument can be supplied directly from a matrix produced
+by the <code>clustboot</code> function. The values of the consensus matrix,
+<strong>A</strong>, are calculated by
+</p>
+<p style="text-align: center;"><code class="reqn">a_{ij} = a_{ji} = \frac{\#n \:of \:objects \:i \:and \:j
+\:in \:the \:same \:cluster}{\#n \:of \:objects \:i \:and \:j
+\:sampled \:at \:the \:same \:time}</code>
+</p>
+
+<p>where <code class="reqn">a_{ij}</code> is the agreement index between objects i and
+j. Note that due to the agreement between objects i and
+j equal to the agreement between objects j and i,
+the consensus matrix is a symmetric matrix.
+</p>
+<p>Meanwhile, the <code>reorder</code> argument is a function to reorder the objects
+in both the row and column of the consensus matrix such that similar objects
+are close to each other. This task can be solved by applying a clustering
+algorithm in the consensus matrix. The <code>reorder</code> has to consist of
+two input arguments. The two input arguments are a
+distance matrix/ object and number of clusters.
+The output is only a vector of cluster memberships. Thus,
+the algorihtm that can be applied in the <code>reorder</code> argument is the
+distance-based algorithm with a distance as the input.
+</p>
+<p>The default <code>reorder</code> is <code>fastclust</code> applying the
+<code>fastkmed</code> function. The code of the <code>fastclust</code> is
+</p>
+<p>fastclust &lt;- function(x, nclust) {
+</p>
+<p>res &lt;- fastkmed(x, nclust, iterate = 50)
+</p>
+<p>return(res$cluster)
+</p>
+<p>}
+</p>
+<p>For other examples, see <strong>Examples</strong>. It applies centroid and
+complete linkage algorithms.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a consensus/ agreement matrix of n x n
+dimension.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Monti, S., P. Tamayo, J. Mesirov, and T. Golub. 2003. Consensus
+clustering: A resampling-based method for class discovery and visualization
+of gene expression microarray data. Machine Learning 52 pp. 91-118.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+irisfast &lt;- clustboot(mrwdist, nclust=3, nboot=7)
+consensusfast &lt;- consensusmatrix(irisfast, nclust = 3)
+centroid &lt;- function(x, nclust) {
+res &lt;- hclust(as.dist(x), method = "centroid")
+member &lt;- cutree(res, nclust)
+return(member)
+}
+consensuscentroid &lt;- consensusmatrix(irisfast, nclust = 3, reorder = centroid)
+complete &lt;- function(x, nclust) {
+res &lt;- hclust(as.dist(x), method = "complete")
+member &lt;- cutree(res, nclust)
+return(member)
+}
+consensuscomplete &lt;- consensusmatrix(irisfast, nclust = 3, reorder = complete)
+consensusfast[c(1:5,51:55,101:105),c(1:5,51:55,101:105)]
+consensuscentroid[c(1:5,51:55,101:105),c(1:5,51:55,101:105)]
+consensuscomplete[c(1:5,51:55,101:105),c(1:5,51:55,101:105)]
+
+</code></pre>
+
+
+</div>

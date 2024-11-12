@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lowrank_kernel-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An S4 class to represent a low-rank kernel for a SNPset at specified knots</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to represent a low-rank kernel for a SNPset at specified knots
+</p>
+
+
+<h3>Details</h3>
+
+<p>This kernel is used for predictions. If observations and knots are 
+equal, better construct a full-rank kernel of class <code>kernel</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>type</code></dt>
+<dd>
+<p>character, kernel type: Use <code>'lin'</code> for the linear kernel,
+<code>'sia'</code> for the size-adjusted or <code>'net'</code> for the network-based kernel.</p>
+</dd>
+<dt><code>kernel</code></dt>
+<dd>
+<p>kernel <code>matrix</code> of dimension equal to individuals</p>
+</dd>
+<dt><code>pathway</code></dt>
+<dd>
+<p><code>pathway</code> object</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Juliane Manitz
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(gwas)
+data(hsa04020)
+square &lt;- calc_kernel(gwas, hsa04020, knots=gwas, type='lin', calculation='cpu')
+dim(square@kernel)
+
+gwas2 &lt;- new('GWASdata', pheno=pheno[1:10,], geno=geno[1:10,], anno=anno, desc="study 2")
+low_rank &lt;- calc_kernel(gwas, hsa04020, knots = gwas2, type='net', calculation='cpu')
+dim(low_rank@kernel)
+</code></pre>
+
+
+</div>

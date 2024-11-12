@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gaussiankernel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the Gaussian kernel matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function provides the Gaussian kernel matrix computed with the median heuristic bandwidth.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gaussiankernel(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>The samples in the sequence.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Returns a numeric matrix, the Gaussian kernel matrix computed with the specified bandwidth.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kerSeg-package</code>,<code>kerseg1</code>,<code>kerseg2</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Sequence : change in the mean in the middle of the sequence.
+d = 50
+mu = 2
+tau = 50
+n = 100
+set.seed(1)
+y = rbind(matrix(rnorm(d*tau),tau), matrix(rnorm(d*(n-tau),mu/sqrt(d)), n-tau))
+
+K = gaussiankernel(y) # Gaussian kernel matrix
+</code></pre>
+
+
+</div>

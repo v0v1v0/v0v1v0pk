@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Kernel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a Kernel Object</h2>
+
+<h3>Description</h3>
+
+<p>Create a kernel object, to use as variable in a model formula.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Kernel(x, kernel.function, scale = TRUE, rho = NULL, gamma = NULL,
+  d = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a formula, a vector or a matrix of variables grouped in the same kernel. It could also be a symetric matrix representing the Gram matrix, associated to a kernel function, already computed by the user.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.function</code></td>
+<td>
+<p>type of kernel. Possible values are <code>"gaussian"</code>,  <code>"linear"</code>, <code>"polynomial"</code>, <code>"sigmoid"</code>, <code>"inverse.quadratic"</code> or <code>"equality"</code>. See details below. If <code>x</code> is a Gram matrix, associated to a kernel function, already computed by the user, <code>kernel.function</code> should be equal to <code>"gram.matrix"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>boolean indicating if variables should be scaled before computing the kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho, gamma, d</code></td>
+<td>
+<p>kernel function hyperparameters. See details below.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>To use inside kspm() function. Given two <code class="reqn">p-</code>dimensional vectors <code class="reqn">x</code> and <code class="reqn">y</code>,
+</p>
+
+<ul>
+<li>
+<p> the Gaussian kernel is defined as <code class="reqn">k(x,y) = exp\left(-\frac{\parallel x-y \parallel^2}{\rho}\right)</code> where <code class="reqn">\parallel x-y \parallel</code> is the Euclidean distance between <code class="reqn">x</code> and <code class="reqn">y</code> and <code class="reqn">\rho &gt; 0</code> is the bandwidth of the kernel,
+</p>
+</li>
+<li>
+<p> the linear kernel is defined as <code class="reqn">k(x,y) = x^Ty</code>,
+</p>
+</li>
+<li>
+<p> the polynomial kernel is defined as <code class="reqn">k(x,y) = (\rho x^Ty + \gamma)^d</code> with <code class="reqn">\rho &gt; 0</code>, <code class="reqn">d</code> is the polynomial order. Of note, a linear kernel is a polynomial kernel with <code class="reqn">\rho = d = 1</code> and <code class="reqn">\gamma = 0</code>,
+</p>
+</li>
+<li>
+<p> the sigmoid kernel is defined as <code class="reqn">k(x,y) = tanh(\rho x^Ty + \gamma)</code> which is similar to the sigmoid function in logistic regression,
+</p>
+</li>
+<li>
+<p> the inverse quadratic function defined as <code class="reqn">k(x,y) = \frac{1}{\sqrt{\parallel x-y \parallel^2 + \gamma}}</code> with <code class="reqn">\gamma &gt; 0</code>,
+</p>
+</li>
+<li>
+<p> the equality kernel defined as <code class="reqn">k(x,y) = \left\lbrace \begin{array}{ll} 1 &amp; if  x = y \\ 0 &amp; otherwise \end{array}\right.</code>.
+</p>
+</li>
+</ul>
+<p>Of note, Gaussian, inverse quadratic and equality kernels are measures of similarity resulting to a matrix containing 1 along the diagonal.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A Kernel object including all parameters needed in computation of the model
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Liu, D., Lin, X., and Ghosh, D. (2007). Semiparametric regression of multidimensional genetic pathway data: least squares kernel machines and linear mixed models. Biometrics, 63(4), 1079:1088.
+</p>
+
+
+</div>

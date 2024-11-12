@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>as.relation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Surmise Relations of Knowledge Structures</h2>
+
+<h3>Description</h3>
+
+<p>Computes the surmise relation of knowledge structures.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  ## S3 method for class 'kstructure'
+as.relation(x, ...)
+  ## S3 method for class 'kbase'
+as.relation(x, ...)
+  ## S3 method for class 'kfamset'
+as.relation(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>,
+<code>kbase</code>, or <code>kfamset</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>as.relation</code> takes an arbitrary knowledge structure and computes the
+surmise <code>relation</code> of the corresponding 
+quasi-ordinal knowledge space. Antisymmetric (and
+transitive) surmise relations may then be plotted as a Hasse diagram.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>relation</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>, <code>kbase</code>, <code>kfamset</code>,
+<code>relation</code>, <code>plot</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+as.relation(kst)
+</code></pre>
+
+
+</div>

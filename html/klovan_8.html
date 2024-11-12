@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covar_mtrx</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create Co-variance Matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a non-normalized co-variance matrix
+from the given klovan dataset. For further details on klovan datasets,
+refer to the README.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">covar_mtrx(data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A non-normalized co-variance matrix of the klovan data.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("Klovan_Row80")
+covar_mtrx(Klovan_Row80) # view co-variance matrix
+</code></pre>
+
+
+</div>

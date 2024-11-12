@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_stock_history_by_ohlcv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>get stock history by ohlcv</h2>
+
+<h3>Description</h3>
+
+<p>Get stock history by open, high, low, close, volume.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_stock_history_by_ohlcv(stock_code, unit = "D", add_var = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>stock_code</code></td>
+<td>
+<p>A string specifying stock code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unit</code></td>
+<td>
+<p>A string specifying day, week, month</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add_var</code></td>
+<td>
+<p>A boolean adding volitility and percentage change</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>stock history by ohlcv data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># get stock history
+## Not run: 
+get_stock_history_by_ohlcv("005930")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

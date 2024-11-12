@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>findTwins</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+findTwins: finds twin points in a recurrence matrix
+</h2>
+
+<h3>Description</h3>
+
+<p>This function finds twin points (that is, identical columns) in a recurrence matrix.It is used internally
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">findTwins(recMat, pointsToFind = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>recMat</code></td>
+<td>
+
+<p>The recurrence matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pointsToFind</code></td>
+<td>
+
+<p>The points (columns) whose twins are to be found (defaults to all)
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function classifies the columns in families of twins and assigns an integer number to each family. The numbers are mere codes to identify the families and they do not have any meaning themselves.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of integers. Each number represents a family of twins. Positions corresponding to columns with no twins are assigned NA. When the search of twins is limited to a subset of points, the uninteresting points are assigned NA also.  
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>References</h3>
+
+<p>Marwan,R., Romano, M.C., Thiel,M., Kurths,J.(2007): Recurrence plots for the analysis of complex systems. Physics Reports 438, 237-329.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Generate time series and recurrence matrix
+res &lt;- genRmExample(name = "SRM", InKTSEnv = FALSE, plotRM = FALSE)
+TS &lt;- res$TS
+SRM &lt;- res$newSimpRM
+
+# Find twins
+SRMTwins &lt;- findTwins(SRM)
+
+# Interpretation example
+aFamily &lt;- SRMTwins[which(is.finite(SRMTwins))][1]
+twinsInFamily &lt;- which(SRMTwins == aFamily)
+TS[twinsInFamily,] 
+# The values in TS are very similar
+# The columns in the recurrence matrix are identical,
+# although this cannot be observed directly
+# because of the way KarsTS stores recurrence matrices
+</code></pre>
+
+
+</div>

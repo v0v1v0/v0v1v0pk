@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>grand.table</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Export results to a table</h2>
+
+<h3>Description</h3>
+
+<p>Try this function to combine results from an evaluated test into a matrix and export it to a table,
+e.g. to import
+in other software products. It can be particularily helpful for ET/NRET coded tests,
+if you want to compare the results of
+different valid scoring functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">grand.table(
+  NR.res = NULL,
+  NRET.res = NULL,
+  NRETp.res = NULL,
+  ET.res = NULL,
+  rescale = TRUE,
+  file = NULL,
+  csv2 = TRUE,
+  encoding = "CP1252",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>NR.res</code></td>
+<td>
+<p>An object of class <code>klausuR</code> which was evaluated according to the NR scoring policy.
+Usual MC tests must be given as <code>NR.res</code>, too.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>NRET.res</code></td>
+<td>
+<p>An object of class <code>klausuR</code> which was evaluated according to the NRET scoring policy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>NRETp.res</code></td>
+<td>
+<p>An object of class <code>klausuR</code> which was evaluated according to the NRET+ scoring policy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ET.res</code></td>
+<td>
+<p>An object of class <code>klausuR</code> which was evaluated according to the ET scoring policy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rescale</code></td>
+<td>
+<p>Logical,
+whether ET/NRET scaled results should be rescaled by <code>nret.rescale</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>A character string giving a file name to save to. If <code>NULL</code>,
+no file will be written.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>csv2</code></td>
+<td>
+<p>Logical. If <code>FALSE</code>,
+<code>write.csv</code> will be used instead of <code>write.csv2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>Encoding of the exported table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional options for <code>write.csv</code>/<code>write.csv2</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data.frame.
+</p>
+
+
+<h3>Note</h3>
+
+<p>For obvious reasons At least one of <code>NR.res</code>, <code>NRET.res</code>,
+<code>NRETp.res</code> or <code>ET.res</code>,
+or any combination of those, must be specified.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+</div>

@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotkanji</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot kanji</h2>
+
+<h3>Description</h3>
+
+<p>Write kanji to a graphics device.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotkanji(
+  kanji,
+  device = "default",
+  family = NULL,
+  factor = 10,
+  width = NULL,
+  height = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kanji</code></td>
+<td>
+<p>a vector of class character specifying one or several kanji to be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>device</code></td>
+<td>
+<p>the type of graphics device where the kanji is plotted. Defaults to the
+user's default type according to <code>getOption("device")</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the font family or families used for writing the kanji. Make sure to add the font(s)
+first by using <code>font_add</code>; see details. If <code>family</code> is
+a vector of several font families they are matched to the characters in <code>kanji</code>
+(and possibly recycled).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>a maginification factor applied to the font size (typically 12 points).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width, height</code></td>
+<td>
+<p>the dimensions of the device.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further parameters passed to the function opening the device (such as a
+file name for devices that create a file).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function writes one or several kanji to a graphics device
+in an arbitrary font that has been registered, i.e., added
+to the database in package <code>sysfonts</code>. For the latter say <code>font_add</code> or
+<code>font_families</code> to verify what fonts are available.
+</p>
+<p>For further information see <em>Working with Japanese fonts</em> in <code>vignette("kanjistat", package = "kanjistat")</code>.
+<code>plotkanji</code> uses the package <code>showtext</code> to write the kanji in a large font at the
+center of a new device of the specified type.
+specify <code>device = "current"</code> to write the kanji to the current device. It is now recommended
+to simply use <code>graphics::text</code> in combination with <code>showtext::showtext_auto</code> instead.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No return value, called for side effects.
+</p>
+
+
+<h3>Warning</h3>
+
+<p>If no font family is provided, the default <strong>Chinese</strong> font WenQuanYi Micro Hei that comes with the package showtext is used.
+This means that the characters will typically be recognizable, but quite often look odd as Japanese characters.
+We strongly advised that a Japanese font is used as detailed above.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">plotkanji("\u6edd")   
+plotkanji("\u72ac\u732b\u9b5a")
+
+</code></pre>
+
+
+</div>

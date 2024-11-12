@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bw_t</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bandwidth selection for the transformation kernel estimator</h2>
+
+<h3>Description</h3>
+
+<p>The bandwidth is selected by a rule of thumb. It approximately minimizes
+the MISE of the Gaussian copula on the transformed domain. The usual normal
+reference matrix is multiplied by 1.25 to account for the higher variance
+on the copula level.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bw_t(udata)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>udata</code></td>
+<td>
+<p>data.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The formula is
+</p>
+<p style="text-align: center;"><code class="reqn">1.25  n^{-1 / 6}  \hat{\Sigma}^{1/2},</code>
+</p>
+
+<p>where <code class="reqn">\hat{Sigma}</code> is empirical covariance matrix of the transformed
+random vector.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>2 x 2</code> bandwidth matrix.
+</p>
+
+
+<h3>References</h3>
+
+<p>Nagler, T. (2014).
+Kernel Methods for Vine Copula Estimation.
+Master's Thesis, Technische Universitaet Muenchen,
+<a href="https://mediatum.ub.tum.de/node?id=1231221">https://mediatum.ub.tum.de/node?id=1231221</a>
+</p>
+
+
+</div>

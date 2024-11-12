@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keras_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Keras Model</h2>
+
+<h3>Description</h3>
+
+<p>A model is a directed acyclic graph of layers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keras_model(inputs, outputs = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+<p>Input layer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outputs</code></td>
+<td>
+<p>Output layer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Any additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>fit_generator()</code>,
+<code>get_config()</code>,
+<code>get_layer()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_generator()</code>,
+<code>predict_on_batch()</code>,
+<code>predict_proba()</code>,
+<code>summary.keras.engine.training.Model()</code>,
+<code>train_on_batch()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+library(keras)
+
+# input layer
+inputs &lt;- layer_input(shape = c(784))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs %&gt;%
+  layer_dense(units = 64, activation = 'relu') %&gt;%
+  layer_dense(units = 64, activation = 'relu') %&gt;%
+  layer_dense(units = 10, activation = 'softmax')
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+model %&gt;% compile(
+  optimizer = 'rmsprop',
+  loss = 'categorical_crossentropy',
+  metrics = c('accuracy')
+)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cv.kerndwd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>cross-validation</h2>
+
+<h3>Description</h3>
+
+<p>Carry out a cross-validation for <code>kerndwd</code> to find optimal values of the tuning parameter <code>lambda</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cv.kerndwd(x, y, kern, lambda, nfolds=5, foldid, wt, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A matrix of predictors, i.e., the matrix <code>x</code> used in <code>kerndwd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A vector of binary class labels, i.e., the <code>y</code> used in <code>kerndwd</code>. <code>y</code> has to be two levels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern</code></td>
+<td>
+<p>A kernel function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>A user specified <code>lambda</code> candidate sequence for cross-validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfolds</code></td>
+<td>
+<p>The number of folds. Default value is 5. The allowable range is from 3 to the sample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>foldid</code></td>
+<td>
+<p>An optional vector with values between 1 and <code>nfold</code>, representing the fold indices for each observation. If supplied, <code>nfold</code> can be missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wt</code></td>
+<td>
+<p>A vector of length <code class="reqn">n</code> for weight factors. When <code>wt</code> is missing or <code>wt=NULL</code>, an unweighted DWD is fitted. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments being passed to <code>kerndwd</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function computes the mean cross-validation error and the standard error by fitting <code>kerndwd</code> with every fold excluded alternatively. This function is modified based on the <code>cv</code> function from the <code>glmnet</code> package.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>cv.kerndwd</code> object including the cross-validation results is return..
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>The <code>lambda</code> sequence used in <code>kerndwd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvm</code></td>
+<td>
+<p>A vector of length <code>length(lambda)</code>: mean cross-validated error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvsd</code></td>
+<td>
+<p>A vector of length <code>length(lambda)</code>: estimates of standard error of <code>cvm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvupper</code></td>
+<td>
+<p>The upper curve: <code>cvm + cvsd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvlower</code></td>
+<td>
+<p>The lower curve: <code>cvm - cvsd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda.min</code></td>
+<td>
+<p>The <code>lambda</code> incurring the minimum cross validation error <code>cvm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda.1se</code></td>
+<td>
+<p>The largest value of <code>lambda</code> such that error is within one standard error of the minimum.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvm.min</code></td>
+<td>
+<p>The cross-validation error corresponding to <code>lambda.min</code>, i.e., the least error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvm.1se</code></td>
+<td>
+<p>The cross-validation error corresponding to <code>lambda.1se</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Boxiang Wang and Hui Zou<br>
+Maintainer: Boxiang Wang  <a href="mailto:boxiang-wang@uiowa.edu">boxiang-wang@uiowa.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Wang, B. and Zou, H. (2018)
+“Another Look at Distance Weighted Discrimination," 
+<em>Journal of Royal Statistical Society, Series B</em>, <b>80</b>(1), 177–198. <br><a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244">https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244</a><br>
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," <em>Journal of Statistical Software</em>, <b>33</b>(1), 1–22.<br><a href="https://www.jstatsoft.org/v33/i01/paper">https://www.jstatsoft.org/v33/i01/paper</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kerndwd</code> and <code>plot.cv.kerndwd</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1)
+data(BUPA)
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
+lambda = 10^(seq(3, -3, length.out=10))
+kern = rbfdot(sigma=sigest(BUPA$X))
+m.cv = cv.kerndwd(BUPA$X, BUPA$y, kern, qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+m.cv$lambda.min
+</code></pre>
+
+
+</div>

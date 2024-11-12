@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bw_beta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bandwidth selection for the beta kernel estimator</h2>
+
+<h3>Description</h3>
+
+<p>The bandwidth is selected by minimizing the MISE using the Frank copula as
+the reference family. The copula parameter is set by inversion of Kendall's
+tau. See Nagler (2014) for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bw_beta(udata)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>udata</code></td>
+<td>
+<p>data.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>To speed things up, optimal bandwidths have been pre-calculated on a grid of
+tau values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A scalar bandwidth parameter.
+</p>
+
+
+<h3>References</h3>
+
+<p>Nagler, T. (2014).
+Kernel Methods for Vine Copula Estimation.
+Master's Thesis, Technische Universitaet Muenchen,
+<a href="https://mediatum.ub.tum.de/node?id=1231221">https://mediatum.ub.tum.de/node?id=1231221</a>
+</p>
+
+
+</div>

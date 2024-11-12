@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>var_missing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Apply a statistic function to all variables</h2>
+
+<h3>Description</h3>
+
+<p>Apply either <code>count_na()</code> or <code>dplyr::n_distinct()</code> to every column of a data
+frame and return the count and share of total values (either proportion
+missing or proportion distinct).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">var_missing(df)
+
+var_distinct(df)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>A data frame to glimpse.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Invisibly, a table of statistics by column of a data frame.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">var_missing(dplyr::storms)
+var_distinct(dplyr::storms)
+</code></pre>
+
+
+</div>

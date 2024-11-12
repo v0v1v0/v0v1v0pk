@@ -1,0 +1,160 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>histogram_from_hist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Histogram from hist function</h2>
+
+<h3>Description</h3>
+
+<p>Create a histogram based on the output of the <code>hist</code> function
+in the <code>graphics</code> package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">histogram_from_hist(
+  vector = NULL,
+  breaks = NULL,
+  counts = NULL,
+  percent = FALSE,
+  bin_fill_color = "green4",
+  bin_border_color = "black",
+  bin_border_thickness = 1,
+  notify_na_count = NULL,
+  x_axis_tick_marks = NULL,
+  y_axis_tick_marks = NULL,
+  cap_axis_lines = TRUE,
+  x_axis_title = "Value",
+  y_axis_title = NULL,
+  y_axis_title_vjust = 0.85
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p>a numeric vector indicating breaks for the bins.
+By default, no input is required for this argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>counts</code></td>
+<td>
+<p>a numeric vector containing counts for the bins
+(i.e., heights of the bins). By default, no input is required
+for this argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>percent</code></td>
+<td>
+<p>logical. If <code>percent = TRUE</code>, percentages
+will be plotted rather than frequencies (default = FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_fill_color</code></td>
+<td>
+<p>color of the area inside each bin
+(default = "green4")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_border_color</code></td>
+<td>
+<p>color of the border around each bin
+(default = "black")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_border_thickness</code></td>
+<td>
+<p>thickness of the border around each bin
+(default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notify_na_count</code></td>
+<td>
+<p>if <code>TRUE</code>, notify how many observations
+were removed due to missing values. By default, NA count will be printed
+only if there are any NA values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_tick_marks</code></td>
+<td>
+<p>a vector of values at which to place tick marks
+on the x axis (e.g., setting <code>x_axis_tick_marks = seq(0, 10, 5)</code> will
+put tick marks at 0, 5, and 10.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_tick_marks</code></td>
+<td>
+<p>a vector of values at which to place tick marks
+on the y axis (e.g., setting <code>y_axis_tick_marks = seq(0, 10, 5)</code> will
+put tick marks at 0, 5, and 10.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cap_axis_lines</code></td>
+<td>
+<p>logical. Should the axis lines be capped at the
+outer tick marks? (default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_title</code></td>
+<td>
+<p>title for x axis (default = "Value")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title</code></td>
+<td>
+<p>title for y axis (default = "Count" or "Percentage",
+depending on the value of <code>percent</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title_vjust</code></td>
+<td>
+<p>position of the y axis title (default = 0.85).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a histogram, a ggplot object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+histogram_from_hist(1:100)
+histogram_from_hist(c(1:100, NA))
+histogram_from_hist(vector = mtcars[["mpg"]])
+histogram_from_hist(vector = mtcars[["mpg"]], percent = TRUE)
+histogram_from_hist(vector = mtcars[["mpg"]],
+x_axis_tick_marks = c(10, 25, 35), y_axis_title_vjust = 0.5,
+y_axis_title = "Freq", x_axis_title = "Values of mpg")
+
+</code></pre>
+
+
+</div>

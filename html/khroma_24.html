@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_scheme_colourblind</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Simulated Color Blindness</h2>
+
+<h3>Description</h3>
+
+<p>Shows colors in a plot with different types of simulated color blindness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_scheme_colourblind(x)
+
+plot_scheme_colorblind(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>character</code> vector of colors.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>plot_scheme_colourblind()</code> is called for its side-effects: it results in a
+graphic being displayed (invisibly returns <code>x</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau, V. Arel-Bundock
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other diagnostic tools: 
+<code>change()</code>,
+<code>compare()</code>,
+<code>plot.color_scheme()</code>,
+<code>plot_map()</code>,
+<code>plot_scheme()</code>,
+<code>plot_tiles()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Trichromat
+pal &lt;- colour("bright")
+plot_scheme(pal(7))
+
+# Deuteranopia
+deu &lt;- change(pal, mode = "deuteranopia")
+plot_scheme(deu(7))
+
+# Protanopia
+pro &lt;- change(pal, mode = "protanopia")
+plot_scheme(pro(7))
+
+# Tritanopia
+tri &lt;- change(pal, mode = "tritanopia")
+plot_scheme(tri(7))
+
+# Achromatopsia
+ach &lt;- change(pal, mode = "achromatopsia")
+plot_scheme(ach(7))
+
+## Plot simulated color blindness
+plot_scheme_colorblind(pal(7))
+
+</code></pre>
+
+
+</div>

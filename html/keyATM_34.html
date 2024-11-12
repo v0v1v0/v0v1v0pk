@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>semantic_coherence</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Semantic Coherence: Mimno et al. (2011)</h2>
+
+<h3>Description</h3>
+
+<p>Mimno, David et al. 2011. “Optimizing Semantic Coherence in Topic Models.”
+In Proceedings of the 2011 Conference on Empirical Methods in Natural
+Language Processing, Edinburgh, Scotland, UK.: Association for Computational
+Linguistics, 262–72. https://aclanthology.org/D11-1024.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">semantic_coherence(x, docs, n = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the output from a keyATM model (see <code>keyATM()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>docs</code></td>
+<td>
+<p>texts read via <code>keyATM_read()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer. The number terms to visualize. Default is <code>10</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Equation 1 of Mimno et al. 2011 adopted to keyATM.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of topic coherence metric calculated by each topic.
+</p>
+
+
+</div>

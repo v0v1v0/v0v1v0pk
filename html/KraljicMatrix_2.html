@@ -1,0 +1,135 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geom_frontier</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting the Pareto Optimal Frontier</h2>
+
+<h3>Description</h3>
+
+<p>The frontier geom is used to overlay the efficient frontier on a scatterplot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">geom_frontier(mapping = NULL, data = NULL, position = "identity",
+  direction = "vh", na.rm = FALSE, show.legend = NA, inherit.aes = TRUE,
+  ...)
+
+stat_frontier(mapping = NULL, data = NULL, geom = "step",
+  position = "identity", direction = "vh", na.rm = FALSE,
+  show.legend = NA, inherit.aes = TRUE, quadrant = "top.right", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mapping</code></td>
+<td>
+<p>Set of aesthetic mappings created by <code>aes</code> or
+<code>aes_</code>. If specified and <code>inherit.aes = TRUE</code> (the default), it is
+combined with the default mapping at the top level of the plot. You must
+supply mapping if there is no plot mapping.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data to be displayed in this layer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>position</code></td>
+<td>
+<p>Position adjustment, either as a string, or the result of a
+call to a position adjustment function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>direction</code></td>
+<td>
+<p>Direction of stairs: 'vh' for vertical then horizontal, or 'hv'
+for horizontal then vertical.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>If <code>FALSE</code>, the default, missing values are removed with a
+warning. If <code>TRUE</code>, missing values are silently removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show.legend</code></td>
+<td>
+<p>Logical. Should this layer be included in the legends?
+<code>NA</code>, the default, includes if any aesthetics are mapped. <code>FALSE</code>
+never includes, and <code>TRUE</code> always includes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit.aes</code></td>
+<td>
+<p>If <code>FALSE</code>, overrides the default aesthetics, rather
+than combining with them. This is most useful for helper functions that
+define both data and aesthetics and shouldn't inherit behaviour from the
+default plot specification, e.g. borders.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments passed on to <code>layer</code>. These are often
+aesthetics, used to set an aesthetic to a fixed value, like
+<code>color = "red"</code> or <code>size = 3</code>. They may also be parameters to the
+paired <code>geom</code>/<code>stat</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geom</code></td>
+<td>
+<p>Use to override the default connection between
+<code>geom_frontier</code> and <code>stat_frontier</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quadrant</code></td>
+<td>
+<p>See <code>get_frontier</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+
+# default will find the efficient front in top right quadrant
+ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  geom_frontier()
+
+# change the direction of the steps
+ggplot(mtcars, aes(mpg, wt)) +
+  geom_point() +
+  geom_frontier(direction = 'hv')
+
+# use quadrant parameter to change how you define the efficient frontier
+ggplot(airquality, aes(Ozone, Temp)) +
+  geom_point() +
+  geom_frontier(quadrant = 'top.left')
+
+ggplot(airquality, aes(Ozone, Temp)) +
+  geom_point() +
+  geom_frontier(quadrant = 'bottom.right')
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

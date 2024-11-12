@@ -1,0 +1,216 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compute_all_tests</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Testing pathway risk association</h2>
+
+<h3>Description</h3>
+
+<p>This functions computes p-values <code>frm</code> score tests of genetic pathway risk association in 5 different models
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compute_all_tests(
+  data,
+  ind_gene = 7:ncol(data),
+  num_perts = 1000,
+  Ws = NULL,
+  rho = NA,
+  kernel = c("linear", "gaussian", "poly"),
+  d = 2,
+  pca_thres = 0.9,
+  get_ptb_pvals = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a <code>data.frame</code> of <code>N</code> rows and set up as the output from <code>sim_SCR_data</code> with columns:</p>
+
+<ul>
+<li>
+<p><code>XR</code>: time to recurrence / death / censoring
+</p>
+</li>
+<li>
+<p><code>XD</code>: time to death / censoring
+</p>
+</li>
+<li>
+<p><code>DeltaR</code>: Indicator of censoring (0), recurrence (1), or death (2) for this earliest time <code>XR</code>
+</p>
+</li>
+<li>
+<p><code>DeltaD</code>: Indicator of censoring (0) or death (1)
+</p>
+</li>
+<li>
+<p><code>XPFS</code>: time to recurrence / death / censoring (=<code>XR</code>)
+</p>
+</li>
+<li>
+<p><code>DeltaPFS</code>: Indicator of censoring (0) or recurrence or death, whichever came first (1)
+</p>
+</li>
+<li>
+<p><code>Z_1,...,Z_P</code>: genomic variables
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind_gene</code></td>
+<td>
+<p>columns indices of genes in the pathway of interest. Default is <code>7:ncol(data)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_perts</code></td>
+<td>
+<p>number of perturbations used. Default is <code>1000</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ws</code></td>
+<td>
+<p>optional inputed perturbations, should be a vector of length <code>N x num_perts</code> containing
+i.i.d. realization of a random variable with mean=0 and variance=1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>a vector of rhos, such as one found created from the range returned by <code>findRhoInterval</code>,
+used for tuning non-linear kernel. Only used if <code>kernel</code> is not <code>"linear"</code>. Default is <code>NA</code>.
+Currently not available for use by user-defined kernels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string indicating which kernel is used. Possible values (currently implemented) are
+<code>"linear"</code>, <code>"gaussian"</code> or <code>"poly"</code>. Otherwise, this can also be a user defined kernel function.
+See <code>genericKernelEval</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>if <code>kernel</code> is <code>"poly"</code>, the polynomial power. Default is 2 (quadratic kernel).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pca_thres</code></td>
+<td>
+<p>a number between <code>0</code> and <code>1</code> giving the threshold to be used for PCA.
+Default is <code>0.9</code>. If <code>NULL</code>, no PCA is performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>get_ptb_pvals</code></td>
+<td>
+<p>a logical flag indicating whether perturbed p-values should be returned
+as part of the results. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>extra parameters to be passed to a user-defined kernel.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>either a <code>vector</code> of p-values for 5 different models with names:</p>
+
+<ul>
+<li>
+<p><code>"SCR"</code>: Semi-Competing Risks
+</p>
+</li>
+<li>
+<p><code>"PFS"</code>: Progression Free Survival
+</p>
+</li>
+<li>
+<p><code>"CR"</code>: Competing Risks
+</p>
+</li>
+<li>
+<p><code>"OS"</code>: Overall Survival
+</p>
+</li>
+<li>
+<p><code>"SCR_alt"</code>: SCR allowing different tuning parameters for the two event time processes
+</p>
+</li>
+</ul>
+<p> or else if <code>get_ptb_pvals</code> is <code>TRUE</code>, a <code>list</code> with 2 elements:</p>
+
+<ul>
+<li>
+<p><code>"obs_pvals"</code>: a vector containing the observed p-values for each of the 5 models as described above
+</p>
+</li>
+<li>
+<p><code>"null_pvals_perts"</code>: a matrix of dimensions <code>num_perts x 5</code> containing the corresponding
+perturbed p-values
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Neykov M, Hejblum BP, Sinnot JA, Kernel Machine Score Test for Pathway Analysis in the
+Presence of Semi-Competing Risks, submitted, 2016.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## First generate some Data
+feat_m_fun &lt;- function(X){
+ sin(X[,1]+X[,2]^2)-1
+}
+feat_d_fun &lt;-  function(X){
+ (X[,4]-X[,5])^2/8
+}
+mydata &lt;- sim_SCR_data(data_size = 400, ncol_gene_mat = 20, feat_m = feat_m_fun,
+                      feat_d = feat_d_fun, mu_cen = 40, cov=0.5)
+
+#initial range
+ind_gene &lt;- c(7:ncol(mydata))
+my_rho_init &lt;- seq(0.01, 20, length=300)*length(ind_gene)
+range(my_rho_init)
+
+if(interactive()){
+# compute the interval for rho
+rho_set &lt;- findRhoInterval(tZ=t(mydata[,ind_gene]), rho_init = my_rho_init, kernel="gaussian")
+rho_set
+range(my_rho_init) # good to check that the interval produced here is strictly contained in rho_init
+# otherwise, expand rho.init and rerun
+
+rhos &lt;- exp(seq(log(rho_set[1]),log(rho_set[2]), length=50))
+
+# run the tests with Gaussian kernel
+compute_all_tests(data = mydata, num_perts=1000, rho=rhos, kernel="gaussian")
+# run the tests with linear kernel
+compute_all_tests(data=mydata, num_perts=1000, kernel="linear")
+}
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dkde1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Working with a kde1d object</h2>
+
+<h3>Description</h3>
+
+<p>The density, cdf, or quantile function of a kernel density estimate are
+evaluated at arbitrary points with <code>dkde1d</code>, <code>pkde1d</code>,
+and <code>qkde1d</code> respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dkde1d(x, obj)
+
+pkde1d(x, obj)
+
+qkde1d(x, obj)
+
+rkde1d(n, obj, quasi = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of evaluation points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>a <code>kde1d</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer; number of observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quasi</code></td>
+<td>
+<p>logical; the default (<code>FALSE</code>) returns pseudo-random
+numbers, use <code>TRUE</code> for quasi-random numbers (generalized Halton, see
+<code>ghalton</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The density or cdf estimate evaluated at <code>x</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kde1d</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc)  # load data
+fit &lt;- kde1d(wdbc[, 5])  # estimate density
+dkde1d(1000, fit)        # evaluate density estimate
+pkde1d(1000, fit)        # evaluate corresponding cdf
+qkde1d(0.5, fit)         # quantile function
+hist(rkde1d(100, fit))   # simulate
+
+</code></pre>
+
+
+</div>

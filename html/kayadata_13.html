@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lookup_region_code</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Look up country or region name from code</h2>
+
+<h3>Description</h3>
+
+<p>Look up country or region name from code
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lookup_region_code(region_code, data = kayadata::kaya_data, quiet = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>region_code</code></td>
+<td>
+<p>The three-letter country or region code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data frame in which to look up <code>region_code</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Suppress warnings if there is no such country or region.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The corresponding country or region name, or NULL if there is no
+such country or region
+</p>
+
+
+<h3>See Also</h3>
+
+<p>regions
+</p>
+
+
+</div>

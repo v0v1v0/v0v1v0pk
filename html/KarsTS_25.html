@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compareVecVec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+compareVecVec: compare the elements of two vectors
+</h2>
+
+<h3>Description</h3>
+
+<p>Checks whether there are any shared elements between two vectors.It is used internally
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compareVecVec(VA, VB)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>VA</code></td>
+<td>
+
+<p>One vector
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>VB</code></td>
+<td>
+
+<p>Another vector
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A logical matrix showing the coincidences
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+compareVecVec(1:10, 7:12)
+
+V1 &lt;- c("Apples", "Strawberries","Watermelon")
+V2 &lt;- c("Ananas", "Apples", "Strawberries", "Coconut")
+compareVecVec(V1,V2)
+
+</code></pre>
+
+
+</div>

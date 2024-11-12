@@ -1,0 +1,35 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>imgur_upload</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Upload an image to imgur.com</h2>
+
+<h3>Description</h3>
+
+<p>This function is an alias to <code>xfun::upload_imgur()</code>. It is kept in
+<span class="pkg">knitr</span> only for backward-compatibility reasons. You are recommended to
+use <code>xfun::upload_imgur()</code> directly instead.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">imgur_upload(
+  file,
+  key = xfun::env_option("knitr.imgur.key", "9f3460e67f308f6"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file, key, ...</code></td>
+<td>
+<p>See <code>xfun::upload_imgur()</code>.</p>
+</td>
+</tr></table>
+</div>

@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kanjidata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Data on kanji</h2>
+
+<h3>Description</h3>
+
+<p>The tibbles kbase and kmorph provide basic and morphologic information, respectively, for
+all kanji contained in the KANJIDIC2 file (see below)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kbase
+
+kmorph
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>kbase is a tibble with 13,108 rows and 13 variables:
+</p>
+
+<dl>
+<dt>kanji</dt>
+<dd>
+<p>the kanji</p>
+</dd>
+<dt>unicode</dt>
+<dd>
+<p>the Unicode codepoint</p>
+</dd>
+<dt>strokes</dt>
+<dd>
+<p>the number of strokes</p>
+</dd>
+<dt>class</dt>
+<dd>
+<p>one of four classes: "kyouiku", "jouyou", "jinmeiyou" or "hyougai"</p>
+</dd>
+<dt>grade</dt>
+<dd>
+<p>a number from 1-11, basically a finer version of class, same as in KANJIDIC2,
+except that we assgined an 11 for all hyougaiji (rather than an NA value)</p>
+</dd>
+<dt>kanken</dt>
+<dd>
+<p>at what level the kanji appears in the Nihon Kanji Nouryoku Kentei (Kanken)</p>
+</dd>
+<dt>jlpt</dt>
+<dd>
+<p>at what level the kanji appears in the Japanese Language Proficiency Test
+(Nihongou Nouryoku Shiken)</p>
+</dd>
+<dt>wanikani</dt>
+<dd>
+<p>at what level the kanji is learned on the kanji learning website Wanikani</p>
+</dd>
+<dt>frank</dt>
+<dd>
+<p>the frequency rank (1 = most frequent) "based on several averages (Wikipedia,
+novels, newspapers, ...)"</p>
+</dd>
+<dt>frank_news</dt>
+<dd>
+<p>the frequency rank (1 = most frequent) based on news paper data (2501
+most frequent kanji over four years in the Mainichi Shimbun)</p>
+</dd>
+<dt>read_on, read_kun</dt>
+<dd>
+<p>a single ON reading in katakana</p>
+</dd>
+<dt>read_kun</dt>
+<dd>
+<p>a single kun reading in hiragana</p>
+</dd>
+<dt>mean</dt>
+<dd>
+<p>a single English meaning of the kanji</p>
+</dd>
+</dl>
+<p>kmorph is a tibble with 13,108 rows and 15 variables:
+</p>
+
+<dl>
+<dt>kanji</dt>
+<dd>
+<p>the kanji</p>
+</dd>
+<dt>strokes</dt>
+<dd>
+<p>the number of strokes</p>
+</dd>
+<dt>radical</dt>
+<dd>
+<p>the traditional (Kangxi) radical used for indexing kanji (one of 214)</p>
+</dd>
+<dt>radvar</dt>
+<dd>
+<p>the variant of the radical if it is different, otherwise <code>NA</code></p>
+</dd>
+<dt>nelson_c</dt>
+<dd>
+<p>the Nelson radical if it differs from the traditional one, otherwise <code>NA</code></p>
+</dd>
+<dt>idc</dt>
+<dd>
+<p>ideographic description character (plus sometimes a number or a letter) describing
+the shape of the kanji</p>
+</dd>
+<dt>components</dt>
+<dd>
+<p>visible components of the kanji; originally from KRADFILE</p>
+</dd>
+<dt>skip</dt>
+<dd>
+<p>the kanji's SKIP code</p>
+</dd>
+<dt>mean</dt>
+<dd>
+<p>a single English meaning of the kanji (same as in kbase)</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>The single ON and kun readings and the single meaning are for easy identification
+of the more difficult kanji. They are the first entry in the KANJIDIC2 file which may not
+always be the most important one. For full readings/meanings use the function <code>lookup</code>
+or consult a dictionary.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Most of the data is directly from the KANJIDIC2 file.
+<a href="https://www.edrdg.org/wiki/index.php/KANJIDIC_Project">https://www.edrdg.org/wiki/index.php/KANJIDIC_Project</a><br>
+Variables <code>jlpt</code>, <code>frank</code>, <code>idc</code>, <code>components</code> were taken from the Kanjium data base
+<a href="https://github.com/mifunetoshiro/kanjium">https://github.com/mifunetoshiro/kanjium</a><br>
+Variable <code>components</code> is originally from RADKFILE/KRADFILE.
+<a href="https://www.edrdg.org/">https://www.edrdg.org/</a>)
+</p>
+<p>The use of this data is covered in each case by a Creative Commons BY-SA 4.0 License.
+See the package's LICENSE file for details and copyright holders.
+</p>
+<p>Variable "class" is derived from "grade".<br>
+Variable "kanken" was compiled based on the Wikipedia description of the test levels (as of September 2022).
+</p>
+
+
+</div>

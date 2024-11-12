@@ -1,0 +1,235 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covANOVA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creator for the Class <code>"covANOVA"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Creator for the class <code>"covANOVA"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">covANOVA(k1Fun1 = k1Fun1Gauss,
+      cov = c("corr", "homo"),
+      iso = 0, iso1 = 1L,
+      hasGrad = TRUE,
+      inputs = NULL,
+      d = NULL,
+      parNames,
+      par = NULL, parLower = NULL, parUpper = NULL,
+      label = "ANOVA kernel",
+      ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>k1Fun1</code></td>
+<td>
+
+<p>A kernel function of a <em>scalar</em> numeric variable, and possibly
+of an extra "shape" parameter. This function can also return the
+first-order derivative or the two-first order derivatives as an
+attribute with name <code>"der"</code> and with a matrix content. When an
+extra shape parameter exists, the gradient can also be returned
+as an attribute with name <code>"gradient"</code>, see <b>Examples</b>
+later. The name of the function can be given as a character string.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>A character string specifying the value of the variance parameter <code class="reqn">\delta</code> for the covariance kernel. Contrarily to other kernel classes, that parameter is not equal to the variance. Thus, mind that choosing (<code>"corr"</code>) corresponds to <code class="reqn">\delta=1</code> but <em>does not</em> correspond to a correlation kernel, see details below. Partial matching is allowed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iso</code></td>
+<td>
+
+<p>Integer. The value <code>1L</code> corresponds to an isotropic covariance,
+with all the inputs sharing the same range value.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iso1</code></td>
+<td>
+
+<p>Integer. This applies only when <code>k1Fun1</code> contains one or more
+parameters that can be called 'shape' parameters. At now, only one
+such parameter can be found in <code>k1Fun1</code> and consequently
+<code>iso1</code> must be of length one. With <code>iso1 = 0</code> the shape
+parameter in <code>k1Fun1</code> will generate <code>d</code> parameters in the
+<code>covANOVA</code> object with their name suffixed by the dimension. When
+<code>iso1</code> is <code>1</code> only one shape parameter will be created in
+the <code>covANOVA</code> object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hasGrad</code></td>
+<td>
+
+<p>Integer or logical. Tells if the value returned by the function
+<code>k1Fun1</code> has an attribute named <code>"der"</code> giving the
+derivative(s).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+
+<p>Character. Names of the inputs.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>Integer. Number of inputs.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parNames</code></td>
+<td>
+
+<p>Names of the parameters. By default, ranges are prefixed
+<code>"theta_"</code> in the non-iso case and the range is named
+<code>"theta"</code> in the iso case.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+
+<p>Numeric values for the parameters. Can be <code>NA</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parLower</code></td>
+<td>
+
+<p>Numeric values for the lower bounds on the parameters. Can be
+<code>-Inf</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parUpper</code></td>
+<td>
+
+<p>Numeric values for the upper bounds on the parameters. Can be
+<code>Inf</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+
+<p>A short description of the kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments passed to the method <code>new</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A ANOVA kernel on the <code class="reqn">d</code>-dimensional Euclidean space
+takes the form </p>
+<p style="text-align: center;"><code class="reqn">K(\mathbf{x},\,\mathbf{x}') = \delta^2
+    \prod_{\ell = 1}^d (1 + \tau_\ell^2 \kappa(r_\ell))</code>
+</p>
+<p> where <code class="reqn">\kappa(r)</code> is a suitable correlation kernel for a one-dimensional input, and <code class="reqn">r_\ell</code> is given by  <code class="reqn">r_\ell := [x_\ell - x'_\ell] / \theta_\ell</code> for <code class="reqn">\ell = 1</code> to <code class="reqn">d</code>.
+</p>
+<p>In this default form, the ANOVA kernel depends on <code class="reqn">2d + 1</code>
+parameters: the <em>ranges</em> <code class="reqn">\theta_\ell &gt;0</code>, the
+<em>variance ratios</em> <code class="reqn">\tau_\ell^2</code>, and the variance parameter <code class="reqn">\delta^2</code>.
+</p>
+<p>An <em>isotropic</em> form uses the same range <code class="reqn">\theta</code>
+for all inputs, i.e. sets <code class="reqn">\theta_\ell =
+    \theta</code> for all <code class="reqn">\ell</code>. This is obtained by
+using <code>iso = TRUE</code>.
+</p>
+<p>A <em>correlation</em> version uses <code class="reqn">\delta^2 = 1</code>. This is obtained by using <code>cov = "corr"</code>. Mind that it does not correspond to a correlation kernel. Indeed, in general, the variance is equal to </p>
+<p style="text-align: center;"><code class="reqn">K(\mathbf{x},\,\mathbf{x}) = \delta^2
+    \prod_{\ell = 1}^d (1 + \tau_\ell^2).</code>
+</p>
+
+<p>Finally, the correlation kernel <code class="reqn">\kappa(r)</code> can depend on
+a "shape" parameter, e.g. have the form
+<code class="reqn">\kappa(r;\,\alpha)</code>. The extra shape parameter
+<code class="reqn">\alpha</code> will be considered then as a parameter of the
+resulting ANOVA kernel, making it possible to estimate it
+by ML along with the range(s) and the variance.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with class <code>"covANOVA"</code>.
+</p>
+
+
+
+
+
+
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+if (require(DiceKriging)) {
+    ## a 16-points factorial design and the corresponding response
+    d &lt;- 2; n &lt;- 16; x &lt;- seq(from = 0.0, to = 1.0, length.out = 4)
+    X &lt;- expand.grid(x1 = x, x2 = x)
+    y &lt;- apply(X, 1, DiceKriging::branin)
+
+    ## kriging model with matern5_2 covariance structure, constant
+    ## trend. A crucial point is to set the upper bounds!
+    mycov &lt;- covANOVA(k1Fun1 = k1Fun1Matern5_2, d = 2, cov = "homo")
+    coefUpper(mycov) &lt;- c(2.0, 2.0, 5.0, 5.0, 1e10)
+    mygp &lt;- gp(y ~ 1, data = data.frame(X, y),
+               cov = mycov, multistart = 100, noise = TRUE)
+
+    nGrid &lt;- 50; xGrid &lt;- seq(from = 0, to = 1, length.out = nGrid)
+    XGrid &lt;- expand.grid(x1 = xGrid, x2 = xGrid)
+    yGrid &lt;- apply(XGrid, 1, DiceKriging::branin)
+    pgp &lt;- predict(mygp, XGrid)$mean
+
+    mykm &lt;- km(design = X, response = y)
+    pkm &lt;- predict(mykm, XGrid, "UK")$mean
+    c("km" = sqrt(mean((yGrid - pkm)^2)),
+      "gp" = sqrt(mean((yGrid - pgp)^2)))
+    
+}
+
+## End(Not run)
+</code></pre>
+
+
+</div>

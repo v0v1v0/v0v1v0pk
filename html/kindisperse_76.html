@@ -1,0 +1,192 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kin_pair_simulation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KinPairSimulation</h2>
+
+<h3>Description</h3>
+
+<p>KinPairSimulation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kin_pair_simulation(
+  data = NULL,
+  kinship = NULL,
+  lifestage = NULL,
+  simtype = NULL,
+  kerneltype = NULL,
+  posigma = NULL,
+  initsigma = NULL,
+  breedsigma = NULL,
+  gravsigma = NULL,
+  ovisigma = NULL,
+  customsigma = NULL,
+  simdims = NULL,
+  kernelshape = NULL,
+  cycle = NULL,
+  call = NULL,
+  filtertype = NULL,
+  upper = NULL,
+  lower = NULL,
+  spacing = NULL,
+  samplenum = NULL,
+  sampledims = NULL,
+  model = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>tbl_df. tibble  of simulation values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>character - one of PO, FS, HS, AV, HAV, GG, 1C, H1C, GAV, HGAV, 1C1, H1C1, GGG, 2C, and H2C.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lifestage</code></td>
+<td>
+<p>character - one of 'unknown', 'immature' or 'ovipositional'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simtype</code></td>
+<td>
+<p>character - simulation type</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kerneltype</code></td>
+<td>
+<p>character. - 'Gaussian', 'Laplace' or 'vgamma' (variance-gamma)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posigma</code></td>
+<td>
+<p>numeric - overall value of dispersal sigma (for simple kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initsigma</code></td>
+<td>
+<p>numeric.    - value of pre-breeding dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breedsigma</code></td>
+<td>
+<p>numeric.    - value of breeding dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gravsigma</code></td>
+<td>
+<p>numeric.    - value of post-breeding dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ovisigma</code></td>
+<td>
+<p>numeric.    - value of oviposition dispersal sigma (for composite kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>customsigma</code></td>
+<td>
+<p>numeric. - vector of named custom dispersal sigmas (for custom kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simdims</code></td>
+<td>
+<p>numeric. - dimensions of sampling area (assumes one side of square)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernelshape</code></td>
+<td>
+<p>numeric. - value of kernel shape of simulation (if using kernel with shape parameter e.g. vgamma)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cycle</code></td>
+<td>
+<p>integer - number of breeding cycles sampled individual has survived (for custom kernel)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>call. Call to create object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filtertype</code></td>
+<td>
+<p>character. whether the initial sim has been further filtered</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>numeric.       - FILTER: upper threshold used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>numeric.       - FILTER: lower threshold used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spacing</code></td>
+<td>
+<p>numeric.       - FILTER: spacing used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samplenum</code></td>
+<td>
+<p>numeric.       - FILTER: sample number used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sampledims</code></td>
+<td>
+<p>numeric.       - FILTER: sample dimensions used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>list - model information if custom simulation used to generate object</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns an object of class <code>KinPairSimulation</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kin_pair_simulation()
+</code></pre>
+
+
+</div>

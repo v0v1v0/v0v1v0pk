@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>omega_constants</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate any constants that depend on angular frequency <code class="reqn">\omega</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>This function accesses the appropriate method to calculate the
+<code class="reqn">\omega</code>-dependent constant associated with the choice of <code>c.type</code>.
+</p>
+<p><em>This function is not likely to be needed by the user.</em>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">omega_constants(omega = 0, c.type = c("alpha", "diffusivity_time"), ...)
+
+## Default S3 method:
+omega_constants(omega = 0, c.type = c("alpha", "diffusivity_time"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>omega</code></td>
+<td>
+<p>frequency,  <code class="reqn">[rad/sec]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c.type</code></td>
+<td>
+<p>the constant to calculate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional params passed to calculator.  In the case of 
+<code>ctype="alpha"</code>, set 
+<code>S., T., Rs.</code>; and, in the case of
+<code>ctype="diffusivity_time"</code>, set
+<code>D.</code> or <code>S., T.</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+
+<h4>What is <code>"omega"</code>?</h4>
+
+<p>The name is in reference to
+radial frequency <code class="reqn">\omega</code>, which is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\omega \equiv 2 \pi / \tau</code>
+</p>
+
+<p>where <code class="reqn">\tau</code> is the period of oscillation.
+</p>
+
+
+
+<h4>What is the <code>"alpha"</code> calculation?</h4>
+
+<p>The parameter <code class="reqn">\alpha</code> is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\alpha \equiv r_w \sqrt{\omega S / T}</code>
+</p>
+
+<p>where <code class="reqn">r_w</code> is the radius of the well,
+where <code class="reqn">S</code> is the storativity, and <code class="reqn">T</code> is
+transmissivity.  See the parameter <code>...</code> for details
+on how to pass these values.
+</p>
+<p>This definition is common to many papers on the topic.  For example,
+it corresponds to  <strong>Equation 12</strong> in Kitagawa et al (2011).
+Because the computation of <code class="reqn">\alpha</code> depends also on physical
+properties, additional parameters can be
+passed through (e.g. the transmissivity).  
+</p>
+
+
+
+<h4>What is the <code>"diffusivity_time"</code> calculation?</h4>
+
+<p>This is a similar calculation to <code>omega_norm</code>. It uses
+the effective hydraulic diffusivity <code class="reqn">D</code>, which is defined in
+this case as the ratio of transmissivity to storativity:
+</p>
+<p style="text-align: center;"><code class="reqn">D \equiv \frac{T}{S}</code>
+</p>
+
+
+
+
+<h3>Value</h3>
+
+<p>Values of the constant represented by <code>c.type</code> for the given
+parameters
+</p>
+
+
+<h3>Warnings Issued</h3>
+
+<p>In the case <code>c.type='alpha'</code>, the 
+parameters <code>S.</code>, <code>T.</code>,  and <code>Rs.</code> should
+be passed; otherwise, values are assumed to ensure the 
+calculation does not fail, and the results are essentially meaningless.
+</p>
+<p>Warnings will be issued if any necessary parameters are missing, indicating
+default values were used.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>alpha_constants</code>, <code>well_response</code>, and
+<code>kitagawa-package</code> for references and more background.
+</p>
+<p>Other ConstantsCalculators: 
+<code>alpha_constants()</code>,
+<code>kitagawa-constants</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># alpha
+omega_constants() # default is alpha, but will give warnings about S., T., Rs.
+omega_constants(T.=1,S.=1,Rs.=1)  # 0, no warnings
+omega_constants(1:10)  # sequence, with warnings about S., T., Rs.
+omega_constants(1:10,T.=1,S.=1,Rs.=1) # sequence, no warnings
+# diffusivity time
+omega_constants(c.type="diffusivity_time", D.=1)  # 0, no warnings
+omega_constants(c.type="diff", D.=1)  # 0, no warnings (arg matching)
+omega_constants(c.type="diff")  # 0, warnings about S., T. because no D.
+omega_constants(c.type="diff", S.=1)  # 0, warnings about T. because no D. or S.
+</code></pre>
+
+
+</div>

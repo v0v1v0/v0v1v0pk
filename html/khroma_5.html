@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compare</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Color Difference</h2>
+
+<h3>Description</h3>
+
+<p>Computes CIELAB distance metric.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compare(x, metric = 2000, diag = FALSE, upper = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>character</code> vector of colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metric</code></td>
+<td>
+<p>An <code>integer</code> value giving the year the metric was
+recommended by the CIE. It must be one of "<code>1976</code>", "<code>1994</code>", or
+"<code>2000</code>" (default; see <code>spacesXYZ::DeltaE()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diag</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the diagonal of the distance matrix
+be printed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the upper triangle of the distance
+matrix should be printed?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A distance matrix.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other diagnostic tools: 
+<code>change()</code>,
+<code>plot.color_scheme()</code>,
+<code>plot_map()</code>,
+<code>plot_scheme()</code>,
+<code>plot_scheme_colourblind()</code>,
+<code>plot_tiles()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Trichromat
+pal &lt;- colour("bright")
+compare(pal(5))
+
+# Deuteranopia
+deu &lt;- change(pal, mode = "deuteranopia")
+compare(deu(5))
+
+# Protanopia
+pro &lt;- change(pal, mode = "protanopia")
+compare(pro(5))
+
+# Tritanopia
+tri &lt;- change(pal, mode = "tritanopia")
+compare(tri(5))
+
+# Achromatopsia
+ach &lt;- change(pal, mode = "achromatopsia")
+compare(ach(5))
+</code></pre>
+
+
+</div>

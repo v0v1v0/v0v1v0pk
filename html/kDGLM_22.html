@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_Multinom_Normal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>convert_Multinom_Normal</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the parameters of the Dirichlet that best approximates the given log-Normal distribution.
+The approximation is the best in the sense that it minimizes the KL divergence from the log-Normal to the Dirichlet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_Multinom_Normal(ft, Qt, parms = list())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ft</code></td>
+<td>
+<p>vector: A vector representing the means from the normal distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qt</code></td>
+<td>
+<p>matrix: A matrix representing the covariance matrix of the normal distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list: A list of extra known parameters of the distribution. Not used in this kernel.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The parameters of the conjugated distribution of the linear predictor.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Multinomial outcome: 
+<code>convert_Normal_Multinom()</code>,
+<code>multnom_pred()</code>,
+<code>update_Multinom()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knitxl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Knit a Document to an XLSX file</h2>
+
+<h3>Description</h3>
+
+<p>This function takes an input file, extracts the R code in it according to a
+list of patterns, evaluates the code and writes the output in an XLSX
+spreadsheet file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knitxl(
+  input,
+  output = NULL,
+  text = NULL,
+  quiet = FALSE,
+  envir = parent.frame(),
+  encoding = "UTF-8"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>Path to the input file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>Path to the output file for <code>knitxl()</code>. If <code>NULL</code>, this
+function will try to guess a default, which will be under the current
+working directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>A character vector. This is an alternative way to provide the
+input file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Boolean; suppress the progress bar and messages?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>envir</code></td>
+<td>
+<p>Environment in which code chunks are to be evaluated, for
+example, <code>parent.frame()</code>, <code>new.env()</code>, or
+<code>globalenv()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>Encoding of the input file; always assumed to be UTF-8 (i.e.,
+this argument is effectively ignored).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The compiled document is written into the output file, and the path
+of the output file is returned invisibly.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  library(knitxl)
+  path_to_input &lt;- system.file("examples", "knitxl-minimal.Rmd", package = "knitxl")
+  path_to_output &lt;- "knitxl-minimal.xlsx"
+  knitxl(path_to_input, output = path_to_output)  # will generate knitxl-minimal.xlsx
+  unlink(path_to_output)
+
+</code></pre>
+
+
+</div>

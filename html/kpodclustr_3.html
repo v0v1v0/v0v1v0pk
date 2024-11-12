@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>initialImpute</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function for initial imputation for k-means</h2>
+
+<h3>Description</h3>
+
+<p><code>initialImpute</code> Initial imputation for k-means
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">initialImpute(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix containing missing entries whose rows are observations and columns are features</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A data matrix containing no missing entries
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jocelyn T. Chi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p &lt;- 2
+n &lt;- 100
+k &lt;- 3
+sigma &lt;- 0.25
+missing &lt;- 0.05
+Data &lt;- makeData(p,n,k,sigma,missing)
+X &lt;- Data$Missing
+X_copy &lt;- initialImpute(X)
+
+</code></pre>
+
+
+</div>

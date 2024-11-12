@@ -1,0 +1,219 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kaplan-Meier Multiple Imputation for Competing Risks</h2>
+
+<h3>Description</h3>
+
+<p>The function performs a non parametric multiple imputation that aims
+at recovering the missing potential censoring times from competing
+events.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmi(formula, data, id = NULL, etype, failcode = 1, nimp = 10,
+    epsilon = 1, bootstrap = FALSE, nboot = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A <code>formula</code> object, that must have a <code>Surv</code>
+object on the left of a <code>~</code> operator. Covariates could be added
+on the right hand side of the formula. They will be used to model
+the censoring distribution. See Details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data.frame in which to interpret the variables given in
+the formula, <code>etype</code> and <code>id</code>. It is mandatory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>Used to identify individual subjects when one subject can
+have several rows of data, e.g., with time-dependent covariates. Set
+to <code>NULL</code> when there is only one raw of data per subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>etype</code></td>
+<td>
+<p>Variable specifying the type of competing event. When
+<code>status == 1</code> in <code>formula</code>, <code>etype</code> describes the
+type of event, otherwise, for censored observation, (<code>status ==
+      0</code>), the value of <code>etype</code> is ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>failcode</code></td>
+<td>
+<p>Indicates the failure cause of interest. Imputation
+will be performed on the other competing events. Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nimp</code></td>
+<td>
+<p>Number of multiple imputation. Default is 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>When the last time is an event, a censoring time equal
+to <code>max(time) + epsilon</code> is added. By default, <code>epsilon</code>
+is set to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bootstrap</code></td>
+<td>
+<p>Logical. Whether to estimate the censoring
+distribution using bootstrap samples. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboot</code></td>
+<td>
+<p>If <code>bootstrap</code> is set to TRUE, <code>nboot</code>
+determines the number of bootstrap samples.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>It was shown that if censoring times are observed for all individuals,
+methods for standard right-censored survival data can be used to
+analyse cumulative incidence functions from competing risks (Fine and
+Gray 1999). Therefore the idea proposed by Ruan and Gray (2008) is to
+impute potential censoring times for individuals who have failed from
+the competing events. The censoring times are imputed from the
+conditional Kaplan-Meier estimator of the censoring distribution.
+</p>
+<p>Estimation of the censoring distribution may be improved through
+bootstrapping. Estimation might also be improved fitting a model for
+the censoring distribution. When covariates are given, a proportional
+hazards model on the hazard of censoring is fit. The censoring
+times are then imputed from the estimated model.
+</p>
+<p>The competing risks model formulation in <code>formula</code> mimics the one
+in <code>survfit</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kmi</code> with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>imputed.data</code></td>
+<td>
+<p>A list of matrices giving the imputed times in the
+first column and imputed event type in the second column. The event
+status for imputed times take value 0 (censored).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>original.data</code></td>
+<td>
+<p>The original data set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>info</code></td>
+<td>
+<p>Gives the names of the time and event indicator column in
+the original data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The matched call.</p>
+</td>
+</tr>
+</table>
+<h3>Warning</h3>
+
+<p>When a proportional hazards model is fit for modelling the censoring
+distribution, the censoring times are imputed from the imputed model.
+When there is missing covariate information for the prediction, mean
+imputation is used.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This multiple imputation technique does not work for left-truncated
+data.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Arthur Allignol, <a href="mailto:arthur.allignol@gmail.com">arthur.allignol@gmail.com</a></p>
+
+
+<h3>References</h3>
+
+<p>Ruan, P.K. and Gray, R.J. (2008). Analyses of cumulative
+incidence functions via non-parametric multiple
+imputation. <em>Statistics in Medicine</em>, 27(27):5709–5724.
+</p>
+<p>Allignol, A. and Beyersmann, J. (2010). Software for fitting
+nonstandard proportional subdistribution hazards
+models. <em>Biostatistics</em>, doi:10.1093/biostatistics/kxq018 
+</p>
+<p>Fine, J.P. and Gray, R.J. (1999). A Proportional Hazards Model for the
+Subdistribution of a Competing Risk. <em>Journal of the American
+Statistical Association</em>. 94(446):496–509.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>icu.pneu</code>, <code>cox.kmi</code>,
+<code>Surv</code>,  <code>survfit</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(icu.pneu)
+
+if (require(survival)) {
+    
+    dat &lt;- kmi(Surv(start, stop, status) ~ 1, data = icu.pneu,
+               etype = event, id= id, failcode = 2, nimp = 5)
+    
+    ## another way to specify the formula if there is no status
+    ## variable
+    icu.pneu$ev &lt;- icu.pneu$event
+    icu.pneu$ev[icu.pneu$status == 0] &lt;- 0
+    
+    dat &lt;- kmi(Surv(start, stop, ev != 0) ~ 1, data = icu.pneu,
+               etype = ev, id= id, failcode = 2, nimp = 5)
+    
+    ## with covariates to model the censoring distribution
+    dat.cova &lt;- kmi(Surv(start, stop, status) ~ age + sex,
+                    data = icu.pneu, etype = event, id = id,
+                    failcode = 2, nimp = 5)
+    
+}
+</code></pre>
+
+
+</div>

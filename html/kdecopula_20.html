@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.kdecopula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction method for <code>kdecop()</code> fits</h2>
+
+<h3>Description</h3>
+
+<p>Predicts the pdf, cdf, or (inverse) h-functions by calling <code>dkdecop()</code>,
+<code>pkdecop()</code>, or <code>hkdecop()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kdecopula'
+predict(object, newdata, what = "pdf", stable = FALSE,
+  ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>kdecopula</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>evaluation point(s), a length two vector or a matrix with
+two columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>what</code></td>
+<td>
+<p>what to predict, one of <code>c("pdf", "cdf", "hfunc1", "hfunc2", "hinv1", "hinv2")</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stable</code></td>
+<td>
+<p>only used for <code>what = "pdf"</code>, see <code>dkdecop()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>unused.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric vector of predictions.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc)
+udat &lt;- apply(wdbc[, -1], 2, function(x) rank(x) / (length(x) + 1))
+fit &lt;- kdecop(udat[, 5:6])
+
+all.equal(predict(fit, c(0.1, 0.2)), dkdecop(c(0.1, 0.2), fit))
+all.equal(predict(fit, udat, "hfunc1"), hkdecop(udat, fit, cond.var = 1))
+</code></pre>
+
+
+</div>

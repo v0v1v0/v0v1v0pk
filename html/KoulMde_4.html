@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Koul2StageMde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Two-stage minimum distance estimation in linear regression model with autoregressive error.</h2>
+
+<h3>Description</h3>
+
+<p>Estimates both regression and autoregressive coefficients in the model <code class="reqn">Y=X\beta + \epsilon</code> where <code class="reqn">\epsilon</code> is autoregressive process of known order <code>q</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Koul2StageMde(
+  Y,
+  X,
+  D,
+  b0,
+  RegIntMeasure,
+  AR_Order,
+  ArIntMeasure,
+  TuningConst = 1.345
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>- Vector of response variables in linear regression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>- Design matrix of explanatory variables in linear regression model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>- Weight Matrix. Dimension of D should match that of X. Default value is XA where A=(X'X)^(-1/2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b0</code></td>
+<td>
+<p>- Initial value for beta.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RegIntMeasure</code></td>
+<td>
+<p>- Symmetric and <code class="reqn">\sigma</code>-finite measure used for estimating <code class="reqn">\beta</code>: Lebesgue, Degenerate or Robust.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>AR_Order</code></td>
+<td>
+<p>- Order of the autoregressive error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ArIntMeasure</code></td>
+<td>
+<p>- Symmetric and <code class="reqn">\sigma</code>-finite measure used for estimating autoregressive coefficients of the error: Lebesgue, Degenerate or Robust.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TuningConst</code></td>
+<td>
+<p>- Used only for Robust measure.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>MDE1stage - The list of the first stage minimum distance estimation result. It contains betahat1stage, residual1stage, and rho1stage.
+</p>
+
+<ul>
+<li>
+<p> betahat1stage - The first stage minimum distance estimators of regression coefficients.
+</p>
+</li>
+<li>
+<p> residual1stage - Residuals after the first stage minimum distance estimation.
+</p>
+</li>
+<li>
+<p> rho1stage - The first stage minimum distance estimators of autoregressive coefficients of the error.
+</p>
+</li>
+</ul>
+<p>MDE2stage - The list of the second stage minimum distance estimation result. It contains betahat2stage, residual2stage, and rho2stage.
+</p>
+
+<ul>
+<li>
+<p> betahat2stage - The second stage minimum distance estimators of regression coefficients.
+</p>
+</li>
+<li>
+<p> residual2stage - Residuals after the second stage minimum distance estimation.
+</p>
+</li>
+<li>
+<p> rho2stage - The second stage minimum distance estimators of autoregressive coefficients of the error.
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>[1] Kim, J. (2018). A fast algorithm for the coordinate-wise minimum distance estimation. J. Stat. Comput. Simul., 3: 482 - 497
+</p>
+<p>[2] Kim, J. (2020). Minimum distance estimation in linear regression model with strong mixing errors. Commun. Stat. - Theory Methods., 49(6): 1475 - 1494
+</p>
+<p>[3] Koul, H. L (1985). Minimum distance estimation in linear regression with unknown error distributions. Statist. Probab. Lett., 3: 1-8.
+</p>
+<p>[4] Koul, H. L (1986). Minimum distance estimation and goodness-of-fit tests in first-order autoregression. Ann. Statist., 14 1194-1213.
+</p>
+<p>[5] Koul, H. L (2002). Weighted empirical process in nonlinear dynamic models. Springer, Berlin, Vol. 166
+</p>
+
+
+<h3>See Also</h3>
+
+<p>KoulArMde() and KoulLrMde()
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">####################
+n &lt;- 10
+p &lt;- 3
+X &lt;- matrix(runif(n*p, 0,50), nrow=n, ncol=p)  #### Generate n-by-p design matrix X
+beta &lt;- c(-2, 0.3, 1.5)                        #### Generate true beta = (-2, 0.3, 1.5)'
+rho  &lt;- 0.4                                    #### True rho = 0.4
+eps &lt;- vector(length=n)
+xi &lt;- rnorm(n, 0,1)                            #### Generate innovation from N(0,1)
+                                              #### Generate autoregressive process of order 1
+for(i in 1:n){
+ if(i==1){eps[i] &lt;- xi[i]}
+ else{eps[i] &lt;- rho*eps[i-1] + xi[i]}
+}
+Y &lt;- X%*%beta + eps
+#####################
+D &lt;- "default"                                  #### Use the default weight matrix
+b0 &lt;- solve(t(X)%*%X)%*%(t(X)%*%Y)              #### Set initial value for beta
+
+IntMeasure &lt;- "Lebesgue"                                ##### Define Lebesgue measure
+MDEResult &lt;- Koul2StageMde(Y,X, "default", b0, IntMeasure, 1, IntMeasure, TuningConst = 1.345)
+MDE1stageResult &lt;- MDEResult[[1]]
+MDE2stageResult &lt;- MDEResult[[2]]
+
+beta1 &lt;- MDE1stageResult$betahat1stage
+residual1 &lt;- MDE1stageResult$residual1stage
+rho1 &lt;- MDE1stageResult$rhohat1stage
+
+beta2 &lt;- MDE2stageResult$betahat2stage
+residual2 &lt;- MDE1stageResult$residual2stage
+rho2 &lt;- MDE2stageResult$rhohat2stage
+</code></pre>
+
+
+</div>

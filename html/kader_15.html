@@ -1,0 +1,306 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kare</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Adaptive Regression Estimator</h2>
+
+<h3>Description</h3>
+
+<p>Wrapper function which does some preparatory calculations and then calls
+the actual “workhorse” functions which do the main computations for
+kernel adaptive regression estimation of Eichner &amp; Stute (2012). Finally,
+it structures and returns the obtained results. Summarizing information
+and technical details can be found in Eichner (2017).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kare(x.points, data, kernel = c("gaussian", "epanechnikov", "rectangular"),
+  Sigma = seq(0.01, 10, length = 51), h = NULL, theta = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x.points</code></td>
+<td>
+<p>Vector of location(s) at which the regression estimate is
+to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data frame or list with one component named <code>x</code> which
+contains the vector of regressor values <code class="reqn">x_1, \ldots, x_n</code>
+and one named <code>y</code> which holds the vector of pertaining
+response values <code class="reqn">y_1, \ldots, y_n</code> (in the corresponding
+order) of the data from which the estimate is to be computed
+at the values given in <code>x.points</code>. Pairs <code class="reqn">(x_i, y_i)</code>
+with <code>NA</code> or an infinite value in a least one of their
+elements are removed (and a warning is issued).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>A character string naming the kernel to be used for the
+adaptive estimator. This must partially match one of
+"gaussian", "rectangular" or "epanechnikov", with default
+"gaussian", and may be abbreviated to a unique prefix.
+(Currently, this kernel is also used for the initial,
+non-adaptive Nadaraya-Watson regression estimator which enters
+into the estimators of bias and variance as described in the
+references.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma</code></td>
+<td>
+<p>Vector of value(s) of the scale parameter <code class="reqn">\sigma</code>.
+If of length 1 no adaptation is performed. Otherwise
+considered as the grid over which the optimization of the
+adaptive method will be performed. Defaults to
+<code>seq(0.01, 10, length = 51)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar for bandwidth <code class="reqn">h</code>. Defaults to NULL and is then
+internally set to <code class="reqn">n^{-1/5}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Numeric scalar for value of location parameter <code class="reqn">\theta</code>.
+Defaults to NULL and is then internally set to the arithmetic
+mean of <code class="reqn">x_1, \ldots, x_n</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>length(x.points)</code> = 1, a list of eight components with the
+following names and meanings:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>x</code> </td>
+<td style="text-align: left;"> Scalar <code class="reqn">x</code>-value in <code>x.points</code> at which the
+                regression estimator was computed. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>y</code> </td>
+<td style="text-align: left;"> Estimated scalar value of <code class="reqn">m(x)</code> at point in
+                <code>x.points</code>. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>sigma.adap</code> </td>
+<td style="text-align: left;"> The found scalar minimizer of the MSE-estimator,
+                         i.e., the adaptive smoothing parameter value. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>msehat.min</code> </td>
+<td style="text-align: left;"> The found scalar minimum of the MSE-estimator. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>Sigma</code> </td>
+<td style="text-align: left;"> Vector with the <code class="reqn">\sigma</code>-grid on which the
+                    minimization process was performed. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>Bn</code> </td>
+<td style="text-align: left;"> Vector with the estimator of bias on that
+                 <code class="reqn">\sigma</code>-grid. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>Vn2</code> </td>
+<td style="text-align: left;"> Ditto for the variance. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>MSE</code> </td>
+<td style="text-align: left;"> Ditto for the MSE. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ </td>
+</tr>
+</table>
+<p>If <code>length(x.points)</code> &gt; 1, a list with the same component names as
+above, but then
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>x</code> </td>
+<td style="text-align: left;"> Vector <code>x.points</code> with x-values at which the regression
+                estimator was computed. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>y</code> </td>
+<td style="text-align: left;"> Vector of estimated values of <code class="reqn">m(x)</code> at the x-values in
+                <code>x.points</code>. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>sigma.adap</code> </td>
+<td style="text-align: left;"> Vector of the found minimizers of the MSE-estimator,
+                         i.e., the adaptive smoothing parameter values. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>msehat.min</code> </td>
+<td style="text-align: left;"> Vector of the found minima of the MSE-estimator. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>Sigma</code> </td>
+<td style="text-align: left;"> Vector with the <code class="reqn">\sigma</code>-grid on which the
+                    minimization process was performed. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>Bn</code> </td>
+<td style="text-align: left;"> (<code>length(Sigma)</code> by <code>length(x.points)</code>)-matrix
+                 with the estimated values of the bias on the
+                 <code class="reqn">\sigma</code>-grid in their columns (which correspond to the
+                 x-values). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>Vn2</code> </td>
+<td style="text-align: left;"> Ditto for the variance. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>MSE</code> </td>
+<td style="text-align: left;"> Ditto for the MSE. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  </td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Eichner &amp; Stute (2012) and Eichner (2017): see <code>kader</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+
+ # Regression function:
+m &lt;- function(x, x1 = 0, x2 = 8, a = 0.01, b = 0) {
+ a * (x - x1) * (x - x2)^3 + b
+}
+ # Note: For a few details on m() see examples in ?nadwat.
+
+x0 &lt;- 5   # The point x_0 at which the MSE-optimal kernel adjusted
+ # nonparametric estimation of m should take place. (Recall: for m's
+ # default values a minimum is at 2, a point of inflection at 4, and
+ # a saddle point an 8; an "arbitrary" point would, e.g., be at 5.)
+
+n &lt;- 100   # Sample size.
+sdeps &lt;- 1   # Std. dev. of the \epsilon_i: \sqrt(Var(Y|X=x))
+             # (here: constant in x).
+design.ctr &lt;- x0 + 0.5   # "centre" and "scale" of the design, i.e.,
+design.scl &lt;- 1  # in the normal scenario below, expected value and
+                 # std. dev. of the distribution of the x_i's.
+
+set.seed(42)   # To guarantee reproducibility.
+x &lt;- rnorm(n, mean = design.ctr, sd = design.scl)   # x_1, ..., x_n
+Y &lt;- m(x) + rnorm(length(x), sd = sdeps)            # Y_1, ..., Y_n
+data &lt;- data.frame(x = x, y = Y)
+
+ # Computing the kernel adaptive regression estimator values
+ #**********************************************************
+x.points &lt;- seq(-3.3 * design.scl, 3.3 * design.scl, length = 101) +
+   design.ctr  # x-grid on which to draw and estimate the regr. fct. m.
+
+Sigma &lt;- seq(0.01, 10, length = 51)   # \sigma-grid for minimization.
+fit &lt;- kare(x.points = x0, data = data, Sigma = Sigma)
+
+## Not run: 
+ # Grafical display for the current data set
+ #******************************************
+ # Storing the curent settings of the graphics device
+ # and changing its layout for the three plots to come:
+op &lt;- par(mfrow = c(3, 1), mar = c(3, 3, 2, 0.1)+0.1,
+   mgp = c(1.5, 0.5, 0), tcl = -0.3, cex.main = 2)
+
+ # The scatter plot of the "raw data":
+plot(y ~ x, data = data, xlim = range(data$x, x.points),
+   ylim = range(data$y, fit$y, na.rm = TRUE),
+   main = bquote(n == .(n)), xlab = "x", ylab = "y")
+
+ # The "true" regression function m:
+lines(x.points, m(x.points), lty = 2)
+
+ # The MSE-optimal kernel adjusted nonparametric regression estimator
+ # at x_0, i.e., the point (x_0, \hat m_n(x_0)):
+points(fit$x, fit$y, col = "red", pch = 4, cex = 2)
+
+ # The legend for the "true" regression function m and for the point
+ # (x_0, \hat m_n(x_0)):
+legend("topleft", lty = c(2, NA), pch = c(NA, 4),
+ col = c("black", "red"), bty = "n", cex = 1.2,
+ legend = c(as.expression(bquote(paste("m  with  ",
+                                       sigma(paste(Y, "|", X == x))
+                                 == .(sdeps)))),
+            as.expression(bquote(paste(hat(m)[n](x[0]), "  at  ",
+                                       x[0] == .(x0))))))
+
+ # Visualizing the estimators of (Bias_n(sigma))^2 and
+ # Var_n(sigma) at x0 on the sigma-grid:
+with(fit,
+  matplot(Sigma, cbind(Bn*Bn, Vn2), type = "l", lty = 1:2,
+   col = c("black", "red"), xlab = expression(sigma), ylab = ""))
+
+ # The legend for (Bias_n(sigma))^2 and Var_n(sigma):
+legend("topleft", lty = 1:2, col = c("black", "red"), bty = "n",
+  legend = c(expression(paste(widehat(plain(Bias))[n]^2, (sigma))),
+             expression(widehat(plain(Var))[n](sigma))),
+  cex = 1.2)
+
+ # Visualizing the estimator of MSE_n(sigma) at x0 on the sigma-grid
+ # together with the point indicating the detected minimum, and a legend:
+plot(fit$Sigma, fit$MSE, type = "l",
+ xlab = expression(sigma), ylab = "")
+points(fit$sigma.adap, fit$msehat.min, pch = 4, col = "red", cex = 2)
+legend("topleft", lty = c(1, NA), pch = c(NA, 4),
+ col = c("black", "red"), bty = "n", cex = 1.2,
+ legend = c(expression(widehat(plain(MSE))[n](sigma)),
+            substitute(group("(", list(plain(Minimizer),
+                                       plain(Minimum)), ")")
+                         == group("(", list(x, y), ")"),
+                       list(x = signif(fit$sigma.adap, 4),
+                            y = signif(fit$msehat.min, 4)))))
+
+par(op) # Restoring the previous settings of the graphics device.
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

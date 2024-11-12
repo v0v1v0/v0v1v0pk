@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pp.kSamples</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Upper Tail Probability Plots for Objects of Class kSamples
+</h2>
+
+<h3>Description</h3>
+
+<p>This function plots upper tail probabilities of the limiting distribution 
+against the corresponding exact or simulated probabilities, both on a log-scale.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pp.kSamples(x) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class <code>kSamples</code></p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Objects of class <code>kSamples</code> are produced by any of the following functions
+</p>
+<p><code>ad.test</code> Anderson-Darling k-sample test.
+</p>
+<p><code>ad.test.combined</code> Combined Anderson-Darling k-sample tests.
+</p>
+<p><code>qn.test</code> <code class="reqn">QN</code> rank scores test.
+</p>
+<p><code>qn.test.combined</code> Combined <code class="reqn">QN</code> rank scores tests.
+</p>
+<p><code>contingency2xt</code> test for <code class="reqn">2 * t</code> contingency table.
+</p>
+<p><code>contingency2xt.comb</code> test for the combination of <code class="reqn">2 * t</code> contingency tables.
+</p>
+<p><code>jt.test</code> Jonckheere-Terpstra test.
+</p>
+<p><code>Steel.test</code> Steel test. This will work only for alternative = "greater" or "two-sided".
+The approximation quality for "less" is the same as for "greater".
+</p>
+<p>The command <code>pp.kSamples(x)</code> for an object of class <code>kSamples</code>
+will only produce a plot when the object <code>x</code> contains 
+non-NULL entries for the null distribution. The purpose of this function is to give the user
+a sense of the asymptotic distribution accuracy.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ad.test</code>,
+<code>ad.test.combined</code>,
+<code>qn.test</code>,
+<code>qn.test.combined</code>,
+</p>
+<p><code>contingency2xt</code>,
+<code>contingency2xt.comb</code>
+<code>jt.test</code>
+<code>Steel.test</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">qn.out &lt;- qn.test(c(1,3,7,2,9),c(1,4,6,11,2),test="KW",
+		method="simulated",dist=TRUE,Nsim=1000) 
+pp.kSamples(qn.out)
+</code></pre>
+
+
+</div>

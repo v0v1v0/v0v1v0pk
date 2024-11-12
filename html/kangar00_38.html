@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>make_psd,matrix-method</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adjust network <code>matrix</code> to be positive semi-definite</h2>
+
+<h3>Description</h3>
+
+<p>Adjust network <code>matrix</code> to be positive semi-definite
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'matrix'
+make_psd(x, eps = sqrt(.Machine$double.eps))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>matrix</code> specifying the network adjacency matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>A <code>numeric</code> value, setting the tolance for smallest 
+eigenvalue adjustment</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For a <code>matrix</code> N, the closest positive semi-definite <code>matrix</code> is 
+calculated as N* = rho*N + (1+rho)*I, where I is the identity <code>matrix</code>
+and rho = 1/(1 - lambda) with lambda the smallest eigenvalue of N. 
+For more details check the references.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The <code>matrix</code> <code>x</code>, if it is positive definite and the closest
+positive semi-definite <code>matrix</code> if <code>x</code> is not positive semi-definite.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Juliane Manitz, Saskia Freytag, Stefanie Friedrichs
+</p>
+
+
+<h3>References</h3>
+
+
+<ul><li>
+<p> Freytag S, Manitz J, Schlather M, Kneib T, Amos CI, Risch A, Chang-Claude J, Heinrich J, Bickeboeller H: A network-based kernel machine test for the identification of risk pathways in genome-wide association studies. Hum Hered. 2013, 76(2):64-75.
+</p>
+</li></ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(2345)
+m &lt;- matrix(data=sample(size=25, c(0,0,1), replace=TRUE),5,5)
+m &lt;- m + t(m)
+min(eigen(m, only.values = TRUE, symmetric = TRUE)$values)
+round(make_psd(m),2)
+
+</code></pre>
+
+
+</div>

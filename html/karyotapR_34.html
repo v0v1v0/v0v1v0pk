@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotCopyNumberGMM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot copy number GMM components</h2>
+
+<h3>Description</h3>
+
+<p>Plots the probability densities of GMM components for given chromosome or chromosome arm, store in a <code>TapestriExperiment</code>.
+<code>calcGMMCopyNumber()</code> must be run first.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotCopyNumberGMM(
+  TapestriExperiment,
+  feature.id = 1,
+  chromosome.scope = "chr",
+  draw.boundaries = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>feature.id</code></td>
+<td>
+<p>chromosome or chromosome arm to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>chromosome.scope</code></td>
+<td>
+<p>"chr" or "arm", for plotting models for either whole chromosomes or chromosome arms.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>draw.boundaries</code></td>
+<td>
+<p>logical, if <code>TRUE</code>, draw decision boundaries between each Gaussian component.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>ggplot</code> object, density plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- calcNormCounts(tap.object)
+control.copy.number &lt;- generateControlCopyNumberTemplate(tap.object,
+  copy.number = 2,
+  sample.feature.label = "cellline1"
+)
+tap.object &lt;- calcCopyNumber(tap.object,
+  control.copy.number,
+  sample.feature = "test.cluster"
+)
+tap.object &lt;- calcSmoothCopyNumber(tap.object)
+tap.object &lt;- calcGMMCopyNumber(tap.object,
+  cell.barcodes = colnames(tap.object),
+  control.copy.number = control.copy.number,
+  model.components = 1:5
+)
+
+tap.object &lt;- plotCopyNumberGMM(tap.object,
+  feature.id = 7,
+  chromosome.scope = "chr",
+  draw.boundaries = TRUE
+)
+
+</code></pre>
+
+
+</div>

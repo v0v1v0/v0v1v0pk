@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kGauss</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Gauss (Squared-Exponential) Kernel
+</h2>
+
+<h3>Description</h3>
+
+<p>Gauss (or squared exponential) covariance function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kGauss(d)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>Dimension.
+</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>An object of class <code>"covMan"</code> with default parameters: 1 for
+ranges and variance values.
+</p>
+
+
+<h3>References</h3>
+
+<p>C.E. Rasmussen and C.K.I. Williams (2006), <em>Gaussian Processes
+for Machine Learning</em>, the MIT Press,
+<a href="https://doi.org/10.7551/mitpress/3206.001.0001">doi:10.7551/mitpress/3206.001.0001</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kGauss()  # default: d = 1, nu = 5/2
+myGauss &lt;- kGauss(d = 2)
+coef(myGauss) &lt;- c(range = c(2, 5), sigma2 = 0.1)
+myGauss
+</code></pre>
+
+
+</div>

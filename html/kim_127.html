@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tau_squared</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tau-squared (between-studies variance for meta analysis)</h2>
+
+<h3>Description</h3>
+
+<p>Calculate tau-squared, the between-studies variance (the variance of the
+effect size parameters across the population of studies), as illustrated
+in Borenstein et al. (2009, pp. 72-73, ISBN: 978-0-470-05724-7).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tau_squared(effect_sizes = NULL, effect_size_variances = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>effect_sizes</code></td>
+<td>
+<p>effect sizes (e.g., standardized mean differences)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effect_size_variances</code></td>
+<td>
+<p>within-study variances</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Negative values of tau-squared are converted to 0 in the output (see
+Cheung, 2013;
+https://web.archive.org/web/20230512225539/https://openmx.ssri.psu.edu/thread/2432)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+tau_squared(effect_sizes = c(1, 2), effect_size_variances = c(3, 4))
+# a negative tau squared value is converted to 0:
+tau_squared(effect_sizes = c(1.1, 1.4), effect_size_variances = c(1, 4))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

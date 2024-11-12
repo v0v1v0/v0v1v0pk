@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dep_measures</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Dependence measures of a <code>kdecop()</code> fit</h2>
+
+<h3>Description</h3>
+
+<p>Calculates several dependence measures derived from the copula density. All
+measures except <code>"blomqvist"</code> are computed by quasi Monte Carlo methods
+(see <code>rkdecop()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dep_measures(object, measures = "all", n_qmc = 10^3, seed = 5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>kdecopula</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>measures</code></td>
+<td>
+<p>which measures to compute, see <em>Details</em>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_qmc</code></td>
+<td>
+<p>the number of quasi Monte Carlo samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>the seed for quasi Monte Carlo integration.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A named vector of dependence measures.
+</p>
+<p>The following measures are available:
+</p>
+
+<dl>
+<dt><code>"kendall"</code></dt>
+<dd>
+<p>Kendall's <code class="reqn">\tau</code>, see Nelsen (2007); computed as the
+sample version of a quasi Monte Carlo sample.</p>
+</dd>
+<dt><code>"spearman"</code></dt>
+<dd>
+<p>Spearman's <code class="reqn">\rho</code>, see Nelsen (2007); computed as the
+sample version of a quasi Monte Carlo sample.</p>
+</dd>
+<dt><code>"blomqvist"</code></dt>
+<dd>
+<p>Blomqvist's <code class="reqn">\beta</code>, see Nelsen (2007); computed
+as <code class="reqn">4C(0.5, 0.5) - 1</code>.</p>
+</dd>
+<dt><code>"gini"</code></dt>
+<dd>
+<p>Gini's <code class="reqn">\gamma</code>, see Nelsen (2007); computed by quasi
+Monte Carlo integration.</p>
+</dd>
+<dt><code>"vd_waerden"</code></dt>
+<dd>
+<p>van der Waerden's coefficient, see Genest and Verret
+(2005); computed as the sample version of a quasi Monte Carlo sample.</p>
+</dd>
+<dt><code>"minfo"</code></dt>
+<dd>
+<p>mutual information, see Joe (1989); computed by quasi Monte
+Carlo integration.</p>
+</dd>
+<dt><code>"linfoot"</code></dt>
+<dd>
+<p>Linfoot's correlation coefficient, see Joe (1989);
+computed by quasi Monte Carlo integration.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>Nelsen, R. (2007). An introduction to copulas. Springer Science
+&amp; Business Media, 2007.
+</p>
+<p>Genest, C., and Verret, F. (2005). Locally most powerful rank tests of
+independence for copula models. Journal of Nonparametric Statistics, 17(5)
+</p>
+<p>Joe, H. (1989). Relative Entropy Measures of Multivariate Dependence.
+Journal of the American Statistical Association, 84(405)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## load data and transform with empirical cdf
+data(wdbc)
+udat &lt;- apply(wdbc[, -1], 2, function(x) rank(x) / (length(x) + 1))
+
+## estimate copula density and calculate dependence measures
+fit &lt;- kdecop(udat[, 5:6])
+dep_measures(fit)
+
+</code></pre>
+
+
+</div>

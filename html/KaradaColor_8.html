@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kg_plot_color</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw the color data</h2>
+
+<h3>Description</h3>
+
+<p><code>kg_plot_color</code> This function draw the color data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kg_plot_color(name = "Sapporo_Sta", color = NULL, n = 5, showcode = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Color palette color palette name. (default: <code>"Sapporo_Sta"</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>Color data. Precedence over name except NULL. (default: NULL)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of colors to create.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showcode</code></td>
+<td>
+<p>Add a color code to the plot.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Vector containing a hex color code representation for the chosen
+palette
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Draw the color palette of the KaradaColor
+kg_plot_color(name = "Amanohashidate", n = 5, showcode = FALSE)
+#Draw the KG_create_cc command
+kg_plot_color(color = kg_create_cc(c("#ff48ac", "yellow")), showcode = TRUE)
+#Draw the KG_create_tc command
+kg_plot_color(color = kg_create_tc("yellow"), showcode = TRUE)
+#Color data
+kg_plot_color(color = c("gray"), showcode = FALSE)
+</code></pre>
+
+
+</div>

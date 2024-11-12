@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>legendPlot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Legend Pedigree Plot</h2>
+
+<h3>Description</h3>
+
+<p>Pedigree plot with ready-made legend along the bottom of the page to represent colors 
+and affection statuses
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">legendPlot(
+  x,
+  id = x$id,
+  affected = x$affected,
+  affected.label = NULL,
+  col = 1,
+  col.label = NULL,
+  symbolsize = 0.75,
+  cex = 0.5,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Pedigree data frame with ped (pedigree id), id (id of individual),
+father (id of father), mother (id of mother), sex, affected (affection status), 
+and avail (DNA availability).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>Optional, a character string to replace the correspinding id for persons in the pedigree</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>affected</code></td>
+<td>
+<p>A variable indicating affection status. A multi-column matrix can be used to
+give the status with respect to multiple traits. Logical, factor, and integer types
+are converted to 0/1 representing unaffected and affected, respectively. NAs are
+considered missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>affected.label</code></td>
+<td>
+<p>Set labels for affection statuses</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>Colors for the plot symbol for each individual</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.label</code></td>
+<td>
+<p>Named vector, with elements matching the unique color codes, the names are the labels used in the legend.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbolsize</code></td>
+<td>
+<p>Size of symbols (circle/square/triangle). Default is 1.0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex</code></td>
+<td>
+<p>Character expansion size for labels and ids. Default is 1.0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Character expansion size for labels and ids. Default is 1.0</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jason Sinnwell, code contributed by Sara Achenbach
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pedigree</code>, <code>plot.pedigree</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(sample.ped)
+pedAll &lt;- pedigree(sample.ped$id, sample.ped$father,
+   sample.ped$mother, sample.ped$sex,
+   affected=cbind(sample.ped$affected, sample.ped$avail),
+   famid=sample.ped$ped)
+ped1 &lt;- pedAll["1"]
+legendPlot(ped1,  affected.label=c("cancer","available"))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

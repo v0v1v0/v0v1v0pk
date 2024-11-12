@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write_csv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write to a csv file</h2>
+
+<h3>Description</h3>
+
+<p>Write to a csv file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write_csv(data = NULL, name = NULL, timestamp = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>a character string of the csv file name without the
+".csv" extension. For example, if the csv file to write to is
+"myfile.csv", enter <code>name = "myfile"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timestamp</code></td>
+<td>
+<p>logical. Should the timestamp be appended to the
+file name?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a .csv file in the working directory,
+that is, an output from the data.table function, <code>fwrite</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+write_csv(mtcars, "mtcars_from_write_csv")
+write_csv(mtcars)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

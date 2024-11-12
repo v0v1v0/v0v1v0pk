@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_reduce_lr_on_plateau</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reduce learning rate when a metric has stopped improving.</h2>
+
+<h3>Description</h3>
+
+<p>Models often benefit from reducing the learning rate by a factor of 2-10 once
+learning stagnates. This callback monitors a quantity and if no improvement
+is seen for a 'patience' number of epochs, the learning rate is reduced.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_reduce_lr_on_plateau(
+  monitor = "val_loss",
+  factor = 0.1,
+  patience = 10,
+  verbose = 0,
+  mode = c("auto", "min", "max"),
+  min_delta = 1e-04,
+  cooldown = 0,
+  min_lr = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>monitor</code></td>
+<td>
+<p>quantity to be monitored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>factor by which the learning rate will be reduced. new_lr = lr
+\* factor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>patience</code></td>
+<td>
+<p>number of epochs with no improvement after which learning
+rate will be reduced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>int. 0: quiet, 1: update messages.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p>one of "auto", "min", "max". In min mode, lr will be reduced when
+the quantity monitored has stopped decreasing; in max mode it will be
+reduced when the quantity monitored has stopped increasing; in auto mode,
+the direction is automatically inferred from the name of the monitored
+quantity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_delta</code></td>
+<td>
+<p>threshold for measuring the new optimum, to only focus on
+significant changes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cooldown</code></td>
+<td>
+<p>number of epochs to wait before resuming normal operation
+after lr has been reduced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_lr</code></td>
+<td>
+<p>lower bound on the learning rate.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other callbacks: 
+<code>callback_csv_logger()</code>,
+<code>callback_early_stopping()</code>,
+<code>callback_lambda()</code>,
+<code>callback_learning_rate_scheduler()</code>,
+<code>callback_model_checkpoint()</code>,
+<code>callback_progbar_logger()</code>,
+<code>callback_remote_monitor()</code>,
+<code>callback_tensorboard()</code>,
+<code>callback_terminate_on_naan()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>remove_chunks_dialog</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Invoke Rstudio addin to remove chunks from the active source document</h2>
+
+<h3>Description</h3>
+
+<p>The dialog will present a data table list of chunks in the source document. Select the rows
+that correspond to the chunks that you wish to remove and hit the <code>Remove chunks</code> button
+to remove them.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">remove_chunks_dialog()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>When the dialog is started, if the cursor is positioned inside a chunk in the source document,
+then the row corresponding to this chunk will be selected by default.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns <code>TRUE</code> if one or more chunks were removed, <code>FALSE</code> otherwise.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>David M. Kaplan <a href="mailto:dmkaplan2000@gmail.com">dmkaplan2000@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other Chunk tools: 
+<code>create_chunk()</code>,
+<code>create_data_chunk_dialog()</code>,
+<code>insert_data_chunk_template()</code>,
+<code>list_rmd_chunks()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+remove_chunks_dialog()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

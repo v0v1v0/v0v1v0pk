@@ -1,0 +1,130 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>desc_stats</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Descriptive statistics</h2>
+
+<h3>Description</h3>
+
+<p>Returns descriptive statistics for a numeric vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">desc_stats(
+  vector = NULL,
+  output_type = "vector",
+  sigfigs = 3,
+  se_of_mean = FALSE,
+  ci = FALSE,
+  pi = FALSE,
+  skewness = FALSE,
+  kurtosis = FALSE,
+  notify_na_count = NULL,
+  print_dt = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>if <code>output_type = "vector"</code>, return a vector
+of descriptive statistics; if <code>output_type = "dt"</code>, return a
+data.table of descriptive statistics (default = "vector")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se_of_mean</code></td>
+<td>
+<p>logical. Should the standard errors around
+the mean be included in the descriptive stats?
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>logical. Should 95% CI be included in the descriptive stats?
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pi</code></td>
+<td>
+<p>logical. Should 95% PI be included in the descriptive stats?
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skewness</code></td>
+<td>
+<p>logical. Should the skewness statistic be included
+in the descriptive stats?
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kurtosis</code></td>
+<td>
+<p>logical. Should the kurtosis statistic be included
+in the descriptive stats?
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notify_na_count</code></td>
+<td>
+<p>if <code>TRUE</code>, notify how many observations
+were removed due to missing values. By default, NA count will be printed
+only if there are any NA values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print_dt</code></td>
+<td>
+<p>if <code>TRUE</code>, print the descriptive stats data.table</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>if <code>output_type = "vector"</code>, the output will be a
+named numeric vector of descriptive statistics;
+if <code>output_type = "dt"</code>, the output will be data.table of
+descriptive statistics.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">desc_stats(1:100)
+desc_stats(1:100, ci = TRUE, pi = TRUE, sigfigs = 2)
+desc_stats(1:100, se_of_mean = TRUE,
+ci = TRUE, pi = TRUE, sigfigs = 2,
+skewness = TRUE, kurtosis = TRUE)
+desc_stats(c(1:100, NA))
+example_dt &lt;- desc_stats(vector = c(1:100, NA), output_type = "dt")
+example_dt
+</code></pre>
+
+
+</div>

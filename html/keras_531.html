@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict_generator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>(Deprecated) Generates predictions for the input samples from a data generator.</h2>
+
+<h3>Description</h3>
+
+<p>The generator should return the same kind of data as accepted by
+<code>predict_on_batch()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predict_generator(
+  object,
+  generator,
+  steps,
+  max_queue_size = 10,
+  workers = 1,
+  verbose = 0,
+  callbacks = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>generator</code></td>
+<td>
+<p>Generator yielding batches of input samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>Total number of steps (batches of samples) to yield from
+<code>generator</code> before stopping.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_queue_size</code></td>
+<td>
+<p>Maximum size for the generator queue. If unspecified,
+<code>max_queue_size</code> will default to 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>workers</code></td>
+<td>
+<p>Maximum number of threads to use for parallel processing. Note that
+parallel processing will only be performed for native Keras generators (e.g.
+<code>flow_images_from_directory()</code>) as R based generators must run on the main thread.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>verbosity mode, 0 or 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>callbacks</code></td>
+<td>
+<p>List of callbacks to apply during prediction.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Numpy array(s) of predictions.
+</p>
+
+
+<h3>Raises</h3>
+
+<p>ValueError: In case the generator yields data in an invalid
+format.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>fit_generator()</code>,
+<code>get_config()</code>,
+<code>get_layer()</code>,
+<code>keras_model()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_on_batch()</code>,
+<code>predict_proba()</code>,
+<code>summary.keras.engine.training.Model()</code>,
+<code>train_on_batch()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_crop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Crop a plot (remove the edges) using PDFCrop or ImageMagick</h2>
+
+<h3>Description</h3>
+
+<p>The program <code>pdfcrop</code> (often shipped with a LaTeX distribution) is
+executed on a PDF plot file, and
+<code>magick::image_trim()</code> is executed for other
+types of plot files.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_crop(x, quiet = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Filename of the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Whether to suppress standard output from the command.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The program <code>pdfcrop</code> can crop the extra white margins when the plot
+format is PDF, to make better use of the space in the output document,
+otherwise we often have to struggle with <code>graphics::par()</code> to set
+appropriate margins. Note <code>pdfcrop</code> often comes with a LaTeX
+distribution such as TinyTeX, MiKTeX, or TeX Live, and you may not need to
+install it separately (use <code>Sys.which('pdfcrop')</code> to check it; if it not
+empty, you are able to use it). Note that <code>pdfcrop</code> depends on
+GhostScript. You can check if GhostScript is installed via
+<code>tools::find_gs_cmd()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The original filename.
+</p>
+
+
+<h3>References</h3>
+
+<p>PDFCrop: <a href="https://www.ctan.org/pkg/pdfcrop">https://www.ctan.org/pkg/pdfcrop</a>. If you use
+TinyTeX, you may install <code>pdfcrop</code> with
+<code>tinytex::tlmgr_install('pdfcrop')</code>.
+</p>
+
+
+</div>

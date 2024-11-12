@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kfda.predict</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict Method for Kernel Fisher Discriminant Analysis (KFDA) fit</h2>
+
+<h3>Description</h3>
+
+<p>Test the testData using KFDA. This function is used after training phase is performed using the kfda function.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kfda.predict(object = obj, testData = data)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An <code>R</code> object of class <code>kfda</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>testData</code></td>
+<td>
+<p>an optional <code>data frame</code> or <code>matrix</code> containing the variables in the model. In particular, the order of variables in the data frame must be the same as trainData, and the target value must be removed in advance.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Since this function inherits <code>KPCA</code> and <code>LDA</code>, various learning can be possible by adjusting the hyper-parameters of each function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The result of performing testData on the KFDA model.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>A class label of testData.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posterior</code></td>
+<td>
+<p>A posterior probabilities for the classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The scores of testData on up to <code>kfda</code> discriminant variables.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Donghwan Kim<br><a href="mailto:ainsuotain@hanmail.net">ainsuotain@hanmail.net</a>
+<a href="mailto:donhkim9714@korea.ac.kr">donhkim9714@korea.ac.kr</a>
+<a href="mailto:dhkim2@bistel.com">dhkim2@bistel.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Yang, J., Jin, Z., Yang, J. Y., Zhang, D., and Frangi, A. F. (2004) &lt;DOI:10.1016/j.patcog.2003.10.015&gt;. Essence of kernel Fisher discriminant: KPCA plus LDA. <em>Pattern Recognition</em>, 37(10): 2097-2100.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kfda</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># data input
+data(iris)
+
+# data separation
+idx &lt;- sample(1:dim(iris)[1], round(dim(iris)[1]*0.7))
+trainData &lt;- iris[idx, ]
+testData &lt;- iris[-(idx), -dim(iris)[2]]
+testData.Label &lt;- iris[-(idx), dim(iris)[2]]
+
+# training KFDA model
+kfda.model &lt;- kfda(trainData = trainData, kernel.name = "rbfdot")
+
+# testing new(test)data by KFDA model
+pre &lt;- kfda.predict(object = kfda.model, testData = testData)
+
+# plotting
+plot(kfda.model$LDs, col = kfda.model$label, pch = 19, main = "Plot for KFDA")
+points(pre$x, col = pre$class, cex = 2)
+legend("topleft", legend = c("trainData","testData"), pch = c(19,1))
+
+# prediction result
+table(pre$class, (testData.Label))
+
+</code></pre>
+
+
+</div>

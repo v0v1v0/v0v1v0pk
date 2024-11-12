@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_model_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Saves all layer weights to a <code>.weights.h5</code> file.</h2>
+
+<h3>Description</h3>
+
+<p>Saves all layer weights to a <code>.weights.h5</code> file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_model_weights(model, filepath, overwrite = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A keras Model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filepath</code></td>
+<td>
+<p>string.
+Path where to save the model. Must end in <code>.weights.h5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Whether we should overwrite any existing model
+at the target location, or instead ask the user
+via an interactive prompt.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This is called primarily for side effects. <code>model</code> is returned,
+invisibly, to enable usage with the pipe.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_saving_apis/weights_saving_and_loading#saveweights-method">https://keras.io/api/models/model_saving_apis/weights_saving_and_loading#saveweights-method</a>
+</p>
+</li></ul>
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>layer_tfsm()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model()</code> <br><code>save_model_config()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

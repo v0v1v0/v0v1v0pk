@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Frequency Increment Test</h2>
+
+<h3>Description</h3>
+
+<p>Frequency Increment Test
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit(object, dates, ...)
+
+## S4 method for signature 'data.frame,numeric'
+fit(object, dates, calendar = CE(), level = 0.95, roll = FALSE, window = 3)
+
+## S4 method for signature 'matrix,numeric'
+fit(object, dates, calendar = CE(), level = 0.95, roll = FALSE, window = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dates</code></td>
+<td>
+<p>A length-<code class="reqn">m</code> <code>numeric</code> vector of dates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the calendar
+of <code>dates</code> (see <code>calendar()</code>). Defaults to Gregorian Common Era.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the confidence level.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>roll</code></td>
+<td>
+<p>A <code>logical</code> scalar: should each time series be subsetted to
+look for episodes of selection?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>window</code></td>
+<td>
+<p>An odd <code>integer</code> giving the size of the rolling
+window. Only used if <code>roll</code> is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Frequency Increment Test (FIT) rejects neutrality if the distribution
+of normalized variant frequency increments exhibits a mean that deviates
+significantly from zero.
+</p>
+<p>If <code>roll</code> is <code>TRUE</code>, each time series is subsetted according to <code>window</code> to
+see if episodes of selection can be identified among variables that might
+not show overall selection.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>IncrementTest</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Feder, A. F., Kryazhimskiy, S. &amp; Plotkin, J. B. (2014). Identifying
+Signatures of Selection in Genetic Time Series. <em>Genetics</em>, 196(2):
+509-522. <a href="https://doi.org/10.1534/genetics.113.158220">doi:10.1534/genetics.113.158220</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot()</code>
+</p>
+<p>Other chronological analysis: 
+<code>aoristic()</code>,
+<code>apportion()</code>,
+<code>roc()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Crema et al. 2016
+data("merzbach", package = "folio")
+
+## Keep only decoration types that have a maximum frequency of at least 50
+keep &lt;- apply(X = merzbach, MARGIN = 2, FUN = function(x) max(x) &gt;= 50)
+counts &lt;- merzbach[, keep]
+
+## Group by phase
+## We use the row names as time coordinates (roman numerals)
+dates &lt;- as.numeric(utils::as.roman(rownames(counts)))
+
+## Frequency Increment Test
+freq &lt;- fit(counts, dates, calendar = NULL)
+
+## Plot time vs abundance
+plot(freq, calendar = NULL, ncol = 3, xlab = "Phases")
+
+## Plot time vs abundance and highlight selection
+freq &lt;- fit(counts, dates, calendar = NULL, roll = TRUE, window = 5)
+plot(freq, calendar = NULL, ncol = 3, xlab = "Phases")
+</code></pre>
+
+
+</div>

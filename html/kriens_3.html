@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>do</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Compose and Forget in one go.
+</h2>
+
+<h3>Description</h3>
+
+<p><code>do</code> allows to specify the list of function directly as its arguments.
+It return a function which is the composition of every argument with the continuation already forgotten.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">do(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>The functions that must be composed together.
+</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A function of the type <code>g(x)</code> which can be directly used on the input.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matteo Provenzano<br><a href="http://www.alephdue.com">http://www.alephdue.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>path</code>, <code>forget</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># define a function that doubles its argument
+times.two &lt;- function(x, ret) {
+  ret(x*2)
+}
+
+# define a function that loops over a list of list and double every element
+loop &lt;- do(lapply, lapply, times.two)
+
+#returns list(list(2, 4, 6), list(8,10,12))
+loop(list(list(1,2,3),list(4,5,6)))
+</code></pre>
+
+
+</div>

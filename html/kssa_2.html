@@ -1,0 +1,153 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_imputations</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>get_imputations function</h2>
+
+<h3>Description</h3>
+
+<p>Function to get imputations from methods compared by kssa
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_imputations(x_ts, methods = "all", seed = 1234)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x_ts</code></td>
+<td>
+<p>A ts object with missing data to be imputed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>methods</code></td>
+<td>
+<p>A string or string vector indicating the method or methods
+You can choose between the following:
+</p>
+
+<ul>
+<li>
+<p>"all" - get imputed values for all methods - Default
+</p>
+</li>
+<li>
+<p>"auto.arima" - State space representation of an ARIMA model
+</p>
+</li>
+<li>
+<p>"StructTS" - State space representation of a structural model
+</p>
+</li>
+<li>
+<p>"seadec" - Seasonal decomposition with Kalman smoothing
+</p>
+</li>
+<li>
+<p>"linear_i" - Linear interpolation
+</p>
+</li>
+<li>
+<p>"spline_i" - Spline interpolation
+</p>
+</li>
+<li>
+<p>"stine_i" - Stineman interpolation
+</p>
+</li>
+<li>
+<p>"simple_ma" - Simple moving average
+</p>
+</li>
+<li>
+<p>"linear_ma" - Linear moving average
+</p>
+</li>
+<li>
+<p>"exponential_ma" - Exponential moving average
+</p>
+</li>
+<li>
+<p>"locf" - Last observation carried forward
+</p>
+</li>
+<li>
+<p>"stl" - Seasonal and trend decomposition with Loess
+</p>
+</li>
+</ul>
+<p>For further details on these imputation methods please check packages <code>imputeTS</code> and <code>forecast</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Numeric. Any number</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of imputed time series with the selected methods
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Example 1: Get imputed values for airgap_na_ts with the methods of
+
+library("imputeTS")
+library("kssa")
+
+# Create 20% random missing data in tsAirgapComplete time series from imputeTS
+airgap_na &lt;- missMethods::delete_MCAR(as.data.frame(tsAirgapComplete), 0.2)
+
+# Convert to time series object
+airgap_na_ts &lt;- ts(airgap_na, start = c(1959, 1), end = c(1997, 12), frequency = 12)
+
+my_imputations &lt;- get_imputations(airgap_na_ts, methods = "all")
+
+# my_imputations contains the imputed time series with all methods.
+# Access it and choose the one from the best method for your purposes
+
+my_imputations$seadec
+plot.ts(my_imputations$seadec)
+
+
+
+
+# Example 2: Get imputed values for airgap_na_ts using only a subset of algorithms
+
+library("imputeTS")
+library("kssa")
+
+# Create 20% random missing data in tsAirgapComplete time series from imputeTS
+airgap_na &lt;- missMethods::delete_MCAR(as.data.frame(tsAirgapComplete), 0.2)
+
+# Convert to time series object
+airgap_na_ts &lt;- ts(airgap_na, start = c(1959, 1), end = c(1997, 12), frequency = 12)
+
+my_imputations &lt;- get_imputations(airgap_na_ts, methods = c("linear_i", "locf"))
+
+# my_imputations contains the imputed time series with all applied
+# methods (locf and linear interpolation).
+# Access it and choose the one from the best method for your purposes
+
+my_imputations$locf
+plot.ts(my_imputations$locf)
+
+
+</code></pre>
+
+
+</div>

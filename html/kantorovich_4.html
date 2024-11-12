@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kantorovich</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kantorovich distance</h2>
+
+<h3>Description</h3>
+
+<p>Compute the Kantorovich distance between two probability measures on a finite set.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kantorovich(mu, nu, dist = NULL, details = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>(row margins) probability measure in numeric or bigq/character mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>(column margins) probability measure in numeric or bigq/character mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist</code></td>
+<td>
+<p>function or matrix, the distance to be minimized on average;
+if <code>NULL</code>, the 0-1 distance is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>details</code></td>
+<td>
+<p>prints the joinings achieving the Kantorovich distance and
+returns them in the <code>"joinings"</code> attribute of the output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments passed to <code>dist</code> (only if it is a function)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function firstly computes all the extreme joinings of <code>mu</code>
+and <code>nu</code>, then evaluates the average distance for each of them, and
+then returns the minimal one.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The Kantorovich distance between <code>mu</code> and <code>nu</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mu &lt;- c(1/7, 2/7, 4/7)
+nu &lt;- c(1/4, 1/4, 1/2)
+kantorovich(mu, nu)
+library(gmp)
+mu &lt;- as.bigq(c(1,2,4), 7)
+nu &lt;- as.bigq(c(1,1,1), c(4,4,2))
+kantorovich(mu, nu)
+mu &lt;- c("1/7", "2/7", "4/7")
+nu &lt;- c("1/4", "1/4", "1/2")
+kantorovich(mu, nu, details=TRUE)
+
+</code></pre>
+
+
+</div>

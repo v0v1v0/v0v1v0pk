@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keras_model_custom</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>(Deprecated) Create a Keras custom model</h2>
+
+<h3>Description</h3>
+
+<p><code>keras_model_custom()</code> is soft-deprecated. Please define custom models by
+subclassing <code>keras$Model</code> directly using <code>%py_class%</code> or <code>R6::R6Class()</code>,
+or by calling <code>new_model_class()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keras_model_custom(model_fn, name = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model_fn</code></td>
+<td>
+<p>Function that returns an R custom model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Optional name for model</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A Keras model
+</p>
+
+
+</div>

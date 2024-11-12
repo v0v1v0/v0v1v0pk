@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>initializer_glorot_uniform</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Glorot uniform initializer, also called Xavier uniform initializer.</h2>
+
+<h3>Description</h3>
+
+<p>It draws samples from a uniform distribution within <code style="white-space: pre;">⁠-limit, limit⁠</code>
+where <code>limit</code> is <code>sqrt(6 / (fan_in + fan_out))</code>
+where <code>fan_in</code> is the number of input units in the weight tensor
+and <code>fan_out</code> is the number of output units in the weight tensor.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">initializer_glorot_uniform(seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Integer used to seed the random generator.</p>
+</td>
+</tr></table>
+<h3>References</h3>
+
+<p>Glorot &amp; Bengio, AISTATS 2010 <a href="https://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf">https://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other initializers: 
+<code>initializer_constant()</code>,
+<code>initializer_glorot_normal()</code>,
+<code>initializer_he_normal()</code>,
+<code>initializer_he_uniform()</code>,
+<code>initializer_identity()</code>,
+<code>initializer_lecun_normal()</code>,
+<code>initializer_lecun_uniform()</code>,
+<code>initializer_ones()</code>,
+<code>initializer_orthogonal()</code>,
+<code>initializer_random_normal()</code>,
+<code>initializer_random_uniform()</code>,
+<code>initializer_truncated_normal()</code>,
+<code>initializer_variance_scaling()</code>,
+<code>initializer_zeros()</code>
+</p>
+
+
+</div>

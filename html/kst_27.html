@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lpath_is_gradation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Gradation Property of Learning Paths</h2>
+
+<h3>Description</h3>
+
+<p>Tests for the gradation property of learning paths.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  lpath_is_gradation(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>list</code> of learning paths .</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>A learning path is considered a <em>gradation</em> if each state in a 
+learning path differs from its predecessor and/or successor state by 
+a single item/notion.
+</p>
+<p><code>lpath_is_gradation</code> takes an arbitrary list of learning paths and 
+tests for their gradation property.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>list</code> of logical values where each element represents one learning path.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>, <code>lpath</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set(), set("c"), set("a","b"), set("b","c"), 
+   set("c","d"), set("d","e"), set("a","b","c"), set("b","c","d"), 
+   set("c","d","e"), set("a","b","c","d"), set("a","b","d","e"), 
+   set("b","c","d","e"), set("a","b","c","d","e")))
+lp &lt;- lpath(kst)
+lpath_is_gradation(lp)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,262 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ls.ranking.capa.ident</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Least squares capacity identification in the framework of a ranking procedure</h2>
+
+<h3>Description</h3>
+
+<p>Ranking alternatives means ordering them from the best to the worst alternative. The aim of the implemented method is to model a given ranking by means of a Choquet integral. The result of the function is an object of class <code>Mobius.capacity</code>. This function is an implementation of the TOMASO method (see Meyer and Roubens (2005)) in the particular ranking framework. The input data are given under the form of a set of alternatives and a partial weak order, each alternative being described according to a set of criteria. These well-known alternatives are called "prototypes". They represent alternatives for which the decision maker has an a priori knowledge and for which he/she is able to build a ranking. If the provided ranking (partial weak order) of the prototypes cannot be described by a Choquet integral, an approximative solution, which minimizes the "gap" between the given ranking and the one derived from the Choquet integral, is proposed. The problem is solved by quadratic programming. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ls.ranking.capa.ident(n, k, C, rk, d, A.Shapley.preorder = NULL,
+A.Shapley.interval = NULL, A.interaction.preorder = NULL,
+A.interaction.interval = NULL, A.inter.additive.partition = NULL,
+sigf = 5, maxiter = 20, epsilon = 1e-6)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Object of class <code>numeric</code> containing the
+number of elements of the set on which the object of class
+<code>Mobius.capacity</code> is to be defined (in short, the number of criteria).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Object of class <code>numeric</code> imposing that the solution is at
+most a k-additive capacity (the Moebius transform of subsets whose cardinal is
+superior to <code>k</code> vanishes).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+<code>n</code>-column criteria matrix. Each line of this matrix
+corresponds to a prototype.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rk</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+constraints relative to the preorder of the prototypes. Each line
+of this 2-column matrix corresponds to one constraint of the type
+"the alternative <code>i</code> is prefered to the alternative <code>j</code>". A line is structured as follows: the first element
+encodes <code>i</code>, the second <code>j</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>Object of class <code>numeric</code> containing the threshold value, i.e. the minimal "distance" between two neighbor alternatives in the given ranking (e.g. the difference in terms of the Choquet integral of the
+a prototype with rank 3 and a prototype with rank 4 should be at least <code>d</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.Shapley.preorder</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+constraints relative to the preorder of the criteria. Each line
+of this 3-column matrix corresponds to one constraint of the type
+"the Shapley importance index of criterion <code>i</code> is greater than
+the Shapley importance index of criterion <code>j</code> with preference threshold
+<code>delta.S</code>". A line is structured as follows: the first element
+encodes <code>i</code>, the second <code>j</code>, and the third element contains
+the preference threshold <code>delta.S</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.Shapley.interval</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+constraints relative to the quantitative importance of the
+criteria. Each line of this 3-column matrix corresponds to one
+constraint of the type "the Shapley importance index of criterion
+<code>i</code> lies in the interval <code>[a,b]</code>". The interval
+<code>[a,b]</code> has to be included in <code>[0,1]</code>. A line of the
+matrix is structured as follows: the first element encodes <code>i</code>,
+the second <code>a</code>, and the third <code>b</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.interaction.preorder</code></td>
+<td>
+<p>Object of class <code>matrix</code>
+containing the constraints relative to the preorder of the pairs of
+criteria in terms of the Shapley interaction index. Each line of this 5-column matrix
+corresponds to one constraint of the type "the Shapley interaction
+index of the pair <code>ij</code> of criteria is greater than the Shapley interaction
+index of the pair <code>kl</code> of criteria with preference threshold <code>delta.I</code>".
+A line is structured as follows: the first two elements encode
+<code>ij</code>, the second two <code>kl</code>, and the fifth element contains
+the preference threshold <code>delta.I</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.interaction.interval</code></td>
+<td>
+<p>Object of class <code>matrix</code>
+containing the constraints relative to the type and the magnitude of
+the Shapley interaction index for pairs of criteria. Each line of
+this 4-column matrix corresponds to one constraint of the type
+"the Shapley interaction index of the pair <code>ij</code> of criteria
+lies in the interval <code>[a,b]</code>". The interval <code>[a,b]</code> has to
+be included in <code>[-1,1]</code>. A line is structured as follows: the first two elements encode
+<code>ij</code>, the third element encodes <code>a</code>, and the fourth element
+encodes <code>b</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.inter.additive.partition</code></td>
+<td>
+<p>Object of class <code>numeric</code>
+encoding a partition of the set of criteria imposing that there be
+no interactions among criteria belonging to different classes 
+of the partition. The partition is to be given under the form of a
+vector of integers from <code>{1,...,n}</code> of length <code>n</code> such
+that two criteria belonging to the same class are "marked" by the
+same integer. For instance, the partition <code>{{1,3},{2,4},{5}}</code> can
+be encoded as <code>c(1,2,1,2,3)</code>. See Fujimoto and Murofushi (2000)
+for more details on the concept of mu-inter-additive partition.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigf</code></td>
+<td>
+<p>Precision (default: 5 significant figures). Parameter to
+be passed to the <code>ipop</code> function (quadratic programming)
+of the <span class="pkg">kernlab</span> package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>Maximum number of iterations. Parameter to
+be passed to the <code>ipop</code> function (quadratic programming)
+of the <span class="pkg">kernlab</span> package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>Object of class <code>numeric</code> containing the
+threshold value for the monotonicity constraints, i.e. the
+difference between the "weights" of two subsets whose cardinals
+differ exactly by 1 must be greater than <code>epsilon</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The quadratic program is solved using the <code>ipop</code> function of
+the <span class="pkg">kernlab</span> package.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function returns a list structured as follows:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>solution</code></td>
+<td>
+<p>Object of class
+<code>Mobius.capacity</code> containing the Moebius transform of the
+<code>k</code>-additive solution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>glob.eval</code></td>
+<td>
+<p>The global evaluations satisfying the given ranking.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>how</code></td>
+<td>
+<p>Information returned by <code>ipop</code> (cf. <span class="pkg">kernlab</span>) on
+the convergence of the solver.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rk.C</code></td>
+<td>
+<p>The ranks of the prototypes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Choquet.C</code></td>
+<td>
+<p>The Choquet integral of the prototypes</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>K. Fujimoto and T. Murofushi (2000) <em>Hierarchical decomposition of the
+Choquet integral</em>, in: Fuzzy Measures and Integrals: Theory and
+Applications, M. Grabisch, T. Murofushi, and M. Sugeno Eds, Physica
+Verlag, pages 95-103.
+</p>
+<p>P. Meyer, M. Roubens (2005), <em>Choice, Ranking and Sorting in Fuzzy Multiple
+Criteria Decision Aid</em>, in: J. Figueira, S. Greco, and M. Ehrgott,
+Eds, Multiple Criteria Decision Analysis: State of the Art
+Surveys, volume 78 of International Series in Operations Research and
+Management Science, chapter 12, pages 471-506. Springer Science +
+Business Media, Inc., New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.capacity-class</code>,
+<br><code>lin.prog.capa.ident</code>,
+<br><code>mini.var.capa.ident</code>,
+<br><code>mini.dist.capa.ident</code>,
+<br><code>least.squares.capa.ident</code>,
+<br><code>heuristic.ls.capa.ident</code>,
+<br><code>entropy.capa.ident</code>.  
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+arthur &lt;- c(1, 1, 0.75, 0.25)
+lancelot &lt;- c(0.75, 0.75, 0.75, 0.75)
+yvain &lt;- c(1, 0.625, 0.5, 1)
+perceval &lt;- c(0.25, 0.5, 0.75, 0.75)
+erec &lt;- c(0.375, 1, 0.5 , 0.75)
+
+P &lt;- rbind(arthur, lancelot, yvain, perceval, erec)
+
+# lancelot &gt; erec; yvain &gt; erec, erec &gt; perceval, erec &gt; arthur
+rk.proto &lt;- rbind(c("lancelot","erec"), c("yvain","erec"), c("erec","perceval"), c("erec","arthur"))
+
+n&lt;-4
+k&lt;-2
+d&lt;-0.1
+
+## search for a capacity which satisfies the constraints
+lrc &lt;- ls.ranking.capa.ident(n ,k, P, rk.proto, d)
+
+lrc
+
+</code></pre>
+
+
+</div>

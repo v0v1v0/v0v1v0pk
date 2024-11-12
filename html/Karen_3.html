@@ -1,0 +1,200 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get.sim.trajectories</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate a clonal tracking dataset from a given cell differentiation network.</h2>
+
+<h3>Description</h3>
+
+<p>This function simulates clone-specific trajectories for a cell differentiation network associated to a set of (constrained) biochemical reactions,
+cell types, and missing/latent cell types.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get.sim.trajectories(
+  rct.lst,
+  constr.lst = NULL,
+  latSts.lst,
+  ct.lst,
+  th,
+  S,
+  nCL,
+  X0,
+  s2 = 1e-08,
+  r0 = 0,
+  r1 = 0,
+  f = 0,
+  ntps,
+  trunc = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rct.lst</code></td>
+<td>
+<p>A list of biochemical reactions defining the cell differentiation network.
+A differentiation move from cell type "A" to cell type "B" must be coded as "A-&gt;B"
+Duplication of cell "A" must be coded as "A-&gt;1"
+Death of cell "A" must be coded as "A-&gt;0".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constr.lst</code></td>
+<td>
+<p>(defaults to NULL, when no constraints are needed) List of linear constraints that must be applied to the biochemical reactions.
+For example, if we need the constraint "A-&gt;B = B-&gt;C + B-&gt;D", this must be coded using the following syntax
+c("theta\[\'A-&gt;B\'\]=(theta\[\'B-&gt;C\'\] + theta\[\'B-&gt;D\'\])").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>latSts.lst</code></td>
+<td>
+<p>List of the latent cell types. If for example counts are not available for cell types "A" and "B", then latSts.lst = c("A", "B").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ct.lst</code></td>
+<td>
+<p>List of all the cell types involved in the network formulation.
+For example, if the network is defined by the biochemical reactions are A-&gt;B" and "A-&gt;C", then ct.lst = c("A", "B", "C").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>th</code></td>
+<td>
+<p>The vector parameter that must be used for simulation. The length of th equals the number of unconstrained reactions plus 2
+(for the noise parameters <code class="reqn">(\rho_0, \rho_1)</code>). Only positive parameters can be provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>The length of each trajectory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nCL</code></td>
+<td>
+<p>An integer defining the number of distinct clones.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X0</code></td>
+<td>
+<p>A p-dimensional vector for the initial condition of the cell types,
+where <code class="reqn">p</code> is the number of distinct cell types provided in ct.lst.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s2</code></td>
+<td>
+<p>(defaults to 1e-8) A positive value for the overall noise variance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r0</code></td>
+<td>
+<p>(defaults to 0) A positive value for the intercept defining the
+noise covariance matrix <code class="reqn">R_k = \rho_0 + \rho_1G_kX_k</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>(defaults to 0) A positive value for the slope defining the
+noise covariance matrix <code class="reqn">R_k = \rho_0 + \rho_1G_kX_k</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>(defaults to 0) The fraction of measurements that must be considered as missing/latent.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ntps</code></td>
+<td>
+<p>Number of time points to consider from the whole simulated clonal tracking dataset.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trunc</code></td>
+<td>
+<p>(defaults to FALSE) Logical, indicating whether sampling from a truncated multivariate normal must be performed.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the following:
+</p>
+
+<ul>
+<li>
+<p>"X"The simulated process.
+</p>
+</li>
+<li>
+<p>"Y"The simulated noisy-corrupted measurements.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">rcts &lt;- c("HSC-&gt;T", ## reactions
+          "HSC-&gt;M",
+          "T-&gt;0",
+          "M-&gt;0")
+
+cnstr &lt;- NULL
+latsts &lt;- "HSC" ## latent cell types
+
+ctps &lt;- unique(setdiff(c(sapply(rcts, function(r){ ## all cell types
+  as.vector(unlist(strsplit(r, split = "-&gt;", fixed = TRUE)))
+}, simplify = "array")), c("0", "1")))
+
+## simulation parameters:
+S &lt;- 100 ## trajectories length
+nCL &lt;- 2 ## number of clones
+X0 &lt;- rep(0, length(ctps)) ## initial condition
+names(X0) &lt;- ctps
+X0["HSC"] &lt;- 1
+ntps &lt;- 5 ## number of time-points
+f_NA &lt;- 0 ## fraction of observed data
+
+th.true &lt;- c(1.9538674, 1.0559815, 0.7232172, 0.7324133) ## dynamic parameters
+names(th.true) &lt;- rcts
+s2.true &lt;- 1e-8 ## additonal noise
+r0.true &lt;- .1 ## intercept noise parameter
+r1.true &lt;- .01 ## slope noise parameter
+
+## simulate trajectories:
+XY &lt;- get.sim.trajectories(rct.lst = rcts,
+                           constr.lst = cnstr,
+                           latSts.lst = latsts,
+                           ct.lst = ctps,
+                           th = th.true,
+                           S = S,
+                           nCL = nCL,
+                           X0 = X0,
+                           s2 = s2.true,
+                           r0 = r0.true,
+                           r1 = r1.true,
+                           f = f_NA,
+                           ntps = ntps,
+                           trunc = FALSE)
+
+XY$X ## process
+XY$Y ## measurements
+</code></pre>
+
+
+</div>

@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>application_vgg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>VGG16 and VGG19 models for Keras.</h2>
+
+<h3>Description</h3>
+
+<p>VGG16 and VGG19 models for Keras.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">application_vgg16(
+  include_top = TRUE,
+  weights = "imagenet",
+  input_tensor = NULL,
+  input_shape = NULL,
+  pooling = NULL,
+  classes = 1000,
+  classifier_activation = "softmax"
+)
+
+application_vgg19(
+  include_top = TRUE,
+  weights = "imagenet",
+  input_tensor = NULL,
+  input_shape = NULL,
+  pooling = NULL,
+  classes = 1000,
+  classifier_activation = "softmax"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>include_top</code></td>
+<td>
+<p>whether to include the 3 fully-connected layers at the top
+of the network.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>One of <code>NULL</code> (random initialization),
+<code>'imagenet'</code> (pre-training on ImageNet),
+or the path to the weights file to be loaded. Defaults to <code>'imagenet'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_tensor</code></td>
+<td>
+<p>Optional Keras tensor
+(i.e. output of <code>layer_input()</code>)
+to use as image input for the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_shape</code></td>
+<td>
+<p>optional shape list, only to be specified if <code>include_top</code>
+is FALSE (otherwise the input shape has to be <code style="white-space: pre;">⁠(224, 224, 3)⁠</code> It should
+have exactly 3 inputs channels, and width and height should be no smaller
+than 32. E.g. <code style="white-space: pre;">⁠(200, 200, 3)⁠</code> would be one valid value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pooling</code></td>
+<td>
+<p>Optional pooling mode for feature extraction
+when <code>include_top</code> is <code>FALSE</code>. Defaults to <code>NULL</code>.
+</p>
+
+<ul>
+<li> <p><code>NULL</code> means that the output of the model will be
+the 4D tensor output of the
+last convolutional layer.
+</p>
+</li>
+<li> <p><code>'avg'</code> means that global average pooling
+will be applied to the output of the
+last convolutional layer, and thus
+the output of the model will be a 2D tensor.
+</p>
+</li>
+<li> <p><code>'max'</code> means that global max pooling will
+be applied.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classes</code></td>
+<td>
+<p>Optional number of classes to classify images into, only to be
+specified if <code>include_top</code> is TRUE, and if no <code>weights</code> argument is
+specified. Defaults to 1000 (number of ImageNet classes).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classifier_activation</code></td>
+<td>
+<p>A string or callable. The activation function to
+use on the "top" layer. Ignored unless <code>include_top = TRUE</code>. Set
+<code>classifier_activation = NULL</code> to return the logits of the "top" layer.
+Defaults to <code>'softmax'</code>. When loading pretrained weights,
+<code>classifier_activation</code> can only be <code>NULL</code> or <code>"softmax"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Optionally loads weights pre-trained on ImageNet.
+</p>
+<p>The <code>imagenet_preprocess_input()</code> function should be used for image preprocessing.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Keras model instance.
+</p>
+
+
+<h3>Reference</h3>
+
+<p>- <a href="https://arxiv.org/abs/1409.1556">Very Deep Convolutional Networks for Large-Scale Image Recognition</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+library(keras)
+
+model &lt;- application_vgg16(weights = 'imagenet', include_top = FALSE)
+
+img_path &lt;- "elephant.jpg"
+img &lt;- image_load(img_path, target_size = c(224,224))
+x &lt;- image_to_array(img)
+x &lt;- array_reshape(x, c(1, dim(x)))
+x &lt;- imagenet_preprocess_input(x)
+
+features &lt;- model %&gt;% predict(x)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

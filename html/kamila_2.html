@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>classifyKamila</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Classify new data into existing KAMILA clusters</h2>
+
+<h3>Description</h3>
+
+<p>A function that classifies a new data set into existing KAMILA clusters
+using the output object from the kamila function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">classifyKamila(obj, newData)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>An output object from the kamila function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newData</code></td>
+<td>
+<p>A list of length 2, with first element a data frame of continuous variables, and second element a data frame of categorical factors.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A function that takes obj, the output from the kamila function, and newData,
+a list of length 2, where the first element is a data frame of continuous
+variables, and the second element is a data frame of categorical factors.
+Both data frames must have the same format as the original data used
+to construct the kamila clustering.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An integer vector denoting cluster assignments of the new data points.
+</p>
+
+
+<h3>References</h3>
+
+<p>Foss A, Markatou M; kamila: Clustering Mixed-Type Data in R and Hadoop. Journal of Statistical Software, 83(13). 2018. doi: 10.18637/jss.v083.i13
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate toy data set
+set.seed(1234)
+dat1 &lt;- genMixedData(400, nConVar = 2, nCatVar = 2, nCatLevels = 4,
+  nConWithErr = 2, nCatWithErr = 2, popProportions = c(.5,.5),
+  conErrLev = 0.2, catErrLev = 0.2)
+# Partition the data into training/test set
+trainingIds &lt;- sample(nrow(dat1$conVars), size = 300, replace = FALSE)
+catTrain &lt;- data.frame(apply(dat1$catVars[trainingIds,], 2, factor), stringsAsFactors = TRUE)
+conTrain &lt;- data.frame(scale(dat1$conVars)[trainingIds,], stringsAsFactors = TRUE)
+catTest &lt;- data.frame(apply(dat1$catVars[-trainingIds,], 2, factor), stringsAsFactors = TRUE)
+conTest &lt;- data.frame(scale(dat1$conVars)[-trainingIds,], stringsAsFactors = TRUE)
+# Run the kamila clustering procedure on the training set
+kamilaObj &lt;- kamila(conTrain, catTrain, numClust = 2, numInit = 10)
+table(dat1$trueID[trainingIds], kamilaObj$finalMemb)
+# Predict membership in the test data set
+kamilaPred &lt;- classifyKamila(kamilaObj, list(conTest, catTest))
+table(dat1$trueID[-trainingIds], kamilaPred)
+</code></pre>
+
+
+</div>

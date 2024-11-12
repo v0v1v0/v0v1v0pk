@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rep_sum_pct</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>rep_sum_pct</h2>
+
+<h3>Description</h3>
+
+<p>Reporting helper function: computes and formats the relative
+percentage of a count.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rep_sum_pct(
+  count,
+  count_reference,
+  digits = 2,
+  na.rm = TRUE,
+  brackets = c("round", "square"),
+  suffix = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>count</code></td>
+<td>
+<p>A numeric. The numerator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>count_reference</code></td>
+<td>
+<p>A numeric. The denominator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer indicating the number of decimal places.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>A logical indicating if missings should be removed from <code>x</code>
+before computing the distributional parameters (default: <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>brackets</code></td>
+<td>
+<p>A character. Either <code>"round"</code> (default) or <code>"square"</code> to
+indicate the type of brackets to surround the relative count.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffix</code></td>
+<td>
+<p>A character which is placed between the lower and the upper
+confidence bound in the formatted output.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character with the formatted output.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>stats::median, stats::quantile, <code>Hmisc::wtd.quantile()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">rep_sum_pct(count = 40, count_reference = 200)
+rep_sum_pct(count = 40, count_reference = 200, brackets = "square")
+rep_sum_pct(40, 200, brackets = "square", suffix = FALSE)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,178 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>set.func-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "set.func"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing a set function.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the function <code>set.func</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal to
+the number of elements of the set on which the set function is defined.</p>
+</dd>
+<dt>
+<code>subsets</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>2^n</code> containing the power set of the underlying set in
+"natural" order. The subsets are coded as integers.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>2^n</code> containing the coefficients of the set function in binary order.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>superclass.set.func</code>, directly.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "set.func")</code> </p>
+</dd>
+<dt>as.game</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>as.capacity</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>as.card.set.func</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>as.Mobius.set.func</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>as.Mobius.card.set.func</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>conjugate</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>interaction.indices</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>is.cardinal</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>is.kadditive</dt>
+<dd>
+<p><code>signature(object = "set.func", k = "numeric")</code></p>
+</dd>
+<dt>is.monotone</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>k.truncate.Mobius</dt>
+<dd>
+<p><code>signature(object = "set.func", k =
+	"numeric")</code></p>
+</dd>
+<dt>Mobius</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>Shapley.value</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+<dt>to.data.frame</dt>
+<dd>
+<p><code>signature(object = "set.func")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>set.func</code>,
+<br><code>as.game-methods</code>,	
+<br><code>as.capacity-methods</code>,
+<br><code>as.card.set.func-methods</code>, 
+<br><code>as.Mobius.set.func-methods</code>,
+<br><code>as.Mobius.card.set.func-methods</code>,
+<br><code>conjugate-methods</code>, 
+<br><code>interaction.indices-methods</code>,
+<br><code>is.cardinal-methods</code>, 
+<br><code>is.kadditive-methods</code>,
+<br><code>is.monotone-methods</code>,
+<br><code>k.truncate.Mobius-methods</code>,
+<br><code>Mobius-methods</code>, 
+<br><code>Shapley.value-methods</code>,
+<br><code>to.data.frame-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a set function
+mu &lt;- set.func(c(1:8,8:1)/8)
+
+## the attributes of the object
+mu@n
+mu@data
+mu@subsets
+
+## some conversions that cannot work
+## Not run: as.game(mu)
+## Not run: as.capacity(mu)
+## Not run: as.card.set.func(mu)
+
+## some tests
+is.cardinal(mu)
+is.kadditive(mu,2)
+is.monotone(mu)
+
+## some transformations
+conjugate(mu)
+Mobius(mu)
+k.truncate.Mobius(mu,2)
+
+## summary 
+Shapley.value(mu)
+interaction.indices(mu)
+# the same
+summary(mu)
+
+## save the set function to a file
+d &lt;- to.data.frame(mu)
+## Not run: write.table(d,"my.set.func.csv",sep="\t")
+
+# finally, some conversions that should work
+mu &lt;- set.func(c(0,1,1,1,2,2,2,3))
+as.game(mu)
+as.capacity(mu)
+as.card.set.func(mu)
+</code></pre>
+
+
+</div>

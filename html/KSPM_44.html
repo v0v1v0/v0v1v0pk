@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>residuals.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract residuals from a Kernel Semi Parametric Model</h2>
+
+<h3>Description</h3>
+
+<p>Returns the vector of residuals for a model fit of class "kspm".
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+residuals(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional optional argument (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector of residuals. The vector length is the number of observations used in model coefficients estimation (see nobs.kspm).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm for fitting model, nobs.kspm, rstandard.kspm.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+y &lt;- 3*x + rnorm(15, 0, 2)
+fit &lt;- kspm(y, kernel = ~ Kernel(x, kernel.function = "linear"))
+residuals(fit)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lkmt.net.kernel.hsa04020</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Example test result for the network-based <code>kernel</code> for 
+<code>pathway</code> hsa04020.</h2>
+
+<h3>Description</h3>
+
+<p>An object of class <code>lkmt</code> containing exemplary test results for an 
+application of the logistic kernel machine test, derived from the example data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(lkmt.net.kernel.hsa04020)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>lkmt</code> for the network-based  
+<code>kernel</code> and the <code>pathway</code> hsa04020.
+</p>
+
+<dl>
+<dt>formular</dt>
+<dd>
+<p>gives a formular defining the nullmodel used in the 
+logistic kernel machine test</p>
+</dd>
+<dt>kernel</dt>
+<dd>
+<p>includes the <code>kernel</code> object of the 
+<code>pathway</code> to be evaluated</p>
+</dd>
+<dt>GWASdata</dt>
+<dd>
+<p>gives the <code>GWASdata</code> object including the study data 
+considered in testing</p>
+</dd>
+<dt>statistic</dt>
+<dd>
+<p>gives the value of the test statistic</p>
+</dd>
+<dt>df</dt>
+<dd>
+<p>specifies the degrees of freedom</p>
+</dd>
+<dt>p.value</dt>
+<dd>
+<p>includes teh p-value resulting from the test</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>simulated data and Ensembl extract
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(hsa04020)
+data(gwas)
+net_kernel &lt;- calc_kernel(gwas, hsa04020, knots=NULL, type='net', calculation='cpu')
+lkmt_test(pheno ~ sex + age, net_kernel, gwas, method='satt')
+</code></pre>
+
+
+</div>

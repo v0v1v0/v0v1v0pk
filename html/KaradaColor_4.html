@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kg_create_cc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create complementary color</h2>
+
+<h3>Description</h3>
+
+<p><code>kg_create_cc</code> This function create complementary color.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kg_create_cc(basecols = c("#ff48ac", "red"), alpha = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>basecols</code></td>
+<td>
+<p>Set color data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The alpha transparency. Numbers range from 0-1.
+see argument alpha in <code>rgb</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return base and complementary color in a data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kg_show_console(kg_create_cc())
+kg_plot_color(color = kg_create_cc())
+</code></pre>
+
+
+</div>

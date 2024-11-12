@@ -1,0 +1,160 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KS2sample_Rcpp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+R function calling the C++ routines that compute the p-value for a (weighted) two-sample Kolmogorov-Smirnov (KS) test, given an arbitrary positive weight function and arbitrary data samples with possibly repeated observations (i.e. ties)
+</h2>
+
+<h3>Description</h3>
+
+<p>Function calling directly the C++ routines that compute the exact p-value <code class="reqn">P(D_{m,n} \ge q)</code> for the (weighed) two-sample one- or two-sided Kolmogorov-Smirnov statistic, at a fixed <code class="reqn">q</code>, <code class="reqn">q\in [0,1]</code>, given the sample sizes <code>m</code> and <code>n</code>, the vector of weights <code>w_vec</code> and the vector <code>M</code> containing the number of times each distinct observation is repeated in the pooled sample.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KS2sample_Rcpp(m, n, kind, M, q, w_vec, tol)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+
+<p>the sample size of first tested sample.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>the sample size of second tested sample.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kind</code></td>
+<td>
+
+<p>an integer value (= 1,2 or 3) which specified the alternative hypothesis. When = 1, the test is two-sided. When = 2 or 3, the test is one-sided. See ‘Details’ for the meaning of the possible values. Other value is invalid.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+
+<p>an integer-valued vector with <code class="reqn">k</code> cells, where <code class="reqn">k</code> denotes the number of distinct values in the ordered pooled sample of tested pair of samples(i.e. <code class="reqn">a_1&lt;a_2&lt;\ldots&lt;a_k</code>). <code>M[i]</code> is the number of times that <code class="reqn">a_i</code> is repeated in the pooled sample. A valid <code>M</code> must have strictly positive integer values and have the sum of all cells equals to <code>m+n</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+
+<p>numeric value between 0 and 1, at which the p-value <code class="reqn">P(D_{m,n}\geq q)</code> is computed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w_vec</code></td>
+<td>
+<p>a vector with <code>m+n-1</code> cells, giving weights to each observation in the pooled sample. Valid <code>w_vec</code> must have <code>m+n-1</code> cells and strictly positive value. See ‘Details’ for the meaning of values in each cell.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the value of <code class="reqn">\epsilon</code> for computing <code class="reqn">P(D_{m,n} &gt;q- \epsilon)</code>, which is equivalent to <code class="reqn">P(D_{m,n} \geq q)</code>. Non-positive input (<code>tol</code> <code class="reqn">\leq 0</code>) or large input (<code>tol</code> <code class="reqn">&gt;</code><code>1e-6</code>) are replaced by <code>tol = 1e-6</code>. In cases when <code>m</code> and <code>n</code> have large least common multiple, a smaller value is highly recommended.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given a pair of random samples <code class="reqn">\bm{X}_m=(X_{1},..., X_{m})</code> and <code class="reqn">\bm{Y}_n=(Y_{1},..., Y_{n})</code> of sizes <code>m</code> and <code>n</code> with empirical cdfs <code class="reqn">F_{m}(t)</code> and <code class="reqn">G_{n}(t)</code> respectively, coming from some unknown cdfs <code class="reqn">F(x)</code> and <code class="reqn">G(x)</code>. It is assumed that <code class="reqn">F(x)</code> and <code class="reqn">G(x)</code> could be either <em>continuous</em>, <em>discrete</em> or <em>mixed</em>, which means that repeated observations are allowed in the corresponding observed samples. The task is to test the null hypothesis <code class="reqn">H_0: F(x) = G(x)</code>  for all <code class="reqn">x</code>,  either against the alternative hypothesis <code class="reqn">H_1: F(x)\neq G(x)</code>  for at least one <code class="reqn">x</code>, which corresponds to the two-sided test, or against <code class="reqn">H_1: F(x)&gt; G(x)</code>  and <code class="reqn">H_1: F(x)&lt; G(x)</code>   for at least one <code class="reqn">x</code>, which corresponds to the two one-sided tests. The (weighted) two-sample Kolmogorov-Smirnov goodness-of-fit statistics that are used to test these hypotheses are generally defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">\Delta_{m,n} = \sup |F_{m}(t) - G_n(t)|W(E_{m+n}(t), \textnormal{ to test against the alternative } H_1: F(x)\neq G(x)</code>
+</p>
+ 
+<p style="text-align: center;"><code class="reqn">\Delta_{m,n}^{+} = \sup [F_{m}(t) - G_n(x)]W(E_{m+n}(t)), \textnormal{ to test against the alternative } H_1: F(x)&gt; G(x)</code>
+</p>
+ 
+<p style="text-align: center;"><code class="reqn">\Delta_{m,n}^{-} = \sup [G_n(t) - F_{m}(x)]W(E_{m+n}(t)), \textnormal{ to test against the alternative } H_1: F(x)&lt; G(x), </code>
+</p>
+
+<p>where <code class="reqn">E_{m+n}(t)</code> is the empirical cdf of the pooled sample <code class="reqn">\bm{Z}_{m,n}=(X_{1},..., X_{m},Y_{1},..., Y_{n})</code>, <code class="reqn">W( )</code> is a strictly positive weight function defined on <code class="reqn">[0,1]</code>. 
+</p>
+<p><code>w_vec[i]</code> (0<code class="reqn">&lt;</code><code>i</code><code class="reqn">&lt;</code><code class="reqn">m+n</code>) is then equal to <code class="reqn">W(Z_i)=W(\frac{i}{m+n})</code>(<code class="reqn">Z_i</code> is the i-th smallest observation in the pooled sample <code class="reqn">\bm{Z}_{m,n}</code>). 
+Different value of <code>w_vec</code> specifies the weighted Kolmogorov-Smirnov test differently. For example, when <code>w_vec=rep(1,m+n-1)</code>, <code>KS2sample_Rcpp</code> calculates the p-value of the unweighted two-sample Kolmogorov-Smirnov test, when <code>w_vec</code> = <code>((1:(m+n-1))*((m+n-1):1))^(-1/2)</code>, it calculates the p-value for the weighted two-sample Kolmogorov-Smirnov test with Anderson-Darling weight <code class="reqn">W(t) = 1/[t(1-t)]^{1/2}</code>.
+</p>
+<p>Possible values of <code>kind</code> are 1,2 and 3, which specify the alternative hypothesis, i.e. specify the test statistic to be either <code class="reqn">\Delta_{m,n}</code>,  <code class="reqn">\Delta_{m,n}^{+}</code> or <code class="reqn">\Delta_{m,n}^{-}</code> respectively.
+</p>
+<p>The numeric array <code>M</code> specifies the number of <em>repeated observations</em> in the pooled sample. For a particular realization of the pooled sample <code class="reqn">\bm{Z}_{m,n}=(X_{1},..., X_{m},Y_{1},..., Y_{n})</code>, let there be <code class="reqn">k</code> distinct values, <code class="reqn">a_1&lt;a_2&lt;...&lt;a_k</code>, in the ordered, pooled sample <code class="reqn">(z_1\leq z_2\leq \ldots \leq z_{m+n})</code>, where <code class="reqn">k\leq m+n</code>, and where <code class="reqn">m_i</code>=<code>M[i]</code> is the number of times <code class="reqn">a_i</code>, <code class="reqn">i=1,\ldots,k</code> appears in the pooled sample. The p-value is then defined as the probability
+</p>
+<p style="text-align: center;"><code class="reqn">P\left(D_{m,n}\geq q\right),</code>
+</p>
+
+<p>where <code class="reqn">D_{m,n}</code> is the two-sample Kolmogorov-Smirnov test statistic defined according to the value of <code>weight</code> and <code>alternative</code>, for two samples <code class="reqn">\bm{X}'_m</code> and  <code class="reqn">\bm{Y}'_n</code> of sizes <code class="reqn">m</code> and <code class="reqn">n</code>, <em>randomly drawn from the pooled sample without replacement</em>, i.e. <code class="reqn">D_{m,n}</code> is defined on the space <code class="reqn">\Omega</code> (see further details in <code>KS2sample</code>), and <code class="reqn">q\in [0,1]</code>. 
+</p>
+<p><code>KS2sample_Rcpp</code> implements an exact algorithm, extending the Fortran 77 subroutine due to Nikiforov (1994), an extended functionality by allowing more flexible choices of weight, as well as for <em>large sample sizes</em>. A version of the Nikiforov's recurrence proposed recently by Viehmann (2021) is further incorporated, which computes directly the p-value, with higher accuracy, giving up to 17 correct digits, but at up to 3 times higher computational cost than <code>KS2sample_c_Rcpp</code>. Compared with other known algorithms, it allows data samples to come from <em>continuous, discrete or mixed distribution</em>(i.e. ties may appear), and it is more efficient and more generally applicable for <em>large sample sizes</em>. This algorithm ensures a total worst-case run-time of order <code class="reqn">O(nm)</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Numeric value corresponding to <code class="reqn">P(D_{m,n}\geq q)</code>, given sample sizes <code>m</code>, <code>n</code>, <code>M</code> and <code>w_vec</code>. If the value of <code>m</code>, <code>n</code> are non-positive, or if the length of <code>w_vec</code> is not equal to <code>m+n-1</code>, then the function returns <code>-1</code>, the non-permitted value of <code>M</code> or non-permitted value inside <code>w_vec</code> returns <code>-2</code>, numerically unstable calculation returns <code>-3</code>.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Based on the Fortran subroutine by Nikiforov (1994). See also Dimitrova, Jia, Kaishev (2024).
+</p>
+
+
+<h3>References</h3>
+
+<p>Paul L. Canner (1975). "A Simulation Study of One- and Two-Sample Kolmogorov-Smirnov Statistics with a Particular Weight Function". Journal of the American Statistical Association, <b>70</b>(349), 209-211.
+</p>
+<p>Nikiforov, A. M. (1994). "Algorithm AS 288: Exact Smirnov Two-Sample Tests for Arbitrary Distributions." Journal of the Royal Statistical Society. Series C (Applied Statistics), <b>43</b>(1), 265–270.
+</p>
+<p>Viehmann, T. (2021). Numerically more stable computation of the p-values for the two-sample Kolmogorov-Smirnov test. <em>arXiv preprint</em> arXiv:2102.08037.
+</p>
+<p>Dimitrina S. Dimitrova, Yun Jia, Vladimir K. Kaishev (2024). "The R functions KS2sample and Kuiper2sample: Efficient Exact Calculation of P-values of the Two-sample Kolmogorov-Smirnov and Kuiper Tests".  <em>submitted</em>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Computing the unweighted two-sample Kolmogorov-Smirnov test
+## Example see in Nikiforov (1994)
+
+m &lt;- 120
+n &lt;- 150
+kind &lt;- 1
+q &lt;- 0.1
+M &lt;- c(80,70,40,80)
+w_vec &lt;- rep(1,m+n-1)
+tol &lt;- 1e-6
+KS2sample_Rcpp(m, n, kind, M, q, w_vec, tol)
+
+kind &lt;- 2
+KS2sample_Rcpp(m, n, kind, M, q, w_vec, tol)
+
+## Computing the weighted two-sample Kolmogorov-Smirnov test
+## with Anderson-Darling weight
+kind &lt;- 3
+w_vec &lt;- ((1:(m+n-1))*((m+n-1):1))^(-1/2)
+KS2sample_Rcpp(m, n, kind, M, q, w_vec, tol)
+</code></pre>
+
+
+</div>

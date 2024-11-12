@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Mscale</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>M scale</h2>
+
+<h3>Description</h3>
+
+<p>The M scale of an univariate sample.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Mscale(u, c, b)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>numeric vector with positive values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+<p>a tuning constant. If consistency to standard normal distribution
+is desired use <code>normal_consistency_constants</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>the desired break down point.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>M scale value.
+</p>
+
+
+<h3>References</h3>
+
+<p>Maronna, R. A., Martin, R. D., Yohai, V. J., &amp; Salibian-Barrera,
+M. (2018). Robust statistics: theory and methods (with R). Wiley.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Mscale(u = rnorm(100), c = 1, b = 0.5)
+
+</code></pre>
+
+
+</div>

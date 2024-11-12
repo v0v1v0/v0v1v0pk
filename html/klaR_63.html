@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.rda</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Regularized Discriminant Analysis (RDA)</h2>
+
+<h3>Description</h3>
+
+<p>Classifies new observations using parameters determined by 
+the <code>rda</code>-function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'rda'
+predict(object, newdata, posterior = TRUE, 
+    aslist = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object of class <code>rda</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>Data frame (or matrix) of cases to be classified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posterior</code></td>
+<td>
+<p>Logical; indicates whether a matrix of 
+posterior probabilites over all classes for each observation 
+shall be returned in addition to classifications.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aslist</code></td>
+<td>
+<p>Logical; if <code>TRUE</code>, a list
+containing classifications and posterior probabilities is returned, 
+otherwise a vector with an attribute ‘<code>posterior</code>’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>currently unused</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Depends on the value of argument ‘<code>aslist</code>’:
+</p>
+<p>Either a vector (of class <code>factor</code>) of classifications 
+that (optionally) has an attribute ‘<code>posterior</code>’ 
+containing the posterior probability matrix, or
+</p>
+<p>A list with elements ‘<code>class</code>’ and ‘<code>posterior</code>’.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Christian Röver, <a href="mailto:roever@statistik.tu-dortmund.de">roever@statistik.tu-dortmund.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>rda</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+x &lt;- rda(Species ~ ., data = iris, gamma = 0.05, lambda = 0.2)
+predict(x, iris[, 1:4])
+</code></pre>
+
+
+</div>

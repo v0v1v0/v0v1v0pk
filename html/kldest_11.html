@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_est_brnn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bias-reduced generalized k-nearest-neighbour KL divergence estimation</h2>
+
+<h3>Description</h3>
+
+<p>This is the bias-reduced generalized k-NN based KL divergence estimator from
+Wang et al. (2009) specified in Eq.(29).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_est_brnn(X, Y, max.k = 100, warn.max.k = TRUE, eps = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> matrices, representing <code>n</code> samples from
+the true distribution <code class="reqn">P</code> and <code>m</code> samples from the approximate distribution
+<code class="reqn">Q</code>, both in <code>d</code> dimensions. Vector input is treated as a column matrix.
+<code>Y</code> can be left blank if <code>q</code> is specified (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.k</code></td>
+<td>
+<p>Maximum numbers of nearest neighbours to compute (default: <code>100</code>).
+A larger <code>max.k</code> may yield a more accurate KL-D estimate (see <code>warn.max.k</code>),
+but will always increase the computational cost.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warn.max.k</code></td>
+<td>
+<p>If <code>TRUE</code> (the default), warns if <code>max.k</code> is such that more
+than <code>max.k</code> neighbours are within the neighbourhood <code class="reqn">\delta</code> for some
+data point(s). In this case, only the first <code>max.k</code> neighbours are counted.
+As a consequence, <code>max.k</code> may required to be increased.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>Error bound in the nearest neighbour search. A value of <code>eps = 0</code>
+(the default) implies an exact nearest neighbour search, for <code>eps &gt; 0</code>
+approximate nearest neighbours are sought, which may be somewhat faster for
+high-dimensional problems.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Finite sample bias reduction is achieved by an adaptive choice of the number
+of nearest neighbours. Fixing the number of nearest neighbours upfront, as
+done in <code>kld_est_nn()</code>, may result in very different distances
+<code class="reqn">\rho^l_i,\nu^k_i</code> of a datapoint <code class="reqn">x_i</code> to its <code class="reqn">l</code>-th nearest
+neighbours in <code class="reqn">X</code> and <code class="reqn">k</code>-th nearest neighbours in <code class="reqn">Y</code>,
+respectively, which may lead to unequal biases in NN density estimation,
+especially in a high-dimensional setting.
+To overcome this issue, the number of neighbours <code class="reqn">l,k</code> are here chosen
+in a way to render <code class="reqn">\rho^l_i,\nu^k_i</code> comparable, by taking the largest
+possible number of neighbours <code class="reqn">l_i,k_i</code> smaller than
+<code class="reqn">\delta_i:=\max(\rho^1_i,\nu^1_i)</code>.
+</p>
+<p>Since the bias reduction explicitly uses both samples <code>X</code> and <code>Y</code>, one-sample
+estimation is not possible using this method.
+</p>
+<p>Reference:
+Wang, Kulkarni and Verdú, "Divergence Estimation for Multidimensional
+Densities Via k-Nearest-Neighbor Distances", IEEE Transactions on Information
+Theory, Vol. 55, No. 5 (2009). DOI: https://doi.org/10.1109/TIT.2009.2016060
+</p>
+
+
+<h3>Value</h3>
+
+<p>A scalar, the estimated Kullback-Leibler divergence <code class="reqn">\hat D_{KL}(P||Q)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># KL-D between one or two samples from 1-D Gaussians:
+set.seed(0)
+X &lt;- rnorm(100)
+Y &lt;- rnorm(100, mean = 1, sd = 2)
+q &lt;- function(x) dnorm(x, mean = 1, sd =2)
+kld_gaussian(mu1 = 0, sigma1 = 1, mu2 = 1, sigma2 = 2^2)
+kld_est_nn(X, Y)
+kld_est_nn(X, q = q)
+kld_est_nn(X, Y, k = 5)
+kld_est_nn(X, q = q, k = 5)
+kld_est_brnn(X, Y)
+
+
+# KL-D between two samples from 2-D Gaussians:
+set.seed(0)
+X1 &lt;- rnorm(100)
+X2 &lt;- rnorm(100)
+Y1 &lt;- rnorm(100)
+Y2 &lt;- Y1 + rnorm(100)
+X &lt;- cbind(X1,X2)
+Y &lt;- cbind(Y1,Y2)
+kld_gaussian(mu1 = rep(0,2), sigma1 = diag(2),
+             mu2 = rep(0,2), sigma2 = matrix(c(1,1,1,2),nrow=2))
+kld_est_nn(X, Y)
+kld_est_nn(X, Y, k = 5)
+kld_est_brnn(X, Y)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mutate_kendall_rw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mutate each trajectory.</h2>
+
+<h3>Description</h3>
+
+<p>Mutate each trajectory.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mutate_kendall_rw(simulations, mutate_function, df = T)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>simulations</code></td>
+<td>
+<p>Object of class kendall_simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mutate_function</code></td>
+<td>
+<p>Function that will be applied to each trajectory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>If TRUE, a d.f will be returned, if FALSE, simulations in the kendall_simulation
+object passed in simulations argument will be replaced by the result of mutate_function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data frame or a list (of class kendall_simulation)
+</p>
+
+
+</div>

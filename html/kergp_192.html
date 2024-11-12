@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>varVec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generic Function: Variance of Gaussian Process at Specific Locations
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function returning a variance vector 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+varVec(object, X, ...)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>Covariance kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>A matrix with <code class="reqn">d</code> columns, where <code class="reqn">d</code> is the number of inputs
+of the covariance kernel. The <code class="reqn">n</code> rows define a set of sites or
+locations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments for methods.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric vector with length <code>nrow(X)</code> containing the variances
+<code class="reqn">K(\mathbf{x}, \mathbf{x})</code> for all the sites
+<code class="reqn">\mathbf{x}</code>.
+</p>
+
+
+</div>

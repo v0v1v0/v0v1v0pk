@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Claw, Bimodal, Kurtotic, Outlier, Trimodal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Datasets
+</h2>
+
+<h3>Description</h3>
+
+<p>A random sample of size 200 from the claw, bimodal, kurtotic, outlier and trimodal Gaussian density.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(claw)
+data(bimodal)
+data(kurtotic)
+data(outlier)
+data(trimodal)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>Numeric vector with length 200.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Generate 200 random numbers, distributed according to a normal mixture, using 
+<code>rnorMix</code> in package <a href="https://CRAN.R-project.org/package=nor1mix"><span class="pkg">nor1mix</span></a>.
+</p>
+<pre>
+  ## Claw density
+  claw &lt;- rnorMix(n=200, MW.nm10)
+  plot(MW.nm10)
+  
+  ## Bimodal density
+  bimodal &lt;- rnorMix(n=200, MW.nm7)
+  plot( MW.nm7)
+  
+  ## Kurtotic density
+  kurtotic &lt;- rnorMix(n=200, MW.nm4)
+  plot(MW.nm4)
+  
+  ## Outlier density
+  outlier &lt;- rnorMix(n=200, MW.nm5)
+  plot( MW.nm5)
+  
+  ## Trimodal density
+  trimodal &lt;- rnorMix(n=200, MW.nm9)
+  plot(MW.nm9)
+  </pre>   
+
+
+<h3>Source</h3>
+
+<p>Randomly generated a normal mixture with the function <code>rnorMix</code> in package <a href="https://CRAN.R-project.org/package=nor1mix"><span class="pkg">nor1mix</span></a>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Martin, M. (2013). 
+<a href="https://CRAN.R-project.org/package=nor1mix"><span class="pkg">nor1mix</span></a>: Normal (1-d) mixture models (S3 classes and methods). 
+<em><span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> package version 1.1-4</em>.
+</p>
+
+
+</div>

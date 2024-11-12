@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>as.matrix.semivariance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert semivariance to a matrix object</h2>
+
+<h3>Description</h3>
+
+<p>Convert semivariance to a matrix object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'semivariance'
+as.matrix(x, ...)
+
+## S3 method for class 'semivariance'
+as.data.frame(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <code>semivariance</code> object created by <code>semivariance</code> or 
+<code>exponential.semivariance</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>as.matrix</code> and <code>as.data.frame</code>
+methods. Not supported for <code>semivariance</code> object.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The defaults of semivariance methods give a list or numeric vector. These
+methods can convert the semivariance output list and vector to <code>matrix</code> or 
+<code>data.frame</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix containing the computed distance and semivariance.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize Data
+summary(ContrivedData)
+
+# Empirical semivariance for variable y
+raw.var &lt;- semivariance(x=ContrivedData$y,coords = cbind(ContrivedData$s.1, 
+  ContrivedData$s.2))
+as.matrix(raw.var)
+
+# Estimation using metropolis.krige()
+#' # Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+#M&lt;-10000
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+   data = ContrivedData, n.iter = M, range.tol = 0.05)
+
+# Parametric semivariance
+parametric.var &lt;- semivariance(contrived.run)
+as.matrix(parametric.var)
+as.data.frame(parametric.var)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

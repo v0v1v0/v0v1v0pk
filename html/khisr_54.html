@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_organisations_by_level</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get Organisations by Level</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+<code>get_organisations_by_level()</code> is an experimental function that retrieves
+the organisation units along with their parent units.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_organisations_by_level(
+  level = 1,
+  org_ids = NULL,
+  auth = NULL,
+  call = caller_env()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>An integer specifying the desired organisation level (default level 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>org_ids</code></td>
+<td>
+<p>Optional. A vector of organisation identifiers whose details
+are being retrieved.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auth</code></td>
+<td>
+<p>Optional. The authentication object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The call environment.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble containing the organisation units and their parent units up
+to the specified level.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Fetch all the organisation units metadata
+organisations &lt;- get_organisations_by_level(level = 2)
+organisations
+
+</code></pre>
+
+
+</div>

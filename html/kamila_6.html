@@ -1,0 +1,171 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gmsClust</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A general implementation of Modha-Spangler clustering for mixed-type data.</h2>
+
+<h3>Description</h3>
+
+<p>Modha-Spangler clustering estimates the optimal weighting for continuous
+vs categorical variables using a brute-force search strategy.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gmsClust(
+  conData,
+  catData,
+  nclust,
+  searchDensity = 10,
+  clustFun = wkmeans,
+  conDist = squaredEuc,
+  catDist = squaredEuc,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conData</code></td>
+<td>
+<p>A data frame of continuous variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catData</code></td>
+<td>
+<p>A data frame of categorical variables; the allowable variable types depend on the specific clustering function used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclust</code></td>
+<td>
+<p>An integer specifying the number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>searchDensity</code></td>
+<td>
+<p>An integer determining the number of distinct cluster weightings evaluated in the brute-force search.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clustFun</code></td>
+<td>
+<p>The clustering function to be applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conDist</code></td>
+<td>
+<p>The continuous distance function used to construct the objective function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catDist</code></td>
+<td>
+<p>The categorical distance function used to construct the objective function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments to be passed to the <code>clustFun</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Modha-Spangler clustering uses a brute-force search strategy to estimate
+the optimal weighting for continuous vs categorical variables. This
+implementation admits an arbitrary clustering function and arbitrary
+objective functions for continuous and categorical variables.
+</p>
+<p>The input parameter clustFun must be a function accepting inputs 
+(conData, catData, conWeight, nclust, ...) and returning a list containing
+(at least) the elements cluster, conCenters, and catCenters. The list element
+"cluster" contains cluster memberships denoted by the integers 1:nclust. The
+list elements "conCenters" and "catCenters" must be data frames whose rows
+denote cluster centroids. The function clustFun must allow nclust = 1, in
+which case $centers returns a data frame with a single row.
+Input parameters conDist and catDist are functions that must each take two
+data frame rows as input and return a scalar distance measure.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing the following results objects:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>results</code></td>
+<td>
+<p>A results object corresponding to the base clustering algorithm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objFun</code></td>
+<td>
+<p>A numeric vector of length <code>searchDensity</code> containing the values of the objective function for each weight used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qcon</code></td>
+<td>
+<p>A numeric vector of length <code>searchDensity</code> containing the values of the continuous component of the objective function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qcon</code></td>
+<td>
+<p>A numeric vector of length <code>searchDensity</code> containing the values of the categorical component of the objective function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bestInd</code></td>
+<td>
+<p>The index of the most successful run</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>A numeric vector of length <code>searchDensity</code> containing the continuous weights used</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Foss A, Markatou M; kamila: Clustering Mixed-Type Data in R and Hadoop. Journal of Statistical Software, 83(13). 2018. doi: 10.18637/jss.v083.i13
+</p>
+<p>Modha DS, Spangler WS; Feature Weighting in k-Means Clustering. Machine Learning, 52(3). 2003. doi: 10.1023/a:1024016609528
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Generate toy data set with poor quality categorical variables and good
+# quality continuous variables.
+set.seed(1)
+dat &lt;- genMixedData(200, nConVar=2, nCatVar=2, nCatLevels=4, nConWithErr=2,
+  nCatWithErr=2, popProportions=c(.5,.5), conErrLev=0.3, catErrLev=0.8)
+catDf &lt;- dummyCodeFactorDf(data.frame(apply(dat$catVars, 2, factor), stringsAsFactors = TRUE))
+conDf &lt;- data.frame(scale(dat$conVars), stringsAsFactors = TRUE)
+
+msRes &lt;- gmsClust(conDf, catDf, nclust=2)
+
+table(msRes$results$cluster, dat$trueID)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

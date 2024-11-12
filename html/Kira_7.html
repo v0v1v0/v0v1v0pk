@@ -1,0 +1,204 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_curve</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Graphics of the results of the classification process</h2>
+
+<h3>Description</h3>
+
+<p>Return graphics of the results of the classification process.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_curve(data, type = "ROC", title = NA, xlabel = NA, ylabel = NA,  
+           posleg = 3, boxleg = FALSE, axis = TRUE, size = 1.1, grid = TRUE, 
+           color = TRUE, classcolor = NA, savptc = FALSE, width = 3236, 
+           height = 2000, res = 300, casc = TRUE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data with x and y coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>ROC (default) or PRC graphics type.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>Title of the graphic, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlabel</code></td>
+<td>
+<p>Names the X axis, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylabel</code></td>
+<td>
+<p>Names the Y axis, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posleg</code></td>
+<td>
+<p>0 with no caption,<br>
+1 for caption in the left upper corner,<br>
+2 for caption in the right upper corner,<br>
+3 for caption in the right lower corner (default),<br>
+4 for caption in the left lower corner.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boxleg</code></td>
+<td>
+<p>Puts the frame in the caption (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>Put the diagonal axis on the graph (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>Size of the points in the graphs (default = 1.1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>Put grid on graphs (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>Colored graphics (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classcolor</code></td>
+<td>
+<p>Vector with the colors of the classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>savptc</code></td>
+<td>
+<p>Saves graphics images to files (default = FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>Graphics images width when savptc = TRUE (defaul = 3236).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>Graphics images height when savptc = TRUE (default = 2000).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+<p>Nominal resolution in ppi of the graphics images when savptc = TRUE (default = 300).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>casc</code></td>
+<td>
+<p>Cascade effect in the presentation of the graphic (default = TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>ROC or PRC curve.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani</p>
+
+
+<h3>See Also</h3>
+
+<p><code>results</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+data  &lt;- iris
+names &lt;- colnames(data)
+colnames(data) &lt;- c(names[1:4],"class")
+
+#### Start - hold out validation method ####
+dat.sample = sample(2, nrow(data), replace = TRUE, prob = c(0.7,0.3))
+data.train = data[dat.sample == 1,] # training data set
+data.test  = data[dat.sample == 2,] # test data set
+class.train = as.factor(data.train$class) # class names of the training data set
+class.test  = as.factor(data.test$class)  # class names of the test data set
+#### End - hold out validation method ####
+
+
+dist = "euclidean" 
+# dist = "manhattan"
+# dist = "minkowski"
+# dist = "canberra"
+# dist = "maximum"
+# dist = "chebyshev"
+
+k = 1
+lambda = 5
+
+r &lt;- (ncol(data) - 1)
+res &lt;- knn(train = data.train[,1:r], test = data.test[,1:r], class = class.train, 
+           k = 1, dist = dist, lambda = lambda)
+
+resp &lt;- results(orig.class = class.test, predict = res$predict)
+
+message("Mean squared error:"); resp$mse
+message("Mean absolute error:"); resp$mae
+message("Relative absolute error:"); resp$rae
+message("Confusion matrix:"); resp$conf.mtx  
+message("Hit rate: ", resp$rate.hits)
+message("Error rate: ", resp$rate.error)
+message("Number of correct instances: ", resp$num.hits)
+message("Number of wrong instances: ", resp$num.error)
+message("Kappa coefficient: ", resp$kappa)
+# message("Data for the ROC curve in classes:"); resp$roc.curve 
+# message("Data for the PRC curve in classes:"); resp$prc.curve
+message("General results of the classes:"); resp$res.class
+
+dat &lt;- resp$roc.curve; tp = "roc"; ps = 3
+# dat &lt;- resp$prc.curve; tp = "prc"; ps = 4
+
+plot_curve(data = dat, type = tp, title = NA, xlabel = NA, ylabel = NA,  
+           posleg = ps, boxleg = FALSE, axis = TRUE, size = 1.1, grid = TRUE, 
+           color = TRUE, classcolor = NA, savptc = FALSE,
+           width = 3236, height = 2000, res = 300, casc = FALSE)
+
+</code></pre>
+
+
+</div>

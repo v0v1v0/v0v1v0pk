@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>BrayCurtis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernels for count data</h2>
+
+<h3>Description</h3>
+
+<p>Ruzicka and Bray-Curtis are kernel functions for absolute or relative
+frequencies and count data. Both kernels have as input a matrix or data.frame
+with dimension <em>NxD</em> and <em>N</em>&gt;1, <em>D</em>&gt;1, containing strictly non-negative real numbers.
+Samples should be in the rows. Thus, when working with relative frequencies,
+'rowSums(X)' should be 1 (or 100, or another arbitrary number) for <em>all</em> rows
+(samples) of the dataset.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">BrayCurtis(X)
+
+Ruzicka(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Matrix or data.frame that contains absolute or relative frequencies.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>For more info about these measures, please check Details in
+?vegan::vegdist(). Note that, in the vegan help page, "Ruzicka" corresponds to
+"quantitative Jaccard". 'BrayCurtis(X)' gives the same result than
+'1-vegan::vegdist(X,method="bray")', and the same with 'Ruzicka(data)' and
+'1-vegan::vegdist(data,method="jaccard")'.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Kernel matrix (dimension: <em>NxN</em>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- matrix(rpois(5000,lambda=3),ncol=100,nrow=50)
+Kruz &lt;- Ruzicka(data)
+Kbray &lt;- BrayCurtis(data)
+Kruz[1:5,1:5]
+Kbray[1:5,1:5]
+</code></pre>
+
+
+</div>

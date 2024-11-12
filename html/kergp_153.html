@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parseCovFormula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parse a Formula or Expression Describing a Composite
+Covariance Kernel</h2>
+
+<h3>Description</h3>
+
+<p>Parse a formula (or expression) describing a composite covariance
+kernel.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">parseCovFormula(formula, where = .GlobalEnv, trace = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula or expression describing a covariance
+kernel. See <b>Examples</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>where</code></td>
+<td>
+<p>An environment where kernel objects and top
+parameters are searched for.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>Integer level of verbosity.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The formula involves existing covariance kernel objects and must
+define a valid kernel composition rule. For instance the sum and
+the product of kernels, the convex combination of kernels are
+classically used. The kernels objects are used in the formula with
+parentheses as is they where functions calls with no formal
+arguments e.g. <code>obj( )</code>. Non-kernel objects used in the
+formula must be numeric scalar parameters and are called <em>top</em>
+parameters. The covariance objects must exist in the environment
+defined by <code>where</code> because their slots will be used to
+identify the inputs and the parameters of the composite kernel
+defined by the formula.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the results of parsing. Although the results
+content is easy to understand, the function is not intended to be
+used by the final user, and the results may change in future
+versions.
+</p>
+
+
+<h3>Caution</h3>
+
+<p>Only relatively simple formulas are correctly
+parsed. So use only formulas having a structure similar to one of
+those given in the examples. In case of problems, error messages
+are likely to be difficult to understand.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The parsing separates covariance objects from top
+parameters.  It retrieves information about the kernel inputs and
+parameters from the slots. Obviously, any change in the
+covariances objects after the parsing (e.g. change in the
+parameters names or values) will not be reported in the results of
+the parsing, so kernel any needed customization must be done prior
+to the parsing.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Yves Deville
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## =========================================================================
+## build some kernels (with their inputNames) in the global environment
+## =========================================================================
+
+myCovExp3 &lt;- kMatern(d = 3, nu = "1/2")
+inputNames(myCovExp3) &lt;- c("x", "y", "z")
+
+myCovGauss2 &lt;- kGauss(d = 2)
+inputNames(myCovGauss2) &lt;- c("temp1", "temp2")
+
+k &lt;- kMatern(d = 1)
+inputNames(k) &lt;- "x"
+
+ell &lt;- kMatern(d = 1)
+inputNames(ell) &lt;- "y"
+
+## =========================================================================
+## Parse a formula. This formula is stupid because 'myCovGauss2'
+## and 'myCovExp3' should be CORRELATION kernels and not
+## covariance kernels to produce an identifiable model.
+## =========================================================================
+
+cov &lt;- ~ tau2 * myCovGauss2() * myCovExp3() + sigma2 * k()
+pf &lt;- parseCovFormula(cov, trace = 1)
+
+## =========================================================================
+## Parse a formula with ANOVA composition
+## =========================================================================
+
+cov1 &lt;- ~ tau2 * myCovGauss2() * myCovExp3() + sigma2 * (1 + k()) * (1 + ell())
+pf1 &lt;- parseCovFormula(cov1, trace = 1) 
+
+</code></pre>
+
+
+</div>

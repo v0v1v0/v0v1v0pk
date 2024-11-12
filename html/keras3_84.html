@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_csv_logger</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Callback that streams epoch results to a CSV file.</h2>
+
+<h3>Description</h3>
+
+<p>Supports all values that can be represented as a string,
+including 1D iterables such as atomic vectors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_csv_logger(filename, separator = ",", append = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>Filename of the CSV file, e.g. <code>'run/log.csv'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>separator</code></td>
+<td>
+<p>String used to separate elements in the CSV file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>append</code></td>
+<td>
+<p>Boolean. <code>TRUE</code>: append if file exists (useful for continuing
+training). <code>FALSE</code>: overwrite existing file.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>Callback</code> instance that can be passed to <code>fit.keras.src.models.model.Model()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>csv_logger &lt;- callback_csv_logger('training.log')
+model %&gt;% fit(X_train, Y_train, callbacks = list(csv_logger))
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/callbacks/csv_logger#csvlogger-class">https://keras.io/api/callbacks/csv_logger#csvlogger-class</a>
+</p>
+</li></ul>
+<p>Other callbacks: <br><code>Callback()</code> <br><code>callback_backup_and_restore()</code> <br><code>callback_early_stopping()</code> <br><code>callback_lambda()</code> <br><code>callback_learning_rate_scheduler()</code> <br><code>callback_model_checkpoint()</code> <br><code>callback_reduce_lr_on_plateau()</code> <br><code>callback_remote_monitor()</code> <br><code>callback_swap_ema_weights()</code> <br><code>callback_tensorboard()</code> <br><code>callback_terminate_on_nan()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sedist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the stroke edit distances between two sets of kanji</h2>
+
+<h3>Description</h3>
+
+<p>Variants of the stroke edit distance proposed by Yencken (2010).
+Each kanji is encoded as sequence of stroke types according to
+its stroke order, using the type attribute from the kanjiVG data. Then the
+edit distance (a.k.a.\ Levenshtein distance) between sequences is computed and
+divided by the maximum of the number of strokes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sedist(k1, k2, type = c("full", "before_slash", "first"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>k1, k2</code></td>
+<td>
+<p>atomic vectors or lists of kanji in any format that can be treated by <code>convert_kanji()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the type of stroke edit distance to compute. See details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The kanjiVG type attribute is a single string composed of a CJK strokes Unicode character, an optional
+latin letter providing further information and possibly a variant (another CJK strokes character with optional
+letter) separated by "/". If <code>type</code> is "full"' a match is only counted if two strings are exactly the
+same, "before_slash" ignores any slashes and what comes after them, "first" only considers the first
+character of each string (so the first CJK stroke character) when counting matches.
+</p>
+<p>The stroke edit distance used by Yencken (2010) is obtained by setting type = "all" (the default),
+except that the underlying kanjiVG data has significantly changed since then. Comparing with the values
+in dstrokedit we get an agreement of 96.3 percent, whereas the other distances disagree by
+a small amount (usually 1-2 edit operations).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>length(k1)</code> x <code>length(k2)</code> matrix of stroke edit distances.
+</p>
+
+
+<h3>Warning</h3>
+
+<p>Requires kanjistat.data package.
+</p>
+
+
+<h3>References</h3>
+
+<p>Yencken, Lars (2010). Orthographic support for passing the reading hurdle in Japanese.<br>
+PhD Thesis, University of Melbourne, Australia
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ind1 &lt;- 384  
+k1 &lt;- convert_kanji(ind1, "character")
+ind2 &lt;- which(dstrokedit[ind1,] &gt; 0)  
+# dstrokedit contains only the "closest" kanji
+k2 &lt;- convert_kanji(ind2, "character")
+row_a &lt;- dstrokedit[ind1, ind2]  
+if (requireNamespace("kanjistat.data", quietly = TRUE)) {
+  row_b &lt;- sedist(k1, k2)  
+  mat &lt;- rbind(row_a, row_b)
+  rownames(mat) = c(k1, k1)
+  colnames(mat) = k2
+  mat
+}
+
+</code></pre>
+
+
+</div>

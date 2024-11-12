@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>excel_formula_convert</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Excel formula, convert (to)</h2>
+
+<h3>Description</h3>
+
+<p>Alias for the 'convert_to_excel_formula' function.
+Convert elements of a character vector to Excel formulas to preserve
+the character (string) format when opened in an Excel file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">excel_formula_convert(vector = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a character vector</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>the output will be a character vector formatted as an Excel
+formula. For example, if an element in the input vector was <code>".500"</code>,
+this element will be converted to <code>=".500"</code>, which will show up as
+".500" in Excel, rather than as "0.5"
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# compare the two csv files below
+# example 1
+dt &lt;- data.table::data.table(a = ".500")
+data.table::fwrite(dt, "example1.csv") # the csv will show "0.5"
+# example 2
+dt &lt;- data.table::data.table(a = excel_formula_convert(".500"))
+data.table::fwrite(dt, "example2.csv") # the csv will show ".500"
+
+## End(Not run)
+</code></pre>
+
+
+</div>

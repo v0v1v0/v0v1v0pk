@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summary for a fitted kDGLM model</h2>
+
+<h3>Description</h3>
+
+<p>Prints a report for a fitted_dlm object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+summary(
+  object,
+  t = object$t,
+  lag = -1,
+  metric.lag = 1,
+  metric.cutoff = floor(object$t/10),
+  pred.cred = 0.95,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted_dlm object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>Integer: The time index for the latent states.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>Integer: The number of steps ahead used for the evaluating the latent states. Use lag&lt;0 for the smoothed distribution, If lag==0 for the filtered distribution and lag=h for the h-step-ahead prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metric.lag</code></td>
+<td>
+<p>Integer: The number of steps ahead used for the evaluating the predictions used when calculating metrics. Use metric.lag&lt;0 for the smoothed distribution, If metric.lag==0 for the filtered distribution and metric.lag=h for the h-step-ahead prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metric.cutoff</code></td>
+<td>
+<p>Integer: The cutoff time index for the metric calculation. Values before that time will be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>numeric: The credibility interval to be used for the interval score.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra arguments passed to the coef method.#'</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No return value, called to print a summary of the fitted kDGLM model.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary visualization functions for the fitted_dlm class: 
+<code>plot.dlm_coef()</code>,
+<code>plot.fitted_dlm()</code>,
+<code>summary.searched_dlm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- c(AirPassengers)
+
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+outcome &lt;- Poisson(lambda = "rate", data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+summary(fitted.data)
+
+</code></pre>
+
+
+</div>

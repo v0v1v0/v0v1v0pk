@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>PX dataset for KSEA calculations</h2>
+
+<h3>Description</h3>
+
+<p>A sample PX dataset of the experimental phosphoproteomics input
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(PX)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>the experimental data file must be formatted exactly as described below;
+must have 6 columns in the exact order: Protein, Gene, Peptide, Residue.Both, p, FC;
+cannot have NA values, or else the entire peptide row is deleted;
+Description of each column in PX: 
+</p>
+
+<ul>
+<li>
+<p>"Protein" the Uniprot ID for the parent protein 
+</p>
+</li>
+<li>
+<p>"Gene" the HUGO gene name for the parent protein 
+</p>
+</li>
+<li>
+<p>"Peptide" the peptide sequence
+</p>
+</li>
+<li>
+<p>"Residue.Both" all phosphosites from that peptide, separated by semicolons if applicable;
+must be formatted as the single amino acid abbrev. with the residue position (e.g. S102)
+</p>
+</li>
+<li>
+<p>"p" the p-value of that peptide (if none calculated, please write "NULL", cannot be NA)
+</p>
+</li>
+<li>
+<p>"FC" the fold change (not log-transformed); usually the control sample is the denominator
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>unpublished data
+</p>
+
+
+</div>

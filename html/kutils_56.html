@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reverse</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reverse the levels in a factor</h2>
+
+<h3>Description</h3>
+
+<p>Simple literal reversal. Will stop with an error message if x is
+not a factor (or ordered) variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reverse(x, eol = c("Skip", "DNP"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a factor variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eol</code></td>
+<td>
+<p>values to be kept at the end of the list. Does not
+accept regular expresssions, just literal text strings
+representing values.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Sometimes people want to
+reverse some levels, excluding others and leaving them at the end
+of the list. The "eol" argument sets aside some levels and puts
+them at the end of the list of levels.
+</p>
+<p>The use case for the <code>eol</code> argument is a factor
+with several missing value labels, as appears in SPSS. With
+up to 18 different missing codes, we want to leave them
+at the end. In the case for which this was designed, the
+researcher did not want to designate those values as
+missing before inspecting the pattern of observed values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a new factor variable with reversed values
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Consider alphabetication of upper and lower
+x &lt;- factor(c("a", "b", "c", "C", "a", "c"))
+levels(x)
+xr1 &lt;- reverse(x)
+xr1
+## Keep "C" at end of list, after reverse others
+xr2 &lt;- reverse(x, eol = "C")
+xr2
+y &lt;- ordered(x, levels = c("a", "b", "c", "C"))
+yr1 &lt;- reverse(y)
+class(yr1)[1] == "ordered"
+yr1
+## Hmm. end of list amounts to being "maximal".
+## Unintended side-effect, but interesting.
+yr2 &lt;- reverse(y, eol = "C")
+yr2
+## What about a period as a value (SAS missing)
+z &lt;- factor(c("a", "b", "c", "b", "c", "."))
+reverse(z)
+z &lt;- factor(c(".", "a", "b", "c", "b", "c", "."))
+reverse(z)
+## How about R NA's
+z &lt;- factor(c(".", "a", NA, "b", "c", "b", NA, "c", "."))
+z
+reverse(z)
+z &lt;- ordered(c(".", "a", NA, "b", "c", "b", NA, "c", "."))
+z
+str(z)
+## Put "." at end of list
+zr &lt;- reverse(z, eol = ".")
+zr
+str(zr)
+z &lt;- ordered(c(".", "c", NA, "e", "a", "c", NA, "e", "."),
+         levels = c(".", "c", "e", "a"))
+reverse(z, eol = ".")
+reverse(z, eol = c("a", "."))
+</code></pre>
+
+
+</div>

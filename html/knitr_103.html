@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>raw_block</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mark character strings as raw blocks in R Markdown</h2>
+
+<h3>Description</h3>
+
+<p>Wraps content in a raw attribute block, which protects it from being escaped
+by Pandoc. See <a href="https://pandoc.org/MANUAL.html#generic-raw-attribute">https://pandoc.org/MANUAL.html#generic-raw-attribute</a>.
+Functions <code>raw_latex()</code> and <code>raw_html()</code> are shorthands of
+<code>raw_block(x, 'latex')</code> and <code>raw_block(x, 'html')</code>, respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">raw_block(x, type = "latex", ...)
+
+raw_latex(x, ...)
+
+raw_html(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The character vector to be protected.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of raw blocks (i.e., the Pandoc output format). If you
+are not sure about the Pandoc output format of your document, insert a code
+chunk <code>knitr:::pandoc_to()</code> and see what it returns after the document
+is compiled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments to be passed to <code>asis_output()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">knitr::raw_latex("\\emph{some text}")
+</code></pre>
+
+
+</div>

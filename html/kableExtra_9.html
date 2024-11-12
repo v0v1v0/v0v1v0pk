@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>collapse_rows</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Collapse repeated rows to multirow cell</h2>
+
+<h3>Description</h3>
+
+<p>Collapse same values in columns into multirow cells. This
+feature does similar things with <code>group_rows</code>. However, unlike <code>group_rows</code>,
+it analyzes existing columns, finds out rows that can be grouped together,
+and make them multirow cells. Note that if you want to use <code>column_spec</code> to
+specify column styles, you should use <code>column_spec</code> before <code>collapse_rows</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">collapse_rows(
+  kable_input,
+  columns = NULL,
+  valign = c("middle", "top", "bottom"),
+  latex_hline = c("full", "major", "none", "custom", "linespace"),
+  row_group_label_position = c("identity", "stack", "first"),
+  custom_latex_hline = NULL,
+  row_group_label_fonts = NULL,
+  headers_to_remove = NULL,
+  target = NULL,
+  col_names = TRUE,
+  longtable_clean_cut = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kable_input</code></td>
+<td>
+<p>Output of <code>knitr::kable()</code> with <code>format</code> specified</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>columns</code></td>
+<td>
+<p>A numeric value or vector indicating in which column(s) rows
+need to be collapsed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>valign</code></td>
+<td>
+<p>Select from "top", "middle" (default), "bottom". The reason why
+"top" is not default is that the multirow package on CRAN win-builder is
+not up to date.
+Only used when <code>row_group_label_position</code> is <code>identity</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>latex_hline</code></td>
+<td>
+<p>Option controlling the behavior of adding hlines to table.
+Choose from <code>full</code>, <code>major</code>, <code>none</code>, <code>custom</code> and <code>linespace</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row_group_label_position</code></td>
+<td>
+<p>Option controlling positions of row group
+labels. Choose from <code>identity</code>, <code>stack</code>, or <code>first</code> – the latter behaves
+like <code>identity</code> when <code>row_group_label_position</code> is <code>top</code> but without using
+the multirow package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_latex_hline</code></td>
+<td>
+<p>Numeric column positions whose collapsed rows will
+be separated by hlines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row_group_label_fonts</code></td>
+<td>
+<p>A list of arguments that can be supplied to
+group_rows function to format the row group label when
+<code>row_group_label_position</code> is <code>stack</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>headers_to_remove</code></td>
+<td>
+<p>Numeric column positions where headers should be
+removed when they are stacked.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target</code></td>
+<td>
+<p>If multiple columns are selected to do collapsing and a target
+column is specified, this target column will be used to collapse other
+columns based on the groups of this target column.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_names</code></td>
+<td>
+<p>T/F. A LaTeX specific option. If you set <code>col.names</code> be
+<code>NULL</code> in your <code>kable</code> call, you need to set this option false to let
+everything work properly.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longtable_clean_cut</code></td>
+<td>
+<p>T/F with default T. Multirow cell sometimes are
+displayed incorrectly around pagebreak. This option forces groups to cut
+before the end of a page. If you have a group that is longer than 1 page,
+you need to turn off this option.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+dt &lt;- data.frame(a = c(1, 1, 2, 2), b = c("a", "a", "a", "b"))
+x &lt;- knitr::kable(dt, "html")
+collapse_rows(x)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

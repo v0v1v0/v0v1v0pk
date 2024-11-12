@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.h.bcv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot for Biased Cross-Validation
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>plot.h.bcv</code> function loops through calls to 
+the <code>h.bcv</code> function. Plot for biased cross-validation 
+function for 1-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'h.bcv'
+plot(x, seq.bws=NULL, ...)
+## S3 method for class 'h.bcv'
+lines(x,seq.bws=NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>h.bcv</code> (output from <code>h.bcv</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.bws</code></td>
+<td>
+<p>the sequence of bandwidths in which to compute the biased 
+cross-validation function. By default, the procedure defines a sequence of 
+50 points, from <code>0.15*hos</code> to <code>2*hos</code> (Over-smoothing).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphics parameters, see <code>par</code> in package "graphics".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Plot of 1-d biased cross-validation function are sent to graphics window.<br></p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.bws</code></td>
+<td>
+<p>the sequence of bandwidths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bcv</code></td>
+<td>
+<p>the values of the biased cross-validation function in the bandwidths grid.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>h.bcv</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## EXAMPLE 1:
+
+plot(h.bcv(trimodal, whichbcv = 1, deriv.order = 0),main="",sub="")
+lines(h.bcv(trimodal, whichbcv = 2, deriv.order = 0),col="red")
+legend("topright", c("BCV1","BCV2"),lty=1,col=c("black","red"),inset = .015)
+
+## EXAMPLE 2:
+
+plot(h.bcv(trimodal, whichbcv = 1, deriv.order = 1),main="",sub="")
+lines(h.bcv(trimodal, whichbcv = 2, deriv.order = 1),col="red")
+legend("topright", c("BCV1","BCV2"),lty=1,col=c("black","red"),inset = .015)
+</code></pre>
+
+
+</div>

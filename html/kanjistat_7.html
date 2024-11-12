@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>distdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Precomputed kanji distances</h2>
+
+<h3>Description</h3>
+
+<p>Precomputed kanji distances
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dstrokedit
+
+dyehli
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>Symmetric sparse matrices containing distances between a key kanji, its ten nearest neighbors and
+possibly some other close kanji.<br>
+For <code>dstrokedit</code>, these are the stroke edit distances according to Yencken and Baldwin (2008).<br>
+For <code>dyehli</code>, these are the bag-of-radicals distances according to Yeh and Li (2002).<br>
+Both are an instance of the S4 class <code>dsCMatrix</code> (symmetric sparse matrices in <em>column</em>-compressed format)
+with 2133 rows and 2133 columns.
+</p>
+<p>All pre-2010 jouyou kanji that are also post-2010
+jouyou kanji are included. The indices are those from <code>kbase</code>.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Datasets from <a href="https://lars.yencken.org/datasets">https://lars.yencken.org/datasets</a>, made available under the
+Creative Commons Attribution 3.0 Unported licence.
+</p>
+<p>Computed as part of <em>Yencken, Lars (2010)
+<a href="https://lars.yencken.org/papers/phd-thesis.pdf">Orthographic support for passing the reading hurdle in Japanese</a>.
+PhD Thesis, University of Melbourne, Melbourne, Australia</em>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Yeh, Su-Ling
+and Li, Jing-Ling (2002). Role of structure and component in judgements of
+visual similarity of Chinese characters. <em>Journal of Experimental Psychology:
+Human Perception and Performance</em>, <strong>28</strong>(4), 933–947.
+</p>
+<p>Yencken, Lars, &amp; Baldwin, Timothy (2008). Measuring and predicting orthographic associations:
+Modelling the similarity of Japanese kanji. In: <em>Proceedings of the 22nd International Conference on Computational
+Linguistics (Coling 2008)</em>, pp. 1041-1048.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Find index for kanji \u90e8
+bu_index &lt;- match("\u90e8", kbase$kanji)
+
+# Look up available stroke edit distances for \u90e8.
+non_zero &lt;- which(dstrokedit[bu_index,] != 0)
+sed &lt;- dstrokedit[non_zero, bu_index]
+names(sed) &lt;- kbase[non_zero,]$kanji
+sort(sed)
+
+# Look up available bag-of-radicals distances for \u90e8.
+non_zero &lt;- which(dyehli[bu_index,] != 0)
+bord &lt;- dyehli[non_zero, bu_index]
+names(bord) &lt;- kbase[non_zero,]$kanji
+sort(bord)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>axials_add</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add axial distributions</h2>
+
+<h3>Description</h3>
+
+<p>Add axial distributions. Useful to construct an overall distribution that results from multiple 'draws'
+from smaller distributions. E.g. The pathway between first cousins which can be found by adding
+each of the component distributions of their respective lifespans along with the relevant offspring producing
+(e.g. oviposition) of the parent.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">axials_add(axvals)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>axvals</code></td>
+<td>
+<p>numeric. vector of axial distribution values from different kernels that are to be added.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>numeric</code> Returns the axial value that results from adding the input axial values under an additive variance framework.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other axial_helpers: 
+<code>axials_decompose()</code>,
+<code>axials_subtract()</code>,
+<code>axials()</code>,
+<code>axpermute_subtract()</code>,
+<code>axpermute()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fullsibs_ax &lt;- 5
+parent_offspring_ax &lt;- 25
+cousin_ax &lt;- axials_add(c(fullsibs_ax, parent_offspring_ax))
+</code></pre>
+
+
+</div>

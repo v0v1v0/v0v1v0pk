@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kRp.POS.tags</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get elaborated word tag definitions</h2>
+
+<h3>Description</h3>
+
+<p>This function can be used to get a set of part-of-speech (POS) tags for a given language. These tag sets should conform
+with the ones used by TreeTagger.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kRp.POS.tags(
+  lang = get.kRp.env(lang = TRUE),
+  list.classes = FALSE,
+  list.tags = FALSE,
+  tags = c("words", "punct", "sentc")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>A character string defining a language (see details for valid choices).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>list.classes</code></td>
+<td>
+<p>Logical,
+if <code>TRUE</code> only the known word classes for the chosen language will me returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>list.tags</code></td>
+<td>
+<p>Logical,
+if <code>TRUE</code> only the POS tags for the chosen language will me returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tags</code></td>
+<td>
+<p>A character vector with at least one of "words", "punct" or "sentc".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Use <code>available.koRpus.lang</code> to get a list of all supported languages. Language
+support packages must be installed an loaded to be usable with <code>kRp.POS.tags</code>.
+For the internal tokenizer a small subset of tags is also defined,
+available through <code>lang="kRp"</code>.
+Finally,
+the Universal POS Tags[1] are automatically appended if no matching tag was already defined.
+If you don't know the language your text was written in,
+the function <code>guess.lang</code>
+should be able to detect it.
+</p>
+<p>With the element <code>tags</code> you can specify if you want all tag definitions, or a subset,
+e.g. tags only for punctuation and
+sentence endings (that is,
+you need to call for both "punct" and "sentc" to get all punctuation tags).
+</p>
+<p>The function is not so much intended to be used directly,
+but it is called by several other functions internally. However,
+it can still be useful to directly examine available POS tags.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>list.classes=FALSE</code> and <code>list.tags=FALSE</code> returns a matrix with word tag definitions of the given language.
+The matrix has three columns:
+</p>
+
+<dl>
+<dt>
+<code>tag</code>:</dt>
+<dd>
+<p>Word tag</p>
+</dd>
+<dt>
+<code>class</code>:</dt>
+<dd>
+<p>Respective word class</p>
+</dd>
+<dt>
+<code>desc</code>:</dt>
+<dd>
+<p>"Human readable" description of what the tag stands for</p>
+</dd>
+</dl>
+<p>Otherwise a vector with the known word classes or POS tags for the chosen language (and probably tag subset) will be returned.
+If both <code>list.classes</code> and <code>list.tags</code> are <code>TRUE</code>,
+still only the POS tags will be returned.
+</p>
+
+
+<h3>References</h3>
+
+<p>[1] <a href="https://universaldependencies.org/u/pos/index.html">https://universaldependencies.org/u/pos/index.html</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>get.kRp.env</code>,
+<code>available.koRpus.lang</code>,
+<code>install.koRpus.lang</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  tags.internal &lt;- kRp.POS.tags("kRp")
+  tags.en &lt;- kRp.POS.tags("en")
+} else {}
+</code></pre>
+
+
+</div>

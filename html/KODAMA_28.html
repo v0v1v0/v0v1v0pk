@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>spirals</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Spirals Data Set Generator</h2>
+
+<h3>Description</h3>
+
+<p>Produces a data set of spiral clusters.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">spirals(n=c(100,100,100),sd=c(0,0,0))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>a vector of integer. The length of the vector is the number of clusters and each number corresponds to the number of data points in each cluster.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+<p>amount of noise for each spiral.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a two dimensional data set.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore and Leonardo Tenori</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>helicoid</code>,<code>dinisurface</code>,<code>swissroll</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+v1=spirals(c(100,100,100),c(0.1,0.1,0.1))
+plot(v1,col=rep(2:4,each=100))
+v2=spirals(c(100,100,100),c(0.1,0.2,0.3))
+plot(v2,col=rep(2:4,each=100))
+v3=spirals(c(100,100,100,100,100),c(0,0,0.2,0,0))
+plot(v3,col=rep(2:6,each=100))
+v4=spirals(c(20,40,60,80,100),c(0.1,0.1,0.1,0.1,0.1))
+plot(v4,col=rep(2:6,c(20,40,60,80,100)))
+</code></pre>
+
+
+</div>

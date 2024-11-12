@@ -1,0 +1,248 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyATM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>keyATM main function</h2>
+
+<h3>Description</h3>
+
+<p>Fit keyATM models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyATM(
+  docs,
+  model,
+  no_keyword_topics,
+  keywords = list(),
+  model_settings = list(),
+  priors = list(),
+  options = list(),
+  keep = c()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>docs</code></td>
+<td>
+<p>texts read via <code>keyATM_read()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>keyATM model: <code>base</code>, <code>covariates</code>, and <code>dynamic</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>no_keyword_topics</code></td>
+<td>
+<p>the number of regular topics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keywords</code></td>
+<td>
+<p>a list of keywords.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_settings</code></td>
+<td>
+<p>a list of model specific settings (details are in the online documentation).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>a list of priors of parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>a list of options </p>
+
+<ul>
+<li> <p><strong>seed</strong>: A numeric value for random seed. If it is not provided, the package randomly selects a seed.
+</p>
+</li>
+<li> <p><strong>iterations</strong>: An integer. Number of iterations. Default is <code>1500</code>.
+</p>
+</li>
+<li> <p><strong>verbose</strong>: If <code>TRUE</code>, it prints loglikelihood and perplexity. Default is <code>FALSE</code>.
+</p>
+</li>
+<li> <p><strong>llk_per</strong>: An integer. If the value is <code>j</code> <strong>keyATM</strong> stores loglikelihood and perplexity every <code class="reqn">j</code> iteration. Default value is <code>10</code> per iterations
+</p>
+</li>
+<li> <p><strong>use_weights</strong>: If <code>TRUE</code> use weight. Default is <code>TRUE</code>.
+</p>
+</li>
+<li> <p><strong>weights_type</strong>: There are four types of weights. Weights based on the information theory (<code>information-theory</code>) and inverse frequency (<code>inv-freq</code>) and normalized versions of them (<code>information-theory-normalized</code> and <code>inv-freq-normalized</code>). Default is <code>information-theory</code>.
+</p>
+</li>
+<li> <p><strong>prune</strong>: If <code>TRUE</code> rume keywords that do not appear in the corpus. Default is <code>TRUE</code>.
+</p>
+</li>
+<li> <p><strong>store_theta</strong>: If <code>TRUE</code> or <code>1</code>, it stores <code class="reqn">\theta</code> (document-topic distribution) for the iteration specified by thinning. Default is <code>FALSE</code> (same as <code>0</code>).
+</p>
+</li>
+<li> <p><strong>store_pi</strong>: If <code>TRUE</code> or <code>1</code>, it stores <code class="reqn">\pi</code> (the probability of using keyword topic word distribution) for the iteration specified by thinning. Default is <code>FALSE</code> (same as <code>0</code>).
+</p>
+</li>
+<li> <p><strong>thinning</strong>: An integer. If the value is <code>j</code> <strong>keyATM</strong> stores following parameters every <code>j</code> iteration. The default is <code>5</code>. </p>
+
+<ul>
+<li> <p><em>theta</em>: For all models. If <code>store_theta</code> is <code>TRUE</code> document-level topic assignment is stored (sufficient statistics to calculate document-topic distributions <code>theta</code>).
+</p>
+</li>
+<li> <p><em>alpha</em>: For the base and dynamic models. In the base model alpha is shared across all documents whereas each state has different alpha in the dynamic model.
+</p>
+</li>
+<li> <p><em>lambda</em>: coefficients in the covariate model.
+</p>
+</li>
+<li> <p><em>R</em>: For the dynamic model. The state each document belongs to.
+</p>
+</li>
+<li> <p><em>P</em>: For the dynamic model. The state transition probability.
+</p>
+</li>
+</ul>
+</li>
+<li> <p><strong>parallel_init</strong>: Parallelize processes to speed up initialization. Default is <code>FALSE</code>. Please <code>plan()</code> before use this feature.
+</p>
+</li>
+<li> <p><strong>resume</strong>: The resume argument is used to save and load the intermediate results of the keyATM fitting process, allowing you to resume the fitting from a previous state. The default value is <code>NULL</code> (do not resume).
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep</code></td>
+<td>
+<p>a vector of the names of elements you want to keep in output.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>keyATM_output</code> object containing:
+</p>
+
+<dl>
+<dt>keyword_k</dt>
+<dd>
+<p>number of keyword topics</p>
+</dd>
+<dt>no_keyword_topics</dt>
+<dd>
+<p>number of no-keyword topics</p>
+</dd>
+<dt>V</dt>
+<dd>
+<p>number of terms (number of unique words)</p>
+</dd>
+<dt>N</dt>
+<dd>
+<p>number of documents</p>
+</dd>
+<dt>model</dt>
+<dd>
+<p>the name of the model</p>
+</dd>
+<dt>theta</dt>
+<dd>
+<p>topic proportions for each document (document-topic distribution)</p>
+</dd>
+<dt>phi</dt>
+<dd>
+<p>topic specific word generation probabilities (topic-word distribution)</p>
+</dd>
+<dt>topic_counts</dt>
+<dd>
+<p>number of tokens assigned to each topic</p>
+</dd>
+<dt>word_counts</dt>
+<dd>
+<p>number of times each word type appears</p>
+</dd>
+<dt>doc_lens</dt>
+<dd>
+<p>length of each document in tokens</p>
+</dd>
+<dt>vocab</dt>
+<dd>
+<p>words in the vocabulary (a vector of unique words)</p>
+</dd>
+<dt>priors</dt>
+<dd>
+<p>priors</p>
+</dd>
+<dt>options</dt>
+<dd>
+<p>options</p>
+</dd>
+<dt>keywords_raw</dt>
+<dd>
+<p>specified keywords</p>
+</dd>
+<dt>model_fit</dt>
+<dd>
+<p>perplexity and log-likelihood</p>
+</dd>
+<dt>pi</dt>
+<dd>
+<p>estimated <code class="reqn">\pi</code> (the probability of using keyword topic word distribution) for the last iteration</p>
+</dd>
+<dt>values_iter</dt>
+<dd>
+<p>values stored during iterations</p>
+</dd>
+<dt>kept_values</dt>
+<dd>
+<p>outputs you specified to store in <code>keep</code> option</p>
+</dd>
+<dt>information</dt>
+<dd>
+<p>information about the fitting</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><a href="https://keyatm.github.io/keyATM/articles/pkgdown_files/Options.html">https://keyatm.github.io/keyATM/articles/pkgdown_files/Options.html</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  library(keyATM)
+  library(quanteda)
+  data(keyATM_data_bills)
+  bills_keywords &lt;- keyATM_data_bills$keywords
+  bills_dfm &lt;- keyATM_data_bills$doc_dfm  # quanteda dfm object
+  keyATM_docs &lt;- keyATM_read(bills_dfm)
+
+  # keyATM Base
+  out &lt;- keyATM(docs = keyATM_docs, model = "base",
+                no_keyword_topics = 5, keywords = bills_keywords)
+
+  # Visit our website for full examples: https://keyatm.github.io/keyATM/
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

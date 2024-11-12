@@ -1,0 +1,479 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausur</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate multiple choice tests</h2>
+
+<h3>Description</h3>
+
+<p>The function <code>klausur</code> expects an object of class <code>klausuR.answ-class</code>,
+containing some
+identification data on all subjects and their answers to the test items,
+a vector with the correct answers, and optionally a vector with
+marks assigned to the points achieved. It will compute global test results as well as some item analysis (including Cronbach's alpha,
+discriminatory power and Lienert's selection index of the test items),
+and anonymous feedback for the test subjects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klausur(
+  data,
+  marks = NULL,
+  mark.labels = NULL,
+  items = NULL,
+  wght = NULL,
+  score = "solved",
+  matn = NULL,
+  na.rm = TRUE,
+  cronbach = TRUE,
+  item.analysis = TRUE,
+  sort.by = "Name",
+  maxp = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>An object of class <code>klausuR.answ-class</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks</code></td>
+<td>
+<p>A vector assigning marks to points achieved (see details). Alternatively,
+set it to <code>"suggest"</code> to let
+<code>klausur.gen.marks</code> calculate suggestions under the assumption of normal distribution.
+If <code>NULL</code>, this value must be set in the <code>data</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mark.labels</code></td>
+<td>
+<p>If <code>marks="suggest"</code>, use these as the marks you want to give.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items</code></td>
+<td>
+<p>Indices of a subset of variables in <code>data</code> to be taken as items.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wght</code></td>
+<td>
+<p>A vector with weights for each item (named also according to <code>Item###</code>). If <code>NULL</code>,
+the value from the <code>data</code> object
+will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score</code></td>
+<td>
+<p>Specify the scoring policy, must be one of <code>"solved"</code> (default),
+<code>"partial"</code>, <code>"liberal"</code>, <code>"pick-n"</code>,
+<code>"NR"</code>, <code>"ET"</code>, <code>"NRET"</code>, or <code>"NRET+"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matn</code></td>
+<td>
+<p>A matriculation number of a subject,
+to receive detailed results for that subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>Logical,
+whether cases with NAs should be ignored in <code>data</code>. Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cronbach</code></td>
+<td>
+<p>Logical. If TRUE, Cronbach's alpha will be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>item.analysis</code></td>
+<td>
+<p>Logical. If TRUE, some usual item statistics like difficulty,
+discriminatory power and distractor analysis will be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort.by</code></td>
+<td>
+<p>A character string naming the variable to sort the results by. Set to <code>c()</code> to skip any re-ordering.
+If <code>cronbach</code> is TRUE, too,
+it will include the alpha values if each item was deleted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxp</code></td>
+<td>
+<p>Optional numeric value,
+if set will be forced as the maximum number of points achievable. This should actually not be needed,
+if your test has no strange errors. But if for example it later turns out you need to adjust one item because it has two instead of
+one correct answers,
+this option can become handy in combination with "partial" scoring and item weights.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For details on the ecpected data structure refer to <code>klausur.data</code>,
+</p>
+<p><strong>Scoring functions</strong>
+</p>
+<p>In combination with multiple (correct) answers for certain items you can specify one of six scoring policies via the <code>score</code>-parameter.
+If you set it to something othe than <code>"solved"</code>,
+as the names may suggest you <strong>allow partially given answers</strong> under the condition that the test subject didn't
+check more alternatives than there are correct ones (that is,
+if you checked four alternatives where three correct ones were possible, you're out):
+</p>
+
+<ul>
+<li>
+<p><code>"solved"</code> Multiple Choice: Check all correct alternatives. This is the default,
+which means that one will only get any points for an
+item if the answer was 100% correct (that is, all or nothing).
+</p>
+</li>
+<li>
+<p><code>"partial"</code> Multiple Choice: Check all correct alternatives,
+allow partially given answers, but none of the distractors must be checked.
+</p>
+</li>
+<li>
+<p><code>"liberal"</code> Multiple Choice: Check all correct alternatives,
+allow partially given answers, even distractors can be checked.
+</p>
+</li>
+<li>
+<p><code>"pick-n"</code> Multiple Choice: Check all correct alternatives,
+allow partially given answers, even distractors can be checked. Difference to <code>"liberal"</code> is
+that you will also get points for unchecked distractors.
+</p>
+</li>
+<li>
+<p><code>"ET"</code> Elimination Testing: In contrast to the usual MC procedure,
+eliminate/strike all <em>wrong</em> alternatives.
+</p>
+</li>
+<li>
+<p><code>"NRET"</code> Number Right Elimination Testing: Like ET+MC,
+eliminate/strike all <em>wrong</em> alternatives <em>and</em> check the correct one.
+</p>
+</li>
+<li>
+<p><code>"NRET+"</code> Number Right Elimination Testing, more strict: Like NRET,
+but if more alternatives are checked right than there are right anwers,
+it will automatically yield to 0 points for that item.
+</p>
+</li>
+<li>
+<p><code>"NR"</code> Number Right: The usual MC scoring,
+but works with ET/NRET data. It was implemented for completeness, e.g. to compare results
+of different scoring techniques.
+</p>
+</li>
+</ul>
+<p>An example for <code>"solved"</code>,
+<code>"partial"</code> and <code>"liberal"</code>: If an item has five answer alternatives, the correct answer is "134" and a subject checked "15",
+<code>"solved"</code> will give no point (because "15" is not equal to "134"),
+as will <code>"partial"</code> (because "5" is wrong),
+but <code>"liberal"</code> will give 1/3 (because "1" is correct),
+and <code>"pick-n"</code> will give 2/5 (because "1" was correctly checked and "2" correctly unchecked).
+</p>
+<p><strong>(Number Right) Elimination Testing</strong>
+</p>
+<p>Note that <code>"ET"</code>,
+<code>"NRET"</code>/<code>"NRET+"</code> and <code>"NR"</code> will disable <code>wght</code> as of now,
+and <strong>need the data in different format</strong> than the other scoring functions (see <code>klausur.data</code> for details).
+<code>klausur</code> will evaluate each answer individually and sum up the points for each item. The alternative-wise evaluations will be documented in the
+<code>trfls</code> slot of the results.
+Therefore, in these cases that matrix is not boolean,
+but more complex. For each item and each subject, a character string represents
+the evaluated answer alternatives, with the following elements:
+</p>
+
+<ul>
+<li>
+<p><code>P</code> True positive: Alternative was checked as right and is right. <em>Points: +1 (+ constant)</em>
+</p>
+</li>
+<li>
+<p><code>p</code> False positive: Alternative was checked as right but is wrong. <em>Points: 0 (+ constant)</em>
+</p>
+</li>
+<li>
+<p><code>N</code> True negative: Alternative was checked as wrong and is wrong. <em>Points: +1 (+ constant)</em>
+</p>
+</li>
+<li>
+<p><code>n</code> False negative: Alternative was checked as wrong but is right. <em>Points: -(alternatives-1) (+ constant)</em>
+</p>
+</li>
+<li>
+<p><code>0</code> Missing: Alternative wasn't checked at all. <em>Points: 0 (+ constant)</em>
+</p>
+</li>
+<li>
+<p><code>*</code> Error: Alternative was checked both wrong and right. <em>Points NRET+: 0 (+ constant);
+NR scores 1 point if this was the correct alternative,
+ET 1 point if it hit a wrong one,
+and NRET sums up the points for both the positive and negative answer (all + constant)</em>
+</p>
+</li>
+</ul>
+<p>An example: If we have an item with four alternatives, and the third one is right (i.e.,
+"<code>--+-</code>"), and a test subject considered the first alternative
+to be correct and eliminated all others (i.e., "<code>+---</code>"),
+it would be evaluated as "<code>pNnN</code>", that is 0+1-3+1=-1 point, not considering the constant.
+As you can see,
+it would be possible to end up with a negative sum of points. If you consider how in the end a mark will be assigned to the achieved points,
+this would be a problem,
+because a vactor cannot have negative indices. To circumvent this issue, klausuR automatically adds a constant to all results, so
+that the worst possible result is not negative but 0. This constant is simply (alternatives-1),
+i.e. 3 for the example. In other words, if our test had 10
+such items,
+the results minus 30 would be equivalent to scoring without that constant. You can use <code>nret.rescale</code> to remove
+the constant from the results afterwards.
+</p>
+<p><strong>Marks</strong>
+</p>
+<p>The <strong>assigned marks</strong> are expected to be in a certain format as well (see <code>klausur.data</code> for details),
+as long as you don't want <code>klausur</code> to suggest them itself. If you want to let klausuR make a suggestion,
+set <code>marks="suggest"</code>,
+and <code>klausur.gen.marks</code> kicks in and takes either the <code>mark.labels</code> you have defined here or will
+ask you step by step. See the documentation of that function for details. To see the suggested result in detail,
+have a look at the slot
+<code>marks</code> of the returned object.
+</p>
+<p>To calculate Cronbach's alpha and item analysis methods from the package <code>psych</code> are used. Lienert's selction index
+("Selektionskennwert") aims to consider both discriminatory power (correlation of an item with the test results) and difficulty to determine the
+quality of an item. It is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">S = \frac{r_{it}}{2 \times{} \sqrt{Difficulty \times{} (1-Difficulty)}}</code>
+</p>
+
+<p>Item analysis also includes item discrimination.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>klausuR-class</code> with the following slots.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>results</code></td>
+<td>
+<p>A data.frame with global results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>answ</code></td>
+<td>
+<p>A data.frame with all given answers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corr</code></td>
+<td>
+<p>A vector with the correct answers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wght</code></td>
+<td>
+<p>A vector with the weights of items</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>points</code></td>
+<td>
+<p>A data.frame with resulting points given for the answers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks</code></td>
+<td>
+<p>A vector with assignments of marks to achieved score</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks.sum</code></td>
+<td>
+<p>A more convenient matrix with summary information on the defined marks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trfls</code></td>
+<td>
+<p>A data.frame of TRUE/FALSE values,
+whether a subject was able to solve an item or not</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>anon</code></td>
+<td>
+<p>A data.frame for anonymous feedback</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>A table with mean, median and quartiles of the test results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+<p>Standard deviation of the test results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cronbach</code></td>
+<td>
+<p>Internal consistency, a list of three elements "alpha",
+"ci" (confidence interval 95%) and "deleted" (alpha if item was removed)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>item.analysis</code></td>
+<td>
+<p>A data.frame with information on difficulty, discriminatory power,
+discriminant factor and Lienert's selection index of all items.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distractor.analysis</code></td>
+<td>
+<p>A list with information on the selected answer alternatives for each individual item (only calculated if <code>item.analysis=TRUE</code>).
+Also lists the discriminatory power of each alternative,
+being the point-biserial (a.k.a Pearson) correlation of it with the global outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>misc</code></td>
+<td>
+<p>Anything that was stored in the <code>misc</code> slot of the input data.</p>
+</td>
+</tr>
+</table>
+<p>Not all slots are shown by default (refer to <code>show</code> and <code>plot</code>).
+</p>
+
+
+<h3>Note</h3>
+
+<p><code>klausur</code> allows some tweaks that are probably not as useful as they seem. For instance,
+having items with more than one correct answer doesn't
+necessarily yield more diagnostic information,
+allowing for those being answered partially adds to that, and binding marks blindly to a normal distribution can
+give quite unfair test results! In addition,
+please do <strong>always check a sample of the results</strong> to make sure no errors accurred.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur.data</code>,
+<code>klausur.report</code>,
+<code>compare</code>,
+<code>klausur.gen</code>,
+<code>klausur.gen.marks</code>,
+<code>klausur.gen.corr</code>,
+<code>plot</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(antworten)
+
+# vector with correct answers:
+richtig &lt;- c(Item01=3, Item02=2, Item03=2, Item04=2, Item05=4,
+ Item06=3, Item07=4, Item08=1, Item09=2, Item10=2, Item11=4,
+ Item12=4, Item13=2, Item14=3, Item15=2, Item16=3, Item17=4,
+ Item18=4, Item19=3, Item20=5, Item21=3, Item22=3, Item23=1,
+ Item24=3, Item25=1, Item26=3, Item27=5, Item28=3, Item29=4,
+ Item30=4, Item31=13, Item32=234)
+
+# vector with assignement of marks:
+notenschluessel &lt;- c()
+# scheme of assignments: marks[points_from:to] &lt;- mark
+notenschluessel[0:12]  &lt;- 5.0
+notenschluessel[13:15] &lt;- 4.0
+notenschluessel[16:18] &lt;- 3.7
+notenschluessel[19:20] &lt;- 3.3
+notenschluessel[21]    &lt;- 3.0
+notenschluessel[22]    &lt;- 2.7
+notenschluessel[23]    &lt;- 2.3
+notenschluessel[24]    &lt;- 2.0
+notenschluessel[25:26] &lt;- 1.7
+notenschluessel[27:29] &lt;- 1.3
+notenschluessel[30:32] &lt;- 1.0
+
+# now combine all test data into one object of class klausur.answ
+data.obj &lt;- klausur.data(answ=antworten, corr=richtig, marks=notenschluessel)
+
+# if that went well, get the test results
+klsr.obj &lt;- klausur(data.obj)
+
+# to try pick-n scoring, we must also define all distractors
+falsch &lt;- c(Item01=1245, Item02=1345, Item03=1345, Item04=1345, Item05=1235,
+ Item06=1245, Item07=1235, Item08=2345, Item09=1345, Item10=1345, Item11=1235,
+ Item12=1235, Item13=1345, Item14=1245, Item15=1345, Item16=1245, Item17=1235,
+ Item18=1235, Item19=1245, Item20=1234, Item21=1245, Item22=1245, Item23=2345,
+ Item24=1245, Item25=2345, Item26=1245, Item27=1234, Item28=1245, Item29=1235,
+ Item30=1235, Item31=245, Item32=15)
+
+data.obj &lt;- klausur.data(answ=antworten, corr=richtig, wrong=falsch,
+      marks=notenschluessel)
+klsr.obj &lt;- klausur(data.obj, score="pick-n")
+
+############################
+ # example for an NRET test
+############################
+# load sampla data in SPSS format
+data(spss.data)
+# define correct answers
+spss.corr &lt;- c(
+   item01=2, item02=3, item03=3, item04=3, item05=2,
+   item06=2, item07=3, item08=1, item09=1, item10=2)
+
+# convert into klausuR type coding
+klausuR.data &lt;- nret.translator(spss.data, spss="in")
+klausuR.corr &lt;- nret.translator(spss.corr, spss="in", corr=TRUE,
+  num.alt=3, spss.prefix=c(corr="item"))
+# now create the data object; "Nickname" must be renamed
+data.obj &lt;- klausur.data(answ=klausuR.data, corr=klausuR.corr,
+  rename=c(Pseudonym="Nickname"))
+
+ # finally, the test can be evaluated, using the scoring functions available
+NRET.results &lt;- klausur(data.obj, marks="suggest", mark.labels=11, score="NRET")
+NRETplus.results &lt;- klausur(data.obj, marks="suggest", mark.labels=11, score="NRET+")
+NR.results &lt;- klausur(data.obj, marks="suggest", mark.labels=11, score="NR")
+ET.results &lt;- klausur(data.obj, marks="suggest", mark.labels=11, score="ET")
+</code></pre>
+
+
+</div>

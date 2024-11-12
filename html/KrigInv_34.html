@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vorob_threshold</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Calculation of the Vorob'ev threshold </h2>
+
+<h3>Description</h3>
+
+<p>Evaluation of the Vorob'ev threshold given an excursion probability vector. This threshold is such that the volume of the set (x : pn(x) &gt; threshold) is equal to the integral of pn. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vorob_threshold(pn)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pn</code></td>
+<td>
+<p>Input vector of arbitrary size containing the excursion probabilities pn(x).</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>In this function, all the points x are supposed to be equaly weighted.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a scalar: the Vorob'ev thresold</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Ginsbouger D., Bect J., Molchanov I. (2013) <em>Estimating and quantifying uncertainties on level sets using the Vorob'ev expectation and deviation with gaussian process models</em> mODa 10, Advances in Model-Oriented Design and Analysis, Contributions to Statistics, pp 35-43
+</p>
+<p>Chevalier C. (2013) <em>Fast uncertainty reduction strategies relying on Gaussian process models</em> Ph.D Thesis, University of Bern
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>max_vorob_parallel</code>, <code>vorob_optim_parallel</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#vorob_threshold
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- 80 #threshold
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+## Not run: 
+###we need to compute some additional arguments:
+#integration points, and current kriging means and variances at these points
+integcontrol &lt;- list(n.points=50,distrib="sobol")
+obj &lt;- integration_design(integcontrol=integcontrol,
+lower=c(0,0),upper=c(1,1),model=model,T=T)
+
+integration.points &lt;- obj$integration.points
+
+pred &lt;- predict_nobias_km(object=model,newdata=integration.points,
+type="UK",se.compute=TRUE)
+pn &lt;- pnorm((pred$mean-T)/pred$sd)
+
+vorob_threshold(pn)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

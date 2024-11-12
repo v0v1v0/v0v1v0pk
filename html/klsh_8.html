@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reduction.ratio.from.blocking</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Returns the reduction ratio associated with a blocking method</h2>
+
+<h3>Description</h3>
+
+<p>Returns the reduction ratio associated with a blocking method
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reduction.ratio.from.blocking(blocking)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>blocking</code></td>
+<td>
+<p>The actual blocks</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The reduction ratio
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("RLdata500")
+klsh.blocks &lt;- klsh(RLdata500, p=20, num.blocks=5, k=2)
+reduction.ratio.from.blocking(klsh.blocks)
+</code></pre>
+
+
+</div>

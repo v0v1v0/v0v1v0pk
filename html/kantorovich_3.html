@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ejoinings</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extreme joinings</h2>
+
+<h3>Description</h3>
+
+<p>Return extreme joinings between <code>mu</code> and <code>nu</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ejoinings(mu, nu, zeros = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>(row margins) probability measure in numeric or bigq/character mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>(column margins) probability measure in numeric or bigq/character mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zeros</code></td>
+<td>
+<p>logical; in case when <code>mu</code> and <code>nu</code> have different lengths,
+set <code>FALSE</code> to remove lines or columns full of zeros</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the extreme joinings (matrices).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mu &lt;- nu &lt;- c(0.5, 0.5)
+ejoinings(mu, nu)
+# use exact arithmetic
+library(gmp)
+mu &lt;- nu &lt;- as.bigq(c(0.5,0.5))
+ejoinings(mu, nu)
+# different lengths example
+mu &lt;- setNames(as.bigq(c(1,2,4), 7), c("a", "b", "c"))
+nu &lt;- setNames(as.bigq(c(3,1), 4), c("b", "c"))
+ejoinings(mu, nu)
+
+</code></pre>
+
+
+</div>

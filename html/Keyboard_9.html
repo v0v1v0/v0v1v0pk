@@ -1,0 +1,333 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get.oc.obd.kb</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate Operating Characteristics to Find the Optimal Biological Dose</h2>
+
+<h3>Description</h3>
+
+<p>This function generates operating characteristics to find the  optimal biological dose (OBD).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get.oc.obd.kb(
+  toxicity.low,
+  toxicity.moderate,
+  toxicity.high,
+  efficacy.low,
+  efficacy.moderate,
+  efficacy.high,
+  target.toxicity,
+  target.efficacy,
+  ncohort = 10,
+  cohortsize = 3,
+  n.early = 100,
+  startdose = 1,
+  p.true,
+  q.true,
+  ntrial = 1000,
+  seed = 6,
+  p1 = 0.15,
+  p2 = 0.4,
+  q1 = 0.3,
+  q2 = 0.6,
+  cutoff.eli.toxicity = 0.95,
+  cutoff.eli.efficacy = 0.3,
+  w1.toxicity = 0.33,
+  w2.toxicity = 1.09,
+  indicator = target.toxicity
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>toxicity.low</code></td>
+<td>
+<p>The upper boundary for the low toxicity interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toxicity.moderate</code></td>
+<td>
+<p>The upper boundary for the moderate toxicity interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toxicity.high</code></td>
+<td>
+<p>The upper boundary for the high toxicity interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>efficacy.low</code></td>
+<td>
+<p>The upper boundary for the low efficacy interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>efficacy.moderate</code></td>
+<td>
+<p>The upper boundary for the moderate efficacy interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>efficacy.high</code></td>
+<td>
+<p>The upper boundary for the high efficacy interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target.toxicity</code></td>
+<td>
+<p>The target DLT rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target.efficacy</code></td>
+<td>
+<p>The target efficacy rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncohort</code></td>
+<td>
+<p>The total number of cohorts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cohortsize</code></td>
+<td>
+<p>The number of patients in the cohort.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.early</code></td>
+<td>
+<p>The early stopping parameter. If the number of patients treated at
+the current dose reaches <code>n.early</code>, then we stop the trial
+and select the optimal biological dose (OBD) based on the observed data. The default value is 100.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>startdose</code></td>
+<td>
+<p>The starting dose level.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.true</code></td>
+<td>
+<p>A vector containing the true toxicity probabilities of the
+investigational dose levels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q.true</code></td>
+<td>
+<p>A vector containing the true efficacy probabilities of the
+investigational dose levels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ntrial</code></td>
+<td>
+<p>The total number of trials to be simulated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>The random seed for simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p1</code></td>
+<td>
+<p>The cutoff lower limit for safety utility function 1, described in the Details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p2</code></td>
+<td>
+<p>The cutoff upper limit for safety utility function 1, described in the Details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q1</code></td>
+<td>
+<p>The cutoff lower limit for efficacy utility function 1, described in the Details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q2</code></td>
+<td>
+<p>The cutoff upper limit for efficacy utility function 1, described in the Details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff.eli.toxicity</code></td>
+<td>
+<p>The cutoff value to eliminate a dose with unacceptable high toxicity for safety. The default value is 0.95.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff.eli.efficacy</code></td>
+<td>
+<p>The cutoff value for the futility rule, the acceptable lowest efficacy. The default value is 0.30.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w1.toxicity</code></td>
+<td>
+<p>The weight for toxicity utility function 2 and 3,described in the Details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w2.toxicity</code></td>
+<td>
+<p>The weight for toxicity utility function 3, described in the Details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indicator</code></td>
+<td>
+<p>The indicator cutoff value for utility function 3, described in the Details section.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Large trials are simulated to characterize the operating characteristics of the Keyboard design under the prespecified true toxicity probabilities and true efficacy probabilities of the investigational doses. The dose assignment follows the rules described in the function <code>get.decision.obd.kb()</code>.
+</p>
+<p>The following stopping rules are built in the Keyboard design:
+</p>
+
+<ol>
+<li>
+<p> Stop the trial if the lowest dose is eliminated from the trial due to high unacceptable toxicity.
+</p>
+</li>
+<li>
+<p> Stop the trial if the number of patients treated at the current dose exceeds <code>n.earlystop</code>.
+</p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p><code>get.oc.obd.kb()</code> returns the operating characteristics of the Keyboard design as a list, including:<br></p>
+
+<ol>
+<li>
+<p> the selection percentage at each dose level using utility function 1 (<code>$selpercent1</code>), <br></p>
+</li>
+<li>
+<p> the selection percentage at each dose level using utility function 2 (<code>$selpercent2</code>), <br></p>
+</li>
+<li>
+<p> the selection percentage at each dose level using utility function 3 (<code>$selpercent3</code>), <br></p>
+</li>
+<li>
+<p> the number of patients treated at each dose level (<code>$npatients</code>), <br></p>
+</li>
+<li>
+<p> the number of dose-limiting toxicities (DLTs) observed at each dose level (<code>$ntox</code>), <br></p>
+</li>
+<li>
+<p> the number of responses observed at each dose level (<code>$neff</code>), <br></p>
+</li>
+<li>
+<p> the average number of DLTs (<code>$totaltox</code>), <br></p>
+</li>
+<li>
+<p> the average number of responses (<code>$totaleff</code>), <br></p>
+</li>
+<li>
+<p> the average number of patients (<code>$totaln</code>), <br></p>
+</li>
+<li>
+<p> the percentage of early stopping without selecting the OBD using utility function 1 (<code>$percentstop1</code>), <br></p>
+</li>
+<li>
+<p> the percentage of early stopping without selecting the OBD using utility function 2 (<code>$percentstop2</code>), <br></p>
+</li>
+<li>
+<p> the percentage of early stopping without selecting the OBD using utility function 3 (<code>$percentstop3</code>), <br></p>
+</li>
+<li>
+<p> data.frame (<code>$simu.setup</code>) containing simulation parameters, such as target, p.true, etc.
+</p>
+</li>
+</ol>
+<h3>Author(s)</h3>
+
+<p>Xiaomeng Yuan, Chen Li, Hongying Sun, Li Tang and Haitao Pan
+</p>
+
+
+<h3>References</h3>
+
+<p>Li DH, Whitmore JB, Guo W, Ji Y.  Toxicity and efficacy probability interval design for phase I adoptive cell therapy dose-finding clinical trials.
+<em>Clinical Cancer Research</em>. 2017; 23:13-20.
+https://clincancerres.aacrjournals.org/content/23/1/13.long
+</p>
+<p>Liu S, Johnson VE.  A robust Bayesian dose-finding design for phase I/II clinical trials. <em>Biostatistics</em>. 2016; 17(2):249-63.
+https://academic.oup.com/biostatistics/article/17/2/249/1744018
+</p>
+<p>Zhou Y, Lee JJ, Yuan Y.  A utility-based Bayesian optimal interval (U-BOIN) phase I/II design to identify the optimal biological dose for targeted and immune therapies. <em>Statistics in Medicine</em>. 2019; 38:S5299-5316.
+https://onlinelibrary.wiley.com/doi/epdf/10.1002/sim.8361
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other single-agent phase I/II functions: 
+<code>get.decision.obd.kb()</code>,
+<code>get.decision.obd2.kb()</code>,
+<code>get.oc.obd2.kb()</code>,
+<code>select.obd.kb()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+toxicity.low &lt;- 0.15
+toxicity.moderate &lt;- 0.25
+toxicity.high &lt;- 0.35
+efficacy.low &lt;- 0.25
+efficacy.moderate &lt;- 0.45
+efficacy.high &lt;- 0.65
+target.toxicity &lt;- 0.30
+target.efficacy &lt;- 0.40
+p.true &lt;-c(0.08,0.30,0.60,0.80)
+q.true &lt;- c(0.25,0.40,0.25,0.50)
+oc.obd.kb &lt;- get.oc.obd.kb(toxicity.low = toxicity.low,
+             toxicity.moderate= toxicity.moderate,
+             toxicity.high = toxicity.high,
+             efficacy.low = efficacy.low,
+             efficacy.moderate = efficacy.moderate,
+             efficacy.high = efficacy.high,
+             target.toxicity=target.toxicity,
+             target.efficacy= target.efficacy,
+             p.true= p.true, q.true= q.true)
+oc.obd.kb
+summary_kb(oc.obd.kb)
+plot_kb(oc.obd.kb)
+plot_kb(oc.obd.kb$selpercent1)
+plot_kb(oc.obd.kb$selpercent2)
+plot_kb(oc.obd.kb$selpercent3)
+plot_kb(oc.obd.kb$npatients)
+plot_kb(oc.obd.kb$ntox)
+plot_kb(oc.obd.kb$neff)
+
+</code></pre>
+
+
+</div>

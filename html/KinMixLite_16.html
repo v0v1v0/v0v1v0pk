@@ -1,0 +1,36 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>formats</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Formats</h2>
+
+<h3>Description</h3>
+
+<p>Formats for data objects in KinMix and KinMixLite</p>
+
+
+<h3>Formats</h3>
+
+<p>An <b>allele frequency database</b> is a data frame containing variables <code>marker</code>, <code>allele</code> and <code>frequency</code> (character, numeric and numeric respectively).
+</p>
+<p>A <b>mixture profile</b> is a data frame containing variables <code>marker</code>, <code>allele</code> and <code>height</code> (character, numeric and numeric respectively).
+</p>
+<p>A <b>genotype profile</b> is a data frame containing variables <code>marker</code>, <code>allele1</code> and <code>allele2</code> (character, numeric and numeric respectively).
+</p>
+<p>Examples of these 3 data formats are objects <code>db</code>, <code>epg</code> and <code>Cgt</code>, respectively, in <code>test2data</code>.
+</p>
+<p>A <b>allele count array</b> is an alternative format for a genotype as a named list of vectors, one for each marker. Each vector gives the number of each allele in the genotype, with the alleles listed in the order in which they appear in the <code>data</code> component of the relevant mixture object. 
+</p>
+<p>An <b>IBD pattern distribution</b> or <b>IBD object</b> is a list with components <code>pr</code> (a numerical vector) and <code>patt</code> (an integer matrix with <code>nrow(patt)==length(pr)</code> and an even number of columns). The elements of <code>pr</code> are the probabilities of the IBD patterns in the corresponding rows of <code>patt</code>. Adjacent pairs of columns encode the genotypes of different individuals; equal elements in any row determine equality of the alleles; different elements denote independent draws from the gene pool. If the component <code>pr</code> is missing, functions <code>rpt.IBD</code> and <code>rpt.typed.relatives</code> assume the probabilities are equal.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+</div>

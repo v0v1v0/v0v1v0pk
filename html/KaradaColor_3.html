@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>image_add_textAcode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add to image() command text and color code</h2>
+
+<h3>Description</h3>
+
+<p><code>image_add_textAcode</code> This function add to image() command text and color code.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">image_add_textAcode(
+  coldata,
+  xlab = NULL,
+  ylab = NULL,
+  colornames = "color",
+  showcode = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coldata</code></td>
+<td>
+<p>Color data. Only for matrix class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>x axis label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>x axis label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colornames</code></td>
+<td>
+<p>Color name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showcode</code></td>
+<td>
+<p>Add a color code to the plot.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Display hex color code and color on console.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">image_add_textAcode(coldata = t(as.matrix(c("red", "#ff48ac"))),
+                    colornames = "color", showcode = TRUE)
+</code></pre>
+
+
+</div>

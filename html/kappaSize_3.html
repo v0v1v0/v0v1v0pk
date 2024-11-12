@@ -1,0 +1,165 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CI5Cats</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence Interval Approach for the Number of Subjects Required for a Study of Interobserver Agreement with Five Outcome Categories</h2>
+
+<h3>Description</h3>
+
+<p>This function provides detailed sample size estimation information to determine
+the number of subjects required using the confidence interval perspective to sample 
+size estimation for <code class="reqn">\kappa</code>.   This version assumes that the outcome has five categories.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CI5Cats(kappa0, kappaL, kappaU=NA, props, raters=2, alpha=0.05)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kappa0</code></td>
+<td>
+<p>The anticipated preliminary value of <code class="reqn">\kappa</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappaL</code></td>
+<td>
+<p>The desired expected lower bound for a two-sided 100(1 - <code class="reqn">\alpha</code>) % confidence interval for <code class="reqn">\kappa</code>.  Alternatively, if kappaU is set to NA, the procedure produces the number of required subjects 
+for a one-sided confidence interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappaU</code></td>
+<td>
+<p>The desired expected upper confidence limit for <code class="reqn">\kappa</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>props</code></td>
+<td>
+<p>The anticipated prevalence of the desired traits.  Note that the elements
+of the five element vector must be non-negative and sum to one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raters</code></td>
+<td>
+<p>The number of raters that are available.  This function allows between
+2 and 6 raters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The desired type I error rate.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function provides detailed sample size estimation computation for studies
+of interobserver agreement with five outcomes.  This function employs the
+confidence interval perspective, determining the correct sample size that provides
+the specified expected confidence limits.  Sample
+size estimation is based on the precision of the estimate, instead of a simple hypothesis
+testing perspective.  Note that a warning message is provided if any of the expected cell counts are less than 5.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>The calculated sample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa0</code></td>
+<td>
+<p>The specified anticipated value of <code class="reqn">\kappa</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappaL</code></td>
+<td>
+<p>The specified expected lower limit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappaU</code></td>
+<td>
+<p>The specified expected upper limit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>props</code></td>
+<td>
+<p>The anticipated proportions of individuals with the outcomes of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raters</code></td>
+<td>
+<p>The number of raters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The desired type I error rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ChiCrit</code></td>
+<td>
+<p>The critical value that is required for sample size estimation.  It is
+typically not required and is not displayed in the summary output.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Michael Rotondi, <a href="mailto:mrotondi@yorku.ca">mrotondi@yorku.ca</a></p>
+
+
+<h3>References</h3>
+
+<p>Rotondi MA, Donner A.  (2012).  A Confidence Interval Approach to Sample Size Estimation for Interobserver Agreement Studies with Multiple Raters and Outcomes.  Journal of Clinical Epidemiology, 65:778-784.
+</p>
+<p>Donner A, Rotondi MA.  (2010).  Sample Size Requirements for Interval Estimation of the Kappa Statistic for Interobserver Agreement Studies with a Binary Outcome and Multiple Raters.  International Journal of Biostatistics 6:31.
+</p>
+<p>Altaye M, Donner A, Klar N.  (2001). Procedures for Assessing Interobserver Agreement among Multiple Raters.  Biometrics 57:584-588.
+</p>
+<p>Donner A.  (1999).  Sample Size Requirements for Interval Estimation of the Intraclass Kappa Statistic.  Communication in Statistics 28:415-429.
+</p>
+<p>Bartfay E, Donner A. (2001).  Statistical Inferences for Interobserver Agreement Studies with Nominal Outcome Data.  The Statistician 50:135-146.
+</p>
+<p>Donner A, Eliasziw M. (1987) Sample size requirements for reliability studies. Statistics in Medicine 6:441-448.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Power5Cats</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: Suppose an investigator would like to determine the required sample size to test 
+kappa0=0.4 with precision of 0.1 on each side, in a study of interobserver agreement.  
+Further suppose that the prevalence of the traits are 0.13, 0.17, 0.2, 0.2, 0.3.
+## End(Not run)
+
+CI5Cats(kappa0=0.4, kappaL=0.3, kappaU=0.5, props=c(0.13, 0.17, 0.2, 0.2, 0.3), alpha=0.05);
+</code></pre>
+
+
+</div>

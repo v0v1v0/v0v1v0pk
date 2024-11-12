@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>use_implementation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Select a Keras implementation and backend</h2>
+
+<h3>Description</h3>
+
+<p>Select a Keras implementation and backend
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">use_implementation(implementation = c("keras", "tensorflow"))
+
+use_backend(backend = c("tensorflow", "cntk", "theano", "plaidml"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>implementation</code></td>
+<td>
+<p>One of "keras" or "tensorflow" (defaults to "keras").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>backend</code></td>
+<td>
+<p>One of "tensorflow", "cntk", or "theano" (defaults
+to "tensorflow")</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Keras has multiple implementations (the original keras implementation
+and the implementation native to TensorFlow) and supports multiple
+backends ("tensorflow", "cntk", "theano", and "plaidml"). These functions allow
+switching between the various implementations and backends.
+</p>
+<p>The functions should be called after <code>library(keras)</code> and before calling
+other functions within the package (see below for an example).
+</p>
+<p>The default implementation and backend should be suitable for most
+use cases. The "tensorflow" implementation is useful when using Keras
+in conjunction with TensorFlow Estimators (the <span class="pkg">tfestimators</span>
+R package).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# use the tensorflow implementation
+library(keras)
+use_implementation("tensorflow")
+
+# use the cntk backend
+library(keras)
+use_backend("theano")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

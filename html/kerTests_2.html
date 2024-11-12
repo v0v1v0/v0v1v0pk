@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kertests</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generalized Kernel Two-Sample Tests</h2>
+
+<h3>Description</h3>
+
+<p>This function provides generalzied kernel-based two-sample tests.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kertests(X, Y, sigma, r1=1.2, r2=0.8, perm=0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>The first samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>The second samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>The bandwidth of Gaussian kernels. The median heuristic should be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>The constant in the test statistics <code class="reqn">\textrm{Z}_{W,r1}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r2</code></td>
+<td>
+<p>The constant in the test statistics <code class="reqn">\textrm{Z}_{W,r2}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perm</code></td>
+<td>
+<p>The number of permutations performed to calculate the p-value of the test. The default value is 0, which means the permutation is not performed and only approximated p-value based on the asymptotic theory is provided. Doing permutation could be time consuming, so be cautious if you want to set this value to be larger than 10,000.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list <code>teststat</code> with each test statistic value and a list <code>pval</code> with p-values of the tests. See below for more details.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>GPK</code></td>
+<td>
+<p>The value of the test statistic GPK</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ZW1</code></td>
+<td>
+<p>The value of the test statistic <code class="reqn">\textrm{Z}_{W,r1}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ZW2</code></td>
+<td>
+<p>The value of the test statistic <code class="reqn">\textrm{Z}_{W,r2}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ZD</code></td>
+<td>
+<p>The value of the test statistic <code class="reqn">\textrm{Z}_{D}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPK_appr</code></td>
+<td>
+<p>The approximated p-value of fGPK based on asymptotic theory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPKM_appr</code></td>
+<td>
+<p>The approximated p-value of <code class="reqn">\textrm{fGPK}_{M}</code> based on asymptotic theory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPK_Simes_appr</code></td>
+<td>
+<p>The approximated p-value of fGPK based on asymptotic theory with a Simes procedure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPKM_Simes_appr</code></td>
+<td>
+<p>The approximated p-value of <code class="reqn">\textrm{fGPK}_{M}</code> based on asymptotic theory with a Simes procedure.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>GPK_perm</code></td>
+<td>
+<p>The permutation p-value of GPK when argument ‘perm’ is positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPK_perm</code></td>
+<td>
+<p>The permutation p-value of fGPK when argument ‘perm’ is positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPKM_perm</code></td>
+<td>
+<p>The permutation p-value of <code class="reqn">\textrm{fGPK}_{M}</code> when argument ‘perm’ is positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPK_Simes_perm</code></td>
+<td>
+<p>The permutation p-value of fGPK with a Simes procedure when argument ‘perm’ is positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fGPKM_Simes_perm</code></td>
+<td>
+<p>The permutation p-value of <code class="reqn">\textrm{fGPK}_{M}</code> with a Simes procedure when argument ‘perm’ is positive.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>kerTests-package</code>, <code>med_sigma</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Mean difference in Gaussian distribution.
+d = 100
+mu = 0.2
+sam = 100
+n = 200
+set.seed(500)
+X = matrix(rnorm(d*sam), sam)
+Y = matrix(rnorm(d*sam,mu), sam)
+
+sigma = med_sigma(X, Y) # median heuristic
+
+a = kertests(X, Y, sigma, r1=1.2, r2=0.8, perm=1000)
+# output results based on the permutation and the asymptotic results
+# the test statistic values can be found in a$teststat
+# p-values can be found in a$pval
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_est_kde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel density-based Kullback-Leibler divergence estimation in any dimension</h2>
+
+<h3>Description</h3>
+
+<p>Disclaimer: this function doesn't use binning and/or the fast Fourier transform
+and hence, it is extremely slow even for moderate datasets. For this reason,
+it is not exported currently.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_est_kde(X, Y, hX = NULL, hY = NULL, rule = c("Silverman", "Scott"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> matrices, representing <code>n</code> samples from
+the true distribution <code class="reqn">P</code> and <code>m</code> samples from the approximate distribution
+<code class="reqn">Q</code>, both in <code>d</code> dimensions. Vector input is treated as a column matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hX, hY</code></td>
+<td>
+<p>Positive scalars or length <code>d</code> vectors, representing bandwidth
+parameters (possibly different in each component) for the density estimates
+of <code class="reqn">P</code> and <code class="reqn">Q</code>, respectively. If unspecified, a heurestic specified
+via the <code>rule</code> argument is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rule</code></td>
+<td>
+<p>A heuristic for computing arguments <code>hX</code> and/or <code>hY</code>. The default
+<code>"silverman"</code> is Silverman's rule
+</p>
+<p style="text-align: center;"><code class="reqn">h_i = \sigma_i\left(\frac{4}{(2+d)n}\right)^{1/(d+4)}.</code>
+</p>
+
+<p>As an alternative, Scott's rule <code>"scott"</code> can be used,
+</p>
+<p style="text-align: center;"><code class="reqn">h_i = \frac{\sigma_i}{n^{1/(d+4)}}.</code>
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This estimation method approximates the densities of the unknown distributions
+<code class="reqn">P</code> and <code class="reqn">Q</code> by kernel density estimates, using a sample size- and
+dimension-dependent bandwidth parameter and a Gaussian kernel. It works for
+any number of dimensions but is very slow.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A scalar, the estimated Kullback-Leibler divergence <code class="reqn">\hat D_{KL}(P||Q)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># KL-D between two samples from 1-D Gaussians:
+set.seed(0)
+X &lt;- rnorm(100)
+Y &lt;- rnorm(100, mean = 1, sd = 2)
+kld_gaussian(mu1 = 0, sigma1 = 1, mu2 = 1, sigma2 = 2^2)
+kld_est_kde1(X, Y)
+kld_est_nn(X, Y)
+kld_est_brnn(X, Y)
+
+# KL-D between two samples from 2-D Gaussians:
+set.seed(0)
+X1 &lt;- rnorm(100)
+X2 &lt;- rnorm(100)
+Y1 &lt;- rnorm(100)
+Y2 &lt;- Y1 + rnorm(100)
+X &lt;- cbind(X1,X2)
+Y &lt;- cbind(Y1,Y2)
+kld_gaussian(mu1 = rep(0,2), sigma1 = diag(2),
+             mu2 = rep(0,2), sigma2 = matrix(c(1,1,1,2),nrow=2))
+kld_est_kde2(X, Y)
+kld_est_nn(X, Y)
+kld_est_brnn(X, Y)
+</code></pre>
+
+
+</div>

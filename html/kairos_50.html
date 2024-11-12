@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>permute</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rearranges a Data Matrix</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>permute()</code> rearranges a data matrix according to a permutation order.
+</p>
+</li>
+<li> <p><code>get_order()</code> returns the seriation order for rows and/or columns.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">permute(object, order, ...)
+
+get_order(x, ...)
+
+## S4 method for signature 'data.frame,PermutationOrder'
+permute(object, order)
+
+## S4 method for signature 'matrix,PermutationOrder'
+permute(object, order)
+
+## S4 method for signature 'PermutationOrder'
+get_order(x, margin = c(1, 2))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x, order</code></td>
+<td>
+<p>A <code>PermutationOrder</code> object giving the permutation
+order for rows and columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>A <code>numeric</code> vector giving the subscripts which the
+rearrangement will be applied over: <code>1</code> indicates rows, <code>2</code> indicates
+columns, <code>c(1, 2)</code> indicates rows and columns.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+<ul><li> <p><code>permute()</code> returns a permuted <code>matrix</code> or a permuted <code>data.frame</code>
+(the same as <code>object</code>).
+</p>
+</li></ul>
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dimensio::ca()</code>
+</p>
+<p>Other seriation methods: 
+<code>seriate_average()</code>,
+<code>seriate_rank()</code>,
+<code>seriate_refine()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Replicates Desachy 2004 results
+data("compiegne", package = "folio")
+
+## Get seriation order for columns on EPPM using the reciprocal averaging method
+## Expected column order: N, A, C, K, P, L, B, E, I, M, D, G, O, J, F, H
+(indices &lt;- seriate_rank(compiegne, EPPM = TRUE, margin = 2))
+
+## Get permutation order
+get_order(indices, 1) # rows
+get_order(indices, 2) # columns
+
+## Permute columns
+(new &lt;- permute(compiegne, indices))
+
+## See the vignette
+## Not run: 
+utils::vignette("seriation")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

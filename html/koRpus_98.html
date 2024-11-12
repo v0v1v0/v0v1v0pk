@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gutierrez</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Gutiérrez <em>Fórmula de comprensibilidad</em>
+</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gutierrez(txt.file, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculates Gutiérrez de Polini's <em>Fórmula de comprensibilidad</em> (Gutiérrez, 1972,
+as cited in Fernández, 2016).
+In contrast to <code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Fernández, A. M. (2016,
+November 30). <em>Fórmula de comprensibilidad de Gutiérrez de Polini</em>.
+<a href="https://legible.es/blog/comprensibilidad-gutierrez-de-polini/">https://legible.es/blog/comprensibilidad-gutierrez-de-polini/</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  gutierrez(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

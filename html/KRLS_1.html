@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fdskrls</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Compute first differences with KRLS
+</h2>
+
+<h3>Description</h3>
+
+<p>Internal function that is called by  <code>krls</code> to computes first differences for binary predictors in the X matrix. It would normally not be called by the user directly.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fdskrls(object,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object from call to <code>krls</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments to be passed to lower level functions</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A object of class <code>krls</code> where the derivatives, average derivatives, and the varinaces of the average derivatives are 
+replaced with the first differences for binary predictors. The binaryindicator is also updated and set to TRUE for binary predictors.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krls</code>
+</p>
+
+
+</div>

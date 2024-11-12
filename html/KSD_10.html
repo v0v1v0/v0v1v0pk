@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>perturbgmm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Returns a perturbed model of given GMM</h2>
+
+<h3>Description</h3>
+
+<p>Returns a perturbed model of given GMM
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">perturbgmm(model = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>: The base Gaussian Mixture Model</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>perturbedModel : Perturbed model with added noise to the supplied GMM
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Add noise to default 1-d gaussian mixture model
+model &lt;- gmm()
+noisymodel &lt;- perturbgmm(model)
+</code></pre>
+
+
+</div>

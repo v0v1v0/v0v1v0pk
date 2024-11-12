@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_par_filenames</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get Filenames of Par files</h2>
+
+<h3>Description</h3>
+
+<p>Return the filenames for the par files
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_par_filenames(
+  ids = get_ids(),
+  modalities = c("FLAIR", "MPRAGE", "T2w", "fMRI", "DTI"),
+  visits = c(1, 2)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>ID to return</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modalities</code></td>
+<td>
+<p>vector of image modalities within
+<code>c("FLAIR", "MPRAGE", "T2w", "fMRI", "DTI")</code> to return</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>visits</code></td>
+<td>
+<p>Vector of scan indices to return (1 or 2 or both)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Data.frame of filenames
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">get_par_filenames()
+</code></pre>
+
+
+</div>

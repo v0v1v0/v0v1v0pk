@@ -1,0 +1,148 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lifetab</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Create cohort life table </h2>
+
+<h3>Description</h3>
+
+<p>Create cohort life table.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lifetab(tis, ninit, nlost, nevent)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tis</code></td>
+<td>
+<p> a vector of end points of time intervals, whose length is
+1 greater than nlost and nevent. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ninit</code></td>
+<td>
+<p> the number of subjects initially entering the study. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlost</code></td>
+<td>
+<p> a vector of the number of individuals lost follow or
+withdrawn alive for whatever reason. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nevent</code></td>
+<td>
+<p> a vector of the number of individuals who experienced
+the event </p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data.frame with the following columns:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>nsubs</code></td>
+<td>
+<p> the number of subject entering the intervals
+who have not experienced the event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlost</code></td>
+<td>
+<p> the number of individuals lost follow or
+withdrawn alive for whatever reason. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nrisk</code></td>
+<td>
+<p> the estimated number of individuals at risk of
+experiencing the event. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nevent</code></td>
+<td>
+<p> the number of individuals who experienced
+the event. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv</code></td>
+<td>
+<p> the estimated survival function at the start
+of the intervals. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pdf</code></td>
+<td>
+<p> the estimated probability density function at
+the midpoint of the intervals. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hazard</code></td>
+<td>
+<p> the estimated hazard rate at the midpoint
+of the intervals. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.surv</code></td>
+<td>
+<p> the estimated standard deviation of survival at the
+beginning of the intervals. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.pdf</code></td>
+<td>
+<p> the estimated standard deviation of the prbability
+density function at the midpoint of the intervals. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.hazard</code></td>
+<td>
+<p> the estimated standard deviation of the hazard
+function at the midpoint of the intervals</p>
+</td>
+</tr>
+</table>
+<p>The row.names are the intervals.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Jun Yan <a href="mailto:jyan@stat.uconn.edu">jyan@stat.uconn.edu</a> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tis &lt;- c(0, 2, 3, 5, 7, 11, 17, 25, 37, 53, NA)
+nsubs &lt;- c(927, 848, 774, 649, 565, 449, 296, 186, 112, 27)
+nlost &lt;- c(2, 3, 6, 9, 7, 5, 3, rep(0, 3))
+nevent &lt;- c(77, 71, 119, 75, 109, 148, 107, 74, 85, 27)
+
+lifetab(tis, nsubs[1], nlost, nevent)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kpod</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function for performing k-POD</h2>
+
+<h3>Description</h3>
+
+<p><code>kpod</code> Function for performing k-POD, a method for k-means clustering on partially observed data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kpod(X, k, kmpp_flag = TRUE, maxiter = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix containing missing entries whose rows are observations and columns are features</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of clusters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kmpp_flag</code></td>
+<td>
+<p>(Optional) Indicator for whether or not to initialize with k-means++</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>(Optional) Maximum number of iterations</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>cluster: Clustering assignment obtained with k-POD
+</p>
+<p>cluster_list: List containing clustering assignments obtained in each iteration
+</p>
+<p>obj_vals: List containing the k-means objective function in each iteration
+</p>
+<p>fit: Fit of clustering assignment obtained with k-POD (calculated as 1-(total withinss/totss))
+</p>
+<p>fit_list: List containing fit of clustering assignment obtained in each iteration
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jocelyn T. Chi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p &lt;- 5
+n &lt;- 200
+k &lt;- 3
+sigma &lt;- 0.15
+missing &lt;- 0.20
+Data &lt;- makeData(p,n,k,sigma,missing)
+X &lt;- Data$Missing
+Orig &lt;- Data$Orig
+truth &lt;- Data$truth
+
+kpod_result &lt;- kpod(X,k)
+kpodclusters &lt;- kpod_result$cluster
+
+</code></pre>
+
+
+</div>

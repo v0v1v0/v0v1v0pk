@@ -1,0 +1,212 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>aoristic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Aoristic Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Computes the aoristic sum.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">aoristic(x, y, ...)
+
+## S4 method for signature 'numeric,numeric'
+aoristic(
+  x,
+  y,
+  step = 1,
+  start = min(x),
+  end = max(y),
+  calendar = CE(),
+  weight = TRUE,
+  groups = NULL
+)
+
+## S4 method for signature 'ANY,missing'
+aoristic(
+  x,
+  step = 1,
+  start = NULL,
+  end = NULL,
+  calendar = CE(),
+  weight = TRUE,
+  groups = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, y</code></td>
+<td>
+<p>A <code>numeric</code> vector giving the lower and upper boundaries of the
+time intervals, respectively. If <code>y</code> is missing, an attempt is made to
+interpret <code>x</code> in a suitable way (see <code>grDevices::xy.coords()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step</code></td>
+<td>
+<p>A length-one <code>integer</code> vector giving the step size, i.e. the
+width of each time step in the time series (defaults to <code class="reqn">1</code>,
+i.e. annual level).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the beginning of the time
+window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the end of the time
+window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the calendar
+of <code>x</code> and <code>y</code> (see <code>calendar()</code>). Defaults to Gregorian Common Era.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the aoristic sum be weighted by
+the length of periods (default). If <code>FALSE</code> the aoristic sum is the number
+of elements within a time block.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>groups</code></td>
+<td>
+<p>A <code>factor</code> vector in the sense that <code>as.factor(groups)</code>
+defines the grouping. If <code>x</code> is a <code>list</code> (or a <code>data.frame</code>), <code>groups</code> can
+be a length-one vector giving the index of the grouping component (column)
+of <code>x</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Aoristic analysis is used to determine the probability of contemporaneity of
+archaeological sites or assemblages. The aoristic analysis distributes the
+probability of an event uniformly over each temporal fraction of the period
+considered. The aoristic sum is then the distribution of the total number of
+events to be assumed within this period.
+</p>
+<p>Muller and Hinz (2018) pointed out that the overlapping of temporal
+intervals related to period categorization and dating accuracy is likely to
+bias the analysis. They proposed a weighting method to overcome this
+problem. This method is not implemented here (for the moment), see the
+<a href="https://github.com/ISAAKiel/aoristAAR"><span class="pkg">aoristAAR</span> package</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>AoristicSum</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Crema, E. R. (2012). Modelling Temporal Uncertainty in Archaeological
+Analysis. <em>Journal of Archaeological Method and Theory</em>, 19(3): 440-61.
+<a href="https://doi.org/10.1007/s10816-011-9122-3">doi:10.1007/s10816-011-9122-3</a>.
+</p>
+<p>Johnson, I. (2004). Aoristic Analysis: Seeds of a New Approach to Mapping
+Archaeological Distributions through Time. <em>In</em> Ausserer, K. F., Börner, W.,
+Goriany, M. &amp; Karlhuber-Vöckl, L. (ed.), <em>Enter the Past - The E-Way into
+the Four Dimensions of Cultural Heritage</em>, Oxford: Archaeopress, p. 448-52.
+BAR International Series 1227.
+<a href="https://doi.org/10.15496/publikation-2085">doi:10.15496/publikation-2085</a>
+</p>
+<p>Müller-Scheeßel, N. &amp; Hinz, M. (2018). <em>Aoristic Research in R: Correcting
+Temporal Categorizations in Archaeology</em>. Presented at the Human History and
+Digital Future (CAA 2018), Tubingen, March 21.
+<a href="https://www.youtube.com/watch?v=bUBukex30QI">https://www.youtube.com/watch?v=bUBukex30QI</a>.
+</p>
+<p>Palmisano, A., Bevan, A. &amp; Shennan, S. (2017). Comparing Archaeological
+Proxies for Long-Term Population Patterns: An Example from Central Italy.
+<em>Journal of Archaeological Science</em>, 87: 59-72.
+<a href="https://doi.org/10.1016/j.jas.2017.10.001">doi:10.1016/j.jas.2017.10.001</a>.
+</p>
+<p>Ratcliffe, J. H. (2000). Aoristic Analysis: The Spatial Interpretation of
+Unspecific Temporal Events. <em>International Journal of Geographical
+Information Science</em>, 14(7): 669-79. <a href="https://doi.org/10.1080/136588100424963">doi:10.1080/136588100424963</a>.
+</p>
+<p>Ratcliffe, J. H. (2002). Aoristic Signatures and the Spatio-Temporal
+Analysis of High Volume Crime Patterns. <em>Journal of Quantitative
+Criminology</em>, 18(1): 23-43. <a href="https://doi.org/10.1023/A%3A1013240828824">doi:10.1023/A:1013240828824</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>roc()</code>, <code>plot()</code>
+</p>
+<p>Other chronological analysis: 
+<code>apportion()</code>,
+<code>fit()</code>,
+<code>roc()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Husi 2022
+data("loire", package = "folio")
+
+## Get time range
+loire_range &lt;- loire[, c("lower", "upper")]
+
+## Calculate aoristic sum (normal)
+aorist_raw &lt;- aoristic(loire_range, step = 50, weight = FALSE)
+plot(aorist_raw, col = "grey")
+
+## Calculate aoristic sum (weights)
+aorist_weighted &lt;- aoristic(loire_range, step = 50, weight = TRUE)
+plot(aorist_weighted, col = "grey")
+
+## Calculate aoristic sum (weights) by group
+aorist_groups &lt;- aoristic(loire_range, step = 50, weight = TRUE,
+                          groups = loire$area)
+plot(aorist_groups, flip = TRUE, col = "grey")
+image(aorist_groups)
+
+## Rate of change
+roc_weighted &lt;- roc(aorist_weighted, n = 30)
+plot(roc_weighted)
+
+## Rate of change by group
+roc_groups &lt;- roc(aorist_groups, n = 30)
+plot(roc_groups, flip = TRUE)
+</code></pre>
+
+
+</div>

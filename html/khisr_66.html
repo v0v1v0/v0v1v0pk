@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>khis_cred_clear</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Clear the Credentials from Memory</h2>
+
+<h3>Description</h3>
+
+<p>This function clears the DHIS2 credentials from memory. If an auth object is
+provided, it clears the credentials from that object. If no <code>auth</code> object is
+provided, it clears the global auth credentials.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">khis_cred_clear(auth = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>auth</code></td>
+<td>
+<p>(Optional) An authentication object from which to clear credentials.
+If not provided, the credentials in the global auth object will be cleared.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>No return value, called for side effects.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other credential functions: 
+<code>khis_base_url()</code>,
+<code>khis_cred()</code>,
+<code>khis_display_name()</code>,
+<code>khis_has_cred()</code>,
+<code>khis_username()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Clear credentials from the global .auth object
+khis_cred_clear()
+</code></pre>
+
+
+</div>

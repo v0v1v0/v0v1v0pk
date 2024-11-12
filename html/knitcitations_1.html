@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bibliography</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate the bibliography</h2>
+
+<h3>Description</h3>
+
+<p>Generate the bibliography
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bibliography(style = "text", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>style</code></td>
+<td>
+<p>see RefManageR::PrintBibliography</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments passed to PrintBibliography,</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For non-trivial bibliographies, knitcitations recommends authors use 
+pandoc format, and allow pandoc 
+to generate the references list rather than rely on the bibliography() function. 
+Pandoc has rich CSL support using any provided CSL file (see Pandoc documentation
+for details) and is integrated into recent version of RStudio.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list of works cited
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">citet(citation("httr"))
+citet(citation("digest"))
+bibliography()
+bibliography(sorting = 'ynt') # sort by year, then name, title
+bibliography(sorting = 'ydnt') # sort by year, descending, then name, title
+cleanbib()
+
+</code></pre>
+
+
+</div>

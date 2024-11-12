@@ -1,0 +1,189 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dictionary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Word dictionaries</h2>
+
+<h3>Description</h3>
+
+<p>Construct or coerce to and from a dictionary.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dictionary(object, ...)
+
+## S3 method for class 'kgram_freqs'
+dictionary(object, size = NULL, cov = NULL, thresh = NULL, ...)
+
+## S3 method for class 'character'
+dictionary(
+  object,
+  .preprocess = identity,
+  size = NULL,
+  cov = NULL,
+  thresh = NULL,
+  ...
+)
+
+## S3 method for class 'connection'
+dictionary(
+  object,
+  .preprocess = identity,
+  size = NULL,
+  cov = NULL,
+  thresh = NULL,
+  max_lines = Inf,
+  batch_size = max_lines,
+  ...
+)
+
+as_dictionary(object)
+
+## S3 method for class 'kgrams_dictionary'
+as_dictionary(object)
+
+## S3 method for class 'character'
+as_dictionary(object)
+
+## S3 method for class 'kgrams_dictionary'
+as.character(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>object from which to extract a dictionary, or to be coerced to
+dictionary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to or from other methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>either <code>NULL</code> or a length one positive integer. Predefined size of the
+required dictionary (the top <code>size</code> most frequent words are retained).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+<p>either <code>NULL</code> or a length one numeric between <code>0</code> and <code>1</code>.
+Predefined text coverage fraction of the dictionary
+(the most frequent words providing the required coverage are retained).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thresh</code></td>
+<td>
+<p>either <code>NULL</code> or length one a positive integer.
+Minimum word count threshold to include a word in the dictionary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.preprocess</code></td>
+<td>
+<p>a function taking a character vector as input and returning
+a character vector as output. Optional preprocessing transformation
+applied to text before creating the dictionary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_lines</code></td>
+<td>
+<p>a length one positive integer or <code>Inf</code>.
+Maximum number of lines to be read from the <code>connection</code>.
+If <code>Inf</code>, keeps reading until the End-Of-File.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>a length one positive integer less than or equal to
+<code>max_lines</code>.Size of text batches when reading text from
+<code>connection</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>dictionary</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These generic functions are used to build <code>dictionary</code> objects,
+or to coerce from other formats to <code>dictionary</code>, and from a
+<code>dictionary</code> to a character vector. By now, the only
+non-trivial type coercible to <code>dictionary</code> is <code>character</code>,
+in which case each entry of the input vector is considered as a single word.
+Coercion from <code>dictionary</code> to <code>character</code> returns the list of
+words included in the dictionary as a regular character vector.
+</p>
+<p>Dictionaries can be extracted from <code>kgram_freqs</code> objects, or <em>built</em>
+from text coming either directly from a character vector or a connection.
+</p>
+<p>A single preprocessing transformation can be applied before processing the
+text for unique words. After preprocessing,
+<em>anything delimited by one or more white space characters</em>
+in the transformed text input <em>is counted as a word</em> and may be added
+to the dictionary modulo additional constraints.
+</p>
+<p>The possible constraints for including a word in the dictionary can be of
+three types: (i) fixed size of dictionary, implemented by the <code>size</code>
+argument; (ii) fixed text covering fraction, as specified by the <code>cov</code>
+argument; or (iii) minimum word count threshold, <code>thresh</code> argument.
+<em>Only one of these constraints can be applied at a time</em>,
+so that specifying more than one of <code>size</code>, <code>cov</code> or <code>thresh</code>
+results in an error.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>dictionary</code> for <code>dictionary()</code> and
+<code>as_dictionary()</code>, a character vector for the <code>as.character()</code>
+method.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Building a dictionary from Shakespeare's "Much Ado About Nothing"
+
+dict &lt;- dictionary(much_ado)
+length(dict)
+query(dict, "leonato") # TRUE
+query(dict, c("thy", "thou")) # c(TRUE, TRUE)
+query(dict, "smartphones") # FALSE
+
+# Getting list of words as regular character vector
+words &lt;- as.character(dict)
+head(words)
+
+# Building a dictionary from a list of words
+dict &lt;- as_dictionary(c("i", "the", "a"))
+
+</code></pre>
+
+
+</div>

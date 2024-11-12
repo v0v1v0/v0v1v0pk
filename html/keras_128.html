@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hdf5_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Representation of HDF5 dataset to be used instead of an R array</h2>
+
+<h3>Description</h3>
+
+<p>Representation of HDF5 dataset to be used instead of an R array
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hdf5_matrix(datapath, dataset, start = 0, end = NULL, normalizer = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>datapath</code></td>
+<td>
+<p>string, path to a HDF5 file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataset</code></td>
+<td>
+<p>string, name of the HDF5 dataset in the file specified in datapath</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>int, start of desired slice of the specified dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end</code></td>
+<td>
+<p>int, end of desired slice of the specified dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>normalizer</code></td>
+<td>
+<p>function to be called on data when retrieved</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Providing <code>start</code> and <code>end</code> allows use of a slice of the dataset.
+</p>
+<p>Optionally, a normalizer function (or lambda) can be given. This will
+be called on every slice of data retrieved.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An array-like HDF5 dataset.
+</p>
+
+
+</div>

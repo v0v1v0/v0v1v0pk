@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>computeQuickKrigcov</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Quick computation of kriging covariances</h2>
+
+<h3>Description</h3>
+
+<p>Computes kriging covariances between some new points and many integration points, using precomputed data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">computeQuickKrigcov(model,integration.points,X.new,
+precalc.data, F.newdata , c.newdata)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A Kriging model of <code>km</code> class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.points</code></td>
+<td>
+<p>p*d matrix of fixed integration points in the X space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X.new</code></td>
+<td>
+<p>q*d matrix of new points. The calculated covariances are the covariances between these new point and the integration points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precalc.data</code></td>
+<td>
+<p>List containing precalculated data. This list is generated using the function <code>precomputeUpdateData</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F.newdata</code></td>
+<td>
+<p>The value of the kriging trend basis function at point X.new.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c.newdata</code></td>
+<td>
+<p>The (unconditional) covariance between X.new and the design points.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function requires to use another function in order to generate the proper arguments. 
+The argument <code>precalc.data</code> can be generated using <code>precomputeUpdateData</code>.
+The arguments <code>F.newdata</code> and <code>c.newdata</code> can be obtained using <code>predict_nobias_km</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Matrix of size p*q containing kriging covariances
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Bect J., Ginsbourger D., Vazquez E., Picheny V., Richet Y. (2014), <em>Fast parallel kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>, Technometrics, vol. 56(4), pp 455-465
+</p>
+<p>Chevalier C., Ginsbourger D. (2014), <em>Corrected Kriging update formulae for batch-sequential data assimilation</em>, in Pardo-Iguzquiza, E., et al. (Eds.) Mathematics of Planet Earth, pp 119-122
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>precomputeUpdateData</code>, <code>predict_nobias_km</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#computeQuickKrigcov
+
+set.seed(9)
+N &lt;- 20 #number of observations
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+            response = response,covtype="matern3_2")
+
+#the integration.points are the points where we want to 
+#compute predictions/covariances if a point new.x is added 
+#to the DOE
+x.grid &lt;- seq(0,1,length=20)
+integration.points &lt;- expand.grid(x.grid,x.grid)
+integration.points &lt;- as.matrix(integration.points)
+
+#precalculation
+precalc.data &lt;- precomputeUpdateData(model=model,
+                     integration.points=integration.points)
+
+#now we can compute quickly kriging covariances 
+#between these data and any other points.
+#example if 5 new points are added:
+X.new &lt;- matrix(runif(10),ncol=2)
+pred &lt;- predict_nobias_km(object=model,
+                          newdata=X.new,type="UK",se.compute=TRUE)
+
+kn &lt;- computeQuickKrigcov(model=model,
+                    integration.points=integration.points,X.new=X.new,
+                    precalc.data=precalc.data,
+                    F.newdata=pred$F.newdata,
+                    c.newdata=pred$c)
+</code></pre>
+
+
+</div>

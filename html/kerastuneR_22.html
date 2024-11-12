@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save model</h2>
+
+<h3>Description</h3>
+
+<p>Saves a Model for a given trial
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_model(tuner, trial_id, model, step = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tuner</code></td>
+<td>
+<p>A tuner object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trial_id</code></td>
+<td>
+<p>The ID of the 'Trial' that corresponds to this Model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The trained model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step</code></td>
+<td>
+<p>For models that report intermediate results to the 'Oracle', the 
+step that this saved file should correspond to. For example, for Keras models 
+this is the number of epochs trained.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>None
+</p>
+
+
+</div>

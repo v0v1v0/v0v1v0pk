@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>barplotnum</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Barplot of each cluster for numerical variables data set</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a barplot from a cluster result. A barplot
+indicates the location and dispersion of each cluster. The x-axis
+of the barplot is variable's mean, while the y-axis is the variable's name.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">barplotnum(dataori, clust, nc = 1, alpha = 0.05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dataori</code></td>
+<td>
+<p>An original data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clust</code></td>
+<td>
+<p>A vector of cluster membership (see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nc</code></td>
+<td>
+<p>A number of columns for the plot of all cluster
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>A numeric number to set the significant level (between 0 and 0.2).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a marked barplot because some markers are added, i.e.
+a significant test, a population mean for each (numerical) variable.
+The significance test applies t-test between the population's mean and
+cluster's mean in every variable. The alpha is set in between 0 to 20%.
+If the population mean differs to the cluster's mean, the bar shade in the
+barplot also differs.
+</p>
+<p><code>clust</code> is a vector with the length equal to the number of objects
+(n), or the function will be an error otherwise. <code>nc</code>
+controls the layout (grid) of the plot. If <code>nc = 1</code>, the plot of each
+cluster is placed in a column. When the number of clusters is 6 and
+<code>nc = 2</code>, for example, the plot has a layout of 3-row and 2-column grids.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a barplot.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Leisch, F. (2008). Handbook of Data Visualization, Chapter
+Visualizing cluster analysis and finite mixture models, pp. 561-587.
+Springer Handbooks of Computational Statistics. Springer Verlag.
+</p>
+<p>Dolnicar, S. and F. Leisch (2014). Using graphical statistics to
+better understand market segmentation solutions. International Journal of
+Market Research 56, 207-230.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- iris[,1:4]
+memb &lt;- cutree(hclust(dist(dat)),3)
+barplotnum(dat, memb)
+barplotnum(dat, memb, 2)
+
+</code></pre>
+
+
+</div>

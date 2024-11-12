@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dale.chall</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Dale-Chall Readability Formula</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dale.chall(
+  txt.file,
+  word.list,
+  parameters = c(const = 64, dword = 0.95, asl = 0.69),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>word.list</code></td>
+<td>
+<p>A vector or matrix (with exactly one column) which defines familiar words. For valid results
+the long Dale-Chall list with about 3000 words should be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A numeric vector with named magic numbers,
+defining the relevant parameters for the index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculates the New Dale-Chall Readability Formula. In contrast to <code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+<p>If <code>parameters="PSK"</code>, the parameters by Powers-Sumner-Kearl (1958) are used, and if
+<code>parameters="old"</code>, the original parameters by Dale-Chall (1948), respectively.
+</p>
+<p>This formula doesn't need syllable count.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+dale.chall(tagged.text, word.list=new.dale.chall.wl)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

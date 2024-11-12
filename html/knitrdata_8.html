@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>insert_data_chunk_template</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Insert an empty data chunk template in active source document</h2>
+
+<h3>Description</h3>
+
+<p>This function is essentially the equivalent for data chunks of the "Insert a
+new code chunk" menu item available in Rstudio when a Rmarkdown document is
+open. It places at the current cursor location an empty <code>data</code> chunk
+that can then be modified and filled in by hand.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">insert_data_chunk_template()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>Invisibly returns the chunk contents as a character vector, one line
+of text per element.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>David M. Kaplan <a href="mailto:dmkaplan2000@gmail.com">dmkaplan2000@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other Chunk tools: 
+<code>create_chunk()</code>,
+<code>create_data_chunk_dialog()</code>,
+<code>list_rmd_chunks()</code>,
+<code>remove_chunks_dialog()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+insert_data_chunk_template()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

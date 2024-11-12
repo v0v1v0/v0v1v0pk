@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calcSmoothCopyNumber</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smooth copy number values across chromosomes and chromosome arms</h2>
+
+<h3>Description</h3>
+
+<p><code>calcSmoothCopyNumber()</code> takes <code>copyNumber</code> slot values for probes on a chromosome and smooths them by median (default) for each chromosome
+and chromosome arm, resulting in one copy number value per chromosome and chromosome arm for each cell barcode.
+Cell-chromosome values are then discretized into integers by conventional rounding (1.5 &lt;= x &lt; 2.5 rounds to 2).
+Smoothed copy number and discretized smoothed copy number values are stored as <code>smoothedCopyNumber</code> and <code>discreteCopyNumber</code> assays,
+in <code>altExp</code> slots <code>smoothedCopyNumberByChr</code> for chromosome-level smoothing, and <code>smoothedCopyNumberByArm</code> for chromosome arm-level smoothing.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calcSmoothCopyNumber(TapestriExperiment, method = "median")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Character, smoothing method: median (default) or mean.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> with <code>smoothedCopyNumber</code> and <code>discreteCopyNumber</code> assays in <code>altExp</code> slots <code>smoothedCopyNumberByChr</code> and <code>smoothedCopyNumberByArm</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- calcNormCounts(tap.object)
+control.copy.number &lt;- generateControlCopyNumberTemplate(tap.object,
+  copy.number = 2,
+  sample.feature.label = "cellline1"
+)
+tap.object &lt;- calcCopyNumber(tap.object,
+  control.copy.number,
+  sample.feature = "test.cluster"
+)
+tap.object &lt;- calcSmoothCopyNumber(tap.object)
+</code></pre>
+
+
+</div>

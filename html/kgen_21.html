@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calc_seawater_correction</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kgen seawater composition correction function</h2>
+
+<h3>Description</h3>
+
+<p>Kgen seawater composition correction function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calc_seawater_correction(
+  k,
+  sal,
+  temp_c,
+  magnesium = 0.0528171,
+  calcium = 0.0102821,
+  method = "r_polynomial"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>K to be calculated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sal</code></td>
+<td>
+<p>Salinity</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>temp_c</code></td>
+<td>
+<p>Temperature (Celcius)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>magnesium</code></td>
+<td>
+<p>magnesium concentration in mol/kgsw. If None, modern is assumed (0.0528171). Should be the average magnesium concentration in seawater - a salinity correction is then applied to calculate the magnesium concentration in the sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calcium</code></td>
+<td>
+<p>calcium concentration in mol/kgsw. If None, modern is assumed (0.0102821). Should be the average calcium concentration in seawater - a salinity correction is then applied to calculate the magnesium concentration in the sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>string describing method which should be either 'myami', 'myami_polynomial', or 'r_polynomial' (Default: 'r_polynomial').</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of seawater correction factors
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dennis Mayk
+</p>
+
+
+</div>

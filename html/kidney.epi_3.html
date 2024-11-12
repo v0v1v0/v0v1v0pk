@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>egfr.schwartz</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Schwartz (for children only)</h2>
+
+<h3>Description</h3>
+
+<p>Schwartz (for children only)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">egfr.schwartz(creatinine, age, sex, height_cm = 0, height_ft = 0,
+  height_inch = 0, creatinine_units = "micromol/l",
+  equation_type = "classic", label_sex_male = c("Male", 1),
+  label_sex_female = c("Female", 0))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>creatinine</code></td>
+<td>
+<p>Numeric vector. Serum creatinine, could be expressed in "micromol/L", "mmol/L" or "mg/dL". Units of measurement should be defined in variable creatinine_units (if not defined explicitly by user, the default value is "micromol/L").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>age</code></td>
+<td>
+<p>Numeric vector. Age, in years. Age does not accounted in Schwartz equation, but used in the function to check whether Schwartz equation could be applied to a given patient.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sex</code></td>
+<td>
+<p>Vector. The value of variable refers to the parameters label_sex_male and label_sex_female. Required only in case of quadratic Schwartz equation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height_cm</code></td>
+<td>
+<p>Numeric vector. Could be defined either as height_cm if is measured in cm, or as height_ft and height_inch if is measured in feet and inches.
+If the parameter height_cm is greater than 0, the function uses cm, otherwise - feet and inches.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height_ft</code></td>
+<td>
+<p>see height_cm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height_inch</code></td>
+<td>
+<p>see height_cm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>creatinine_units</code></td>
+<td>
+<p>Character string. Units in which serum creatinne is expressed. Could be one of the following: "micromol/L", "mmol/L" or "mg/dL".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>equation_type</code></td>
+<td>
+<p>Character string. Define whether to calculate eGFR either by classic Schwartz or quadratic Schwartz equation. Could be one of the following: "classic", "quadratic". If not explicitly defined by user, the default assumption is "classic".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_sex_male</code></td>
+<td>
+<p>List. Label(s) for definition(s) of male sex.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_sex_female</code></td>
+<td>
+<p>List. Label(s) for definition(s) of female sex.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculate estimated glomerular filtration rate (eGFR) by Schwartz equation
+Reference to the equation: Gao A, Cachat F, Faouzi M et al. Comparison of the glomerular filtration rate in children by the new revised Schwartz formula and a new generalized formula. Kidney International 2013;83:524–30.
+</p>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+Citation: Bikbov B. R open source programming code for calculation of the Kidney Donor Profile Index and Kidney Donor Risk Index. Kidney Diseases, 2018. DOI: 10.1159/000492427 (citation for the whole package)
+</p>
+
+
+<h3>Value</h3>
+
+<p>numeric eGFR expressed in ml/min/1.73m&lt;sup&gt;2&lt;/sup&gt;.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">egfr.schwartz (creatinine = 1.4, age = 10, height_cm = 90, sex = "Male",
+  creatinine_units = "mg/dl")
+egfr.schwartz (creatinine = 1.4, age = 10, height_cm = 90, sex = "Male",
+  creatinine_units = "mg/dl", equation_type = "quadratic")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kcpa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KCP (Kernel Change Point) Detection</h2>
+
+<h3>Description</h3>
+
+<p>Finds the most optimal change point(s) in the running statistic time series <code>RunStat</code> by
+looking at their kernel-based pairwise similarities.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kcpa(RunStat, Kmax = 10, wsize = 25)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>RunStat</code></td>
+<td>
+<p>Dataframe of running statistics with rows corresponding to the windows and the
+columns corresponding to the variable(s) on which these running statistics were computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kmax</code></td>
+<td>
+<p>Maximum number of change points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wsize</code></td>
+<td>
+<p>Window size</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>kcpSoln</code></td>
+<td>
+<p>A matrix comprised of the minimized variance criterion <em>Rmin</em> and the optimal change point location(s) for each <em>k</em> from 1 to <code>Kmax</code></p>
+</td>
+</tr></table>
+<h3>References</h3>
+
+<p>Arlot, S., Celisse, A., &amp; Harchaoui, Z. (2019). A kernel multiple change-point algorithm via model selection. <em>Journal of Machine Learning Research</em>, 20(162), 1-56.
+</p>
+<p>Cabrieto, J., Tuerlinckx, F., Kuppens, P., Grassmann, M., &amp; Ceulemans, E. (2017). Detecting correlation changes in multivariate time series:
+A comparison of four non-parametric change point detection methods. <em>Behavior Research Methods</em>, 49, 988-1005. doi:10.3758/s13428-016-0754-9
+</p>
+
+
+</div>

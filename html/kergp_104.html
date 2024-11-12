@@ -1,0 +1,221 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gls-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generalized Least Squares Estimation with a Given Covariance Kernel
+</h2>
+
+<h3>Description</h3>
+
+<p>Generalized Least Squares (GLS) estimation for a linear model with
+a covariance given by the covariance kernel object. The method gives
+auxiliary variables as needed in many algebraic computations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+## S4 method for signature 'covAll'
+gls(object,
+    y, X, F = NULL, varNoise = NULL, 
+    beta = NULL, checkNames = TRUE,
+    ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object with <code>"covAll"</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>The response vector with length <code class="reqn">n</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>The input (or spatial design) matrix with <code class="reqn">n</code> rows and <code class="reqn">d</code>
+columns. This matrix must be compatible with the given covariance
+object, see <code>checkX,covAll,matrix-method</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F</code></td>
+<td>
+
+<p>A trend design matrix with <code class="reqn">n</code> rows and <code class="reqn">p</code> columns. When
+<code>F</code> is <code>NULL</code> no trend is used and the response <code>y</code>
+is simply a realization of a centered Gaussian Process with covariance kernel given by <code>object</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varNoise</code></td>
+<td>
+
+<p>A known noise variance. When provided, must be a positive numeric
+value.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+
+<p>A known vector of trend parameters. Default is <code>NULL</code>
+indicating that the trend parameters must be estimated.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkNames</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), check the compatibility of
+<code>X</code> with <code>object</code>, see <code>checkX</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>not used yet.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There are two options: for unknown trend, this is the usual GLS
+estimation with given covariance kernel; for a known trend, it returns
+the corresponding auxiliary variables (see <code>value</code> below).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with several elements.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>betaHat</code></td>
+<td>
+
+<p>Vector <code class="reqn">\widehat{\boldsymbol{\beta}}</code> of length <code class="reqn">p</code>
+containing the estimated coefficients if <code>beta = NULL</code>, or the
+known coefficients <code class="reqn">\boldsymbol{\beta}</code> either.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+
+<p>The (lower) Cholesky root matrix <code class="reqn">\mathbf{L}</code> of the
+covariance matrix <code class="reqn">\mathbf{C}</code>. This
+matrix has <code class="reqn">n</code> rows and <code class="reqn">n</code> columns and <code class="reqn">\mathbf{C} =
+    \mathbf{L} \mathbf{L}^\top</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eStar</code></td>
+<td>
+
+<p>Vector of length <code class="reqn">n</code>: <code class="reqn">\mathbf{e}^\star = \mathbf{L}^{-1}(\mathbf{y} -
+    \mathbf{X} \widehat{\boldsymbol{\beta}})</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Fstar</code></td>
+<td>
+
+<p>Matrix <code class="reqn">n \times p</code>:  <code class="reqn">\mathbf{F}^\star :=
+    \mathbf{L}^{-1}\mathbf{F}</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sseStar</code></td>
+<td>
+
+<p>Sum of squared errors:
+<code class="reqn">{\mathbf{e}^\star}^\top\mathbf{e}^\star</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RStar</code></td>
+<td>
+
+<p>The 'R' upper triangular <code class="reqn">p \times p</code> matrix in the QR
+decomposition of <code>FStar</code>: <code class="reqn">\mathbf{F}^\star =
+      \mathbf{Q}\mathbf{R}^\star</code>.
+</p>
+</td>
+</tr>
+</table>
+<p>All objects having length <code class="reqn">p</code> or having one of their dimension
+equal to <code class="reqn">p</code> will be <code>NULL</code> when <code>F</code> is <code>NULL</code>,
+meaning that <code class="reqn">p = 0</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Y. Deville, O. Roustant
+</p>
+
+
+<h3>References</h3>
+
+<p>Kenneth Lange (2010), <em>Numerical Analysis for Statisticians</em> 2nd ed.
+pp. 102-103. Springer-Verlag,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a possible 'covTS'
+myCov &lt;- covTS(inputs = c("Temp", "Humid"),
+               kernel = "k1Matern5_2",
+               dep = c(range = "input"),
+               value = c(range = 0.4))
+d &lt;- myCov@d; n &lt;- 100;
+X &lt;- matrix(runif(n*d), nrow = n, ncol = d)
+colnames(X) &lt;- inputNames(myCov)
+## generate the 'GP part'  
+C &lt;- covMat(myCov, X = X)
+L &lt;- t(chol(C))
+zeta &lt;- L %*% rnorm(n)
+## trend matrix 'F' for Ordinary Kriging
+F &lt;- matrix(1, nrow = n, ncol = 1)
+varNoise &lt;- 0.5
+epsilon &lt;- rnorm(n, sd = sqrt(varNoise))
+beta &lt;- 10
+y &lt;- F %*% beta + zeta + epsilon
+fit &lt;- gls(myCov, X = X, y = y, F = F, varNoise = varNoise)
+
+</code></pre>
+
+
+</div>

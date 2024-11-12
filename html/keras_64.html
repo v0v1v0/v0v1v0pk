@@ -1,0 +1,174 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_lambda</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a custom callback</h2>
+
+<h3>Description</h3>
+
+<p>This callback is constructed with anonymous functions that will be called at
+the appropriate time. Note that the callbacks expects positional arguments,
+as:
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_lambda(
+  on_epoch_begin = NULL,
+  on_epoch_end = NULL,
+  on_batch_begin = NULL,
+  on_batch_end = NULL,
+  on_train_batch_begin = NULL,
+  on_train_batch_end = NULL,
+  on_train_begin = NULL,
+  on_train_end = NULL,
+  on_predict_batch_begin = NULL,
+  on_predict_batch_end = NULL,
+  on_predict_begin = NULL,
+  on_predict_end = NULL,
+  on_test_batch_begin = NULL,
+  on_test_batch_end = NULL,
+  on_test_begin = NULL,
+  on_test_end = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>on_epoch_begin</code></td>
+<td>
+<p>called at the beginning of every epoch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_epoch_end</code></td>
+<td>
+<p>called at the end of every epoch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_batch_begin</code></td>
+<td>
+<p>called at the beginning of every training batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_batch_end</code></td>
+<td>
+<p>called at the end of every training batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_batch_begin</code></td>
+<td>
+<p>called at the beginning of every batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_batch_end</code></td>
+<td>
+<p>called at the end of every batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_begin</code></td>
+<td>
+<p>called at the beginning of model training.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_end</code></td>
+<td>
+<p>called at the end of model training.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_batch_begin</code></td>
+<td>
+<p>called at the beginning of a batch in predict methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_batch_end</code></td>
+<td>
+<p>called at the end of a batch in predict methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_begin</code></td>
+<td>
+<p>called at the beginning of prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_end</code></td>
+<td>
+<p>called at the end of prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_batch_begin</code></td>
+<td>
+<p>called at the beginning of a batch in evaluate methods.
+Also called at the beginning of a validation batch in the fit methods,
+if validation data is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_batch_end</code></td>
+<td>
+<p>called at the end of a batch in evaluate methods.
+Also called at the end of a validation batch in the fit methods,
+if validation data is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_begin</code></td>
+<td>
+<p>called at the beginning of evaluation or validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_end</code></td>
+<td>
+<p>called at the end of evaluation or validation.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li> <p><code>on_epoch_begin</code> and <code>on_epoch_end</code> expect two positional arguments: <code>epoch</code>, <code>logs</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠on_batch_*⁠</code>, <code style="white-space: pre;">⁠on_train_batch_*⁠</code>, <code style="white-space: pre;">⁠on_predict_batch_*⁠</code> and <code style="white-space: pre;">⁠on_test_batch_*⁠</code>, expect
+two positional arguments: <code>batch</code>, <code>logs</code>
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠on_train_*⁠</code>, <code style="white-space: pre;">⁠on_test_*⁠</code> and <code style="white-space: pre;">⁠on_predict_*⁠</code> expect one positional argument: <code>logs</code>
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other callbacks: 
+<code>callback_csv_logger()</code>,
+<code>callback_early_stopping()</code>,
+<code>callback_learning_rate_scheduler()</code>,
+<code>callback_model_checkpoint()</code>,
+<code>callback_progbar_logger()</code>,
+<code>callback_reduce_lr_on_plateau()</code>,
+<code>callback_remote_monitor()</code>,
+<code>callback_tensorboard()</code>,
+<code>callback_terminate_on_naan()</code>
+</p>
+
+
+</div>

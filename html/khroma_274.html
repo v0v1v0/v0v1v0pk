@@ -1,0 +1,205 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scale_tol_vibrant</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Paul Tol's <em>vibrant</em> Discrete Color Scheme</h2>
+
+<h3>Description</h3>
+
+<p>Paul Tol's <em>vibrant</em> Discrete Color Scheme
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_colour_vibrant(..., reverse = FALSE, aesthetics = "colour")
+
+scale_color_vibrant(..., reverse = FALSE, aesthetics = "colour")
+
+scale_fill_vibrant(..., reverse = FALSE, aesthetics = "fill")
+
+scale_edge_colour_vibrant(..., reverse = FALSE, aesthetics = "edge_colour")
+
+scale_edge_color_vibrant(..., reverse = FALSE, aesthetics = "edge_colour")
+
+scale_edge_fill_vibrant(..., reverse = FALSE, aesthetics = "edge_fill")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed to <code>ggplot2::discrete_scale()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse</code></td>
+<td>
+<p>A <code>logical</code> scalar. Should the resulting
+vector of colors be reversed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aesthetics</code></td>
+<td>
+<p>A <code>character</code> string or vector of character
+strings listing the name(s) of the aesthetic(s) that this scale works with.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A discrete scale.
+</p>
+
+
+<h3>Qualitative Color Schemes</h3>
+
+<p>The qualitative color schemes are used as given (no interpolation):
+colors are picked up to the maximum number of supported values.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<strong>Palette</strong>      </td>
+<td style="text-align: left;"> <strong>Max.</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>bright</code>         </td>
+<td style="text-align: left;"> 7        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>highcontrast</code>   </td>
+<td style="text-align: left;"> 3        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>vibrant</code>        </td>
+<td style="text-align: left;"> 7        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>muted</code>          </td>
+<td style="text-align: left;"> 9        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>mediumcontrast</code> </td>
+<td style="text-align: left;"> 6        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>pale</code>           </td>
+<td style="text-align: left;"> 6        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>dark</code>           </td>
+<td style="text-align: left;"> 6        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>light</code>          </td>
+<td style="text-align: left;"> 9        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>According to Paul Tol's technical note, the <code>bright</code>, <code>highcontrast</code>,
+<code>vibrant</code> and <code>muted</code> color schemes are color-blind safe. The
+<code>mediumcontrast</code> color scheme is designed for situations needing color
+pairs.
+</p>
+<p>The <code>light</code> color scheme is reasonably distinct for both normal or
+colorblind vision and is intended to fill labeled cells.
+</p>
+<p>The <code>pale</code> and <code>dark</code> schemes are not very distinct in either normal or
+colorblind vision and should be used as a text background or to highlight
+a cell in a table.
+</p>
+<p>Refer to the original document for details about the recommended uses (see
+references)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Tol, P. (2021). <em>Colour Schemes</em>. SRON. Technical Note No.
+SRON/EPS/TN/09-002, issue 3.2.
+URL: <a href="https://personal.sron.nl/~pault/data/colourschemes.pdf">https://personal.sron.nl/~pault/data/colourschemes.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other qualitative color schemes: 
+<code>scale_colour_land()</code>,
+<code>scale_colour_soil()</code>,
+<code>scale_colour_stratigraphy()</code>,
+<code>scale_okabeito_discrete</code>,
+<code>scale_tol_bright</code>,
+<code>scale_tol_dark</code>,
+<code>scale_tol_discreterainbow</code>,
+<code>scale_tol_highcontrast</code>,
+<code>scale_tol_light</code>,
+<code>scale_tol_mediumcontrast</code>,
+<code>scale_tol_muted</code>,
+<code>scale_tol_pale</code>
+</p>
+<p>Other Paul Tol's color schemes: 
+<code>scale_tol_BuRd</code>,
+<code>scale_tol_PRGn</code>,
+<code>scale_tol_YlOrBr</code>,
+<code>scale_tol_bright</code>,
+<code>scale_tol_dark</code>,
+<code>scale_tol_discreterainbow</code>,
+<code>scale_tol_highcontrast</code>,
+<code>scale_tol_incandescent</code>,
+<code>scale_tol_iridescent</code>,
+<code>scale_tol_light</code>,
+<code>scale_tol_mediumcontrast</code>,
+<code>scale_tol_muted</code>,
+<code>scale_tol_nightfall</code>,
+<code>scale_tol_pale</code>,
+<code>scale_tol_smoothrainbow</code>,
+<code>scale_tol_sunset</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(mpg, package = "ggplot2")
+
+ggplot2::ggplot(mpg, ggplot2::aes(displ, hwy, colour = class)) +
+  ggplot2::geom_point() +
+  scale_colour_bright()
+
+ggplot2::ggplot(mpg, ggplot2::aes(displ, hwy, colour = class)) +
+  ggplot2::geom_point() +
+  scale_colour_vibrant()
+
+data(diamonds, package = "ggplot2")
+
+ggplot2::ggplot(diamonds, ggplot2::aes(clarity, fill = cut)) +
+  ggplot2::geom_bar() +
+  scale_fill_muted()
+</code></pre>
+
+
+</div>

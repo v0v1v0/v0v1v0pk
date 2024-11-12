@@ -1,0 +1,349 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The 'ode' class object</h2>
+
+<h3>Description</h3>
+
+<p>This class provide all information about odes and methods for numerically solving odes.
+</p>
+
+
+<h3>Format</h3>
+
+<p><code>R6Class</code> object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an  <code>R6Class</code> object which can be used for gradient matching.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt><code>solve_ode(par_ode,xinit,tinterv)</code></dt>
+<dd>
+<p>This method is used to solve ode numerically.</p>
+</dd> 
+<dt><code>optim_par(par,y_p,z_p)</code></dt>
+<dd>
+<p>This method is used to estimate ode parameters by standard gradient matching.</p>
+</dd>
+<dt><code>lossNODE(par,y_p,z_p)</code></dt>
+<dd>
+<p>This method is used to calculate the mismatching between gradient of interpolation and gradient from ode.</p>
+</dd>
+</dl>
+<h3>Public fields</h3>
+
+<div class="r6-fields">
+
+<dl>
+<dt><code>ode_par</code></dt>
+<dd>
+<p>vector(of length n_p) containing ode parameters. n_p is the number of ode parameters.</p>
+</dd>
+<dt><code>ode_fun</code></dt>
+<dd>
+<p>function containing the ode function.</p>
+</dd>
+<dt><code>t</code></dt>
+<dd>
+<p>vector(of length n_o) containing time points of observations. n_o is the length of time points.</p>
+</dd>
+</dl>
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-ode-new"><code>ode$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-greet"><code>ode$greet()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-solve_ode"><code>ode$solve_ode()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-rmsfun"><code>ode$rmsfun()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-gradient"><code>ode$gradient()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-lossNODE"><code>ode$lossNODE()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-grlNODE"><code>ode$grlNODE()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-loss32NODE"><code>ode$loss32NODE()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-grl32NODE"><code>ode$grl32NODE()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-optim_par"><code>ode$optim_par()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ode-clone"><code>ode$clone()</code></a>
+</p>
+</li>
+</ul>
+<hr>
+<a id="method-ode-new"></a>
+
+
+
+<h4>Method <code>new()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$new(
+  sample = NULL,
+  fun = NULL,
+  grfun = NULL,
+  t = NULL,
+  ode_par = NULL,
+  y_ode = NULL
+)</pre></div>
+
+
+<hr>
+<a id="method-ode-greet"></a>
+
+
+
+<h4>Method <code>greet()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$greet()</pre></div>
+
+
+<hr>
+<a id="method-ode-solve_ode"></a>
+
+
+
+<h4>Method <code>solve_ode()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$solve_ode(par_ode, xinit, tinterv)</pre></div>
+
+
+<hr>
+<a id="method-ode-rmsfun"></a>
+
+
+
+<h4>Method <code>rmsfun()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$rmsfun(par_ode, state, M1, true_par)</pre></div>
+
+
+<hr>
+<a id="method-ode-gradient"></a>
+
+
+
+<h4>Method <code>gradient()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$gradient(y_p, par_ode)</pre></div>
+
+
+<hr>
+<a id="method-ode-lossNODE"></a>
+
+
+
+<h4>Method <code>lossNODE()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$lossNODE(par, y_p, z_p)</pre></div>
+
+
+<hr>
+<a id="method-ode-grlNODE"></a>
+
+
+
+<h4>Method <code>grlNODE()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$grlNODE(par, y_p, z_p)</pre></div>
+
+
+<hr>
+<a id="method-ode-loss32NODE"></a>
+
+
+
+<h4>Method <code>loss32NODE()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$loss32NODE(par, y_p, z_p)</pre></div>
+
+
+<hr>
+<a id="method-ode-grl32NODE"></a>
+
+
+
+<h4>Method <code>grl32NODE()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$grl32NODE(par, y_p, z_p)</pre></div>
+
+
+<hr>
+<a id="method-ode-optim_par"></a>
+
+
+
+<h4>Method <code>optim_par()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$optim_par(par, y_p, z_p)</pre></div>
+
+
+<hr>
+<a id="method-ode-clone"></a>
+
+
+
+<h4>Method <code>clone()</code>
+</h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ode$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt>
+<dd>
+<p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+</div>
+
+
+
+
+<h3>Author(s)</h3>
+
+<p>Mu Niu, <a href="mailto:mu.niu@glasgow.ac.uk">mu.niu@glasgow.ac.uk</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">noise = 0.1  ## set the variance of noise
+SEED = 19537
+set.seed(SEED)
+## Define ode function, we use lotka-volterra model in this example. 
+## we have two ode states x[1], x[2] and four ode parameters alpha, beta, gamma and delta.
+LV_fun = function(t,x,par_ode){
+  alpha=par_ode[1]
+  beta=par_ode[2]
+  gamma=par_ode[3]
+  delta=par_ode[4]
+  as.matrix( c( alpha*x[1]-beta*x[2]*x[1] , -gamma*x[2]+delta*x[1]*x[2] ) )
+}
+## Define the gradient of ode function against ode parameters 
+## df/dalpha,  df/dbeta, df/dgamma, df/ddelta where f is the differential equation.
+LV_grlNODE= function(par,grad_ode,y_p,z_p) { 
+alpha = par[1]; beta= par[2]; gamma = par[3]; delta = par[4]
+dres= c(0)
+dres[1] = sum( -2*( z_p[1,]-grad_ode[1,])*y_p[1,]*alpha ) 
+dres[2] = sum( 2*( z_p[1,]-grad_ode[1,])*y_p[2,]*y_p[1,]*beta)
+dres[3] = sum( 2*( z_p[2,]-grad_ode[2,])*gamma*y_p[2,] )
+dres[4] = sum( -2*( z_p[2,]-grad_ode[2,])*y_p[2,]*y_p[1,]*delta)
+dres
+}
+
+## create a ode class object
+kkk0 = ode$new(2,fun=LV_fun,grfun=LV_grlNODE)
+## set the initial values for each state at time zero.
+xinit = as.matrix(c(0.5,1))
+## set the time interval for the ode numerical solver.
+tinterv = c(0,6)
+## solve the ode numerically using predefined ode parameters. alpha=1, beta=1, gamma=4, delta=1.
+kkk0$solve_ode(c(1,1,4,1),xinit,tinterv) 
+
+## Create another ode class object by using the simulation data from the ode numerical solver.
+## If users have experiment data, they can replace the simulation data with the experiment data.
+## set initial values for ode parameters.
+init_par = rep(c(0.1),4)
+init_yode = kkk0$y_ode
+init_t = kkk0$t
+kkk = ode$new(1,fun=LV_fun,grfun=LV_grlNODE,t=init_t,ode_par= init_par, y_ode=init_yode )
+
+</code></pre>
+
+
+</div>

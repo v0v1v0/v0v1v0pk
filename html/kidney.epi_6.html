@@ -1,0 +1,237 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ktx.kdpi.optn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate KDRI and KDPI for deceased kidney donor</h2>
+
+<h3>Description</h3>
+
+<p>Calculate KDRI and KDPI for deceased kidney donor
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ktx.kdpi.optn(age, height_cm = 0, height_ft = 0, height_inch = 0,
+  weight_kg = 0, weight_lb = 0, ethnicity, hypertension, diabetes,
+  causeofdeath, creatinine, hcv, dcdstatus,
+  creatinine_units = "micromol/l", return_output_type = "KDPI",
+  mapping_values_year = "latest",
+  label_afroamerican = c("Afroamerican"),
+  label_hypertension_positive = c("yes"),
+  label_hypertension_unknown = "NA",
+  label_diabetes_positive = c("yes"), label_diabetes_unknown = "NA",
+  label_causeofdeath = c("cva"), label_hcv_positive = c("positive"),
+  label_hcv_unknown = "NA", label_dcdstatus = c("yes"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>age</code></td>
+<td>
+<p>Numeric vector. Age, in years.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height_cm</code></td>
+<td>
+<p>Numeric vector. Could be defined either as height_cm if is measured in cm, or as height_ft and height_inch if is measured in feet and inches.
+If the parameter height_cm is greater than 0, the function uses cm, otherwise - feet and inches.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height_ft</code></td>
+<td>
+<p>see height_cm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height_inch</code></td>
+<td>
+<p>see height_cm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_kg</code></td>
+<td>
+<p>Numeric vector. Could be defined either as weight_kg if measured in kg, or as weight_lb if is measured in pounds.
+If the parameter weight_kg is greater than 0, the function uses kg, otherwise - pounds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_lb</code></td>
+<td>
+<p>see weight_kg</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ethnicity</code></td>
+<td>
+<p>Vector. Ethnicity, specify in case of African-American donors which have special coefficient in the regression equation. The value of variable refers to the parameter label_afroamerican.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hypertension</code></td>
+<td>
+<p>Vector. History of hypertension, specify in case of hypertensive donors which have special coefficient in the regression equation. The value of variable refers to the parameters label_hypertension_positive and label_hypertension_unknown.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diabetes</code></td>
+<td>
+<p>Vector. History of diabetes, specify in case of donors with diabetes which have special coefficient in the regression equation. The value of variable refers to the parameters label_diabetes_positive and label_diabetes_unknown.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>causeofdeath</code></td>
+<td>
+<p>Vector. Cause of death, specify whether death was due to cerebrovascular disease, or other reasons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>creatinine</code></td>
+<td>
+<p>Numeric vector. Serum creatinine, could be expressed in "micromol/L", "mmol/L" or "mg/dL". Units of measurement should be defined in variable creatinine_units (if not defined explicitly by user, the default value is "micromol/L").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hcv</code></td>
+<td>
+<p>Vector. Hepatitis C virus status. The value of variable refers to the parameters label_hcv_positive and label_hcv_unknown.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dcdstatus</code></td>
+<td>
+<p>Vector. Donation after circulatory death status. Specify whether organ was from a donor after circulatory death or not. The value of variable refers to the parameter label_dcdstatus.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>creatinine_units</code></td>
+<td>
+<p>Character string. Units in which serum creatinne is expressed. Could be one of the following: "micromol/L", "mmol/L" or "mg/dL".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_output_type</code></td>
+<td>
+<p>Character string. Specify which calculated parameter to return from the function: "KDRI_Rao" - Raw Kidney Donor Risk Index, "KDRI_median" - scaled to the median Kidney Donor Risk Index, or "KDPI" - Kidney Donor Profile Index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mapping_values_year</code></td>
+<td>
+<p>Numeric value or character string.  Specify which year to take for the OPTN mapping table, as well as KDRI scaling factor and chances of hypertension and diabetes in case if they were unknown for donor.
+</p>
+<p>By default the value is "latest", and the function takes the latest available OPTN mapping table and coefficients from the internal dataframes ktx.kdpi_mapping_table and ktx.kdpi_coefficients_table.
+</p>
+<p>But if necessary, a user could define the exact year (i.e. mapping_values_year = 2015).
+</p>
+<p>For a list of available years run the following: ktx.kdpi.optn.show.years().</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_afroamerican</code></td>
+<td>
+<p>List. Label(s) for Afroamerican ethnicity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_hypertension_positive</code></td>
+<td>
+<p>List. Label(s) for a positive history of hypertension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_hypertension_unknown</code></td>
+<td>
+<p>List. Label(s) for donors with unknown history of hypertension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_diabetes_positive</code></td>
+<td>
+<p>List. Label(s) for a positive history of diabetes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_diabetes_unknown</code></td>
+<td>
+<p>List. Label(s) for donors with unknown history of diabetes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_causeofdeath</code></td>
+<td>
+<p>List. Label(s) for a cause of death due to cerebrovascular/stroke.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_hcv_positive</code></td>
+<td>
+<p>List. Label(s) for a positive HCV status.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_hcv_unknown</code></td>
+<td>
+<p>List. Label(s) for an unknown, not done, indeterminate, or pending HCV status.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_dcdstatus</code></td>
+<td>
+<p>List. Label(s) for a donor after circulatory death status.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculate Kidney Donor Risk Index (KDRI) and Kidney Donor Profile Index (KDPI) based on the algorithm of US Organ Procurement and Transplantation Network. 
+The Kidney Donor Profile Index (KDPI) is a numerical measure that combines ten donor factors to summarize into a single number the quality of deceased donor kidneys relative to other recovered kidneys. 
+<em>KDRI could be calculated only for a deceased donor</em>!
+</p>
+<p>More reading:
+</p>
+
+<ul>
+<li> <p><a href="https://optn.transplant.hrsa.gov/resources/allocation-calculators/kdpi-calculator/">OPTN web-based calculator</a>
+</p>
+</li>
+<li> <p><a href="https://optn.transplant.hrsa.gov/media/1512/guide_to_calculating_interpreting_kdpi.pdf">Guide to calculating and interpreting KDPI</a>
+</p>
+</li>
+<li> <p><a href="https://optn.transplant.hrsa.gov/media/2150/kdpi_mapping_table.pdf">Latest data for mapping table, scaling factor, etc</a>
+</p>
+</li>
+</ul>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+</p>
+<p>Citation: Bikbov B. R open source programming code for calculation of the Kidney Donor Profile Index and Kidney Donor Risk Index. Kidney Diseases, 2018. DOI: 10.1159/000492427
+</p>
+
+
+<h3>Value</h3>
+
+<p>numeric One of the following values based on the return_output_type argument: Raw Kidney Donor Risk Index (KDRI), Scaled to the median Kidney Donor Risk Index (KDRI), or Kidney Donor Profile Index (KDPI).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ktx.kdpi.optn (age = 60, height_cm = 168, weight_kg = 93, ethnicity = "White",
+  hypertension = "yes", diabetes = "no", causeofdeath = "roadinjury",
+  creatinine = 1.4, hcv = "negative", dcdstatus = "no",
+  creatinine_units = "mg/dl", return_output_type = "KDRI_Rao")
+ktx.kdpi.optn (age = 30, height_cm = 176, weight_kg = 82, ethnicity = "White", 
+  hypertension = "NA", diabetes = "no", causeofdeath = "roadinjury", 
+  creatinine = 150, hcv = "negative", dcdstatus = "no", return_output_type = "KDPI")
+</code></pre>
+
+
+</div>

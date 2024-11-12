@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyholder-id</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add id column and key</h2>
+
+<h3>Description</h3>
+
+<p>Functions for creating id column and key.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">use_id(.tbl)
+
+compute_id_name(x)
+
+add_id(.tbl)
+
+key_by_id(.tbl, .add = FALSE, .exclude = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Character vector of names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.add, .exclude</code></td>
+<td>
+<p>Parameters for <code>key_by()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>use_id()</code> assigns as keys a tibble with column '.id'
+and row numbers of <code>.tbl</code> as values.
+</p>
+<p><code>compute_id_name()</code> computes the name which is different from every
+element in <code>x</code> by the following algorithm: if '.id' is not present in <code>x</code> it
+is returned; if taken - '.id1' is checked; if taken - '.id11' is checked and
+so on.
+</p>
+<p><code>add_id()</code> creates a column with unique name (computed with
+<code>compute_id_name()</code>) and row numbers as values (grouping is ignored). After
+that puts it as first column.
+</p>
+<p><code>key_by_id()</code> is similar to <code>add_id()</code>: it creates a column with unique name
+and row numbers as values (grouping is ignored) and calls <code>key_by()</code> function
+to use this column as key. If <code>.add</code> is <code>FALSE</code> unique name is computed based
+on <code>.tbl</code> column names; if <code>TRUE</code> then based on <code>.tbl</code> and its keys column
+names.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mtcars %&gt;% use_id()
+
+mtcars %&gt;% add_id()
+
+mtcars %&gt;% key_by_id(.exclude = TRUE)
+
+</code></pre>
+
+
+</div>

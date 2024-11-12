@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>with_custom_object_scope</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Provide a scope with mappings of names to custom objects</h2>
+
+<h3>Description</h3>
+
+<p>Provide a scope with mappings of names to custom objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">with_custom_object_scope(objects, expr)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>objects</code></td>
+<td>
+<p>Named list of objects</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>Expression to evaluate</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There are many elements of Keras models that can be customized with
+user objects (e.g. losses, metrics, regularizers, etc.). When
+loading saved models that use these functions you typically
+need to explicitly map names to user objects via the <code>custom_objects</code>
+parameter.
+</p>
+<p>The <code>with_custom_object_scope()</code> function provides an alternative that
+lets you create a named alias for a user object that applies to an entire
+block of code, and is automatically recognized when loading saved models.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The result from evaluating <code>expr</code> within the custom object scope.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># define custom metric
+metric_top_3_categorical_accuracy &lt;-
+  custom_metric("top_3_categorical_accuracy", function(y_true, y_pred) {
+    metric_top_k_categorical_accuracy(y_true, y_pred, k = 3)
+  })
+
+with_custom_object_scope(c(top_k_acc = sparse_top_k_cat_acc), {
+
+  # ...define model...
+
+  # compile model (refer to "top_k_acc" by name)
+  model |&gt; compile(
+    loss = "binary_crossentropy",
+    optimizer = optimizer_nadam(),
+    metrics = c("top_k_acc")
+  )
+
+  # save the model
+  model |&gt; save_model("my_model.keras")
+
+  # loading the model within the custom object scope doesn't
+  # require explicitly providing the custom_object
+  reloaded_model &lt;- load_model("my_model.keras")
+})
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>layer_tfsm()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model()</code> <br><code>save_model_config()</code> <br><code>save_model_weights()</code> <br></p>
+<p>Other serialization utilities: <br><code>deserialize_keras_object()</code> <br><code>get_custom_objects()</code> <br><code>get_registered_name()</code> <br><code>get_registered_object()</code> <br><code>register_keras_serializable()</code> <br><code>serialize_keras_object()</code> <br></p>
+
+
+</div>

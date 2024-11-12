@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>looloss</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Loss Function for Leave One Out Error
+</h2>
+
+<h3>Description</h3>
+
+<p>Internal function that computes Leave-On-Out (LOO) Error for KRLS given a fixed value for lambda (the parameter that governs the tradeoff between model fit and complexity in KRLS).
+This function is called internally by <code>krls</code> to find value of lambda that minimizes the LOO error. It would normally not be called by the user directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">looloss(y = NULL, Eigenobject = NULL,
+lambda = NULL,eigtrunc=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>n by 1 vector of outcomes.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Eigenobject</code></td>
+<td>
+
+<p>Object from call to <code>eigen</code> that contains spectral decomposition of the n by n Kernel matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+
+<p>Positive scalar value for lamnbda parameter.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eigtrunc</code></td>
+<td>
+
+<p>Positive scalar value that determines truncation of eigenvalues for lamnda search window. See <code>krls</code> for details. Default is <code>NULL</code> which means no truncation.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Scalar value for LOO error.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krls</code>
+</p>
+
+
+</div>

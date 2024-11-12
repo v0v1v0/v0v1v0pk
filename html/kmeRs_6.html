@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmeRs_statistics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate row and column statistics for a k-mer similarity matrix</h2>
+
+<h3>Description</h3>
+
+<p>The <code>kmeRs_statistics</code> function calculates basic statistics and returns the similarity matrix
+with calculated results or summarized table with statistics only when margin.only
+is set to TRUE
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmeRs_statistics(x, margin.only = FALSE, digits = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Similarity matrix computed by <code>kmeRs_similarity_matrix</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin.only</code></td>
+<td>
+<p>Should only margin statistics be displayed? Defaults to <code>FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>rounding digits, defaults to 2</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data.frame with results
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Simple BLOSUM62 similarity matrix for DNA nucleotides
+# Sample heptamers
+q0 &lt;- c("GATTACA", "ACAGATT", "GAATTAC", "GAAATCT", "CTATAGA", "GTACATA", "AACGATT")
+# Compute similarity matrix 
+example &lt;- kmeRs_similarity_matrix(q0, submat = "BLOSUM62")
+# Result as a full matrix
+kmeRs_statistics(example)
+
+# Result a summary statistics table
+kmeRs_statistics(example, margin.only = TRUE)
+
+</code></pre>
+
+
+</div>

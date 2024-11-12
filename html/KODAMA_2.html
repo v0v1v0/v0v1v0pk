@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>categorical.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Categorical Information</h2>
+
+<h3>Description</h3>
+
+<p>Summarization of the categorical information.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">categorical.test (name,x,y,total.column=FALSE,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>the name of the feature.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the information to summarize.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the classification of the cohort.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>total.column</code></td>
+<td>
+<p>option to visualize the total (by default = "<code>FALSE</code>").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to the function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a table with the summarized information and The p-value computated using the Fisher's test.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>correlation.test</code>,<code>continuous.test</code>, <code>txtsummary</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(clinical)
+
+hosp=clinical[,"Hospital"]
+gender=clinical[,"Gender"]
+GS=clinical[,"Gleason score"]
+BMI=clinical[,"BMI"]
+age=clinical[,"Age"]
+
+A=categorical.test("Gender",gender,hosp)
+B=categorical.test("Gleason score",GS,hosp)
+
+C=continuous.test("BMI",BMI,hosp,digits=2)
+D=continuous.test("Age",age,hosp,digits=1)
+
+rbind(A,B,C,D)
+
+
+</code></pre>
+
+
+</div>

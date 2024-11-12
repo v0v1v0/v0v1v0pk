@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>deduper</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Removes redundant words from beginnings of character strings</h2>
+
+<h3>Description</h3>
+
+<p>In Qualtrix data, we sometimes find repeated words in column
+names. For whatever reason, the variable names have repeated words
+like "Philadelphia_Philadelphia_3".  This function changes a
+vector c("Philadelphia_Philadelphia_3", "Denver_Denver_4") to
+c("Philadelphia_3", "Denver_4"). It is non destructive, so that
+other values will not be altered.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">deduper(x, sep = ",_\\s-", n = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Character vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>Delimiter. A regular expression indicating the point at
+which to split the strings before checking for
+duplicates. Default will look for repeat separated by comma,
+underscore, or one space character.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Limit on number of duplicates to remove. Default, NULL,
+means delete all duplicates at the beginning of a string.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>See <a href="https://stackoverflow.com/questions/43711240/r-regular-expression-match-omit-several-repeats">https://stackoverflow.com/questions/43711240/r-regular-expression-match-omit-several-repeats</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>Cleaned up vector.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c("Philadelphia_Philadelphia_3", "Denver_Denver_4",
+        "Den_Den_Den_Den_Den_Den_Den_5")
+deduper(x)
+deduper(x, n = 2)
+deduper(x, n = 3)
+deduper(x, n = 4)
+x &lt;- c("Philadelphia,Philadelphia_3", "Denver Denver_4")
+## Shows comma also detected by default
+deduper(x)
+## Works even if delimiter is inside matched string,
+## or separators vary
+ x &lt;- c("Den_5_Den_5_Den_5,Den_5 Den_5")
+deduper(x)
+## generate vector
+x &lt;- replicate(10, paste(sample(letters, 5), collapse = ""))
+n &lt;- c(paste0("_", sample(1:10, 5)), rep("", 5))
+x &lt;- paste0(x, "_", x, n, n)
+x
+deduper(x)
+
+</code></pre>
+
+
+</div>

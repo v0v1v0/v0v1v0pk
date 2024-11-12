@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regrVonPS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check if variable can be regressed to independence on its parents</h2>
+
+<h3>Description</h3>
+
+<p>Uses the generalised additive model gam to non-linearly and non-parametrically regress variable V on its parents and set of variables S.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regrVonPS(G, V, S, suffStat, indepTest = kernelCItest, alpha = 0.2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>adjacency matrix, for the graph</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V</code></td>
+<td>
+<p>integer, node which we regress</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>integer(s), set we regress on</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffStat</code></td>
+<td>
+<p>sufficient statistics to perform the independence test kernelCItest</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indepTest</code></td>
+<td>
+<p>independence test to check for dependence between residuals of V and S</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>numeric cutoff for significance level of individual partial correlation tests</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>regrVonPS() returns the number of p-values smaller than the cutoff, i.e 0 means residuals of V are independent of all variables in S
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>)
+</p>
+
+
+</div>

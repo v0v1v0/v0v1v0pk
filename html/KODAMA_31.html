@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>txtsummary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Median and Coefficient Interval</h2>
+
+<h3>Description</h3>
+
+<p>Summarization of a numeric vector.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">txtsummary (x,digits=0,scientific=FALSE,range=c("IQR","95%CI"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>how many significant digits are to be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scientific</code></td>
+<td>
+<p>either a logical specifying whether result should be encoded in scientific format.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>the range to be visualized.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns the median and the range (interquartile or 95% coefficient interval) of numeric vetor.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>categorical.test</code>,<code>continuous.test</code>,<code>correlation.test</code>, <code>txtsummary</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(clinical)
+
+txtsummary(clinical[,"BMI"])
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,139 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>make.timedep.dataset</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Create Dataset for Time-dependent Covariate Proportional Hazard Model Analaysi
+</h2>
+
+<h3>Description</h3>
+
+<p>Returns a data frame that is suitable for time-dependent covariate Cox model fit. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">make.timedep.dataset(dat, X, d, baseline.ageyrs, t.1, t.2 = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+
+<p>data frame
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>string. Name of the followup time column in dat. Unit needs to be years.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>string. Name of the followup time column in dat.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>baseline.ageyrs</code></td>
+<td>
+
+<p>string. Name of the followup time column in dat.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.1</code></td>
+<td>
+
+<p>numerical. Cutoff for age group
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.2</code></td>
+<td>
+
+<p>numerical. Second cutoff for age group 
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function assumes that the followup length is such that only one change of age group is possible.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns a data frame with the following columns added:  tstart, tstop, .timedep.agegrp, .baseline.agegrp
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>tstart</code></td>
+<td>
+<p>left bound of time interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tstop</code></td>
+<td>
+<p>right bound of time interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.timedep.agegrp</code></td>
+<td>
+<p>time-dependent age group</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.baseline.agegrp</code></td>
+<td>
+<p>baseline age group</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Youyi Fong
+</p>
+
+
+<h3>References</h3>
+
+<p>Therneau, T. and Crowson, C. Using Time Dependent Covariates and Time Dependent Coefficients in the Cox Model. A vignette from the R package surival.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(survival)
+
+n=3000; followup.length=5; incidence.density=0.015; age.sim="continuous"
+
+dat.0=sim.dat.tvarying.two(n, followup.length, incidence.density, age.sim, seed=1)
+dat=subset(dat.0, for.non.tvarying.ana, select=c(ptid, X, d, baseline.age, trt))
+dat.timedep = make.timedep.dataset (dat, "X", "d", "baseline.age", 6)
+coxph(Surv(tstart,tstop,d) ~ trt*.timedep.agegrp, dat.timedep)
+
+
+</code></pre>
+
+
+</div>

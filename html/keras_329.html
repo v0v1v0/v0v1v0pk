@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_additive_attention</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Additive attention layer, a.k.a. Bahdanau-style attention</h2>
+
+<h3>Description</h3>
+
+<p>Additive attention layer, a.k.a. Bahdanau-style attention
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_additive_attention(
+  object,
+  use_scale = TRUE,
+  ...,
+  causal = FALSE,
+  dropout = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_scale</code></td>
+<td>
+<p>If <code>TRUE</code>, will create a variable to scale the attention scores.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>causal</code></td>
+<td>
+<p>Boolean. Set to <code>TRUE</code> for decoder self-attention. Adds a mask such
+that position <code>i</code> cannot attend to positions <code>j &gt; i</code>. This prevents the
+flow of information from the future towards the past.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+attention scores.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Inputs are <code>query</code> tensor of shape <code style="white-space: pre;">⁠[batch_size, Tq, dim]⁠</code>, <code>value</code> tensor of
+shape <code style="white-space: pre;">⁠[batch_size, Tv, dim]⁠</code> and <code>key</code> tensor of shape
+<code style="white-space: pre;">⁠[batch_size, Tv, dim]⁠</code>. The calculation follows the steps:
+</p>
+
+<ol>
+<li>
+<p> Reshape <code>query</code> and <code>key</code> into shapes <code style="white-space: pre;">⁠[batch_size, Tq, 1, dim]⁠</code>
+and <code style="white-space: pre;">⁠[batch_size, 1, Tv, dim]⁠</code> respectively.
+</p>
+</li>
+<li>
+<p> Calculate scores with shape <code style="white-space: pre;">⁠[batch_size, Tq, Tv]⁠</code> as a non-linear
+sum: <code>scores = tf.reduce_sum(tf.tanh(query + key), axis=-1)</code>
+</p>
+</li>
+<li>
+<p> Use scores to calculate a distribution with shape
+<code style="white-space: pre;">⁠[batch_size, Tq, Tv]⁠</code>: <code>distribution = tf$nn$softmax(scores)</code>.
+</p>
+</li>
+<li>
+<p> Use <code>distribution</code> to create a linear combination of <code>value</code> with
+shape <code style="white-space: pre;">⁠[batch_size, Tq, dim]⁠</code>:
+<code style="white-space: pre;">⁠return tf$matmul(distribution, value)⁠</code>.
+</p>
+</li>
+</ol>
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/AdditiveAttention">https://www.tensorflow.org/api_docs/python/tf/keras/layers/AdditiveAttention</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/attention_layers/additive_attention/">https://keras.io/api/layers/attention_layers/additive_attention/</a>
+</p>
+</li>
+</ul>
+</div>

@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyed-df-one-tbl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>One-table verbs from dplyr for keyed_df</h2>
+
+<h3>Description</h3>
+
+<p>Defined methods for dplyr generic single table functions. Most of them
+preserve 'keyed_df' class and 'keys' attribute (excluding <code>summarise</code> with
+scoped variants, <code>distinct</code> and <code>do</code> which remove them). Also these methods
+modify rows in keys according to the rows modification in reference
+data frame (if any).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keyed_df'
+select(.data, ...)
+
+## S3 method for class 'keyed_df'
+rename(.data, ...)
+
+## S3 method for class 'keyed_df'
+mutate(.data, ...)
+
+## S3 method for class 'keyed_df'
+transmute(.data, ...)
+
+## S3 method for class 'keyed_df'
+summarise(.data, ...)
+
+## S3 method for class 'keyed_df'
+group_by(.data, ...)
+
+## S3 method for class 'keyed_df'
+ungroup(x, ...)
+
+## S3 method for class 'keyed_df'
+rowwise(data, ...)
+
+## S3 method for class 'keyed_df'
+distinct(.data, ..., .keep_all = FALSE)
+
+## S3 method for class 'keyed_df'
+do(.data, ...)
+
+## S3 method for class 'keyed_df'
+arrange(.data, ..., .by_group = FALSE)
+
+## S3 method for class 'keyed_df'
+filter(.data, ...)
+
+## S3 method for class 'keyed_df'
+slice(.data, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.data, data, x</code></td>
+<td>
+<p>A keyed object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Appropriate arguments for functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.keep_all</code></td>
+<td>
+<p>Parameter for dplyr::distinct.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.by_group</code></td>
+<td>
+<p>Parameter for dplyr::arrange.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>dplyr::transmute()</code> is supported implicitly with <code>dplyr::mutate()</code>
+support.
+</p>
+<p><code>dplyr::rowwise()</code> is not supposed to be generic in <code>dplyr</code>. Use
+<code>rowwise.keyed_df</code> directly.
+</p>
+<p>All scoped variants of present functions are also supported.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Two-table verbs
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mtcars %&gt;% key_by(vs, am) %&gt;% dplyr::mutate(gear = 1)
+
+</code></pre>
+
+
+</div>

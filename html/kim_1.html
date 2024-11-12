@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>akaike_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Akaike Weights</h2>
+
+<h3>Description</h3>
+
+<p>Compare adequacy of different models by calculating their Akaike weights
+and the associated evidence ratio.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">akaike_weights(aic_values = NULL, print_output_explanation = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>aic_values</code></td>
+<td>
+<p>a vector of AIC values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print_output_explanation</code></td>
+<td>
+<p>logical. Should an explanation about
+how to read the output be printed? (default = TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Please refer to Wagenmakers &amp; Farrell (2004), <a href="https://doi.org/10.3758/BF03206482">doi:10.3758/BF03206482</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>the output will be a data.table showing AIC weights,
+their evidence ratio(s), etc.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># default reference AIC value is the minimum AIC value, e.g., 202 below.
+akaike_weights(c(204, 202, 206, 206, 214))
+</code></pre>
+
+
+</div>

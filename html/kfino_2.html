@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>doutlier</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>doutlier defines an outlier distribution (Surface of a
+trapezium) and uses input parameters given in the main function kfino_fit()</h2>
+
+<h3>Description</h3>
+
+<p>doutlier defines an outlier distribution (Surface of a
+trapezium) and uses input parameters given in the main function kfino_fit()
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">doutlier(y, K, expertMin, expertMax)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric, point</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>numeric, constant value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expertMin</code></td>
+<td>
+<p>numeric, the minimal weight expected by the user</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expertMax</code></td>
+<td>
+<p>numeric, the maximal weight expected by the user</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>this function is used to calculate an outlier distribution
+following a trapezium shape. 
+<code class="reqn">y \mapsto \text{doutlier}(y,K,\text{expertMin},\text{expertMax})</code>
+is the probability density function on 
+<code class="reqn">[\text{expertMin},\text{expertMax}]</code> which is linear and verifies
+<code class="reqn">\text{doutlier}(\text{expertMax},K,\text{expertMin},\text{expertMax}) 
+ =K*\text{doutlier}(\text{expertMin},K,\text{expertMin},\text{expertMax}).</code>
+In particular, when $K=1$ this corresponds to the uniform distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a numeric value
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">doutlier(2,5,10,45)
+</code></pre>
+
+
+</div>

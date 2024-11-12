@@ -1,0 +1,305 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print_uncertainty_1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Prints a measure of uncertainty for 1d function.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function draws the value of a given measure of uncertainty over the whole input domain (1D).
+The function can be used to print relevant outputs after having used the function <code>EGI</code> or <code>EGIparallel</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">print_uncertainty_1d(model, T, type = "pn",
+lower = 0, upper = 1, resolution = 500, new.points = 0,
+xscale = c(0, 1), show.points = TRUE, cex.points = 1,
+cex.axis = 1, pch.points.init = 17, pch.points.end = 17,
+col.points.init = "black", col.points.end = "red", xaxislab = NULL,
+yaxislab = NULL, xaxispoint = NULL, yaxispoint = NULL,
+vorobmean=FALSE,krigmeanplot=FALSE,Tplot=FALSE,consQuantile=NULL,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Array containing one or several thresholds.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Type of uncertainty that the user wants to print.
+Possible values are <code>"pn"</code> (probability of excursion), or
+<code>"sur"</code>, <code>"imse"</code>, <code>"timse"</code>, <code>"vorob"</code> if we print a measure of uncertainty corresponding to one criterion.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+
+<p>Lower bound for the input domain.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+
+<p>Upper bound for the input domain.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resolution</code></td>
+<td>
+
+<p>Number of points to discretize the interval (lower,upper).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.points</code></td>
+<td>
+
+<p>Number of new observations.
+These observations are the last new.points observations and can be printed in another color and the initial observations (see argument: <code>col.points.end</code>).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xscale</code></td>
+<td>
+
+<p>If one wants to rescale the input domain on another interval it is possible to set this vector of size 2. The new interval will be translated by <code>xscale[1]</code> and expanded by a factor <code>xscale[2] - xscale[1]</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show.points</code></td>
+<td>
+
+<p>Boolean: should we show the observations on the graph ?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.points</code></td>
+<td>
+
+<p>Multiplicative factor for the size of the points.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis</code></td>
+<td>
+
+<p>Multiplicative factor for the size of the axis graduations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch.points.init</code></td>
+<td>
+
+<p>Symbol for the <code>n-new.points</code> first observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch.points.end</code></td>
+<td>
+
+<p>Symbol for the <code>new.points</code> last observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.points.init</code></td>
+<td>
+
+<p>Color for the <code>n-new.points</code> first observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.points.end</code></td>
+<td>
+
+<p>Color for the <code>new.points</code> last observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xaxislab</code></td>
+<td>
+
+<p>Optional new labels that will replace the normal levels on x axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yaxislab</code></td>
+<td>
+
+<p>Optional new labels that will replace the normal levels on y axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xaxispoint</code></td>
+<td>
+
+<p>Position of these new labels on x axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yaxispoint</code></td>
+<td>
+
+<p>Position of these new labels on y axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vorobmean</code></td>
+<td>
+
+<p>Optional boolean. When it is set to <code>TRUE</code> the Vorob'ev expectation is plotted. It corresponds to the averaged excursion set, using the definition of Vorob'ev. Here, the estimated set is the set above the Vorob'ev threshold (plotted in blue).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>krigmeanplot</code></td>
+<td>
+
+<p>When set to <code>TRUE</code> a kriging mean is plotted on a second y axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tplot</code></td>
+<td>
+
+<p>When set to <code>TRUE</code>, and if <code>krigmeanplot</code> is also set to <code>TRUE</code>, draws horizontal lines corresponding to the different thresholds <code>T</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>consQuantile</code></td>
+<td>
+
+<p>Optional value for plotting conservative quantiles. In order to plot </p>
+
+<ul>
+<li>
+<p>Conservative estimates: <code>consQuantile</code> is a list containing at least <code>consLevel</code> (scalar), with the option <code>typeEx</code> (character, default = "&gt;").
+</p>
+</li>
+<li>
+<p>Generic Vorob'ev quantiles: <code>consQuantile</code> is a scalar corresponding to the Vorob'ev quantile level.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Additional arguments to the <code>plot</code> function.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The integrated uncertainty. If the conservative estimate is computed, it also returns the conservative quantile level.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+<p>Dario Azzimonti (IDSIA, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Bect J., Ginsbourger D., Li L., Picheny V., Vazquez E. (2012), <em>Sequential design of computer experiments for the estimation of a probability of failure</em>, Statistics and Computing vol. 22(3), pp 773-793
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>print_uncertainty_2d</code>,<code>print_uncertainty_nd</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#print_uncertainty_1d
+
+set.seed(9)
+N &lt;- 9 #number of observations
+T &lt;- c(-0.2,0.2) #thresholds
+testfun &lt;- sin
+lower &lt;- c(0)
+upper &lt;- c(6)
+
+#a 20 points initial design
+design &lt;- data.frame( lower+(upper-lower)*matrix(runif(N),ncol=1) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design,
+	response = response,covtype="matern3_2")
+
+print_uncertainty_1d(model=model,T=T,lower=lower,upper=upper,
+  main="probability of excursion",xlab="x",ylab="pn",
+  cex.points=1.5,col.points.init="red",
+  krigmeanplot=TRUE,Tplot=TRUE)
+
+## Not run: 
+uq1d &lt;- print_uncertainty_1d(model=model,T=T,lower=lower,upper=upper,
+  main="probability of excursion",xlab="x",ylab="pn",
+  cex.points=1.5,col.points.init="red",
+  krigmeanplot=TRUE,Tplot=TRUE,consQuantile =list(consLevel=0.95))
+
+  print_uncertainty_1d(model=model,T=T,lower=lower,upper=upper,
+  main="probability of excursion",xlab="x",ylab="pn",
+  cex.points=1.5,col.points.init="red",
+  krigmeanplot=TRUE,Tplot=TRUE,consQuantile =uq1d[2])
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>word_context</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Word-context conditional expression</h2>
+
+<h3>Description</h3>
+
+<p>Create word-context conditional expression with the <code style="white-space: pre;">⁠%|%⁠</code> operator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">word %|% context
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>word</code></td>
+<td>
+<p>a character vector. Word or words to include as the variable
+part of the conditional expression.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>context</code></td>
+<td>
+<p>a character vector of length one. The fixed (or "given") part
+of the conditional expression.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The intuitive meaning of the operator <code style="white-space: pre;">⁠%|%⁠</code> is that of the mathematical
+symbol <code>|</code> (given). This operator is used to create conditional expressions
+representing the occurrence of some word after a given context (for instance,
+the expression <code>"you" %|% "i love"</code> would represent the occurrence of
+the word <code>"you"</code> after the string "i love"). The purpose of <code style="white-space: pre;">⁠%|%⁠</code> is to
+create objects which can be given as input to probability() (see
+probability for further examples).
+</p>
+
+
+<h3>Value</h3>
+
+<p>a <code>word_context</code> class object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">f &lt;- kgram_freqs(much_ado, 2, .tknz_sent = tknz_sent)
+m &lt;- language_model(f, "kn", D = 0.5)
+probability("leonato" %|% "enter", m)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>overunder</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Functionality for specifying overstrands and understrands</h2>
+
+<h3>Description</h3>
+
+<p>Functionality for specifying overstrands and understrands
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">overunder(x)
+overunder(x) &lt;- value
+mirror(x)
+is.sensible(overunderobj,x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A knot object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value,overunderobj</code></td>
+<td>
+<p>A two-column integer matrix specifying the
+senses of the crossings in a knot</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>overunder()</code> returns a two-column integer matrix with
+rows corresponding to crossing points.  The first element of each row
+corresponds to the strand number of the overstrand and the second
+element corresponds to the understrand.  
+</p>
+<p>Function <code>is.sensible()</code> checks to see whether the overunder
+matrix is compatible with the knot path.  For example, it checks to
+see whether each crossing has exactly one row, and that each row
+corresponds to a pair of strands that actually cross.
+</p>
+<p>Function <code>mirror()</code> takes a knot and returns the knot with the
+senses of each crossing reversed; it is as though the knot is
+reflected in the plane of the projection.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>knot</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+overunder(k4_1)
+
+par(mfcol=c(1,2))
+knotplot(k4_1,gap=80)
+knotplot(mirror(k4_1),gap=80)
+
+is.sensible(overunder(k6_1),k6_1)
+</code></pre>
+
+
+</div>

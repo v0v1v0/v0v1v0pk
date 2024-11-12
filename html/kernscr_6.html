@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>findRhoInterval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find an interval constraining the rho parameter for a non linear kernel</h2>
+
+<h3>Description</h3>
+
+<p>Find an interval constraining the rho parameter for a non linear kernel
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">findRhoInterval(
+  tZ,
+  rho_init = seq(0.01, 20, length = 300) * nrow(tZ),
+  kernel = c("gaussian", "poly"),
+  d = NA,
+  rate_range = c(1.5, 4),
+  pca_thres = 0.9,
+  warning_suppress = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tZ</code></td>
+<td>
+<p>a <code>P x N</code> matrix of genomic covariates (i.e., the usual data array Z transposed)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho_init</code></td>
+<td>
+<p>an initial large range of possible rhos, which will be considered to see if they are
+reasonable tuning parameters for the kernel. Default is <code>seq(0.01, 20, length=300)*P</code>. See Details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>character string specifying a nonlinear kernel. Currently supported options are:
+<code>"gaussian"</code> or <code>"poly"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>if <code>kernel</code> is <code>"poly"</code>, the polynomial power (e.g. d=2 for quadratic kernel).
+Default is <code>NA</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate_range</code></td>
+<td>
+<p>a vector of length 2 indicating the range of alpha in the paper. Default is <code>c(1.5,4)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pca_thres</code></td>
+<td>
+<p>a number between <code>0</code> and <code>1</code> giving the threshold to be used for PCA.
+Default is <code>0.9</code>. If <code>NULL</code>, no PCA is performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warning_suppress</code></td>
+<td>
+<p>logical flag. Indicating whether the warnings should be suppress during
+the linear model fitting step. Default is <code>TRUE</code>. See details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function will print <code>rho_init</code> range and the range of valid tuning parameters.
+If that range butts up against either the upper or lower bound of <code>rho_init</code>, you can rerun this function
+with a bigger <code>rho_init</code>.
+</p>
+<p>Finding the right tuning parameters includes a step of fitting a linear model which can fail
+because some tuning parameters yield only one eigenvector. We want to eliminate those tuning parameters,
+so this is OK. However, in case one want to suppress (numerous) annoying warning messages, use the
+<code>warning_suppress</code> argument.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an upper and lower bound to look for rho
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## First generate some Data
+feat_m_fun &lt;- function(X){
+ sin(X[,1]+X[,2]^2)-1
+}
+feat_d_fun &lt;-  function(X){
+ (X[,4]-X[,5])^2/8
+}
+mydata &lt;- sim_SCR_data(data_size = 400, ncol_gene_mat = 20, feat_m = feat_m_fun,
+                      feat_d = feat_d_fun, mu_cen = 30, cov=0.5)
+
+#initial range
+ind_gene &lt;- c(7:ncol(mydata))
+my_rho_init &lt;- seq(0.01, 20, length=300)*length(ind_gene)
+range(my_rho_init)
+
+if(interactive()){
+# compute the interval for rho
+rho_set &lt;- findRhoInterval(tZ=t(mydata[,ind_gene]), rho_init = my_rho_init, kernel="gaussian")
+rho_set
+range(my_rho_init) # good to check that the interval produced here is strictly contained in rho_init
+# otherwise, expand rho.init and rerun
+
+#rhos &lt;- exp(seq(log(rho_set[1]),log(rho_set[2]), length=50))
+}
+</code></pre>
+
+
+</div>

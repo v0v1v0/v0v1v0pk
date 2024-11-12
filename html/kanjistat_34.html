@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pooled_similarity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Precomputed kanji distances</h2>
+
+<h3>Description</h3>
+
+<p>Precomputed kanji distances
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pooled_similarity
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A tibble containing kanji similarity judgments by 3 "native or native-like"
+speakers of Japanese. For each row, the pivot kanji was compared to a list of
+potential distractors. From the distractors, the subjects selected one
+character which they found particularly easy to confuse with the pivot. For
+the exact methodology, see the original study referenced below.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Datasets from <a href="https://lars.yencken.org/datasets">https://lars.yencken.org/datasets</a>, made available under the
+Creative Commons Attribution 3.0 Unported licence.
+</p>
+<p>Collected as part of <em>Yencken, Lars (2010)
+<a href="https://lars.yencken.org/papers/phd-thesis.pdf">Orthographic support for passing the reading hurdle in Japanese</a>.
+PhD Thesis, University of Melbourne, Melbourne, Australia</em>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Yencken, Lars, &amp; Baldwin, Timothy (2008). Measuring and predicting orthographic associations:
+Modelling the similarity of Japanese kanji. In: <em>Proceedings of the 22nd International Conference on Computational
+Linguistics (Coling 2008)</em>, pp. 1041-1048.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get kanji characters that were found to be easily confused with \u5927.
+pooled_similarity[pooled_similarity$selected == "\u5927", ]$pivot
+
+</code></pre>
+
+
+</div>

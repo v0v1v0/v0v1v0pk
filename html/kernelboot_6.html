@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rmvk</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Random generation from product kernel density</h2>
+
+<h3>Description</h3>
+
+<p>Random generation from product kernel density
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rmvk(
+  n,
+  y,
+  bw = sqrt(diag(bw.silv(y))),
+  kernel = c("gaussian", "epanechnikov", "rectangular", "triangular", "biweight",
+    "cosine", "optcosine"),
+  weights = NULL,
+  adjust = 1,
+  shrinked = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of observations. If <code>length(n) &gt; 1</code>,
+the length is taken to be the number required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric matrix or data.frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+<p>numeric vector of length equal to <code>ncol(y)</code>;
+the smoothing bandwidth to be used. The kernels are
+scaled such that this is the standard deviation of the
+smoothing kernel (see
+<code>density</code> for details). If provided as
+a single value, the same bandwidth is used for each variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used.
+This must partially match one of "gaussian", "rectangular",
+"triangular", "epanechnikov", "biweight", "cosine"
+or "optcosine", with default "gaussian", and may be abbreviated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>numeric vector of length equal to <code>nrow(y)</code>; must be non-negative.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adjust</code></td>
+<td>
+<p>scalar; the bandwidth used is actually <code>adjust*bw</code>.
+This makes it easy to specify values like 'half the default'
+bandwidth.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shrinked</code></td>
+<td>
+<p>if <code>TRUE</code> random generation algorithm preserves mean and
+variances of the individual variables (see <code>ruvk</code>).
+Shrinking is applied to each of the variables individually.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Product kernel density is defined in terms of independent univariate kernels
+</p>
+<p style="text-align: center;"><code class="reqn">
+\hat{f_H}(\mathbf{x}) = \sum_{i=1}^n w_i \prod_{j=1}^m
+K_{h_j}( x_i - y_{ij})
+</code>
+</p>
+
+<p>where <code class="reqn">w</code> is a vector of weights such that all <code class="reqn">w_i \ge 0</code>
+and <code class="reqn">\sum_i w_i = 1</code> (by default uniform <code class="reqn">1/n</code> weights are used),
+<code class="reqn">K_{h_j}</code> is univariate kernel <code class="reqn">K</code> parametrized by bandwidth <code class="reqn">h_j</code>,
+where <code class="reqn">\boldsymbol{y}</code> is a matrix of data points used for estimating the
+kernel density.
+</p>
+<p>For functions estimating kernel densities please check <span class="pkg">KernSmooth</span>,
+<span class="pkg">ks</span>, or other packages reviewed by Deng and Wickham (2011).
+</p>
+<p>For random generation the algorithm described in <code>kernelboot</code> is used.
+When using <code>shrinked = TRUE</code>, random noise is drawn from independent, shrinked
+univariate kernels.
+</p>
+
+
+<h3>References</h3>
+
+<p>Deng, H. and Wickham, H. (2011). Density estimation in R.
+<a href="http://vita.had.co.nz/papers/density-estimation.pdf">http://vita.had.co.nz/papers/density-estimation.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kernelboot</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+dat &lt;- mtcars[, c("mpg", "disp")]
+
+partmp &lt;- par(mfrow = c(1, 2), mar = c(3, 3, 3, 3))
+
+plot(rmvk(5000, dat, shrinked = FALSE), col = "#458B004D", pch = 16,
+     xlim = c(0, 45), ylim = c(-200, 800),
+     main = "Product kernel", axes = FALSE)
+points(dat, pch = 2, lwd = 2, col = "red")
+axis(1); axis(2)
+
+plot(rmvk(5000, dat, shrinked = TRUE), col = "#458B004D", pch = 16,
+     xlim = c(0, 45), ylim = c(-200, 800),
+     main = "Product kernel (shrinked)", axes = FALSE)
+points(dat, pch = 2, lwd = 2, col = "red")
+axis(1); axis(2)
+
+par(partmp)
+
+cov(dat)
+cov(rmvk(5000, dat, shrinked = FALSE))
+cov(rmvk(5000, dat, shrinked = TRUE))
+
+</code></pre>
+
+
+</div>

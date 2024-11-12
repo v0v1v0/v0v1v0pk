@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kappa2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cohen's kappa for nominal data</h2>
+
+<h3>Description</h3>
+
+<p>The data of ratings must be stored in a two column object,
+each rater is a columns and the subjects are in the rows.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kappa2(ratings, robust = FALSE, ratingScale = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ratings</code></td>
+<td>
+<p>matrix (dimension nx2), containing the ratings as subjects by raters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+<p>flag. Use robust estimate for random chance of agreement by Brennan-Prediger?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ratingScale</code></td>
+<td>
+<p>Possible levels for the rating. Or <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Every rating category is used and the levels are sorted.
+Weighting is currently not implemented.
+</p>
+
+
+<h3>Value</h3>
+
+<p>list containing Cohen's kappa agreement measure (value) or <code>NULL</code> if no valid subjects
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>irr::kappa2()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 2 raters have assessed 4 subjects into categories "A", "B" or "C"
+# organize ratings as two column matrix, one row per subject rated
+m &lt;- rbind(sj1 = c("A", "A"),
+           sj2 = c("C", "B"),
+           sj3 = c("B", "C"),
+           sj4 = c("C", "C"))
+           
+# Cohen's kappa -----
+kappa2(ratings = m)
+
+# robust variant ---------
+kappa2(ratings = m, robust = TRUE)
+
+</code></pre>
+
+
+</div>

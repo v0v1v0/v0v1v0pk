@@ -1,0 +1,227 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_mel_spectrogram</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer to convert raw audio signals to Mel spectrograms.</h2>
+
+<h3>Description</h3>
+
+<p>This layer takes <code>float32</code>/<code>float64</code> single or batched audio signal as
+inputs and computes the Mel spectrogram using Short-Time Fourier Transform
+and Mel scaling. The input should be a 1D (unbatched) or 2D (batched) tensor
+representing audio signals. The output will be a 2D or 3D tensor
+representing Mel spectrograms.
+</p>
+<p>A spectrogram is an image-like representation that shows the frequency
+spectrum of a signal over time. It uses x-axis to represent time, y-axis to
+represent frequency, and each pixel to represent intensity.
+Mel spectrograms are a special type of spectrogram that use the mel scale,
+which approximates how humans perceive sound. They are commonly used in
+speech and music processing tasks like speech recognition, speaker
+identification, and music genre classification.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_mel_spectrogram(
+  object,
+  fft_length = 2048L,
+  sequence_stride = 512L,
+  sequence_length = NULL,
+  window = "hann",
+  sampling_rate = 16000L,
+  num_mel_bins = 128L,
+  min_freq = 20,
+  max_freq = NULL,
+  power_to_db = TRUE,
+  top_db = 80,
+  mag_exp = 2,
+  min_power = 1e-10,
+  ref_power = 1,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fft_length</code></td>
+<td>
+<p>Integer, size of the FFT window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sequence_stride</code></td>
+<td>
+<p>Integer, number of samples between successive STFT
+columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sequence_length</code></td>
+<td>
+<p>Integer, size of the window used for applying
+<code>window</code> to each audio frame. If <code>NULL</code>, defaults to <code>fft_length</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>window</code></td>
+<td>
+<p>String, name of the window function to use. Available values
+are <code>"hann"</code> and <code>"hamming"</code>. If <code>window</code> is a tensor, it will be
+used directly as the window and its length must be
+<code>sequence_length</code>. If <code>window</code> is <code>NULL</code>, no windowing is
+used. Defaults to <code>"hann"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sampling_rate</code></td>
+<td>
+<p>Integer, sample rate of the input signal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_mel_bins</code></td>
+<td>
+<p>Integer, number of mel bins to generate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_freq</code></td>
+<td>
+<p>Float, minimum frequency of the mel bins.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_freq</code></td>
+<td>
+<p>Float, maximum frequency of the mel bins.
+If <code>NULL</code>, defaults to <code>sampling_rate / 2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power_to_db</code></td>
+<td>
+<p>If TRUE, convert the power spectrogram to decibels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top_db</code></td>
+<td>
+<p>Float, minimum negative cut-off <code>max(10 * log10(S)) - top_db</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mag_exp</code></td>
+<td>
+<p>Float, exponent for the magnitude spectrogram.
+1 for magnitude, 2 for power, etc. Default is 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_power</code></td>
+<td>
+<p>Float, minimum value for power and <code>ref_power</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ref_power</code></td>
+<td>
+<p>Float, the power is scaled relative to it
+<code>10 * log10(S / ref_power)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+
+<ul>
+<li> <p><a href="https://en.wikipedia.org/wiki/Spectrogram">Spectrogram</a>,
+</p>
+</li>
+<li> <p><a href="https://en.wikipedia.org/wiki/Mel_scale">Mel scale</a>.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p><strong>Unbatched audio signal</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_mel_spectrogram(
+  num_mel_bins = 64,
+  sampling_rate = 8000,
+  sequence_stride = 256,
+  fft_length = 2048
+)
+layer(random_uniform(shape = c(16000))) |&gt; shape()
+</pre></div>
+<p><strong>Batched audio signal</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_mel_spectrogram(
+  num_mel_bins = 80,
+  sampling_rate = 8000,
+  sequence_stride = 128,
+  fft_length = 2048
+)
+layer(random_uniform(shape = c(2, 16000))) |&gt; shape()
+</pre></div>
+
+
+<h3>Input Shape</h3>
+
+<p>1D (unbatched) or 2D (batched) tensor with shape:<code style="white-space: pre;">⁠(..., samples)⁠</code>.
+</p>
+
+
+<h3>Output Shape</h3>
+
+<p>2D (unbatched) or 3D (batched) tensor with
+shape:<code style="white-space: pre;">⁠(..., num_mel_bins, time)⁠</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_feature_space()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_normalization()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br><code>layer_text_vectorization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

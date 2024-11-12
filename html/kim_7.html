@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>change_var_names</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Change variable names in a data set</h2>
+
+<h3>Description</h3>
+
+<p>Change variable names in a data set
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">change_var_names(
+  data = NULL,
+  old_var_names = NULL,
+  new_var_names = NULL,
+  skip_absent = FALSE,
+  print_summary = TRUE,
+  output_type = "dt"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>old_var_names</code></td>
+<td>
+<p>a vector of old variable names
+(i.e., variable names to change)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new_var_names</code></td>
+<td>
+<p>a vector of new variable names</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skip_absent</code></td>
+<td>
+<p>If <code>skip_absent = TRUE</code>, old variable names
+that do not exist in the data set will be skipped (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print_summary</code></td>
+<td>
+<p>If <code>print_summary = TRUE</code>, a summary of
+old and new variable names will printed. (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>type of the output. If <code>output_type = "dt"</code>,
+the function's output will be a data.table with changed names.
+If <code>output_type = "summary"</code>, the function's output will
+be a data.table listing old and new variable names.
+By default, <code>output_type = "dt"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data.table object with changed variable names
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">change_var_names(
+mtcars, old = c("mpg", "cyl"), new = c("mpg_new", "cyl_new"))
+</code></pre>
+
+
+</div>

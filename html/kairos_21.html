@@ -1,0 +1,172 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>apportion</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Chronological Apportioning</h2>
+
+<h3>Description</h3>
+
+<p>Chronological Apportioning
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">apportion(object, ...)
+
+## S4 method for signature 'data.frame'
+apportion(
+  object,
+  s0,
+  s1,
+  t0,
+  t1,
+  from = min(s0),
+  to = max(s1),
+  step = 25,
+  method = c("uniform", "truncated"),
+  z = 2,
+  progress = getOption("kairos.progress")
+)
+
+## S4 method for signature 'matrix'
+apportion(
+  object,
+  s0,
+  s1,
+  t0,
+  t1,
+  from = min(s0),
+  to = max(s1),
+  step = 25,
+  method = c("uniform", "truncated"),
+  z = 2,
+  progress = getOption("kairos.progress")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s0</code></td>
+<td>
+<p>A length-<code class="reqn">m</code> <code>numeric</code> vector giving the site beginning dates
+expressed in CE years (BCE years must be given as negative numbers).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s1</code></td>
+<td>
+<p>A length-<code class="reqn">m</code> <code>numeric</code> vector giving the site end dates
+expressed in CE years (BCE years must be given as negative numbers).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t0</code></td>
+<td>
+<p>A length-<code class="reqn">p</code> <code>numeric</code> vector giving the type beginning dates
+expressed in CE years (BCE years must be given as negative numbers).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t1</code></td>
+<td>
+<p>A length-<code class="reqn">p</code> <code>numeric</code> vector giving the type end dates
+expressed in CE years (BCE years must be given as negative numbers).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the beginning of the
+period of interest (in years CE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the end of the period of
+interest (in years CE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>step</code></td>
+<td>
+<p>A length-one <code>integer</code> vector giving the step size, i.e. the
+width of each time step for apportioning (in years CE; defaults to
+<code class="reqn">25</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A <code>character</code> string specifying the distribution to be used
+(type popularity curve). It must be one of "<code>uniform</code>" (uniform
+distribution) or "<code>truncated</code>" (truncated standard normal distribution).
+Any unambiguous substring can be given.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>z</code></td>
+<td>
+<p>An <code>integer</code> value giving the lower and upper truncation points
+(defaults to <code class="reqn">2</code>). Only used if <code>method</code> is "<code>truncated</code>".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress</code></td>
+<td>
+<p>A <code>logical</code> scalar: should a progress bar be displayed?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>CountApportion</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Roberts, J. M., Mills, B. J., Clark, J. J., Haas, W. R., Huntley, D. L. &amp;
+Trowbridge, M. A. (2012). A Method for Chronological Apportioning of Ceramic
+Assemblages. <em>Journal of Archaeological Science</em>, 39(5): 1513-20.
+<a href="https://doi.org/10.1016/j.jas.2011.12.022">doi:10.1016/j.jas.2011.12.022</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other chronological analysis: 
+<code>aoristic()</code>,
+<code>fit()</code>,
+<code>roc()</code>
+</p>
+
+
+</div>

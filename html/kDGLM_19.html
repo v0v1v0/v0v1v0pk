@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coefficients.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>coefficients.fitted_dlm</h2>
+
+<h3>Description</h3>
+
+<p>This method is wrapper for the coef method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+coefficients(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted_dlm object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed to coef.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+
+<ul>
+<li>
+<p> data data.frame: A table with the model evaluated at each observed time.
+</p>
+</li>
+<li>
+<p> theta.mean matrix: The mean of the latent states at each time. Dimensions are n x t, where t is the size of t.eval and n is the number of latent states.
+</p>
+</li>
+<li>
+<p> theta.cov array: A 3D-array containing the covariance matrix of the latent states at each time. Dimensions are n x n x t, where t is the size of t.eval and n is the number of latent states.
+</p>
+</li>
+<li>
+<p> lambda.mean matrix: The mean of the linear predictor at each time. Dimensions are k x t, where t is the size of t.eval and k is the number of linear predictors.
+</p>
+</li>
+<li>
+<p> lambda.cov array: A 3D-array containing the covariance matrix for the linear predictor at each time. Dimensions are k x k x t, where t is the size of t.eval and k is the number of linear predictors.
+</p>
+</li>
+<li>
+<p> log.like, mae, mase, rae, mse, interval.score: The metric value at each time.
+</p>
+</li>
+<li>
+<p> conj.param list: A list containing, for each outcome, a data.frame with the parameter of the conjugated distribution at each time.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>coef.fitted_dlm</code>
+</p>
+
+
+</div>

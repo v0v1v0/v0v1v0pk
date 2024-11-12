@@ -1,0 +1,169 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_mean_iou</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the mean Intersection-Over-Union metric.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode r"><pre>iou &lt;- true_positives / (true_positives + false_positives + false_negatives)
+</pre></div>
+<p>Intersection-Over-Union is a common evaluation metric for semantic image
+segmentation.
+</p>
+<p>To compute IoUs, the predictions are accumulated in a confusion matrix,
+weighted by <code>sample_weight</code> and the metric is then calculated from it.
+</p>
+<p>If <code>sample_weight</code> is <code>NULL</code>, weights default to 1.
+Use <code>sample_weight</code> of 0 to mask values.
+</p>
+<p>Note that this class first computes IoUs for all individual classes, then
+returns the mean of these values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_mean_iou(
+  ...,
+  num_classes,
+  name = NULL,
+  dtype = NULL,
+  ignore_class = NULL,
+  sparse_y_true = TRUE,
+  sparse_y_pred = TRUE,
+  axis = -1L
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_classes</code></td>
+<td>
+<p>The possible number of labels the prediction task can have.
+This value must be provided, since a confusion matrix of dimension =
+<code style="white-space: pre;">⁠[num_classes, num_classes]⁠</code> will be allocated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore_class</code></td>
+<td>
+<p>Optional integer. The ID of a class to be ignored during
+metric computation. This is useful, for example, in segmentation
+problems featuring a "void" class (commonly -1 or 255) in
+segmentation maps. By default (<code>ignore_class=NULL</code>), all classes are
+considered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sparse_y_true</code></td>
+<td>
+<p>Whether labels are encoded using integers or
+dense floating point vectors. If <code>FALSE</code>, the <code>argmax</code> function
+is used to determine each sample's most likely associated label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sparse_y_pred</code></td>
+<td>
+<p>Whether predictions are encoded using integers or
+dense floating point vectors. If <code>FALSE</code>, the <code>argmax</code> function
+is used to determine each sample's most likely associated label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>(Optional) The dimension containing the logits. Defaults to <code>-1</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>Metric</code> instance is returned. The <code>Metric</code> instance can be passed
+directly to <code>compile(metrics = )</code>, or used as a standalone object. See
+<code>?Metric</code> for example usage.
+</p>
+
+
+<h3>Examples</h3>
+
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre># cm = [[1, 1],
+#        [1, 1]]
+# sum_row = [2, 2], sum_col = [2, 2], true_positives = [1, 1]
+# iou = true_positives / (sum_row + sum_col - true_positives))
+# result = (1 / (2 + 2 - 1) + 1 / (2 + 2 - 1)) / 2 = 0.33
+m &lt;- metric_mean_iou(num_classes = 2)
+m$update_state(c(0, 0, 1, 1), c(0, 1, 0, 1))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[1. 1.]
+##  [1. 1.]], shape=(2, 2), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.33333334, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$reset_state()
+m$update_state(c(0, 0, 1, 1), c(0, 1, 0, 1),
+               sample_weight=c(0.3, 0.3, 0.3, 0.1))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0.3 0.3]
+##  [0.3 0.1]], shape=(2, 2), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.2380952, shape=(), dtype=float32)
+
+</pre></div>
+<p>Usage with <code>compile()</code> API:
+</p>
+<div class="sourceCode r"><pre>model %&gt;% compile(
+  optimizer = 'sgd',
+  loss = 'mse',
+  metrics = list(metric_mean_iou(num_classes=2)))
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/metrics/segmentation_metrics#meaniou-class">https://keras.io/api/metrics/segmentation_metrics#meaniou-class</a>
+</p>
+</li></ul>
+<p>Other iou metrics: <br><code>metric_binary_iou()</code> <br><code>metric_iou()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_conv2d_transpose</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>2D deconvolution (i.e. transposed convolution).</h2>
+
+<h3>Description</h3>
+
+<p>2D deconvolution (i.e. transposed convolution).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_conv2d_transpose(
+  x,
+  kernel,
+  output_shape,
+  strides = c(1, 1),
+  padding = "valid",
+  data_format = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Tensor or variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>kernel tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_shape</code></td>
+<td>
+<p>1D int tensor for the output shape.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strides</code></td>
+<td>
+<p>strides list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>string, <code>"same"</code> or <code>"valid"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>string, <code>"channels_last"</code> or <code>"channels_first"</code>. Whether
+to use Theano or TensorFlow/CNTK data format for inputs/kernels/outputs.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor, result of transposed 2D convolution.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

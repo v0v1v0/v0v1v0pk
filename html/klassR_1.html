@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ApplyKlass</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Match and convert a classification</h2>
+
+<h3>Description</h3>
+
+<p>Match and convert a classification
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ApplyKlass(
+  x,
+  klass,
+  date = NULL,
+  variant = NULL,
+  correspond = NULL,
+  language = "nb",
+  output_level = NULL,
+  output = "name",
+  format = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>klass</code></td>
+<td>
+<p>Classification number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>date</code></td>
+<td>
+<p>String for the required date of the classification. Format must be "yyyy-mm-dd". For an inverval, provide two dates as a vector. If blank, will default to today's date.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variant</code></td>
+<td>
+<p>The classification variant to fetch (if a variant is wanted).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correspond</code></td>
+<td>
+<p>ID number for target in correspondence table. For correspondence between two dates within the same classification, use correspond = TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>language</code></td>
+<td>
+<p>Default "nb" for Norwegian (Bokmål). Also "nn" (Nynorsk) and "en" (English available for some classifications)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_level</code></td>
+<td>
+<p>Desired output level</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>String describing output. May be "name" (default), "code" or "both".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>Logical for whther to run formatting av input vector x (Default = TRUE), important to check if formatting is in one level.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector or data frame is returned with names and/or code of the desired output level.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(klassdata)
+kommune_names &lt;- ApplyKlass(x = klassdata$kommune, klass = 131, language = "en", format=FALSE)
+</code></pre>
+
+
+</div>

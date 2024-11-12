@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ListKlass</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Classification list
+Get a full list of all classifications and codelists</h2>
+
+<h3>Description</h3>
+
+<p>Classification list
+Get a full list of all classifications and codelists
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ListKlass(codelists = FALSE, language = "nb")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>codelists</code></td>
+<td>
+<p>True/False for whether to include codelists. Default = FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>language</code></td>
+<td>
+<p>Two letter string for the requested language output. Default is Bokmål ("nb"). Nynorsk ("nn") and English ("en").</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame containing a full list of classifications. The data frame includes the classification name, number, family and type.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(ListKlass(codelists = TRUE))
+</code></pre>
+
+
+</div>

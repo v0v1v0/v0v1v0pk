@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>citep</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>citep - inline parenthetical citation</h2>
+
+<h3>Description</h3>
+
+<p>Generate an inline parenthetical citation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">citep(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a citation query, or list of queries for multiple citations. See details and examples</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments for the search or formatting. See details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>the citation query can be any of: 
+- A bibentry object, 
+- An article or dataset DOI,
+- The URL to a website such as a scientific journal article page 
+- A path to a PDF file (will attempt to extract citation info)
+- A search query string, such as part of the article title, 
+year, or journal (Queries CrossRef)
+- The bibkey to anything that has already been cited. 
+knitcitations will attempt to find the most complete citation information
+based on the information specified.  In some cases that information may
+be incomplete.  When using search queries rather than an exact reference
+(such as URL, DOI, pdf, or bibkey) the desired article may not be found or
+many not be uniquely determined by the string. The most relevant search
+result is returned, so consider refining search terms as necessary.
+See examples.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Format of the parenthetical citation will depend on configuration. 
+Unless citation_format = "pandoc", formatting is handled by 
+<code>Citep</code>. See the arguments to Citep for details.
+knitcitations will automatically track what has been cited during the
+active R session until the citation log is reset.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Citep</code> for more details on the
+parenthetical citation generation.  <code>citet</code> for generating
+inline text citations.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Cite an R package using the 'bibentry' object
+citep(citation("httr"))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Multinom</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multinom outcome for kDGLM models</h2>
+
+<h3>Description</h3>
+
+<p>Creates an outcome with Multinomial distribution with the chosen parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Multinom(p, data, offset = as.matrix(data)^0, base.class = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>character: a vector with the name of the linear predictor associated with the probability of each category (except the base one, which is assumed to be the last).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>vector: Values of the observed data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>vector: The offset at each observation. Must have the same shape as data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base.class</code></td>
+<td>
+<p>character or integer: The name or index of the base class. Default is to use the last column of data.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For evaluating the posterior parameters, we use the method proposed in Alves et al. (2024).
+</p>
+<p>For the details about the implementation see  dos Santos et al. (2024).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A object of the class dlm_distr
+</p>
+
+
+<h3>References</h3>
+
+<p>Mariane
+Branco Alves, Helio
+S. Migon, Raíra Marotta, Junior,
+Silvaneo
+Vieira dos Santos (2024).
+“k-parametric Dynamic Generalized Linear Models: a sequential approach via Information Geometry.”
+2201.05387.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p>Other auxiliary functions for a creating outcomes: 
+<code>Gamma()</code>,
+<code>Normal()</code>,
+<code>Poisson()</code>,
+<code>summary.dlm_distr()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+structure &lt;- (
+  polynomial_block(p = 1, order = 2, D = 0.95) +
+    harmonic_block(p = 1, period = 12, D = 0.975) +
+    noise_block(p = 1, R1 = 0.1) +
+    regression_block(p = chickenPox$date &gt;= as.Date("2013-09-01"))
+  # Vaccine was introduced in September of 2013
+) * 4
+
+outcome &lt;- Multinom(p = structure$pred.names, data = chickenPox[, c(2, 3, 4, 6, 5)])
+fitted.data &lt;- fit_model(structure, chickenPox = outcome)
+summary(fitted.data)
+plot(fitted.data, plot.pkg = "base")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,255 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>komaletter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KOMA-Script LaTeX Letter Format</h2>
+
+<h3>Description</h3>
+
+<p>A format for LaTeX letters via R Markdown using the KOMA-Script class
+'scrlttr2'. It provides layouts for many different window envelope types
+(German, US, French, Japanese, ...) and lets you define customized layouts.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">komaletter(..., keep_tex = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments to <code>rmarkdown::pdf_document()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_tex</code></td>
+<td>
+<p>A boolean toggle to select whether intermediate
+LaTeX files are to be kept, defaults to <code>FALSE</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>R Markdown output to pass to <code>rmarkdown::render()</code>
+</p>
+
+
+<h3>Letter features</h3>
+
+<p>Various aspects of the letter can be customized via the following
+variables in the R Markdown document metadata (aka YAML header).
+</p>
+<p>Although it rarely makes sense to write a letter without sender and recipient,
+a komaletter can be constructed by merely specifying the output format.
+All other variables are optional.
+</p>
+<p>Most commonly used variables:</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+   <strong>Variable</strong> </td>
+<td style="text-align: left;"> <strong>Description</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   author </td>
+<td style="text-align: left;"> Writer of the letter. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   return-address </td>
+<td style="text-align: left;"> Address of the sender; takes a list for a multi-line address. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   address </td>
+<td style="text-align: left;"> Name and address of the recipient; takes a list. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   date </td>
+<td style="text-align: left;"> Custom date; if not specified, current date will be inserted. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   subject </td>
+<td style="text-align: left;"> Subject line. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   opening </td>
+<td style="text-align: left;"> Text for the salutation. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   closing </td>
+<td style="text-align: left;"> Text for the complementary close, like: Best regards. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   signature </td>
+<td style="text-align: left;"> Text (e.g. your name) or an image of your signature with <code>"\\includegraphics{sig.png}"</code>. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   signature-before </td>
+<td style="text-align: left;"> Adjust vertical space between closing and signature by specifying a length such as <code style="white-space: pre;">⁠2mm⁠</code> or <code>"0.5\\baselineskip"</code>. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>All variables understood by <code>rmarkdown</code>'s <code>pdf_document</code> format may be used
+in addition to the <code>komaletter</code> variables defined in the following table
+to further customize your letter. For modifications of the layout please
+refer to the vignette "Introduction to komaletter".
+</p>
+<p>Further variables defined by komaletter:</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+   <strong>Variable</strong> </td>
+<td style="text-align: left;"> <strong>Description</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   lco </td>
+<td style="text-align: left;"> Letter Class Option File. Either name of a standard KOMA-Script LCO (e.g. DIN, SN, ) or path to custom LCO. If not specified, the <code>maintainersDelight.lco</code> will be used. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   lang </td>
+<td style="text-align: left;"> Language code according to <a href="https://www.rfc-editor.org/rfc/rfc5646.html">BCP 47</a> (e.g. <code>en</code> or <code>en-GB</code>). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   papersize </td>
+<td style="text-align: left;"> Size of paper eg. <code>a4</code>, <code>letter</code>. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   return-phone </td>
+<td style="text-align: left;"> Phone number of sender used in letter head. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   return-email </td>
+<td style="text-align: left;"> Email address of sender used in letter head. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   return-url </td>
+<td style="text-align: left;"> Website of sender used in letter head. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   return-short </td>
+<td style="text-align: left;"> Shorter version of return address only used in window (see vignette <code>letter_example4</code>). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   place </td>
+<td style="text-align: left;"> Sender’s place used near date. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   yourref </td>
+<td style="text-align: left;"> Addressee’s reference as part of reference line. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   yourmail </td>
+<td style="text-align: left;"> Date of addressee’s referenced mail as part of reference line. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   myref </td>
+<td style="text-align: left;"> Sender’s reference as part of reference line. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   customer </td>
+<td style="text-align: left;"> Customer number as part of reference line. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   invoice </td>
+<td style="text-align: left;"> Invoice number as part of reference line. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   cc </td>
+<td style="text-align: left;"> Recipients to be carbon-copied; can take a list. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   encl </td>
+<td style="text-align: left;"> List of enclosures. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   ps </td>
+<td style="text-align: left;"> Text to be added at the end of the letter as a postscript. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   inline-links </td>
+<td style="text-align: left;"> If true, do standard inline hyperlinks rather than footnotes (styling is author's job, cf. vignette <code>letter_example2</code>). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   komaoption </td>
+<td style="text-align: left;"> Specify further KOMA options; takes a list (see <a href="https://komascript.de/~mkohm/scrguien.pdf">KOMA-Script documentation</a>). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+   parskip </td>
+<td style="text-align: left;"> Defines how to mark new paragraphs, e.g. full, half, off (see <a href="https://komascript.de/~mkohm/scrguien.pdf">KOMA-Script documentation</a>). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>The source of the example letter vignettes show several of these options in use.
+</p>
+
+
+<h3>References</h3>
+
+<p>JJ Allaire, Yihui Xie, Jonathan McPherson et al. (2020). rmarkdown:
+Dynamic Documents for R. R package version 2.6.
+<a href="https://cran.r-project.org/package=rmarkdown">https://cran.r-project.org/package=rmarkdown</a>
+</p>
+<p>Aaron Wolen and Andrew Dunning (2017). pandoc-letter. GitHub Repository.
+<a href="https://github.com/aaronwolen/pandoc-letter">https://github.com/aaronwolen/pandoc-letter</a>
+</p>
+<p>Markus Kohm (2020). KOMA-Script: A versatile LaTeX <code class="reqn">2_\epsilon</code> bundle.
+<a href="https://komascript.de/~mkohm/scrguien.pdf">https://komascript.de/~mkohm/scrguien.pdf</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+rmarkdown::draft("my_letter.Rmd", template="pdf", package="komaletter")
+rmarkdown::render("my_letter.Rmd")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Rgeo_kriging</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kriging Interpolation for Databases</h2>
+
+<h3>Description</h3>
+
+<p>Performs kriging interpolation on a provided database using 'RGeostats' methods.
+The data is interpolated over a grid covering the entire area of interest.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Rgeo_kriging(db, model, dx = NA, dy = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>db</code></td>
+<td>
+<p>A db-class object. Should be created using the <code>Rgeo_database()</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>An S4 plottable Rgeostats omnidirectional variogram model.
+Should be created using the <code>Rgeo_vario_model()</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dx</code></td>
+<td>
+<p>Optional. The grid cell size in the x-direction. If not provided, it is calculated
+as the average of the ranges in x and y directions divided by 50.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dy</code></td>
+<td>
+<p>Optional. The grid cell size in the y-direction. If not provided, it is calculated
+as the average of the ranges in x and y directions divided by 50.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>Rgeo_kriging()</code> function performs kriging interpolation based on the provided
+database (db) and variogram model (model). The grid cell sizes <code>dx</code> and <code>dy</code>
+can be optionally specified or will be automatically determined based on the data.
+Results can be visualized with the <code>Rgeo_kriging_plot()</code> function and summary statistics
+can be printed by simply calling the returned kriged object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A S4 plottable Rgeostats kriged database. Can be plotted using the
+<code>Rgeo_kriging_plot</code> function. Summary statistics for the kriging process
+can be printed by simply calling the returned dbgrid3 object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if(requireNamespace("RGeostats", quietly = TRUE)){
+    library(RGeostats)
+    data("Klovan_Row80", package = "klovan")
+    db &lt;- Rgeo_database(Klovan_Row80, 3, "RC3")
+    model &lt;- Rgeo_vario_model(db, 3, "RC3", lag = 500, model = 13)
+    krig &lt;- Rgeo_kriging(db, model)
+    krig # prints summary statistics for kriging
+}
+
+</code></pre>
+
+
+</div>

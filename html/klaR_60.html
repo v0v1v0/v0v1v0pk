@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.meclight</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction of Minimal Error Classification</h2>
+
+<h3>Description</h3>
+
+<p>Classify multivariate observations in conjunction with <code>meclight</code> and
+<code>lda</code>. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'meclight'
+predict(object, newdata,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object of class <code>meclight</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>Data frame of cases to be classified or, 
+if object has a formula, a data frame with columns of the same names
+as the variables used. A vector will be interpreted as a row
+vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>currently ignored</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Classify multivariate observations in conjunction with <code>meclight</code> and
+<code>lda</code>. 
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>The estimated class (<code>factor</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posterior</code></td>
+<td>
+<p>Posterior probabilities for the classes.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>References</h3>
+
+<p>Roehl, M.C., Weihs, C., and Theis, W. (2002): 
+Direct Minimization in Multivariate Classification. <em>Computational Statistics</em>, 17, 29-46.</p>
+
+
+<h3>See Also</h3>
+
+<p><code>meclight</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+meclight.obj &lt;- meclight(Species ~ ., data = iris)
+predict(meclight.obj, iris)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,110 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cross_spectrum</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the cross-spectrum of two timeseries</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the cross-spectrum of two timeseries
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cross_spectrum(x, ...)
+
+## S3 method for class 'mts'
+cross_spectrum(x, ...)
+
+## Default S3 method:
+cross_spectrum(
+  x,
+  y,
+  k = 10,
+  samp = 1,
+  q,
+  adaptive = FALSE,
+  verbose = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric; timeseries</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments to <code>pspectrum</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric; timeseries. if missing, assumed to be column no. 2 in <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>integer; the number of sine tapers, unless this is <code>NULL</code>; in the latter case
+a Welch-based spectrum is calculated rather than a multitaper spectrum. There are distinct
+advantages and disadvantages to either of these.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samp</code></td>
+<td>
+<p>numeric; the sampling rate (e.g., <code>deltat</code>) of the data; must be the same for <code>x</code> and <code>y</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>numeric; the probability quantile [0,1] to calculate coherence significance levels; if missing, a 
+pre-specified sequence is included. This is will be ignored for Welch-based spectra (see <code>k</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adaptive</code></td>
+<td>
+<p>logical; should adaptive multitaper estimation be used?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>logical; should messages be printed?</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+require(psd)
+
+n &lt;- 1000
+ramp &lt;- seq_len(n)
+parab &lt;- ramp^2
+
+set.seed(1255)
+X &lt;- ts(rnorm(n) + ramp/2)
+Y &lt;- ts(rnorm(n) + ramp/10 + parab/100)
+
+# Calculate the multitaper cross spectrum
+csd &lt;- cross_spectrum(X, Y, k=20)
+
+</code></pre>
+
+
+</div>

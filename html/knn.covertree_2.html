@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_knn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kNN search</h2>
+
+<h3>Description</h3>
+
+<p>k nearest neighbor search with custom distance function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_knn(data, k, ..., query = NULL, distance = c("euclidean",
+  "cosine", "rankcor"), sym = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of nearest neighbors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Unused. All parameters to the right of the <code>...</code> have to be specified by name (e.g. <code>find_knn(data, k, distance = 'cosine')</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>query</code></td>
+<td>
+<p>Query matrix. In <code>knn</code> and <code>knn_asym</code>, query and data are identical</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distance</code></td>
+<td>
+<p>Distance metric to use. Allowed measures: Euclidean distance (default), cosine distance (<code class="reqn">1-corr(c_1, c_2)</code>) or rank correlation distance (<code class="reqn">1-corr(rank(c_1), rank(c_2))</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sym</code></td>
+<td>
+<p>Return a symmetric matrix (as long as query is NULL)?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>list</code> with the entries:
+</p>
+
+<dl>
+<dt><code>index</code></dt>
+<dd>
+<p>A <code class="reqn">nrow(data) \times k</code> integer matrix containing the indices of the k nearest neighbors for each cell.</p>
+</dd>
+<dt><code>dist</code></dt>
+<dd>
+<p>A <code class="reqn">nrow(data) \times k</code> double matrix containing the distances to the k nearest neighbors for each cell.</p>
+</dd>
+<dt><code>dist_mat</code></dt>
+<dd>
+<p>A <code>dgCMatrix</code> if <code>sym == TRUE</code>,
+else a <code>dsCMatrix</code> (<code class="reqn">nrow(query) \times nrow(data)</code>).
+Any zero in the matrix (except for the diagonal) indicates that the cells in the corresponding pair are close neighbors.
+</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># The default: symmetricised pairwise distances between all rows
+pairwise &lt;- find_knn(mtcars, 5L)
+image(as.matrix(pairwise$dist_mat))
+
+# Nearest neighbors of a subset within all
+mercedeses &lt;- grepl('Merc', rownames(mtcars))
+merc_vs_all &lt;- find_knn(mtcars, 5L, query = mtcars[mercedeses, ])
+# Replace row index matrix with row name matrix
+matrix(
+  rownames(mtcars)[merc_vs_all$index],
+  nrow(merc_vs_all$index),
+  dimnames = list(rownames(merc_vs_all$index), NULL)
+)[, -1]  # 1st nearest neighbor is always the same row
+
+</code></pre>
+
+
+</div>

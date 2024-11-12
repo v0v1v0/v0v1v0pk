@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KSgeneral-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Computing P-Values of the One-Sample K-S Test and the Two-Sample
+K-S and Kuiper Tests for (Dis)Continuous Null Distribution
+</h2>
+
+<h3>Description</h3>
+
+<p>This package computes p-values of the one-sample and two-sample Kolmogorov-Smirnov (KS) tests and the two-sample Kuiper test.
+</p>
+<p>The one-sample two-sided Kolmogorov-Smirnov (KS) statistic is one of the most popular goodness-of-fit test statistics that is used to measure how well the distribution of a random sample agrees with a prespecified theoretical distribution.
+Given a random sample <code class="reqn">\{X_{1},..., X_{n}\}</code> of size <code class="reqn">n</code> with an empirical cdf <code class="reqn">F_{n}(x)</code>, the two-sided KS statistic is defined as
+<code class="reqn">D_{n} = \sup | F_{n}(x) - F(x) | </code>, where <code class="reqn">F(x)</code>  is the cdf of the prespecified theoretical distribution under the null hypothesis <code class="reqn">H_{0}</code>, that <code class="reqn"> \{ X_{1},..., X_{n} \} </code> comes from <code class="reqn">F(x)</code>.
+The package <span class="pkg">KSgeneral</span> implements a novel, accurate and efficient Fast Fourier Transform (FFT)-based method, referred as Exact-KS-FFT method to compute the complementary cdf,
+<code class="reqn">P(D_{n} \ge q)</code>, at a fixed <code class="reqn">q\in [0, 1]</code> for a given (hypothezied) purely discrete, mixed or continuous underlying cdf <code class="reqn">F(x)</code>, and arbitrary, possibly very large sample size <code class="reqn">n</code>.
+A plot of the complementary cdf <code class="reqn">P(D_{n} \ge q)</code>, <code class="reqn">0 \le q \le 1</code>, can also be produced.
+</p>
+<p>In other words, the package computes the p-value, <code class="reqn">P(D_{n} \ge q)</code> for any fixed critical level <code class="reqn">q\in [0, 1]</code>.
+If an observed (data) sample, <code class="reqn">\{x_{1},..., x_{n}\}</code>  is supplied, <span class="pkg">KSgeneral</span> computes the p-value <code class="reqn">P(D_{n} \ge d_{n})</code>, where <code class="reqn">d_{n}</code>  is the value of the KS test statistic computed based on <code class="reqn">\{x_{1},..., x_{n}\}</code>.  One can also compute the (complementary) cdf for the one-sided KS statistics <code class="reqn">D_{n}^{-}</code>  or <code class="reqn">D_{n}^{+}</code>  (cf., Dimitrova, Kaishev, Tan (2020)) by appropriately specifying correspondingly <code class="reqn">A_{i} = 0</code>  for all <code class="reqn">i</code>  or <code class="reqn">B_{i} = 1</code>  for all <code class="reqn">i</code>, in the function <code>ks_c_cdf_Rcpp</code>.
+</p>
+<p>The two-sample Kolmogorov-Smirnov (KS) and the Kuiper statistics are widely used to test the null hypothesis (<code class="reqn">H_0</code>) that two data samples come from the same underlying distribution. Given a pair of random samples <code class="reqn">\bm{X}_m=(X_{1},..., X_{m})</code> and <code class="reqn">\bm{Y}_n=(Y_{1},..., Y_{n})</code> of sizes <code>m</code> and <code>n</code> with empirical cdfs <code class="reqn">F_{m}(t)</code> and <code class="reqn">G_{n}(t)</code> respectively, coming from unknown CDFs <code class="reqn">F(x)</code> and <code class="reqn">G(x)</code>. It is assumed that <code class="reqn">F(x)</code> and <code class="reqn">G(x)</code> could be either <em>continuous</em>, <em>discrete</em> or <em>mixed</em>, which means that repeated observations are allowed in the corresponding observed samples. We want to test the null hypothesis <code class="reqn">H_0: F(x) = G(x)</code>  for all <code class="reqn">x</code>,  either against the alternative hypothesis <code class="reqn">H_1: F(x)\neq G(x)</code>  for at least one <code class="reqn">x</code>, which corresponds to the two-sided test, or against <code class="reqn">H_1: F(x)&gt; G(x)</code>  and <code class="reqn">H_1: F(x)&lt; G(x)</code>   for at least one <code class="reqn">x</code>, which corresponds to the two one-sided tests. The (weighted) two-sample Kolmogorov-Smirnov goodness-of-fit statistics that are used to test these hypotheses are generally defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">\Delta_{m,n} = \sup |F_{m}(t) - G_n(t)|W(E_{m+n}(t), \textnormal{ to test against the alternative } H_1: F(x)\neq G(x)</code>
+</p>
+ 
+<p style="text-align: center;"><code class="reqn">\Delta_{m,n}^{+} = \sup [F_{m}(t) - G_n(x)]W(E_{m+n}(t)), \textnormal{ to test against the alternative } H_1: F(x)&gt; G(x)</code>
+</p>
+ 
+<p style="text-align: center;"><code class="reqn">\Delta_{m,n}^{-} = \sup [G_n(t) - F_{m}(x)]W(E_{m+n}(t)), \textnormal{ to test against the alternative } H_1: F(x)&lt; G(x)</code>
+</p>
+ 
+<p>where <code class="reqn">E_{m+n}(t)</code>  is the empirical cdf of the pooled sample <code class="reqn">\bm{Z}_{m,n}=(X_{1},..., X_{m},Y_{1},..., Y_{n})</code>, <code class="reqn">W( )</code>  is a strictly positive weight function defined on <code class="reqn">(0,1)</code>. <span class="pkg">KSgeneral</span> implements an exact algorithm which is an extension of the Fortran 77 subroutine due to Nikiforov (1994), to calculate the exact p-value <code class="reqn">P(D_{m,n} \ge q)</code>, where <code class="reqn">q\in [0,1]</code>  and <code class="reqn">D_{m,n}</code>  is the two-sample Kolmogorov-Smirnov goodness-of-fit test defined on the space <code class="reqn">\Omega</code> of all possible <code class="reqn">\frac{(m+n)!}{m!n!}</code>  pairs of samples, <code class="reqn">\bm{X}'_m</code> and  <code class="reqn">\bm{Y}'_n</code> of sizes <code class="reqn">m</code> and <code class="reqn">n</code>, that are <em>randomly drawn from the pooled sample</em> <code class="reqn">\bm{Z}_{m+n}</code> <em>without replacement</em>. If two data samples <code class="reqn">\{x_1,\ldots,x_m\}</code> and <code class="reqn">\{y_1,\ldots,y_n\}</code>  are supplied, the package computes <code class="reqn">P(D_{m,n} \ge</code> <code>d</code><code class="reqn">)</code>, where <code>d</code> is the observed value of <code class="reqn">\Delta_{m,n}</code> computed based on these two observed samples. Samples may come from any continuous, discrete or mixed distribution, i.e. the test allows repeated observations to appear in the user provided data samples <code class="reqn">\{x_1,\ldots,x_m\}</code>, <code class="reqn">\{y_1,\ldots,y_n\}</code>  and their pooled sample <code class="reqn">\bm{Z}_{m+n}=\{x_1,\ldots,x_m,y_1,\ldots,y_n\}</code>.
+</p>
+<p>The two-sample (unweighted) Kuiper goodness-of-fit statistic is defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">\varsigma_{m,n} = \sup [F_{m}(t) - G_n(t)] - \inf [F_{m}(t) - G_n(t)].</code>
+</p>
+ 
+<p>It is widely used when the data samples are periodic or circular (data that are measured in radians). <span class="pkg">KSgeneral</span> calculates the exact p-value <code class="reqn">P(V_{m,n} \ge q)</code>, where <code class="reqn">q\in [0,2]</code> and <code class="reqn">V_{m,n}</code>  is the two-sample Kuiper goodness-of-fit test defined on the on the space, <code class="reqn">\Omega</code>, as described above. If two data samples <code class="reqn">\{x_1,\ldots,x_m\}</code> and <code class="reqn">\{y_1,\ldots,y_n\}</code>  are supplied, the package computes <code class="reqn">P(V_{m,n} \ge</code> <code>v</code><code class="reqn">)</code>, where <code>v</code>  is the observed value of <code class="reqn">\varsigma_{m,n}</code> computed based on these two observed samples. Similarly, as for the KS test, the two-sample Kuiper test also allows repeated observations in the user provided data samples <code class="reqn">\{x_1,\ldots,x_m\}</code>, <code class="reqn">\{y_1,\ldots,y_n\}</code>  and their pooled sample <code class="reqn">\bm{Z}_{m+n}=\{x_1,\ldots,x_m,y_1,\ldots,y_n\}</code>.
+</p>
+
+
+<h3>Details</h3>
+
+<p><b>One-sample KS test</b>:
+</p>
+<p>The Exact-KS-FFT method to compute p-values of the one-sample KS test in <span class="pkg">KSgeneral</span> is based on expressing the p-value <code class="reqn">P(D_{n} \ge q)</code> in terms of an appropriate rectangle probability with respect to the uniform order statistics, as noted by Gleser (1985) for <code class="reqn">P(D_{n} &gt; q)</code>.
+The latter representation is used to express <code class="reqn">P(D_{n} \ge q)</code> via a double-boundary non-crossing probability for a homogeneous Poisson process, with intensity <code class="reqn">n</code>, which is then efficiently computed using FFT, ensuring total run-time of order <code class="reqn">O(n^{2}log(n))</code> (see Dimitrova, Kaishev, Tan (2020) and also Moscovich and Nadler (2017) for the special case when <code class="reqn">F(x)</code> is continuous).
+</p>
+<p>The code for the one-sample KS test in <span class="pkg">KSgeneral</span> represents an R wrapper of the original C++ code due to Dimitrova, Kaishev, Tan (2020) and based on the C++ code developed by Moscovich and Nadler (2017).
+The package includes the functions <code>disc_ks_c_cdf</code>, <code>mixed_ks_c_cdf</code> and <code>cont_ks_c_cdf</code> that compute the complementary cdf <code class="reqn">P(D_n \ge q)</code>, for a fixed <code class="reqn">q</code>, <code class="reqn">0 \le q \le 1</code>, when <code class="reqn">F(x)</code> is purely discrete, mixed or continuous, respectively.
+<span class="pkg">KSgeneral</span> includes also the functions <code>disc_ks_test</code>, <code>mixed_ks_test</code> and <code>cont_ks_test</code> that compute the p-value <code class="reqn">P(D_{n} \ge d_{n})</code>, where <code class="reqn">d_{n}</code> is the value of the KS test statistic computed based on a user provided data sample <code class="reqn">\{x_{1}, ..., x_{n}\}</code>, when <code class="reqn">F(x)</code> is purely discrete, mixed or continuous, respectively.
+</p>
+<p>The functions <code>disc_ks_test</code> and <code>cont_ks_test</code> represent accurate and fast (run time <code class="reqn">O(n^{2}log(n))</code>) alternatives to the functions <code>ks.test</code> from the package <span class="pkg">dgof</span> and the function <code>ks.test</code> from the package <span class="pkg">stat</span>, which compute p-values of <code class="reqn">P(D_{n} \ge d_{n})</code>, assuming <code class="reqn">F(x)</code> is purely discrete or continuous, respectively.
+</p>
+<p>The package also includes the function <code>ks_c_cdf_Rcpp</code> which gives the flexibility to compute the complementary cdf (p-value) for the one-sided KS test statistics <code class="reqn">D_{n}^{-}</code> or <code class="reqn">D_{n}^{+}</code>.
+It also allows for faster computation time and possibly higher accuracy in computing <code class="reqn">P(D_{n} \ge q)</code>.
+</p>
+<p><b>Two-sample KS test and Kuiper test</b>:
+</p>
+<p>The method underlying for computing p-values of the two-sample KS and Kuiper tests in <span class="pkg">KSgeneral</span> is the extension of the algorithm due to Nikiforov (1994) and is based on expressing the p-value as the probability that a point sequence stays within a certain region in the two-dimensional integer-valued lattice. The algorithm for both tests uses a recursive formula to calculate the total number of point sequences within the region which is divided by the total number of elements in <code class="reqn">\Omega</code>, i.e. <code class="reqn">\frac{(m+n)!}{m!n!}</code>  to obtain the probability.
+</p>
+<p>For a particular realization of the pooled sample <code class="reqn">\bm{Z}_{m,n}=(X_{1},..., X_{m},Y_{1},..., Y_{n})</code>, the p-values calculated by the functions <code>KS2sample</code> and <code>Kuiper2sample</code> are the probabilities:
+</p>
+<p style="text-align: center;"><code class="reqn">P(D_{m,n}\geq q), P(V_{m,n}\geq q),</code>
+</p>
+
+<p>where <code class="reqn">D_{m,n}</code> and <code class="reqn">V_{m,n}</code>  are the two-sample Kolmogorov-Smirnov and Kuiper test statistics respectively, for two samples <code class="reqn">\bm{X}'_m</code> and  <code class="reqn">\bm{Y}'_n</code> of sizes <code class="reqn">m</code> and <code class="reqn">n</code>, <em>randomly drawn from the pooled sample without replacement</em>, i.e. they are defined on the space <code class="reqn">\Omega</code> and <code class="reqn">q\in [0,1]</code> for the KS test, <code class="reqn">q \in [0,2]</code> for the Kuiper test. 
+</p>
+<p>Both <code>KS2sample</code> and <code>Kuiper2sample</code> implement algorithms which generalize the method due to Nikiforov (1994), and calculate the exact p-values of the KS test and the Kuiper test respectively. Both of them allow tested data samples to come from continuous, discrete or mixed distributions (ties are also allowed).
+</p>
+<p><code>KS2sample</code> ensures a total worst-case run-time of order <code class="reqn">O(nm)</code>. Compared with other known algorithms, it not only allows more flexible choices on weights leading to better power (see Dimitrova, Jia, Kaishev 2024), but also is more efficient and more generally applicable for <em>large sample sizes</em>. <code>Kuiper2sample</code> is accurate and valid for large sample sizes. It ensures a total worst-case run-time of order <code class="reqn">O((mn)^{2})</code>. When <code>m</code> and <code>n</code> have large greatest common divisor (an extreme case is <code>m</code> = <code>n</code>), it ensures a total worst-case run-time of order <code class="reqn">O((m)^{2}n)</code>. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitrina S. Dimitrova &lt;D.Dimitrova@city.ac.uk&gt;,
+        Yun Jia &lt;yunjia2019@gmail.com&gt;,
+        Vladimir K. Kaishev &lt;Vladimir.Kaishev.1@city.ac.uk&gt;,
+        Senren Tan &lt;raymondtsrtsr@outlook.com&gt;
+</p>
+<p>Maintainer: Dimitrina S. Dimitrova &lt;D.Dimitrova@city.ac.uk&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Dimitrina S. Dimitrova, Vladimir K. Kaishev, Senren Tan. (2020) "Computing the Kolmogorov-Smirnov Distribution When the Underlying CDF is Purely Discrete, Mixed or Continuous". Journal of Statistical Software, <b>95</b>(10): 1-42. doi:10.18637/jss.v095.i10.
+</p>
+<p>Gleser L.J. (1985). "Exact Power of Goodness-of-Fit Tests of Kolmogorov Type for Discontinuous Distributions". Journal of the American Statistical Association, <b>80</b>(392), 954-958.
+</p>
+<p>Moscovich A., Nadler B. (2017). "Fast Calculation of Boundary Crossing Probabilities for Poisson Processes". Statistics and Probability Letters, <b>123</b>, 177-182.
+</p>
+<p>Dimitrina S. Dimitrova, Yun Jia, Vladimir K. Kaishev (2024). "The R functions KS2sample and Kuiper2sample: Efficient Exact Calculation of P-values of the Two-sample Kolmogorov-Smirnov and Kuiper Tests".  <em>submitted</em>
+</p>
+
+
+</div>

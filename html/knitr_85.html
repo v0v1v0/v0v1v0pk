@@ -1,0 +1,40 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>opts_template</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Template for creating reusable chunk options</h2>
+
+<h3>Description</h3>
+
+<p>Creates a template binding a label to a set of chunk options. Every chunk
+that references the template label will have the specified set of options
+applied to it.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">opts_template
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>list</code> of length 7.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">opts_template$set(myfigures = list(fig.height = 4, fig.width = 4))
+# later you can reuse these chunk options by 'opts.label', e.g.
+
+# &lt;&lt;foo, opts.label='myfigures'&gt;&gt;=
+
+# the above is equivalent to &lt;&lt;foo, fig.height=4, fig.width=4&gt;&gt;=
+</code></pre>
+
+
+</div>

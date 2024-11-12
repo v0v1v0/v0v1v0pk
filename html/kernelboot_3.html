@@ -1,0 +1,382 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernelboot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smoothed bootstrap</h2>
+
+<h3>Description</h3>
+
+<p>Smoothed bootstrap is an extension of standard bootstrap using kernel densities.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernelboot(
+  data,
+  statistic,
+  R = 500L,
+  bw = "default",
+  kernel = c("multivariate", "gaussian", "epanechnikov", "rectangular", "triangular",
+    "biweight", "cosine", "optcosine", "none"),
+  weights = NULL,
+  adjust = 1,
+  shrinked = TRUE,
+  ignore = NULL,
+  parallel = FALSE,
+  workers = 1L
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>vector, matrix, or data.frame. For non-numeric values standard bootstrap
+is applied (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>a function that is applied to the <code>data</code>. The first argument of
+the function will always be the original data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>the number of bootstrap replicates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+<p>the smoothing bandwidth to be used (see <code>density</code>).
+The kernels are scaled such that this is the standard deviation,
+or covariance matrix of the smoothing kernel. By default
+<code>bw.nrd0</code> is used for univariate data,
+and <code>bw.silv</code> is used for multivariate data. When using
+<code>kernel = "multivariate"</code> this parameter should be a
+<em>covariance matrix</em> of the smoothing kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used.
+This must partially match one of "multivariate", "gaussian",
+"rectangular", "triangular", "epanechnikov", "biweight", "cosine",
+"optcosine", or "none" with default "multivariate", and may be abbreviated.
+Using <code>kernel = "multivariate"</code> forces multivariate Gaussian kernel
+(or univariate Gaussian for univariate data). Using <code>kernel = "none"</code>
+forces using standard bootstrap (no kernel smoothing).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>vector of importance weights. It should have as many elements
+as there are observations in <code>data</code>. It defaults to uniform
+weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adjust</code></td>
+<td>
+<p>scalar; the bandwidth used is actually <code>adjust*bw</code>. This makes
+it easy to specify values like 'half the default' bandwidth.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shrinked</code></td>
+<td>
+<p>logical; if <code>TRUE</code> random generation algorithm preserves
+means and variances of the variables. This parameter is ignored for
+"multivariate" kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore</code></td>
+<td>
+<p>vector of names of columns to be ignored during the smoothing phase of
+bootstrap procedure (their values are not altered using random noise).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>if <code>TRUE</code>, parallel computing is used (see <code>future_lapply</code>).
+<em>Warning:</em> using parallel computing does not necessary have to
+lead to improved performance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>workers</code></td>
+<td>
+<p>the number of workers used for parallel computing.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><em>Smoothed bootstrap</em> is an extension of standard bootstrap procedure, where instead
+of drawing samples with replacement from the empirical distribution, they are drawn
+from kernel density estimate of the distribution.
+</p>
+<p>For smoothed bootstrap, points (in univariate case), or rows (in multivariate case), are drawn with
+replacement, to obtain samples of size <code class="reqn">n</code> from the initial dataset of size <code class="reqn">n</code>, as with
+standard bootstrap. Next, random noise from kernel density <code class="reqn">K</code> is added to each of the drawn
+values. The procedure is repeated <code class="reqn">R</code> times and <code>statistic</code> is evaluated on each of the
+samples.
+</p>
+<p>The noise is added <em>only</em> to the numeric columns, while non-numeric columns (e.g.
+<code>character</code>, <code>factor</code>, <code>logical</code>) are not altered. What follows, to the
+non-numeric columns and columns listed in <code>ignore</code> parameter standard bootstrap procedure
+is applied.
+</p>
+<p><strong>Univariate kernel densities</strong>
+</p>
+<p>Univariate kernel density estimator is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">
+\hat{f_h}(x) = \sum_{i=1}^n w_i \, K_h(x-y_i)
+</code>
+</p>
+
+<p>where <code class="reqn">w</code> is a vector of weights such that all <code class="reqn">w_i \ge 0</code>
+and <code class="reqn">\sum_i w_i = 1</code> (by default uniform <code class="reqn">1/n</code> weights are used),
+<code class="reqn">K_h = K(x/h)/h</code> is kernel <code class="reqn">K</code> parametrized by bandwidth <code class="reqn">h</code>
+and <code class="reqn">y</code> is a vector of data points used for estimating the kernel density.
+</p>
+<p>To draw samples from univariate kernel density, the following procedure can be applied (Silverman, 1986):
+</p>
+<p><em>Step 1</em> Sample <code class="reqn">i</code> uniformly with replacement from <code class="reqn">1,\dots,n</code>.
+</p>
+<p><em>Step 2</em> Generate <code class="reqn">\varepsilon</code> to have probability density <code class="reqn">K</code>.
+</p>
+<p><em>Step 3</em> Set <code class="reqn">x = y_i + h\varepsilon</code>.
+</p>
+<p>If samples are required to have the same variance as <code>data</code>
+(i.e. <code>shrinked = TRUE</code>), then <em>Step 3</em> is modified
+as following:
+</p>
+<p><em>Step 3'</em> <code class="reqn">
+x = \bar y + (y_i - \bar y + h\varepsilon)/(1 + h^2 \sigma^2_K/\sigma^2_Y)^{1/2}
+</code>
+</p>
+<p>where <code class="reqn">\sigma_K^2</code> is variance of the kernel (fixed to 1 for kernels used in this package).
+</p>
+<p>When shrinkage described in <em>Step 3'</em> is applied, the smoothed bootstrap density function changes
+it's form to
+</p>
+<p style="text-align: center;"><code class="reqn">
+\hat{f}_{h,b}(x) = (1 + r) \; \hat{f_h}(x + r(x - \bar{y}))
+</code>
+</p>
+
+<p>where <code class="reqn">r = \left(1 + h^2 \sigma_K^2 / \sigma_y^2 \right)^{1/2}-1</code>.
+</p>
+<p>This package offers the following univariate kernels:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<em>Gaussian</em>     </td>
+<td style="text-align: left;"> <code class="reqn">\frac{1}{\sqrt{2\pi}} e^{-{u^2}/2}</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<em>Rectangular</em>  </td>
+<td style="text-align: left;"> <code class="reqn">\frac{1}{2} \ \mathbf{1}_{(|u|\leq1)}</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<em>Triangular</em>   </td>
+<td style="text-align: left;"> <code class="reqn">(1-|u|) \ \mathbf{1}_{(|u|\leq1)}</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<em>Epanchenikov</em> </td>
+<td style="text-align: left;"> <code class="reqn">\frac{3}{4}(1-u^2) \ \mathbf{1}_{(|u|\leq1)}</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<em>Biweight</em>     </td>
+<td style="text-align: left;"> <code class="reqn">\frac{15}{16}(1-u^2)^2 \ \mathbf{1}_{(|u|\leq1)}</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<em>Cosine</em>       </td>
+<td style="text-align: left;"> <code class="reqn">\frac{1}{2} \left(1 + \cos(\pi u)\right) \ \mathbf{1}_{(|u|\leq1)}</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<em>Optcosine</em>    </td>
+<td style="text-align: left;"> <code class="reqn">\frac{\pi}{4}\cos\left(\frac{\pi}{2}u\right) \ \mathbf{1}_{(|u|\leq1)}</code>
+</td>
+</tr>
+</table>
+<p>All the kernels are re-scalled so that their standard deviations are equal to 1,
+so that bandwidth parameter controls their standard deviations.
+</p>
+<p>Random generation from Epanchenikov kernel is done using algorithm
+described by Devroye (1986). For optcosine kernel inverse transform
+sampling is used. For biweight kernel random values are drawn from
+<code class="reqn">\mathrm{Beta}(3, 3)</code> distribution and
+<code class="reqn">\mathrm{Beta}(3.3575, 3.3575)</code>
+distribution serves as a close approximation of cosine kernel.
+Random generation for triangular kernel is done by taking difference
+of two i.i.d. uniform random variates. To sample from rectangular
+and Gaussian kernels standard random generation algorithms are used
+(see <code>runif</code> and <code>rnorm</code>).
+</p>
+<p><strong>Product kernel densities</strong>
+</p>
+<p>Univariate kernels may easily be extended to multiple dimensions by
+using product kernel
+</p>
+<p style="text-align: center;"><code class="reqn">
+\hat{f_H}(\mathbf{x}) = \sum_{i=1}^n w_i \prod_{j=1}^m
+K_{h_j}(x_i - y_{ij})
+</code>
+</p>
+
+<p>where <code class="reqn">w</code> is a vector of weights such that all <code class="reqn">w_i \ge 0</code>
+and <code class="reqn">\sum_i w_i = 1</code> (by default uniform <code class="reqn">1/n</code> weights are used),
+and <code class="reqn">K_{h_j}</code> are univariate kernels <code class="reqn">K</code> parametrized by bandwidth
+<code class="reqn">h_j</code>, where <code class="reqn">\boldsymbol{y}</code> is a matrix of data points used for
+estimating the kernel density.
+</p>
+<p>Random generation from product kernel is done by drawing with replacement
+rows of <code class="reqn">y</code>, and then adding to the sampled values random noise from
+univariate kernels <code class="reqn">K</code>, parametrized by corresponding bandwidth parameters
+<code class="reqn">h_j</code>.
+</p>
+<p><strong>Multivariate kernel densities</strong>
+</p>
+<p>Multivariate kernel density estimator may also be defined in terms of multivariate kernels
+<code class="reqn">K_H</code> (e.g. multivariate normal distribution, as in this package)
+</p>
+<p style="text-align: center;"><code class="reqn">
+\hat{f_H}(\mathbf{x}) = \sum_{i=1}^n w_i \, K_H( \mathbf{x}-\boldsymbol{y}_i)
+</code>
+</p>
+
+<p>where <code class="reqn">w</code> is a vector of weights such that all <code class="reqn">w_i \ge 0</code>
+and <code class="reqn">\sum_i w_i = 1</code> (by default uniform <code class="reqn">1/n</code> weights are used),
+<code class="reqn">K_H</code> is kernel <code class="reqn">K</code> parametrized by bandwidth matrix <code class="reqn">H</code> and
+<code class="reqn">\boldsymbol{y}</code> is a matrix of data points used for estimating the kernel density.
+</p>
+<p><em>Notice:</em> When using multivariate normal (Gaussian) distribution as a kernel <code class="reqn">K</code>, the
+bandwidth parameter <code class="reqn">H</code> is a <em>covariance matrix</em> as compared to standard deviations
+used in univariate and product kernels.
+</p>
+<p>Random generation from multivariate kernel is done by drawing with replacement
+rows of <code class="reqn">y</code>, and then adding to the sampled values random noise from
+multivariate normal distribution centered at the data points and parametrized
+by corresponding bandwidth matrix <code class="reqn">H</code>. For further details see <code>rmvg</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Silverman, B. W. (1986). Density estimation for statistics and data analysis.
+Chapman and Hall/CRC.
+</p>
+<p>Scott, D. W. (1992). Multivariate density estimation: theory, practice,
+and visualization. John Wiley &amp; Sons.
+</p>
+<p>Efron, B. (1981). Nonparametric estimates of standard error: the jackknife,
+the bootstrap and other methods. Biometrika, 589-599.
+</p>
+<p>Hall, P., DiCiccio, T.J. and Romano, J.P. (1989). On smoothing and the bootstrap.
+The Annals of Statistics, 692-704.
+</p>
+<p>Silverman, B.W. and Young, G.A. (1987). The bootstrap: To smooth or not to smooth?
+Biometrika, 469-479.
+</p>
+<p>Scott, D.W. (1992). Multivariate density estimation: theory, practice,
+and visualization. John Wiley &amp; Sons.
+</p>
+<p>Wang, S. (1995). Optimizing the smoothed bootstrap. Annals of the Institute of
+Statistical Mathematics, 47(1), 65-80.
+</p>
+<p>Young, G.A. (1990). Alternative smoothed bootstraps. Journal of the Royal
+Statistical Society. Series B (Methodological), 477-484.
+</p>
+<p>De Angelis, D. and Young, G.A. (1992). Smoothing the bootstrap.
+International Statistical Review/Revue Internationale de Statistique, 45-56.
+</p>
+<p>Polansky, A.M. and Schucany, W. (1997). Kernel smoothing to improve bootstrap
+confidence intervals. Journal of the Royal Statistical Society: Series B
+(Statistical Methodology), 59(4), 821-838.
+</p>
+<p>Devroye, L. (1986). Non-uniform random variate generation. New York: Springer-Verlag.
+</p>
+<p>Parzen, E. (1962). On estimation of a probability density function and mode.
+The annals of mathematical statistics, 33(3), 1065-1076.
+</p>
+<p>Silverman, B.W. and Young, G.A. (1987). The bootstrap: To smooth or not to smooth?
+Biometrika, 469-479.
+</p>
+<p>Jones, M.C. (1991). On correcting for variance inflation in kernel density estimation.
+Computational Statistics &amp; Data Analysis, 11, 3-15.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bw.silv</code>, <code>density</code>,
+<code>bandwidth</code>, <code>kernelboot-class</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+set.seed(1)
+
+# smooth bootstrap of parameters of linear regression
+
+b1 &lt;- kernelboot(mtcars, function(data) coef(lm(mpg ~ drat + wt, data = data)) , R = 250)
+b1
+summary(b1)
+
+b2 &lt;- kernelboot(mtcars, function(data) coef(lm(mpg ~ drat + wt, data = data)) , R = 250,
+                 kernel = "epanechnikov")
+b2
+summary(b2)
+
+# smooth bootstrap of parameters of linear regression
+# smoothing phase is not applied to "am" and "cyl" variables
+
+b3 &lt;- kernelboot(mtcars, function(data) coef(lm(mpg ~ drat + wt + am + cyl, data = data)) , R = 250,
+                 ignore = c("am", "cyl"))
+b3
+summary(b3)
+
+# standard bootstrap (without kernel smoothing)
+
+b4 &lt;- kernelboot(mtcars, function(data) coef(lm(mpg ~ drat + wt + am + cyl, data = data)) , R = 250,
+                 ignore = colnames(mtcars))
+b4
+summary(b4)
+
+# smooth bootstrap for median of univariate data
+
+b5 &lt;- kernelboot(mtcars$mpg, function(data) median(data) , R = 250)
+b5
+summary(b5)
+
+
+</code></pre>
+
+
+</div>

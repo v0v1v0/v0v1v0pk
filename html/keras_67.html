@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_progbar_logger</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Callback that prints metrics to stdout.</h2>
+
+<h3>Description</h3>
+
+<p>Callback that prints metrics to stdout.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_progbar_logger(count_mode = "samples", stateful_metrics = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>count_mode</code></td>
+<td>
+<p>One of "steps" or "samples". Whether the progress bar
+should count samples seens or steps (batches) seen.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stateful_metrics</code></td>
+<td>
+<p>List of metric names that should <em>not</em>
+be averaged onver an epoch. Metrics in this list will be logged
+as-is in <code>on_epoch_end</code>. All others will be averaged in
+<code>on_epoch_end</code>.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other callbacks: 
+<code>callback_csv_logger()</code>,
+<code>callback_early_stopping()</code>,
+<code>callback_lambda()</code>,
+<code>callback_learning_rate_scheduler()</code>,
+<code>callback_model_checkpoint()</code>,
+<code>callback_reduce_lr_on_plateau()</code>,
+<code>callback_remote_monitor()</code>,
+<code>callback_tensorboard()</code>,
+<code>callback_terminate_on_naan()</code>
+</p>
+
+
+</div>

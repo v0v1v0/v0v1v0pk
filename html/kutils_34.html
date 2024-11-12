@@ -1,0 +1,169 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keysPool</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Homogenize class values and create a long key by pooling variable
+keys.</h2>
+
+<h3>Description</h3>
+
+<p>For long-format keys, this is one way to correct for errors in
+"class_old" or "class_new" for common variables. For a long key
+created by stacking together several long keys, or for a list of
+long keys, this will try to homogenize the classes by using a
+"highest common denominator" approach.  If one key has x1 as a
+floating point, but another block of rows in the key has x1 as
+integer, then class must be changed to floating point
+(numeric). If another section of a key has x1 as a character, then
+character becomes the class.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keysPool(
+  keylong = NULL,
+  keysplit = NULL,
+  classes = list(c("logical", "integer"), c("integer", "numeric"), c("ordered",
+    "factor"), c("factor", "character")),
+  colnames = c("class_old", "class_new"),
+  textre = "TEXT$"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>keylong</code></td>
+<td>
+<p>A list of long keys, or just one long key,
+presumably a result of rbinding several long keys.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keysplit</code></td>
+<td>
+<p>Not often needed for user-level code. A list of
+key blocks, each of which is to be inspected and
+homogenized. Not used if a keylong argument is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classes</code></td>
+<td>
+<p>A list of vectors specifying legal promotions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colnames</code></td>
+<td>
+<p>Either c("class_old","class_new), ""class_old", or
+"class_new".  The former is the default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>textre</code></td>
+<td>
+<p>A regular expression matching a column name to be
+treated as character. Default matches any variable name ending
+in "TEXT"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Users might run keyTemplate on several data sets, arriving
+at keys that need to be combined.  The long versions of the
+keys can be stacked together by a function like <code>rbind</code>.
+If the values class_old and class_new for a single variable are
+inconsistent, then the "key stack" will fail the tests in keyCheck.
+This function automates the process of fixing the class variables by
+"promoting" classes where possible.
+</p>
+<p>Begin with a simple example.  In one data set, the value of x is
+drawn from integers 1L, 2L, 3L, while in another set it is
+floating values like 1.1, 2.2. After creating long format keys,
+and stacking them together, the values of class_old will clash.
+For x, we will observe both "integer" and "numeric" in the
+class_old column.  In that situation, the class_old for all of the
+rows under consideration should be set as "numeric".
+</p>
+<p>The promotion schemes are described by the variable classes, where
+we have the most conservative changes first. The most destructive
+change is when variables are converted from integer to character,
+for example. The conservative conversion strategies are specified
+in the classes variable, in which the last element in a vector
+will be used to replace the preceeding classes.  For example,
+c("ordered", "factor", "character") means that the class_old
+values of "ordered" and "factor" will be replaced by "character".
+</p>
+<p>The conversions specified by classes are tried, in order.
+1. logical -&gt; integer
+2. integer -&gt; numeric
+3. ordered -&gt; factor
+</p>
+<p>If their application fails to homogenize a vector, then class is
+changed to "character". For example, when the value of class_old
+observed is c("ordered", "numeric", "character"). In that case,
+the class is promoted to "character", it is the least common
+denominator.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A class-corrected version of the same format as the input,
+either a long key or a list of key elements.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat1 &lt;- data.frame(x1 = as.integer(rnorm(100)), x2 = sample(c("Apple", "Orange"),
+                   100, replace = TRUE), x3 = ifelse(rnorm(100) &lt; 0, TRUE, FALSE))
+dat2 &lt;- data.frame(x1 = rnorm(100), x2 = ordered(sample(c("Apple", "Orange"),
+                   100, replace = TRUE)), x3 = rbinom(100, 1, .5),
+                   stringsAsFactors = FALSE)
+key1 &lt;- keyTemplate(dat1, long = TRUE)
+key2 &lt;- keyTemplate(dat2, long = TRUE)
+keys2stack &lt;- rbind(key1, key2)
+keys2stack.fix &lt;- keysPool(keys2stack)
+keys2stack.fix2 &lt;- keysPool(keys2stack.fix, colname = "class_new")
+## Sometimes this will not be able to homogenize
+dat1 &lt;- data.frame(x1 = as.integer(rnorm(100)),
+                   x2 = sample(c("Apple", "Orange"), 100, replace = TRUE))
+dat2 &lt;- data.frame(x1 = rnorm(100),
+                   x2 = sample(c("Apple", "Orange"), 100, replace = TRUE),
+                   stringsAsFactors = FALSE)
+key1 &lt;- keyTemplate(dat1, long = TRUE)
+key2 &lt;- keyTemplate(dat2, long = TRUE)
+## Create a stack of keys for yourself
+keys2stack &lt;- rbind(key1, key2)
+keys.fix &lt;- keysPool(keys2stack)
+## We will create stack of keys for you
+keys.fix2 &lt;- keysPool(list(key1, key2)) 
+## View(keys.fix)
+## View(keys.fix2)
+
+
+## If you have wide keys, convert them with wide2long, either by
+key1 &lt;- keyTemplate(dat1)
+key2 &lt;- keyTemplate(dat2)
+keysstack.wide &lt;- rbind(wide2long(key1), wide2long(key2))
+keys.fix &lt;- keysPool(keysstack.wide)
+## or
+keysPool(list(wide2long(key1), wide2long(key2)))
+</code></pre>
+
+
+</div>

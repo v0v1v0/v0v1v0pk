@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmpp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k-means++</h2>
+
+<h3>Description</h3>
+
+<p><code>kmpp</code> Computes initial centroids via kmeans++
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmpp(X, k)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix whose rows are observations and columns are features</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of clusters.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data matrix whose rows contain initial centroids for the k clusters
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n &lt;- 10
+p &lt;- 2
+X &lt;- matrix(rnorm(n*p),n,p)
+k &lt;- 3
+kmpp(X,k)
+
+</code></pre>
+
+
+</div>

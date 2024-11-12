@@ -1,0 +1,244 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vorobVol_optim_parallel2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute volume criterion</h2>
+
+<h3>Description</h3>
+
+<p>Compute the volume criterion. Useful for optimization routines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vorobVol_optim_parallel2(x, other.points, integration.points,
+  integration.weights = NULL, intpoints.oldmean, intpoints.oldsd,
+  precalc.data, model, T, new.noise.var = NULL, batchsize, alpha,
+  current.crit, typeEx = "&gt;")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>One point where to evaluate the criterion</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>other.points</code></td>
+<td>
+<p>remaining points of the batch</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.points</code></td>
+<td>
+<p><code class="reqn">p*d</code> matrix with the integration points for evaluating numerically the integral of the criterion</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.weights</code></td>
+<td>
+<p>vector of size <code class="reqn">p</code> containting the integration weights for the integral numerical evaluation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intpoints.oldmean</code></td>
+<td>
+<p>Vector of size <code class="reqn">p</code> corresponding to the kriging mean at the integration points before adding the batchsize points <code>x</code> to the design of experiments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intpoints.oldsd</code></td>
+<td>
+<p>Vector of size <code class="reqn">p</code> corresponding to the kriging standard deviation at the integration points before adding the batchsize points <code>x</code> to the design of experiments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precalc.data</code></td>
+<td>
+<p>List containing useful data to compute quickly the updated kriging variance. This list can be generated using the <code>precomputeUpdateData</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>a km Model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>threshold</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.noise.var</code></td>
+<td>
+<p>Optional scalar with the noise variance at the new observation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+<p>size of the batch of new points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>threshold on pn obtained with conservative estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>current.crit</code></td>
+<td>
+<p>starting value for criterion</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>typeEx</code></td>
+<td>
+<p>a character ("&gt;" or "&lt;") identifying the type of excursion</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The value of the criterion at <code>x</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dario Azzimonti (IDSIA, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Azzimonti, D. and Ginsbourger, D. (2018). <em>Estimating orthant probabilities of high dimensional Gaussian vectors with an application to set estimation</em>.  Journal of Computational and Graphical Statistics, 27(2), 255-267.
+</p>
+<p>Azzimonti, D. (2016). <em>Contributions to Bayesian set estimation relying on random field priors</em>. PhD thesis, University of Bern.
+</p>
+<p>Azzimonti, D., Ginsbourger, D., Chevalier, C., Bect, J., and Richet, Y. (2018). <em>Adaptive design of experiments for conservative estimation of excursion sets</em>. Under revision. Preprint at <a href="https://hal.archives-ouvertes.fr/hal-01379642">hal-01379642</a>
+</p>
+<p>Chevalier, C., Bect, J., Ginsbourger, D., Vazquez, E., Picheny, V., and Richet, Y. (2014). <em>Fast kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>. Technometrics, 56(4):455-465.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>EGIparallel</code>, <code>max_futureVol_parallel</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#vorobVol_optim_parallel2
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- 80 #threshold
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design,
+            response = response,covtype="matern3_2")
+
+###we need to compute some additional arguments:
+#integration points, and current kriging means and variances at these points
+integcontrol &lt;- list(n.points=50,distrib="vorob",init.distrib="MC")
+obj &lt;- integration_design(integcontrol=integcontrol,
+                          lower=c(0,0),upper=c(1,1),model=model,T=T)
+
+integration.points &lt;- obj$integration.points
+integration.weights &lt;- obj$integration.weights
+
+# alpha, the pn threshold should be computed with conservativeEstimate
+# Here it is fixed at 0.992364
+alpha &lt;- 0.992364
+
+## Not run: 
+# You can compute it with the following code
+CE_design=as.matrix (randtoolbox::sobol (n = 500*model@d,
+                                      dim = model@d))
+colnames(CE_design) &lt;- colnames(model@X)
+
+CE_pred = predict.km(object = model, newdata = CE_design,
+                          type = "UK",cov.compute = TRUE)
+CE_pred$cov &lt;- CE_pred$cov +1e-7*diag(nrow = nrow(CE_pred$cov),ncol = ncol(CE_pred$cov))
+
+Cestimate &lt;- anMC::conservativeEstimate(alpha = 0.95, pred=CE_pred,
+                           design=CE_design, threshold=T, pn = NULL,
+                           type = "&gt;", verb = 1,
+                           lightReturn = TRUE, algo = "GANMC")
+alpha &lt;- Cestimate$lvs
+
+## End(Not run)
+
+
+pred &lt;- predict_nobias_km(object=model,newdata=integration.points,
+                          type="UK",se.compute=TRUE)
+intpoints.oldmean &lt;- pred$mean ; intpoints.oldsd&lt;-pred$sd
+
+#another precomputation
+precalc.data &lt;- precomputeUpdateData(model,integration.points)
+
+batchsize &lt;- 4
+other.points &lt;- c(0.7,0.5,0.5,0.9,0.9,0.8)
+x &lt;- c(0.1,0.2)
+#one evaluation of the vorobVol_optim_parallel criterion2
+#we calculate the expectation of the future volume vorobev uncertainty when
+#1+3 points are added to the doe
+#the 1+3 points are (0.1,0.2) and (0.7,0.5), (0.5,0.9), (0.9,0.8)
+vorobVol_optim_parallel2(x=x,other.points=other.points,integration.points=integration.points,
+                      integration.weights=integration.weights,
+                      intpoints.oldmean=intpoints.oldmean,intpoints.oldsd=intpoints.oldsd,
+                      precalc.data=precalc.data,T=T,model=model,
+                      batchsize=batchsize,alpha=alpha)
+
+
+n.grid &lt;- 20 #you can run it with 100
+x.grid &lt;- y.grid &lt;- seq(0,1,length=n.grid)
+x &lt;- expand.grid(x.grid, y.grid)
+vorobVol_parallel.grid &lt;- apply(X=x,FUN=vorobVol_optim_parallel2,MARGIN=1,other.points=other.points,
+                             integration.points=integration.points,
+                             integration.weights=integration.weights,
+                             intpoints.oldmean=intpoints.oldmean,intpoints.oldsd=intpoints.oldsd,
+                             precalc.data=precalc.data,T=T,model=model,
+                             batchsize=batchsize,alpha=alpha)
+z.grid &lt;- matrix(vorobVol_parallel.grid, n.grid, n.grid)
+
+#plots: contour of the criterion, doe points and new point
+image(x=x.grid,y=y.grid,z=z.grid,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid,15,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+points(matrix(other.points,ncol=2,byrow=TRUE), col="red", pch=17, lwd=4,cex=2)
+
+# Note that we want to maximize this criterion.
+i.best &lt;- which.max(vorobVol_parallel.grid)
+points(x[i.best,], col="blue", pch=17, lwd=4,cex=3)
+
+#plots the real (unknown in practice) curve f(x)=T
+testfun.grid &lt;- apply(x,1,testfun)
+z.grid.2 &lt;- matrix(testfun.grid, n.grid, n.grid)
+contour(x.grid,y.grid,z.grid.2,levels=T,col="blue",add=TRUE,lwd=5)
+title("Contour lines of vorobVol_parallel criterion (black) and of f(x)=T (blue)")
+
+
+
+</code></pre>
+
+
+</div>

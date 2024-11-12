@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>linkedLR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>LR with pairwise linked markers</h2>
+
+<h3>Description</h3>
+
+<p>This function does the main LR calculations of the KLINK app.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">linkedLR(
+  pedigrees,
+  linkageMap,
+  linkedPairs = NULL,
+  maxdist = Inf,
+  markerData = NULL,
+  mapfun = "Kosambi",
+  lumpSpecial = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pedigrees</code></td>
+<td>
+<p>A list of two pedigrees.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linkageMap</code></td>
+<td>
+<p>A data frame with columns including <code>Marker</code>, <code>Chrom</code> and
+<code>PosCM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linkedPairs</code></td>
+<td>
+<p>A list of marker pairs. If not supplied, calculated as
+<code>getLinkedPairs(markerData$Marker, linkageMap, maxdist = maxdist)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxdist</code></td>
+<td>
+<p>A number, passed onto <code>getLinkedMarkers()</code> if <code>linkedPairs</code> is
+NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>markerData</code></td>
+<td>
+<p>A data frame with marker data, typically the output of
+<code>markerSummary(pedigrees)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mapfun</code></td>
+<td>
+<p>Name of the map function to be used; either "Haldane" or
+"Kosambi" (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lumpSpecial</code></td>
+<td>
+<p>A logical, by default TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame with detailed LR results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(forrel)
+
+ped1 = nuclearPed(fa = "AF", child = "CH") |&gt;
+  profileSim(markers = NorwegianFrequencies)
+
+ped2 = singletons(c("AF", "CH")) |&gt;
+  transferMarkers(from = ped1, to = _)
+
+pedigrees = list(ped1, ped2)
+
+linkedLR(pedigrees, KLINK::LINKAGEMAP)
+
+# For testing
+# .linkedLR(pedigrees, markerpair = c("SE33", "D6S474"), linkageMap = LINKAGEMAP)
+
+</code></pre>
+
+
+</div>

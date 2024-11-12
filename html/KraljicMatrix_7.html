@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MAVF_sensitivity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multi-attribute value function sensitivity analysis</h2>
+
+<h3>Description</h3>
+
+<p><code>MAVF_sensitivity</code> computes summary statistics for multi-attribute value
+scores of <code>x</code> and <code>y</code> given a range of swing weights for each attribute
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MAVF_sensitivity(data, x, y, x_wt_min, x_wt_max, y_wt_min, y_wt_max)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Variable from data frame to represent <code>x</code> attribute values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Variable from data frame to represent <code>y</code> attribute values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_wt_min</code></td>
+<td>
+<p>Lower bound anchor point for <code>x</code> attribute swing weight</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_wt_max</code></td>
+<td>
+<p>Upper bound anchor point for <code>x</code> attribute swing weight</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_wt_min</code></td>
+<td>
+<p>Lower bound anchor point for <code>y</code> attribute swing weight</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_wt_max</code></td>
+<td>
+<p>Upper bound anchor point for <code>y</code> attribute swing weight</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The sensitivity analysis performs a Monte Carlo simulation with 1000
+trials for each product or service (row). Each trial randomly selects a weight
+from a uniform distribution between the lower and upper bound weight parameters
+and calculates the mult-attribute utility score. From these trials, summary
+statistics for each product or service (row) are calculated and reported for
+the final output.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with added variables consisting of sensitivity analysis
+summary statistics for each product or service (row).
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>MAVF_score</code> for computing the multi-attribute value score of <code>x</code> and <code>y</code>
+given their respective weights
+</p>
+<p><code>SAVF_score</code> for computing the exponential single attribute value score
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Given the following data frame that contains \code{x} and \code{y} attribute
+# values for each product or service contract, we can compute how the range of
+# swing weights for each \code{x} and \code{y} attribute influences the multi-
+# attribute value score.
+
+df &lt;- data.frame(contract = 1:10,
+                 x_attribute = c(0.92, 0.79, 1.00, 0.39, 0.68, 0.55, 0.73, 0.76, 1.00, 0.74),
+                 y_attribute = c(0.52, 0.19, 0.62, 1.00, 0.55, 0.52, 0.53, 0.46, 0.61, 0.84))
+
+MAVF_sensitivity(df, x_attribute, y_attribute, .55, .75, .25, .45)
+
+</code></pre>
+
+
+</div>

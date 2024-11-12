@@ -1,0 +1,31 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knit_global</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The global environment in which code chunks are evaluated</h2>
+
+<h3>Description</h3>
+
+<p>This function makes the environment of a code chunk accessible inside a
+chunk.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knit_global()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>It returns the <code>envir</code> argument of <code>knit</code>, e.g. if we call
+<code>knit()</code> in the global environment, <code>knit_global()</code> returns
+R's global environment by default. You can call functions like
+<code>ls()</code> on this environment.
+</p>
+
+
+</div>

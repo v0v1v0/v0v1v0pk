@@ -1,0 +1,149 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.keras.src.models.model.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generates output predictions for the input samples.</h2>
+
+<h3>Description</h3>
+
+<p>Generates output predictions for the input samples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.src.models.model.Model'
+predict(
+  object,
+  x,
+  ...,
+  batch_size = NULL,
+  verbose = getOption("keras.verbose", default = "auto"),
+  steps = NULL,
+  callbacks = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input samples. It could be:
+</p>
+
+<ul>
+<li>
+<p> A array (or array-like), or a list of arrays
+(in case the model has multiple inputs).
+</p>
+</li>
+<li>
+<p> A tensor, or a list of tensors
+(in case the model has multiple inputs).
+</p>
+</li>
+<li>
+<p> A TF Dataset.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Integer or <code>NULL</code>.
+Number of samples per batch.
+If unspecified, <code>batch_size</code> will default to <code>32</code>.
+Do not specify the <code>batch_size</code> if your data is in the
+form of a TF Dataset or a generator
+(since they generate batches).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p><code>"auto"</code>, <code>0</code>, <code>1</code>, or <code>2</code>. Verbosity mode.
+<code>0</code> = silent, <code>1</code> = progress bar, <code>2</code> = one line per epoch.
+<code>"auto"</code> becomes 1 for most cases,
+<code>2</code> if in a knitr render or running on a distributed training server.
+Note that the progress bar is not
+particularly useful when logged to a file,
+so <code>verbose=2</code> is recommended when not running interactively
+(e.g., in a production environment). Defaults to <code>"auto"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>Total number of steps (batches of samples)
+before declaring the prediction round finished.
+Ignored with the default value of <code>NULL</code>.
+If <code>x</code> is a TF Dataset and <code>steps</code> is <code>NULL</code>,
+<code>predict()</code> will run until the input dataset is exhausted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>callbacks</code></td>
+<td>
+<p>List of <code>Callback</code> instances.
+List of callbacks to apply during prediction.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Computation is done in batches. This method is designed for batch
+processing of large numbers of inputs. It is not intended for use inside
+of loops that iterate over your data and process small numbers of inputs
+at a time.
+</p>
+<p>For small numbers of inputs that fit in one batch,
+directly call the model <code>model$call</code> for faster execution, e.g.,
+<code>model(x)</code>, or <code>model(x, training = FALSE)</code> if you have layers such as
+<code>BatchNormalization</code> that behave differently during
+inference.
+</p>
+
+
+<h3>Value</h3>
+
+<p>R array(s) of predictions.
+</p>
+
+
+<h3>Note</h3>
+
+<p>See <a href="https://keras.io/getting_started/faq/#whats-the-difference-between-model-methods-predict-and-call">this FAQ entry</a>
+for more details about the difference between <code>Model</code> methods
+<code>predict()</code> and <code>call()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_training_apis#predict-method">https://keras.io/api/models/model_training_apis#predict-method</a>
+</p>
+</li></ul>
+<p>Other model training: <br><code>compile.keras.src.models.model.Model()</code> <br><code>evaluate.keras.src.models.model.Model()</code> <br><code>predict_on_batch()</code> <br><code>test_on_batch()</code> <br><code>train_on_batch()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>net.kernel.hsa04020</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Example network-based kernel matrix for pathway hsa04020.</h2>
+
+<h3>Description</h3>
+
+<p>An example of a kernel object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(net.kernel.hsa04020)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>kernel</code> and type 'network' for the pathway 
+hsa04020.
+</p>
+
+<dl>
+<dt>type</dt>
+<dd>
+<p>specifies which kernel function was used to calculate the kernel</p>
+</dd>
+<dt>kernel</dt>
+<dd>
+<p>includes the kernel matrix calculated for the pathway</p>
+</dd>
+<dt>pathway</dt>
+<dd>
+<p>includes the <code>pathway</code> object of the pathway, for which  
+the kernel matrix was calculated</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>simulated data and Ensembl extract
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(net.kernel.hsa04020)
+# derivation 
+data(gwas)
+data(hsa04020)
+net_kernel &lt;- calc_kernel(gwas, hsa04020, knots=NULL, type='net', calculation='cpu')
+# are the value differences smaller than machine epsilon?
+all(abs(net.kernel.hsa04020@kernel - net_kernel@kernel) &lt; sqrt(.Machine$double.eps))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covQualNested-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class <code>"covQualNested"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Correlation or covariance structure for qualitative inputs
+(i.e. factors) obtained by nesting.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("covQualNested",
+    ...)</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>covLevels</code>:</dt>
+<dd>
+<p>Object of class <code>"function"</code> computing the covariance matrix
+for the set of all levels.
+</p>
+</dd>
+<dt>
+<code>covLevMat</code>:</dt>
+<dd>
+<p>Object of class <code>"matrix"</code>. The matrix returned by the
+function in slot <code>covLevels</code>. Since this matrix is often
+needed, it can be stored rather than recomputed.
+</p>
+</dd>
+<dt>
+<code>hasGrad</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>. If <code>TRUE</code>, the analytical
+gradient can be computed.
+</p>
+</dd>
+<dt>
+<code>acceptLowerSQRT</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>. If <code>TRUE</code>, the lower square
+root of the matrix can be returned
+</p>
+</dd>
+<dt>
+<code>label</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. A label to describe the
+kernel.
+</p>
+</dd>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. The number of inputs.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code> Names of the inputs.
+</p>
+</dd>
+<dt>
+<code>nlevels</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code> with length <code>d</code> give the
+number of levels for the factors.
+</p>
+</dd>
+<dt>
+<code>levels</code>:</dt>
+<dd>
+<p>Object of class <code>"list"</code> with length <code>d</code>. Gives the
+levels for the inputs.
+</p>
+</dd>
+<dt>
+<code>parLower</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Lower bounds on the (hyper)
+parameters.
+</p>
+</dd>
+<dt>
+<code>parUpper</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Upper bounds on the (hyper)
+parameters.
+</p>
+</dd>
+<dt>
+<code>par</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Value of the (hyper) parameters.
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Number of (hyper) parameters.
+</p>
+</dd>
+<dt>
+<code>kernParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Name of the parameters.
+</p>
+</dd>
+<dt>
+<code>group</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Group numbers: one for each final
+level.
+</p>
+</dd>
+<dt>
+<code>groupLevels</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Vector of labels for the
+groups.
+</p>
+</dd>
+<dt>
+<code>between</code>:</dt>
+<dd>
+<p>Object of class <code>"covQual"</code>. A covariance or correlation
+structure that can be used between groups.
+</p>
+</dd>
+<dt>
+<code>within</code>:</dt>
+<dd>
+<p>Object of class <code>"list"</code>. A list of covariance or correlation
+structures that are used within the groups. Each item has class
+<code>"covQual"</code>.
+</p>
+</dd>
+<dt>
+<code>parNCum</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Cumulated number of
+parameters. Used for technical computations.
+</p>
+</dd>
+<dt>
+<code>contrasts</code>:</dt>
+<dd>
+<p>Object of class <code>"function"</code>. A contrast function like
+<code>contr.helmod</code>. This function must return a contrast matrix
+with columns having unit norm.
+</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>"covQual"</code>, directly.
+Class <code>"covAll"</code>, by class "covQual", distance 2.
+</p>
+
+
+<h3>Methods</h3>
+
+<p>No methods defined with class "covQualNested" in the signature.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">showClass("covQualNested")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sampl.mcmc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate feasible solutions to a knapsack problem using Markov Chain Monte Carlo</h2>
+
+<h3>Description</h3>
+
+<p>Generate feasible solutions to a knapsack problem using Markov Chain Monte Carlo
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sampl.mcmc(init, numSampl, maxIter = 2 * numSampl, constraints = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>init</code></td>
+<td>
+<p>- an initial feasible solution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numSampl</code></td>
+<td>
+<p>- number of samples to be generated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxIter</code></td>
+<td>
+<p>- maximum number of iterations to be run to prevent infinite loop</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constraints</code></td>
+<td>
+<p>- a list of list of constraints with constr.mat, constr.dir, constr.rhs in each sublist.
+Please see example for an example of constraints.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a matrix of {0, 1} with each row representing a sample
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+#number of variables
+N &lt;- 100
+
+#number of variables in each group
+grpLen &lt;- 10
+
+#equality matrix
+A &lt;- matrix(c(rep(1, N)), ncol=N, byrow=TRUE)
+
+#inequality matrix
+G &lt;- matrix(c(rep(1, grpLen), rep(0, N - grpLen),
+    rep(c(0,1), each=grpLen), rep(0, N - 2*grpLen)), ncol=N, byrow=TRUE)
+
+#construct a list of list of constraints
+constraints &lt;- list(
+    list(constr.mat=A, constr.dir=rep("==", nrow(A)), constr.rhs=c(20)),
+    list(constr.mat=G, constr.dir=rep("&lt;=", nrow(G)), constr.rhs=c(5, 5)),
+    list(constr.mat=G, constr.dir=rep("&gt;=", nrow(G)), constr.rhs=c(1, 2))
+)
+
+#generate an initial feasible solution
+init &lt;- initState(N, constraints=constraints)
+
+#create feasible solutions to knapsack problems subject to constraints
+samples &lt;- sampl.mcmc(init, 50, constraints=constraints)
+
+</code></pre>
+
+
+</div>

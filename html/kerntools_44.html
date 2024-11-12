@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>svm_imp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>SVM feature importance</h2>
+
+<h3>Description</h3>
+
+<p>Recovering the features importances from a SVM model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">svm_imp(
+  X,
+  svindx,
+  coeff,
+  result = "absolute",
+  cos.norm = FALSE,
+  center = FALSE,
+  scale = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Matrix or data.frame that contains real numbers ("integer", "float" or "double").
+X is NOT the kernel matrix, but the original dataset used to compute the kernel matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>svindx</code></td>
+<td>
+<p>Indices of the support vectors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeff</code></td>
+<td>
+<p>target * alpha.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>result</code></td>
+<td>
+<p>A string. If "absolute", the absolute values of the importances
+are returned. If "squared", the squared values are returned. Any other input will
+result in the original (positive and/or negative) importance values (see Details). (Defaults: "absolute").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cos.norm</code></td>
+<td>
+<p>Boolean. Was the data cosine normalized prior to training the model? (Defaults: FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>Boolean. Was the data centered prior to training the model? (Defaults: FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>Boolean. Was the data scaled prior to training the model? (Defaults: FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function may be not valid for all kernels. Do not use it with
+the RBF, Laplacian, Bray-Curtis, Jaccard/Ruzicka, or Kendall's tau kernels unless
+you know exactly what you are doing.
+</p>
+<p>Usually the sign of the importances is irrelevant, thus justifying working with the
+absolute or squared values; see for instance Guyon et al. (2002). Some classification
+tasks are an exception to this, when it can be demonstrated that the feature space
+is strictly nonnegative. In that case, a positive importance implies that a feature
+contributes to the "positive" class, and the same with a negative importance
+and the "negative" class.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The importance of each feature (a vector).
+</p>
+
+
+<h3>References</h3>
+
+<p>Guyon, I., Weston, J., Barnhill, S., and Vapnik, V. (2002) Gene selection
+for cancer classification using support vector machines. Machine learning, 46, 389-422.
+<a href="https://link.springer.com/content/pdf/10.1023/a:1012487302797.pdf">Link</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data1 &lt;- iris[1:100,]
+sv_index &lt;- c( 24, 42, 58, 99)
+coefficients &lt;- c(-0.2670988, -0.3582848,  0.2129282,  0.4124554)
+# This SV and coefficients were obtained from a model generated with kernlab:
+# model &lt;- kernlab::ksvm(Species ~ .,data=data1, kernel="vanilladot",scaled = TRUE)
+# sv_index &lt;- unlist(kernlab::alphaindex(model))
+# coefficients &lt;- kernlab::unlist(coef(model))
+# Now we compute the importances:
+svm_imp(X=data1[,-5],svindx=sv_index,coeff=coefficients,center=TRUE,scale=TRUE)
+</code></pre>
+
+
+</div>

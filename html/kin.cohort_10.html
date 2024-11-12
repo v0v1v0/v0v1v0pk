@@ -1,0 +1,178 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> methods for print and plot </h2>
+
+<h3>Description</h3>
+
+<p>Functions to print a formatted output and produce plots
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kin.cohort'
+print(x, descriptive = TRUE, cumrisk = TRUE, hazard = FALSE, survival = FALSE, 
+        logrank = TRUE, HR = TRUE, digits = 5, ...)
+
+## S3 method for class 'kin.cohort.boot'
+print(x, cumrisk = TRUE, hazard = FALSE, HR = TRUE, conf = 0.95,
+        digits = 5, show = TRUE, logrank = TRUE, ...)
+
+## S3 method for class 'kin.cohort'
+plot(x, what = c("cr", "hr", "crr"), min.age = min(x$knots), 
+      max.age = max(x$knots), max.y, type, add=FALSE, color, line,  ...)
+
+## S3 method for class 'kin.cohort.boot'
+plot(x, conf = 0.95, what = c("cr", "hr", "crr"), min.age = min(x$knots), 
+      max.age = max(x$knots), age.start = 0, start.ref, max.y, type,
+      median = FALSE, add = FALSE, color, line, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p> object to be printed or plotted </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>descriptive</code></td>
+<td>
+<p> print table with number of events and person-years</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cumrisk</code></td>
+<td>
+<p>print cumulative risk</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hazard</code></td>
+<td>
+<p>print hazard</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survival</code></td>
+<td>
+<p>print survival</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>HR</code></td>
+<td>
+<p>print harard ratios</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logrank</code></td>
+<td>
+<p>print logrank p value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>digits for rounding</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+<p>do not print</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf</code></td>
+<td>
+<p> coverage for confidence intervals </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>what</code></td>
+<td>
+<p> type of plot desired: cumulative risk ("cr"), hazard ratio ("hr", for marginal method only), cumulative risk ratio ("crr", for moments method only) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.age</code></td>
+<td>
+<p> Minimal age for plots </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.age</code></td>
+<td>
+<p> Maximal age for plots </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>age.start</code></td>
+<td>
+<p> initial age value (x) for plots </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start.ref</code></td>
+<td>
+<p> initial risk value (y) for plots </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.y</code></td>
+<td>
+<p> Max value for y axis </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p> type of line in plots </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+<p> If TRUE, then lines are added to current plot. Useful to compare analyses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p> change line colors using a vector of values </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line</code></td>
+<td>
+<p> change line width using a vector of values </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>median</code></td>
+<td>
+<p> plot median of bootstrap samples instead of point estimates  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p> additional arguments for print or plot </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Specific output and plot types can be selected with arguments
+</p>
+
+
+</div>

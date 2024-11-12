@@ -1,0 +1,194 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sim.dat.tvarying.two</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Simulation Functions for Time-dependent Proportional Hazard Model
+</h2>
+
+<h3>Description</h3>
+
+<p>sim.dat.tvarying.three simulates from a model with time varing age group variale of three levels, sim.dat.tvarying.two two.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sim.dat.tvarying.three(n, followup.length, incidence.density, 
+    age.sim = c("tvaryinggroup", "baselinegroup", "continuous","bt"),
+    random.censoring.rate = 0.05, seed)
+    
+sim.dat.tvarying.two(n, followup.length, incidence.density, 
+    age.sim = c("tvaryinggroup", "baselinegroup", "continuous","bt"), 
+    random.censoring.rate = 0.05, seed)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>integer. Sample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>followup.length</code></td>
+<td>
+
+<p>numeric. Length of followup, in years.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incidence.density</code></td>
+<td>
+
+<p>numeric. Incidence rate per year.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>age.sim</code></td>
+<td>
+
+<p>string. Choose between one of three possibilities. tvaryinggroup: age group is time-varying covariate; baselinegroup: age group is a baseline covariate; continuous: age is a continuous covariate; bt: age group by treatment interaction uses baseline age group, while age group main effect uses time-dependent age group
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random.censoring.rate</code></td>
+<td>
+
+<p>numeric. Amount of random censoring.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+
+<p>integer. Random number generator seed.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In sim.dat.tvarying.three, baseline age is uniformly distributed between 2.0 and 16.0, and divivded into three groups at 6 and 12.
+In sim.dat.tvarying.two, baseline age is uniformly distributed between 2.0 and 12.0, and divivded into two groups at 6.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Return a data frame with the following columns:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>ptid</code></td>
+<td>
+<p>subject identifier</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trt</code></td>
+<td>
+<p>treatment indicator 0/1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>for.non.tvarying.ana</code></td>
+<td>
+<p>Boolean, used to subset dataset for non-time dependent analysis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>censoring time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>baseline.age</code></td>
+<td>
+<p>age years at baseline</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>agegrp</code></td>
+<td>
+<p>a factor with levels <code>[0,6)</code> <code>[6,12)</code> <code>[12,100)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>baseline.agegrp</code></td>
+<td>
+<p>a factor with levels <code>[0,6)</code> <code>[6,12)</code> <code>[12,100)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tstart</code></td>
+<td>
+<p>left bound of time interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tstop</code></td>
+<td>
+<p>right bound of time interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>event indicator</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>followup time, in years</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Youyi Fong
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>make.timedep.dataset</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(survival)
+
+dat=sim.dat.tvarying.three(n=6000,followup.length=3, incidence.density=0.05, 
+    age.sim="tvaryinggroup", seed=1)
+f.tvarying = Surv(tstart,tstop,d) ~ trt*agegrp 
+f =          Surv(X,d)            ~ trt*baseline.agegrp 
+fits=list()
+fits[["tvarying"]]=coxph(f.tvarying, dat)
+fits[["baseline"]]=coxph(f, subset(dat, for.non.tvarying.ana))
+fits
+
+
+
+
+
+
+
+</code></pre>
+
+
+</div>

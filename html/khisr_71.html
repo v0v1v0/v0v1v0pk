@@ -1,0 +1,209 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metadata-filter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Metadata Filter</h2>
+
+<h3>Description</h3>
+
+<p>Formats a metadata filter to DHIS 2 comparison operators.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metadata_filter(property, operator, values, call = caller_env())
+
+property %.eq% values
+
+property %.ieq% values
+
+property %.~eq% values
+
+property %.ne% values
+
+property %.Like% values
+
+property %.~Like% values
+
+property %.^Like% values
+
+property %.~^Like% values
+
+property %.Like$% values
+
+property %.~Like$% values
+
+property %.like% values
+
+property %.~like% values
+
+property %.^like% values
+
+property %.~^like% values
+
+property %.like$% values
+
+property %.~like$% values
+
+property %.gt% values
+
+property %.ge% values
+
+property %.lt% values
+
+property %.le% values
+
+property %.token% values
+
+property %.~token% values
+
+property %.in% values
+
+property %.~in% values
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>property</code></td>
+<td>
+<p>The property on the metadata you want to filter on</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>operator</code></td>
+<td>
+<p>The comparison operator you want to perform</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+<p>The value to check against</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>description</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>To filter the metadata there are several filter operations that can be applied
+to the returned list of metadata. The format of the filter itself is
+straight-forward and follows the pattern property:operator:value, where
+property is the property on the metadata you want to filter on, operator is
+the comparison operator you want to perform and value is the value to check
+against (not all operators require value). To view the operator see
+<a href="https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/metadata.html#webapi_metadata_object_filter">DHIS 2 Operator</a>
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">⁠%.eq%⁠</code>        - Equality
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.ieq%⁠</code>       - Case insensitive string, match exact
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~eq%⁠</code>       - Inequality
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.ne%⁠</code>        - Inequality
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.Like%⁠</code>      - Case sensitive string, match anywhere
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~Like%⁠</code>     - Case sensitive string, not match anywhere
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.^Like%⁠</code>     - Case sensitive string, match start
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~^Like%⁠</code>    - Case sensitive string, not match start
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.Like$%⁠</code>     - Case sensitive string, match end
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~Like$%⁠</code>    - Case sensitive string, not match end
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.like%⁠</code>      - Case insensitive string, match anywhere
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~like%⁠</code>     - Case insensitive string, not match anywhere
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠ %.^like%⁠</code>    - Case insensitive string, match start
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~^like%⁠</code>    - Case insensitive string, not match start
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.like$%⁠</code>     - Case insensitive string, match end
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~like$%⁠</code>    - Case insensitive string, not match end
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.gt%⁠</code>        - Greater than
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.ge%⁠</code>        - Greater than or equal
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.lt%⁠</code>        - Less than
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.le%⁠</code>        - Less than or equal
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.token%⁠</code>     - Match on multiple tokens in search property
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~token%⁠</code>    - Not match on multiple tokens in search property
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.in%⁠</code>        - Find objects matching 1 or more values
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠%.~in%⁠</code>       - Find objects not matching 1 or more values
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A spliced list with filter in the format property:operator:value
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Generate an equality filter
+id %.eq% 'element_id'
+
+# Finding multiple ids
+'id' %.in% c('id1', 'id2', 'id3')
+
+# Get all data elements which have a data set with id ID1
+'dataSetElements.dataSet.id' %.eq% 'ID1'
+
+# get data elements which are members of the ANC data element group
+'dataElementGroups.id' %.eq% 'qfxEYY9xAl6'
+
+# Get data elements which have any option set
+metadata_filter('optionSet', '!null', NULL)
+
+</code></pre>
+
+
+</div>

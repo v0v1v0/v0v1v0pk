@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keys-get</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get keys</h2>
+
+<h3>Description</h3>
+
+<p>Functions for getting information about keys.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keys(.tbl)
+
+raw_keys(.tbl)
+
+has_keys(.tbl)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>keys()</code> always returns a tibble of keys. In case of
+no keys it returns a tibble with number of rows as in <code>.tbl</code> and zero
+columns. <code>raw_keys()</code> is just a wrapper for <code>attr(.tbl, "keys")</code>.
+To know whether <code>.tbl</code> has keys use <code>has_keys()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Set keys, Manipulate keys
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">keys(mtcars)
+
+raw_keys(mtcars)
+
+has_keys(mtcars)
+
+df &lt;- key_by(mtcars, vs, am)
+keys(df)
+
+has_keys(df)
+
+</code></pre>
+
+
+</div>

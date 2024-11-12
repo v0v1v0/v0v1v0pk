@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_tuner</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tuner Callback</h2>
+
+<h3>Description</h3>
+
+<p>Abstract base class used to build new callbacks.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_tuner(tuner, trial)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tuner</code></td>
+<td>
+<p>tuner object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trial</code></td>
+<td>
+<p>trial ID</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Attributes: params: dict. Training parameters (eg. verbosity, 
+batch size, number of epochs...). model: instance of 'keras.models.Model'. 
+Reference of the model being trained. validation_data: 
+Deprecated. Do not use. The 'logs' dictionary that callback methods
+take as argument will contain keys for quantities relevant to
+the current batch or epoch. Currently, the '.fit()' method of the 'Model' class
+will include the following quantities in the 'logs' that
+it passes to its callbacks: on_epoch_end: logs include 'acc' and 'loss', 
+and optionally include 'val_loss' (if validation is enabled in 'fit'), and 
+'val_acc' (if validation and accuracy monitoring are enabled). on_batch_begin: 
+logs include 'size', the number of samples in the current batch. on_batch_end: 
+logs include 'loss', and optionally 'acc' (if accuracy monitoring is enabled).
+</p>
+
+
+<h3>Value</h3>
+
+<p>None
+</p>
+
+
+<h3>Attributes</h3>
+
+<p>params: dict. Training parameters (eg. verbosity, batch size, 
+number of epochs...). model: instance of 'keras.models.Model'. 
+Reference of the model being trained. 
+validation_data: Deprecated. Do not use.
+</p>
+
+
+</div>

@@ -1,0 +1,247 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>well_response</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Spectral response for a sealed well</h2>
+
+<h3>Description</h3>
+
+<p>This is the primary function to calculate the response
+for a sealed well.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">well_response(omega, T., S., Vw., Rs., Ku., B., ...)
+
+## Default S3 method:
+well_response(
+  omega,
+  T.,
+  S.,
+  Vw.,
+  Rs.,
+  Ku.,
+  B.,
+  Avs,
+  Aw,
+  rho,
+  Kf,
+  grav,
+  freq.units = c("rad_per_sec", "Hz"),
+  as.pressure = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>omega</code></td>
+<td>
+<p>frequency, (see <code>freq.units</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T.</code></td>
+<td>
+<p>effective aquifer transmissivity <code class="reqn">[m^2/s]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S.</code></td>
+<td>
+<p>well storativity,  <code class="reqn">[unitless]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Vw.</code></td>
+<td>
+<p>well volume,     <code class="reqn">[m^3]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rs.</code></td>
+<td>
+<p>radius of screened portion,  <code class="reqn">[m]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ku.</code></td>
+<td>
+<p>undrained bulk modulus,  <code class="reqn">[Pa]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.</code></td>
+<td>
+<p>Skempton's coefficient,  <code class="reqn">[unitless, bounded]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Avs</code></td>
+<td>
+<p>amplification factor for volumetric strain <code class="reqn">E_{kk,obs}/E_{kk}</code>,  <code class="reqn">[]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Aw</code></td>
+<td>
+<p>amplification factor of well volume change for <code class="reqn">E_{kk}</code>,  <code class="reqn">[]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>fluid density <code class="reqn">[kg/m^3]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kf</code></td>
+<td>
+<p>bulk modulus of fluid,  <code class="reqn">[Pa]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grav</code></td>
+<td>
+<p>local gravitational acceleration <code class="reqn">[m/s^2]</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq.units</code></td>
+<td>
+<p>set the units of <code>omega</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as.pressure</code></td>
+<td>
+<p>logical; should the response for water pressure? (default is water height)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The response depends strongly on the physical properties
+given. Default values are assumed where reasonable–for instance, 
+the pore-fluid is assumed to be water–but considerable care 
+should be invested in the choice of
+parameters, unless the function is used in an optimization scheme.
+</p>
+<p>Assumed values are:
+</p>
+
+<table>
+<tr>
+<td style="text-align: right;">
+<code>Avs</code>  </td>
+<td style="text-align: left;"> 1 </td>
+<td style="text-align: right;"> </td>
+<td style="text-align: left;"> amplification factor for volumetric strain</td>
+</tr>
+<tr>
+<td style="text-align: right;">
+<code>Aw</code>   </td>
+<td style="text-align: left;"> 1 </td>
+<td style="text-align: right;"> </td>
+<td style="text-align: left;"> amplification factor for water well</td>
+</tr>
+<tr>
+<td style="text-align: right;">
+</td>
+</tr>
+</table>
+<p>The responses returned here are,
+effectively, the amplification of water levels in a well, relative to 
+the aquifer strain; or
+</p>
+<p style="text-align: center;"><code class="reqn">Z = \frac{z}{\epsilon} \equiv \frac{p}{\rho g \epsilon}</code>
+</p>
+
+<p>If <code>as.pressure=TRUE</code>, then the responses are scaled by
+<code>rho*grav</code> so that they represent water pressure relative to
+aquifer strain:
+</p>
+<p style="text-align: center;"><code class="reqn">Z = \frac{p}{\epsilon}</code>
+</p>
+
+<p>Not all parameters need to be given, but should be.  
+For example, if
+either <code>rho</code> or <code>grav</code> are not specified, they
+are taken from <code>constants</code>.
+<em>Parameters which do not end in <code>.</code> do
+not need to be specified (they may be excluded); if
+they are missing, warnings will be thrown.</em>
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with class <code>'wrsp'</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour
+</p>
+
+
+<h3>References</h3>
+
+<p>See <code>kitagawa-package</code> for references and more background.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>open_well_response</code> for the open-well equivalents
+<code>wrsp-methods</code> for a description of the class <code>'wrsp'</code> and its methods,
+<code>sensing_volume</code> to easily estimate the volume <code>Vw.</code>, and
+<code>kitagawa-package</code> for references and more background.
+</p>
+<p>Other WellResponseFunctions: 
+<code>open_well_response()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#### dummy example
+well_response(1:10, T.=1, S.=1, Vw.=1, Rs.=1, Ku.=1, B.=1)
+
+#### a more physically realistic calculation:
+# Physical params applicable for B084 borehole
+# (see: http://pbo.unavco.org/station/overview/B084/ for details)
+#
+Rc &lt;- 0.0508   # m, radius of water-sensing (2in)
+Lc &lt;- 146.9    # m, length of grouted region (482ft)
+Rs &lt;- 3*Rc     # m, radius of screened region (6in)
+Ls &lt;- 9.14     # m, length of screened region (30ft)
+#
+# calculate the sensing volume for the given well parameters
+Volw &lt;- sensing_volume(Rc, Lc, Rs, Ls) # m**3, ~= 1.8
+#
+Frqs &lt;- 10**seq.int(from=-4,to=0,by=0.1) # log10-space
+head(Rsp &lt;- well_response(omega=Frqs, T.=1e-6, S.=1e-5, 
+Vw.=Volw, Rs.=Rs, Ku.=40e9, B.=0.2, freq.units="Hz"))
+
+# Access plot.wrsp:
+plot(Rsp)
+
+</code></pre>
+
+
+</div>

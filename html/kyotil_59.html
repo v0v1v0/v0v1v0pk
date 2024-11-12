@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get.sim.res</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Read simulation results
+</h2>
+
+<h3>Description</h3>
+
+<p>Go through a folder and read all files and combine the results into a multidimensional array.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get.sim.res (dir, res.name="res", verbose=TRUE)
+MCsummary (dir, res.name = "res", exclude.some = TRUE,
+                 exclude.col = 1, verbose = TRUE)
+getFormattedMCSummary (path, sim, nn, fit.method, exclude.some = TRUE,
+                 exclude.col = 1, verbose = TRUE, coef.0 = NULL, digit1
+                 = 2, sum.est = c("mean", "median"), sum.sd =
+                 c("median", "mean"), style = 1, keep.intercept =
+                 FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dir</code></td>
+<td>
+<p>directory of MC result files</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>partial path to the directory of MC result files</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res.name</code></td>
+<td>
+<p>name of the R object saved in the files, default is res, but may be others</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sim</code></td>
+<td>
+<p>a string to denote simulation setting</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nn</code></td>
+<td>
+<p>a vector of sample sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit.method</code></td>
+<td>
+<p>a string to denote fitting method. sim, nn and fit.method together forms the name of the directory containing MC result files</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exclude.col</code></td>
+<td>
+<p>column number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exclude.some</code></td>
+<td>
+<p>whether to exclude MC results that are extreme</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coef.0</code></td>
+<td>
+<p>simulation truth</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digit1</code></td>
+<td>
+<p>digits</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum.est</code></td>
+<td>
+<p>use mean or median as location estimate summary</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum.sd</code></td>
+<td>
+<p>use mean or median as sd estimate summary</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>style</code></td>
+<td>
+<p>integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep.intercept</code></td>
+<td>
+<p>whether to include intercept in the table</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Depends on package abind to combine arrays from files.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A multidimensional array.
+</p>
+
+
+</div>

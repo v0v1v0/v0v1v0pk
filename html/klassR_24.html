@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MakeUrl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal function to create URL address</h2>
+
+<h3>Description</h3>
+
+<p>Internal function to create URL address
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MakeUrl(
+  klass,
+  correspond = NULL,
+  correspondID = NULL,
+  variant_name = NULL,
+  type = "vanlig",
+  fratil = FALSE,
+  date = NULL,
+  output_level_coding = NULL,
+  language_coding = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>klass</code></td>
+<td>
+<p>Classification number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correspond</code></td>
+<td>
+<p>Target number for correspondence table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variant_name</code></td>
+<td>
+<p>The name of the variant of the classification</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>String describing type. "vanlig" for normal classification and "kor" for correspondence. Default = "vanlig"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fratil</code></td>
+<td>
+<p>True/False for whether a date interval is to be used. Default = False</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>date</code></td>
+<td>
+<p>Date(s) for classification</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_level_coding</code></td>
+<td>
+<p>Coding for output level</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>language_coding</code></td>
+<td>
+<p>Coding for language</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>String url adress
+</p>
+
+
+</div>

@@ -1,0 +1,228 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.gp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Prediction Method for the <code>"gp"</code> S3 Class
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction method for the <code>"gp"</code> S3 class.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+## S3 method for class 'gp'
+predict(object, newdata,
+        type = ifelse(object$trendKnown, "SK", "UK"), 
+        seCompute = TRUE, covCompute = FALSE,
+        lightReturn = FALSE, biasCorrect = FALSE,
+        forceInterp,        
+        ...)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object with S3 class <code>"gp"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+
+<p>A data frame containing all the variables required for prediction: inputs and trend variables, if applicable.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>A character string corresponding to the GP "kriging" family, to be chosen between simple kriging (<code>"SK"</code>), or universal kriging
+(<code>"UK"</code>).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seCompute</code></td>
+<td>
+
+<p>Optional logical. If <code>FALSE</code>, only the kriging mean is computed.  If <code>TRUE</code>, the kriging variance (actually, the corresponding standard deviation) and prediction intervals are computed too.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covCompute</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> the covariance matrix is computed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lightReturn</code></td>
+<td>
+
+<p>Optional logical. If <code>TRUE</code>, <code>c</code> and <code>cStar</code> are
+not returned. This should be reserved to expert users who want to
+save memory and know that they will not miss these values.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>biasCorrect</code></td>
+<td>
+
+<p>Optional logical to correct bias in the UK variance and
+covariances. Default is <code>FALSE</code>. See <b>Details</b>
+below.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>forceInterp</code></td>
+<td>
+
+<p>Logical used to force a nugget-type prediction. If <code>TRUE</code>,
+the noise will be interpreted as a nugget effect. <em>This argument
+is likely to be removed in the future</em>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Not used yet.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The estimated (UK) variance and covariances are NOT multiplied by
+<code class="reqn">n/(n-p)</code> by default (<code class="reqn">n</code> and <code class="reqn">p</code> denoting the number of
+rows and columns of the trend matrix <code class="reqn">\mathbf{F}</code>). Recall that
+this correction would contribute to limit bias: it would totally
+remove it if the correlation parameters were known (which is not the
+case here). However, this correction is often ignored in the context
+of computer experiments, especially in adaptive strategies. It can be
+activated by turning <code>biasCorrect</code> to <code>TRUE</code>, when
+<code>type = "UK"</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following elements.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+
+<p>GP mean ("kriging") predictor (including the trend) computed at
+<code>newdata</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+
+<p>GP prediction ("kriging") standard deviation computed at
+<code>newdata</code>. Not computed if <code>seCompute</code> is <code>FALSE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdSK</code></td>
+<td>
+
+<p>Part of the above standard deviation corresponding to simple kriging
+(coincides with <code>sd</code> when <code>type = "SK"</code>). Not computed if
+<code>seCompute</code> is <code>FALSE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trend</code></td>
+<td>
+
+<p>The computed trend function, evaluated at <code>newdata</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>GP prediction ("kriging") conditional covariance matrix. Not
+computed if <code>covCompute</code> is <code>FALSE</code> (default).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower95,</code></td>
+<td>
+ </td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper95</code></td>
+<td>
+
+<p>Bounds of the 95 % GP prediction interval computed at
+<code>newdata</code> (to be interpreted with special care when parameters
+are estimated, see description above). Not computed if
+<code>seCompute</code> is <code>FALSE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+
+<p>An auxiliary matrix <code class="reqn">\mathbf{c}</code>, containing all the
+covariances between the points in <code>newdata</code> and those in the
+initial design. Not returned if <code>lightReturn</code> is
+<code>TRUE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cStar </code></td>
+<td>
+
+<p>An auxiliary vector, equal to <code class="reqn">\mathbf{L}^{-1}\mathbf{c}</code> where <code class="reqn">\mathbf{L}</code> is the Cholesky root of the
+covariance matrix <code class="reqn">\mathbf{C}</code> used in the estimation. Not
+returned if <code>lightReturn</code> is <code>TRUE</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>O. Roustant, D. Ginsbourger, Y. Deville
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>gp</code> for the creation/estimation of a model. See
+<code>gls-methods</code> for the signification of the auxiliary variables.</p>
+
+
+</div>

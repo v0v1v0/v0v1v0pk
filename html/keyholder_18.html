@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>key-by-scoped</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Key by selection of variables</h2>
+
+<h3>Description</h3>
+
+<p>These functions perform keying by selection of variables using corresponding
+scoped variant of select. Appropriate
+data frame is selected with scoped function first, and then it is assigned
+as keys.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">key_by_all(.tbl, .funs = list(), ..., .add = FALSE, .exclude = FALSE)
+
+key_by_if(.tbl, .predicate, .funs = list(), ..., .add = FALSE,
+  .exclude = FALSE)
+
+key_by_at(.tbl, .vars, .funs = list(), ..., .add = FALSE,
+  .exclude = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame .</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.funs</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.add</code></td>
+<td>
+<p>Whether to add keys to (possibly) existing ones. If <code>FALSE</code> keys
+will be overridden.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.exclude</code></td>
+<td>
+<p>Whether to exclude key variables from <code>.tbl</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.predicate</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.vars</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Not scoped key_by()
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mtcars %&gt;% key_by_all(.funs = toupper)
+
+mtcars %&gt;% key_by_if(rlang::is_integerish, toupper)
+
+mtcars %&gt;% key_by_at(c("vs", "am"), toupper)
+
+</code></pre>
+
+
+</div>

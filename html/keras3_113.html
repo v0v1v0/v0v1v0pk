@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>config_set_floatx</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set the default float dtype.</h2>
+
+<h3>Description</h3>
+
+<p>Set the default float dtype.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">config_set_floatx(value)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>String; <code>'bfloat16'</code>, <code>'float16'</code>, <code>'float32'</code>, or <code>'float64'</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>No return value, called for side effects.
+</p>
+
+
+<h3>Note</h3>
+
+<p>It is not recommended to set this to <code>"float16"</code> for training,
+as this will likely cause numeric stability issues.
+Instead, mixed precision, which leverages
+a mix of <code>float16</code> and <code>float32</code>. It can be configured by calling
+<code>keras3::keras$mixed_precision$set_dtype_policy('mixed_float16')</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>config_floatx()
+</pre></div>
+<div class="sourceCode"><pre>## [1] "float32"
+
+</pre></div>
+<div class="sourceCode r"><pre>config_set_floatx('float64')
+config_floatx()
+</pre></div>
+<div class="sourceCode"><pre>## [1] "float64"
+
+</pre></div>
+<div class="sourceCode r"><pre># Set it back to float32
+config_set_floatx('float32')
+</pre></div>
+
+
+<h3>Raises</h3>
+
+<p>ValueError: In case of invalid value.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/utils/config_utils#setfloatx-function">https://keras.io/api/utils/config_utils#setfloatx-function</a>
+</p>
+</li></ul>
+<p>Other config backend: <br><code>config_backend()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_image_data_format()</code> <br></p>
+<p>Other backend: <br><code>clear_session()</code> <br><code>config_backend()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_image_data_format()</code> <br></p>
+<p>Other config: <br><code>config_backend()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_enable_unsafe_deserialization()</code> <br><code>config_epsilon()</code> <br><code>config_floatx()</code> <br><code>config_image_data_format()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>config_set_backend()</code> <br><code>config_set_epsilon()</code> <br><code>config_set_image_data_format()</code> <br></p>
+
+
+</div>

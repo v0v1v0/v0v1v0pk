@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gwas</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Example <code>GWASdata</code> object.</h2>
+
+<h3>Description</h3>
+
+<p>An object of type GWASdata containing the example files for 
+annotation, phenotypes and genotypes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(gwas)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>GWASdata</code>:
+</p>
+
+<dl>
+<dt>geno</dt>
+<dd>
+<p>contains example genotypes</p>
+</dd>
+<dt>anno</dt>
+<dd>
+<p>example annotation for three pathways</p>
+</dd>
+<dt>pheno</dt>
+<dd>
+<p>exemplary phenotypes for all 'genotyped' individuals</p>
+</dd>
+<dt>desc</dt>
+<dd>
+<p>a description of the GWAS study, here 'example study'</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>simulated data
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># create gwas object
+data(pheno)
+data(geno)
+data(anno)
+gwas &lt;- new('GWASdata', pheno=pheno, geno=geno, anno=anno, desc="some study") 
+</code></pre>
+
+
+</div>

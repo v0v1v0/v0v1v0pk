@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>levene_test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Levene's test</h2>
+
+<h3>Description</h3>
+
+<p>Conduct Levene's test (i.e., test the null hypothesis that the variances
+in different gorups are equal)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">levene_test(
+  data = NULL,
+  dv_name = NULL,
+  iv_1_name = NULL,
+  iv_2_name = NULL,
+  round_f = 2,
+  round_p = 3,
+  output_type = "text"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_name</code></td>
+<td>
+<p>name of the first independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_name</code></td>
+<td>
+<p>name of the second independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_f</code></td>
+<td>
+<p>number of decimal places to which to round the
+F-statistic from Levene's test (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_p</code></td>
+<td>
+<p>number of decimal places to which to round the
+p-value from Levene's test (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>If <code>output_type = "text"</code>, the output will be
+the results of Levene's test in a text format (i.e., character).
+If <code>output_type = "list"</code>, the output will be the results of
+Levene's test in a list format (e.g., p value, F stat, etc. as a list).
+By default, <code>output_type = "text"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output of the function depends on the input for
+<code>output_type</code>. By default, the output will be the
+results of Levene's test in a text format (i.e., character).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+levene_test(
+data = mtcars, dv_name = "mpg",
+iv_1_name = "vs", iv_2_name = "am")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

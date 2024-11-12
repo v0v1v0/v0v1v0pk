@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>make_kpb_output_decisions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Progress Output Location</h2>
+
+<h3>Description</h3>
+
+<p>Provides functionality to decide <strong>how</strong> the progress should be written,
+if at all.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">make_kpb_output_decisions()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>This function makes decisions about <strong>how</strong> the progress bar should be displayed
+based on whether:
+</p>
+
+<ol>
+<li>
+<p> The code is being run in an interactive session or not
+</p>
+</li>
+<li>
+<p> The code is part of a <code>knitr</code> evaluation using <code>knit()</code> or <code>rmarkdown::render()</code>
+</p>
+</li>
+<li>
+<p> Options set by the user. These options include:
+</p>
+
+<ol>
+<li> <p><strong>kpb.suppress_noninteractive</strong>: a logical value. Whether to suppress output
+when being run non-interactively.
+</p>
+</li>
+<li> <p><strong>kpb.use_logfile</strong>: logical, should a log-file be used for output?
+</p>
+</li>
+<li> <p><strong>kpb.log_file</strong>: character string defining the log-file to use. <strong>kpb.use_logfile</strong> must be <code>TRUE</code>.
+</p>
+</li>
+<li> <p><strong>kpb.log_pattern</strong>: character string providing a pattern to use, will be combined with the chunk
+label to create a log-file for each knitr chunk. <strong>kpb.use_logfile</strong> must be <code>TRUE</code>.
+</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>Based on these, it will either return a newly opened connection, either via
+<code>stderr()</code>, <code>stdout()</code>, or a file connection via <code>file("logfile.log", open = "w")</code>.
+Note that for files this will overwrite a previously existing file, and the contents
+will be lost.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a write-able connection or NULL
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# suppress output when not interactive
+options(kpb.suppress_noninteractive = TRUE)
+
+# use a log-file, will default to kpb_output.txt
+options(kpb.use_logfile = TRUE)
+
+# use a specific log-file
+options(kpb.use_logfile = TRUE)
+options(kpb.log_file = "progress.txt")
+
+# use a log-file based on chunk names
+options(kpb.use_logfile = TRUE)
+options(kpb.log_pattern = "pb_out_")
+# for a document with a chunk labeled: "longcalc", this will generate "pb_out_longcalc.log"
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>qualtricsBlockStack</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create meta data frame to align identical questions</h2>
+
+<h3>Description</h3>
+
+<p>Qualtrics returns a data frame that has vertical "blocks", one for
+each "treatment condition" in an experimental condition.
+Researchers often want to align the questions from the blocks
+vertically, essentially converting the Qualtrics "wide" format to
+a "long" format. This is a helper function that identifies
+questions that may need to be stacked together.  The input is a
+meta data structure (can be retrieved as an attribute from
+importQualtrics). It will find out which questions are identical
+and prepare to re-align ("stack") the columns.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">qualtricsBlockStack(meta, questionname = "question")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meta</code></td>
+<td>
+<p>A meta data structure retrieved from importQualtrics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>questionname</code></td>
+<td>
+<p>Character string for name of column in meta data that holds the questions</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A new meta data table that horizontally aligns equivalent questions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson
+</p>
+
+
+</div>

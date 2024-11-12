@@ -1,0 +1,416 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>irtose</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Item Response Theory Observed-Score Kernel Equating
+</h2>
+
+<h3>Description</h3>
+
+<p>A function to conduct an equating between two parallel tests using item response theory (IRT) observed-score kernel equating. Designs available are equivalent groups (EG) and non-equivalent groups with anchor test using chain equating (NEAT CE).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">irtose(design="CE", P, Q, x, y, a=0, qpoints=seq(-6, 6, by=0.1), model="2pl", catsX=0, 
+catsY=0, catsA=0, see="analytical", replications=199, kernel="gaussian", 
+h=list(hx=0, hy=0, hxP=0, haP=0, hyQ=0, haQ=0), 
+hlin=list(hxlin=0, hylin=0, hxPlin=0, haPlin=0, hyQlin=0, haQlin=0), KPEN=0, wpen=0.5, 
+linear=FALSE, slog=1, bunif=1, altopt=FALSE, wS=0.5, eqcoef="mean-mean", robust=FALSE,
+distribution = list("normal", par = data.frame(mu = 0, sigma = 1)), DS = FALSE, 
+CV = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>design</code></td>
+<td>
+
+<p>A character vector indicating which design to use. Possible designs are EG, CE and PSE.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+
+<p>Object of class "matrix" or an object created by the R package ltm containing either the responses for each question in  group P or the estimated IRT model in group P.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+
+<p>Object of class "matrix" or an object created by the R package ltm containing either the responses for each question in  group Q or the estimated IRT model in group Q.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>Vector of possible score values of the main test X to be equated.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>Vector of possible score values of the main test Y to be equated.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+
+<p>Vector of possible score values of the anchor test A. (Required for all NEAT designs.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qpoints</code></td>
+<td>
+
+<p>A numeric vector containing the quadrature points used in the equating. If not specified, the quadrature points from the IRT models will be used.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>A character vector indicating which IRT model to use. Available models for dichotomoous data are 2pl and 3pl while available models for polytomous data are GPCM and GRM. Default is "2pl".
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catsX</code></td>
+<td>
+
+<p>The number of category answers for each item on test X. (GPCM and GRM only.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catsY</code></td>
+<td>
+
+<p>The number of category answers for each item on test Y. (GPCM and GRM only.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catsA</code></td>
+<td>
+
+<p>The number of category answers for each item on test A. (GPCM and GRM only.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>see</code></td>
+<td>
+
+<p>A character vector indicating which standard errors of equating to use. Options are "analytical" and "bootstrap", with default "analytical". If using the double smoothing bandwidth selection method (DS = TRUE), the bootstrap is not supported.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replications</code></td>
+<td>
+
+<p>The number of bootstrap replications if using the bootstrap standard error calculations. Default is 199.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+
+<p>A character vector indicating which kernel to use, either "gaussian", "logistic", "stdgaussian" or "uniform". Default is "gaussian".
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+
+<p>Optional argument to specify the continuization parameters manually as a list with suitable bandwidth parameters. In an EG design or a NEAT PSE design: hx and hy, in a NEAT CE design: hxP, haP, hyQ and haQ. (If linear=TRUE, then these arguments have no effect.) 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hlin</code></td>
+<td>
+
+<p>Optional argument to specify the linear continuization parameters manually as a list with suitable bandwidth parameters. In an EG design or a NEAT PSE design: hxlin and hylin, in a NEAT CE design: hxPlin, haPlin, hyQlin and haQlin.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>slog</code></td>
+<td>
+
+<p>The parameter used in defining the logistic kernel. Default is 1.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bunif</code></td>
+<td>
+
+<p>The parameter used in defining the uniform kernel. Default is 0.5.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KPEN</code></td>
+<td>
+
+<p>The constant used in deciding the optimal continuization parameter. Default is 0. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wpen</code></td>
+<td>
+
+<p>An argument denoting at which point the derivatives in the second part of the penalty function should be evaluated. Default is 1/4.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear</code></td>
+<td>
+
+<p>Logical denoting if only a linear equating is to be performed. Default is FALSE. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>altopt</code></td>
+<td>
+
+<p>Logical which sets the bandwidth parameter equal to a variant of Silverman's rule of thumb. Default is FALSE. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wS</code></td>
+<td>
+
+<p>The weighting of group P in a PSE equating. Default is 0.5.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eqcoef</code></td>
+<td>
+
+<p>Character vector indicating which equating coefficients to use. Options are "mean-mean", "mean-gmean", "mean-sigma", "Stocking-Lord" and "Haebara". Default is "mean-mean". (Only for PSE. With polytomous IRT models, only "mean-mean" is available.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+
+<p>Logical indicating whether the robust covariance matrix should be calculated for the IRT model. Warning: is slow for large models and large sample sizes. Default is FALSE. (Only for 2pl and GPCM models.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distribution</code></td>
+<td>
+
+<p>A list containing information regarding the latent distribution. Default is the standard normal distribution. (Currently not in use.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DS</code></td>
+<td>
+
+<p>Logical which enables bandwidth selection with the double smoothing method.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>CV</code></td>
+<td>
+
+<p>Logical which enables bandwidth selection with the cross-validation method.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An S4 object of class 'keout' which includes the following slots (accessed by using the get functions):
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>coveqYx</code></td>
+<td>
+<p>The asymptotic covariance matrix of the equating function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pest</code></td>
+<td>
+<p>The estimated probability matrix over population P.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pobs</code></td>
+<td>
+<p>The observed probability matrix over population P.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qest</code></td>
+<td>
+<p>The estimated probability matrix over population Q.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qobs</code></td>
+<td>
+<p>The observed probability matrix over population Q.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scores</code></td>
+<td>
+<p>A list containing the score vectors for the tests to be equated and, in a NEAT CE design, the score vector of the anchor test. Also included are the estimated score probabilities and the continuized cumulative distribution functions for the respective tests.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear</code></td>
+<td>
+<p>A logical vector. TRUE if linear=TRUE was specified, otherwise FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PRE</code></td>
+<td>
+<p>A data frame containing the percent relative error in the ten first moments between the equated scores and the reference distribution. (For chain equating, the PRE is calculated for the linking from X to A and the linking from A to Y.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>A data frame containing the continuization parameters used in the equating.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>A character vector denoting the kernel used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character vector describing the design used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>equating</code></td>
+<td>
+<p>A data frame containing the equated values from X to Y and the associated standard errors (for either an equipercentile or a linear equating), as well as the SEED between the equipercentile and linear equating functions and the equated values and the associated standard errors in the linear case (if an equipercentile equating is conducted).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>see</code></td>
+<td>
+<p>A character vector denoting which standard errors of equating are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replications</code></td>
+<td>
+<p>A numeric vector denoting the number of replications used when calculating the bootstrap standard errors of equating.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>irt</code></td>
+<td>
+<p>A list containing the objects from the package ltm and the adjusted asymptotic covariance matrices of the item parameters.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjoern.h.andersson@gmail.com">bjoern.h.andersson@gmail.com</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Andersson, B. (2016). Asymptotic Standard Errors of Observed-Score Equating With Polytomous IRT
+Models. <em>Journal of Educational Measurement</em>, <b>53</b>, 459–477.
+</p>
+<p>Andersson, B. (2018). Asymptotic Variance of Linking Coefficient Estimators for Polytomous IRT Models. <em>Applied Psychological Measurement</em>, <b>42</b>, 192–205.
+</p>
+<p>Andersson, B. and Wiberg, M. (2017). Item Response Theory Observed-Score Kernel Equating. <em>Psychometrika</em>, <b>83</b>, 48–67. 
+</p>
+<p>von Davier, A.A., Holland, P.W., and Thayer, D.T. (2004). <em>The Kernel Method of Test Equating.</em> Springer-Verlag New York.
+</p>
+<p>Ogasawara, H. (2003). Asymptotic standard errors of IRT observed-score equating methods. <em>Psychometrika</em>, <b>68</b>, 193-211.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kequate</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+#Generate data, non-equivalent groups with chain equating design
+akX &lt;- runif(15, 0.5, 2)
+bkX &lt;- rnorm(15)
+akY &lt;- runif(15, 0.5, 2)
+bkY &lt;- rnorm(15)
+akA &lt;- runif(15, 0.5, 2)
+bkA &lt;- rnorm(15)
+
+dataP &lt;- matrix(0, nrow = 1000, ncol = 30)
+dataQ &lt;- matrix(0, nrow = 1000, ncol = 30)
+
+for(i in 1:1000){
+	ability &lt;- rnorm(1)
+	dataP[i,1:15] &lt;- (1 / (1 + exp(-akX * (ability - bkX)))) &gt; runif(15)
+	dataP[i,16:30] &lt;- (1 / (1 + exp(-akA * (ability - bkA)))) &gt; runif(15)
+}
+
+for(i in 1:1000){
+	ability &lt;- rnorm(1, mean = 0.5)
+	dataQ[i,1:15] &lt;- (1 / (1 + exp(-akY * (ability - bkY)))) &gt; runif(15)
+	dataQ[i,16:30] &lt;- (1 / (1 + exp(-akA * (ability - bkA)))) &gt; runif(15)
+}
+#Estimate the 2-PL IRT model with package ltm
+sim2plP &lt;- ltm(dataP ~ z1, IRT.param = TRUE)
+sim2plQ &lt;- ltm(dataQ ~ z1, IRT.param = TRUE)
+
+#Equate the two tests
+sim2plan &lt;- irtose("CE", sim2plP, sim2plQ, 0:15, 0:15, 0:15)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

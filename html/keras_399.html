@@ -1,0 +1,140 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_random_width</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Randomly vary the width of a batch of images during training</h2>
+
+<h3>Description</h3>
+
+<p>Randomly vary the width of a batch of images during training
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_random_width(
+  object,
+  factor,
+  interpolation = "bilinear",
+  seed = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>A positive float (fraction of original height), or a list of size 2
+representing lower and upper bound for resizing vertically. When
+represented as a single float, this value is used for both the upper and
+lower bound. For instance, <code>factor = c(0.2, 0.3)</code> results in an output with
+width changed by a random amount in the range <code style="white-space: pre;">⁠[20%, 30%]⁠</code>. <code style="white-space: pre;">⁠factor=(-0.2, 0.3)⁠</code> results in an output with width changed by a random amount in the
+range <code style="white-space: pre;">⁠[-20%, +30%]⁠</code>. <code>factor = 0.2</code> results in an output with width changed
+by a random amount in the range <code style="white-space: pre;">⁠[-20%, +20%]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interpolation</code></td>
+<td>
+<p>String, the interpolation method. Defaults to <code>bilinear</code>.
+Supports <code>"bilinear"</code>, <code>"nearest"</code>, <code>"bicubic"</code>, <code>"area"</code>, <code>"lanczos3"</code>,
+<code>"lanczos5"</code>, <code>"gaussian"</code>, <code>"mitchellcubic"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Integer. Used to create a random seed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Adjusts the width of a batch of images by a random factor. The input
+should be a 3D (unbatched) or 4D (batched) tensor in the <code>"channels_last"</code>
+image data format.
+</p>
+<p>By default, this layer is inactive during inference.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/RandomWidth">https://www.tensorflow.org/api_docs/python/tf/keras/layers/RandomWidth</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/preprocessing_layers/">https://keras.io/api/layers/preprocessing_layers/</a>
+</p>
+</li>
+</ul>
+<p>Other image augmentation layers: 
+<code>layer_random_brightness()</code>,
+<code>layer_random_contrast()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_zoom()</code>
+</p>
+<p>Other preprocessing layers: 
+<code>layer_category_encoding()</code>,
+<code>layer_center_crop()</code>,
+<code>layer_discretization()</code>,
+<code>layer_hashing()</code>,
+<code>layer_integer_lookup()</code>,
+<code>layer_normalization()</code>,
+<code>layer_random_brightness()</code>,
+<code>layer_random_contrast()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_zoom()</code>,
+<code>layer_rescaling()</code>,
+<code>layer_resizing()</code>,
+<code>layer_string_lookup()</code>,
+<code>layer_text_vectorization()</code>
+</p>
+
+
+</div>

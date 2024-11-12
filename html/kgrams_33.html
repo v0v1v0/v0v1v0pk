@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>preprocess</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Text preprocessing</h2>
+
+<h3>Description</h3>
+
+<p>A minimal text preprocessing utility.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">preprocess(input, erase = "[^.?!:;'[:alnum:][:space:]]", lower_case = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>a character vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>erase</code></td>
+<td>
+<p>a length one character vector. Regular expression matching
+parts of text to be <em>erased</em> from input. The default removes anything
+not  alphanumeric (<code>[A-z0-9]</code>), space (white space, tab,
+vertical tab, newline, form feed, carriage return), apostrophes or
+punctuation characters (<code>"[.?!:;]"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower_case</code></td>
+<td>
+<p>a length one logical vector. If TRUE, puts everything to
+lower case.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The expressions <code>preprocess(x, erase = pattern, lower_case = TRUE)</code> and
+<code>preprocess(x, erase = pattern, lower_case = FALSE)</code> are roughly
+equivalent to <code>tolower(gsub(pattern, "", x))</code> and
+<code>gsub(pattern, "", x)</code>, respectively, provided that the regular
+expression 'pattern' is correctly recognized by R.
+</p>
+<p><strong>Note.</strong> This function, as well as tknz_sent, are included
+in the library for illustrative purposes only, and are not optimized for
+performance. Furthermore (for performance reasons) the function has a
+separate implementation for Windows and UNIX OS types, respectively, so that
+results obtained in the two cases may differ slightly.
+In contexts that require full reproducibility, users are encouraged to define
+their own preprocessing and tokenization custom functions - or to work with
+externally processed data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a character vector containing the processed output.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">preprocess("#This Is An Example@-@!#")
+</code></pre>
+
+
+</div>

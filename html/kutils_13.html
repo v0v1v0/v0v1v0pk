@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>deleteBogusRows</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Remove rows in which the proportion of missing data exceeds
+a threshold.</h2>
+
+<h3>Description</h3>
+
+<p>If cases are mostly missing, delete them. It often happens that
+when data is imported from other sources, some noise rows exist at
+the bottom of the input.  Anything that is missing in more than,
+say, 90% of cases is probably useless information.  We invented
+this to deal with problem that MS Excel users often include a
+marginal note at the bottom of a spread sheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">deleteBogusRows(dframe, pm = 0.9, drop = FALSE, verbose = TRUE, n = 25)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dframe</code></td>
+<td>
+<p>A data frame or matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pm</code></td>
+<td>
+<p>"proportion missing data" to be tolerated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop</code></td>
+<td>
+<p>Default FALSE: if data frame result is reduced to one
+row, should R's default drop behavior "demote" this to a
+column vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Default TRUE. Should a report be printed
+summarizing information to be delted?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Default 25: limit on number of values to print in verbose
+diagnostic output. If set to NULL or NA, then all of the
+column values will be printed for the bogus rows.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data frame, invisibly
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mymat &lt;- matrix(rnorm(10*100), nrow = 10, ncol = 100,
+               dimnames = list(1:10, paste0("x", 1:100)))
+mymat &lt;- rbind(mymat, c(32, rep(NA, 99)))
+mymat2 &lt;- deleteBogusRows(mymat)
+mydf &lt;- as.data.frame(mymat)
+mydf$someFactor &lt;- factor(sample(c("A", "B"), size = NROW(mydf), replace = TRUE))
+mydf2 &lt;- deleteBogusRows(mydf, n = "all")
+</code></pre>
+
+
+</div>

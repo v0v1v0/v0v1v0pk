@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read.bed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read the binary PLINK format (BED, BIM, and FAM)</h2>
+
+<h3>Description</h3>
+
+<p>Require the complete set of 3 files in the binary
+PLINK format. It includes BED file, BIM file and BAM file. For more
+information about the binary PLINK format, please check in the manual of
+PLINK.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read.bed(bed, bim, fam, only.snp = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>bed</code></td>
+<td>
+<p>A path of BED file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bim</code></td>
+<td>
+<p>A path of BIM file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fam</code></td>
+<td>
+<p>A path of FAM file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>only.snp</code></td>
+<td>
+<p>If TRUE, the function to read only SNP matrix, otherwise all
+files are loaded. The default value is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For more details about the binary PLINK format, please check
+<a href="http://zzz.bwh.harvard.edu/plink/binary.shtml">http://zzz.bwh.harvard.edu/plink/binary.shtml</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>The list containing the matrices of <code>$snp</code>, <code>$snp.info</code>,
+and <code>$ind.info</code>.
+</p>
+
+<ul>
+<li> <p><code>$snp</code> is a SNP matrix from BED file.
+</p>
+</li>
+<li> <p><code>$snp.info</code> is a data.frame of SNP information from BIM file.
+</p>
+</li>
+<li> <p><code>$ind.info</code> is a data.frame of individual information from FAM file.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>write.bed</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+#Use the example files embedded in the package.
+bed &lt;- system.file("extdata", "example_SNP.bed", package="KRIS")
+bim &lt;- system.file("extdata", "example_SNP.bim", package="KRIS")
+fam &lt;- system.file("extdata", "example_SNP.fam", package="KRIS")
+snp &lt;- read.bed(bed, bim, fam )
+
+#Check the objects inside 'snp'
+ls(snp)
+
+#Preview $snp
+print(snp$snp[1:10, 1:10])
+
+#Preview $snp.info
+head(snp$snp.info)
+
+#Preview $ind.info
+head(snp$ind.info)
+</code></pre>
+
+
+</div>

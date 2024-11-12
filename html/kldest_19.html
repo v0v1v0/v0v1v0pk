@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_uniform</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Analytical KL divergence for two uniform distributions</h2>
+
+<h3>Description</h3>
+
+<p>This function computes <code class="reqn">D_{KL}(p||q)</code>, where <code class="reqn">p\sim \text{U}(a_1,b_1)</code>
+and <code class="reqn">q\sim \text{U}(a_2,b_2)</code>, with <code class="reqn">a_2&lt;a_1&lt;b_1&lt;b_2</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_uniform(a1, b1, a2, b2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>a1, b1</code></td>
+<td>
+<p>Range of true uniform distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a2, b2</code></td>
+<td>
+<p>Range of approximate uniform distribution</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar (the Kullback-Leibler divergence)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kld_uniform(a1 = 0, b1 = 1, a2 = 0, b2 = 2)
+</code></pre>
+
+
+</div>

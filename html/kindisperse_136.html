@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>unmount_appdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Unmount a <code>KinPairData</code> Object (clear slot from appdata environment)</h2>
+
+<h3>Description</h3>
+
+<p>This function is part of a suite of functions handling the interface between the kindisperse app &amp; R
+package. Due to how shiny's interactive programming works, ordinary objects are not visible to the reactive functions
+embedded in the app. The solution implemented here is to construct a custom environment, <code>env_appdata</code>, that is
+accessible within the app and outside of it.
+</p>
+<p>When called, this function clears any objects with names found in the vector <code>nms</code> from the app interface
+environment, keeping it from becoming over-cluttered &amp; taking up space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">unmount_appdata(nms)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>nms</code></td>
+<td>
+<p>A character vector of names of objects to unmount from the appdata environment</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>No return value, called for side effects
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other app_ports: 
+<code>display_appdata()</code>,
+<code>mount_appdata()</code>,
+<code>reset_appdata()</code>,
+<code>reset_tempdata()</code>,
+<code>retrieve_appdata()</code>,
+<code>retrieve_tempdata()</code>,
+<code>retrieveall_appdata()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mount_appdata(kin_pair_data(), "mydata")
+
+unmount_appdata("mydata")
+</code></pre>
+
+
+</div>

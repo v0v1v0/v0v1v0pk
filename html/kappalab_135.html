@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Mobius.game-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "Mobius.game"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing the Möbius transform of a game.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the function <code>Mobius.game</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 containing the
+number of elements of the set on which the Möbius transform is
+defined. </p>
+</dd>
+<dt>
+<code>k</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 containg the order
+of truncation of the Möbius transform: subsets whose cardinal is
+superior to k are considered to be zero.</p>
+</dd>
+<dt>
+<code>subsets</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing
+the "<code>k</code> power set" of the underlying
+set in "natural" order . The subsets are encoded as integers.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>choose(n,0) + ... + choose(n,k)</code> representing the
+coefficients of a truncated Möbius transform of a game in "natural" order.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>Mobius.set.func</code>, directly.
+Class <code>superclass.set.func</code>, by class <code>Mobius.set.func</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>Choquet.integral</dt>
+<dd>
+<p><code>signature(object = "Mobius.game", f =
+	"numeric")</code> </p>
+</dd>
+<dt>Sipos.integral</dt>
+<dd>
+<p><code>signature(object = "Mobius.game", f =
+	"numeric")</code> </p>
+</dd>
+<dt>Sugeno.integral</dt>
+<dd>
+<p><code>signature(object = "Mobius.game", f =
+	"numeric")</code> </p>
+</dd>
+<dt>zeta</dt>
+<dd>
+<p><code>signature(object = "Mobius.game")</code> </p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>game-class</code>,
+<br><code>Mobius.game</code>,
+<br><code>Choquet.integral-methods</code>,
+<br><code>Sipos.integral-methods</code>, 
+<br><code>Sugeno.integral-methods</code>,
+<br><code>zeta-methods</code>,
+<br><code>expect.Choquet.norm-methods</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a game (which is a capacity)
+mu &lt;- game(c(0,rep(1,15)))
+## and its Mobius representation
+a &lt;- Mobius(mu)
+
+# the attributes of object a
+a@n
+a@k
+a@data
+a@subsets
+
+## a transformation
+zeta(a)
+## let us check ...
+Mobius(zeta(a))
+
+## integral calculations 
+f &lt;- c(0.2,0.3,0.1,0.7)
+Choquet.integral(a,f)
+Sugeno.integral(a,f)
+f &lt;- c(0.2,-0.3,0.1,-0.7)
+Sipos.integral(a,f)
+</code></pre>
+
+
+</div>

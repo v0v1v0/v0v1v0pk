@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generate_world</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create Karel's world</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a "world" (i.e. a list with data about its size, walls,
+beepers and Karel's position and direction), plots it and prepares everything
+so that Karel can start performing actions in it. It must be run always
+before Karel starts working on her goals, especially if we have made a
+mistake, we must start all over again by first running this function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generate_world(world)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>world</code></td>
+<td>
+<p>Character vector of length 1 with the name of one of the
+provided worlds in the package or a list provided by the user with all the
+components that a world needs (see more below in details).</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>After running <code>generate_mundo()</code>, we can run Karel's actions and finally
+visualize it all with the function <code>run_actions()</code>.
+</p>
+<p>Argument <code>world</code> can be create by the user. In this case, it
+must be a list with the following components:
+</p>
+
+<ol>
+<li> <p><code>nx</code>: TODO
+</p>
+</li>
+<li> <p><code>ny</code>:
+</p>
+</li>
+<li> <p><code>hor_walls</code>:
+</p>
+</li>
+<li> <p><code>ver_walls</code>:
+</p>
+</li>
+<li> <p><code>karel_x</code>:
+</p>
+</li>
+<li> <p><code>karel_y</code>:
+</p>
+</li>
+<li> <p><code>karel_dir</code>:
+</p>
+</li>
+<li> <p><code>beepers_x</code>:
+</p>
+</li>
+<li> <p><code>beepers_y</code>:
+</p>
+</li>
+<li> <p><code>beepers_n</code>:
+</p>
+</li>
+<li> <p><code>beepers_bag</code>:
+</p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p>Plots the initial state of Karel's world and prepares everything to
+start recording her actions.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>actions</code> <code>run_actions</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generate_world("mundo001")
+
+</code></pre>
+
+
+</div>

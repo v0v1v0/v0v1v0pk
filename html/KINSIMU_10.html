@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>outputCSV</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Output frequency data into ISFG format</h2>
+
+<h3>Description</h3>
+
+<p>Output frequency data into ISFG format
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">outputCSV(data, strpath)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>frequency data, a list containing 4 data frames.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strpath</code></td>
+<td>
+<p>name of the pathway of the output csv file</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a .csv file in ISFG formate
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">path&lt;-tempdir()
+outputCSV(FortytwoSTR,file.path(path,'data.csv'))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.simulate.gp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot Simulations from a <code>gp</code> Object
+</h2>
+
+<h3>Description</h3>
+
+<p>Function to plot simulations from a <code>gp</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'simulate.gp'
+plot(x, y,
+        col = list(sim = "SpringGreen3", trend = "orangered"),
+        show = c(sim = TRUE, trend = TRUE, y = TRUE),
+        ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>An object containing simulations, produced by 'simulate' with
+<code>output = "list"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>Not used yet.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+
+<p>Named list of colors to be used, with elements <code>"sim"</code> and
+<code>"trend"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+
+<p>A logical vector telling which elements must be shown.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Further argument passed to <code>plot</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Nothing.
+</p>
+
+
+<h3>Note</h3>
+
+<p>For now, this function can be used only when the number of inputs is
+one.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>simulate.gp</code>.
+</p>
+
+
+</div>

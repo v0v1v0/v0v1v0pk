@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keys-set</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set keys</h2>
+
+<h3>Description</h3>
+
+<p>Key is a vector which goal is to provide information about rows in reference
+data frame. Its length should always be equal to number of rows in
+data frame. Keys are stored as tibble in attribute <code>"keys"</code>
+and so one data frame can have multiple keys. Data frame with keys is
+implemented as class keyed_df.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keys(.tbl) &lt;- value
+
+assign_keys(.tbl, value)
+
+key_by(.tbl, ..., .add = FALSE, .exclude = FALSE)
+
+unkey(.tbl)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame .</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>Values of keys (converted to tibble).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Variables to be used as keys defined in similar fashion as in
+<code>dplyr::select()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.add</code></td>
+<td>
+<p>Whether to add keys to (possibly) existing ones. If <code>FALSE</code> keys
+will be overridden.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.exclude</code></td>
+<td>
+<p>Whether to exclude key variables from <code>.tbl</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>key_by</code> ignores grouping when creating keys. Also if <code>.add == TRUE</code>
+and names of some added keys match the names of existing keys the new ones
+will override the old ones.
+</p>
+<p>Value for <code style="white-space: pre;">⁠keys&lt;-⁠</code> should not be <code>NULL</code> because it is converted to tibble
+with zero rows. To remove keys use <code>unkey()</code>, <code>remove_keys()</code> or
+<code>restore_keys()</code>. <code>assign_keys</code> is a more suitable for piping wrapper for
+<code style="white-space: pre;">⁠keys&lt;-⁠</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Get keys, Manipulate keys
+</p>
+<p>Scoped key_by()
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">df &lt;- dplyr::as_tibble(mtcars)
+
+# Value is converted to tibble
+keys(df) &lt;- 1:nrow(df)
+
+# This will throw an error
+## Not run: 
+keys(df) &lt;- 1:10
+
+## End(Not run)
+
+# Use 'vs' and 'am' as keys
+df %&gt;% key_by(vs, am)
+
+df %&gt;% key_by(vs, am, .exclude = TRUE)
+
+df %&gt;% key_by(vs) %&gt;% key_by(am, .add = TRUE, .exclude = TRUE)
+
+# Override keys
+df %&gt;% key_by(vs, am) %&gt;% dplyr::mutate(vs = 1) %&gt;%
+  key_by(gear, vs, .add = TRUE)
+
+# Use select helpers
+df %&gt;% key_by(dplyr::one_of(c("vs", "am")))
+
+df %&gt;% key_by(dplyr::everything())
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_req_pkg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check for required packages</h2>
+
+<h3>Description</h3>
+
+<p>Check whether required packages are installed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_req_pkg(pkg = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pkg</code></td>
+<td>
+<p>a character vector containing names of packages to check</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>there will be no output from this function. Rather, the
+function will check whether the packages given as inputs are installed.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+check_req_pkg("data.table")
+check_req_pkg(c("base", "utils", "ggplot2", "data.table"))
+
+
+</code></pre>
+
+
+</div>

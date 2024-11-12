@@ -1,0 +1,219 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loss_categorical_focal_crossentropy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the alpha balanced focal crossentropy loss.</h2>
+
+<h3>Description</h3>
+
+<p>Use this crossentropy loss function when there are two or more label
+classes and if you want to handle class imbalance without using
+<code>class_weights</code>. We expect labels to be provided in a <code>one_hot</code>
+representation.
+</p>
+<p>According to <a href="https://arxiv.org/pdf/1708.02002">Lin et al., 2018</a>, it
+helps to apply a focal factor to down-weight easy examples and focus more on
+hard examples. The general formula for the focal loss (FL)
+is as follows:
+</p>
+<p><code>FL(p_t) = (1 - p_t)^gamma * log(p_t)</code>
+</p>
+<p>where <code>p_t</code> is defined as follows:
+<code style="white-space: pre;">⁠p_t = output if y_true == 1, else 1 - output⁠</code>
+</p>
+<p><code>(1 - p_t)^gamma</code> is the <code>modulating_factor</code>, where <code>gamma</code> is a focusing
+parameter. When <code>gamma</code> = 0, there is no focal effect on the cross entropy.
+<code>gamma</code> reduces the importance given to simple examples in a smooth manner.
+</p>
+<p>The authors use alpha-balanced variant of focal loss (FL) in the paper:
+<code>FL(p_t) = -alpha * (1 - p_t)^gamma * log(p_t)</code>
+</p>
+<p>where <code>alpha</code> is the weight factor for the classes. If <code>alpha</code> = 1, the
+loss won't be able to handle class imbalance properly as all
+classes will have the same weight. This can be a constant or a list of
+constants. If alpha is a list, it must have the same length as the number
+of classes.
+</p>
+<p>The formula above can be generalized to:
+<code>FL(p_t) = alpha * (1 - p_t)^gamma * CrossEntropy(y_true, y_pred)</code>
+</p>
+<p>where minus comes from <code>CrossEntropy(y_true, y_pred)</code> (CE).
+</p>
+<p>Extending this to multi-class case is straightforward:
+<code>FL(p_t) = alpha * (1 - p_t) ** gamma * CategoricalCE(y_true, y_pred)</code>
+</p>
+<p>In the snippet below, there is <code>num_classes</code> floating pointing values per
+example. The shape of both <code>y_pred</code> and <code>y_true</code> are
+<code style="white-space: pre;">⁠(batch_size, num_classes)⁠</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loss_categorical_focal_crossentropy(
+  y_true,
+  y_pred,
+  alpha = 0.25,
+  gamma = 2,
+  from_logits = FALSE,
+  label_smoothing = 0,
+  axis = -1L,
+  ...,
+  reduction = "sum_over_batch_size",
+  name = "categorical_focal_crossentropy",
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>Tensor of one-hot true targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>Tensor of predicted targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>A weight balancing factor for all classes, default is <code>0.25</code> as
+mentioned in the reference. It can be a list of floats or a scalar.
+In the multi-class case, alpha may be set by inverse class
+frequency by using <code>compute_class_weight</code> from <code>sklearn.utils</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma</code></td>
+<td>
+<p>A focusing parameter, default is <code>2.0</code> as mentioned in the
+reference. It helps to gradually reduce the importance given to
+simple examples in a smooth manner. When <code>gamma</code> = 0, there is
+no focal effect on the categorical crossentropy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from_logits</code></td>
+<td>
+<p>Whether <code>output</code> is expected to be a logits tensor. By
+default, we consider that <code>output</code> encodes a probability
+distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_smoothing</code></td>
+<td>
+<p>Float in <code style="white-space: pre;">⁠[0, 1].⁠</code> When &gt; 0, label values are smoothed,
+meaning the confidence on label values are relaxed. For example, if
+<code>0.1</code>, use <code>0.1 / num_classes</code> for non-target labels and
+<code>0.9 + 0.1 / num_classes</code> for target labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>The axis along which to compute crossentropy (the features
+axis). Defaults to <code>-1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reduction</code></td>
+<td>
+<p>Type of reduction to apply to the loss. In almost all cases
+this should be <code>"sum_over_batch_size"</code>.
+Supported options are <code>"sum"</code>, <code>"sum_over_batch_size"</code> or <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Optional name for the loss instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>The dtype of the loss's computations. Defaults to <code>NULL</code>, which
+means using <code>config_floatx()</code>. <code>config_floatx()</code> is a
+<code>"float32"</code> unless set to different value
+(via <code>config_set_floatx()</code>). If a <code>keras$DTypePolicy</code> is
+provided, then the <code>compute_dtype</code> will be utilized.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Categorical focal crossentropy loss value.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>y_true &lt;- rbind(c(0, 1, 0), c(0, 0, 1))
+y_pred &lt;- rbind(c(0.05, 0.95, 0), c(0.1, 0.8, 0.1))
+loss &lt;- loss_categorical_focal_crossentropy(y_true, y_pred)
+loss
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([3.20583090e-05 4.66273481e-01], shape=(2), dtype=float64)
+
+</pre></div>
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre>y_true &lt;- rbind(c(0, 1, 0), c(0, 0, 1))
+y_pred &lt;- rbind(c(0.05, 0.95, 0), c(0.1, 0.8, 0.1))
+# Using 'auto'/'sum_over_batch_size' reduction type.
+cce &lt;- loss_categorical_focal_crossentropy()
+cce(y_true, y_pred)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.23315276, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre># Calling with 'sample_weight'.
+cce(y_true, y_pred, sample_weight = op_array(c(0.3, 0.7)))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.16320053, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre># Using 'sum' reduction type.
+cce &lt;- loss_categorical_focal_crossentropy(reduction = "sum")
+cce(y_true, y_pred)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.46630552, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre># Using 'none' reduction type.
+cce &lt;- loss_categorical_focal_crossentropy(reduction = NULL)
+cce(y_true, y_pred)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([3.2058331e-05 4.6627346e-01], shape=(2), dtype=float32)
+
+</pre></div>
+<p>Usage with the <code>compile()</code> API:
+</p>
+<div class="sourceCode r"><pre>model %&gt;% compile(
+  optimizer = 'adam',
+  loss = loss_categorical_focal_crossentropy())
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other losses: <br><code>Loss()</code> <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_dice()</code> <br><code>loss_hinge()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_log_cosh()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+
+
+</div>

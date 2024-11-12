@@ -1,0 +1,161 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KinPairData-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Formal class KinPairData</h2>
+
+<h3>Description</h3>
+
+<p>The class <code>KinPairData</code> is a formal (S4) class for storing kinship and lifespan dispersal
+information concerning kin pairs. It is the base class on which the <code>KinPairSimulation</code> class is built.
+The <code>KinPairData</code> class is used to store information about the spatial distribution of kin dyads for use
+in calculating axial sigmas of intergenerational dispersal as initially implemented in Jasper et al. 2019
+(doi: <a href="https://doi.org/10.1111/1755-0998.13043">10.1111/1755-0998.13043</a>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'KinPairData'
+show(object)
+
+## S4 method for signature 'KinPairData'
+initialize(
+  .Object,
+  data = NULL,
+  kinship = NULL,
+  lifestage = NULL,
+  cycle = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class KinpairData</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.Object</code></td>
+<td>
+<p>the KinPairData object to be constructed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data about kinship to be used to construct object (tibble, data.frame, or numeric vector of distances)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>character. Kinship category value for object. - one of PO, FS, HS, AV, HAV, GG, 1C, H1C, GAV, HGAV, 1C1, H1C1, GGG, 2C, and H2C.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lifestage</code></td>
+<td>
+<p>character. Lifestage value for object. - one of 'immature', 'ovipositional' or 'unknown'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cycle</code></td>
+<td>
+<p>non-negative integer or vector of two such integers - Represents
+the number of complete breeding cycles each simulated individual has undergone before the sampling point, where the time between
+birth and first reproduction is coded as '0', that between first and second reproduction '1', etc. (default 0). If the first individual
+was sampled as a juvenile &amp; the second as an adult of equivalent stage, the vector c(0, 1) would be used. In most situations, defualt will be appropriate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional argument to pass to downstream functions in future</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KinPairData</code></td>
+<td>
+<p>object of class KinPairData</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This class is essentially wrapped around the <code>tbl_df</code> class but with (a) expectations around certain columns
+that must be present (<code>id1, id2, kinship</code>, &amp; <code>distance</code> - three 'character' &amp; one 'numeric' column), as
+well as (b) additional attributes (<code>kinship</code>, <code>lifestage</code>, &amp; <code>cycle</code>) characterizing the close-kin
+dyads being stored.These attributes, as well as the embedded vector of distances, can be accessed with the methods
+<code>kinship</code>, <code>lifestage</code>, <code>breeding_cycle</code> and <code>distances</code>.
+</p>
+<p>Objects from this class are returned from the <code>df_to_kinpair</code> and <code>csv_to_kinpair</code> functions
+(&amp; related), and are directly constructed with the namesake <code>KinPairData()</code> function.
+They can be passed to the <code>sample_kindist</code> function for filtering and subsampling, and to
+axial functions (including <code>axials_standard</code> and <code>axpermute_standard</code>) for estimation of
+axial dispersal.
+</p>
+
+
+<h3>Value</h3>
+
+<p>returns object of class <code>KinPairData</code>
+</p>
+<p>No return value, called for side effects
+</p>
+<p>Returns an object of class <code>KinPairData</code>
+</p>
+
+
+<h3>Methods (by generic)</h3>
+
+
+<ul>
+<li> <p><code>show</code>: standard print method
+</p>
+</li>
+<li> <p><code>initialize</code>: initialize method
+</p>
+</li>
+</ul>
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>kinship</code></dt>
+<dd>
+<p>character - one of PO, FS, HS, AV, HAV, GG, 1C, H1C, GAV, HGAV, 1C1, H1C1, GGG, 2C, and H2C.</p>
+</dd>
+<dt><code>lifestage</code></dt>
+<dd>
+<p>character - lifestage at sampling - either 'immature', 'ovipositional' or a stage
+corresponding to a <code>DispersalModel</code> custom stage</p>
+</dd>
+<dt><code>cycle</code></dt>
+<dd>
+<p>non-negative integer or vector of two such integers - Represents
+the number of complete breeding cycles each  individual has undergone before the sampling point, where the time between
+birth and first reproduction is coded as '0', that between first and second reproduction '1', etc. (default 0). If the first individual
+was sampled as a juvenile &amp; the second as an adult of equivalent stage, the vector c(0, 1) would be used. In most situations, the default will be appropriate</p>
+</dd>
+<dt><code>tab</code></dt>
+<dd>
+<p>tbl_df. - tibble of dispersal values</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p>Other kdclasses: 
+<code>DispersalModel-class</code>,
+<code>KinPairSimulation-class</code>
+</p>
+
+
+</div>

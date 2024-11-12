@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>file.backup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a backup version of a file by renaming it.</h2>
+
+<h3>Description</h3>
+
+<p>Inserts the date-time of the most recent modification at the
+end of the file name, before the extension.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">file.backup(name, fullpath = FALSE, keep.old = FALSE, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>A character string for the name of the file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fullpath</code></td>
+<td>
+<p>Return the full directory path to the
+file. Default FALSE, return only the file name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep.old</code></td>
+<td>
+<p>If FALSE (default), rename the file. Otherwise, keep old copy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If TRUE, output warnings and list the files in the output directory when done.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Return is the new file name that was created, using whatever
+path information was provided in the file's original name. However,
+the fullpath argument can be set to TRUE, so a path with the
+full directory name will be created and returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The name of the newly created file.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shadi Pirhosseinloo &lt;shadi@ku.edu&gt; Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tdir &lt;- tempdir()
+owd &lt;- getwd()
+
+setwd(tdir)
+system("touch test.1.txt")
+system("touch test.2.txt")
+system("touch test.3.txt")
+system("touch test.4.txt")
+system("touch test.5.txt")
+## note: no extension next
+system("touch test.6")
+list.files()
+file.backup("test.1.txt")
+file.backup("test.2.txt", fullpath=TRUE)
+list.files()
+setwd(owd)
+file.backup(file.path(tdir, "test.3.txt"))
+## Next should be same path because input had a full path
+file.backup(file.path(tdir, "test.4.txt"), fullpath=TRUE)
+file.backup(file.path(tdir, "test.5.txt"), fullpath = TRUE, verbose = TRUE)
+file.backup(file.path(tdir, "test.6"))
+</code></pre>
+
+
+</div>

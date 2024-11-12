@@ -1,0 +1,205 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mkmSet</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Partitions of a multi-index</h2>
+
+<h3>Description</h3>
+
+<p>The function returns  all the partitions of a multi-index, that is a vector of non-negative integers. Note that these partitions correspond 
+to the subdivisions of a multiset having the input multi-index as multiplicities.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">      mkmSet(vPar = NULL, vOutput = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vPar</code></td>
+<td>
+<p>vector of non-negative integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vOutput</code></td>
+<td>
+<p>optional boolean variable. If equal to <code>TRUE</code>, the function produces a compact 
+output that is easy to read.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>mkmSet</code> function finds all the vectors, different from the zero vector, whose 
+sum (in column) is equal to the vector (in column) of nonnegative integers given in input. When the input 
+vector is just an integer, let's say <code>n</code>, the function returns the partitions of <code>n</code>. 
+Each partition is paired with the number of set partitions having that partition as their class. 
+For example, if <code>n=3</code> the output is 
+</p>
+
+<table><tr>
+<td style="text-align: center;">
+<code>[[1,1,1],1], [[1,2],3], [[3],1]</code>,</td>
+</tr></table>
+<p>where <code>1+1+1=1+2=3</code>. From this output, the subdivisions of a multiset with multiplicity 3 can be 
+recovered. For example, the subdivisions of <code>[a,a,a]</code> are <code>[[a], [a], [a]]</code> corresponding to
+<code>[1,1,1]</code>, <code>[[a], [a,a]]</code> corresponds to <code>[1,2]</code> and <code>[[a,a,a]]</code> corresponds to 
+<code>[3]</code>. When the input vector is a multi-index, the function returns all the partitions of the 
+multi-index. For example, if the input is (2,1) then the function returns <br><code style="white-space: pre;">⁠
+0 1 1     0 2     1 1     2
+1 0 0     1 0     0 1     1⁠</code>
+<br><br>
+with multiplicities 1, 1, 2, 1 respectively, which corresponds to the output (the columns become rows) 
+of the <code>mkmSet</code> function when the flag variable <code>vOutput</code> is set equal to <code>TRUE</code>  
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>[( 0 1 )( 1 0 )( 1 0 ),  1 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 0 1 )( 2 0 ),  1 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 1 0 )( 1 1 ),  2 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 2 1 ),  1 ]</code>
+</td>
+</tr>
+</table>
+<p>From this output, the subdivisions of a multiset with multiplicity (2,1) can be easily recovered. 
+For example the previous partitions correspond to the following subdivisions of the multiset 
+<code>[a,a,b]</code>  
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>[[b], [a], [a]]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">     
+<code>[[b], [a,a]]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">  
+<code>[[a], [a,b]]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+<code>[[a,a,b]]</code>
+</td>
+</tr>
+</table>
+<p>The <code>mkmSet</code> function is the core of the <code>kStatistics</code> package. The strategy to find 
+all the partitions of a multi-index is described in the refereed papers. To find the multiplicities of the 
+multi-index partitions see the <code>countP</code> function. </p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>list</code></td>
+<td>
+<p>two-dimensional list: in the first there is the partition, while in the second there is 
+its multiplicity</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>Called by the <code>nKS</code>, <code>nKM</code>, <code>nPS</code> and <code>nPM</code> functions  in 
+the <code>kStatistics</code> package. <br><br> 
+In the output list, the sum of all multiplicities is the Bell Number whereas the sum of all 
+multiplicities of the partitions with the same lenght is the Stirling number of the second kind. 
+For example, <code>mkmSet(4, TRUE)</code> returns  
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>[( 1 )( 1 )( 1 )( 1 ),  1 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 1 )( 1 )( 2 ),  6 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 2 )( 2 ),  3 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 1 )( 3 ),  4 ]</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>[( 4 ),  1 ]</code>
+</td>
+</tr>
+</table>
+<p>Observe that <code>3 + 4 = 7 =  S(4,2)</code>, where 4 is the input integer, 2 is the length of the 
+partitions <code>[1,3]</code> and <code>[2,2]</code> and <code>S(i,j)</code> denotes the Stirling numbers of the second 
+kind, see also the <code>nStirling2</code> function. Similarly, we have <code>1 =  S(4,4) =  S(4,1)</code> 
+and <code>6 =  S(4,3)</code>. Note that <code>1 + 6 + 4 + 3 + 1 = 15 = Bell(4)</code> which is the number of 
+partitions of the integer 4.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. 14(2), 440-468. (download from <a href="https://arxiv.org/pdf/math/0607623.pdf">https://arxiv.org/pdf/math/0607623.pdf</a>)
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) Symbolic computation of moments of sampling distributions. 
+Comp. Stat. Data Analysis. 52(11), 4909-4922. (download from <a href="https://arxiv.org/abs/0806.0129">https://arxiv.org/abs/0806.0129</a>) 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mCoeff</code>,
+<code>countP</code>,
+<code>nStirling2</code>,
+<code>intPart</code>,
+<code>ff</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Return [ [[1,1,1],1], [[1,2],3], [[3],1]  ]
+# 3 is the multiplicity of a multiset with 3 elements all equal
+mkmSet(3)
+
+# Return [ [[1,1],[1,0],2], [[1,0],[1,0],[0,1],1],[[2,0],[0,1],1], [[2,1],1] ]
+# (2,1) is the multiplicity of a multiset with 2 equal elements and a third distinct element 
+mkmSet(c(2,1)) 
+# OR (same output)
+mkmSet(c(2,1), FALSE)  
+
+# Returns the same output of the previous example but in a compact form.
+mkmSet(c(2,1), TRUE)  
+
+</code></pre>
+
+
+</div>

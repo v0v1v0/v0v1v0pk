@@ -1,0 +1,161 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>elbow</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Elbow method to determine the optimal number of clusters.</h2>
+
+<h3>Description</h3>
+
+<p>Generates the Elbow graph and returns the ideal number of clusters.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">elbow(data, k.max = 10, method = "AutoElbow", plot = TRUE, 
+      cut = TRUE, title = NA, xlabel = NA, ylabel = NA, size = 1.1,  
+      grid = TRUE, color = TRUE, savptc = FALSE, width = 3236, 
+      height = 2000, res = 300, casc = TRUE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data with x and y coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k.max</code></td>
+<td>
+<p>Maximum number of clusters for comparison (default = 10).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Method used to find the ideal number k of clusters: "jump", "curvature", "Exp", "AutoElbow" (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>Indicates whether to plot the elbow graph (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cut</code></td>
+<td>
+<p>Indicates whether to plot the best cluster indicative line (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>Title of the graphic, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlabel</code></td>
+<td>
+<p>Names the X axis, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylabel</code></td>
+<td>
+<p>Names the Y axis, if not set, assumes the default text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>Size of points on the graph and line thickness (default = 1.1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>Put grid on graph (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>Colored graphic (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>savptc</code></td>
+<td>
+<p>Saves the graph image to a file (default = FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>Graphic image width when savptc = TRUE (defaul = 3236).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>Graphic image height when savptc = TRUE (default = 2000).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+<p>Nominal resolution in ppi of the graphic image when savptc = TRUE (default = 300).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>casc</code></td>
+<td>
+<p>Cascade effect in the presentation of the graphic (default = TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>k.ideal</code></td>
+<td>
+<p>Ideal number of clusters.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani</p>
+
+
+<h3>References</h3>
+
+<p>Erich, S. Stop using the Elbow criterion for k-means and how to choose the number of clusters instead. <em>ACM SIGKDD Explorations Newsletter.</em> 25 (1): 36-42. arXiv:2212.12189. 2023. doi: 10.1145/3606274.3606278
+</p>
+<p>Sugar, C. A. and James, G. M. Finding the number of clusters in a dataset: An information-theoretic approach. <em>Journal of the American Statistical Association</em>, 98, 463, 750-763. 2003. doi: 10.1198/016214503000000666
+</p>
+<p>Zhang, Y.; Mandziuk, J.; Quek, H. C. and Goh, W. Curvature-based method for determining the number of clusters. <em>Inf. Sci.</em> 415, 414-428, 2017. doi: 10.1016/j.ins.2017.05.024
+</p>
+<p>Onumanyi, A. J.; Molokomme, D. N.; Isaac, S. J. and Abu-Mahfouz, A. M. Autoelbow: An automatic elbow detection method for estimating the number of clusters in a dataset. <em>Applied Sciences 12</em>, 15. 2022. doi: 10.3390/app12157515
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+res &lt;- elbow(data = iris[,1:4], k.max = 20, method = "AutoElbow", cut = TRUE, 
+             plot = TRUE, title = NA, xlabel = NA, ylabel = NA, size = 1.1, 
+             grid = TRUE, savptc = FALSE, width = 3236, color = TRUE, 
+             height = 2000, res = 300, casc = FALSE)
+             
+res$k.ideal # number of clusters
+
+</code></pre>
+
+
+</div>

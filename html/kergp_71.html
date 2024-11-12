@@ -1,0 +1,164 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corLevCompSymm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Correlation Matrix for the Compound Symmetry Structure</h2>
+
+<h3>Description</h3>
+
+<p>Compute the correlation matrix for a the compound symmetry structure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">corLevCompSymm(par, nlevels, levels, lowerSQRT = FALSE, compGrad = TRUE,
+  cov = FALSE, impl = c("C", "R"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+
+<p>Numeric vector of length <code>1</code> if <code>cov</code> is
+<code>TRUE</code> or with length <code>2</code> else. The first element is the
+correlation coefficient and the second one (when it exists) is the
+variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlevels</code></td>
+<td>
+
+<p>Number of levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>levels</code></td>
+<td>
+
+<p>Character representing the levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lowerSQRT</code></td>
+<td>
+
+<p>Logical. When <code>TRUE</code> the (lower) Cholesky
+root <code class="reqn">\mathbf{L}</code> of the correlation matrix
+<code class="reqn">\mathbf{C}</code> is returned instead of the correlation matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical. Should the gradient be computed?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+<p>Logical.
+</p>
+<p>If <code>TRUE</code> the matrix is a covariance
+matrix (or its Cholesky root) rather than a correlation matrix and
+the last element in <code>par</code> is the variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impl</code></td>
+<td>
+
+<p>A character telling which of the C and R implementations
+should be chosen.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A correlation matrix (or its Cholesky root) with the
+optional <code>gradient</code> attribute.
+</p>
+
+
+<h3>Note</h3>
+
+<p>When <code>lowerSQRT</code> is <code>FALSE</code>, the implementation
+used is always in R because no gain would then result from an
+implementation in C.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Yves Deville
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">checkGrad &lt;- TRUE
+lowerSQRT &lt;- FALSE
+nlevels &lt;- 12
+set.seed(1234)
+par &lt;- runif(1L, min = 0, max = pi)
+
+##============================================================================
+## Compare R and C implementations for 'lowerSQRT = TRUE'
+##============================================================================
+tR &lt;- system.time(TR &lt;- corLevCompSymm(nlevels = nlevels, par = par,
+                                       lowerSQRT = lowerSQRT, impl = "R"))
+tC &lt;- system.time(T &lt;- corLevCompSymm(nlevels = nlevels, par = par,
+                                      lowerSQRT = lowerSQRT))
+tC2 &lt;- system.time(T2 &lt;- corLevCompSymm(nlevels = nlevels, par = par,
+                                        lowerSQRT = lowerSQRT, compGrad = FALSE))
+## time
+rbind(R = tR, C = tC, C2 = tC2)
+
+## results
+max(abs(T - TR))
+max(abs(T2 - TR))
+
+##===========================================================================
+## Compare the gradients
+##===========================================================================
+
+if (checkGrad) {
+
+    library(numDeriv)
+
+    ##=======================
+    ## lower SQRT case only
+    ##========================
+    JR &lt;- jacobian(fun = corLevCompSymm, x = par, nlevels = nlevels,
+                   lowerSQRT = lowerSQRT, impl = "R", method = "complex")
+    J &lt;- attr(T, "gradient")
+
+    ## redim and compare.
+    dim(JR) &lt;- dim(J)
+    max(abs(J - JR))
+    nG &lt;- length(JR)
+    plot(1:nG, as.vector(JR), type = "p", pch = 21, col = "SpringGreen3",
+         cex = 0.8, ylim = range(J, JR),
+         main = paste("gradient check, lowerSQRT =", lowerSQRT))
+    points(x = 1:nG, y = as.vector(J), pch = 16, cex = 0.6, col = "orangered")
+}
+
+</code></pre>
+
+
+</div>

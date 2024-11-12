@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>series</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sampling Times</h2>
+
+<h3>Description</h3>
+
+<p>Get the times at which a time series was sampled.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'EventDate'
+time(x, calendar = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>). If <code>NULL</code> (the default), <em>rata die</em> are
+returned.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>numeric</code> vector.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other mutators: 
+<code>data.frame</code>,
+<code>model</code>,
+<code>mutators</code>,
+<code>subset()</code>
+</p>
+
+
+</div>

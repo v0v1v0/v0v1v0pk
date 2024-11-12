@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PCAKneePlot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot of PCA proportion of variance explained</h2>
+
+<h3>Description</h3>
+
+<p>Draws "knee plot" of PCA proportion of variance explained to determine which principal components (PCs) to include for downstream applications e.g. clustering.
+Variance explained for each PC is indicated by the line.
+Cumulative variance explained is indicated by the bars.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PCAKneePlot(TapestriExperiment, alt.exp = "alleleFrequency", n.pcs = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.exp</code></td>
+<td>
+<p>Character, <code>altExp</code> to use, <code>NULL</code> uses top-level/main experiment. Default "alleleFrequency".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.pcs</code></td>
+<td>
+<p>Numeric, number of PCs to plot, starting at 1. Default 10.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>ggplot2 object, combined line plot and bar graph
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- runPCA(tap.object, alt.exp = "alleleFrequency")
+PCAKneePlot(tap.object, n.pcs = 5)
+</code></pre>
+
+
+</div>

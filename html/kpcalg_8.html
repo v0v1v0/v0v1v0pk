@@ -1,0 +1,164 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernelCItest</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Conditional Independence test</h2>
+
+<h3>Description</h3>
+
+<p>Test to check the (conditional) dependence between two variables x and y given a set of variables S, using independence criteria. The kernelCItest() function, uses Distance Covariance or Hilbert-Schmidt Independence Criterion to test for the (conditional) independence between random variables, with an interface that can easily by used in <code>skeleton</code>, <code>pc</code> or <code>kpc</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernelCItest(x, y, S = NULL, suffStat, verbose = FALSE, data,
+  ic.method = NULL, p = NULL, index = NULL, sig = NULL, numCol = NULL,
+  numCluster = NULL, eps = NULL, paral = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, y, S</code></td>
+<td>
+<p>It is tested, whether x and y are conditionally independent given the subset S of the remaining nodes. x, y, S all are integers, corresponding to variable or node numbers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffStat</code></td>
+<td>
+<p>a list of parameters consisting of data, ic.method, p, index, sig, numCol, numCluster, eps, paral</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>a logical parameter, if TRUE, detailed output is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>numeric matrix witch collumns representing variables and rows representing samples</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ic.method</code></td>
+<td>
+<p>Method for the (conditional) independence test: Distance Covariance (permutation or gamma test), HSIC (permutation or gamma test) or HSIC cluster</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Number of permutations for Distance Covariance, HSIC permutation and HSIC cluster tests. Default is Distance Covariance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>Number in (0,2] the power of the distance in the Distance Covariance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig</code></td>
+<td>
+<p>Gaussian kernel width for HSIC tests. Default is 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCol</code></td>
+<td>
+<p>Number of columns used in the incomplete Cholesky decomposition. Default is 50</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCluster</code></td>
+<td>
+<p>Number of clusters for kPC clust algorithm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>Normalization parameter for kPC clust. Default is 0.1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paral</code></td>
+<td>
+<p>Number of cores to use for parallel calculations.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>kernelCItest() returns the p-value of the test.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>) and Nina Ines Bertille Desgranges
+</p>
+
+
+<h3>References</h3>
+
+<p>G. Szekely, M. Rizzo and N. Bakirov (2007). Measuring and Testing Dependence by Correlation of Distances. The Annals of Statistics 2007, Vol. 35, No. 6, 2769-2794.
+</p>
+<p>A. Gretton et al. (2005). Kernel Methods for Measuring Independence. JMLR 6 (2005) 2075-2129.
+</p>
+<p>R. Tillman, A. Gretton and P. Spirtes (2009). Nonlinear directed acyclic structure learning with weakly additive noise model. NIPS 22, Vancouver.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(10)
+library(pcalg)
+z &lt;- 10*runif(300)
+w &lt;- 10*runif(300)
+x &lt;- sin(z) + runif(300)
+y &lt;- cos(z) + runif(300)
+
+data &lt;- cbind(x,y,z,w)
+
+#conditionally independent
+test1a &lt;- kernelCItest(x=1,y=2,S=c(3),suffStat = list(data=data,ic.method="dcc.gamma"))
+test2a &lt;- kernelCItest(x=1,y=2,S=c(3),suffStat = list(data=data,ic.method="dcc.perm"))
+test3a &lt;- kernelCItest(x=1,y=2,S=c(3),suffStat = list(data=data,ic.method="hsic.gamma"))
+test4a &lt;- kernelCItest(x=1,y=2,S=c(3),suffStat = list(data=data,ic.method="hsic.perm"))
+test5a &lt;- kernelCItest(x=1,y=2,S=c(3),suffStat = list(data=data,ic.method="hsic.clust"))
+test6a &lt;- gaussCItest( x=1,y=2,S=c(3),suffStat = list(C=cor(data),n=4))
+
+test1a
+test2a
+test3a
+test4a
+test5a
+test6a
+
+#dependent
+test1b &lt;- kernelCItest(x=1,y=2,S=c(4),suffStat = list(data=data,ic.method="dcc.gamma"))
+test2b &lt;- kernelCItest(x=1,y=2,S=c(4),suffStat = list(data=data,ic.method="dcc.perm"))
+test3b &lt;- kernelCItest(x=1,y=2,S=c(4),suffStat = list(data=data,ic.method="hsic.gamma"))
+test4b &lt;- kernelCItest(x=1,y=2,S=c(4),suffStat = list(data=data,ic.method="hsic.perm"))
+test5b &lt;- kernelCItest(x=1,y=2,S=c(4),suffStat = list(data=data,ic.method="hsic.clust"))
+test6b &lt;- gaussCItest( x=1,y=2,S=c(4),suffStat = list(C=cor(data),n=4))
+
+test1b
+test2b
+test3b
+test4b
+test5b
+test6b
+</code></pre>
+
+
+</div>

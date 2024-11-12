@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ladder_moment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate the distribution of first ladder moment for given level</h2>
+
+<h3>Description</h3>
+
+<p>NA is returned if the level wasn't crossed. Printing the resulting object
+will give summary of the estimated distribution and information whether
+level wasn't crossed in some simulations. This information can be used to
+pick the right trajectory length for the given level.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ladder_moment(simulations, level)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>simulations</code></td>
+<td>
+<p>kendall_simulation object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Positive numeric</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>tibble
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">{
+kendall_rw &lt;- simulate_kendall_rw(100, 100, runif, 0.5)
+estim_ladder &lt;- ladder_moment(kendall_rw, 1000)
+estim_ladder
+}
+
+</code></pre>
+
+
+</div>

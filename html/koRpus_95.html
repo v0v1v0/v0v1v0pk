@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fucks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Fucks' Stilcharakteristik</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fucks(txt.file, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculates Fucks' Stilcharakteristik ("characteristics of style"; Fucks, 1955,
+as cited in Briest, 1974).
+In contrast to <code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Briest, W. (1974). Kann man Verständlichkeit messen? <em>Zeitschrift für Phonetik,
+Sprachwissenschaft und Kommunikationsforschung</em>, 27, 543–563.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  fucks(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

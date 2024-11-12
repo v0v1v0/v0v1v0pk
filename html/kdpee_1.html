@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kdpee</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fast Entropy Estimation of Multi-Dimensional Data</h2>
+
+<h3>Description</h3>
+
+<p>Non-parametric estimator for the differential entropy of a multidimensional distribution, given a limited set of data points, by a recursive rectilinear partitioning.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kdpee(X, ci = 0.95, lower = apply(X, 2, min), upper = apply(X, 2, max))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>[<code>matrix</code>]<br>
+Data, one observation per row.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Confidence threshold used to decide if a cell should be divided further.
+Defaults to 95%.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>[<code>numeric(n)</code>]<br>
+Lower bound of the support of <code>X</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>[<code>numeric(n)</code>]<br>
+Upper bound of the support of <code>X</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Differential entropy estimate.
+</p>
+
+
+<h3>References</h3>
+
+<p>D. Stowell and M. D. Plumbley
+Fast multidimensional entropy estimation by k-d partitioning.
+IEEE Signal Processing Letters 16 (6), 537–540, June 2009.
+http://dx.doi.org/10.1109/LSP.2009.2017346
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Xu &lt;- matrix(runif(1000 * 100), ncol=100)
+kdpee(Xu)
+
+Xn &lt;- matrix(rnorm(1000 * 100), ncol=100)
+kdpee(Xn)
+
+</code></pre>
+
+
+</div>

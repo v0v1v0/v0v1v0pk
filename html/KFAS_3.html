@@ -1,0 +1,185 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>approxSSM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Linear Gaussian Approximation for Exponential Family State Space Model</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>approxSMM</code> performs a linear Gaussian approximation of an
+exponential family state space model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">approxSSM(
+  model,
+  theta,
+  maxiter = 50,
+  tol = 1e-08,
+  expected = FALSE,
+  H_tol = 1e+15
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A non-Gaussian state space model object of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Initial values for conditional mode theta.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>The maximum number of iterations used in approximation.
+Default is 50.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>Tolerance parameter for convergence checks.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expected</code></td>
+<td>
+<p>Logical value defining the approximation of H_t in case of Gamma 
+and negative binomial distribution. Default is <code>FALSE</code> which matches the 
+algorithm of Durbin &amp; Koopman (1997), whereas <code>TRUE</code> uses the expected value
+of observations in the equations, leading to results which match with <code>glm</code> (where applicable).
+The latter case was the default behaviour of KFAS before version 1.3.8.
+Essentially this is the difference between observed and expected information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H_tol</code></td>
+<td>
+<p>Tolerance parameter for check <code>max(H) &gt; tol_H</code>, which suggests that the approximation 
+converged to degenerate case with near zero signal-to-noise ratio. Default is very generous 1e15.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is rarely needed itself, it is mainly available for
+illustrative and debugging purposes. The underlying Fortran code is used by
+other functions of KFAS for non-Gaussian state space modelling.
+</p>
+<p>The linear Gaussian approximating model is defined by
+</p>
+<p style="text-align: center;"><code class="reqn">\tilde y_t = Z_t \alpha_t + \epsilon_t, \quad \epsilon_t \sim N(0,\tilde H_t),</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">\alpha_{t+1} = T_t \alpha_t + R_t \eta_t, \quad \eta_t \sim N(0,Q_t),</code>
+</p>
+
+<p>and <code class="reqn">\alpha_1 \sim N(a_1,P_1)</code>,
+</p>
+<p>where <code class="reqn">\tilde y</code> and <code class="reqn">\tilde H</code> are chosen in a way
+that the linear Gaussian approximating model has the same conditional mode of
+<code class="reqn">\theta=Z\alpha</code> given the observations <code class="reqn">y</code> as the original
+non-Gaussian model. Models also have a same curvature at the mode.
+</p>
+<p>The approximation of the exponential family state space model is based on
+iterative weighted least squares method, see McCullagh and Nelder (1983) p.31
+and Durbin Koopman (2012) p. 243.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>SSModel</code> which contains the approximating Gaussian state space model
+with following additional components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>thetahat</code></td>
+<td>
+<p>Mode of <code class="reqn">p(\theta|y)</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterations</code></td>
+<td>
+<p>Number of iterations used. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>difference</code></td>
+<td>
+<p>Relative difference in the last step of approximation
+algorithm. </p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+ <ul>
+<li>
+<p> McCullagh, P. and Nelder, J. A. (1983).
+Generalized linear models. Chapman and Hall.
+</p>
+</li>
+<li>
+<p> Koopman, S.J. and Durbin, J. (2012).
+Time Series Analysis by State Space Methods. Second edition. Oxford University Press. </p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>importanceSSM</code>, <code>SSModel</code>,
+<code>KFS</code>, <code>KFAS</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# A Gamma example modified from ?glm (with log-link)
+clotting &lt;- data.frame(
+  u = c(5,10,15,20,30,40,60,80,100),
+  lot1 = c(118,58,42,35,27,25,21,19,18),
+  lot2 = c(69,35,26,21,18,16,13,12,12))
+
+glmfit1 &lt;- glm(lot1 ~ log(u), data = clotting, family = Gamma(link = "log"))
+glmfit2 &lt;- glm(lot2 ~ log(u), data = clotting, family = Gamma(link = "log"))
+
+# Model lot1 and lot2 together (they are still assumed independent)
+# Note that Gamma distribution is parameterized by 1/dispersion i.e. shape parameter
+model &lt;- SSModel(cbind(lot1, lot2) ~ log(u),
+                u = 1/c(summary(glmfit1)$dispersion, summary(glmfit2)$dispersion),
+                data = clotting, distribution = "gamma")
+approxmodel &lt;- approxSSM(model)
+
+# Conditional modes of linear predictor:
+approxmodel$thetahat
+cbind(glmfit1$linear.predictor, glmfit2$linear.predictor)
+
+KFS(approxmodel)
+summary(glmfit1)
+summary(glmfit2)
+
+# approxSSM uses modified step-halving for more robust convergence than glm:
+y &lt;- rep (0:1, c(15, 10))
+suppressWarnings(glm(formula = y ~ 1, family = binomial(link = "logit"), start = 2))
+model &lt;- SSModel(y~1, dist = "binomial")
+KFS(model, theta = 2)
+KFS(model, theta = 7)
+</code></pre>
+
+
+</div>

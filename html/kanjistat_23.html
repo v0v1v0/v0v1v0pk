@@ -1,0 +1,248 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kanjivec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create kanjivec objects from kanjivg data</h2>
+
+<h3>Description</h3>
+
+<p>Create a (list of) kanjivec object(s). Each object is a representation of the kanji as a tree of strokes
+based on .svg files from the KanjiVG database containing further, derived information.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kanjivec(
+  kanji,
+  database = NULL,
+  flatten = "intelligent",
+  bezier_discr = c("svgparser", "eqtimed", "eqspaced"),
+  save = FALSE,
+  overwrite = FALSE,
+  simplify = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kanji</code></td>
+<td>
+<p>a (vector of) character string(s) of one or several kanji.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>database</code></td>
+<td>
+<p>the path to a local copy of (a subset of) the KanjiVG database. It is expected
+that the svg files reside at this exact location (not in a subdirectory). If <code>NULL</code>,
+an attempt is made to read the svg file(s) from the KanjiVG GitHub repository (after
+prompting for confirmation, which can be switched off via the option
+<code>ask_github</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flatten</code></td>
+<td>
+<p>logical. Should nodes that are only-children be fused with their parents?
+Alternatively one of the strings "intelligent", "inner" or "leaves". Although the first is the default
+it is experimental and the precise meaning will change in the future; see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bezier_discr</code></td>
+<td>
+<p>character. How to discretize the Bézier curves describing the strokes. If
+"svgparser" (the only option available prior to kanjistat 0.12.0), code from the non-CRAN package svgparser
+is used for discretizing at equal time steps. The new choices "eqtimed" and "eqspaced" discretize
+into fewer points (and allow for more customization underneath). The former creates discretization
+points at equal time steps, the latter at equal distance steps (to a good approximation).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save</code></td>
+<td>
+<p>logical or character. If FALSE return the (list of) kanjivec object(s). Otherwise save the result
+as an rds file in the working directory (as kvecsave.rds) or under the file path provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>logical. If FALSE return an error (before any computations are done) if the designated
+file path already exists. Otherwise an existing file is overwritten.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+<p>logical. Shall a single kanjivec object be returned (instead a list of one) if <code>kanji</code>
+is a single kanji?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A kanjivec object contains detailed information on the strokes of which an individual kanji
+is composed including their order, a segmentation into reasonable components ("radicals" in a
+more general sense of the word), classification of individual strokes, and both
+vector data and interpolated points to recreate the actual stroke in a Kyoukashou style font.
+For more information on the original data see <a href="http://kanjivg.tagaini.net/">http://kanjivg.tagaini.net/</a>. That data
+is licenced under Creative Commons BY-SA 3.0 (see licence file of this package).
+</p>
+<p>The original .svg files sometimes contain additional <code style="white-space: pre;">⁠&lt;g&gt;⁠</code> elements that provide
+information about the current group of strokes rather than establishing a new subgroup
+of its own. This happens typically for information that establishes coherence with another
+part of the tree (by noting that the current subgroup is also part 2 of something else),
+but also for variant information. With the option <code>flatten = TRUE</code> the extra hierarchy
+level in the tree is avoided, while the original information in the KanjiVG file is kept.
+This is achieved by fusing only-children to their parents, giving the new node the name
+of the child and all its attributes, but prefixing <code>p.</code> to the attribute names
+of the parent (the parents' "names" attribute is discarded, but can be reconstructed from
+the parents' id). Removal of several hierarchies in sequence can lead to attribute names
+with multiple <code>p.</code> in front. Fusing to parents is suppressed if the parent is the
+root of the hierarchy (typically for one-stroke kanji), as this could lead to confusing
+results.
+</p>
+<p>The options <code>flatten = "inner"</code> and <code>flatten = "leaves"</code> implement the above behavior
+only for the corresponding type of node (inner nodes or leaves). The option
+<code>flatten = "intelligent"</code> tries to find out in more sophisticated ways which flattening
+is desirable and which is not (it will flatten rather conservatively). Currently nodes without
+an element attribute that have only one child are flattened away (one example where this is
+reasonable is in kanji <code>kbase[187, ]</code>), as are nodes with an element attribute and only
+one child if this child is also an inner node and has the same element and part attribute as the
+parent, but both have no number (this would be problematic for any component-building code
+in the particular case of kanji <code>kbase[1111, ]</code>).
+</p>
+<p>A <code>kanjivec</code> object has components
+</p>
+
+<dl>
+<dt><code>char</code></dt>
+<dd>
+<p>the kanji (a single character)</p>
+</dd>
+<dt><code>hex</code></dt>
+<dd>
+<p>its Unicode codepoint (integer of class <code>hexmode</code>)</p>
+</dd>
+<dt><code>padhex</code></dt>
+<dd>
+<p>the Unicode codepoint padded with zeros to five digits (mode character)</p>
+</dd>
+<dt><code>family</code></dt>
+<dd>
+<p>the font on which the data is based. Currently only "schoolbook" (to be extended with "kaisho" at some point)</p>
+</dd>
+<dt><code>nstrokes</code></dt>
+<dd>
+<p>the number of strokes in the kanji</p>
+</dd>
+<dt><code>ncompos</code></dt>
+<dd>
+<p>a vector of the number of components at each depth of the tree</p>
+</dd>
+<dt><code>nveins</code></dt>
+<dd>
+<p>the number of veins in the component structure</p>
+</dd>
+<dt><code>strokedend</code></dt>
+<dd>
+<p>the decomposition tree of the kanji as an object of class <code>dendrogram</code></p>
+</dd>
+<dt><code>components</code></dt>
+<dd>
+<p>the component structure by segmentation depth (components can overlap) in terms
+of KanjiVG elements and their depth-first tree coordinates</p>
+</dd>
+<dt><code>veins</code></dt>
+<dd>
+<p>the veins in the component structure. Each vein is represented as a two-column matrix
+that lists in its rows the indices of <code>components</code> (starting at the root,
+which in the component indexing is <code>c(1,1)</code>)</p>
+</dd>
+<dt><code>stroketree</code></dt>
+<dd>
+<p>the decomposition tree of the kanji, a list containing the full information of the
+the KanjiVG file (except some top level attributes)</p>
+</dd>
+</dl>
+<p><code>stroketree</code> is a close representation of the KanjiVG svg file as list object with
+some serious nesting of sublists. The XML attributes become attributes of the list and its elements.
+The user will usually not have to look at or manipulate <code>stroketree</code> directly, but
+<code>strokedend</code> and <code>compents</code> are derived from it and other functions may process it
+further.
+</p>
+<p>The main differences to the svg file are
+</p>
+
+<ol>
+<li>
+<p> the actual strokes are not only given as d-attributes describing Bézier curves, but
+but also as two-column matrices describing discretizations of these curves. These matrices
+are the actual contents of the innermost lists in <code>stroketree</code>, but are more conveniently
+accessed via the function <code>get_strokes</code>. Starting with version 0.13.0, there is
+also an additional attribute "beziermat", which describes the Bézier curves for the stroke
+in a 2 x (1+3n) matrix format. The first column is the start point, then each triplet of columns
+stands for control point 1, control point 2 and end point (=start point of the next Bézier curve
+if any).
+</p>
+</li>
+<li>
+<p> The positions of the stroke numbers (for plotting) are saved as an attribute strokenum_coords
+to the entire stroke tree rather than a separate element.
+</p>
+</li>
+</ol>
+<p><code>strokedend</code> is more easy to examine and work with due to various convenience functions for
+dendrograms in the packages <code>stats</code> and <code>dendextend</code>, including <code>str</code>
+and <code>plot.dendrogram</code>. The function <code>plot.kanjivec</code> with option
+<code>type = "dend"</code> is a wrapper for <code>plot.dendrogram</code> with reasonable presets
+for various options.
+</p>
+<p>The label-attributes of the nodes of <code>strokedend</code> are taken from the element (for inner nodes)
+and type (for leaves) attributes of the .svg files. They consist of UTF-8 characters representing
+kanji parts and a combination of UTF-8 characters for representing strokes and may not represent
+well in all CJK fonts (see details of <code>plot.kanjivec</code>). If element and type are missing
+in the .svg file, the label assigned is the second part of the id-attribute, e.g. g5 or s9.
+</p>
+<p>The <code>components</code> at a given level can be plotted, see <code>plot.kanjivec</code> with
+<code>type = "kanji"</code>. Both <code>components</code> and <code>veins</code> serve mainly for the computation
+of kanji distances.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of objects of class <code>kanjivec</code> or, if only one kanji was specified and
+<code>simplify</code> is <code>TRUE</code>, a single objects of class <code>kanjivec</code>. If <code>save = TRUE</code>,
+the same is (saved and) still returned invisibly.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.kanjivec</code>, <code>str.kanjivec</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (interactive()) {
+  # Try to load the svg file for the kanji from GitHub.
+  res &lt;- kanjivec("\u85e4", database=NULL)
+  str(res)
+}
+
+fivebetas  # sample kanjivec data
+str(fivebetas[[1]])
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>without_echo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Call a function with echo suppressed</h2>
+
+<h3>Description</h3>
+
+<p>For Linux/Unix and OSX terminals, suppress key echoes from the terminal.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">without_echo(expr)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>Expression to evaluate without terminal echo.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>You will need to set echo to FALSE if you want the R script to handle all
+of the keypress-related behaviour, without any keys being echoed in the
+terminal by the operating system, when using non-blocking keypress. This is
+not necessary when running in a Windows command prompt, and will be safely
+ignored.
+</p>
+
+
+</div>

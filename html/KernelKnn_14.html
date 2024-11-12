@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knn.index.dist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>indices and distances of k-nearest-neighbors</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the k nearest indices and distances of each observation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knn.index.dist(
+  data,
+  TEST_data = NULL,
+  k = 5,
+  method = "euclidean",
+  transf_categ_cols = F,
+  threads = 1,
+  p = k
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data.frame or matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TEST_data</code></td>
+<td>
+<p>a data.frame or matrix (it can be also NULL)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>an integer specifying the k-nearest-neighbors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>a string specifying the method. Valid methods are 'euclidean', 'manhattan', 'chebyshev', 'canberra', 'braycurtis', 'pearson_correlation', 'simple_matching_coefficient', 'minkowski' (by default the order 'p' of the minkowski parameter equals k), 'hamming', 'mahalanobis', 'jaccard_coefficient', 'Rao_coefficient'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transf_categ_cols</code></td>
+<td>
+<p>a boolean (TRUE, FALSE) specifying if the categorical columns should be converted to numeric or to dummy variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threads</code></td>
+<td>
+<p>the number of cores to be used in parallel (openmp will be employed)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>a numeric value specifying the 'minkowski' order, i.e. if 'method' is set to 'minkowski'. This parameter defaults to 'k'</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function takes a number of arguments and it returns the indices and distances of the k-nearest-neighbors for each observation. If TEST_data is NULL then the indices-distances for the train data will be returned, whereas if TEST_data is not NULL then the indices-distances for the TEST_data will be returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list of length 2. The first sublist returns the indices and the second the distances of the k nearest neighbors for each observation.
+If TEST_data is NULL the number of rows of each sublist equals the number of rows in the train data. If TEST_data is not NULL the number of rows of each sublist equals the number of rows in the TEST data.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Lampros Mouselimis
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(Boston)
+
+X = Boston[, -ncol(Boston)]
+
+out = knn.index.dist(X, TEST_data = NULL, k = 4, method = 'euclidean', threads = 1)
+
+</code></pre>
+
+
+</div>

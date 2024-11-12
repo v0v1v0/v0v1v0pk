@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>show-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Methods for Function show in Package ‘kappalab’</h2>
+
+<h3>Description</h3>
+
+<p>Displays the contents of an object.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "superclass.set.func" </dt>
+<dd>
+<p>Generic <code>show</code> method for <code>superclass.set.func</code>.</p>
+</dd>
+<dt>object = "set.func" </dt>
+<dd>
+<p>Displays a <code>set.func</code> object.</p>
+</dd>
+<dt>object = "Mobius.set.func" </dt>
+<dd>
+<p>Displays a <code>Mobius.set.func</code> object.</p>
+</dd>
+<dt>object = "summary.superclass.set.func" </dt>
+<dd>
+<p>Displays a <code>summary.superclass.set.func</code> object.</p>
+</dd>
+<dt>object = "summary.superclass.capacity" </dt>
+<dd>
+<p>Displays a
+<code>summary.superclass.capacity</code> object.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>superclass.set.func-class</code>,
+<br><code>set.func-class</code>,
+<br><code>Mobius.set.func-class</code>,
+<br><code>summary.superclass.set.func-class</code>,
+<br><code>summary.superclass.capacity-class</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a set function
+mu &lt;- set.func(0:15/15)
+show(mu)
+## the same
+mu
+
+## a Mobius transform
+a &lt;- Mobius.set.func(0:10,4,2)
+show(a)
+a
+
+## a cardinal capacity
+mu &lt;- lower.capacity(5)
+show(mu)
+mu
+</code></pre>
+
+
+</div>

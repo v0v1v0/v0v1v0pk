@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mediation_analysis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mediation analysis</h2>
+
+<h3>Description</h3>
+
+<p>Conducts a mediation analysis to estimate an independent variable's
+indirect effect on dependent variable through a mediator variable.
+The current version of the package only supports a simple mediation
+model consisting of one independent variable, one mediator variable,
+and one dependent variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mediation_analysis(
+  data = NULL,
+  iv_name = NULL,
+  mediator_name = NULL,
+  dv_name = NULL,
+  covariates_names = NULL,
+  robust_se = TRUE,
+  iterations = 1000,
+  sigfigs = 3,
+  output_type = "summary_dt",
+  silent = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_name</code></td>
+<td>
+<p>name of the independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mediator_name</code></td>
+<td>
+<p>name of the mediator variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariates_names</code></td>
+<td>
+<p>names of covariates to control for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust_se</code></td>
+<td>
+<p>if <code>TRUE</code>, heteroskedasticity-consistent
+standard errors will be used in quasi-Bayesian simulations. By default,
+it will be set as <code>FALSE</code> if nonparametric bootstrap is used and
+as <code>TRUE</code> if quasi-Bayesian approximation is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterations</code></td>
+<td>
+<p>number of bootstrap samples. The default is set at 1000,
+but consider increasing the number of samples to 5000, 10000, or an
+even larger number, if slower handling time is not an issue.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>if <code>output_type = "summary_dt"</code>,
+return the summary data.table; if <code>output_type = "mediate_output"</code>,
+return the output from the <code>mediate</code> function in the
+'mediate' package; if <code>output_type = "indirect_effect_p"</code>,
+return the p value associated with the indirect effect estimated
+in the mediation model (default = "summary_dt")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>if <code>silent = FALSE</code>, mediation analysis summary,
+estimation method, sample size, and number of simulations will be
+printed; if <code>silent = TRUE</code>, nothing will be printed.
+(default = FALSE)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function requires installing Package 'mediation' v4.5.0
+(or possibly a higher version) by Tingley et al. (2019),
+and uses the source code from a function in the package.
+<a href="https://cran.r-project.org/package=mediation">https://cran.r-project.org/package=mediation</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>if <code>output_type = "summary_dt"</code>, which is the default,
+the output will be a data.table showing a summary of mediation
+analysis results; if <code>output_type = "mediate_output"</code>,
+the output will be the output from the <code>mediate</code> function
+in the 'mediate' package; if <code>output_type = "indirect_effect_p"</code>,
+the output will be the p-value associated with the indirect effect
+estimated in the mediation model (a numeric vector of length one).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+mediation_analysis(
+  data = mtcars, iv_name = "cyl",
+  mediator_name = "disp", dv_name = "mpg", iterations = 100
+)
+mediation_analysis(
+  data = iris, iv_name = "Sepal.Length",
+  mediator_name = "Sepal.Width", dv_name = "Petal.Length",
+  iterations = 100
+)
+
+</code></pre>
+
+
+</div>

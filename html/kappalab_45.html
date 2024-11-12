@@ -1,0 +1,153 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>capacity-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "capacity"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing a capacity, i.e. a monotone set function
+vanishing at the empty set (also called <em>fuzzy measure</em>, <em>non-additive measure</em>,
+<em>monotone measure</em>).</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be mainly created by calls
+to the functions <code>capacity</code> and <code>entropy.capa.ident</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal to the
+number of elements of the set on which the capacity is defined.</p>
+</dd>
+<dt>
+<code>subsets</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>2^n</code> containing the power set of the underlying set in
+"natural" order. The subsets are coded as integers.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>2^n</code> containing the coefficients of the capacity in binary
+order. We necessarily have <code>data[1] = 0</code> plus some additional monotonicity
+constraints.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>game</code>, directly.
+Class <code>superclass.capacity</code>, directly.
+Class <code>set.func</code>, by class <code>game</code>.
+Class <code>superclass.set.func</code>, by class <code>game</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.card.capacity</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>conjugate</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>entropy</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>favor</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>is.normalized</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>normalize</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>Mobius</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>orness</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>variance</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+<dt>veto</dt>
+<dd>
+<p><code>signature(object = "capacity")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>capacity</code>,
+<br><code>entropy.capa.ident</code>,
+<br><code>as.card.capacity-methods</code>,
+<br><code>conjugate-methods</code>, 
+<br><code>entropy-methods</code>,
+<br><code>favor-methods</code>, 
+<br><code>is.normalized-methods</code>,
+<br><code>normalize-methods</code>,
+<br><code>Mobius-methods</code>, 
+<br><code>orness-methods</code>,
+<br><code>variance-methods</code>, 
+<br><code>veto-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(c(0:13,13,13)/13)
+
+## the attributes of the object
+mu@n
+mu@data
+mu@subsets
+
+## a test
+is.normalized(mu)
+normalize(mu)
+
+## a conversion that should not work
+## as.card.capacity(mu)
+
+## some transformations
+conjugate(mu)
+Mobius(mu)
+## let us check ...
+zeta(Mobius(mu))
+
+## some summary indices
+orness(mu)
+veto(mu)
+favor(mu)
+variance(mu)
+entropy(mu)
+## the same
+summary(mu)
+</code></pre>
+
+
+</div>

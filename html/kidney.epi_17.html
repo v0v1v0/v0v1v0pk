@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>service.is.param_possible</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Service functions for data check which could be applied in any function of the package or externally</h2>
+
+<h3>Description</h3>
+
+<p>Service functions for data check which could be applied in any function of the package or externally
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">service.is.param_possible(param2check, possible_params)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>param2check</code></td>
+<td>
+<p>Numeric value or character string. The single value to be verified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>possible_params</code></td>
+<td>
+<p>Vector. The vector of values which contains all possible values.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Verifies whether the single value is among the values of the vector. 
+Function is useful to check whether the argument of the function defined by the user is among the possible arguments recognized inside the function.
+</p>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>logic returns TRUE if argument param2check is foundin possible values possible_params, and FALSE if it is not.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">possible_params = c("KDPI", " KDRI_Rao", "KDRI_median")
+service.is.param_possible("KDZO", possible_params) # return FALSE
+service.is.param_possible("KDPI", possible_params) # return TRUE
+</code></pre>
+
+
+</div>

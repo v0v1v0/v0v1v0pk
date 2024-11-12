@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vario_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create Variogram Plot</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the empirical variogram for a given target factor (FAC)
+and plots it along with the fitted variogram based on the specified variogram model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vario_plot(
+  data,
+  factor,
+  nlags = NA,
+  lags = NA,
+  nugget,
+  sill,
+  range_val,
+  a,
+  model_name
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis, see README for details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>The target factor (FAC) to be used for variogram calculation and fitting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlags</code></td>
+<td>
+<p>The number of lag bins for variogram calculation. Default is NA, which will
+use Sturges' formula to determine the number of lags.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lags</code></td>
+<td>
+<p>The lag width for variogram calculation. Default is NA, which will calculate
+the lag width based on the range of distances.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nugget</code></td>
+<td>
+<p>The nugget effect parameter for the variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sill</code></td>
+<td>
+<p>The sill parameter for the variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range_val</code></td>
+<td>
+<p>The range parameter for the variogram model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>Additional parameter (depends on the variogram model) use NA if not needed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_name</code></td>
+<td>
+<p>The name of the model to use for variogram fitting.
+Available options include "Sph1", "Exp1", "Gau1", "Mat1", "Pow1", "Quad1", "Card1", "Gam1", "Cau1",
+"Sta1", "Ord1", "Tri1", and "Cos1". Use function <code>print_model_names()</code> for more information.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot displaying the empirical variogram and the fitted variogram based on the specified model.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Klovan_Row80)
+# Plot variogram for FAC1
+vario_plot(Klovan_Row80, factor = 1, nlags = 10, nugget = 0.01, sill = 2.5,
+range_val = 1000, a = NA, model_name = "Sph1")
+
+</code></pre>
+
+
+</div>

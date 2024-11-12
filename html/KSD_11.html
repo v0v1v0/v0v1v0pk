@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotgmm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plots histogram for 1-d GMM given the dataset</h2>
+
+<h3>Description</h3>
+
+<p>Plots histogram for 1-d GMM given the dataset
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotgmm(data, mu = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>(n by 1): The dataset of interest,
+where n is the number of samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>: True mean of the GMM (optional)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Plot pdf histogram for a given dataset
+model &lt;- gmm()
+X &lt;- rgmm(model)
+plotgmm(data=X)
+
+# Plot pdf histogram for a given dataset, with lines that indicate the mean
+model &lt;- gmm()
+mu &lt;- model$mu
+X &lt;- rgmm(model)
+plotgmm(data=X, mu=mu)
+</code></pre>
+
+
+</div>

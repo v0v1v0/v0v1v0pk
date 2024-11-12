@@ -1,0 +1,248 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covTS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Creator Function for <code>covTS</code> Objects
+</h2>
+
+<h3>Description</h3>
+
+<p>Creator function for <code>covTS</code> objects representing a Tensor Sum
+covariance kernel.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">covTS(inputs = paste("x", 1:d, sep = ""),
+      d = length(inputs), kernel = "k1Matern5_2",
+      dep = NULL, value = NULL, var = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+
+<p>Character vector giving the names of the inputs used as arguments of
+<code>kernel</code>. Optional if <code>d</code> is given.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+ 
+<p>Integer specifying the spatial dimension (equal to the number of
+inputs). Optional if <code>inputs</code> is given.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+
+<p>Character, name of the one-dimensional kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dep</code></td>
+<td>
+
+<p>Character vector with elements <code>"cst"</code> or <code>"input"</code>
+usually built using the concatenation <code>c</code>. The names
+must correspond to parameters of the kernel specified with
+<code>kernel</code>. When an element is <code>"cst"</code>, the corresponding
+parameter of the 1d kernel will be the same for all inputs.  When
+the element is <code>"input"</code>, the corresponding parameter of the 1d
+kernel gives birth to <code>d</code> parameters in the <code>covTS</code>
+object, one by input.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+
+<p>Named numeric vector. The names must correspond to the 1d kernel
+parameters.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+
+<p>Numeric vector giving the variances <code class="reqn">\sigma^2_i</code>
+that weight the <code class="reqn">d</code> components.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Not used at this stage.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A <code>covTS</code> object represents a <code class="reqn">d</code>-dimensional kernel object
+<code class="reqn">K</code> of the form </p>
+<p style="text-align: center;"><code class="reqn">K(\mathbf{x}, \mathbf{x}';
+  \boldsymbol{\theta}) = \sum_{i=1}^d k(x_i,
+  x_i';\boldsymbol{\theta}_{\mathbf{s}_i})</code>
+</p>
+<p> where <code class="reqn">k</code> is
+the covariance kernel for a Gaussian Process <code class="reqn">Y_x</code> indexed by a scalar
+<code class="reqn">x</code>. The <code class="reqn">d</code> numbers <code class="reqn">x_i</code> stand for the components of the
+<code class="reqn">d</code>-dimensional location vector <code class="reqn">\mathbf{x}</code>. The length
+<code class="reqn">p</code> of all the vectors <code class="reqn">\mathbf{s}_i</code> is the number of
+parameters of the one-dimensional kernel <code class="reqn">k</code>, i.e. 2 or 3 for
+classical covariance kernels.
+</p>
+<p>The package comes with the following covariance kernels which can
+be given as <code>kernel</code> argument.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+
+    <em>name</em> </td>
+<td style="text-align: left;"> <em>description</em> </td>
+<td style="text-align: left;"> <code class="reqn">p</code> </td>
+<td style="text-align: left;"> <em>par. names</em> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+
+    <code>k1Exp</code> </td>
+<td style="text-align: left;"> exponential </td>
+<td style="text-align: left;"> <code class="reqn">2</code> </td>
+<td style="text-align: left;"> <code>range</code>,
+    <code>var</code>
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+
+    <code>k1Matern3_2</code> </td>
+<td style="text-align: left;"> Matérn <code class="reqn">\nu = 3/2</code> </td>
+<td style="text-align: left;"> <code class="reqn">2</code> </td>
+<td style="text-align: left;">
+    <code>range</code>, <code>var</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+
+    <code>k1Matern5_2</code> </td>
+<td style="text-align: left;"> Matérn <code class="reqn">\nu = 5/2</code>
+</td>
+<td style="text-align: left;"> <code class="reqn">2</code> </td>
+<td style="text-align: left;">
+    <code>range</code>, <code>var</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+
+    <code>k1PowExp</code> </td>
+<td style="text-align: left;"> power exponential </td>
+<td style="text-align: left;"> <code class="reqn">3</code> </td>
+<td style="text-align: left;"> <code>range</code>,
+    <code>shape</code>, <code>var</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+
+    <code>k1Gauss</code> </td>
+<td style="text-align: left;"> gaussian or "square exponential" </td>
+<td style="text-align: left;"> <code class="reqn">2</code> </td>
+<td style="text-align: left;">
+    <code>range</code>, <code>var</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+
+  </td>
+</tr>
+</table>
+<p>Note that the exponential kernel of <code>k1Exp</code> is identical to the
+Matérn kernel for <code class="reqn">\nu = 1/2</code>, and that the three Matérns kernels
+provided here for <code class="reqn">\nu = 1/2</code>, <code class="reqn">\nu = 3/2</code> and <code class="reqn">\nu = 5/2</code>
+are special cases of Continuous AutoRegressive (CAR) process
+covariances, with respective order <code class="reqn">1</code>, <code class="reqn">2</code> and <code class="reqn">3</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with S4 class <code>"covTS"</code>.
+</p>
+
+
+<h3>Caution</h3>
+
+<p>The <code class="reqn">1d</code> kernel <code class="reqn">k</code> as given in <code>kernel</code> is always
+assumed to have a variance parameter with name <code>var</code>. This
+assumption may be relaxed in future versions.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Most arguments receive default values or are recycled if necessary.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Y. Deville, O. Roustant D. Ginsbourger
+</p>
+
+
+<h3>References</h3>
+
+<p>N. Durrande, D. Ginsbourger, and O. Roustant (2012) Additive
+"Covariance kernels for high-dimensional Gaussian Process modeling",
+<em>Annales de la Faculté des Sciences de Toulouse</em> 21(3),
+pp. 481–499.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">myCov1 &lt;- covTS(kernel = "k1Exp", inputs = c("v1", "v2", "v3"),
+                dep = c(range = "input"))
+coef(myCov1) &lt;- c(range = c(0.3, 0.7, 0.9), sigma2 = c(2, 2, 8))
+
+myCov1
+coef(myCov1)
+coef(myCov1, as = "matrix")
+coef(myCov1, as = "list")
+coef(myCov1, as = "matrix", type = "range")
+
+# with a common range parameter
+myCov2 &lt;- covTS(kernel = "k1Exp", inputs = c("v1", "v2", "v3"), 
+                dep = c(range = "cst"), value = c(range = 0.7),
+                var = c(2, 2, 8))
+myCov2
+
+myCov3 &lt;- covTS(d = 3, kernel = "k1PowExp",
+                dep = c(range = "cst", shape = "cst"),
+                value = c(shape = 1.8, range = 1.1),
+                var = c(2, 2, 8))
+myCov3
+</code></pre>
+
+
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cum_percent_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cumulative percentage plot</h2>
+
+<h3>Description</h3>
+
+<p>Plots or tabulates cumulative percentages associated with
+elements in a vector
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cum_percent_plot(vector, output_type = "plot")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>if <code>output_type = "plot"</code>, return a cumulative
+percentage plot; if <code>output_type = "dt"</code>, return a data.table
+with cumulative percentages. By default, <code>output_type = "plot"</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+cum_percent_plot(c(1:100, NA, NA))
+cum_percent_plot(mtcars$mpg)
+cum_percent_plot(vector= mtcars$mpg, output_type = "dt")
+
+</code></pre>
+
+
+</div>

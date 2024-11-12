@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit_model_single</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitting one kDGLM models</h2>
+
+<h3>Description</h3>
+
+<p>Fits one model given its structure and the observed data. This function can be used for any supported family (see vignette).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit_model_single(structure, outcomes, smooth = TRUE, p.monit = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>structure</code></td>
+<td>
+<p>dlm_block: The structural blocks of the model. All block must be completely defined.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcomes</code></td>
+<td>
+<p>dlm_distr or list of dlm_distr objects: The model outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth</code></td>
+<td>
+<p>boolean: A flag indicating if the smoothed distribution for the latent states should be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.monit</code></td>
+<td>
+<p>numeric (optional): The prior probability of changes in the latent space variables that are not part of its dynamic.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A fitted_dlm object.
+</p>
+
+
+</div>

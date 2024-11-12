@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kolmogorov-Zurbenko Periodogram</h2>
+
+<h3>Description</h3>
+
+<p>Kolmogorov-Zurbenko periodogram and smoothing using DiRienzo-Zurbenko (DZ).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzp(y, m=length(y), k=1)
+## S3 method for class 'kzp'
+smooth(object, log=TRUE, smooth_level=0.05, method = "DZ")
+## S3 method for class 'kzp'
+nonlinearity(x)
+## S3 method for class 'kzp'
+variation(x)
+## S3 method for class 'kzp'
+summary(object, digits=getOption("digits"), top=1, ...)
+## S3 method for class 'kzp'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>The raw data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>The width of filtering window</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The number of iterations for the KZFT</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Output from kzp function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log</code></td>
+<td>
+<p>Use logarithm values for smoothing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth_level</code></td>
+<td>
+<p>Percentage of smoothness to apply.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Method used for smoothing; choices are "DZ" or "NZ".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>precision of output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top</code></td>
+<td>
+<p>list top values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>periodogram</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Kolmogorov-Zurbenko Periodogram is an estimate of the spectral density using the Kolmogorov-Zurbenko Fourier Transform (KZFT).
+</p>
+
+
+<h3>References</h3>
+
+<p>I. G. Zurbenko, 1986: The spectral Analysis of Time Series. North-Holland, 248 pp.
+</p>
+<p>I. G. Zurbenko, P. S. Porter, Construction of high-resolution wavelets, Signal Processing 65: 315-327, 1998.
+</p>
+<p>A. G. DiRienzo, I. G. Zurbenko, Semi-adaptive nonparametric spectral estimation, Journal of Computational and Graphical Statistics 8(1): 41-59, 1998.
+</p>
+<p>R. Neagu, I. G. Zurbenko, Algorithm for adaptively smoothing the log-periodgram, Journal of the Franklin Institute 340: 103-123, 2003.
+</p>
+<p>Wei Yang and Igor Zurbenko, kzft: Kolmogorov-Zurbenko Fourier Transform and Applications, R-Project 2007.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kzft</code>,
+<code>kztp</code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+t&lt;-1:6000
+f1&lt;-0.03
+f2&lt;-0.04
+noise&lt;-15*rnorm(length(t))
+amp=1.5
+s&lt;-amp*sin(2*pi*f1*t)+amp*sin(2*pi*f2*t)
+system.time(a&lt;-kzp(s+noise,m=500,k=3))
+b&lt;-smooth.kzp(a, smooth_level=0.01)
+par(mfrow=c(3,1))
+plot(periodogram(s+noise),type='l')
+plot(a)
+plot(b)
+par(mfrow=c(1,1))
+
+# signal/noise
+signal&lt;-kzft(s+noise,m=500,k=3)
+print(paste("signal-to-noise ratio = ", round(sqrt(var(2*Re(signal))/var(s+noise)),4) ))
+
+summary(a, digits=2, top=2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

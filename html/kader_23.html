@@ -1,0 +1,135 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>var_ES2012</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Variance Estimator of Eichner &amp; Stute (2012)</h2>
+
+<h3>Description</h3>
+
+<p>Variance estimator <code class="reqn">Var_n(\sigma)</code>, vectorized in <code class="reqn">\sigma</code>, on p.
+2540 of Eichner &amp; Stute (2012).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">var_ES2012(sigma, h, xXh, thetaXh, K, YmDiff2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>Numeric vector <code class="reqn">(\sigma_1, \ldots, \sigma_s)</code> with
+<code class="reqn">s \ge 1</code> with values of the scale parameter <code class="reqn">\sigma</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar for bandwidth <code class="reqn">h</code> (as “contained” in
+<code>thetaXh</code> and <code>xXh</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xXh</code></td>
+<td>
+<p>Numeric vector expecting the pre-computed h-scaled differences
+<code class="reqn">(x - X_1)/h</code>, ..., <code class="reqn">(x - X_n)/h</code> where <code class="reqn">x</code> is the
+single (!) location for which the weights are to be computed,
+the <code class="reqn">X_i</code>'s are the data values, and <code class="reqn">h</code> is the numeric
+bandwidth scalar.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thetaXh</code></td>
+<td>
+<p>Numeric vector expecting the pre-computed h-scaled differences
+<code class="reqn">(\theta - X_1)/h</code>, ..., <code class="reqn">(\theta - X_n)/h</code> where
+<code class="reqn">\theta</code> is the numeric scalar location parameter, and the
+<code class="reqn">X_i</code>'s and <code class="reqn">h</code> are as in <code>xXh</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A kernel function (with vectorized in- &amp; output) to be used for the
+estimator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>YmDiff2</code></td>
+<td>
+<p>Numeric vector of the pre-computed squared differences
+<code class="reqn">(Y_1 - m_n(x))^2</code>, ..., <code class="reqn">(Y_n - m_n(x))^2</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The formula can also be found in eq. (15.22) of Eichner (2017).
+Pre-computed <code class="reqn">(x - X_i)/h</code>, <code class="reqn">(\theta - X_i)/h</code>, and
+<code class="reqn">(Y_i - m_n(x))^2</code> are expected for efficiency reasons (and are
+currently prepared in function <code>kare</code>).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector of the length of <code>sigma</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Eichner &amp; Stute (2012) and Eichner (2017): see <code>kader</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kare</code> which currently does the pre-computing.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+
+ # Regression function:
+m &lt;- function(x, x1 = 0, x2 = 8, a = 0.01, b = 0) {
+ a * (x - x1) * (x - x2)^3 + b
+}
+ # Note: For a few details on m() see examples in ?nadwat.
+
+n &lt;- 100       # Sample size.
+set.seed(42)   # To guarantee reproducibility.
+X &lt;- runif(n, min = -3, max = 15)      # X_1, ..., X_n   # Design.
+Y &lt;- m(X) + rnorm(length(X), sd = 5)   # Y_1, ..., Y_n   # Response.
+
+h &lt;- n^(-1/5)
+Sigma &lt;- seq(0.01, 10, length = 51)   # sigma-grid for minimization.
+x0 &lt;- 5   # Location at which the estimator of m should be computed.
+
+mnX  &lt;- nadwat(x = X, dataX = X, dataY = Y, K = dnorm, h = h) # m_n(X_i)
+                                                     # for i = 1, ..., n.
+ # Estimator of Var_x0(sigma) on the sigma-grid:
+(Vn &lt;- var_ES2012(sigma = Sigma, h = h, xXh = (x0 - X) / h,
+  thetaXh = (mean(X) - X) / h, K = dnorm, YmDiff2 = (Y - mnX)^2))
+
+## Not run: 
+ # Visualizing the estimator of Var_n(sigma) at x0 on the sigma-grid:
+plot(Sigma, Vn, type = "o", xlab = expression(sigma), ylab = "",
+  main = bquote(widehat("Var")[n](sigma)~~"at"~~x==.(x0)))
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

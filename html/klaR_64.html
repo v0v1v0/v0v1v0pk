@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.sknn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple k Nearest Neighbours Classification</h2>
+
+<h3>Description</h3>
+
+<p>Classifies new observations using the sknn learned by 
+the <code>sknn</code>-function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'sknn'
+predict(object, newdata,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object of class <code>sknn</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>Data frame (or matrix) of cases to be classified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>...</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with elements ‘<code>class</code>’ and ‘<code>posterior</code>’.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>sknn</code>, <code>knn</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+x &lt;- sknn(Species ~ ., data = iris)
+predict(x, iris)
+x &lt;- sknn(Species ~ ., gamma = 10, kn = 10, data = iris)
+predict(x, iris)
+</code></pre>
+
+
+</div>

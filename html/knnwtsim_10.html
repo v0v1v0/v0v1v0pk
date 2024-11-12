@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SpMatrixCalc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Seasonal Similarity Matrix</h2>
+
+<h3>Description</h3>
+
+<p>Generates and returns an n x n matrix by calculating the seasonal dissimilarity
+for each possible pair of points in a vector
+of seasonal periods, then converts dissimilarity matrix to a similarity matrix using 1 / (D_p + 1).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SpMatrixCalc(v, nPeriods)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>positive numeric vector with the seasonal periods corresponding to each point in the response series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nPeriods</code></td>
+<td>
+<p>positive numeric value representing the maximum value <code>v</code> can take on.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric matrix of seasonal similarities for the vector <code>v</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li>
+<p> Trupiano (2021) arXiv:2112.06266 for information on the formulation of this seasonal similarity measure.
+</p>
+</li>
+<li> <p><code>SeasonalAbsDissimilarity()</code> for the function used to calculate seasonal dissimilarity.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">SpMatrixCalc(c(1, 2, 4), 4)
+</code></pre>
+
+
+</div>

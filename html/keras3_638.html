@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pad_sequences</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pads sequences to the same length.</h2>
+
+<h3>Description</h3>
+
+<p>This function transforms a list (of length <code>num_samples</code>)
+of sequences (lists of integers)
+into a 2D NumPy array of shape <code style="white-space: pre;">⁠(num_samples, num_timesteps)⁠</code>.
+<code>num_timesteps</code> is either the <code>maxlen</code> argument if provided,
+or the length of the longest sequence in the list.
+</p>
+<p>Sequences that are shorter than <code>num_timesteps</code>
+are padded with <code>value</code> until they are <code>num_timesteps</code> long.
+</p>
+<p>Sequences longer than <code>num_timesteps</code> are truncated
+so that they fit the desired length.
+</p>
+<p>The position where padding or truncation happens is determined by
+the arguments <code>padding</code> and <code>truncating</code>, respectively.
+Pre-padding or removing values from the beginning of the sequence is the
+default.
+</p>
+<div class="sourceCode r"><pre>sequence &lt;- list(c(1), c(2, 3), c(4, 5, 6))
+pad_sequences(sequence)
+</pre></div>
+<div class="sourceCode"><pre>##      [,1] [,2] [,3]
+## [1,]    0    0    1
+## [2,]    0    2    3
+## [3,]    4    5    6
+
+</pre></div>
+<div class="sourceCode r"><pre>pad_sequences(sequence, value=-1)
+</pre></div>
+<div class="sourceCode"><pre>##      [,1] [,2] [,3]
+## [1,]   -1   -1    1
+## [2,]   -1    2    3
+## [3,]    4    5    6
+
+</pre></div>
+<div class="sourceCode r"><pre>pad_sequences(sequence, padding='post')
+</pre></div>
+<div class="sourceCode"><pre>##      [,1] [,2] [,3]
+## [1,]    1    0    0
+## [2,]    2    3    0
+## [3,]    4    5    6
+
+</pre></div>
+<div class="sourceCode r"><pre>pad_sequences(sequence, maxlen=2)
+</pre></div>
+<div class="sourceCode"><pre>##      [,1] [,2]
+## [1,]    0    1
+## [2,]    2    3
+## [3,]    5    6
+
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pad_sequences(
+  sequences,
+  maxlen = NULL,
+  dtype = "int32",
+  padding = "pre",
+  truncating = "pre",
+  value = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sequences</code></td>
+<td>
+<p>List of sequences (each sequence is a list of integers).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxlen</code></td>
+<td>
+<p>Optional Int, maximum length of all sequences. If not provided,
+sequences will be padded to the length of the longest individual
+sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional, defaults to <code>"int32"</code>). Type of the output sequences.
+To pad sequences with variable length strings, you can use <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>String, "pre" or "post" (optional, defaults to <code>"pre"</code>):
+pad either before or after each sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>truncating</code></td>
+<td>
+<p>String, "pre" or "post" (optional, defaults to <code>"pre"</code>):
+remove values from sequences larger than
+<code>maxlen</code>, either at the beginning or at the end of the sequences.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>Float or String, padding value. (Optional, defaults to <code>0</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Array with shape <code style="white-space: pre;">⁠(len(sequences), maxlen)⁠</code>
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/data_loading/timeseries#padsequences-function">https://keras.io/api/data_loading/timeseries#padsequences-function</a>
+</p>
+</li></ul>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+
+
+</div>

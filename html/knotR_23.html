@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bezier</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Various functionality for Bezier curves
+</h2>
+
+<h3>Description</h3>
+
+<p>Various functionality for Bezier curves including derivatives and radius
+of curvature.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bezier(P, tee, n=100)
+bezier_deriv(P, tee, n=100)
+bezier_deriv2(P, tee, n=100)
+bezier_radius(P, tee, n=100)
+bezier_curvature(P,tee,n=100)
+myseg(P, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>Control points in the form of a 4 by 2 matrix with rows
+corresponding to <code class="reqn">P_0</code> to <code class="reqn">P_3</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tee</code></td>
+<td>
+<p>Parametric variable <code class="reqn">t</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Integer specifying number of points between 0 and 1 to use.
+Default value of 100 looks OK</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed by <code>myseg()</code> to <code>points()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li>
+<p> Function <code>bezier()</code> returns a two column matrix with rows
+corresponding to the positions of the specified Bezier curve.
+</p>
+</li>
+<li>
+<p> Functions <code>bezier_deriv()</code> and <code>bezier_deriv2()</code>
+give the first and second derivatives respectively.
+</p>
+</li>
+<li>
+<p> Function <code>bezier_radius()</code> gives the radius of curvature.
+</p>
+</li>
+<li>
+<p> Functions <code>bezier_length()</code> and
+<code>bezier_bending_energy()</code> use numerical quadrature to give the
+arc length and bending energy (<code class="reqn">\int R^{-1}ds</code>).
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bezier_angle</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+P &lt;- matrix(c(0, 1, 2, 2, 2, 0, 3, 2),4,2)
+xy &lt;- bezier(P,n=100)
+dx &lt;- bezier_deriv(P,n=100)
+
+plot(xy,asp=1)
+myseg(P)
+
+plot(xy,asp=1,cex=sqrt(rowSums(dx^2))/3.2)
+
+plot(xy,asp=1)
+segments(xy[,1],xy[,2],(xy+dx/200)[,1],(xy+dx/200)[,2])
+
+
+plot(xy, asp=1,cex=bezier_radius(P,n=100)/2)
+
+lapply(as.controlpoints(k8_9),bezier_radius)
+lapply(as.controlpoints(k8_9),bezier_arclength)
+
+</code></pre>
+
+
+</div>

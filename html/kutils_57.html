@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>safeInteger</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>If a numeric variable has only integer values, then
+make it an integer.</h2>
+
+<h3>Description</h3>
+
+<p>Users often accidentally create floating point numeric variables
+when they really mean integers, such as c(1, 2, 3), when they
+should have done c(1L, 2L, 3L). Before running <code>as.integer()</code>
+to coerce the variable, we'd rather be polite and ask the variable
+"do you mind being treated as if you are an integer?"  This
+function checks to see if the variable is "close enough" to being
+an integer, and then coerces as integer. Otherwise, it returns
+NULL. And issues a warning.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">safeInteger(
+  x,
+  tol = .Machine$double.eps,
+  digits = 7,
+  vmax = .Machine$integer.max,
+  verbose = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>Tolerance value. Defaults to Machine$double.eps. See
+details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>Digits value passed to the zapsmall
+function. Defaults to 7.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vmax</code></td>
+<td>
+<p>Maximum value allowed for an integer. Defaults to
+Machine$integer.max.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Default FALSE: print warnings about x</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>First, calculate absolute value of differences between <code>x</code>
+and <code>as.integer(x)</code>. Second, find out if the sum of those
+differences is smaller than <code>tol</code>. If so, then x can
+reasonably be coerced to an integer.
+</p>
+<p>Be careful with the return. The correct return value for variables
+that should not be coerced as integer is uncertain at this
+point. We've tested various strategies, sometimes returning FALSE,
+NULL, or just the original variable.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Either an integer vector or the original variable
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt; and Ben Kite
+&lt;bakite@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x1 &lt;- c(1, 2, 3, 4, 5, 6)
+is.integer(x1)
+is.double(x1)
+is.numeric(x1)
+(x1int &lt;- safeInteger(x1))
+is.integer(x1int)
+is.double(x1int)
+is.numeric(x1int)
+x2 &lt;- rnorm(100)
+x2int &lt;- safeInteger(x2)
+head(x2int)
+x3 &lt;- factor(x1, labels = c(LETTERS[1:6]))
+x3int &lt;- safeInteger(x3)
+
+</code></pre>
+
+
+</div>

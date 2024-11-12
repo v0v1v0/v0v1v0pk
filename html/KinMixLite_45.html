@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>size</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate and display total size of BN tables for a DNA mixture</h2>
+
+<h3>Description</h3>
+
+<p>Calculate and display total size of BN tables for a DNA mixture</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">size(mixture)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A compiled DNAmixture object</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Returns total size, typically to be printed by bespoke method</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+data(NGMDyes)
+
+## Fit 2-person mixture - baseline model
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(0.001),database=db)
+size(mixD)
+</code></pre>
+
+
+</div>

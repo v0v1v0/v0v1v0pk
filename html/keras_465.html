@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_cosine_similarity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the cosine similarity between the labels and predictions</h2>
+
+<h3>Description</h3>
+
+<p>Computes the cosine similarity between the labels and predictions
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_cosine_similarity(
+  ...,
+  axis = -1L,
+  name = "cosine_similarity",
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed on to the underlying metric. Used for forwards and backwards compatibility.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>(Optional) (1-based) Defaults to -1. The dimension along which the metric is computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<div class="sourceCode"><pre>cosine similarity = (a . b) / ||a|| ||b||
+</pre></div>
+<p>See: <a href="https://en.wikipedia.org/wiki/Cosine_similarity">Cosine Similarity</a>.
+</p>
+<p>This metric keeps the average cosine similarity between <code>predictions</code> and
+<code>labels</code> over a stream of data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A (subclassed) <code>Metric</code> instance that can be passed directly to
+<code>compile(metrics = )</code>, or used as a standalone object. See <code>?Metric</code> for
+example usage.
+</p>
+
+
+<h3>Note</h3>
+
+<p>If you want to compute the cosine_similarity for each case in a
+mini-batch you can use <code>loss_cosine_similarity()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other metrics: 
+<code>custom_metric()</code>,
+<code>metric_accuracy()</code>,
+<code>metric_auc()</code>,
+<code>metric_binary_accuracy()</code>,
+<code>metric_binary_crossentropy()</code>,
+<code>metric_categorical_accuracy()</code>,
+<code>metric_categorical_crossentropy()</code>,
+<code>metric_categorical_hinge()</code>,
+<code>metric_false_negatives()</code>,
+<code>metric_false_positives()</code>,
+<code>metric_hinge()</code>,
+<code>metric_kullback_leibler_divergence()</code>,
+<code>metric_logcosh_error()</code>,
+<code>metric_mean()</code>,
+<code>metric_mean_absolute_error()</code>,
+<code>metric_mean_absolute_percentage_error()</code>,
+<code>metric_mean_iou()</code>,
+<code>metric_mean_relative_error()</code>,
+<code>metric_mean_squared_error()</code>,
+<code>metric_mean_squared_logarithmic_error()</code>,
+<code>metric_mean_tensor()</code>,
+<code>metric_mean_wrapper()</code>,
+<code>metric_poisson()</code>,
+<code>metric_precision()</code>,
+<code>metric_precision_at_recall()</code>,
+<code>metric_recall()</code>,
+<code>metric_recall_at_precision()</code>,
+<code>metric_root_mean_squared_error()</code>,
+<code>metric_sensitivity_at_specificity()</code>,
+<code>metric_sparse_categorical_accuracy()</code>,
+<code>metric_sparse_categorical_crossentropy()</code>,
+<code>metric_sparse_top_k_categorical_accuracy()</code>,
+<code>metric_specificity_at_sensitivity()</code>,
+<code>metric_squared_hinge()</code>,
+<code>metric_sum()</code>,
+<code>metric_top_k_categorical_accuracy()</code>,
+<code>metric_true_negatives()</code>,
+<code>metric_true_positives()</code>
+</p>
+
+
+</div>

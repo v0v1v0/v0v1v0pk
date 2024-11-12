@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>crossing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Crossing Metrics for knots
+</h2>
+
+<h3>Description</h3>
+
+<p>Various descriptions for the crossing points of a knot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">crossing_points(b, give_all = TRUE)
+crossing_matrix(b)
+crossing_strands(b)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>A list of Bezier control parameters, typically given by
+<code>getcontrolpoints()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>give_all</code></td>
+<td>
+<p>In function <code>crossing_points()</code>, Boolean,
+with <code>TRUE</code> meaning to give details of the strands that cross
+and default <code>FALSE</code> meaning to give just the coordinates of the
+crossing points</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>as.controlpoints</code>,<code>bezier</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+crossing_points(k7_2,give_all=TRUE)
+
+</code></pre>
+
+
+</div>

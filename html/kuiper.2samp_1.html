@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kuiper.2samp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>2-sample Kuiper Test Function: performs Kuiper Test for two sets samples of observations</h2>
+
+<h3>Description</h3>
+
+<p>2-sample Kuiper Test Function: performs Kuiper Test for two sets samples of observations
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kuiper.2samp(x, y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an array of sample observations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the other array of sample observations</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Kuiper test statistic and p-value
+</p>
+
+
+<h3>Note</h3>
+
+<p>The computation of the p-value takes references from Paltani(2004)
+which states that the functions (in the set of four formulas) never underestimates the false positive probability
+however it can be a bit high when the sample size in the range of 40 to 50
+a factor of 1.5 is quoted at the 1e-7 level
+</p>
+
+
+<h3>References</h3>
+
+<p>Kuiper, N. H. (1960). "Tests concerning random points on a circle". Proceedings of the Koninklijke Nederlandse Akademie van Wetenschappen, Series A. 63: 38-47.
+Paltani, S., "Searching for periods in X-ray observations using Kuiper's test. Application to the ROSAT PSPC archive", Astronomy and Astrophysics, v.240, p.789-790, 2004.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kuiper.2samp(rnorm(1e3),rnorm(1e3))
+</code></pre>
+
+
+</div>

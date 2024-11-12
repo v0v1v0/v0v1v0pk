@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>palette_size_range</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Symbol Size Mapping</h2>
+
+<h3>Description</h3>
+
+<p>Symbol Size Mapping
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">palette_size_range(range = c(1, 6), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>A length-two <code>numeric</code> vector giving range of possible sizes
+(greater than 0).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A palette <code>function</code> that when called with a single argument
+(a <code>numeric</code> vector of continuous values) returns a <code>numeric</code> vector
+giving the amount by which plotting text and symbols should be magnified
+relative to the default.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other palettes: 
+<code>palette_color_continuous()</code>,
+<code>palette_color_discrete()</code>,
+<code>palette_color_picker()</code>,
+<code>palette_shape()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Visualize a simple DEM model
+## Distribution of elevation values
+elevation &lt;- hist(volcano)
+
+## Where are breaks?
+elevation$breaks
+
+## Build palette functions
+BuRd &lt;- color("BuRd")
+ramp_BuRd &lt;- palette_color_continuous(colors = BuRd(10))
+
+## Plot image
+image(volcano, col = ramp_BuRd(elevation$breaks))
+legend("topright", legend = elevation$breaks, fill = ramp_BuRd(elevation$breaks))
+</code></pre>
+
+
+</div>

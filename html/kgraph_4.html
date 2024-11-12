@@ -1,0 +1,135 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>build_kgraph</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Build a knowledge graph</h2>
+
+<h3>Description</h3>
+
+<p>Build a knowledge graph
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">build_kgraph(
+  selected_concepts,
+  df_weights,
+  df_dict = NULL,
+  rm_single_groups = TRUE,
+  df_sup_nodes = NULL,
+  display_val_digits = 3,
+  display_val_str = "\nCosine similarity: ",
+  str_other = "Other",
+  highlight_mult = TRUE,
+  multiline_labs = TRUE,
+  autoscale = TRUE,
+  spring_weights = TRUE,
+  n_max_edges = 1000,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>selected_concepts</code></td>
+<td>
+<p>Concepts of interest</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_weights</code></td>
+<td>
+<p>Data frame with columns concept1, concept2, and weight;
+typically the df_projs slot of the object returned by
+function fit_embeds_to_pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_dict</code></td>
+<td>
+<p>Dictionary data frame, with columns id (matched to concepts
+in df_weights), desc (for labels), color, and optionally
+group.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rm_single_groups</code></td>
+<td>
+<p>Should groups with only one element be removed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_sup_nodes</code></td>
+<td>
+<p>Data frame of supplementary nodes (work in progress)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display_val_digits</code></td>
+<td>
+<p>Number of weight digits to be displayed in labels</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display_val_str</code></td>
+<td>
+<p>String to prefix to the displayed value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>str_other</code></td>
+<td>
+<p>String to use for missing groups</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>highlight_mult</code></td>
+<td>
+<p>Highlight nodes connected to multiple nodes of
+interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multiline_labs</code></td>
+<td>
+<p>Use multiline labels (shown when hovered on)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>autoscale</code></td>
+<td>
+<p>Perform scaling with sgraph::scale_graph</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spring_weights</code></td>
+<td>
+<p>Use spring weights (reverts edges weights)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_max_edges</code></td>
+<td>
+<p>Threshold on number of edges</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed to scale_kgraph</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Knowledge graph, list of slots df_nodes and df_links
+</p>
+
+
+</div>

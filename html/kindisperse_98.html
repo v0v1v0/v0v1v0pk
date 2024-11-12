@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>retrieve_appdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve <code>KinPairData</code> object from appdata (single)</h2>
+
+<h3>Description</h3>
+
+<p>This function is part of a suite of functions handling the interface between the kindisperse app &amp; R
+package. Due to how shiny's interactive programming works, ordinary objects are not visible to the reactive functions
+embedded in the app. The solution implemented here is to construct a custom environment, <code>env_appdata</code>, that is
+accessible within the app and outside of it.
+</p>
+<p>This function accesses the app interface environment and retrieves an object (typically of class <code>KinPairData</code> or
+<code>KinPairSimulation</code>) with the name <code>nm</code>, making it accessible from within our outside the app. This can be
+used to load simulation objects that were saved from the interface while using the app into the regular R environment
+(after closing the app). (The app uses this function internally to load objects from the interface into its own internal
+environment for display &amp; processing.)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">retrieve_appdata(nm)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>nm</code></td>
+<td>
+<p>character. Name of item as stored in appdata</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Returns KinPairData object accessible by name nm
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other app_ports: 
+<code>display_appdata()</code>,
+<code>mount_appdata()</code>,
+<code>reset_appdata()</code>,
+<code>reset_tempdata()</code>,
+<code>retrieve_tempdata()</code>,
+<code>retrieveall_appdata()</code>,
+<code>unmount_appdata()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mount_appdata(kin_pair_data(), "mydata")
+
+retrieve_appdata("mydata")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>assign_clustpp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function for assigning clusters to rows in a matrix</h2>
+
+<h3>Description</h3>
+
+<p><code>assign_clustpp</code> Function for assigning clusters to rows in a matrix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">assign_clustpp(X, init_centers, kmpp_flag = TRUE, max_iter = 20)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix containing missing entries whose rows are observations and columns are features</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init_centers</code></td>
+<td>
+<p>Centers for initializing k-means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kmpp_flag</code></td>
+<td>
+<p>(Optional) Indicator for whether or not to initialize with k-means++</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_iter</code></td>
+<td>
+<p>(Optional) Maximum number of iterations</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jocelyn T. Chi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p &lt;- 2
+n &lt;- 100
+k &lt;- 3
+sigma &lt;- 0.25
+missing &lt;- 0.05
+Data &lt;- makeData(p,n,k,sigma,missing)
+X &lt;- Data$Missing
+Orig &lt;- Data$Orig
+
+clusts &lt;- assign_clustpp(Orig, k)
+
+</code></pre>
+
+
+</div>

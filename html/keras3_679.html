@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Layer/Model weights as R arrays</h2>
+
+<h3>Description</h3>
+
+<p>Layer/Model weights as R arrays
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_weights(object, trainable = NA)
+
+set_weights(object, weights)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Layer or model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trainable</code></td>
+<td>
+<p>if <code>NA</code> (the default), all weights are returned. If <code>TRUE</code>,
+only weights of trainable variables are returned. If <code>FALSE</code>, only weights
+of non-trainable variables are returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>Weights as R array</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of R arrays.
+</p>
+
+
+<h3>Note</h3>
+
+<p>You can access the Layer/Model as <code>KerasVariables</code> (which are also
+backend-native tensors like <code>tf.Variable</code>) at <code>object$weights</code>,
+<code>object$trainable_weights</code>, or <code>object$non_trainable_weights</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other layer methods: <br><code>count_params()</code> <br><code>get_config()</code> <br><code>quantize_weights()</code> <br><code>reset_state()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>distNumeric</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A pair distance for numerical variables</h2>
+
+<h3>Description</h3>
+
+<p>This function computes a pairwise numerical distance between
+two numerical data sets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">distNumeric(x, y, method = "mrw", xyequal = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A first data matrix (see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A second data matrix (see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A method to calculate the pairwise numerical distance
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xyequal</code></td>
+<td>
+<p>A logical if <code>x</code> is equal to <code>y</code> (see
+<strong>Details</strong>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>x</code> and <code>y</code> arguments have to be matrices with
+the same number of columns where the row indicates the object and the
+column is the variable. This function calculate all pairwise distance
+between rows in the <code>x</code> and <code>y</code> matrices. Although it calculates
+a pairwise distance between two data sets, the default function computes all
+distances in the <code>x</code> matrix. If the <code>x</code> matrix is not equal to
+the <code>y</code> matrix, the <code>xyequal</code> has to be set <code>FALSE</code>.
+</p>
+<p>The <code>method</code> available are <code>mrw</code> (Manhattan weighted by range),
+<code>sev</code> (squared Euclidean weighted by variance), <code>ser</code>
+(squared Euclidean weighted by range), <code>ser.2</code> (squared Euclidean
+weighted by squared range) and <code>se</code> (squared Euclidean).
+Their formulas are:
+</p>
+<p style="text-align: center;"><code class="reqn">mrw_{ij} = \sum_{r=1}^{p_n} \frac{|x_{ir} - x_{jr}|}{R_r}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">sev_{ij} = \sum_{r=1}^{p_n} \frac{(x_{ir} - x_{jr})^2}{s_r^2}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">ser_{ij} = \sum_{r=1}^{p_n} \frac{(x_{ir} - x_{jr})^2}{ R_r }</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">ser.2_{ij} = \sum_{r=1}^{p_n} \frac{(x_{ir} - x_{jr})^2}{ R_r^2 }</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">se_{ij} = \sum_{r=1}^{p_n} (x_{ir} - x_{jr})^2</code>
+</p>
+
+<p>where <code class="reqn">p_n</code> is the number of numerical variables, <code class="reqn">R_r</code> is the range
+of the r-th variables, <code class="reqn">s_r^2</code> is the variance of the r-th
+variables.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a distance matrix with the number of rows equal to
+the number of objects in the <code>x</code> matrix (<code class="reqn">n_x</code>) and the number of
+columns equals to the number of objects in the <code>y</code> matrix (<code class="reqn">n_y</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+mrwdist[1:6,1:6]
+
+</code></pre>
+
+
+</div>

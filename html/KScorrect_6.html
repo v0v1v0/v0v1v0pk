@@ -1,0 +1,349 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LcKS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Lilliefors-corrected Kolmogorov-Smirnov Goodness-Of-Fit Test</h2>
+
+<h3>Description</h3>
+
+<p>Implements the Lilliefors-corrected Kolmogorov-Smirnov test for use in
+goodness-of-fit tests, suitable when population parameters are unknown and
+must be estimated by sample statistics. It uses Monte Carlo simulation to
+estimate <em>p</em>-values. Using a modification of
+<code>ks.test</code>, it can be used with a variety of continuous
+distributions, including normal, lognormal, univariate mixtures of normals,
+uniform, loguniform, exponential, gamma, and Weibull distributions. The Monte
+Carlo algorithm can run 'in parallel.'
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LcKS(x, cdf, nreps = 4999, G = 1:9, varModel = c("E", "V"),
+  parallel = FALSE, cores = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A numeric vector of data values (observed sample).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cdf</code></td>
+<td>
+<p>Character string naming a cumulative distribution function. Case
+insensitive. Only continuous CDFs are valid. Allowed CDFs
+include:</p>
+<ul>
+<li> <p><code>"pnorm"</code> for normal, </p>
+</li>
+<li> <p><code>"pmixnorm"</code>
+for (univariate) normal mixture, </p>
+</li>
+<li> <p><code>"plnorm"</code> for lognormal
+(log-normal, log normal), </p>
+</li>
+<li> <p><code>"punif"</code> for uniform, </p>
+</li>
+<li>
+<p><code>"plunif"</code> for loguniform (log-uniform, log uniform), </p>
+</li>
+<li>
+<p><code>"pexp"</code> for exponential, </p>
+</li>
+<li> <p><code>"pgamma"</code> for gamma, </p>
+</li>
+<li>
+<p><code>"pweibull"</code> for Weibull.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nreps</code></td>
+<td>
+<p>Number of replicates to use in simulation algorithm.
+<code>Default = 4999</code> replicates. See <code>details</code> below. Should be a
+positive integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>Numeric vector of mixture components to consider, for mixture models
+only. <code>Default = 1:9</code> fits up to 9 components. Must contain positive
+integers. See <code>details</code> below.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varModel</code></td>
+<td>
+<p>For mixture models, character string determining whether to
+allow equal-variance mixture components (<code>E</code>), variable-variance
+mixture components (<code>V</code>) or both (the <code>default</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>Logical value that switches between running Monte Carlo
+algorithm in parallel (if <code>TRUE</code>) or not (if <code>FALSE</code>, the
+<code>default</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cores</code></td>
+<td>
+<p>Numeric value to control how many cores to build when running in
+parallel. <code>Default = detectCores - 1</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function builds a simulation distribution <code>D.sim</code> of length
+<code>nreps</code> by drawing random samples from the specified continuous
+distribution function <code>cdf</code> with parameters calculated from the
+provided sample <code>x</code>. Observed statistic <em><code>D</code></em> and simulated
+test statistics are calculated using a simplified version of
+<code>ks.test</code>.
+</p>
+<p>The default <code>nreps = 4999</code> provides accurate <em>p</em>-values.
+<code>nreps = 1999</code> is sufficient for most cases, and computationally
+faster when dealing with more complicated distributions (such as univariate
+normal mixtures, gamma, and Weibull). See below for potentially faster
+parallel implementations.
+</p>
+<p>The <em>p</em>-value is calculated as the number of Monte Carlo samples with
+test statistics <em>D</em> as extreme as or more extreme than that in the
+observed sample <code>D.obs</code>, divided by the <code>nreps</code> number of Monte
+Carlo samples. A value of 1 is added to both the numerator and denominator
+to allow the observed sample to be represented within the null distribution
+(Manly 2004); this has the benefit of avoiding nonsensical <code>p.value =
+  0.000</code> and accounts for the fact that the <em>p</em>-value is an estimate.
+</p>
+<p>Parameter estimates are calculated for the specified continuous
+distribution, using maximum-likelihood estimates. When testing against the
+gamma and Weibull distributions, <code>MASS::fitdistr</code> is used
+to calculate parameter estimates using maximum likelihood optimization,
+with sensible starting values. Because this incorporates an optimization
+routine, the simulation algorithm can be slow if using large <code>nreps</code>
+or problematic samples. Warnings often occur during these optimizations,
+caused by difficulties estimating sample statistic standard errors. Because
+such SEs are not used in the Lilliefors-corrected simulation algorithm,
+warnings are suppressed during these optimizations.
+</p>
+<p>Sample statistics for the (univariate) normal mixture distribution
+<code>pmixnorm</code> are calculated using package <code>mclust</code>, which
+uses BIC to identify the optimal mixture model for the sample, and the EM
+algorithm to calculate parameter estimates for this model. The number of
+mixture components <code>G</code> (with default allowing up to 9 components),
+variance model (whether equal <code>E</code> or variable <code>V</code> variance), and
+component statistics (<code>mean</code>s, <code>sd</code>s, and mixing proportions
+<code>pro</code>) are estimated from the sample when calculating <code>D.obs</code> and
+passed internally when creating random Monte Carlo samples. It is possible
+that some of these samples may differ in their optimal <code>G</code> (for
+example a two-component input sample might yield a three-component random
+sample within the simulation distribution). This can be constrained by
+specifying that simulation BIC-optimizations only consider <code>G</code> mixture
+components.
+</p>
+<p>Be aware that constraining <code>G</code> changes the null hypothesis. The
+default (<code>G = 1:9</code>) null hypothesis is that a sample was drawn from
+<em>any <code>G = 1:9</code>-component mixture distribution</em>. Specifying a
+particular value, such as <code>G = 2</code>, restricts the null hypothesis to
+particular mixture distributions with just <code>G</code> components, even if
+simulated samples might better be represented as different mixture models.
+</p>
+<p>The <code>LcKS(cdf = "pmixnorm")</code> test implements two control loops to
+avoid errors caused by this constraint and when working with problematic
+samples. The first loop occurs during model-selection for the observed
+sample <code>x</code>, and allows for estimation of parameters for the
+second-best model when those for the optimal model are not able to be
+calculated by the EM algorithm. A second loop occurs during the simulation
+algorithm, rejecting samples that cannot be fit by the mixture model
+specified by the observed sample <code>x</code>. Such problematic cases are most
+common when the observed or simulated samples have a component(s) with very
+small variance (i.e., duplicate observations) or when a Monte Carlo sample
+cannot be fit by the specified <code>G</code>.
+</p>
+<p>Parellel computing can be implemented using <code>parallel = TRUE</code>, using
+the operating-system versatile <code>doParallel-package</code>
+and <code>foreach</code> infrastructure, using a default
+<code>detectCores - 1</code> number of cores. Parallel computing
+is generally advisable for the more complicated cumulative density
+functions (i.e., univariate normal mixture, gamma, Weibull), where maximum
+likelihood estimation is time-intensive, but is generally not advisable for
+density functions with quickly calculated sample statistics (i.e., other
+distribution functions). Warnings within the function provide sensible
+recommendations, but users are encouraged to experiment to discover their
+fastest implementation for their individual cases.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>D.obs</code></td>
+<td>
+<p>The value of the test statistic <em>D</em> for the observed
+sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D.sim</code></td>
+<td>
+<p>Simulation distribution of test statistics, with
+<code>length = nreps</code>. This can be used to calculate critical values; see
+examples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p><em>p</em>-value of the test, calculated as
+<code class="reqn">(\sum(D.sim &gt; D.obs) + 1) / (nreps + 1)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The Kolmogorov-Smirnov (such as <code>ks.test</code>) is only valid as a
+goodness-of-fit test when the population parameters are known. This is
+typically not the case in practice. This invalidation occurs because
+estimating the parameters changes the null distribution of the test
+statistic; i.e., using the sample to estimate population parameters brings
+the Kolmogorov-Smirnov test statistic <em>D</em> closer to the null
+distribution than it would be under the hypothesis where the population
+parameters are known. In other words, it is biased and results in increased
+Type II error rates. Lilliefors (1967, 1969) provided a solution, using
+Monte Carlo simulation to approximate the shape of the null distribution
+when the sample statistics are used to estimate population parameters, and
+to use this null distribution as the basis for critical values. The
+function <code>LcKS</code> generalizes this solution for a range of continuous
+distributions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Phil Novack-Gottshall <a href="mailto:pnovack-gottshall@ben.edu">pnovack-gottshall@ben.edu</a>, based on
+code from Charles Geyer (University of Minnesota).
+</p>
+
+
+<h3>References</h3>
+
+<p>Lilliefors, H. W. 1967. On the Kolmogorov-Smirnov test for
+normality with mean and variance unknown. <em>Journal of the American
+Statistical Association</em> 62(318):399-402.
+</p>
+<p>Lilliefors, H. W. 1969. On the Kolmogorov-Smirnov test for the
+exponential distribution with mean unknown. <em>Journal of the American
+Statistical Association</em> 64(325):387-389.
+</p>
+<p>Manly, B. F. J. 2004. <em>Randomization, Bootstrap and Monte
+Carlo Methods in Biology</em>. Chapman &amp; Hall, Cornwall, Great Britain.
+</p>
+<p>Parsons, F. G., and P. H. Wirsching. 1982. A Kolmogorov-Smirnov
+goodness-of-fit test for the two-parameter Weibull distribution when the
+parameters are estimated from the data. <em>Microelectronics Reliability</em>
+22(2):163-167.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Distributions</code> for standard cumulative
+distribution functions, <code>plunif</code> for the loguniform cumulative
+distribution function, and <code>pmixnorm</code> for the univariate normal
+mixture cumulative distribution function.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- runif(200)
+Lc &lt;- LcKS(x, cdf = "pnorm", nreps = 999)
+hist(Lc$D.sim)
+abline(v = Lc$D.obs, lty = 2)
+print(Lc, max = 50)  # Print first 50 simulated statistics
+# Approximate p-value (usually) &lt;&lt; 0.05
+
+# Confirmation uncorrected version has increased Type II error rate when
+#   using sample statistics to estimate parameters:
+ks.test(x, "pnorm", mean(x), sd(x))   # p-value always larger, (usually) &gt; 0.05
+
+# Confirm critical values for normal distribution are correct
+nreps &lt;- 9999
+x &lt;- rnorm(25)
+Lc &lt;- LcKS(x, "pnorm", nreps = nreps)
+sim.Ds &lt;- sort(Lc$D.sim)
+crit &lt;- round(c(.8, .85, .9, .95, .99) * nreps, 0)
+# Lilliefors' (1967) critical values, using improved values from
+#   Parsons &amp; Wirsching (1982) (for n = 25):
+# 0.141 0.148 0.157 0.172 0.201
+round(sim.Ds[crit], 3)			# Approximately the same critical values
+
+# Confirm critical values for exponential are the same as reported by Lilliefors (1969)
+nreps &lt;- 9999
+x &lt;- rexp(25)
+Lc &lt;- LcKS(x, "pexp", nreps = nreps)
+sim.Ds &lt;- sort(Lc$D.sim)
+crit &lt;- round(c(.8, .85, .9, .95, .99) * nreps, 0)
+# Lilliefors' (1969) critical values (for n = 25):
+# 0.170 0.180 0.191 0.210 0.247
+round(sim.Ds[crit], 3)			# Approximately the same critical values
+
+## Not run: 
+# Gamma and Weibull tests require functions from the 'MASS' package
+# Takes time for maximum likelihood optimization of statistics
+require(MASS)
+x &lt;- runif(100, min = 1, max = 100)
+Lc &lt;- LcKS(x, cdf = "pgamma", nreps = 499)
+Lc$p.value
+
+# Confirm critical values for Weibull the same as reported by Parsons &amp; Wirsching (1982)
+nreps &lt;- 9999
+x &lt;- rweibull(25, shape = 1, scale = 1)
+Lc &lt;- LcKS(x, "pweibull", nreps = nreps)
+sim.Ds &lt;- sort(Lc$D.sim)
+crit &lt;- round(c(.8, .85, .9, .95, .99) * nreps, 0)
+# Parsons &amp; Wirsching (1982) critical values (for n = 25):
+# 0.141 0.148 0.157 0.172 0.201
+round(sim.Ds[crit], 3)			# Approximately the same critical values
+
+# Mixture test requires functions from the 'mclust' package
+# Takes time to identify model parameters
+require(mclust)
+x &lt;- rmixnorm(200, mean = c(10, 20), sd = 2, pro = c(1,3))
+Lc &lt;- LcKS(x, cdf = "pmixnorm", nreps = 499, G = 1:9)   # Default G (1:9) takes long time
+Lc$p.value
+G &lt;- Mclust(x)$parameters$variance$G              # Optimal model has only two components
+Lc &lt;- LcKS(x, cdf = "pmixnorm", nreps = 499, G = G)     # Restricting to likely G saves time
+# But note changes null hypothesis: now testing against just two-component mixture
+Lc$p.value
+
+# Running 'in parallel'
+require(doParallel)
+set.seed(3124)
+x &lt;- rmixnorm(300, mean = c(110, 190, 200), sd = c(3, 15, .1), pro = c(1, 3, 1))
+system.time(LcKS(x, "pgamma"))
+system.time(LcKS(x, "pgamma", parallel = TRUE)) # Should be faster
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

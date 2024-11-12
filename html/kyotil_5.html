@@ -1,0 +1,1179 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotting</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plotting Functions</h2>
+
+<h3>Description</h3>
+
+<p>mypostscript and mypdf sets the width and height based on mfrow input. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+smoothed.scaled.hist (dat.ls, bin_width, scale.factors=NULL, cols=NULL, 
+  legend=NULL, cex.legend=1, ...) 
+
+
+myplot (object, ...) 
+
+## S3 method for class 'loess'
+myplot(object, xlab="x", ylab="fitted", ...)
+
+whiskers (x, s, ...) 
+
+abline.pt.slope(pt1, slope, x2=NULL, ...)
+
+abline.pts(pt1, pt2 = NULL)
+
+butterfly.plot(dat, dat2 = NULL, add = FALSE, xaxislabels = rep("", 4), x.ori = 0, 
+    xlab = "", ylab = "", cex.axis = 1, ...)
+
+empty.plot()
+
+add.mtext.label (text, cex = 1.4, adj = -0.2) 
+mydev.off(file = "temp", ext = c("pdf"), res = 200, mydev =
+                 NULL, silent = TRUE)
+getMfrow(len)
+
+myhist (x, add.norm=TRUE, col.norm="blue", ...)
+
+myforestplot(dat, xlim = NULL, xlab = "", main = "", col.1 = "red",
+ col.2 = "blue", plot.labels = TRUE, order = FALSE,
+ decreasing = FALSE, vline = TRUE, cols = NULL, log =
+ "", null.val = NULL)
+
+my.interaction.plot(dat, x.ori = 0, xaxislabels = rep("", 2), cex.axis = 1, add = FALSE,
+    xlab = "", ylab = "", pcol = NULL, lcol = NULL, ...)
+
+myboxplot(object, ...)
+
+## S3 method for class 'formula'
+myboxplot(formula, data, cex = 0.5, xlab = "", ylab = "", main =
+ "", box = TRUE, at = NULL, na.action = NULL, p.val =
+ NULL, pch = 1, col = 1, test = "",
+ friedman.test.formula = NULL, reshape.formula = NULL,
+ reshape.id = NULL, jitter = TRUE, add.interaction =
+ FALSE, drop.unused.levels = TRUE, bg.pt = NULL, add =
+ FALSE, seed = 1, write.p.at.top = FALSE, ...)
+    
+## S3 method for class 'data.frame'
+myboxplot(object, cex = 0.5, ylab = "", xlab = "", main = "",
+ box = TRUE, at = NULL, pch = 1, col = 1, test = "",
+ paired = FALSE, ...)
+
+## S3 method for class 'list'
+myboxplot(object, paired = FALSE, ...)
+
+abline.shade.2(x, col=c(0,1,0))
+abline.shade(pt, type = 5, col = c(0, 1, 0), alpha = 0.3)
+
+
+mylegend(legend, x, y=NULL, lty = NULL, bty = "n", ...)
+
+mymatplot(x, y, type = "b", lty = c(1, 2, 1, 2, 1, 2), pch =
+                 NULL, col = rep(c("darkgray", "black"), each = 3),
+                 xlab = NULL, ylab = "", draw.x.axis = TRUE, bg = NA,
+                 lwd = 1, at = NULL, make.legend = TRUE, legend = NULL,
+                 impute.missing.for.line = TRUE, legend.x = 9,
+                 legend.title = NULL, legend.cex = 1, legend.lty = lty,
+                 legend.inset = 0, xaxt = "s", y.intersp = 1.5,
+                 x.intersp = 0.3, text.width = NULL, add = FALSE, ...
+)
+                          
+mypairs(dat, ladder = FALSE, show.data.cloud = TRUE,
+ ladder.add.line = T, ladder.add.text = T, ...)
+
+wtd.hist (x, breaks = "Sturges", freq = NULL, probability = !freq, 
+    include.lowest = TRUE, right = TRUE, density = NULL, angle = 45, 
+    col = NULL, border = NULL, main = paste("Histogram of", xname), 
+    xlim = range(breaks), ylim = NULL, xlab = xname, ylab, axes = TRUE, 
+    plot = TRUE, labels = FALSE, nclass = NULL, weight = NULL, 
+    ...) 
+
+mylines(x, y, type = "l", ...)
+
+myfigure(mfrow = c(1, 1), mfcol = NULL, width = NULL, 
+    height = NULL, oma = NULL, mar = NULL, main.outer = FALSE, bg=NULL) 
+
+
+mypdf(...)
+
+mypng(...)
+mytiff(...)
+
+mypostscript(file = "temp", mfrow = c(1, 1), mfcol = NULL, width =
+                 NULL, height = NULL, ext = c("eps", "pdf", "png",
+                 "tiff"), oma = NULL, mar = NULL, main.outer = FALSE,
+                 save2file = TRUE, res = 200, silent = TRUE, ...)
+
+panel.cor(x, y, digits = 2, prefix = "", cex.cor, cor., leading0
+ = FALSE, cex.cor.dep = TRUE, ...)
+
+panel.hist(x, ...)
+
+panel.nothing(x, ...)
+
+corplot(object, ...)
+
+## Default S3 method:
+corplot(object, y, ...)
+
+## S3 method for class 'formula'
+corplot(formula, data, main = "", method = c("pearson",
+ "spearman"), col = 1, cex = 0.5, add.diagonal.line =
+ TRUE, add.lm.fit = FALSE, add.loess.fit = FALSE,
+ col.lm = 2, add.deming.fit = FALSE, col.deming = 4,
+ add = FALSE, log = "", same.xylim = FALSE, xlim =
+ NULL, ylim = NULL, ...)
+
+
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat.ls</code></td>
+<td>
+
+<p>named list of vectors. A histogram is made for each vector.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_width</code></td>
+<td>
+
+<p>width of bin for histograms
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.factors</code></td>
+<td>
+
+<p>named vector of scale factors to scale the histogram counts by
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.legend</code></td>
+<td>
+
+<p>cex for legend
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.lty</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.cor.dep</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.loess.fit</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>leading0</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>null.val</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write.p.at.top</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text.width</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex</code></td>
+<td>
+
+<p>tbdcex
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adj</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+
+<p>tbdfile
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ext</code></td>
+<td>
+
+<p>tbdext
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+
+<p>resolution.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.norm</code></td>
+<td>
+<p>Boolean, whether to add normal approximation density line</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.norm</code></td>
+<td>
+<p>string, color of added normal density line</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pt1</code></td>
+<td>
+
+<p>tbdpt1
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ladder</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>slope</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>friedman.test.formula</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reshape.id</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impute.missing.for.line</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mydev</code></td>
+<td>
+
+<p>tbdslope
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.interaction</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xaxt</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bg.pt</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>probability</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.lowest</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>right</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>density</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>angle</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>border</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclass</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pt2</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pt</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+
+<p>tbdpt2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+
+<p>tbddat
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+
+<p>line width.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x.intersp</code></td>
+<td>
+
+<p>controls the look of legend.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.intersp</code></td>
+<td>
+
+<p>controls the look of legend.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.inset</code></td>
+<td>
+
+<p>legend inset
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dat2</code></td>
+<td>
+
+<p>tbddat2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+
+<p>tbdadd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log</code></td>
+<td>
+
+<p>log
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.lm.fit</code></td>
+<td>
+
+<p>lm fit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.deming.fit</code></td>
+<td>
+
+<p>add 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.lm</code></td>
+<td>
+
+<p>col
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.deming</code></td>
+<td>
+
+<p>col
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reshape.formula</code></td>
+<td>
+
+<p>a formula object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xaxislabels</code></td>
+<td>
+
+<p>tbdxaxislabels
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x.ori</code></td>
+<td>
+
+<p>tbdx.ori
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+
+<p>tbdxlab
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+
+<p>tbdylab
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis</code></td>
+<td>
+
+<p>tbdcex.axis
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>len</code></td>
+<td>
+
+<p>tbdlen
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>same.xylim</code></td>
+<td>
+<p>Boolean. Whether xlim and ylim should be the same
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+
+<p>tbdxlim
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+
+<p>tbdxlim
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+
+<p>tbdmain
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.1</code></td>
+<td>
+
+<p>tbdcol.1
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.2</code></td>
+<td>
+
+<p>tbdcol.2
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcol</code></td>
+<td>
+
+<p>tbdpcol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lcol</code></td>
+<td>
+
+<p>tbdlcol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>tbdobject
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>tbdformula
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>tbddata
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>box</code></td>
+<td>
+
+<p>tbdbox
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>at</code></td>
+<td>
+
+<p>tbdat
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch</code></td>
+<td>
+
+<p>tbdpch
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+
+<p>tbdcol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+
+<p>string. For example, "t","w","f","k", "tw"
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend</code></td>
+<td>
+
+<p>tbdlegend
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty</code></td>
+<td>
+
+<p>tbdlty
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bty</code></td>
+<td>
+
+<p>tbdbty
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>tbdtype
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>make.legend</code></td>
+<td>
+
+<p>tbdmake.legend
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.x</code></td>
+<td>
+
+<p>tbdlegend.x
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.title</code></td>
+<td>
+
+<p>tbdlegend.title
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.cex</code></td>
+<td>
+
+<p>tbdlegend.cex
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>draw.x.axis</code></td>
+<td>
+
+<p>tbddraw.x.axis
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bg</code></td>
+<td>
+
+<p>tbdbg
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+
+<p>tbdmethod
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mfrow</code></td>
+<td>
+
+<p>tbdmfrow
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mfcol</code></td>
+<td>
+
+<p>tbdmfcol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+
+<p>tbdwidth
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+
+<p>tbdheight
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>oma</code></td>
+<td>
+
+<p>tbdoma
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mar</code></td>
+<td>
+
+<p>tbdmar
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main.outer</code></td>
+<td>
+
+<p>tbdmain.outer
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save2file</code></td>
+<td>
+
+<p>tbdsave2file
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+
+<p>tbddigits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix</code></td>
+<td>
+
+<p>tbdprefix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.cor</code></td>
+<td>
+
+<p>cex cor
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.labels</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decreasing</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.diagonal.line</code></td>
+<td>
+
+<p>tbdadd.diagonal.line
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x2</code></td>
+<td>
+
+<p>tbdadd.diagonal.line
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vline</code></td>
+<td>
+
+<p>tbdadd.diagonal.line
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols</code></td>
+<td>
+
+<p>tbdadd.diagonal.line
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+
+<p>tbdadd.diagonal.line
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop.unused.levels</code></td>
+<td>
+
+<p>tbdadd.diagonal.line
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.val</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paired</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show.data.cloud</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ladder.add.line</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ladder.add.text</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>myboxplot shows data points along with boxes. The data poins are jittered and the pattern of jittering is made reproducible in repeated calls. The test can only take one type of test currently.
+</p>
+<p>myforestplot is modified from code from Allan deCamp/SCHARP.
+dat should have three columns. first column should be point estimate, second and third lci and uci, fourth p value. 
+col.1 is the color used for CIs that do not include null, col.2 is used for CIs that do include null.
+If order is TRUE, the rows are ordered by the first column of dat. descreasing can be used to change the behavior of order.
+</p>
+<p>corplot.formula uses MethComp::Deming by Bendix Carstensen to fit Deming regression.
+</p>
+<p>wtd.hist is copied from weights package, author: Josh Pasek.
+</p>
+<p>mymatplot will use na.approx (zoo) to fill in NA before plotting in order to draw continuous lines. The filled-in values will not be shown as points.
+</p>
+<p>smoothed.scaled.hist draws histograms and overlay densities on top.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+set.seed(1)
+x=1:50+rnorm(50,0,4)
+y=1:50+rnorm(50,0,4)
+dat=data.frame(x, y)
+corplot(y~x,dat,add.lm.fit=TRUE,add.deming.fit=TRUE,col.lm="red",col.deming="blue")
+
+dat=data.frame(y=c(1:10,2:11), x=rep(c("a","b"),each=10), ptid=c(1:10,1:10))
+par(mfrow=c(1,2))
+myboxplot(y~x, dat, test="w", jitter=FALSE)
+myboxplot(y~x, dat, test="f", add.interaction=TRUE, reshape.formula=y~x, reshape.id="ptid")
+
+
+myboxplot(list(jitter(1:10), jitter(3:12)), test="w")
+myboxplot(list(jitter(1:10), jitter(3:12)), test="w", paired=TRUE)
+
+smoothed.scaled.hist(list(A=rnorm(100,0,1)), bin_width=0.1, xlab="x")
+smoothed.scaled.hist(list(A=rnorm(100,0,1), B=rnorm(500,10,2)), 
+                  bin_width=0.1, xlab="x")
+
+
+
+## Not run: 
+myfigure(mfrow=c(1,2))
+    plot(1:10)
+    plot(1:10)
+mydev.off(ext="png,pdf", file="tmp")
+
+## End(Not run)
+
+
+
+#myboxplot x axis may look weird if log="xy"
+
+</code></pre>
+
+
+</div>

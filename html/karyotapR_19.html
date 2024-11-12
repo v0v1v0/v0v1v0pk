@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calcCopyNumber</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate relative copy number value for each cell-probe unit using reference sample</h2>
+
+<h3>Description</h3>
+
+<p><code>calcCopyNumber()</code> transforms the normalized count matrix <code>normcounts</code> of a <code>TapestriExperiment</code> object
+into copy number values based on a set of reference cell barcodes and given copy number value (e.g. 2 for diploid).
+This is practically used to set the median copy number of a usually diploid reference
+cell population to a known copy number value, e.g. 2, and then calculate the copy number for all the
+cells relative to that reference population. This occurs individually for each probe,
+such that the result is one copy number value per cell barcode per probe (cell-probe unit).
+<code>control.copy.number</code> is a <code>data.frame</code> lookup table used to indicate the copy number value and cell barcodes
+to use as the reference. A template for <code>control.copy.number</code> can be generated using <code>generateControlCopyNumberTemplate()</code>,
+which will have a row for each chromosome arm represented in <code>TapestriExperiment</code>.
+</p>
+<p>The <code>control.copy.number</code> data.frame should include 3 columns named <code>arm</code>, <code>copy.number</code>, and <code>sample.label</code>.
+<code>arm</code> is chromosome arm names from chr1p through chrXq, <code>copy.number</code> is the reference copy number value (2 = diploid), and <code>sample.label</code> is the
+value corresponding to the <code>colData</code> column given in <code>sample.feature</code> to indicate the set of reference cell barcodes to use to set the copy number.
+This is best used in a workflow where the cells are clustered first into their respective samples, and then one cluster is used as the reference population
+the other clusters. This also allows for the baseline copy number to be set for each chromosome arm individually in the case where the
+reference population is not completely diploid.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calcCopyNumber(
+  TapestriExperiment,
+  control.copy.number,
+  sample.feature = "cluster",
+  remove.bad.probes = FALSE
+)
+
+generateControlCopyNumberTemplate(
+  TapestriExperiment,
+  copy.number = 2,
+  sample.feature.label = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control.copy.number</code></td>
+<td>
+<p><code>data.frame</code> with columns <code>arm</code>, <code>copy.number</code>, and <code>sample.label</code>. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample.feature</code></td>
+<td>
+<p>Character, <code>colData</code> column to use for subsetting cell.barcodes. Default "cluster".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.bad.probes</code></td>
+<td>
+<p>Logical, if <code>TRUE</code>, probes with median normalized counts = 0 are removed from the returned <code>TapestriExperiment</code>. If FALSE (default), probes with median normalized counts = 0 throw error and stop function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>copy.number</code></td>
+<td>
+<p>Numeric, sets all entries of <code>copy.number</code> column in output. Default 2 (diploid).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample.feature.label</code></td>
+<td>
+<p>Character, sets all entries of <code>sample.label</code> column in output.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> object with cell-probe copy number values in <code>copyNumber</code> assay slot.
+</p>
+<p><code>data.frame</code> with 3 columns named <code>arm</code>, <code>copy.number</code>, and <code>sample.label</code>
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul><li> <p><code>generateControlCopyNumberTemplate()</code>: generates a <code>data.frame</code> template for <code>control.copy.number</code> in <code>calcCopyNumber()</code>.
+</p>
+</li></ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- calcNormCounts(tap.object)
+control.copy.number &lt;- generateControlCopyNumberTemplate(tap.object,
+  copy.number = 2,
+  sample.feature.label = "cellline1"
+)
+tap.object &lt;- calcCopyNumber(tap.object,
+  control.copy.number,
+  sample.feature = "test.cluster"
+)
+tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+control.copy.number &lt;- generateControlCopyNumberTemplate(tap.object,
+  copy.number = 2,
+  sample.feature.label = "cellline1"
+)
+</code></pre>
+
+
+</div>

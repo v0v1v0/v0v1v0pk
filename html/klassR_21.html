@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ListFamily</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Classification family list
+Print a list of all families and the number of classifications in each</h2>
+
+<h3>Description</h3>
+
+<p>Classification family list
+Print a list of all families and the number of classifications in each
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ListFamily(family = NULL, codelists = FALSE, language = "nb")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>Input family ID number to get a list of classifications in that family</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>codelists</code></td>
+<td>
+<p>True/False for whether to include codelists. Default = FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>language</code></td>
+<td>
+<p>Two letter string for the requested language output. Default is Bokmål ("nb"). Nynorsk ("nn") and English ("en").</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>dataset containing a list of families
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ListFamily(family = 1)
+</code></pre>
+
+
+</div>

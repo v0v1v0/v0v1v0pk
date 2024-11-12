@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>inline_expr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Wrap code using the inline R expression syntax</h2>
+
+<h3>Description</h3>
+
+<p>This is a convenience function to write the "source code" of inline R
+expressions. For example, if you want to write ‘<span class="samp">⁠`r 1+1`⁠</span>’ literally in an
+R Markdown document, you may write ‘<span class="samp">⁠`` `r knitr::inline_expr('1+1')`
+``⁠</span>’; for Rnw documents, this may be
+‘<span class="samp">⁠\verb|\Sexpr{knitr::inline_expr{'1+1'}}|⁠</span>’.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">inline_expr(code, syntax)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>Character string of the inline R source code.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>syntax</code></td>
+<td>
+<p>A character string to specify the syntax, e.g. <code>rnw</code>,
+<code>html</code>, or <code>md</code>. If not specified, this will be guessed from
+the knitting context.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character string marked up using the inline R code syntax.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(knitr)
+inline_expr("1+1", "rnw")
+inline_expr("1+1", "html")
+inline_expr("1+1", "md")
+</code></pre>
+
+
+</div>

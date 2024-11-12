@@ -1,0 +1,156 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covMat-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Covariance Matrix for a Covariance Kernel Object
+</h2>
+
+<h3>Description</h3>
+
+<p>Covariance matrix for a covariance kernel object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'covMan'
+covMat(object, X, Xnew, compGrad = hasGrad(object), 
+       checkNames = NULL, index = 1L, ...)
+
+## S4 method for signature 'covTS'
+covMat(object, X, Xnew, compGrad = FALSE, 
+       checkNames = TRUE, index = 1L, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object with S4 class corresponding to a covariance kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>The matrix (or data.frame) of design points, with <code class="reqn">n</code> rows and
+<code class="reqn">d</code> cols where <code class="reqn">n</code> is the number of spatial points and
+<code class="reqn">d</code> is the 'spatial' dimension.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xnew</code></td>
+<td>
+
+<p>An optional new matrix of spatial design points. If missing, the
+same matrix is used: <code>Xnew = X</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> a derivative with respect to a parameter
+will be computed and returned as an attribute of the result. For
+the <code>covMan</code> class, this is possible only when the gradient
+of the kernel is computed and returned as a <code>"gradient"</code>
+attribute of the result.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkNames</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), check the compatibility of
+<code>X</code> with <code>object</code>, see <code>checkX</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+
+<p>Integer giving the index of the derivation parameter in the official
+order. Ignored if <code>compGrad = FALSE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>not used yet.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The covariance matrix is computed in a C program using the
+<code>.Call</code> interface. The R kernel function is evaluated within the
+C code using <code>eval</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code class="reqn">n_1 \times n_2</code> matrix with general element
+<code class="reqn">C_{ij} :=
+  K(\mathbf{x}_{1,i},\,\mathbf{x}_{2,j};\,\boldsymbol{\theta})</code> where
+<code class="reqn">K(\mathbf{x}_1,\,\mathbf{x}_2;\,\boldsymbol{\theta})</code> is the covariance kernel function.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The value of the parameter <code class="reqn">\boldsymbol{\theta}</code> can be
+extracted from the object with the <code>coef</code> method.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Y. Deville, O. Roustant, D. Ginsbourger, N. Durrande.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coef</code> method
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">myCov &lt;- covTS(inputs = c("Temp", "Humid", "Press"),
+               kernel = "k1PowExp",
+               dep = c(range = "cst", shape = "cst"),
+               value = c(shape = 1.8, range = 1.1))
+n &lt;- 100; X &lt;- matrix(runif(n*3), nrow = n, ncol = 3)
+try(C1 &lt;- covMat(myCov, X)) ## bad colnames
+colnames(X) &lt;- inputNames(myCov)
+C2 &lt;- covMat(myCov, X)
+
+Xnew &lt;- matrix(runif(n * 3), nrow = n, ncol = 3)
+colnames(Xnew) &lt;- inputNames(myCov)
+C2 &lt;- covMat(myCov, X, Xnew)
+
+## check with the same matrix in 'X' and 'Xnew'
+CMM &lt;- covMat(myCov, X, X)
+CM &lt;- covMat(myCov, X)
+max(abs(CM - CMM))
+</code></pre>
+
+
+</div>

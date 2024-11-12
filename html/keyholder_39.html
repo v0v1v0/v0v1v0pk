@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keys-manipulate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Manipulate keys</h2>
+
+<h3>Description</h3>
+
+<p>Functions to manipulate keys.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">remove_keys(.tbl, ..., .unkey = FALSE)
+
+restore_keys(.tbl, ..., .remove = FALSE, .unkey = FALSE)
+
+pull_key(.tbl, var)
+
+rename_keys(.tbl, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Variables to be used for operations defined in similar fashion as
+in <code>dplyr::select()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.unkey</code></td>
+<td>
+<p>Whether to <code>unkey()</code> <code>.tbl</code> in case there are no keys left.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.remove</code></td>
+<td>
+<p>Whether to remove keys after restoring.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+<p>Parameter for <code>dplyr::pull()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>remove_keys()</code> removes keys defined with <code>...</code>.
+</p>
+<p><code>restore_keys()</code> transfers keys defined with <code>...</code> into <code>.tbl</code> and removes
+them from <code>keys</code> if <code>.remove == TRUE</code>. If <code>.tbl</code> is grouped the following
+happens:
+</p>
+
+<ul>
+<li>
+<p> If restored keys don't contain grouping variables then groups don't change;
+</p>
+</li>
+<li>
+<p> If restored keys contain grouping variables then result will be regrouped
+based on restored values. In other words restoring keys beats 'not-modifying'
+grouping variables rule. It is made according to the ideology of keys: they
+contain information about rows and by restoring you want it to be
+available.
+</p>
+</li>
+</ul>
+<p><code>pull_key()</code> extracts one specified column from keys with <code>dplyr::pull()</code>.
+</p>
+<p><code>rename_keys()</code> renames columns in keys using <code>dplyr::rename()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Get keys, Set keys
+</p>
+<p>Scoped functions
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">df &lt;- mtcars %&gt;% dplyr::as_tibble() %&gt;%
+  key_by(vs, am, .exclude = TRUE)
+df %&gt;% remove_keys(vs)
+
+df %&gt;% remove_keys(dplyr::everything())
+
+df %&gt;% remove_keys(dplyr::everything(), .unkey = TRUE)
+
+
+df %&gt;% restore_keys(vs)
+
+df %&gt;% restore_keys(vs, .remove = TRUE)
+
+
+df %&gt;% restore_keys(dplyr::everything(), .remove = TRUE)
+
+df %&gt;% restore_keys(dplyr::everything(), .remove = TRUE, .unkey = TRUE)
+
+
+# Restoring on grouped data frame
+df_grouped &lt;- df %&gt;% dplyr::mutate(vs = 1) %&gt;% dplyr::group_by(vs)
+df_grouped %&gt;% restore_keys(dplyr::everything())
+
+# Pulling
+df %&gt;% pull_key(vs)
+
+# Renaming
+df %&gt;% rename_keys(Vs = vs)
+
+</code></pre>
+
+
+</div>

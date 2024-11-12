@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>areTsGapTimeCompatible</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+areTsGapTimeCompatible: tests time compatibility between a time series and a gap set
+</h2>
+
+<h3>Description</h3>
+
+<p>It checks for three types of compatibility: the initial dates are the same, the sampling period is the same and the length is the same. It is used internally to check whether the inputs chosen by the user are appropiated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">areTsGapTimeCompatible(TS1, GAP1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TS1</code></td>
+<td>
+
+<p>A time series
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>GAP1</code></td>
+<td>
+
+<p>A gap set
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A logical vector, which is c(TRUE, TRUE, TRUE) when all the time compatibilty conditions are met.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Generate a time series
+TS &lt;- genTSExample(InKTSEnv = FALSE)
+## Generate a gap set consisiting of four gaps of 3 NAs each
+GS &lt;- genGapExample(TS, 3, 4, InKTSEnv = FALSE)
+
+## They are obviously compatible since we use TS to create GS
+timeComp &lt;- areTsGapTimeCompatible (TS, GS)
+timeComp
+
+## We modifify the time of TS. The initial dates are not compatible anymore,
+## although the sampling period and the length remain untouched.
+TS$time &lt;- TS$time + 1
+timeComp &lt;-  areTsGapTimeCompatible (TS, GS)
+timeComp
+
+</code></pre>
+
+
+</div>

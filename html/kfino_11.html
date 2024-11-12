@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>utils_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>utils_fit a fonction running the kfino algorithm to filter data and 
+detect outliers under the knowledge of all parameters</h2>
+
+<h3>Description</h3>
+
+<p>utils_fit a fonction running the kfino algorithm to filter data and 
+detect outliers under the knowledge of all parameters
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">utils_fit(param, threshold, kappa = 10, Y, Tps, N)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>param</code></td>
+<td>
+<p>list, see initial parameter list in <code>kfino_fit</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>numeric, threshold for confidence interval, default 0.5</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa</code></td>
+<td>
+<p>numeric, truncation setting for likelihood optimization, 
+default 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>character, name of the numeric variable to predict in the
+data.frame datain</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tps</code></td>
+<td>
+<p>character, time column name in the data.frame datain, a 
+numeric vector.
+Tvar can be expressed as a proportion of day in seconds</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>numeric, length of the numeric vector of Y values</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>utils_fit is a tool function used in the main <code>kfino_fit</code> 
+function. It uses the same input parameter list than the main function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list
+</p>
+
+<dl>
+<dt>prediction</dt>
+<dd>
+<p>vector, the prediction of weights</p>
+</dd>
+<dt>label</dt>
+<dd>
+<p>vector, probability to be an outlier</p>
+</dd>
+<dt>likelihood</dt>
+<dd>
+<p>numeric, the calculated likelihood</p>
+</dd>
+<dt>lwr</dt>
+<dd>
+<p>vector of lower bound confidence interval of the prediction </p>
+</dd>
+<dt>upr</dt>
+<dd>
+<p>vector of upper bound confidence interval of the prediction </p>
+</dd>
+<dt>flag</dt>
+<dd>
+<p>char, is an outlier or not</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1234)
+Y&lt;-rnorm(n=10,mean=50,4)
+Tps&lt;-seq(1,10)
+N=10
+param2&lt;-list(m0=41,
+             mm=45,
+             pp=0.5,
+             aa=0.001,
+             expertMin=30,
+             expertMax=75,
+             sigma2_m0=1,
+             sigma2_mm=0.05,
+             sigma2_pp=5,
+             K=2,
+            seqp=seq(0.5,0.7,0.1))
+print(Y)
+utils_fit(param=param2,threshold=0.5,kappa=10,Y=Y,Tps=Tps,N=N)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>misc_recursive_copy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>misc_recursive_copy</h2>
+
+<h3>Description</h3>
+
+<p>Recursively copying directories and subdirectories.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">misc_recursive_copy(source_dir, target_dir, force = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>source_dir</code></td>
+<td>
+<p>A character string. The path to the directory to be copied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target_dir</code></td>
+<td>
+<p>A character string. The target path.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>A boolean. If <code>FALSE</code> (the default) a dialog is prompted to
+ask the user if the directories should be copied recursively. If <code>TRUE</code>,
+the dialog is not prompted and the <code>source_dir</code> is copied directly to
+<code>target_dir</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function has no return value.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (interactive()) {
+  d1 &lt;- file.path(tempdir(), "folder1")
+  d2 &lt;- file.path(d1, "folder2")
+  d3 &lt;- file.path(tempdir(), "new_folder")
+  f1 &lt;- file.path(d1, "file.one")
+  dir.create(d2, recursive = TRUE)
+  file.create(f1)
+  misc_recursive_copy(d1, d3)
+}
+</code></pre>
+
+
+</div>

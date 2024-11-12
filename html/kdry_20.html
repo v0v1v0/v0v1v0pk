@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rep_pval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>rep_pval</h2>
+
+<h3>Description</h3>
+
+<p>Reporting helper function: formats p-value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rep_pval(p, threshold = 0.001, digits = 3L)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>The p-value that should be formatted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>A threshold to indicate that only "&lt; threshold" is
+printed as output (default: 0.001).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>The number of digits of the formatted p-value (digits).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the p-value is lower than the threshold, the output of the
+function is "&lt; threshold". Otherwise, the p-value is formatted to the
+number of digits.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character with the formatted p-value.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">rep_pval(0.032)
+rep_pval(0.00032)
+
+</code></pre>
+
+
+</div>

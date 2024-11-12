@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Acc_rnd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Accuracy of a random model</h2>
+
+<h3>Description</h3>
+
+<p>'Acc_rnd()' computes the expected accuracy of a random classifier based on the
+class frequencies of the target. This measure can be used as a benchmark when contrasted
+to the accuracy (in test) of a given prediction model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Acc_rnd(target, freq = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>target</code></td>
+<td>
+<p>A character vector or a factor. Alternatively, a numeric vector
+(see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq</code></td>
+<td>
+<p>TRUE if 'target' contains the frequencies of the classes (in this
+case, 'target' should be numeric), FALSE otherwise. (Defaults: FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Expected accuracy of a random classification model (a single value).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Expected accuracy of a random model:
+target &lt;- c(rep("a",5),rep("b",2))
+Acc_rnd(target)
+# This is the same than:
+freqs &lt;- c(5/7,2/7)
+Acc_rnd(freqs,freq=TRUE)
+</code></pre>
+
+
+</div>

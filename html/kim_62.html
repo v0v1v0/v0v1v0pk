@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lenu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>lenu: Length of unique values</h2>
+
+<h3>Description</h3>
+
+<p>Extract unique elements and get the length of those elements
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lenu(x = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector or a data frame or an array or NULL.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a vector, data frame, or array-like 'x' but with duplicate
+elements/rows removed.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">unique(c(10, 3, 7, 10))
+lenu(c(10, 3, 7, 10))
+unique(c(10, 3, 7, 10, NA))
+lenu(c(10, 3, 7, 10, NA))
+lenu(c("b", "z", "b", "a", NA, NA, NA))
+</code></pre>
+
+
+</div>

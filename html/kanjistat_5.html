@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_kanji</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert between kanji formats</h2>
+
+<h3>Description</h3>
+
+<p>Accept any interpretable representation of kanji in terms of index numbers,
+UTF-8 character strings of length 1, UTF-8 codepoints
+or <code>kanjivec</code> objects and convert it to all or any of these
+formats.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_kanji(
+  key,
+  output = c("all", "index", "character", "hexmode", "kanjivec"),
+  simplify = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>an atomic vector or list of kanji in any combination of formats.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>a string describing the desired output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+<p>logical. Whether to simplify the output to an atomic vector
+or keep the structure of the original vector. In either case it depends on
+output whether this is possible.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Index numbers are in terms of the order in <code>kbase</code>. UTF-8 codepoints are
+usually of class "hexmode", but character strings starting
+with "0x" or "0X" are also accepted in the <code>key</code>.
+</p>
+<p>For <code>output = "kanjivec"</code>, the GitHub package kanjistat.data has to be available or
+an error is returned. For <code>output = "all"</code>, component kanjivec is set to NA if
+kanjistat.data is not available.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of the same length as key. If <code>simplify</code> is <code>TRUE</code>, this is an
+atomic vector for output = "index", "character" or "hexmode", and a list
+for output = "kanjivec" or "all" a list. If <code>simplify</code> is <code>FALSE</code>, the original
+structure (atomic or list) kept whenever possible.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">convert_kanji(as.hexmode("99ac"))
+convert_kanji("0x99ac")  # same
+convert_kanji(500, "character") == kbase$kanji[500]  # TRUE
+</code></pre>
+
+
+</div>

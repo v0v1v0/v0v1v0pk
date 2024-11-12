@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>imagenet_decode_predictions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decodes the prediction of an ImageNet model.</h2>
+
+<h3>Description</h3>
+
+<p>Decodes the prediction of an ImageNet model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">imagenet_decode_predictions(preds, top = 5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>preds</code></td>
+<td>
+<p>Tensor encoding a batch of predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top</code></td>
+<td>
+<p>integer, how many top-guesses to return.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>List of data frames with variables <code>class_name</code>, <code>class_description</code>,
+and <code>score</code> (one data frame per sample in batch input).
+</p>
+
+
+</div>

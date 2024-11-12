@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print_uncertainty</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Prints a measure of uncertainty for a function of any dimension.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function prints the value of a given measure of uncertainty. 
+The function can be used to print relevant outputs after having used the function <code>EGI</code> or <code>EGIparallel</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">print_uncertainty(model, T, type = "pn", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Array containing one or several thresholds.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Type of uncertainty that the user wants to print. 
+Possible values are <code>"pn"</code> (probability of excursion), or 
+<code>"sur"</code>, <code>"imse"</code>, <code>"timse"</code>, <code>"vorob"</code> if we print a measure of uncertainty corresponding to one criterion.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments of the functions <code>print_uncertainty_1d</code>, <code>2d</code> or <code>nd</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the integrated uncertainty
+</p>
+
+
+<h3>Author(s)</h3>
+
+ 
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Bect J., Ginsbourger D., Li L., Picheny V., Vazquez E. (2012), <em>Sequential design of computer experiments for the estimation of a probability of failure</em>, Statistics and Computing vol. 22(3), pp 773-793
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>print_uncertainty_1d</code>,<code>print_uncertainty_2d</code>,<code>print_uncertainty_nd</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#print_uncertainty
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- c(80,100) #threshold
+testfun &lt;- branin
+lower &lt;- c(0,0)
+upper &lt;- c(1,1)
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+#you could do many plots, but only one is run here
+print_uncertainty(model=model,T=T,main="probability of excursion",type="pn")
+#print_uncertainty(model=model,T=T,main="Vorob'ev uncertainty",type="vorob")
+#print_uncertainty(model=model,T=T,main="imse uncertainty",type="imse")
+#print_uncertainty(model=model,T=T,main="timse uncertainty",type="timse")
+#print_uncertainty(model=model,T=T,main="sur uncertainty",type="sur")
+#print_uncertainty(model=model,T=T,main="probability of excursion",type="pn",
+#vorobmean=TRUE)
+</code></pre>
+
+
+</div>

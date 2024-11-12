@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coef-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Extract Coefficients of a Covariance Kernel Object as Vector, List or
+Matrix
+</h2>
+
+<h3>Description</h3>
+
+<p>Extract some of or all the coefficients of a covariance kernel object as
+vector, list or matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'covMan'
+coef(object)
+
+## S4 method for signature 'covTS'
+coef(object, type = "all", as = "vector")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object representing a covariance kernel, the coefficient of which
+will be extracted.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Character string or vector specifying which type(s) of coefficients in the
+structure will be extracted. Can be <code>"all"</code> (all coefficients
+are extracted) or any parameter name(s) of the corresponding kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as</code></td>
+<td>
+
+<p>Character string specifying the output structure to be used.  The
+default is <code>"vector"</code>, leading to a numeric vector. Using
+<code>"list"</code> one gets a list of numeric vectors, one by kernel
+parameter. Finally, using <code>"matrix"</code> one gets a matrix with one
+row by input (or dimension) and one column by (selected) kernel
+parameter.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric vector of coefficients or a structure as specified by
+<code>as</code> containing the coefficients selected by <code>type</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>coef&lt;-</code> replacement method which takes a vector of
+replacement values.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">d &lt;- 3
+myCov1 &lt;- covTS(d = d, kernel = "k1Exp", dep = c(range = "input"),
+                value = c(range = 1.1))
+myCov1
+## versatile 'coef' method
+coef(myCov1)
+coef(myCov1, as = "matrix")
+coef(myCov1, as = "list")
+coef(myCov1, as = "matrix", type = "range")
+coef(myCov1) &lt;- c(0.2, 0.3, 0.4, 4, 16, 25)
+coef(myCov1, as = "matrix")
+</code></pre>
+
+
+</div>

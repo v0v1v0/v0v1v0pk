@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>restore-keys-scoped</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Restore selection of keys</h2>
+
+<h3>Description</h3>
+
+<p>These functions restore selection of keys using corresponding
+scoped variant of select. <code>.funs</code>
+argument can be used to rename some keys (without touching actual keys)
+before restoring.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">restore_keys_all(.tbl, .funs = list(), ..., .remove = FALSE,
+  .unkey = FALSE)
+
+restore_keys_if(.tbl, .predicate, .funs = list(), ..., .remove = FALSE,
+  .unkey = FALSE)
+
+restore_keys_at(.tbl, .vars, .funs = list(), ..., .remove = FALSE,
+  .unkey = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.tbl</code></td>
+<td>
+<p>Reference data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.funs</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.remove</code></td>
+<td>
+<p>Whether to remove keys after restoring.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.unkey</code></td>
+<td>
+<p>Whether to <code>unkey()</code> <code>.tbl</code> in case there are no keys left.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.predicate</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.vars</code></td>
+<td>
+<p>Parameter for scoped functions.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">df &lt;- mtcars %&gt;% dplyr::as_tibble() %&gt;% key_by(vs, am, disp)
+# Just restore all keys
+df %&gt;% restore_keys_all()
+
+# Restore all keys with renaming and without touching actual keys
+df %&gt;% restore_keys_all(.funs = toupper)
+
+# Restore with renaming and removing
+df %&gt;%
+  restore_keys_all(.funs = toupper, .remove = TRUE)
+
+# Restore with renaming, removing and unkeying
+df %&gt;%
+  restore_keys_all(.funs = toupper, .remove = TRUE, .unkey = TRUE)
+
+# Restore with renaming keys satisfying the predicate
+df %&gt;%
+  restore_keys_if(rlang::is_integerish, .funs = toupper)
+
+# Restore with renaming specified keys
+df %&gt;%
+  restore_keys_at(c("vs", "disp"), .funs = toupper)
+
+</code></pre>
+
+
+</div>

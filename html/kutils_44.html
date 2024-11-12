@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mgsub</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>apply a vector of replacements, one after the other.</h2>
+
+<h3>Description</h3>
+
+<p>This is multi-gsub.  Use it when it is necessary to process
+many patterns and replacements in a given order on a vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mgsub(pattern, replacement, x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pattern</code></td>
+<td>
+<p>vector of values to be replaced. A vector filled
+with patterns as documented in the <code>gsub</code> pattern
+argument</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replacement</code></td>
+<td>
+<p>vector of replacements, otherwise same as
+<code>gsub</code>.  Length of replacement must be either 1 or same
+as pattern, otherwise an error results.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the vector in which elements are to be replaced, same as
+<code>gsub</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments to be passed to gsub</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>vector with pattern replaced by replacement
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jared Harpole &lt;jared.harpole@gmail.com&gt; and Paul Johnson
+&lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c("Tom", "Jerry", "Elmer", "Bugs")
+pattern &lt;- c("Tom", "Bugs")
+replacement &lt;- c("Thomas", "Bugs Bunny")
+(y &lt;- mgsub(pattern, replacement, x))
+x[1] &lt;- "tom"
+(y &lt;- mgsub(pattern, replacement, x, ignore.case = TRUE))
+(y &lt;- mgsub(c("Elmer", "Bugs"), c("Looney Characters"), x, ignore.case = TRUE))
+</code></pre>
+
+
+</div>

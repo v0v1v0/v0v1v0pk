@@ -1,0 +1,215 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_embedding</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Turns positive integers (indexes) into dense vectors of fixed size.</h2>
+
+<h3>Description</h3>
+
+<p>e.g. <code>rbind(4L, 20L)</code> <code class="reqn">\rightarrow</code> <code>rbind(c(0.25, 0.1), c(0.6, -0.2))</code>
+</p>
+<p>This layer can only be used on positive integer inputs of a fixed range.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_embedding(
+  object,
+  input_dim,
+  output_dim,
+  embeddings_initializer = "uniform",
+  embeddings_regularizer = NULL,
+  embeddings_constraint = NULL,
+  mask_zero = FALSE,
+  weights = NULL,
+  lora_rank = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_dim</code></td>
+<td>
+<p>Integer. Size of the vocabulary,
+i.e. maximum integer index + 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_dim</code></td>
+<td>
+<p>Integer. Dimension of the dense embedding.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>embeddings_initializer</code></td>
+<td>
+<p>Initializer for the <code>embeddings</code>
+matrix (see <code style="white-space: pre;">⁠keras3::initializer_*⁠</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>embeddings_regularizer</code></td>
+<td>
+<p>Regularizer function applied to
+the <code>embeddings</code> matrix (see <code style="white-space: pre;">⁠keras3::regularizer_*⁠</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>embeddings_constraint</code></td>
+<td>
+<p>Constraint function applied to
+the <code>embeddings</code> matrix (see <code style="white-space: pre;">⁠keras3::constraint_*⁠</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mask_zero</code></td>
+<td>
+<p>Boolean, whether or not the input value 0 is a special
+"padding" value that should be masked out.
+This is useful when using recurrent layers which
+may take variable length input. If this is <code>TRUE</code>,
+then all subsequent layers in the model need
+to support masking or an exception will be raised.
+If <code>mask_zero</code> is set to <code>TRUE</code>, as a consequence,
+index 0 cannot be used in the vocabulary (<code>input_dim</code> should
+equal size of vocabulary + 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>Optional floating-point matrix of size
+<code style="white-space: pre;">⁠(input_dim, output_dim)⁠</code>. The initial embeddings values
+to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lora_rank</code></td>
+<td>
+<p>Optional integer. If set, the layer's forward pass
+will implement LoRA (Low-Rank Adaptation)
+with the provided rank. LoRA sets the layer's embeddings
+matrix to non-trainable and replaces it with a delta over the
+original matrix, obtained via multiplying two lower-rank
+trainable matrices. This can be useful to reduce the
+computation cost of fine-tuning large embedding layers.
+You can also enable LoRA on an existing
+<code>Embedding</code> layer instance by calling <code>layer$enable_lora(rank)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>model &lt;- keras_model_sequential() |&gt;
+  layer_embedding(1000, 64)
+
+# The model will take as input an integer matrix of size (batch,input_length),
+# and the largest integer (i.e. word index) in the input
+# should be no larger than 999 (vocabulary size).
+# Now model$output_shape is (NA, 10, 64), where `NA` is the batch
+# dimension.
+
+input_array &lt;- random_integer(shape = c(32, 10), minval = 0, maxval = 1000)
+model |&gt; compile('rmsprop', 'mse')
+output_array &lt;- model |&gt; predict(input_array, verbose = 0)
+dim(output_array)    # (32, 10, 64)
+</pre></div>
+<div class="sourceCode"><pre>## [1] 32 10 64
+
+</pre></div>
+
+
+<h3>Input Shape</h3>
+
+<p>2D tensor with shape: <code style="white-space: pre;">⁠(batch_size, input_length)⁠</code>.
+</p>
+
+
+<h3>Output Shape</h3>
+
+<p>3D tensor with shape: <code style="white-space: pre;">⁠(batch_size, input_length, output_dim)⁠</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<ul>
+<li>
+<div class="sourceCode r"><pre>enable_lora(
+  rank,
+  a_initializer = 'he_uniform',
+  b_initializer = 'zeros'
+)
+</pre></div>
+</li>
+<li>
+<div class="sourceCode r"><pre>quantize(mode, type_check = TRUE)
+</pre></div>
+</li>
+<li>
+<div class="sourceCode r"><pre>quantized_build(input_shape, mode)
+</pre></div>
+</li>
+<li>
+<div class="sourceCode r"><pre>quantized_call(...)
+</pre></div>
+</li>
+</ul>
+<h3>Readonly properties:</h3>
+
+
+<ul><li> <p><code>embeddings</code>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/core_layers/embedding#embedding-class">https://keras.io/api/layers/core_layers/embedding#embedding-class</a>
+</p>
+</li></ul>
+<p>Other core layers: <br><code>layer_dense()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_identity()</code> <br><code>layer_lambda()</code> <br><code>layer_masking()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

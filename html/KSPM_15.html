@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extractAIC.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract AIC from a Kernel Semi Parametric Model</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Akaike Information Criterion (AIC) for a kspm fit.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+extractAIC(fit, scale = NULL, k = 2,
+  correction = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p>fitted model, usually the result of kspm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>option not available for kspm fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>numeric specifying the 'weight' of the effective degrees of freedom (edf) part in the AIC formula. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correction</code></td>
+<td>
+<p>boolean indicating if the corrected AIC should be computed instead of standard AIC, may be <code>TRUE</code> only for <code>k=2</code>. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional optional argument (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The criterion used is <code class="reqn">AIC = n log(RSS) + k (n-edf)</code> where <code class="reqn">RSS</code> is the residual sum of squares and <code class="reqn">edf</code> is the effective degree of freedom of the model. <code>k = 2</code> corresponds to the traditional AIC, using <code>k = log(n)</code> provides Bayesian Information Criterion (BIC) instead. For <code>k=2</code>, the corrected Akaike's Information Criterion (AICc) is obtained by <code class="reqn">AICc = AIC + \frac{2 (n-edf) (n-edf+1)}{(edf-1)}</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>extractAIC.kspm</code> returns a numeric value corresponding to AIC. Of note, the AIC obtained here differs from a constant to the AIC obtained with <code>extractAIC</code> applied to a lm object. If one wants to compare a <code>kspm</code> model with a <code>lm</code> model, it is preferrable to compute again the <code>lm</code> model using kspm function by specifying <code>kernel = NULL</code> and apply <code>extractAIC</code> method on this model.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Liu, D., Lin, X., and Ghosh, D. (2007). Semiparametric regression of multidimensional genetic pathway data: least squares kernel machines and linear mixed models. Biometrics, 63(4), 1079:1088.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>stepKSPM for variable selection procedure based on AIC.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+y &lt;- 3*x + rnorm(15, 0, 2)
+fit &lt;- kspm(y, kernel = ~ Kernel(x, kernel.function = "linear"))
+extractAIC(fit)
+
+</code></pre>
+
+
+</div>

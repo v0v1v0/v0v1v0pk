@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_swap_ema_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Swaps model weights and EMA weights before and after evaluation.</h2>
+
+<h3>Description</h3>
+
+<p>This callbacks replaces the model's weight values with the values of
+the optimizer's EMA weights (the exponential moving average of the past
+model weights values, implementing "Polyak averaging") before model
+evaluation, and restores the previous weights after evaluation.
+</p>
+<p>The <code>SwapEMAWeights</code> callback is to be used in conjunction with
+an optimizer that sets <code>use_ema = TRUE</code>.
+</p>
+<p>Note that the weights are swapped in-place in order to save memory.
+The behavior is undefined if you modify the EMA weights
+or model weights in other callbacks.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_swap_ema_weights(swap_on_epoch = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>swap_on_epoch</code></td>
+<td>
+<p>Whether to perform swapping at <code>on_epoch_begin()</code>
+and <code>on_epoch_end()</code>. This is useful if you want to use
+EMA weights for other callbacks such as <code>callback_model_checkpoint()</code>.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code>Callback</code> instance that can be passed to <code>fit.keras.src.models.model.Model()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># Remember to set `use_ema=TRUE` in the optimizer
+optimizer &lt;- optimizer_sgd(use_ema = TRUE)
+model |&gt; compile(optimizer = optimizer, loss = ..., metrics = ...)
+
+# Metrics will be computed with EMA weights
+model |&gt; fit(X_train, Y_train,
+             callbacks = c(callback_swap_ema_weights()))
+
+# If you want to save model checkpoint with EMA weights, you can set
+# `swap_on_epoch=TRUE` and place ModelCheckpoint after SwapEMAWeights.
+model |&gt; fit(
+  X_train, Y_train,
+  callbacks = c(
+    callback_swap_ema_weights(swap_on_epoch = TRUE),
+    callback_model_checkpoint(...)
+  )
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other callbacks: <br><code>Callback()</code> <br><code>callback_backup_and_restore()</code> <br><code>callback_csv_logger()</code> <br><code>callback_early_stopping()</code> <br><code>callback_lambda()</code> <br><code>callback_learning_rate_scheduler()</code> <br><code>callback_model_checkpoint()</code> <br><code>callback_reduce_lr_on_plateau()</code> <br><code>callback_remote_monitor()</code> <br><code>callback_tensorboard()</code> <br><code>callback_terminate_on_nan()</code> <br></p>
+
+
+</div>

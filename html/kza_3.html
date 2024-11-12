@@ -1,0 +1,174 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kza</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kolmogorov-Zurbenko Adaptive</h2>
+
+<h3>Description</h3>
+
+<p>KZA will recover 2-dimensional or 3-dimensional image or signal buried in noise.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kza(x, m, y = NULL, k = 3, min_size = round(0.05*m), tol = 1.0e-5, impute_tails = FALSE)
+## S3 method for class 'kza'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector of the time series or a matrix (2d) or an array (3d) of an image.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>The window for the filter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>The filtered output from kz.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The number of iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_size</code></td>
+<td>
+<p>Minimum size of window q.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>The smallest value to accept as nonzero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impute_tails</code></td>
+<td>
+<p>The default is to drop the tails.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other parameters.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The selection of parameters of KZA depend on the nature of the data. 
+This function may take a long time to run, depending on the number of dimensions
+and the size of the dimensions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Brian Close &lt;brian.close@gmail.com&gt; and Igor Zurbenko &lt;IZurbenko@albany.edu&gt;</p>
+
+
+<h3>References</h3>
+
+<p>I. Zurbenko, P.S. Porter, S.T. Rao, J.Y. Ku, R. Gui, R.E. Eskridge
+Detecting Discontinuities in Time Series of Upper-air Data: 
+Development and Demonstration of an Adaptive Filter Technique.
+Journal of Climate: (1996) Vol. 9, No. 12, pp. 3548 3560.
+<a href="http://journals.ametsoc.org/action/doSearch?AllField=zurbenko&amp;filter=AllField">http://journals.ametsoc.org/action/doSearch?AllField=zurbenko&amp;filter=AllField</a>
+</p>
+<p>Kevin L. Civerolo, Elvira Brankov, S. T. Rao, Igor Zurbenko
+Assessing the impact of the acid deposition control program.
+Atmospheric Environment 35 (2001) 4135-4148
+<a href="http://www.elsevier.com/locate/atmosenv">http://www.elsevier.com/locate/atmosenv</a>
+</p>
+<p>J.Chen, I.Zurbenko, Nonparametric Boundary detection, Communications in Statistics, 
+Theory and Methods, Vol.26, 12, 2999-3014, 1997.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#######
+# this is an example of detection of a break point in a time series
+#######
+yrs &lt;- 20
+t &lt;- seq(0,yrs,length=yrs*365)
+m &lt;- 365
+
+#noise
+e &lt;- rnorm(n = length(t),0,1)
+trend &lt;- seq(0,-1,length=length(t))
+
+#signal
+bkpt &lt;- 3452
+brk &lt;- c(rep(0,bkpt),rep(0.5,length(t)-bkpt))
+signal &lt;- trend + brk
+
+# y = seasonal + trend + break point + noise
+y &lt;- sin(2*pi*t) + signal + e
+
+k.kz &lt;- kz(y,m)
+
+# kza reconstruction of the signal
+k.kza &lt;- kza(y,m,y=k.kz,min_size=10)
+
+par(mfrow=c(2,1))
+plot(y,type="l", ylim=c(-3,3))
+plot(signal,type="l",ylim=c(-3,3), 
+    main="Signal and KZA Reconstruction")
+lines(k.kza$kza, col=4)
+
+######################
+# image detection (2d)
+######################
+set.seed(2)
+a &lt;- matrix(rep(0,100*100),nrow=100)
+a[35:70,35:70]&lt;-1
+a &lt;- a + matrix(rnorm(100*100,0,1),nrow=100)
+y&lt;-kz(a,m=15,k=3)
+v &lt;- kza(a,m=15,y=y,k=3,impute_tails=TRUE)
+
+x &lt;- seq(1,100)
+y &lt;- x
+op &lt;- par(bg = "white")
+
+###
+#noise
+###
+c="lightblue"
+persp(x, y, a, zlab="z", zlim=c(-5,5), ticktype="detailed", theta=30, phi=30, col=c)
+
+###
+#kza filtered
+###
+persp(x,y,v$kza,zlab="z",zlim=c(-5,5),ticktype="detailed",theta=30,phi=30,col=c)
+
+###
+# another view
+###
+par(mfrow=c(1,2))
+image(a,col=gray(seq(0,1,1/255)))
+image(v$kza,col=gray(seq(0,1,1/255)))
+par(mfrow=c(1,1))
+
+</code></pre>
+
+
+</div>

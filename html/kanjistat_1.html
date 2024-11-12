@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cjk_escape</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Replace CJK characters in files by escape sequences</h2>
+
+<h3>Description</h3>
+
+<p>All CJK characters in the file(s) found at the specified path are substituted by their Unicode
+escape sequences (\u + 4 digit hex number or \U + 8 digit hex number where necessary).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cjk_escape(path, outdir = NULL, verbose = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>the path to a directory or a single file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outdir</code></td>
+<td>
+<p>the directory where the output files are written. Defaults to the subdirectory
+<code>out</code> of the directory in <code>path</code>. The output files have the same names as the originals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>whether to print a message for each output file.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>path</code> is a directory, the replacement is performed for all files at that location
+(subdirectories are ignored). If <code>outdir</code> is the same as <code>path</code>, the original files
+are overwritten without warning.
+</p>
+<p>If <code>path</code> is a file, the replacement is limited to this file. If <code>outdir</code> is the same
+as <code>dirname(path)</code>, the files are overwritten without warning.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No return value, called for side effects.
+</p>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>x5p4c</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Synthetic Data Set contains 5 Variables and 4 Clusters 
+</h2>
+
+<h3>Description</h3>
+
+<p>A synthetically created data frame consists of five continous variables forming four clusters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(x5p4c)</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 400 rows and 5 numeric variables:
+</p>
+
+<dl>
+<dt>p1</dt>
+<dd>
+<p>a continous variable with one mode</p>
+</dd>
+<dt>p2</dt>
+<dd>
+<p>a continous variable with four modes</p>
+</dd>
+<dt>p3</dt>
+<dd>
+<p>a continous variable with two modes</p>
+</dd>
+<dt>p4</dt>
+<dd>
+<p>a continous variable with three modes</p>
+</dd>
+<dt>p5</dt>
+<dd>
+<p>a continous variable with two modes</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>The data set <code>x5p4c</code> is recommended to use in comparing the performances of the internal validity indexes in cluster analysis.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(x5p4c)
+# descriptive statistics of the variables
+summary(x5p4c)
+# plot the histogram of the variable p2
+hist(x5p4c$p2, breaks=15)
+# scatter plots of the variable pairs
+pairs(x5p4c)
+</code></pre>
+
+
+</div>

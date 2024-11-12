@@ -1,0 +1,205 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit_generator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>(Deprecated) Fits the model on data yielded batch-by-batch by a generator.</h2>
+
+<h3>Description</h3>
+
+<p>The generator is run in parallel to the model, for efficiency. For instance,
+this allows you to do real-time data augmentation on images on CPU in
+parallel to training your model on GPU.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit_generator(
+  object,
+  generator,
+  steps_per_epoch,
+  epochs = 1,
+  verbose = getOption("keras.fit_verbose", default = 1),
+  callbacks = NULL,
+  view_metrics = getOption("keras.view_metrics", default = "auto"),
+  validation_data = NULL,
+  validation_steps = NULL,
+  class_weight = NULL,
+  max_queue_size = 10,
+  workers = 1,
+  initial_epoch = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>generator</code></td>
+<td>
+<p>A generator (e.g. like the one provided by
+<code>flow_images_from_directory()</code> or a custom R
+<a href="https://rstudio.github.io/reticulate/articles/calling_python.html#generators-1">generator function</a>).
+</p>
+<p>The output of the generator must be a list of one of these forms:
+</p>
+<div class="sourceCode"><pre> - (inputs, targets)
+ - (inputs, targets, sample_weights)
+</pre></div>
+<p>This list (a single output of the generator) makes a single batch.
+Therefore, all arrays in this list must have the same length (equal to
+the size of this batch). Different batches may have different sizes.
+For example, the last batch of the epoch is commonly smaller than the
+others, if the size of the dataset is not divisible by the batch size.
+The generator is expected to loop over its data indefinitely. An epoch
+finishes when <code>steps_per_epoch</code> batches have been seen by the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps_per_epoch</code></td>
+<td>
+<p>Total number of steps (batches of samples) to yield
+from <code>generator</code> before declaring one epoch finished and starting the next
+epoch. It should typically be equal to the number of samples if your
+dataset divided by the batch size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epochs</code></td>
+<td>
+<p>Integer. Number of epochs to train the model.
+An epoch is an iteration over the entire data provided, as defined by
+<code>steps_per_epoch</code>. Note that in conjunction with <code>initial_epoch</code>,
+<code>epochs</code> is to be understood as "final epoch". The model is not trained
+for a number of iterations given by <code>epochs</code>, but merely until the epoch
+of index <code>epochs</code> is reached.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Verbosity mode (0 = silent, 1 = progress bar, 2 = one line
+per epoch). Defaults to 1 in most contexts, 2 if in knitr render or running
+on a distributed training server.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>callbacks</code></td>
+<td>
+<p>List of callbacks to apply during training.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>view_metrics</code></td>
+<td>
+<p>View realtime plot of training metrics (by epoch). The
+default (<code>"auto"</code>) will display the plot when running within RStudio,
+<code>metrics</code> were specified during model <code>compile()</code>, <code>epochs &gt; 1</code> and
+<code>verbose &gt; 0</code>. Use the global <code>keras.view_metrics</code> option to establish a
+different default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>validation_data</code></td>
+<td>
+<p>this can be either:
+</p>
+
+<ul>
+<li>
+<p> a generator for the validation data
+</p>
+</li>
+<li>
+<p> a list (inputs, targets)
+</p>
+</li>
+<li>
+<p> a list (inputs, targets, sample_weights).
+on which to evaluate
+the loss and any model metrics at the end of each epoch.
+The model will not be trained on this data.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>validation_steps</code></td>
+<td>
+<p>Only relevant if <code>validation_data</code> is a generator.
+Total number of steps (batches of samples) to yield from <code>generator</code> before
+stopping at the end of every epoch. It should typically be equal to the number
+of samples of your validation dataset divided by the batch size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_weight</code></td>
+<td>
+<p>Optional named list mapping class indices (integer) to a
+weight (float) value, used for weighting the loss function (during
+training only). This can be useful to tell the model to "pay more
+attention" to samples from an under-represented class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_queue_size</code></td>
+<td>
+<p>Maximum size for the generator queue. If unspecified,
+<code>max_queue_size</code> will default to 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>workers</code></td>
+<td>
+<p>Maximum number of threads to use for parallel processing. Note that
+parallel processing will only be performed for native Keras generators (e.g.
+<code>flow_images_from_directory()</code>) as R based generators must run on the main thread.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initial_epoch</code></td>
+<td>
+<p>epoch at which to start training (useful for resuming a
+previous training run)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Training history object (invisibly)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>get_config()</code>,
+<code>get_layer()</code>,
+<code>keras_model()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_generator()</code>,
+<code>predict_on_batch()</code>,
+<code>predict_proba()</code>,
+<code>summary.keras.engine.training.Model()</code>,
+<code>train_on_batch()</code>
+</p>
+
+
+</div>

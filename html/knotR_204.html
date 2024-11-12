@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knots</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimized knots</h2>
+
+<h3>Description</h3>
+
+<p>A variety of knots with optimized forms</p>
+
+
+<h3>Details</h3>
+
+<p>A selection of knots that have been optimized for visual appearance.
+The list makes no claims for completeness; the examples are intended
+to show the abilities of the package.
+</p>
+<p>Knots with names like <code>k7_3</code> use the naming scheme of Rolfsen.
+</p>
+<p>Knots with names like <code>k11n157</code> follow the nomenclature of the
+Hoste-Thistlethwaite table;  ‘a’  means ‘alternating’
+and ‘n’ means ‘nonalternating’.
+</p>
+<p>Knot <code>k12a_614</code> is drawn from the “Table of Knot
+Invariants” by Livingstone and Cha.
+</p>
+<p>Knot <code>amphichiral15</code> is the unique amphichiral knot with crossing
+number 15, due to Hoste, Thistlethwaite, and Weeks.
+</p>
+<p>Knots <code>k12n_0411</code> and <code>k11a203</code> show that partial symmetry
+may be enforced.
+</p>
+<p>Knot <code>k8_18</code> is an exceptional knot.
+</p>
+<p>Knot <code>pretzel_p3_p5_p7_m3_m5</code> is drawn from a knot appearing in
+Bryant 2016.  The notation specifies the sense (‘p’ for plus
+and ‘m’ for minus) of the twists.
+</p>
+<p>Knot <code>T20</code> is a “remarkable 20-crossing tangle”; see
+references
+</p>
+<p>Knots <code>k12a1202</code> and <code>k12n838</code> are named following Lamm.
+</p>
+<p>As of version 1.0-4, the complete list of knots is:
+</p>
+<p><code>k10_1</code>, <code>k10_123</code>, <code>k10_47</code>, <code>k10_61</code>,
+<code>k12a1202</code>, <code>k12n838</code>, <code>k3_1</code>, <code>k3_1a</code>, <code>k4_1</code>,
+<code>k4_1a</code>, <code>k5_1</code>, <code>k5_2</code>, <code>k6_1</code>, <code>k6_2</code>,
+<code>k6_3</code>, <code>k7_1</code>, <code>k7_2</code>, <code>k7_3</code>, <code>k7_4</code>,
+<code>k7_5</code>, <code>k7_6</code>, <code>k7_7</code>, <code>k7_7a</code>, <code>k8_1</code>,
+<code>k8_10</code>, <code>k8_11</code>, <code>k8_12</code>, <code>k8_13</code>, <code>k8_14</code>,
+<code>k8_15</code>, <code>k8_16</code>, <code>k8_17</code>, <code>k8_18</code>, <code>k8_19</code>,
+<code>k8_19a</code>, <code>k8_19b</code>, <code>k8_2</code>, <code>k8_20</code>, <code>k8_21</code>,
+<code>k8_3</code>, <code>k8_3_90deg_crossing</code>,
+<code>k8_4</code>, <code>k8_4a</code>, <code>k8_5</code>, <code>k8_6</code>,
+<code>k8_7</code>, <code>k8_8</code>, <code>k8_9</code>, <code>k9_1</code>, <code>k9_10</code>,
+<code>k9_11</code>, <code>k9_12</code>, <code>k9_13</code>, <code>k9_14</code>, <code>k9_15</code>,
+<code>k9_16</code>, <code>k9_17</code>, <code>k9_18</code>, <code>k9_19</code>, <code>k9_2</code>,
+<code>k9_20</code>, <code>k9_21</code>, <code>k9_22</code>, <code>k9_23</code>, <code>k9_23a</code>,
+<code>k9_24</code>, <code>k9_25</code>, <code>k9_26</code>, <code>k9_27</code>, <code>k9_28</code>,
+<code>k9_29</code>, <code>k9_3</code>, <code>k9_30</code>, <code>k9_31</code>, <code>k9_32</code>,
+<code>k9_33</code>, <code>k9_34</code>, <code>k9_35</code>, <code>k9_36</code>, <code>k9_37</code>,
+<code>k9_38</code>, <code>k9_39</code>, <code>k9_4</code>, <code>k9_40</code>, <code>k9_41</code>,
+<code>k9_42</code>, <code>k9_43</code>, <code>k9_44</code>, <code>k9_45</code>, <code>k9_46</code>,
+<code>k9_47</code>, <code>k9_48</code>, <code>k9_49</code>, <code>k9_5</code>, <code>k9_6</code>,
+<code>k9_7</code>, <code>k9_8</code>, <code>k9_9</code>, <code>D16</code>, <code>T20</code>,
+<code>amphichiral15</code>, <code>celtic3</code>, <code>fiveloops</code>, <code>flower</code>,
+<code>fourloops</code>, <code>hexknot</code>, <code>hexknot2</code>, <code>hexknot3</code>,
+<code>k_infinity</code>, <code>k11a1</code>, <code>k11a179</code>, <code>k11a361</code>,
+<code>k11n157</code>, <code>k11n157_morenodes</code>, <code>k11n22</code>,
+<code>k12n_0242</code>, <code>k12n_0411</code>, <code>longthin</code>, <code>ochiai</code>,
+<code>ornamental20</code>, <code>perko_A</code>, <code>perko_B</code>,
+<code>pretzel_2_3_7</code>, <code>pretzel_7_3_7</code>,
+<code>pretzel_p3_p5_p7_m3_m5</code>, <code>reefknot</code>, <code>satellite</code>,
+<code>sum_31_41</code>, <code>three_figure_eights</code>,
+<code>trefoil_of_trefoils</code>, <code>triloop</code>, <code>unknot</code>
+</p>
+
+
+<h3>References</h3>
+
+
+<ul>
+<li>
+<p> K. A. Bryant, 2016. <em>Slice implies mutant-ribbon for odd,
+5-stranded pretzel knots</em>, <code>arXiv:1511.07009v2</code>
+</p>
+</li>
+<li>
+<p> S. Eliahou and J. Fromentin 2017. “A remarkable 20-crossing
+tangle”.  Arxiv, <a href="https://arxiv.org/abs/1610.05560v2">https://arxiv.org/abs/1610.05560v2</a>
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">knotplot(k3_1)
+## maybe str(k3_1) ; plot(k3_1) ...
+</code></pre>
+
+
+</div>

@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>update.krige</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Update Model</h2>
+
+<h3>Description</h3>
+
+<p>Update the Markov chain associated with the <code>metropolis.krige</code> model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'krige'
+update(object, n.iter, n.burnin = 0, combine = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An <code>krige</code> object from the <code>metropolis.krige</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.iter</code></td>
+<td>
+<p>Number of iterations for the update run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.burnin</code></td>
+<td>
+<p>The number of burnin iterations. Defaults to 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>combine</code></td>
+<td>
+<p>Logical value indicate whether to combine the update run with 
+original output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>update</code> methods. Not supported for 
+<code>krige</code> objects.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Since MCMC calculations typically need to run relatively long. This 
+function can continue the MCMC calculations by <code>metropolis.krige()</code>. 
+The parameters of the original model and the estimated results from the previous
+run are passed through the <code>krige</code> object. 
+</p>
+<p>As geospatial estimation can be computationally taxing, the users may want to 
+preserve more iterations of the posterior samples. The <code>combine</code> argument 
+can be used to indicate whether combine the updated run with previous results. 
+This includes both the posterior samples and acceptance rates.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>krige</code> that includes the output MCMC matrix
+of sampled values from the posterior distribution as well as the record of 
+function arguments, model frame, acceptance rates, and standing parameters.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize Data
+summary(ContrivedData)
+
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+#M&lt;-10000
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+   data = ContrivedData, n.iter = M, range.tol = 0.05)
+summary(contrived.run)
+
+# Update run
+contrived.run2 &lt;- update(contrived.run, n.iter = M, combine = TRUE)
+
+summary(contrived.run2)
+#plot(contrived.run2)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

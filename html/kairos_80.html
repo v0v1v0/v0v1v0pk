@@ -1,0 +1,190 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Detection of Selective Processes</h2>
+
+<h3>Description</h3>
+
+<p>Produces an abundance <em>vs</em> time diagram.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'IncrementTest,missing'
+plot(
+  x,
+  calendar = getOption("kairos.calendar"),
+  col.neutral = "#004488",
+  col.selection = "#BB5566",
+  col.roll = "grey",
+  flip = FALSE,
+  ncol = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  main = NULL,
+  sub = NULL,
+  ann = graphics::par("ann"),
+  axes = TRUE,
+  frame.plot = axes,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <code>IncrementTest</code> object to be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.neutral, col.selection, col.roll</code></td>
+<td>
+<p>A vector of colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flip</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the y-axis (ticks and numbering) be
+flipped from side 2 (left) to 4 (right) from series to series when <code>facet</code>
+is "<code>multiple</code>"?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncol</code></td>
+<td>
+<p>An <code>integer</code> specifying the number of columns to use when
+<code>facet</code> is "<code>multiple</code>". Defaults to 1 for up to 4 series, otherwise to 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab, ylab</code></td>
+<td>
+<p>A <code>character</code> vector giving the x and y axis labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>A <code>character</code> string giving a main title for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sub</code></td>
+<td>
+<p>A <code>character</code> string giving a subtitle for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ann</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the default annotation (title and x
+and y axis labels) appear on the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>A <code>logical</code> scalar: should axes be drawn on the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frame.plot</code></td>
+<td>
+<p>A <code>logical</code> scalar: should a box be drawn around the
+plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further parameters to be passed to <code>panel</code>
+(e.g. graphical parameters).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Results of the frequency increment test can be displayed on an abundance
+<em>vs</em> time diagram aid in the detection and quantification of selective
+processes in the archaeological record. If <code>roll</code> is <code>TRUE</code>, each time
+series is subsetted according to <code>window</code> to see if episodes of selection
+can be identified among decoration types that might not show overall
+selection. If so, shading highlights the data points where
+<code>fit()</code> identifies selection.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>plot()</code> is called it for its side-effects: it results in a graphic being
+displayed (invisibly returns <code>x</code>).
+</p>
+
+
+<h3>Note</h3>
+
+<p>Displaying FIT results on an abundance <em>vs</em> time diagram is adapted from Ben
+Marwick's <a href="https://github.com/benmarwick/signatselect/">original idea</a>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit()</code>
+</p>
+<p>Other plotting methods: 
+<code>plot_aoristic</code>,
+<code>plot_event</code>,
+<code>plot_mcd</code>,
+<code>plot_time()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Crema et al. 2016
+data("merzbach", package = "folio")
+
+## Keep only decoration types that have a maximum frequency of at least 50
+keep &lt;- apply(X = merzbach, MARGIN = 2, FUN = function(x) max(x) &gt;= 50)
+counts &lt;- merzbach[, keep]
+
+## Group by phase
+## We use the row names as time coordinates (roman numerals)
+dates &lt;- as.numeric(utils::as.roman(rownames(counts)))
+
+## Frequency Increment Test
+freq &lt;- fit(counts, dates, calendar = NULL)
+
+## Plot time vs abundance
+plot(freq, calendar = NULL, ncol = 3, xlab = "Phases")
+
+## Plot time vs abundance and highlight selection
+freq &lt;- fit(counts, dates, calendar = NULL, roll = TRUE, window = 5)
+plot(freq, calendar = NULL, ncol = 3, xlab = "Phases")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausuR,-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class klausuR</h2>
+
+<h3>Description</h3>
+
+<p>This class is used for objects that are returned by <code>klausur</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>results</code></dt>
+<dd>
+<p>A data.frame with global results</p>
+</dd>
+<dt><code>answ</code></dt>
+<dd>
+<p>A data.frame with all given answers</p>
+</dd>
+<dt><code>corr</code></dt>
+<dd>
+<p>A vector with the correct answers</p>
+</dd>
+<dt><code>wght</code></dt>
+<dd>
+<p>A vector with the weights of items</p>
+</dd>
+<dt><code>points</code></dt>
+<dd>
+<p>A data.frame with resulting points given for the answers</p>
+</dd>
+<dt><code>marks</code></dt>
+<dd>
+<p>A vector with assignments of marks to achieved score</p>
+</dd>
+<dt><code>marks.sum</code></dt>
+<dd>
+<p>A more convenient matrix with summary information on the defined marks</p>
+</dd>
+<dt><code>trfls</code></dt>
+<dd>
+<p>A data.frame of TRUE/FALSE values,
+whether a subject was able to solve an item or not</p>
+</dd>
+<dt><code>anon</code></dt>
+<dd>
+<p>A data.frame for anonymous feedback</p>
+</dd>
+<dt><code>mean</code></dt>
+<dd>
+<p>A table with mean, median and quartiles of the test results</p>
+</dd>
+<dt><code>sd</code></dt>
+<dd>
+<p>Standard deviation of the test results</p>
+</dd>
+<dt><code>cronbach</code></dt>
+<dd>
+<p>Internal consistency, a list of three elements "alpha",
+"ci" (confidence interval 95%) and "deleted" (alpha if item was removed)</p>
+</dd>
+<dt><code>item.analysis</code></dt>
+<dd>
+<p>A data.frame with information on difficulty,
+discriminant power, discriminant factor and selection index of all items.</p>
+</dd>
+<dt><code>distractor.analysis</code></dt>
+<dd>
+<p>A list with information on the selected answer alternatives for each individual item.</p>
+</dd>
+<dt><code>test</code></dt>
+<dd>
+<p>Currently an empty placeholder. Planned to hold the actual test items in future releases.</p>
+</dd>
+<dt><code>misc</code></dt>
+<dd>
+<p>Anything that was stored in the <code>misc</code> slot of the input data.</p>
+</dd>
+</dl>
+</div>

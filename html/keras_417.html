@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_unit_normalization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Unit normalization layer</h2>
+
+<h3>Description</h3>
+
+<p>Unit normalization layer
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_unit_normalization(object, axis = -1L, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>Integer or list. The axis or axes to normalize across. Typically
+this is the features axis or axes. The left-out axes are typically the
+batch axis or axes. Defaults to <code>-1</code>, the last dimension in
+the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.
+</p>
+<div class="sourceCode r"><pre>data &lt;- as_tensor(1:6, shape = c(2, 3), dtype = "float32")
+normalized_data &lt;- data %&gt;% layer_unit_normalization()
+for(row in 1:2)
+  normalized_data[row, ] %&gt;%
+  { sum(.^2) } %&gt;%
+  print()
+# tf.Tensor(0.9999999, shape=(), dtype=float32)
+# tf.Tensor(1.0, shape=(), dtype=float32)
+</pre></div>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Normalize a batch of inputs so that each input in the batch has a L2 norm
+equal to 1 (across the axes specified in <code>axis</code>).
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/UnitNormalization">https://www.tensorflow.org/api_docs/python/tf/keras/layers/UnitNormalization</a>
+</p>
+</li></ul>
+</div>

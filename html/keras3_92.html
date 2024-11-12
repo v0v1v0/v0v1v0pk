@@ -1,0 +1,239 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_tensorboard</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Enable visualizations for TensorBoard.</h2>
+
+<h3>Description</h3>
+
+<p>TensorBoard is a visualization tool provided with TensorFlow. A TensorFlow
+installation is required to use this callback.
+</p>
+<p>This callback logs events for TensorBoard, including:
+</p>
+
+<ul>
+<li>
+<p> Metrics summary plots
+</p>
+</li>
+<li>
+<p> Training graph visualization
+</p>
+</li>
+<li>
+<p> Weight histograms
+</p>
+</li>
+<li>
+<p> Sampled profiling
+</p>
+</li>
+</ul>
+<p>When used in <code>model |&gt; evaluate()</code> or regular validation
+in addition to epoch summaries, there will be a summary that records
+evaluation metrics vs <code>model$optimizer$iterations</code> written. The metric names
+will be prepended with <code>evaluation</code>, with <code>model$optimizer$iterations</code> being
+the step in the visualized TensorBoard.
+</p>
+<p>If you have installed TensorFlow with <code>pip</code> or <code>reticulate::py_install()</code>, you should be able
+to launch TensorBoard from the command line:
+</p>
+<div class="sourceCode"><pre>tensorboard --logdir=path_to_your_logs
+</pre></div>
+<p>or from R with <code>tensorflow::tensorboard()</code>.
+</p>
+<p>You can find more information about TensorBoard
+<a href="https://www.tensorflow.org/get_started/summaries_and_tensorboard">here</a>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_tensorboard(
+  log_dir = "logs",
+  histogram_freq = 0L,
+  write_graph = TRUE,
+  write_images = FALSE,
+  write_steps_per_second = FALSE,
+  update_freq = "epoch",
+  profile_batch = 0L,
+  embeddings_freq = 0L,
+  embeddings_metadata = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>log_dir</code></td>
+<td>
+<p>the path of the directory where to save the log files to be
+parsed by TensorBoard. e.g.,
+<code>log_dir = file.path(working_dir, 'logs')</code>.
+This directory should not be reused by any other callbacks.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>histogram_freq</code></td>
+<td>
+<p>frequency (in epochs) at which to compute
+weight histograms for the layers of the model. If set to 0,
+histograms won't be computed. Validation data (or split) must be
+specified for histogram visualizations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write_graph</code></td>
+<td>
+<p>(Not supported at this time)
+Whether to visualize the graph in TensorBoard.
+Note that the log file can become quite large
+when <code>write_graph</code> is set to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write_images</code></td>
+<td>
+<p>whether to write model weights to visualize as image in
+TensorBoard.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write_steps_per_second</code></td>
+<td>
+<p>whether to log the training steps per second
+into TensorBoard. This supports both epoch and batch frequency
+logging.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>update_freq</code></td>
+<td>
+<p><code>"batch"</code> or <code>"epoch"</code> or integer. When using <code>"epoch"</code>,
+writes the losses and metrics to TensorBoard after every epoch.
+If using an integer, let's say <code>1000</code>, all metrics and losses
+(including custom ones added by <code>Model.compile</code>) will be logged to
+TensorBoard every 1000 batches. <code>"batch"</code> is a synonym for 1,
+meaning that they will be written every batch.
+Note however that writing too frequently to TensorBoard can slow
+down your training, especially when used with distribution
+strategies as it will incur additional synchronization overhead.
+Batch-level summary writing is also available via <code>train_step</code>
+override. Please see
+<a href="https://www.tensorflow.org/tensorboard/scalars_and_keras#batch-level_logging">TensorBoard Scalars tutorial</a>  # noqa: E501
+for more details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile_batch</code></td>
+<td>
+<p>(Not supported at this time)
+Profile the batch(es) to sample compute characteristics.
+profile_batch must be a non-negative integer or a tuple of integers.
+A pair of positive integers signify a range of batches to profile.
+By default, profiling is disabled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>embeddings_freq</code></td>
+<td>
+<p>frequency (in epochs) at which embedding layers will be
+visualized. If set to 0, embeddings won't be visualized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>embeddings_metadata</code></td>
+<td>
+<p>Named list which maps embedding layer names to the
+filename of a file in which to save metadata for the embedding layer.
+In case the same metadata file is to be
+used for all embedding layers, a single filename can be passed.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>Callback</code> instance that can be passed to <code>fit.keras.src.models.model.Model()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>tensorboard_callback &lt;- callback_tensorboard(log_dir = "./logs")
+model %&gt;% fit(x_train, y_train, epochs = 2, callbacks = list(tensorboard_callback))
+# Then run the tensorboard command to view the visualizations.
+</pre></div>
+<p>Custom batch-level summaries in a subclassed Model:
+</p>
+<div class="sourceCode r"><pre>MyModel &lt;- new_model_class("MyModel",
+  initialize = function() {
+    self$dense &lt;- layer_dense(units = 10)
+  },
+  call = function(x) {
+    outputs &lt;- x |&gt; self$dense()
+    tf$summary$histogram('outputs', outputs)
+    outputs
+  }
+)
+
+model &lt;- MyModel()
+model |&gt; compile(optimizer = 'sgd', loss = 'mse')
+
+# Make sure to set `update_freq = N` to log a batch-level summary every N
+# batches. In addition to any `tf$summary` contained in `model$call()`,
+# metrics added in `model |&gt;compile` will be logged every N batches.
+tb_callback &lt;- callback_tensorboard(log_dir = './logs', update_freq = 1)
+model |&gt; fit(x_train, y_train, callbacks = list(tb_callback))
+</pre></div>
+<p>Custom batch-level summaries in a Functional API Model:
+</p>
+<div class="sourceCode r"><pre>my_summary &lt;- function(x) {
+  tf$summary$histogram('x', x)
+  x
+}
+
+inputs &lt;- layer_input(10)
+outputs &lt;- inputs |&gt;
+  layer_dense(10) |&gt;
+  layer_lambda(my_summary)
+
+model &lt;- keras_model(inputs, outputs)
+model |&gt; compile(optimizer = 'sgd', loss = 'mse')
+
+# Make sure to set `update_freq = N` to log a batch-level summary every N
+# batches. In addition to any `tf.summary` contained in `Model.call`,
+# metrics added in `Model.compile` will be logged every N batches.
+tb_callback &lt;- callback_tensorboard(log_dir = './logs', update_freq = 1)
+model |&gt; fit(x_train, y_train, callbacks = list(tb_callback))
+</pre></div>
+<p>Profiling:
+</p>
+<div class="sourceCode r"><pre># Profile a single batch, e.g. the 5th batch.
+tensorboard_callback &lt;- callback_tensorboard(
+  log_dir = './logs', profile_batch = 5)
+model |&gt; fit(x_train, y_train, epochs = 2,
+             callbacks = list(tensorboard_callback))
+
+# Profile a range of batches, e.g. from 10 to 20.
+tensorboard_callback &lt;- callback_tensorboard(
+  log_dir = './logs', profile_batch = c(10, 20))
+model |&gt; fit(x_train, y_train, epochs = 2,
+             callbacks = list(tensorboard_callback))
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/callbacks/tensorboard#tensorboard-class">https://keras.io/api/callbacks/tensorboard#tensorboard-class</a>
+</p>
+</li></ul>
+<p>Other callbacks: <br><code>Callback()</code> <br><code>callback_backup_and_restore()</code> <br><code>callback_csv_logger()</code> <br><code>callback_early_stopping()</code> <br><code>callback_lambda()</code> <br><code>callback_learning_rate_scheduler()</code> <br><code>callback_model_checkpoint()</code> <br><code>callback_reduce_lr_on_plateau()</code> <br><code>callback_remote_monitor()</code> <br><code>callback_swap_ema_weights()</code> <br><code>callback_terminate_on_nan()</code> <br></p>
+
+
+</div>

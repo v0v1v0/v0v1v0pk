@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rstandard.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Standardized residuals for Kernel Semi parametric Model Fits</h2>
+
+<h3>Description</h3>
+
+<p>computes standardized residuals for an object of class "kspm".
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+rstandard(model, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>an model of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>furter arguments passed to or from other methods (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Standardized residuals <code class="reqn">t_i</code> are obtained by <code class="reqn">t_i = \frac{e_i}{\hat{\sigma} \sqrt{1 - h_{ii}}}</code> where <code class="reqn">e_i</code> is the residual, <code class="reqn">\hat{\sigma}</code> is the estimated standard deviation of the errors and <code class="reqn">h_{ii}</code> is the leverage of subject i, i.e. the i th diagonal element of the Hat matrix.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector containing the standardized residuals.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm for fitting model, residuals.kspm, cooks.distance.kspm, plot.kspm.
+</p>
+
+
+</div>

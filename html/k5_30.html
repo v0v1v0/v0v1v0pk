@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>load_my_packages</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save and load packages from file</h2>
+
+<h3>Description</h3>
+
+<p>Save and load packages from file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">load_my_packages(path = NULL)
+
+save_my_packages(x = NULL, path = tempfile())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>The path to a text file containing one package per line. If
+<code>NULL</code> (default), then the default list is read from <code>k5/inst/PACKAGES</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A character vector of package names to save. If <code>NULL</code> (default),
+use all currently attached packages.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The list of packages, invisibly.
+</p>
+
+
+</div>

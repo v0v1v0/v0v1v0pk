@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>degelder</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Powder pattern data by Rene de Gelder</h2>
+
+<h3>Description</h3>
+
+<p>X-ray powder patterns of 131 crystallographic structures, contributed
+by Rene de Gelder.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(degelder)</code></pre>
+
+
+<h3>Format</h3>
+
+<p>This yields a list with three components: the first component,
+'"patterns"', is a matrix of 131 rows and 441 variables, containing
+the powder patterns; the second component is "thetas", the 2theta values
+at which intensities have been measured. The final component,
+'"properties"', gives information on the crystallographic properties
+of the structures.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Rene de Gelder, Institute of Molecules and Materials, Radboud
+University Nijmegen.  
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(degelder)
+mydata &lt;- list(patterns = degelder$patterns,
+               CellVol = log(degelder$properties[,"cell.vol"]))
+
+## custom distance function
+require(Rcpp)
+sourceCpp(system.file("Distances", "wcc.cpp", package = "kohonen"))
+set.seed(7)
+powsom &lt;- supersom(data = mydata, grid = somgrid(6, 4, "hexagonal"),
+                   dist.fcts = c("WCCd", "sumofsquares"),
+                   keep.data = TRUE)
+summary(powsom)		   
+
+## End(Not run)
+</code></pre>
+
+
+</div>

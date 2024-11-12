@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>burnin</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Discard Burn-in Period of Kriging Model</h2>
+
+<h3>Description</h3>
+
+<p>Discard burn-in period of a estimated model from <code>metropolis.krige</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">burnin(object, n.burnin)
+
+## S3 method for class 'krige'
+burnin(object, n.burnin = object$n.iter/2)
+
+## S3 method for class 'matrix'
+burnin(object, n.burnin = nrow(object)/2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An <code>krige</code> object from the <code>metropolis.krige</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.burnin</code></td>
+<td>
+<p>The number of burnin iterations. Defaults to half of the iterations.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function discard the burn-in period from the results of <code>metropolis.krige</code>.
+It is generally used for discarding burn-in for <code>krige</code> object that keeps 
+all the iterations.
+</p>
+
+
+</div>

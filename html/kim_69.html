@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>log_odds_ratio_to_d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert log odds ratio to Cohen's d</h2>
+
+<h3>Description</h3>
+
+<p>Convert log odds ratio to Cohen'd (standardized mean difference),
+as illustrated in Borenstein et al. (2009, p. 47, ISBN: 978-0-470-05724-7)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">log_odds_ratio_to_d(log_odds_ratio = NULL, unname = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>log_odds_ratio</code></td>
+<td>
+<p>log odds ratio (the input can be a vector of values),
+which will be converted to Cohen's d</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unname</code></td>
+<td>
+<p>logical. Should the names from the input be removed?
+(default = TRUE)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+log_odds_ratio_to_d(log(1))
+log_odds_ratio_to_d(log(2))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>icu.pneu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hospital acquired penumonia in ICU</h2>
+
+<h3>Description</h3>
+
+<p>This data set is a random sample drawn from the SIR-3 study that aimed
+at analysing the effect of nosocomial infections on the length of ICU
+stay. Patients were included in the study if they had stayed at least
+1 day in the unit. The sample includes information to assess the
+effect of nosocomial pneumonia on the length of stay. The endpoint is
+either discharge alive from the ICU or dead in the unit. These data
+are censoring complete as the censoring time is known for all patients.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(icu.pneu)</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 1421 observations on the following 8 variables.
+</p>
+
+<dl>
+<dt><code>id</code></dt>
+<dd>
+<p>Individual patient id.</p>
+</dd>
+<dt><code>start</code></dt>
+<dd>
+<p>Start of the observation time.</p>
+</dd>
+<dt><code>stop</code></dt>
+<dd>
+<p>Failure time.</p>
+</dd>
+<dt><code>status</code></dt>
+<dd>
+<p>Censoring status. 0 if the observation is
+censored, 1 otherwise.</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>Event type. 2 is death in
+ICU, 3 is discharge alive</p>
+</dd>
+<dt><code>pneu</code></dt>
+<dd>
+<p>Nosocomial pneumonia indicator.</p>
+</dd>
+<dt><code>adm.cens.exit</code></dt>
+<dd>
+<p>Exit times for patients discharged alive
+are replaced by their administrative censoring times.</p>
+</dd>
+<dt><code>age</code></dt>
+<dd>
+<p>Age at inclusion</p>
+</dd>
+<dt><code>sex</code></dt>
+<dd>
+<p>Sex. <code>F</code> for female and <code>M</code> for male</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Beyersmann, J., Gastmeier, P., Grundmann, H.,
+Baerwolff, S., Geffers, C., Behnke, M.,
+Rueden, H., and Schumacher, M. Use of multistate
+models to assess prolongation of intensive care unit stay due to
+nosocomial infection. <em>Infection Control and Hospital
+Epidemiology</em>, 27:493-499, 2006.
+</p>
+
+
+<h3>References</h3>
+
+<p>Beyersmann, J. and Schumacher, M. (2008). Time-dependent covariates in
+the proportional hazards model for competing
+risks. <em>Biostatistics</em>, 9:765–776.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(icu.pneu)
+</code></pre>
+
+
+</div>

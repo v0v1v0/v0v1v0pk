@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.SSModel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Diagnostic Plots of State Space Models</h2>
+
+<h3>Description</h3>
+
+<p>Diagnostic plots based on standardized residuals for objects of class <code>SSModel</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'SSModel'
+plot(x, nsim = 0, zerotol = 0, expected = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Object of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>The number of independent samples used in importance sampling.
+Only used for non-Gaussian model. Default is 0, which computes the
+approximating Gaussian model by <code>approxSSM</code> and performs the
+usual Gaussian filtering/smoothing so that the smoothed state estimates
+equals to the conditional mode of <code class="reqn">p(\alpha_t|y)</code>.
+In case of <code>nsim = 0</code>, the mean estimates and their variances are computed using
+the Delta method (ignoring the covariance terms).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zerotol</code></td>
+<td>
+<p>Tolerance parameter for positivity checking in standardization. Default is zero. 
+The values of D &lt;= zerotol * max(D, 0) are deemed to zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expected</code></td>
+<td>
+<p>Logical value defining the approximation of H_t in case of Gamma 
+and negative binomial distribution. Default is <code>FALSE</code> which matches the 
+algorithm of Durbin &amp; Koopman (1997), whereas <code>TRUE</code> uses the expected value
+of observations in the equations, leading to results which match with <code>glm</code> (where applicable).
+The latter case was the default behaviour of KFAS before version 1.3.8.
+Essentially this is the difference between observed and expected information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">modelNile &lt;- SSModel(Nile ~ SSMtrend(1, Q = list(matrix(NA))), H = matrix(NA))
+modelNile &lt;- fitSSM(inits = c(log(var(Nile)),log(var(Nile))), model = modelNile,
+ method = "BFGS")$model
+
+if (interactive()) {
+  plot(modelNile)
+}
+</code></pre>
+
+
+</div>

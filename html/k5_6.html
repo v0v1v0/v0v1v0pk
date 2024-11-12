@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>count_diff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Count set difference</h2>
+
+<h3>Description</h3>
+
+<p>Find the length of the set of difference between <code>x</code> and <code>y</code> vectors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">count_diff(x, y, ignore.case = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector to check.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A vector to compare against.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore.case</code></td>
+<td>
+<p>logical; if <code>FALSE</code>, the pattern matching is case
+sensitive and if <code>TRUE</code>, case is ignored during matching.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>sum(x %out% y)</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>The number of <em>unique</em> values of <code>x</code> not in <code>y</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other counting wrappers: 
+<code>count_in()</code>,
+<code>count_na()</code>,
+<code>count_out()</code>,
+<code>na_in()</code>,
+<code>na_out()</code>,
+<code>na_rep()</code>,
+<code>prop_distinct()</code>,
+<code>prop_in()</code>,
+<code>prop_na()</code>,
+<code>prop_out()</code>,
+<code>what_in()</code>,
+<code>what_out()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># only unique values are checked
+count_diff(c("VT", "NH", "ZZ", "ZZ", "ME"), state.abb)
+</code></pre>
+
+
+</div>

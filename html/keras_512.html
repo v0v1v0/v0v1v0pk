@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>new_learning_rate_schedule_class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a new learning rate schedule type</h2>
+
+<h3>Description</h3>
+
+<p>Create a new learning rate schedule type
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">new_learning_rate_schedule_class(
+  classname,
+  ...,
+  initialize = NULL,
+  call,
+  get_config = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>methods and properties of the schedule class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize, get_config</code></td>
+<td>
+<p>Additional recommended methods to implement.
+</p>
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/schedules/LearningRateSchedule">https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/schedules/LearningRateSchedule</a>
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>function which takes a step argument (scalar integer tensor, the
+current training step count, and returns the new learning rate). For
+tracking additional state, objects <code>self</code> and <code>private</code> are automatically
+injected into the scope of the function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>LearningRateSchedule</code> class generator.
+</p>
+
+
+</div>

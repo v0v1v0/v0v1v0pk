@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausuR.answ,-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class klausuR.answ</h2>
+
+<h3>Description</h3>
+
+<p>This class is used for objects needed by <code>klausur</code>.
+They contain all relevant data to calculate test results.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>corr</code></dt>
+<dd>
+<p>Contains three elements:
+</p>
+
+<ul>
+<li>
+<p><code>corr</code> The correct answers to each item.
+</p>
+</li>
+<li>
+<p><code>corr.key</code> An optional data.frame or matrix for test with multiple test forms,
+indicating the positions
+of all items (columns) in all forms (rows). Must have a column called <code>Form</code> (like in <code>id</code>),
+and the
+item columns must follow the usual name scheme <code>Item###</code>. <code>NULL</code> if not needed.
+</p>
+</li>
+<li>
+<p><code>wrong</code> For pick-n scoring, this is the inverse of <code>corr</code>, i.e.,
+all wrong item alternatives.
+</p>
+</li>
+</ul>
+</dd>
+<dt><code>id</code></dt>
+<dd>
+<p>Contains the columns <code>No</code>, <code>Name</code>, <code>FirstName</code>,
+<code>MatrNo</code>, <code>Pseudonym</code> and <code>Form</code>.</p>
+</dd>
+<dt><code>items</code></dt>
+<dd>
+<p>Contains a copy of <code>id$MatrNo</code> and all answers to the test items (one item per column).</p>
+</dd>
+<dt><code>score</code></dt>
+<dd>
+<p>Contains three elements:
+</p>
+
+<ul>
+<li>
+<p><code>marks</code> The assigned marks for achieved points (<code>NULL</code> if none)
+</p>
+</li>
+<li>
+<p><code>wght</code> Weights for each item (<code>NULL</code> if none)
+</p>
+</li>
+<li>
+<p><code>maxp</code> Optional,
+to force a certain maximum points value (<code>NULL</code> if none)
+</p>
+</li>
+</ul>
+</dd>
+<dt><code>test</code></dt>
+<dd>
+<p>Currently an empty placeholder. Planned to hold the actual test items in future releases.</p>
+</dd>
+<dt><code>misc</code></dt>
+<dd>
+<p>Any additional data you'd like to be stored along with <code>id</code> and <code>items</code>,
+e.g. table data from/for other software products. Won't be used for anything.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>The slots , <code>id</code>, <code>items</code> and <code>misc</code>,
+must have the same number of rows and contain copies of the colum <code>MatrNo</code>
+for identification.
+</p>
+
+
+</div>

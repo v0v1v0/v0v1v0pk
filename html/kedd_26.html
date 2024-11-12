@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.dkde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot for Kernel Density Derivative Estimate
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>plot.dkde</code> function loops through calls to 
+the <code>dkde</code> function. Plot for kernel density 
+derivative estimate for 1-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'dkde'
+plot(x, fx = NULL, ...)
+## S3 method for class 'dkde'
+lines(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>dkde</code> (output from <code>dkde</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fx</code></td>
+<td>
+<p>add to graphics the true density derivative (class :<code>function</code>), 
+to compare it by the density derivative to estimate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphics parameters, see <code>par</code> in package "graphics".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The 1-d plot is a standard plot of a 1-d curve. If
+<code>!is.null(fx)</code> then a true density derivative is added. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>Plot of 1-d kernel density derivative estimates are sent to graphics window.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dkde</code>, <code>plot.density</code> in package "stats" if <code>deriv.order = 0</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">plot(dkde(kurtotic,deriv.order=0,kernel="gaussian"),sub="")
+lines(dkde(kurtotic,deriv.order=0,kernel="biweight"),col="red")
+</code></pre>
+
+
+</div>

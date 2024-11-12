@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>obj2kvh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Writing/Adding an R Object to KVH File.</h2>
+
+<h3>Description</h3>
+
+<p>Formats an object before writing it in kvh file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">obj2kvh(obj, objname = NULL, conct = stdout(), indent = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>an R object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objname</code></td>
+<td>
+<p>character object name to write in kvh file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conct</code></td>
+<td>
+<p>connection opened for writing</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indent</code></td>
+<td>
+<p>is tab offset for object name</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Scalar, vector, matrix and list are pre-processed.
+Other objects are written as an output string of toString() function
+To add a content to existent file use "a" as open mode
+<code>fcn=file("m.kvh", "a")</code>
+<code>obj2kvh()</code> can be used along the code advancing in the calculations.
+Writing in a subfield of an already started key requires use of
+appropriate indent value. The file is started with indent=0 and
+every sub-field increments the indent by 1.
+If objname is NULL and obj is not a scalar value, the content of obj
+is written in kvh file without additional indent.
+</p>
+
+
+<h3>Value</h3>
+
+<p>None
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">m=matrix(1:6,2,3);
+fcn=file("m.kvh", "w");
+obj2kvh(m, "m", fcn);
+close(fcn);
+# clean
+unlink("m.kvh")
+
+</code></pre>
+
+
+</div>

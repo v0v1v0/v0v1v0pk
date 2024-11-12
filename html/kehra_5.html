@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pointInspection</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get data from ECMWF ERA_Interim</h2>
+
+<h3>Description</h3>
+
+<p>Get data from ECMWF ERA_Interim
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pointInspection(years, points, var, prefix = "", path = "~",
+  parallel = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>years</code></td>
+<td>
+<p>years to retrieve data for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>points</code></td>
+<td>
+<p>are lat/lon coordinates of points (e.g. stations)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+<p>variable to retrieve</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix</code></td>
+<td>
+<p>string starting netcdf file name</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>folder path where netcdf files are stored</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>Bolean, if TRUE parallel jobs are allowed</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Possible variables names are: "t2m" (2m temperature, in K), "u10" (10 metres wind U component, in m/s), "v10" (10 metres wind V component, in m/s), "tp" (total precipitation, in m), "blh" (boundary layer height, in m), "ssr" (surface net solar radiation, in W/m2s).
+</p>
+
+
+<h3>Value</h3>
+
+<p>time series variable
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># pointInspection(years = 1981:2014, points, var = "t2m")
+
+</code></pre>
+
+
+</div>

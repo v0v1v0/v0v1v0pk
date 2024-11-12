@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.svmlight</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Interface to SVMlight</h2>
+
+<h3>Description</h3>
+
+<p>Predicts new observations using the SVM learned by 
+the <code>svmlight</code>-function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'svmlight'
+predict(object, newdata, scal = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object of class <code>svmlight</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>Data frame (or matrix) of cases to be predicted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scal</code></td>
+<td>
+<p>Logical, whether to scale membership values via <code>e.scal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>...</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If a classification is learned (<code>type="C"</code>) in <code>svmlight</code> a 
+list with elements ‘<code>class</code>’ and ‘<code>posterior</code>’ (scaled, if <code>scal = TRUE</code>).
+</p>
+<p>If a Regression is learned (<code>type="R"</code>) in <code>svmlight</code> the predicted values.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>svmlight</code>, <code>svm</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(iris)
+x &lt;- svmlight(Species ~ ., data = iris)
+predict(x, iris)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

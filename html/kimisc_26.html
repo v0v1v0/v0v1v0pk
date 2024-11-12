@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sample.rows-deprecated</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Random Samples and Permutations for Data Frames</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a sample of the specified size
+from the rows of <code>x</code> using either with or without replacement.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sample.rows(x, size, replace = FALSE, prob = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>A non-negative integer giving the number of items to choose.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>Should sampling be with replacement?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>A vector of probability weights for obtaining the rows of the
+data frame being sampled.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function internally calls <code>sample.int()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame of the same shape as <code>x</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other deprecated functions: <code>coalesce.na-deprecated</code>,
+<code>df_to_list-deprecated</code>,
+<code>hms.to.seconds-deprecated</code>,
+<code>kimisc-deprecated</code>,
+<code>list_to_df-deprecated</code>,
+<code>nc-deprecated</code>,
+<code>nlist-deprecated</code>,
+<code>ofactor-deprecated</code>,
+<code>seconds.to.hms-deprecated</code>,
+<code>thisfile-deprecated</code>,
+<code>tll-deprecated</code>,
+<code>vswitch-deprecated</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(42)
+sample.rows(data.frame(a=c(1,2,3), b=c(4,5,6), row.names=c('a', 'b', 'c')), 10, replace=TRUE)
+</code></pre>
+
+
+</div>

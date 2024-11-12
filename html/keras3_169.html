@@ -1,0 +1,296 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>image_dataset_from_directory</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generates a <code>tf.data.Dataset</code> from image files in a directory.</h2>
+
+<h3>Description</h3>
+
+<p>If your directory structure is:
+</p>
+<div class="sourceCode"><pre>main_directory/
+...class_a/
+......a_image_1.jpg
+......a_image_2.jpg
+...class_b/
+......b_image_1.jpg
+......b_image_2.jpg
+</pre></div>
+<p>Then calling <code>image_dataset_from_directory(main_directory, labels = 'inferred')</code> will return a <code>tf.data.Dataset</code> that yields batches of
+images from the subdirectories <code>class_a</code> and <code>class_b</code>, together with labels
+0 and 1 (0 corresponding to <code>class_a</code> and 1 corresponding to <code>class_b</code>).
+</p>
+<p>Supported image formats: <code>.jpeg</code>, <code>.jpg</code>, <code>.png</code>, <code>.bmp</code>, <code>.gif</code>.
+Animated gifs are truncated to the first frame.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">image_dataset_from_directory(
+  directory,
+  labels = "inferred",
+  label_mode = "int",
+  class_names = NULL,
+  color_mode = "rgb",
+  batch_size = 32L,
+  image_size = c(256L, 256L),
+  shuffle = TRUE,
+  seed = NULL,
+  validation_split = NULL,
+  subset = NULL,
+  interpolation = "bilinear",
+  follow_links = FALSE,
+  crop_to_aspect_ratio = FALSE,
+  pad_to_aspect_ratio = FALSE,
+  data_format = NULL,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>directory</code></td>
+<td>
+<p>Directory where the data is located.
+If <code>labels</code> is <code>"inferred"</code>, it should contain
+subdirectories, each containing images for a class.
+Otherwise, the directory structure is ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>Either <code>"inferred"</code>
+(labels are generated from the directory structure),
+<code>NULL</code> (no labels),
+or a list/tuple of integer labels of the same size as the number of
+image files found in the directory. Labels should be sorted
+according to the alphanumeric order of the image file paths
+(obtained via <code>os.walk(directory)</code> in Python).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_mode</code></td>
+<td>
+<p>String describing the encoding of <code>labels</code>. Options are:
+</p>
+
+<ul>
+<li> <p><code>"int"</code>: means that the labels are encoded as integers
+(e.g. for <code>sparse_categorical_crossentropy</code> loss).
+</p>
+</li>
+<li> <p><code>"categorical"</code> means that the labels are
+encoded as a categorical vector
+(e.g. for <code>categorical_crossentropy</code> loss).
+</p>
+</li>
+<li> <p><code>"binary"</code> means that the labels (there can be only 2)
+are encoded as <code>float32</code> scalars with values 0 or 1
+(e.g. for <code>binary_crossentropy</code>).
+</p>
+</li>
+<li> <p><code>NULL</code> (no labels).
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_names</code></td>
+<td>
+<p>Only valid if <code>labels</code> is <code>"inferred"</code>.
+This is the explicit list of class names
+(must match names of subdirectories). Used to control the order
+of the classes (otherwise alphanumerical order is used).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color_mode</code></td>
+<td>
+<p>One of <code>"grayscale"</code>, <code>"rgb"</code>, <code>"rgba"</code>.
+Whether the images will be converted to
+have 1, 3, or 4 channels. Defaults to <code>"rgb"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Size of the batches of data. Defaults to 32.
+If <code>NULL</code>, the data will not be batched
+(the dataset will yield individual samples).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>image_size</code></td>
+<td>
+<p>Size to resize images to after they are read from disk,
+specified as <code style="white-space: pre;">⁠(height, width)⁠</code>.
+Since the pipeline processes batches of images that must all have
+the same size, this must be provided. Defaults to <code style="white-space: pre;">⁠(256, 256)⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shuffle</code></td>
+<td>
+<p>Whether to shuffle the data. Defaults to <code>TRUE</code>.
+If set to <code>FALSE</code>, sorts the data in alphanumeric order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Optional random seed for shuffling and transformations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>validation_split</code></td>
+<td>
+<p>Optional float between 0 and 1,
+fraction of data to reserve for validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>Subset of the data to return.
+One of <code>"training"</code>, <code>"validation"</code>, or <code>"both"</code>.
+Only used if <code>validation_split</code> is set.
+When <code>subset = "both"</code>, the utility returns a tuple of two datasets
+(the training and validation datasets respectively).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interpolation</code></td>
+<td>
+<p>String, the interpolation method used when
+resizing images.
+Supports <code>"bilinear"</code>, <code>"nearest"</code>, <code>"bicubic"</code>, <code>"area"</code>,
+<code>"lanczos3"</code>, <code>"lanczos5"</code>, <code>"gaussian"</code>, <code>"mitchellcubic"</code>.
+Defaults to <code>"bilinear"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>follow_links</code></td>
+<td>
+<p>Whether to visit subdirectories pointed to by symlinks.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crop_to_aspect_ratio</code></td>
+<td>
+<p>If <code>TRUE</code>, resize the images without aspect
+ratio distortion. When the original aspect ratio differs from the
+target aspect ratio, the output image will be cropped so as to
+return the largest possible window in the image
+(of size <code>image_size</code>) that matches the target aspect ratio. By
+default (<code>crop_to_aspect_ratio = FALSE</code>), aspect ratio may not be
+preserved.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pad_to_aspect_ratio</code></td>
+<td>
+<p>If <code>TRUE</code>, resize the images without aspect
+ratio distortion. When the original aspect ratio differs from the
+target aspect ratio, the output image will be padded so as to
+return the largest possible window in the image
+(of size <code>image_size</code>) that matches the target aspect ratio. By
+default (<code>pad_to_aspect_ratio=FALSE</code>), aspect ratio may not be
+preserved.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>If <code>NULL</code> uses <code>config_image_data_format()</code>
+otherwise either <code>'channel_last'</code> or <code>'channel_first'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Whether to display number information on classes and
+number of files found. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>tf.data.Dataset</code> object.
+</p>
+
+<ul>
+<li>
+<p> If <code>label_mode</code> is <code>NULL</code>, it yields <code>float32</code> tensors of shape
+<code style="white-space: pre;">⁠(batch_size, image_size[1], image_size[2], num_channels)⁠</code>,
+encoding images (see below for rules regarding <code>num_channels</code>).
+</p>
+</li>
+<li>
+<p> Otherwise, it yields a tuple <code style="white-space: pre;">⁠(images, labels)⁠</code>, where <code>images</code> has
+shape <code style="white-space: pre;">⁠(batch_size, image_size[1], image_size[2], num_channels)⁠</code>,
+and <code>labels</code> follows the format described below.
+</p>
+</li>
+</ul>
+<p>Rules regarding labels format:
+</p>
+
+<ul>
+<li>
+<p> if <code>label_mode</code> is <code>"int"</code>, the labels are an <code>int32</code> tensor of shape
+<code style="white-space: pre;">⁠(batch_size,)⁠</code>.
+</p>
+</li>
+<li>
+<p> if <code>label_mode</code> is <code>"binary"</code>, the labels are a <code>float32</code> tensor of
+1s and 0s of shape <code style="white-space: pre;">⁠(batch_size, 1)⁠</code>.
+</p>
+</li>
+<li>
+<p> if <code>label_mode</code> is <code>"categorical"</code>, the labels are a <code>float32</code> tensor
+of shape <code style="white-space: pre;">⁠(batch_size, num_classes)⁠</code>, representing a one-hot
+encoding of the class index.
+</p>
+</li>
+</ul>
+<p>Rules regarding number of channels in the yielded images:
+</p>
+
+<ul>
+<li>
+<p> if <code>color_mode</code> is <code>"grayscale"</code>,
+there's 1 channel in the image tensors.
+</p>
+</li>
+<li>
+<p> if <code>color_mode</code> is <code>"rgb"</code>,
+there are 3 channels in the image tensors.
+</p>
+</li>
+<li>
+<p> if <code>color_mode</code> is <code>"rgba"</code>,
+there are 4 channels in the image tensors.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/data_loading/image#imagedatasetfromdirectory-function">https://keras.io/api/data_loading/image#imagedatasetfromdirectory-function</a>
+</p>
+</li></ul>
+<p>Other dataset utils: <br><code>audio_dataset_from_directory()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+<p>Other preprocessing: <br><code>image_smart_resize()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br></p>
+
+
+</div>

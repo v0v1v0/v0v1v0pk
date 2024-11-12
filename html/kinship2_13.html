@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kindepth</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the depth of each subject in a pedigree</h2>
+
+<h3>Description</h3>
+
+<p>Mark each person as to their depth in a pedigree;
+0 for a founder, otherwise depth = 1 + max(father's depth, mother's
+depth)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kindepth(id, dad.id, mom.id, align = FALSE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>Identification code for each individual</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dad.id</code></td>
+<td>
+<p>Id code for the father</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mom.id</code></td>
+<td>
+<p>Id code for the mother</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align</code></td>
+<td>
+<p>If align=T, go one step further and try to make both
+parents of each child have the same depth.
+(This is not always possible).  It helps
+the drawing program by lining up pedigrees that "join in the middle"
+via a marriage.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In the case of an inbred pedigree a perfect alignment obeying
+<code>extra=TRUE</code> may not exist.</p>
+
+
+<h3>Value</h3>
+
+<p>an integer vector containing the depth for each subject</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Terry Therneau</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.pedigree</code></p>
+
+
+</div>

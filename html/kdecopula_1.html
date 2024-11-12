@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kdecopula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Smoothing for Bivariate Copula Densities</h2>
+
+<h3>Description</h3>
+
+<p>This package provides fast implementations of kernel estimators for the
+copula density. Due to its several plotting options it is particularly
+useful for the exploratory analysis of dependence structures. It can be
+further used for flexible nonparametric estimation of copula densities
+and resampling.
+</p>
+
+
+<h3>Details</h3>
+
+<p>The function <code>kdecop</code> can be used to estimate a copula density
+with a number of popular kernel estimators. The density estimate can be
+evaluated on arbitrary points with <code>dkdecop</code>;
+the cdf with <code>pkdecop</code>. Furthermore, synthetic
+data can be simulated with <code>rkdecop</code>, and
+several plot options are provided by
+<code>plot.kdecopula</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Nagler
+</p>
+
+
+<h3>References</h3>
+
+<p>Nagler, T. (2018)
+kdecopula: An R Package for the Kernel Estimation of Bivariate Copula
+Densities.
+Journal of Statistical Software 84(7), 1-22
+<br><br>
+Gijbels, I. and Mielniczuk, J. (1990).
+Estimating the density of a copula function.
+Communications in Statistics - Theory and Methods, 19(2):445-464.
+<br><br>
+Charpentier, A., Fermanian, J.-D., and Scaillet, O. (2006).
+The estimation of copulas: Theory and practice.
+In Rank, J., editor, Copulas: From theory to application in finance. Risk Books.
+<br><br>
+Geenens, G., Charpentier, A., and Paindaveine, D. (2017).
+Probit transformation for nonparametric kernel estimation of the copula
+density.
+Bernoulli, 23(3), 1848-1873.
+<br><br>
+Nagler, T. (2014).
+Kernel Methods for Vine Copula Estimation.
+Master's Thesis, Technische Universitaet Muenchen,
+<a href="https://mediatum.ub.tum.de/node?id=1231221">https://mediatum.ub.tum.de/node?id=1231221</a>
+<br><br>
+Wen, K. and Wu, X. (2015).
+Transformation-Kernel Estimation of the Copula Density,
+Working paper,
+<a href="http://agecon2.tamu.edu/people/faculty/wu-ximing/agecon2/public/copula.pdf">http://agecon2.tamu.edu/people/faculty/wu-ximing/agecon2/public/copula.pdf</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load data and transform with empirical cdf
+data(wdbc)
+udat &lt;- apply(wdbc[, -1], 2, function(x) rank(x)/(length(x)+1))
+
+## estimation of copula density of variables 5 and 6
+dens.est &lt;- kdecop(udat[, 5:6])
+plot(dens.est)
+
+## evaluate density estimate at (u1,u2)=(0.123,0.321)
+dkdecop(c(0.123, 0.321), dens.est)
+
+## evaluate cdf estimate at (u1,u2)=(0.123,0.321)
+pkdecop(c(0.123, 0.321), dens.est)
+
+## simulate 500 samples from density estimate
+rkdecop(500, dens.est)
+
+</code></pre>
+
+
+</div>

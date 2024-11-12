@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kpc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate the WAN-PDAG using the kPC Algorithm</h2>
+
+<h3>Description</h3>
+
+<p>Estimates the weakly additive noise partially directed acyclic graph (WAN-PDAG) from observational data, using the kPC algorithm. This is a version of <code>pc</code> from pcalg package, that uses HSIC (hsic.gamma, hsic.perm or hsic.clust) or distance covariance (<code>dcov.test</code> or dcov.gamma)  independence tests and udag2wanpdag instead of <code>udag2pdag</code> in the last step.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kpc(suffStat, indepTest, alpha, labels, p, fixedGaps = NULL,
+  fixedEdges = NULL, NAdelete = TRUE, m.max = Inf, u2pd = c("relaxed",
+  "rand", "retry"), skel.method = c("stable", "original", "stable.fast"),
+  conservative = FALSE, maj.rule = FALSE, solve.confl = FALSE,
+  verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>suffStat</code></td>
+<td>
+<p>a list of sufficient statistics, containing all necessary elements for the conditional independence decisions in the function indepTest</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indepTest</code></td>
+<td>
+<p>A function for testing conditional independence. It is internally called as indepTest(x,y,S,suffStat), and tests conditional independence of x and y given S. Here, x and y are variables, and S is a (possibly empty) vector of variables (all variables are denoted by their column numbers in the adjacency matrix). suffStat is a list, see the argument above. The return value of indepTest is the p-value of the test for conditional independence. Default is kernelCItest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>significance level (number in (0,1) for the individual conditional independence tests.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>(optional) character vector of variable (or "node") names. Typically preferred to specifying p.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>(optional) number of variables (or nodes). May be specified if labels are not, in which case labels is set to 1:p.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fixedGaps</code></td>
+<td>
+<p>A logical matrix of dimension p*p. If entry [i,j] or [j,i] (or both) are TRUE, the edge i-j is removed before starting the algorithm. Therefore, this edge is guaranteed to be absent in the resulting graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fixedEdges</code></td>
+<td>
+<p>A logical matrix of dimension p*p. If entry [i,j] or [j,i] (or both) are TRUE, the edge i-j is never considered for removal. Therefore, this edge is guaranteed to be present in the resulting graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>NAdelete</code></td>
+<td>
+<p>If indepTest returns NA and this option is TRUE, the corresponding edge is deleted. If this option is FALSE, the edge is not deleted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m.max</code></td>
+<td>
+<p>Maximal size of the conditioning sets that are considered in the conditional independence tests.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>u2pd</code></td>
+<td>
+<p>String specifying the method for dealing with conflicting information when trying to orient edges (see details below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skel.method</code></td>
+<td>
+<p>Character string specifying method; the default, "stable" provides an order-independent skeleton, see skeleton.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conservative</code></td>
+<td>
+<p>Logical indicating if the conservative PC is used. In this case, only option u2pd = "relaxed" is supported. Note that therefore the resulting object might not be extendable to a DAG. See details for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maj.rule</code></td>
+<td>
+<p>Logical indicating that the triples shall be checked for ambiguity using a majority rule idea, which is less strict than the conservative PC algorithm. For more information, see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>solve.confl</code></td>
+<td>
+<p>If TRUE, the orientation of the v-structures and the orientation rules work with lists for candidate sets and allow bi-directed edges to resolve conflicting edge orientations. In this case, only option u2pd = relaxed is supported. Note, that therefore the resulting object might not be a CPDAG because bi-directed edges might be present. See details for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If TRUE, detailed output is provided.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For more information: <code>pc</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class "pcAlgo" (see <code>pcAlgo</code>) containing an estimate of the equivalence class of the underlying DAG.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Tillman, R. E., Gretton, A. and Spirtes, P. (2009). Nonlinear directed acyclic structure learning with weakly additive noise model. NIPS 22, Vancouver.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+library(pcalg)
+set.seed(4)
+n &lt;- 300
+data &lt;- NULL
+x1 &lt;- 2*(runif(n)-0.5)
+x2 &lt;- x1 + runif(n)-0.5
+x3 &lt;- x1^2 + 0.6*runif(n)
+x4 &lt;- rnorm(n)
+x5 &lt;- x3 + x4^2 + 2*runif(n)
+x6 &lt;- 10*(runif(n)-0.5)
+x7 &lt;- x6^2 + 5*runif(n)
+x8 &lt;- 2*x7^2 + 1.5*rnorm(n)
+x9 &lt;- x7 + 4*runif(n)
+data &lt;- cbind(x1,x2,x3,x4,x5,x6,x7,x8,x9)
+true &lt;- matrix(0,9,9)
+true[c(1),c(2,3)]&lt;-true[c(3,4),5]&lt;-true[c(6),c(7)]&lt;-true[c(7),c(8)]&lt;-true[7,9]&lt;-1
+
+pc &lt;- pc(suffStat = list(C = cor(data), n = 9),
+         indepTest = gaussCItest,
+         alpha = 0.9,
+         labels = colnames(data),
+         u2pd = "relaxed",
+         skel.method = "stable",
+         verbose = TRUE)
+kpc1 &lt;- kpc(suffStat = list(data=data, ic.method="dcc.perm"),
+            indepTest = kernelCItest,
+            alpha = 0.1,
+            labels = colnames(data),
+            u2pd = "relaxed",
+            skel.method = "stable",
+            verbose = TRUE)
+kpc2 &lt;- kpc(suffStat = list(data=data, ic.method="hsic.gamma"),
+            indepTest = kernelCItest,
+            alpha = 0.1,
+            labels = colnames(data),
+            u2pd = "relaxed",
+            skel.method = "stable",
+            verbose = TRUE)
+kpc3 &lt;- kpc(suffStat = list(data=data, ic.method="hsic.perm"),
+            indepTest = kernelCItest,
+            alpha = 0.1,
+            labels = colnames(data),
+            u2pd = "relaxed",
+            skel.method = "stable",
+            verbose = TRUE)
+kpc4 &lt;- kpc(suffStat = list(data=data, ic.method="hsic.clust"),
+            indepTest = kernelCItest,
+            alpha = 0.1,
+            labels = colnames(data),
+            u2pd = "relaxed",
+            skel.method = "stable",
+            verbose = TRUE)
+
+if (require(Rgraphviz)) {
+ par(mfrow=c(2,3))
+ plot(pc,main="pc")
+ plot(kpc1,main="dpc.perm")
+ plot(kpc2,main="kpc.gamma")
+ plot(kpc3,main="kpc.perm")
+ plot(kpc4,main="kpc.clust")
+ plot(as(true,"graphNEL"),main="True DAG")
+}
+
+## End(Not run)
+</code></pre>
+
+
+</div>

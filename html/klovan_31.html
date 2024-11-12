@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Rgeo_kriging_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting Kriged Database</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a plot of the kriged database.
+The function is designed specifically for visualizing geostatistical data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Rgeo_kriging_plot(krig_db, db, property)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>krig_db</code></td>
+<td>
+<p>A kriged database object, resulting from the <code>Rgeo_kriging</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>db</code></td>
+<td>
+<p>The original database object that was used to generate the kriged database.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>property</code></td>
+<td>
+<p>A character string representing the property (or column name) from the database that you want to visualize e.g. "RC1" or "RC2".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function takes a kriged database and the original database, then generates a comparative plot for a specific property.
+This helps in understanding the effect of kriging on the selected property.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A plot comparing the specified <code>property</code> in the original and kriged databases.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if(requireNamespace("RGeostats", quietly = TRUE)){
+    library(RGeostats)
+    data("Klovan_Row80", package = "klovan")
+    db &lt;- Rgeo_database(Klovan_Row80, 3, "RC3")
+    model &lt;- Rgeo_vario_model(db, 3, "RC3", lag = 500, model = 13)
+    krig_db &lt;- Rgeo_kriging(db, model)
+    Rgeo_kriging_plot(krig_db, db, "RC3")
+}
+</code></pre>
+
+
+</div>

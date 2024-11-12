@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>permTest</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KCP Permutation Test</h2>
+
+<h3>Description</h3>
+
+<p>The KCP permutation test implements the variance test and the variance drop test to determine if there is at least one change point in the running statistics
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">permTest(
+  data,
+  RS_fun,
+  wsize = 25,
+  nperm = 1000,
+  Kmax = 10,
+  alpha = 0.05,
+  varTest = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data <em>N</em> x <em>v</em> dataframe where <em>N</em> is the number of time points and <em>v</em> the number of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RS_fun</code></td>
+<td>
+<p>Running statistics function: Should require the time series and <code>wsize</code> as input and return a dataframe of running statistics
+as output. This output dataframe should have rows that correspond to the time windows and columns that correspond to the variable(s) on which the running statistics were computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wsize</code></td>
+<td>
+<p>Window size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nperm</code></td>
+<td>
+<p>Number of permutations to be used in the permutation test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kmax</code></td>
+<td>
+<p>Maximum number of change points desired</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Significance level of the permutation test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varTest</code></td>
+<td>
+<p>If FALSE, only the variance DROP test is implemented, and if TRUE, both the variance and the variance DROP tests are implemented.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sig</code></td>
+<td>
+<p>Significance of having at least one change point. 0 - Not significant, 1- Significant</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p_var_test</code></td>
+<td>
+<p>P-value of the variance test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p_varDrop_test</code></td>
+<td>
+<p>P-value of the variance drop test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perm_rmin</code></td>
+<td>
+<p>A matrix of minimized variance criterion for the permuted data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perm_rmin_without_NA</code></td>
+<td>
+<p>A matrix of minimized variance criterion for the permuted data without NA values.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Cabrieto, J., Tuerlinckx, F., Kuppens, P., Hunyadi, B., &amp; Ceulemans, E. (2018). Testing for the presence of correlation changes
+in a multivariate time series: A permutation based approach. <em>Scientific Reports</em>, 8, 769, 1-20. doi:10.1038/s41598-017-19067-2
+</p>
+
+
+</div>

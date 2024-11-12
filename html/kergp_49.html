@@ -1,0 +1,211 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covTS-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class <code>"covTS"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>S4 class representing a Tensor Sum (TS) covariance kernel.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by call of the form <code>new("covTS", ...)</code> or
+by using the <code>covTS</code> function.
+
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>, the spatial dimension or number
+of inputs of the covariance.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>, vector of input names. Length
+<code>d</code>.
+</p>
+</dd>
+<dt>
+<code>kernel</code>:</dt>
+<dd>
+<p>Object of class <code>"covMan"</code> representing a 1d kernel.
+</p>
+</dd>
+<dt>
+<code>kernParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>, name of the kernel (among the
+allowed ones).
+</p>
+</dd>
+<dt>
+<code>kernParCodes</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>, an integer code stating the
+dependence of the parameter to the input.
+</p>
+</dd>
+<dt>
+<code>par</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>, numeric vector of parameter
+values.
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>, total number of parameters.
+</p>
+</dd>
+<dt>
+<code>parInput</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>, the number of the inputs for
+each parameter. Same length as <code>par</code>, values between <code>1</code>
+and <code>d</code>.
+</p>
+</dd>
+<dt>
+<code>parLower</code>:</dt>
+<dd>
+<p>, </p>
+</dd>
+<dt>
+<code>parUpper</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code> numeric, vector of (possibly
+infinite) lower/upper bounds on parameters.
+</p>
+</dd>
+<dt>
+<code>parBlock</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>
+</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+
+
+<dl>
+<dt>coef</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: extracts the numeric values of
+the covariance parameters.
+
+
+</p>
+</dd>
+<dt>coef&lt;-</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: replaces the whole vector of
+coefficients, as required during ML estimation.
+</p>
+</dd>
+<dt>coefLower</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: extracts the numeric values of
+the lower bounds.
+</p>
+</dd>
+<dt>coefLower&lt;-</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: replacement method for lower
+bounds on covTS coefficients.
+</p>
+</dd>
+<dt>coefUpper</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: ...
+</p>
+</dd>
+<dt>coefUpper&lt;-</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: replacement method for upper
+bounds on covTS coefficients.
+</p>
+</dd>
+<dt>covMat</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: builds the covariance matrix,
+or the cross covariance matrix between two sets of locations for a <code>covTS</code> object.
+</p>
+</dd>
+<dt>kernelName</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: return the character value of the kernel name.
+</p>
+</dd>
+<dt>parMap</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: an integer matrix used to map
+the <code>covTS</code> parameters on the inputs and kernel parameters
+during the computations.
+</p>
+</dd>
+<dt>scores</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: computes the scores.
+</p>
+</dd>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: prints in a custom format.
+</p>
+</dd>
+<dt>simulPar</dt>
+<dd>
+<p><code>signature(object = "covTS")</code>: simulates random values for
+the covariance parameters.
+</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>The names of the methods strive to respect a
+<a href="https://en.wikipedia.org/wiki/CamelCase">camelCase</a> naming
+convention.
+</p>
+<p>While the <code>coef&lt;-</code> replacement method is typically intended
+for internal use during likelihood maximization, the <code>coefLower&lt;-</code>
+and <code>coefUpper&lt;-</code> replacement methods can be used when some
+rough information exists on the possible values of the parameters.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Y. Deville, O. Roustant, D. Ginsbourger.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>covTS</code> function providing  a creator. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">showClass("covTS")
+</code></pre>
+
+
+</div>

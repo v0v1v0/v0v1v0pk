@@ -1,0 +1,167 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.krippendorffsalpha</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot the results of a Krippendorff's Alpha analysis.</h2>
+
+<h3>Description</h3>
+
+<p>Plot the results of a Krippendorff's Alpha analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'krippendorffsalpha'
+plot(
+  x,
+  y = NULL,
+  level = 0.95,
+  type = 7,
+  density = TRUE,
+  lty.density = 1,
+  lty.estimate = 1,
+  lty.interval = 2,
+  col.density = "black",
+  col.estimate = "orange",
+  col.interval = "blue",
+  lwd.density = 3,
+  lwd.estimate = 3,
+  lwd.interval = 3,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class <code>"krippendorffsalpha"</code>, the result of a call to <code>krippendorffs.alpha</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>always ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>the desired confidence level for the interval. The default is 0.95.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the method used to compute sample quantiles. This argument is passed to <code>quantile</code>. The default is 7.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>density</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a kernel density estimate is plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty.density</code></td>
+<td>
+<p>the line type for the kernel density estimate. The default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty.estimate</code></td>
+<td>
+<p>the line type for the estimate of alpha. The default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty.interval</code></td>
+<td>
+<p>the line type for the confidence limits. The default is 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.density</code></td>
+<td>
+<p>the color for the kernel density estimate. The default is black.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.estimate</code></td>
+<td>
+<p>the color for the estimate of alpha. The default is orange.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.interval</code></td>
+<td>
+<p>the color for the confidence limits. The default is blue.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd.density</code></td>
+<td>
+<p>the line width for the kernel density estimate. The default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd.estimate</code></td>
+<td>
+<p>the line width for the estimate of alpha. The default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd.interval</code></td>
+<td>
+<p>the line width for the confidence limits. The default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments. These are passed to <code>hist</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function plots the results of a Krippendorff's Alpha analysis, assuming that <code>krippendorffs.alpha</code> was called with <code>method = "customary"</code> and <code>confint = TRUE</code>. Otherwise there is no bootstrap sample to work with. The plot is highly customizable.
+</p>
+<p>This function plots a histogram of the bootstrap sample, (optionally) a kernel density estimate, and vertical lines marking the lower and upper confidence limits.
+</p>
+
+
+<h3>References</h3>
+
+<p>Krippendorff, K. (2013). Computing Krippendorff's alpha-reliability. Technical report, University of Pennsylvania.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krippendorffs.alpha</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># The following data were presented in Krippendorff (2013).
+
+nominal = matrix(c(1,2,3,3,2,1,4,1,2,NA,NA,NA,
+                   1,2,3,3,2,2,4,1,2,5,NA,3,
+                   NA,3,3,3,2,3,4,2,2,5,1,NA,
+                   1,2,3,3,2,4,4,1,2,5,1,NA), 12, 4)
+fit.nom = krippendorffs.alpha(nominal, level = "nominal", method = "customary", confint = TRUE,
+                              verbose = TRUE, control = list(bootit = 1000, parallel = FALSE))
+dev.new()
+plot(fit.nom, main = "Results for Nominal Data", xlab = "Bootstrap Estimates", density = FALSE)
+</code></pre>
+
+
+</div>

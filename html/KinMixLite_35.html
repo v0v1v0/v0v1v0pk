@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rni</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Random number initialiser supporting spontaneous replication</h2>
+
+<h3>Description</h3>
+
+<p>Random number initialiser supporting spontaneous replication</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rni(seed=0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Integer, seed</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This is a convenience front end to <code>set.seed</code>. A non-zero value of <code>seed</code> is passed directly to <code>set.seed</code>. Given a zero value (the default), the function calls <code>Sys.time</code> to generate an unpredictable starting value – but the value ultimately passed to <code>set.seed</code> is both output using <code>cat</code> and returned invisibly, so can be used for unanticipated replica runs of a simulation.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Non-zero seed value that can be used to reproduce run subsequently</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">rni(0)
+runif(6)
+rni(0)
+runif(6)
+rni(3456)
+runif(6)
+rni(3456)
+runif(6)
+keep&lt;-rni(0)
+print(keep)
+runif(6)
+rni(keep)
+runif(6)
+</code></pre>
+
+
+</div>

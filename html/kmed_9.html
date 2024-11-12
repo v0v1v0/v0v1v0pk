@@ -1,0 +1,223 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>distmix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Distances for mixed variables data set</h2>
+
+<h3>Description</h3>
+
+<p>This function computes a distance matrix for a mixed
+variable data set applying various methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">distmix(data, method = "gower", idnum = NULL, idbin = NULL, idcat = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame or matrix object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A  method to calculate the mixed variables distance
+(see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idnum</code></td>
+<td>
+<p>A vector of column index of the numerical variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idbin</code></td>
+<td>
+<p>A vector of column index of the binary variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idcat</code></td>
+<td>
+<p>A vector of column index of the categorical variables.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There are six methods available to calculate the mixed variable
+distance. They are <code>gower</code>, <code>wishart</code>, <code>podani</code>,
+<code>huang</code>, <code>harikumar</code>, <code>ahmad</code>.
+</p>
+<p><code>gower</code>
+</p>
+<p>The Gower (1971) distance is the most common distance for a mixed variable
+data set. Although the Gower distance accommodates missing values, a missing
+value is not allowed in this function. If there is a missing value, the Gower
+distance from the <code>daisy</code> function in the <span class="pkg">cluster</span> package can be
+applied. The Gower distance between objects i and j is
+computed by
+<code class="reqn">d_{ij} = 1 - s_{ij}</code>, where
+</p>
+<p style="text-align: center;"><code class="reqn">s_{ij} = \frac{\sum_{l=1}^p \omega_{ijl} s_{ijl}}
+{\sum_{l=1}^p \omega_{ijl}}</code>
+</p>
+
+<p><code class="reqn">\omega_{ijl}</code> is a weight in variable l that is usually 1 or 0
+(for a missing value). If the variable l is a numerical variable,
+</p>
+<p style="text-align: center;"><code class="reqn">s_{ijl} = 1- \frac{|x_{il} - x_{jl}|}{R_l}</code>
+</p>
+
+<p><code class="reqn">s_{ijl} \in</code> {0, 1}, if the variable l is a binary/
+categorical variable.
+</p>
+<p><code>wishart</code>
+</p>
+<p>Wishart (2003) has proposed a different measure compared to Gower (1971) in
+the numerical variable part. Instead of a range, it applies a variance of
+the numerical variable in the <code class="reqn">s_{ijl}</code> such that the distance becomes
+</p>
+<p style="text-align: center;"><code class="reqn">d_{ij} = \sqrt{\sum_{l=1}^p \omega_{ijl} \left(\frac{x_{il} - x_{jl}}
+{\delta_{ijl}}\right)^2}</code>
+</p>
+
+<p>where <code class="reqn">\delta_{ijl} = s_l</code> when l is a numerical variable and
+<code class="reqn">\delta_{ijl} \in</code> {0, 1} when l is a binary/ categorical
+variable.
+</p>
+<p><code>podani</code>
+</p>
+<p>Podani (1999) has suggested a different method to compute a distance for
+a mixed variable data set. The Podani distance is calculated by
+</p>
+<p style="text-align: center;"><code class="reqn">d_{ij} = \sqrt{\sum_{l=1}^p \omega_{ijl} \left(\frac{x_{il} - x_{jl}}
+{\delta_{ijl}}\right)^2}</code>
+</p>
+
+<p>where <code class="reqn">\delta_{ijl} = R_l</code> when l is a numerical variable and
+<code class="reqn">\delta_{ijl} \in</code> {0, 1} when l is a binary/ categorical
+variable.
+</p>
+<p><code>huang</code>
+</p>
+<p>The Huang (1997) distance between objects i and j is computed
+by
+</p>
+<p style="text-align: center;"><code class="reqn"> d_{ij} = \sum_{r=1}^{P_n} (x_{ir} - x_{jr})^2 + \gamma
+\sum_{s=1}^{P_c} \delta_c (x_{is} - x_{js})</code>
+</p>
+
+<p>where <code class="reqn">P_n</code> and <code class="reqn">P_c</code> are the number of numerical and categorical
+variables, respectively,
+</p>
+<p style="text-align: center;"><code class="reqn">\gamma = \frac{\sum_{r=1}^{P_n} s_{r}^2}{P_n} </code>
+</p>
+
+<p>and <code class="reqn">\delta_c(x_{is} - x_{js})</code> is the mismatch/ simple matching distance
+(see <code>matching</code>) between object i and object
+j in the variable s.
+</p>
+<p><code>harikumar</code>
+</p>
+<p>Harikumar-PV (2015) has proposed a distance for a mixed variable data set:
+</p>
+<p style="text-align: center;"><code class="reqn"> d_{ij} = \sum_{r=1}^{P_n} |x_{ir} - x_{jr}| + \sum_{s=1}^{P_c}
+\delta_c (x_{is} - x_{js}) + \sum_{t=1}^{p_b} \delta_b (x_{it}, x_{jt})</code>
+</p>
+
+<p>where <code class="reqn">P_b</code> is the number of binary variables,
+<code class="reqn">\delta_c (x_{is}, x_{js})</code> is the co-occurrence distance (see
+<code>cooccur</code>), and <code class="reqn">\delta_b (x_{it}, x_{jt})</code> is the
+Hamming distance.
+</p>
+<p><code>ahmad</code>
+</p>
+<p>Ahmad and Dey (2007) has computed a distance of a mixed variable set via
+</p>
+<p style="text-align: center;"><code class="reqn"> d_{ij} = \sum_{r=1}^{P_n} (x_{ir} - x_{jr})^2 +
+\sum_{s=1}^{P_c} \delta_c (x_{is} - x_{js})</code>
+</p>
+
+<p>where <code class="reqn">\delta_c (x_{it}, x_{jt})</code> are the co-occurrence distance
+(see <code>cooccur</code>). In the Ahmad and Dey distance,
+the binary and categorical variables are not separable such that
+the co-occurrence distance is based on the combined these two classes,
+i.e. binary and categorical variables. Note that this function applies
+standard version of Squared Euclidean, i.e without any weight.
+</p>
+<p>At leas two arguments of the <code>idnum</code>, <code>idbin</code>, and
+<code>idcat</code> have to be provided because this function calculates
+the mixed distance. If the <code>method</code> is <code>harikumar</code>,
+the categorical variables have to be at least two variables such
+that the co-occurrence distance can be computed. It also applies when
+<code>method = "ahmad"</code>. The <code>idbin</code> + <code>idcat</code> has to
+be more than 1 column. It returns to an <code>Error</code> message otherwise.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a distance matrix (n x n).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Ahmad, A., and Dey, L. 2007. A K-mean clustering algorithm for
+mixed numeric and categorical data. Data and Knowledge Engineering 63,
+pp. 503-527.
+</p>
+<p>Gower, J., 1971. A general coefficient of similarity and some
+of its properties. Biometrics 27, pp. 857-871
+</p>
+<p>Harikumar, S., PV, S., 2015. K-medoid clustering for
+heterogeneous data sets. JProcedia Computer Science 70, pp. 226-237.
+</p>
+<p>Huang, Z., 1997. Clustering large data sets with mixed numeric
+and categorical values, in: The First Pacific-Asia Conference on Knowledge
+Discovery and Data Mining, pp. 21-34.
+</p>
+<p>Podani, J., 1999. Extending gower's general coefficient of
+similarity to ordinal characters. Taxon 48, pp. 331-340.
+</p>
+<p>Wishart, D., 2003. K-means clustering with outlier detection,
+mixed variables and missing values, in: Exploratory Data Analysis in
+Empirical Research: Proceedings of the 25th Annual Conference of the
+Gesellschaft fur Klassifikation e.V., University of Munich, March 14-16,
+2001, Springer Berlin Heidelberg, Berlin, Heidelberg. pp. 216-226.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1)
+a &lt;- matrix(sample(1:2, 7*3, replace = TRUE), 7, 3)
+a1 &lt;- matrix(sample(1:3, 7*3, replace = TRUE), 7, 3)
+mixdata &lt;- cbind(iris[1:7,1:3], a, a1)
+colnames(mixdata) &lt;- c(paste(c("num"), 1:3, sep = ""),
+                       paste(c("bin"), 1:3, sep = ""),
+                       paste(c("cat"), 1:3, sep = ""))
+distmix(mixdata, method = "gower", idnum = 1:3, idbin = 4:6, idcat = 7:9)
+
+</code></pre>
+
+
+</div>

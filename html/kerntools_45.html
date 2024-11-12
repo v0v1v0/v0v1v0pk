@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>TSS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Total Sum Scaling</h2>
+
+<h3>Description</h3>
+
+<p>This function transforms a dataset from absolute to relative frequencies
+(by row or column).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">TSS(X, rows = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Numeric matrix or data.frame of any size containing absolute frequencies.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rows</code></td>
+<td>
+<p>If TRUE, the operation is done by row; otherwise, it is done by
+column. (Defaults: TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A relative frequency matrix or data.frame with the same dimension than X.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- matrix(rnorm(50),ncol=5,nrow=10)
+TSS(dat) #It can be checked that, after scaling, the sum of each row is equal to 1.
+</code></pre>
+
+
+</div>

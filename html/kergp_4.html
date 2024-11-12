@@ -1,0 +1,182 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>checkGrad</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Check the Gradient Provided in a <code>covMan</code> Object
+</h2>
+
+<h3>Description</h3>
+
+<p>Check the gradient provided in a <code>covMan</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">checkGrad(object, sym = TRUE,
+          x1 = NULL, n1 = 10,
+          x2 = NULL, n2 = NULL,
+          XLower = NULL, XUpper = NULL,
+          plot = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>A <code>covMan</code> object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sym</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code>, the check is done assuming that <code>x2</code>
+is identical to <code>x1</code>, so the provided values for <code>x2</code> and
+<code>n2</code> (if any) will be ignored.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x1</code></td>
+<td>
+
+<p>Matrix to be used as the first argument of the kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n1</code></td>
+<td>
+
+<p>Number of rows for the matrix <code>x1</code>. Used only when <code>x1</code> is
+not provided.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x2</code></td>
+<td>
+
+<p>Matrix to be used as the second argument of the kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n2</code></td>
+<td>
+
+<p>Number of rows for the matrix <code>x2</code>. Used only when <code>x2</code> is
+not provided.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XLower</code></td>
+<td>
+
+<p>Vector of lower bounds to draw <code>x1</code> and <code>x2</code> when needed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XUpper</code></td>
+<td>
+
+<p>Vector of upper bounds to draw <code>x1</code> and <code>x2</code> when needed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+
+<p><code>Logical</code>. If <code>TRUE</code>, a plot is shown comparing the two
+arrays of gradients.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Each of the two matrices <code>x1</code> and <code>x2</code> with <code>n1</code> and
+<code>n2</code> rows can be given or instead be drawn at random. The matrix
+of kernel values with dimension <code>c(n1, n2)</code> is computed, together
+with its gradient with dimension <code>c(n1, n2, npar)</code> where
+<code>npar</code> is the number of parameters of the kernel. A numerical
+differentiation w.r.t. the kernel parameters is performed for the
+kernel value at <code>x1</code> and <code>x2</code>, and the result is compared to
+that provided by the kernel function (the function described in the
+slot named <code>"kernel"</code> of <code>object</code>). Note that the value of
+the parameter vector is the value provided by <code>coef(object)</code> and
+it can be changed by using the replacement method <code>`coef&lt;-`</code> if
+needed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of results related to the Jacobians
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p> Max of the absolute difference between
+the gradient obtained by numeric differentiation and the
+gradient provided by the kernel object. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<code>Jnum</code>, <code>J</code>
+</td>
+<td>
+<p> Jacobians (arrays) computed
+with <code>numDeriv::jacobian</code> and provided by the kernel
+object. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<code>x1</code>, <code>x2</code>, <code>K</code>
+</td>
+<td>
+<p> The matrices used
+for the check, and the matrix of kernel values with
+dimension <code>c(n1, n2)</code>. The element <code>x2</code> can be
+<code>NULL</code> if the determination of the matrix <code>x2</code>
+was not necessary. </p>
+</td>
+</tr>
+</table>
+<h3>Caution</h3>
+
+<p>For now the function only works when <code>object</code> has class
+<code>"covMan"</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>As a rule of thumb, a gradient coded without error gives a value of
+<code>test</code> less than <code>1e-4</code>, and usually the value is much
+smaller than that.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Yves Deville
+</p>
+
+
+</div>

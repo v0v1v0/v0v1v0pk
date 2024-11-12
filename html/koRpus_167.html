@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pasteText</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Paste koRpus objects</h2>
+
+<h3>Description</h3>
+
+<p>Paste the text in koRpus objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pasteText(txt, ...)
+
+## S4 method for signature 'kRp.text'
+pasteText(
+  txt,
+  replace = c(hon.kRp = "", hoff.kRp = "\n\n", p.kRp = "\n\n")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt</code></td>
+<td>
+<p>An object of class <code>kRp.text</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional options, currently unused.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>A named character vector to define replacements for <code>koRpus</code>' internal headline and paragraph tags.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function takes objects of class <code>kRp.text</code> and pastes only the actual text as is.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An atomic character vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  sample_file &lt;- file.path(
+    path.package("koRpus"), "examples", "corpus", "Reality_Winner.txt"
+  )
+  tokenized.obj &lt;- tokenize(
+    txt=sample_file,
+    lang="en"
+  )
+  tokenized.obj &lt;- jumbleWords(tokenized.obj)
+  pasteText(tokenized.obj)
+} else {}
+</code></pre>
+
+
+</div>

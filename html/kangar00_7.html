@@ -1,0 +1,179 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calc_kernel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the kernel-matrix for a pathway</h2>
+
+<h3>Description</h3>
+
+<p>Uses individuals' genotypes to create a <code>kernel</code> object including 
+the calculated kernel <code>matrix</code> for a specific <code>pathway</code>.
+Each numeric value within this <code>matrix</code> is calculated
+from two individuals' genotypevectors of the SNPs within 
+the <code>pathway</code> by a kernel function. It can be interpreted as the genetic 
+similiarity of the individuals. Association between the <code>pathway</code> and a 
+binary phenotype (case-control status) can be evaluated
+in the logistic kernel machine test, based on the <code>kernel</code> object. 
+Three kernel functions are available.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'GWASdata'
+calc_kernel(
+  object,
+  pathway,
+  knots = NULL,
+  type = c("lin", "sia", "net"),
+  calculation = c("cpu", "gpu"),
+  ...
+)
+
+## S4 method for signature 'GWASdata'
+lin_kernel(object, pathway, knots = NULL, calculation = c("cpu", "gpu"), ...)
+
+## S4 method for signature 'GWASdata'
+sia_kernel(object, pathway, knots = NULL, calculation = c("cpu", "gpu"), ...)
+
+## S4 method for signature 'GWASdata'
+net_kernel(object, pathway, knots = NULL, calculation = c("cpu", "gpu"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p><code>GWASdata</code> object containing the genotypes of the 
+individuals for which a <code>kernel</code> will be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pathway</code></td>
+<td>
+<p>object of the class <code>pathway</code> specifying the SNP set 
+for which a <code>kernel</code> will be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>knots</code></td>
+<td>
+<p><code>GWASdata</code> object, if specified a <code>kernel</code>
+will be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p><code>character</code> indicating the <code>kernel</code> type: 
+Use <code>'lin'</code> to specify the linear kernel, <code>'sia'</code> for the 
+size-adjusted or <code>'net'</code> for the network-based kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calculation</code></td>
+<td>
+<p><code>character</code> specifying if the kernel <code>matrix</code> 
+is computed on CPU or GPU.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to <code>kernel</code> computations.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Different types of kernels can be constructed:
+</p>
+
+<ul>
+<li> <p><code>type='lin'</code> creates the linear kernel assuming additive SNP 
+effects to be evaluated in the logistic kernel machine test.
+</p>
+</li>
+<li> <p><code>type='sia'</code> calculates the size-adjusted kernel which takes 
+into consideration the numbers of SNPs and genes in a <code>pathway</code> 
+to correct for size bias.
+</p>
+</li>
+<li> <p><code>type='net'</code> calculates the network-based kernel. Here not only information on gene membership and gene/pathway size in number of SNPs is incorporated, but also the interaction structure of genes in the <code>pathway</code>.
+</p>
+</li>
+</ul>
+<p>For more details, check the references.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns an object of class <code>kernel</code>, including the similarity 
+<code>matrix</code> of the <code>pathway</code> for the considered individuals. <br>
+If <code>knots</code> are specified low-rank kernel of class a <code>lowrank_kernel</code> 
+will be returned, which is not necessarily quadratic and symmetric.
+</p>
+
+
+<h3>Methods (by class)</h3>
+
+
+<ul>
+<li> <p><code>lin_kernel(GWASdata)</code>: 
+</p>
+</li>
+<li> <p><code>sia_kernel(GWASdata)</code>: 
+</p>
+</li>
+<li> <p><code>net_kernel(GWASdata)</code>: 
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs, Juliane Manitz
+</p>
+
+
+<h3>References</h3>
+
+
+<ul>
+<li>
+<p> Wu MC, Kraft P, Epstein MP, Taylor DM, Chanock SJ, Hunter DJ, Lin X Powerful SNP-Set Analysis for Case-Control Genome-Wide Association Studies. Am J Hum Genet 2010, 86:929-42
+</p>
+</li>
+<li>
+<p> Freytag S, Bickeboeller H, Amos CI, Kneib T, Schlather M: A Novel Kernel for Correcting Size Bias in the Logistic Kernel Machine Test with an Application to Rheumatoid Arthritis. Hum Hered. 2012, 74(2):97-108.
+</p>
+</li>
+<li>
+<p> Freytag S, Manitz J, Schlather M, Kneib T, Amos CI, Risch A, Chang-Claude J, Heinrich J, Bickeboeller H: A network-based kernel machine test for the identification of risk pathways in genome-wide association studies. Hum Hered. 2013, 76(2):64-75.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>kernel-class</code>,<code>pathway</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(gwas)
+data(hsa04020)
+lin_kernel &lt;- calc_kernel(gwas, hsa04020, knots=NULL, type='lin', calculation='cpu')
+summary(lin_kernel)
+net_kernel &lt;- calc_kernel(gwas, hsa04020, knots=NULL, type='net', calculation='cpu')
+summary(net_kernel)
+
+</code></pre>
+
+
+</div>

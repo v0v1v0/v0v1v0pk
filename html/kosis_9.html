@@ -1,0 +1,37 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kosis-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kosis: Korean Statistical Information Service (KOSIS)</h2>
+
+<h3>Description</h3>
+
+<p>API wrapper to download statistical information from the Korean Statistical Information Service (KOSIS) <a href="https://kosis.kr/openapi/index/index.jsp">https://kosis.kr/openapi/index/index.jsp</a>.
+</p>
+
+
+<h3>Details</h3>
+
+<p>To use this package, you will first need to get your API key from the
+website <a href="https://kosis.kr/openapi/index/index.jsp">https://kosis.kr/openapi/index/index.jsp</a>. Once you have your
+key, you can save it as an environment variable for the current session
+using the <code>kosis.setKey</code> function. Alternatively, you can set it
+permanently by adding the following line to your .Renviron file:
+</p>
+<p>KOSIS_API_KEY = PASTE YOUR API KEY
+</p>
+<p>Any functions that require your API key try to retrieve it via
+<code>Sys.getenv("KOSIS_API_KEY")</code> (unless API key is explicitly specified as
+a function argument).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><strong>Maintainer</strong>: Seokhoon Joo <a href="mailto:seokhoonj@gmail.com">seokhoonj@gmail.com</a>
+</p>
+
+
+</div>

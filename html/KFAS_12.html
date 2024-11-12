@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fitted.SSModel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smoothed Estimates or One-step-ahead Predictions of Fitted Values</h2>
+
+<h3>Description</h3>
+
+<p>Computes fitted values from output of <code>KFS</code>
+(or using the <code>SSModel</code> object), i.e. one-step-ahead
+predictions  <code class="reqn">f(\theta_t | y_{t-1}, \ldots, y_1)</code> (<code>m</code>) or smoothed estimates
+<code class="reqn">f(\theta_t | y_n, \ldots, y_1)</code> (<code>muhat</code>),
+where <code class="reqn">f</code> is the inverse of the link function
+(identity in Gaussian case), except in case of Poisson distribution where
+<code class="reqn">f</code> is multiplied with the exposure <code class="reqn">u_t</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'KFS'
+fitted(object, start = NULL, end = NULL, filtered = FALSE, ...)
+
+## S3 method for class 'SSModel'
+fitted(object, start = NULL, end = NULL, filtered = FALSE, nsim = 0, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>KFS</code> or <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>The start time of the period of interest. Defaults to first time
+point of the object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end</code></td>
+<td>
+<p>The end time of the period of interest. Defaults to the last time
+point of the object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filtered</code></td>
+<td>
+<p>Logical, return filtered instead of smoothed estimates of
+state vector. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments to <code>KFS</code>.
+Ignored in method for object of class <code>KFS</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>Only for method for for non-Gaussian model of class <code>SSModel</code>.
+The number of independent samples used in importance sampling.
+Default is 0, which computes the
+approximating Gaussian model by <code>approxSSM</code> and performs the
+usual Gaussian filtering/smoothing so that the smoothed state estimates
+equals to the conditional mode of <code class="reqn">p(\alpha_t|y)</code>.
+In case of <code>nsim = 0</code>, the mean estimates and their variances are computed using
+the Delta method (ignoring the covariance terms).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Multivariate time series containing fitted values.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>signal</code> for partial signals and their covariances.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("sexratio")
+model &lt;- SSModel(Male ~ SSMtrend(1,Q = list(NA)),u = sexratio[, "Total"],
+  data = sexratio, distribution = "binomial")
+model &lt;- fitSSM(model,inits = -15, method = "BFGS")$model
+out &lt;- KFS(model)
+identical(drop(out$muhat), fitted(out))
+
+fitted(model)
+</code></pre>
+
+
+</div>

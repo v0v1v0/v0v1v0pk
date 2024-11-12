@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>varlabTemplate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create Variable Label Template</h2>
+
+<h3>Description</h3>
+
+<p>Receive a key, create a varlab object, with columns
+<code>name_old</code> <code>name_new</code>, and <code>varlab</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">varlabTemplate(obj, varlab = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>A variable key</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varlab</code></td>
+<td>
+<p>Default NULL, function will start from clean slate,
+a set of column labels that match <code>name_new</code>. User can
+specify values by providing a named vector of labels, e.g.,
+<code>c("x1" = "happiness", "x2" = "wealth")</code>, where the names
+are values to be matched against "name_new" in key.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If not specified, a matrix is created with empty variable labels.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character matrix with columns <code>name_new</code> and <code>varlab</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mydf.path &lt;- system.file("extdata", "mydf.csv", package = "kutils")
+mydf &lt;- read.csv(mydf.path, stringsAsFactors=FALSE)
+mydf.keywide1 &lt;- keyTemplate(mydf, long = FALSE, sort = FALSE,
+                    varlab = TRUE)
+attr(mydf.keywide1, "varlab")
+mydf.keywide2 &lt;- keyTemplate(mydf, long = FALSE, sort = FALSE,
+                    varlab = c("x3" = "fun"))
+attr(mydf.keywide2, "varlab")
+attr(mydf.keywide2, "varlab") &lt;- varlabTemplate(mydf.keywide2,
+                  varlab = c("x5" = "wealth", "x10" = "happy"))
+attr(mydf.keywide2, "varlab")
+attr(mydf.keywide2, "varlab") &lt;- varlabTemplate(mydf.keywide2,
+                  varlab = TRUE)
+attr(mydf.keywide2, "varlab")
+## Target we are trying to match:
+mydf.keylong &lt;- keyTemplate(mydf, long = TRUE, sort = FALSE, varlab = TRUE)
+attr(mydf.keylong, "varlab")
+attr(mydf.keylong, "varlab") &lt;- NULL
+varlabTemplate(mydf.keylong)
+attr(mydf.keylong, "varlab") &lt;- varlabTemplate(mydf.keylong,
+                   varlab = c("x3" = "wealth", "x10" = "happy"))
+attr(mydf.keylong, "varlab")
+attr(mydf.keylong, "varlab") &lt;- varlabTemplate(mydf.keylong, varlab = TRUE)
+attr(mydf.keylong, "varlab")
+</code></pre>
+
+
+</div>

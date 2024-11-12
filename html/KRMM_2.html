@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>EM_REML_MM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Expectation-Maximization (EM) algorithm for the restricted maximum likelihood (REML) associated to the mixed model
+
+</h2>
+
+<h3>Description</h3>
+
+<p>EM_REML_MM estimates the components and variance parameters of the following mixed model; Y =X*Beta + Z*U + E, using the EM-REML algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">		EM_REML_MM( Mat_K_inv, Y, X, Z, init_sigma2K, 
+		
+		init_sigma2E, convergence_precision, 
+		
+		nb_iter, display )		
+	</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Mat_K_inv</code></td>
+<td>
+<p>numeric matrix; the inverse of the kernel matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>numeric vector; response vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>numeric matrix; design matrix of predictors with fixed effects</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>numeric matrix; design matrix of predictors with random effects</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init_sigma2K, init_sigma2E</code></td>
+<td>
+
+<p>numeric scalars;
+initial guess values, associated to the mixed model variance parameters,
+for the EM-REML algorithm
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence_precision, nb_iter</code></td>
+<td>
+		
+<p>convergence precision (i.e. tolerance) associated to the mixed model 
+variance parameters, for the EM-REML algorithm, and number of maximum 
+iterations allowed if convergence is not reached
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display</code></td>
+<td>
+
+<p>boolean (TRUE or FALSE character string); 
+should estimated components be displayed at each iteration 
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Beta_hat</code></td>
+<td>
+<p>Estimated fixed effect(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma2K_hat, Sigma2E_hat</code></td>
+<td>
+<p>Estimated variance components</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Laval Jacquin &lt;jacquin.julien@gmail.com&gt;</p>
+
+
+<h3>References</h3>
+
+<p>Foulley, J.-L. (2002). Algorithme em: théorie et application au modèle mixte. Journal de la Société française de Statistique 143, 57-109
+</p>
+
+
+</div>

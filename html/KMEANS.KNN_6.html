@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knn_Function</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>knn_Function</h2>
+
+<h3>Description</h3>
+
+<p>This function implements a custom K-Nearest Neighbors (KNN) algorithm with data preprocessing options. It predicts the class of a new point based on the k closest neighbors in the feature space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knn_Function(
+  new_points,
+  dataset,
+  k = 5,
+  distance_metric = "gower",
+  target_variable,
+  scale_data = TRUE,
+  impute_data = "mean",
+  weight_votes = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>new_points</code></td>
+<td>
+<p>A dataframe of new points to be classified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataset</code></td>
+<td>
+<p>A dataframe of training data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The number of nearest neighbors to consider.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distance_metric</code></td>
+<td>
+<p>The distance metric for calculating neighbors ('gower', 'euclidean', 'manhattan').</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target_variable</code></td>
+<td>
+<p>The name of the target variable in 'dataset'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale_data</code></td>
+<td>
+<p>A boolean to indicate whether the data should be normalized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>impute_data</code></td>
+<td>
+<p>The imputation method for missing values ('mean', 'median', 'mode').</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_votes</code></td>
+<td>
+<p>A boolean to indicate whether votes should be weighted by the inverse of the distance.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing 'Predictions' with the predicted class for each new point, 'Data' with the 'new_points' dataframe and an additional column for predictions, 'Distances' with the distances of the k nearest neighbors, and 'Imputed_Values' with the imputed values for missing variables.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Loading training data (e.g., iris)
+data(iris)
+
+# Preparing new points for prediction (e.g., two new observations)
+new_points &lt;- data.frame(Sepal.Length = c(5.1, 7.7, 1.3, 0.2, 5.1),
+Sepal.Width = c(3.5, 2.6, 5, 3.7, 3.5),
+Petal.Length = c(1.4 , 6.9, 4.5, 6, 3.4),
+Petal.Width = c(10.1, 7.6, 5.6, 8.4, 5.2))
+
+# Calling the custom KNN function
+results &lt;- knn_Function(new_points, dataset = iris, k = 3, target_variable = "Species")
+
+# Displaying predictions
+print(results$Predictions)
+</code></pre>
+
+
+</div>

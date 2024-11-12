@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>service.count_lowerequal_threshhold</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Count how many values are less or equal than the defined threshhold.</h2>
+
+<h3>Description</h3>
+
+<p>Count how many values are less or equal than the defined threshhold.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">service.count_lowerequal_threshhold(x, threshhold)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the vector to be checked.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshhold</code></td>
+<td>
+<p>numeric the threshhold to compare with.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Count how many values are less or equal than the defined threshhold. 
+</p>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>numeric returns number of numeric values less or equal to the threshhold.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">myvals &lt;- c(1, 8, -5, "oggi", NA)
+myvals2 &lt;- service.count_lowerequal_threshhold(myvals, 0)
+myvals2 # 1
+</code></pre>
+
+
+</div>

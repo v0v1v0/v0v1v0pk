@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_dot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Layer that computes a dot product between samples in two tensors.</h2>
+
+<h3>Description</h3>
+
+<p>Layer that computes a dot product between samples in two tensors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_dot(inputs, ..., axes, normalize = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+<p>A input tensor, or list of input tensors. Can be missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Unnamed args are treated as additional <code>inputs</code>. Named arguments are passed on as standard layer arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>Integer or list of integers, axis or axes along which to take the
+dot product.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>normalize</code></td>
+<td>
+<p>Whether to L2-normalize samples along the dot product axis
+before taking the dot product. If set to TRUE, then the output of the dot
+product is the cosine proximity between the two samples.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>inputs</code> is supplied: A tensor, the dot product of the samples
+from the inputs. If <code>inputs</code> is missing, a keras layer instance is
+returned.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/dot">https://www.tensorflow.org/api_docs/python/tf/keras/layers/dot</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/merging_layers/dot/">https://keras.io/api/layers/merging_layers/dot/</a>
+</p>
+</li>
+</ul>
+<p>Other merge layers: 
+<code>layer_average()</code>,
+<code>layer_concatenate()</code>,
+<code>layer_maximum()</code>,
+<code>layer_minimum()</code>,
+<code>layer_multiply()</code>,
+<code>layer_subtract()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>topnode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Orders players by individual centrality from high to low</h2>
+
+<h3>Description</h3>
+
+<p><code>topnode</code> Orders players by individual centrality from high to low
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">topnode(
+  adj.matrix,
+  type,
+  M = Inf,
+  T = ncol(adj.matrix),
+  method,
+  binary = FALSE,
+  cmode,
+  large = TRUE,
+  geodist.precomp = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>Matrix indicating the adjacency matrix of the network.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p><code>type="betweenness"</code> for <code>betweenness</code> centrality. <br><code>type="closeness"</code> for <code>closeness</code> centrality. <br><code>type="degree"</code> for <code>degree</code> centraslity. <br><code>type="diffusion"</code> for <code>diffusion</code> centrality. <br><code>type="evcent"</code> for <code>evcent</code> (eigenvector) centrality. <br><code>type="fragment"</code> for <code>fragment</code> centrality. <br><code>type="mreach.degree"</code> for <code>mreach.degree</code> centrality. <br><code>type="mreach.closeness"</code> for <code>mreach.closeness</code> centrality. <br></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>Positive number indicating the maximum geodistance between two nodes,
+above witch the two nodes are considered disconnected. The default is
+<code>Inf</code>. The option is applicable to mreach.degree, mreach.closeness,
+and fragmentation centralities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>Integer indicating the maximum number of iterations
+of communication process. For diffusion centrality only.
+In the first iteration, the adjacency matrix
+is as the input. In the nth iteration, the adjacency matrix becomes
+the input adjacency matrix to the power of n. By default, T is the network size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Indication of which grouping criterion should be used. <br><code>"min"</code> indicates the "minimum" criterion and is suggested for
+betweenness, closeness, fragmentation, and M-reach centralities. <br><code>"max"</code> indicates the "maximum" criterion and is suggested for
+degree and eigenvector centralities.<br><code>"add"</code> indicates the "addition" criterion and is suggested for
+degree and eigenvector centralities as an altenative of "max".<br><code>"union"</code> indicates the "union" criterion and is suggested for
+diffusion centrality.<br>
+By default, kpset uses "min".
+See <code>kpcent</code> Details section for explanations on grouping method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary</code></td>
+<td>
+<p>If <code>TRUE</code>, the adjacency matrix is binarized.
+If <code>FALSE</code>, the edge values are considered. By default, <code>binary=FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmode</code></td>
+<td>
+<p>String indicating the type of centrality being evaluated.
+The option is applicable to degree and M-reach centralities.
+<code>"outdegree"</code>, <code>"indegree"</code>, and <code>"total"</code> refer to
+indegree, outdegree, and (total) degree respectively. <code>"all"</code> reports
+all the above measures. The default is to report the total degree.
+The option also applies to closeness centrality, but with different options.
+The default is to use the Gil-Schmidt power index as the closeness measure.
+See <code>closeness</code> for complete options.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>large</code></td>
+<td>
+<p>Logical scalar, whether the computation method for large network is
+implemented. If <code>TRUE</code> (the default), the method implmented in <span class="pkg">igraph</span> is
+used; otherwise the method implemented in <span class="pkg">sna</span> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geodist.precomp</code></td>
+<td>
+<p>Geodistance precomputed for the graph to be
+analyzed (optional).
+#'</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector of indices by individual centrality from high to low
+</p>
+
+
+</div>

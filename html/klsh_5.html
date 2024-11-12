@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>confusion.from.blocking</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform evaluations (recall) for blocking.</h2>
+
+<h3>Description</h3>
+
+<p>Perform evaluations (recall) for blocking.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">confusion.from.blocking(blocking, true_ids, recall.only = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>blocking</code></td>
+<td>
+<p>A list of the blocks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>true_ids</code></td>
+<td>
+<p>The true identifiers for comparisons</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recall.only</code></td>
+<td>
+<p>Flag that when true only prints the recall, otherwise
+prints many evaluation metrics in a list</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector of that returns the recall and the precision
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("RLdata500")
+klsh.blocks &lt;- klsh(RLdata500, p=20, num.blocks=5, k=2)
+confusion.from.blocking(klsh.blocks, identity.RLdata500)
+confusion.from.blocking(klsh.blocks, identity.RLdata500, recall.only=TRUE)
+</code></pre>
+
+
+</div>

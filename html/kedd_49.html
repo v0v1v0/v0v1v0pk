@@ -1,0 +1,179 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>h.mcv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Modified Cross-Validation for Bandwidth Selection
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>h.mcv</code> computes the modified 
+cross-validation bandwidth selector of r'th derivative of 
+kernel density estimator one-dimensional.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">h.mcv(x, ...)
+## Default S3 method:
+h.mcv(x, deriv.order = 0, lower = 0.1 * hos, upper = 2 * hos, 
+         tol = 0.1 * lower, kernel = c("gaussian", "epanechnikov", "triweight", 
+         "tricube", "biweight", "cosine"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower, upper</code></td>
+<td>
+<p>range over which to minimize. The default is
+almost always satisfactory. <code>hos</code> (Over-smoothing) is calculated internally
+from an <code>kernel</code>, see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the convergence tolerance for <code>optimize</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, with default
+<code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>h.mcv</code> modified cross-validation implements for choosing the bandwidth <code class="reqn">h</code> 
+of a r'th derivative kernel density estimator.<br></p>
+<p>Stute (1992) proposed a so-called modified cross-validation (MCV) in kernel 
+density estimator. This method can be extended to the estimation of derivative 
+of a density, the essential idea based on approximated the problematic term 
+by the aid of the Hajek projection (see Stute 1992). The minimization criterion is defined by:
+</p>
+<p style="text-align: center;"><code class="reqn">MCV(h;r) = \frac{R\left(K^{(r)}\right)}{nh^{2r+1}} + \frac{(-1)^{r}}{n(n-1)h^{2r+1}}\sum_{i=1}^{n} \sum_{j=1;j \neq i}^{n} \varphi^{(r)} \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>whit </p>
+<p style="text-align: center;"><code class="reqn">\varphi^{(r)}(c) = \left(K^{(r)} \ast K^{(r)} - K^{(2r)} - \frac{\mu_{2}(K)}{2}K^{(2r+2)} \right)(c)</code>
+</p>
+ 
+<p>and <code class="reqn">K^{(r)} \ast K^{(r)} (x)</code> is the convolution of the r'th derivative kernel function <code class="reqn">K^{(r)}(x)</code>
+(see <code>kernel.conv</code> and <code>kernel.fun</code>); <code class="reqn">R\left(K^{(r)}\right) = \int_{R} K^{(r)}(x)^{2} dx</code> and <code class="reqn">\mu_{2}(K) = \int_{R}x^{2} K(x) dx</code>.<br></p>
+<p>The range over which to minimize is <code>hos</code> Oversmoothing bandwidth, the default is almost always 
+satisfactory. See George and Scott (1985), George (1990), Scott (1992, pp 165), Wand and Jones (1995, pp 61). 
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>the deparsed name of the <code>x</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the sample size after elimination of missing values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>value of bandwidth parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.mcv</code></td>
+<td>
+<p>the minimal MCV value.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Heidenreich, N. B., Schindler, A. and Sperlich, S. (2013).
+Bandwidth selection for kernel density estimation: 
+a review of fully automatic selectors.
+<em>Advances in Statistical Analysis</em>.
+</p>
+<p>Stute, W. (1992).
+Modified cross validation in density estimation.
+<em>Journal of Statistical Planning and Inference</em>, <b>30</b>, 293–305.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.h.mcv</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Derivative order = 0
+
+h.mcv(kurtotic,deriv.order = 0)
+
+## Derivative order = 1
+
+h.mcv(kurtotic,deriv.order = 1)
+
+</code></pre>
+
+
+</div>

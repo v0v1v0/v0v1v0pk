@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernel.matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel matrix</h2>
+
+<h3>Description</h3>
+
+<p>These functions transform a <code class="reqn">n \times p</code> matrix into a <code class="reqn">n \times n</code> kernel matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernel.matrix(Z, whichkernel, rho = NULL, gamma = NULL, d = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>a <code class="reqn">n \times p</code> matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whichkernel</code></td>
+<td>
+<p>kernel function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma, rho, d</code></td>
+<td>
+<p>kernel hyperparameters (see details)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given a <code class="reqn">n \times p</code> matrix, this function returns a <code class="reqn">n \times n</code> matrix where each cell represents the similarity between two samples defined by two <code class="reqn">p-</code>dimensional vectors <code class="reqn">x</code> and <code class="reqn">y</code>,
+</p>
+
+<ul>
+<li>
+<p> the Gaussian kernel is defined as <code class="reqn">k(x,y) = exp\left(-\frac{\parallel x-y \parallel^2}{\rho}\right)</code> where <code class="reqn">\parallel x-y \parallel</code> is the Euclidean distance between <code class="reqn">x</code> and <code class="reqn">y</code> and <code class="reqn">\rho &gt; 0</code> is the bandwidth of the kernel,
+</p>
+</li>
+<li>
+<p> the linear kernel is defined as <code class="reqn">k(x,y) = x^Ty</code>,
+</p>
+</li>
+<li>
+<p> the polynomial kernel is defined as <code class="reqn">k(x,y) = (\rho x^Ty + \gamma)^d</code> with <code class="reqn">\rho &gt; 0</code>, <code class="reqn">d</code> is the polynomial order. Of note, a linear kernel is a polynomial kernel with <code class="reqn">\rho = d = 1</code> and <code class="reqn">\gamma = 0</code>,
+</p>
+</li>
+<li>
+<p> the sigmoid kernel is defined as <code class="reqn">k(x,y) = tanh(\rho x^Ty + \gamma)</code> which is similar to the sigmoid function in logistic regression,
+</p>
+</li>
+<li>
+<p> the inverse quadratic function defined as <code class="reqn">k(x,y) = \frac{1}{\sqrt{\parallel x-y \parallel^2 + \gamma}}</code> with <code class="reqn">\gamma &gt; 0</code>,
+</p>
+</li>
+<li>
+<p> the equality kernel defined as <code class="reqn">k(x,y) = \left\lbrace \begin{array}{ll} 1 &amp; if  x = y \\ 0 &amp; otherwise \end{array}\right.</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A <code class="reqn">n \times n</code> matrix.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kernel.gaussian, kernel.linear, kernel.polynomial, kernel.equality, kernel.sigmoid, kernel.inverse.quadratic.
+</p>
+
+
+</div>

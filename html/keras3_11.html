@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>activation_gelu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Gaussian error linear unit (GELU) activation function.</h2>
+
+<h3>Description</h3>
+
+<p>The Gaussian error linear unit (GELU) is defined as:
+</p>
+<p><code>gelu(x) = x * P(X &lt;= x)</code> where <code>P(X) ~ N(0, 1)</code>,
+i.e. <code>gelu(x) = 0.5 * x * (1 + erf(x / sqrt(2)))</code>.
+</p>
+<p>GELU weights inputs by their value, rather than gating
+inputs by their sign as in ReLU.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">activation_gelu(x, approximate = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>approximate</code></td>
+<td>
+<p>A <code>bool</code>, whether to enable approximation.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor, the result from applying the activation to the input tensor <code>x</code>.
+</p>
+
+
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1606.08415">Hendrycks et al., 2016</a>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/activations#gelu-function">https://keras.io/api/layers/activations#gelu-function</a>
+</p>
+</li></ul>
+<p>Other activations: <br><code>activation_elu()</code> <br><code>activation_exponential()</code> <br><code>activation_hard_sigmoid()</code> <br><code>activation_leaky_relu()</code> <br><code>activation_linear()</code> <br><code>activation_log_softmax()</code> <br><code>activation_mish()</code> <br><code>activation_relu()</code> <br><code>activation_relu6()</code> <br><code>activation_selu()</code> <br><code>activation_sigmoid()</code> <br><code>activation_silu()</code> <br><code>activation_softmax()</code> <br><code>activation_softplus()</code> <br><code>activation_softsign()</code> <br><code>activation_tanh()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rename_states</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rename the States of SSModel Object</h2>
+
+<h3>Description</h3>
+
+<p>A simple function for renaming the states of <code>SSModel</code> object. 
+Note that since KFAS version 1.2.3 the auxiliary functions such as 
+<code>SSMtrend</code> have argument <code>state_names</code> which can be used to 
+overwrite the default state names when building the model with <code>SSModel</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rename_states(model, state_names)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Object of class SSModel</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>state_names</code></td>
+<td>
+<p>Character vector giving new names for the states.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Original model with dimnames corresponding to states renamed.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">custom_model &lt;- SSModel(1:10 ~ -1 + 
+SSMcustom(Z = 1, T = 1, R = 1, Q = 1, P1inf = 1), H = 1) 
+custom_model &lt;- rename_states(custom_model, "level")
+ll_model &lt;- SSModel(1:10 ~ SSMtrend(1, Q = 1), H = 1)
+test_these &lt;- c("y", "Z", "H", "T", "R", "Q", "a1", "P1", "P1inf")
+identical(custom_model[test_these], ll_model[test_these])
+
+</code></pre>
+
+
+</div>

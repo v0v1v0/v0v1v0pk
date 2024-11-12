@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_network_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to calculate the network <code>matrix</code> for a <code>pathway</code> object</h2>
+
+<h3>Description</h3>
+
+<p><code>get_network_matrix</code> creates the adjacency matrix representing the gene-gene interaction structure within a particular <code>pathway</code>. Note that a 
+KEGG kgml file is downloaded and saved in the working directory.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'pathway'
+get_network_matrix(object, directed = TRUE, method = "auto")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>pathway</code> object identifying the pathway for which gene interaction infomation should be extracted. Here, KEGG IDs of format 'hsa00100' are used and information is downloaded from the KEGG database.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>directed</code></td>
+<td>
+<p>A <code>logical</code> argument, stating whether the network matrix 
+should return directed (<code>TRUE</code>) or undirected (<code>FALSE</code>) links.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Download method to be used for downloading files, passed to via <code>KEGGgraph::retrieveKGML</code> to <code>utils::download.file</code> function. Currently supports <code>'auto'</code> (default), <code>'internal'</code>, <code>'wininet'</code> (Windows only), <code>'libcurl'</code>, <code>'wget'</code> and <code>'curl'</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>get_network_matrix</code> returns the modified <code>pathway</code> object, where the slots <code>adj</code> and <code>sign</code> are altered according to the downloaded information in the KEGG kgml file.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs, Patricia Burger, Juliane Manitz
+</p>
+
+
+</div>

@@ -1,0 +1,159 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>h.mlcv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Maximum-Likelihood Cross-validation for Bandwidth Selection
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>h.mlcv</code> computes the maximum 
+likelihood cross-validation (Kullback-Leibler information) 
+bandwidth selector of a one-dimensional kernel density estimate.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">h.mlcv(x, ...)
+## Default S3 method:
+h.mlcv(x, lower = 0.1, upper = 5, tol = 0.1 * lower, 
+         kernel = c("gaussian", "epanechnikov", "uniform", "triangular", 
+         "triweight", "tricube", "biweight", "cosine"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower, upper</code></td>
+<td>
+<p>range over which to maximize. The default is
+almost always satisfactory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the convergence tolerance for <code>optimize</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, with default
+<code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>h.mlcv</code> maximum-likelihood cross-validation implements for choosing 
+the optimal bandwidth <code class="reqn">h</code> of kernel density estimator.<br></p>
+<p>This method was proposed by Habbema, Hermans, and Van den Broeck (1971) and by Duin (1976). The maximum-likelihood 
+cross-validation (MLCV) function is defined by:
+</p>
+<p style="text-align: center;"><code class="reqn">MLCV(h) = n^{-1} \sum_{i=1}^{n} \log\left[\hat{f}_{h,i}(x)\right]</code>
+</p>
+
+<p>the estimate <code class="reqn">\hat{f}_{h,i}(x)</code> on the subset <code class="reqn">\{X_{j}\}_{j \neq i}</code>
+denoting the leave-one-out estimator, can be written:
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}_{h,i}(X_{i}) = \frac{1}{(n-1) h} \sum_{j \neq i} K \left(\frac{X_{j}-X_{i}}{h}\right)</code>
+</p>
+
+<p>Define that <code class="reqn">h_{mlcv}</code> as good which approaches the finite maximum of <code class="reqn">MLCV(h)</code>:
+</p>
+<p style="text-align: center;"><code class="reqn">h_{mlcv} = \arg \max_{h} MLCV(h) = \arg \max_{h} \left(n^{-1} \sum_{i=1}^{n} \log\left[\sum_{j \neq i} K \left(\frac{X_{j}-X_{i}}{h}\right)\right]-\log[(n-1)h]\right)</code>
+</p>
+
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>the deparsed name of the <code>x</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the sample size after elimination of missing values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>value of bandwidth parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mlcv</code></td>
+<td>
+<p>the maximal likelihood CV value.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Habbema, J. D. F., Hermans, J., and Van den Broek, K. (1974)
+A stepwise discrimination analysis program using density estimation. 
+<em>Compstat 1974: Proceedings in Computational Statistics</em>. Physica Verlag, Vienna.
+</p>
+<p>Duin, R. P. W. (1976).
+On the choice of smoothing parameters of Parzen estimators of probability density functions. 
+<em>IEEE Transactions on Computers</em>, <b>C-25</b>, 1175–1179.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.h.mlcv</code>, see <code>lcv</code> in package <a href="https://CRAN.R-project.org/package=locfit"><span class="pkg">locfit</span></a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">h.mlcv(bimodal)
+h.mlcv(bimodal, kernel ="epanechnikov")
+</code></pre>
+
+
+</div>

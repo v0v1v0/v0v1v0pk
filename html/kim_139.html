@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vlookup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Vlookup</h2>
+
+<h3>Description</h3>
+
+<p>Look up values in a reference data.table and return values
+associated with the looked-up values contained in the reference data.table
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vlookup(
+  lookup_values = NULL,
+  reference_dt = NULL,
+  col_name_for_lookup_values = NULL,
+  col_name_for_output_values = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lookup_values</code></td>
+<td>
+<p>a vector of values to look up</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reference_dt</code></td>
+<td>
+<p>a data.table containing the values to look up
+as well as values associated with the looked-up values
+that need to be returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_name_for_lookup_values</code></td>
+<td>
+<p>in the reference data.table,
+name of the column containing <code>lookup_values</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_name_for_output_values</code></td>
+<td>
+<p>in the reference data.table,
+name of the column containing values to return (i.e., values
+associated with the looked-up values that will be the function's output)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">vlookup(lookup_values = c(2.620, 2.875), reference_dt = mtcars[1:9, ],
+col_name_for_lookup_values = "wt", col_name_for_output_values = "qsec")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random_truncated_normal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw samples from a truncated normal distribution.</h2>
+
+<h3>Description</h3>
+
+<p>The values are drawn from a normal distribution with specified mean and
+standard deviation, discarding and re-drawing any samples that are more
+than two standard deviations from the mean.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random_truncated_normal(shape, mean = 0, stddev = 1, dtype = NULL, seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>The shape of the random values to generate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>Float, defaults to 0. Mean of the random values to generate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stddev</code></td>
+<td>
+<p>Float, defaults to 1. Standard deviation of the random values
+to generate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>Optional dtype of the tensor. Only floating point types are
+supported. If not specified, <code>config_floatx()</code> is used,
+which defaults to <code>float32</code> unless you configured it otherwise (via
+<code>config_set_floatx(float_dtype)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>An R integer or instance of
+<code>random_seed_generator()</code>.
+Used to make the behavior of the initializer
+deterministic. Note that an initializer seeded with an integer
+or <code>NULL</code> (unseeded) will produce the same random values
+across multiple calls. To get different random values
+across multiple calls, use as seed an instance
+of <code>random_seed_generator()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor of random values.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other random: <br><code>random_beta()</code> <br><code>random_binomial()</code> <br><code>random_categorical()</code> <br><code>random_dropout()</code> <br><code>random_gamma()</code> <br><code>random_integer()</code> <br><code>random_normal()</code> <br><code>random_seed_generator()</code> <br><code>random_shuffle()</code> <br><code>random_uniform()</code> <br></p>
+
+
+</div>

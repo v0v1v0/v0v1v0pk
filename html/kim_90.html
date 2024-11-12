@@ -1,0 +1,236 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_group_means</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot group means</h2>
+
+<h3>Description</h3>
+
+<p>Creates a plot of sample means and error bars by group.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_group_means(
+  data = NULL,
+  dv_name = NULL,
+  iv_name = NULL,
+  na.rm = TRUE,
+  error_bar = "ci",
+  error_bar_range = 0.95,
+  error_bar_tip_width = 0.13,
+  error_bar_thickness = 1,
+  error_bar_caption = TRUE,
+  lines_connecting_means = TRUE,
+  line_colors = NULL,
+  line_types = NULL,
+  line_thickness = 1,
+  line_size = NULL,
+  dot_size = 3,
+  position_dodge = 0.13,
+  x_axis_title = NULL,
+  y_axis_title = NULL,
+  y_axis_title_vjust = 0.85,
+  legend_title = NULL,
+  legend_position = "right"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_name</code></td>
+<td>
+<p>name(s) of the independent variable(s).
+Up to two independent variables can be supplied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>logical. If <code>na.rm = TRUE</code>, NA values in
+independent and dependent variables will be removed before
+calculating group means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar</code></td>
+<td>
+<p>if <code>error_bar = "se"</code>; error bars will be +/-1
+standard error, if <code>error_bar = "ci"</code> error bars will be a
+confidence interval; if <code>error_bar = "pi"</code>, error bars will be
+a prediction interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_range</code></td>
+<td>
+<p>width of the confidence or prediction interval
+(default = 0.95 for 95 percent confidence or prediction interval).
+This argument will not apply when <code>error_bar = "se"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_tip_width</code></td>
+<td>
+<p>graphically, width of the segments
+at the end of error bars (default = 0.13)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_thickness</code></td>
+<td>
+<p>thickness of the error bars (default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_caption</code></td>
+<td>
+<p>should a caption be included to indicate
+the width of the error bars? (default = TRUE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lines_connecting_means</code></td>
+<td>
+<p>logical. Should lines connecting means
+within each group be drawn? (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_colors</code></td>
+<td>
+<p>colors of the lines connecting means (default = NULL)
+If the second IV has two levels, then by default,
+<code>line_colors = c("red", "blue")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_types</code></td>
+<td>
+<p>types of the lines connecting means (default = NULL)
+If the second IV has two levels, then by default,
+<code>line_types = c("solid", "dashed")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_thickness</code></td>
+<td>
+<p>thickness of the lines connecting group means
+(default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_size</code></td>
+<td>
+<p>Deprecated. Use the 'linewidth' argument instead.
+(default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_size</code></td>
+<td>
+<p>size of the dots indicating group means (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>position_dodge</code></td>
+<td>
+<p>by how much should the group means and error bars
+be horizontally offset from each other so as not to overlap?
+(default = 0.13)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_title</code></td>
+<td>
+<p>a character string for the x-axis title. If no
+input is entered, then, by default, the first value of
+<code>iv_name</code> will be used as the x-axis title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title</code></td>
+<td>
+<p>a character string for the y-axis title. If no
+input is entered, then, by default, <code>dv_name</code> will be used
+as the y-axis title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title_vjust</code></td>
+<td>
+<p>position of the y axis title (default = 0.85).
+By default, <code>y_axis_title_vjust = 0.85</code>, which means that the
+y axis title will be positioned at 85% of the way up from the bottom
+of the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_title</code></td>
+<td>
+<p>a character for the legend title. If no input
+is entered, then, by default, the second value of <code>iv_name</code>
+will be used as the legend title. If <code>legend_title = FALSE</code>,
+then the legend title will be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_position</code></td>
+<td>
+<p>position of the legend:
+<code>"none", "top", "right", "bottom", "left", "none"</code>
+(default = <code>"right"</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>by default, the output will be a ggplot object.
+If <code>output = "table"</code>, the output will be a data.table object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+plot_group_means(data = mtcars, dv_name = "mpg", iv_name = c("vs", "am"))
+plot_group_means(
+  data = mtcars, dv_name = "mpg", iv_name = c("vs", "am"),
+  error_bar = "se"
+)
+plot_group_means(
+  data = mtcars, dv_name = "mpg", iv_name = c("vs", "am"),
+  error_bar = "pi", error_bar_range = 0.99
+)
+# set line colors and types manually
+plot_group_means(
+data = mtcars, dv_name = "mpg", iv_name = c("vs", "am"),
+line_colors = c("green4", "purple"),
+line_types = c("solid", "solid"))
+# remove axis titles
+plot_group_means(
+data = mtcars, dv_name = "mpg", iv_name = c("vs", "am"),
+x_axis_title = FALSE, y_axis_title = FALSE, legend_title = FALSE)
+
+</code></pre>
+
+
+</div>

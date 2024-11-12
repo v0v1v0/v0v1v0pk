@@ -1,0 +1,198 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>max_sur_parallel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Minimizer of the parallel <code>"sur"</code> or <code>"jn"</code> criterion</h2>
+
+<h3>Description</h3>
+
+<p>Minimization, based on the package rgenoud (or on exhaustive search on a discrete set), of the <code>"sur"</code> or <code>"jn"</code> criterion for a batch of candidate sampling points.  
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">max_sur_parallel(lower, upper, optimcontrol = NULL, 
+batchsize, integration.param, T,
+model, new.noise.var = 0,real.volume.variance=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+
+<p>Vector containing the lower bounds of the design space.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+
+<p>Vector containing the upper bounds of the design space.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimcontrol</code></td>
+<td>
+
+<p>Optional list of control parameters for the optimization of the sampling criterion. The field <code>method</code> defines which optimization method is used: it can be either <code>"genoud"</code> (default) for an optimisation using the genoud algorithm, or <code>"discrete"</code> for an optimisation over a specified discrete set. 
+If the field <code>method</code> is set to <code>"genoud"</code>, one can set some parameters of this algorithm: 
+<code>pop.size</code>  (default : 50*d),  <code>max.generations</code> (10*d), <code>wait.generations</code> (2),  <code>BFGSburnin</code> (2) and the mutations <code>P1</code>, <code>P2</code>, up to <code>P9</code> (see <code>genoud</code>). Numbers into brackets are the default values.
+If the field <code>method</code> is set to <code>"discrete"</code>, one can set the field <code>optim.points</code>: p * d matrix corresponding to the p points where the criterion will be evaluated. If nothing is specified, 100*d points are chosen randomly. 
+Finally, one can control the field optim.option in order to decide how to optimize the sampling criterion. 
+If <code>optim.option</code> is set to 2 (default), batchsize sequential optimizations in dimension d are performed to find the optimum.
+If <code>optim.option</code> is set to 1, only one optimization in dimension batchsize*d is performed. This option is only available with <code>"genoud"</code>. This option might provide more global and accurate solutions, but is a lot more expensive.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+
+<p>Number of points to sample simultaneously. The sampling criterion will return batchsize points at a time for sampling.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.param</code></td>
+<td>
+
+<p>Optional list of control parameter for the computation of integrals, containing the fields <code>integration.points</code>: a p*d matrix corresponding to p integrations points and <code>integration.weights</code>: a vector of size p corresponding to the weights of these integration points. 
+If nothing is specified, default values are used (see: function <code>integration_design</code> for more details). 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Target value (scalar).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>A Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.noise.var</code></td>
+<td>
+
+<p>Optional scalar value of the noise variance of the new observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>real.volume.variance</code></td>
+<td>
+<p>Optional argument to use the <code>"jn"</code> criterion instead of <code>"sur"</code>. Default: FALSE</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+<p>the best set of points found.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>the value of the sur criterion at par.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allvalues</code></td>
+<td>
+<p>If an optimization on a discrete set of points is chosen, the value of the criterion at all these points.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Bect J., Ginsbourger D., Vazquez E., Picheny V., Richet Y. (2014), <em>Fast parallel kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>, Technometrics, vol. 56(4), pp 455-465
+</p>
+<p>Chevalier C., Ginsbourger D. (2014), <em>Corrected Kriging update formulae for batch-sequential data assimilation</em>, in Pardo-Iguzquiza, E., et al. (Eds.) Mathematics of Planet Earth, pp 119-122
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>EGIparallel</code>,<code>sur_optim_parallel</code>,<code>jn_optim_parallel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#max_sur_parallel
+
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- c(40,80) #thresholds
+testfun &lt;- branin
+lower &lt;- c(0,0)
+upper &lt;- c(1,1)
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+optimcontrol &lt;- list(method="genoud",pop.size=50,optim.option=1)
+integcontrol &lt;- list(distrib="sur",n.points=50,init.distrib="MC")
+integration.param &lt;- integration_design(integcontrol=integcontrol,d=2,
+                                            lower=lower,upper=upper,model=model,
+                                            T=T)
+batchsize &lt;- 5 #number of new points
+
+## Not run: 
+obj &lt;- max_sur_parallel(lower=lower,upper=upper,optimcontrol=optimcontrol,
+                        batchsize=batchsize,T=T,model=model,
+                        integration.param=integration.param)
+                        #one (hard) optim in dimension 5*2 !
+
+obj$par;obj$value #optimum in 5 new points
+new.model &lt;- update(object=model,newX=obj$par,newy=apply(obj$par,1,testfun),
+                       cov.reestim=TRUE)
+
+
+par(mfrow=c(1,2))
+print_uncertainty(model=model,T=T,type="pn",lower=lower,upper=upper,
+cex.points=2.5,main="probability of excursion")
+
+print_uncertainty(model=new.model,T=T,type="pn",lower=lower,upper=upper,
+new.points=batchsize,col.points.end="red",cex.points=2.5,
+main="updated probability of excursion")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

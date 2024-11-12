@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_hinge</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the hinge metric between <code>y_true</code> and <code>y_pred</code>.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode r"><pre>loss &lt;- mean(maximum(1 - y_true * y_pred, 0), axis=-1)
+</pre></div>
+<p><code>y_true</code> values are expected to be -1 or 1. If binary (0 or 1) labels are
+provided we will convert them to -1 or 1.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_hinge(y_true, y_pred, ..., name = "hinge", dtype = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>The ground truth values. <code>y_true</code> values are expected to be -1
+or 1. If binary (0 or 1) labels are provided they will be converted
+to -1 or 1 with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>The predicted values with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>y_true</code> and <code>y_pred</code> are missing, a <code>Metric</code>
+instance is returned. The <code>Metric</code> instance that can be passed directly to
+<code>compile(metrics = )</code>, or used as a standalone object. See <code>?Metric</code> for
+example usage. If <code>y_true</code> and <code>y_pred</code> are provided, then a tensor with
+the computed value is returned.
+</p>
+
+
+<h3>Usage</h3>
+
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre>m &lt;- metric_hinge()
+m$update_state(rbind(c(0, 1), c(0, 0)), rbind(c(0.6, 0.4), c(0.4, 0.6)))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(1.3, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$reset_state()
+m$update_state(rbind(c(0, 1), c(0, 0)), rbind(c(0.6, 0.4), c(0.4, 0.6)),
+               sample_weight = c(1, 0))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(1.1, shape=(), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/metrics/hinge_metrics#hinge-class">https://keras.io/api/metrics/hinge_metrics#hinge-class</a>
+</p>
+</li></ul>
+<p>Other losses: <br><code>Loss()</code> <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_focal_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_dice()</code> <br><code>loss_hinge()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_log_cosh()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+<p>Other hinge metrics: <br><code>metric_categorical_hinge()</code> <br><code>metric_squared_hinge()</code> <br></p>
+
+
+</div>

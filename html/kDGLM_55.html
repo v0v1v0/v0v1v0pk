@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>multi_normal_gamma_pred</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>update_multi_NG_chol
+multi_normal_gamma_pred</h2>
+
+<h3>Description</h3>
+
+<p>update_multi_NG_chol
+multi_normal_gamma_pred
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">multi_normal_gamma_pred(
+  conj.param,
+  outcome = NULL,
+  parms = list(),
+  pred.cred = 0.95
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>list or data.frame: The parameters of the conjugated distribution (Normal-Gamma) of the linear predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcome</code></td>
+<td>
+<p>numeric or matrix (optional): The observed values at the current time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list (optional): A list of extra parameters for the model. Not used in this function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>numeric: the desired credibility for the credibility interval.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the following values:
+</p>
+
+<ul>
+<li>
+<p> pred numeric/matrix: the mean of the predictive distribution of a next observation. Same type and shape as the parameter in model.
+</p>
+</li>
+<li>
+<p> var.pred numeric/matrix: the variance of the predictive distribution of a next observation. Same type and shape as the parameter in model.
+</p>
+</li>
+<li>
+<p> icl.pred numeric/matrix: the percentile of 100*((1-pred.cred)/2)
+</p>
+</li>
+<li>
+<p> icu.pred numeric/matrix: the percentile of 100*(1-(1-pred.cred)/2)
+</p>
+</li>
+<li>
+<p> log.like numeric: the The log likelihood for the outcome given the conjugated parameters.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Normal outcome: 
+<code>convert_multi_NG_Normal()</code>,
+<code>normal_pred()</code>,
+<code>update_Normal()</code>
+</p>
+
+
+</div>

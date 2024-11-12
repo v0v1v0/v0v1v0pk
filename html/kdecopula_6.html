@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bw_tll</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bandwidth selection for the transformation local likelihood estimator</h2>
+
+<h3>Description</h3>
+
+<p>The bandwidth is selected by a rule of thumb similar to <code>bw_t</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bw_tll(udata, deg)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>udata</code></td>
+<td>
+<p>data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deg</code></td>
+<td>
+<p>degree of the polynomial.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The formula is
+</p>
+<p style="text-align: center;"><code class="reqn">5  n^{-1 / (4q + 2)}  \hat{\Sigma}^{1/2},</code>
+</p>
+
+<p>where <code class="reqn">\hat{Sigma}</code> is empirical covariance matrix of the transformed
+random vector and <code class="reqn">q = 1</code> for <code>TLL1</code> and <code class="reqn">q = 2</code> for
+<code>TLL2</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>2 x 2</code> bandwidth matrix.
+</p>
+
+
+</div>

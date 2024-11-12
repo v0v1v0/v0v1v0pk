@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>makeKeylist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert the variable key into a list of long keys, one for each variable.</h2>
+
+<h3>Description</h3>
+
+<p>A keylist element is a long key for one new variable. The new
+variables are named by "name_old.name_new" for uniqueness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">makeKeylist(
+  key,
+  sep = c(character = "\\|", logical = "\\|", integer = "\\|", factor = "\\|",
+    ordered = "[\\|&lt;]", numeric = "\\|"),
+  na.strings = c("\\.", "", "\\s+", "N/A")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>A key object or a file name, csv, xlsx or rds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>Separator regular expressions</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>Strings that will be treated as NA. This will be
+used only if the key object does not have an na.strings
+attribute.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the key has one old variable being recoded 6 ways, that begets
+6 elements in the resulting list. Attributes including the classes
+of the old and new variables are included.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with one element per variable name, along with some
+attributes like class_old and class_new. The class is set as
+well, "keylist"
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+</div>

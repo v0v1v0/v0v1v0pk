@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write_delim_clip</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write a table from the clipboard</h2>
+
+<h3>Description</h3>
+
+<p>Use <code>readr::format_delim()</code> on a data frame to copy a string to the
+clipboard. Defaults to tab separator like given when copying cells from
+spreadsheets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write_delim_clip(x, delim = "\t", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame to write to clipboard.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delim</code></td>
+<td>
+<p>Single character used to separate fields within a record.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>readr::format_delim()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisibly, the input data frame.
+</p>
+
+
+</div>

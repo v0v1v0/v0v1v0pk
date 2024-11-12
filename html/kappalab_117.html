@@ -1,0 +1,295 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lin.prog.capa.ident</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Capacity identification based on linear programming</h2>
+
+<h3>Description</h3>
+
+<p>Creates an object of class <code>Mobius.capacity</code> using the
+linear programming approach proposed by Marichal and Roubens (see
+reference hereafter). Roughly speaking, this function determines, if it
+exists, the capacity compatible with a set of linear constraints that
+"separates" the most the provided alternatives. The problem is solved
+using the <span class="pkg">lpSolve</span> package.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lin.prog.capa.ident(n, k, A.Choquet.preorder = NULL,
+A.Shapley.preorder = NULL, A.Shapley.interval = NULL,
+A.interaction.preorder = NULL, A.interaction.interval = NULL,
+A.inter.additive.partition = NULL, epsilon = 1e-6)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Object of class <code>numeric</code> containing the
+number of elements of the set on which the object of class
+<code>Mobius.capacity</code> is to be defined.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Object of class <code>numeric</code> imposing that the solution is at
+most a k-additive capacity (the Möbius transform of subsets whose cardinal is
+superior to <code>k</code> vanishes).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.Choquet.preorder</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+constraints relative to the preorder of the alternatives. Each line
+of the matrix corresponds to one constraint of the type "alternative
+<code>a</code> is preferred to alternative <code>b</code> with preference threshold
+<code>delta.C</code>". A line is structured as follows: the first <code>n</code>
+elements encode alternative <code>a</code>, the next <code>n</code> elements
+encode alternative <code>b</code>, and the last element contains the
+preference threshold <code>delta.C</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.Shapley.preorder</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+constraints relative to the preorder of the criteria. Each line
+of this 3-column matrix corresponds to one constraint of the type
+"the Shapley importance index of criterion <code>i</code> is greater than
+the Shapley importance index of criterion <code>j</code> with preference threshold
+<code>delta.S</code>". A line is structured as follows: the first element
+encodes <code>i</code>, the second <code>j</code>, and the third element contains
+the preference threshold <code>delta.S</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.Shapley.interval</code></td>
+<td>
+<p>Object of class <code>matrix</code> containing the
+constraints relative to the quantitative importance of the
+criteria. Each line of this 3-column matrix corresponds to one
+constraint of the type "the Shapley importance index of criterion
+<code>i</code> lies in the interval <code>[a,b]</code>". The interval
+<code>[a,b]</code> has to be included in <code>[0,1]</code>. A line of the
+matrix is structured as follows: the first element encodes <code>i</code>,
+the second <code>a</code>, and the third <code>b</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.interaction.preorder</code></td>
+<td>
+<p>Object of class <code>matrix</code>
+containing the constraints relative to the preorder of the pairs of
+criteria in terms of the Shapley interaction index. Each line of this 5-column matrix
+corresponds to one constraint of the type "the Shapley interaction
+index of the pair <code>ij</code> of criteria is greater than the Shapley interaction
+index of the pair <code>kl</code> of criteria with preference threshold <code>delta.I</code>".
+A line is structured as follows: the first two elements encode
+<code>ij</code>, the second two <code>kl</code>, and the fifth element contains
+the preference threshold <code>delta.I</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.interaction.interval</code></td>
+<td>
+<p>Object of class <code>matrix</code>
+containing the constraints relative to the type and the magnitude of
+the Shapley interaction index for pairs of criteria. Each line of
+this 4-column matrix corresponds to one constraint of the type
+"the Shapley interaction index of the pair <code>ij</code> of criteria
+lies in the interval <code>[a,b]</code>". The interval <code>[a,b]</code> has to
+be included in <code>[-1,1]</code>. A line is structured as follows: the first two elements encode
+<code>ij</code>, the third element encodes <code>a</code>, and the fourth element
+encodes <code>b</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.inter.additive.partition</code></td>
+<td>
+<p>Object of class <code>numeric</code>
+encoding a partition of the set of criteria imposing that there be
+no interactions among criteria belonging to different classes 
+of the partition. The partition is to be given under the form of a
+vector of integers from <code>{1,...,n}</code> of length <code>n</code> such
+that two criteria belonging to the same class are "marked" by the
+same integer. For instance, the partition <code>{{1,3},{2,4},{5}}</code> can
+be encoded as <code>c(1,2,1,2,3)</code>. See Fujimoto and Murofushi (2000)
+for more details on the concept of mu-inter-additive partition.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>Object of class <code>numeric</code> containing the
+thresold value for the monotonicity constraints, i.e. the
+difference between the "weights" of two subsets whose cardinals
+differ exactly by 1 must be greater than <code>epsilon</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The linear program is solved using the <code>lp</code> function of
+the <span class="pkg">lpSolve</span>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function returns a list structured as follows:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>solution</code></td>
+<td>
+<p>Object of class <code>Mobius.capacity</code> containing the
+Möbius transform of the <code>k</code>-additive solution, if any.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>Value of the objective function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lp.object</code></td>
+<td>
+<p>Object of class <code>lp.object</code> returned by <code>lpSolve</code>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>K. Fujimoto and T. Murofushi (2000) <em>Hierarchical decomposition of the
+Choquet integral</em>, in: Fuzzy Measures and Integrals: Theory and
+Applications, M. Grabisch, T. Murofushi, and M. Sugeno Eds, Physica
+Verlag, pages 95-103.
+</p>
+<p>J-L. Marichal and M. Roubens (2000), <em>Determination of weights
+of interacting criteria from a reference set</em>, European Journal of
+Operational Research 124, pages 641-650.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.capacity-class</code>,
+<br><code>mini.var.capa.ident</code>,
+<br><code>mini.dist.capa.ident</code>,
+<br><code>least.squares.capa.ident</code>,
+<br><code>heuristic.ls.capa.ident</code>,
+<br><code>ls.sorting.capa.ident</code>,
+<br><code>entropy.capa.ident</code>.  
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## some alternatives
+a &lt;- c(18,11,18,11,11)
+b &lt;- c(18,18,11,11,11)
+c &lt;- c(11,11,18,18,11)
+d &lt;- c(18,11,11,11,18)
+e &lt;- c(11,11,18,11,18)
+    
+## preference threshold relative
+## to the preorder of the alternatives
+delta.C &lt;- 1
+
+## corresponding Choquet preorder constraint matrix 
+Acp &lt;- rbind(c(d,a,delta.C),
+             c(a,e,delta.C),
+             c(e,b,delta.C),
+             c(b,c,delta.C)
+            )
+
+## a Shapley preorder constraint matrix
+## Sh(1) - Sh(2) &gt;= -delta.S
+## Sh(2) - Sh(1) &gt;= -delta.S
+## Sh(3) - Sh(4) &gt;= -delta.S
+## Sh(4) - Sh(3) &gt;= -delta.S
+## i.e. criteria 1,2 and criteria 3,4
+## should have the same global importances
+delta.S &lt;- 0.01    
+Asp &lt;- rbind(c(1,2,-delta.S),
+             c(2,1,-delta.S),
+             c(3,4,-delta.S),
+             c(4,3,-delta.S)
+            )
+
+## a Shapley interval constraint matrix
+## 0.3 &lt;= Sh(1) &lt;= 0.9 
+Asi &lt;- rbind(c(1,0.3,0.9))
+
+
+## an interaction preorder constraint matrix
+## such that I(12) = I(34)
+delta.I &lt;- 0.01
+Aip &lt;- rbind(c(1,2,3,4,-delta.I),
+             c(3,4,1,2,-delta.I))
+
+## an interaction interval constraint matrix
+## i.e. -0.20 &lt;= I(12) &lt;= -0.15 
+Aii &lt;- rbind(c(1,2,-0.2,-0.15))
+
+
+## Not run: 
+## a LP 2-additive solution
+lin.prog &lt;- lin.prog.capa.ident(5,2,A.Choquet.preorder = Acp)              
+m &lt;- lin.prog$solution
+m
+
+## the resulting global evaluations
+rbind(c(a,mean(a),Choquet.integral(m,a)),
+      c(b,mean(b),Choquet.integral(m,b)),
+      c(c,mean(c),Choquet.integral(m,c)),
+      c(d,mean(d),Choquet.integral(m,d)),
+      c(e,mean(e),Choquet.integral(m,e)))
+
+## the Shapley value
+Shapley.value(m)
+
+## a LP 3-additive more constrained solution
+lin.prog2 &lt;- lin.prog.capa.ident(5,3,
+                                   A.Choquet.preorder = Acp,
+                                   A.Shapley.preorder = Asp)
+m &lt;- lin.prog2$solution
+m
+rbind(c(a,mean(a),Choquet.integral(m,a)),
+      c(b,mean(b),Choquet.integral(m,b)),
+      c(c,mean(c),Choquet.integral(m,c)),
+      c(d,mean(d),Choquet.integral(m,d)),
+      c(e,mean(e),Choquet.integral(m,e)))
+Shapley.value(m)
+
+## a LP 5-additive more constrained solution
+lin.prog3 &lt;- lin.prog.capa.ident(5,5,
+                                   A.Choquet.preorder = Acp,
+                                   A.Shapley.preorder = Asp,
+                                   A.Shapley.interval = Asi,
+                                   A.interaction.preorder = Aip,
+                                   A.interaction.interval = Aii)
+
+m &lt;- lin.prog3$solution
+m
+rbind(c(a,mean(a),Choquet.integral(m,a)),
+      c(b,mean(b),Choquet.integral(m,b)),
+      c(c,mean(c),Choquet.integral(m,c)),
+      c(d,mean(d),Choquet.integral(m,d)),
+      c(e,mean(e),Choquet.integral(m,e)))
+summary(m)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_recall</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the recall of the predictions with respect to the labels.</h2>
+
+<h3>Description</h3>
+
+<p>This metric creates two local variables, <code>true_positives</code> and
+<code>false_negatives</code>, that are used to compute the recall. This value is
+ultimately returned as <code>recall</code>, an idempotent operation that simply divides
+<code>true_positives</code> by the sum of <code>true_positives</code> and <code>false_negatives</code>.
+</p>
+<p>If <code>sample_weight</code> is <code>NULL</code>, weights default to 1.
+Use <code>sample_weight</code> of 0 to mask values.
+</p>
+<p>If <code>top_k</code> is set, recall will be computed as how often on average a class
+among the labels of a batch entry is in the top-k predictions.
+</p>
+<p>If <code>class_id</code> is specified, we calculate recall by considering only the
+entries in the batch for which <code>class_id</code> is in the label, and computing the
+fraction of them for which <code>class_id</code> is above the threshold and/or in the
+top-k predictions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_recall(
+  ...,
+  thresholds = NULL,
+  top_k = NULL,
+  class_id = NULL,
+  name = NULL,
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thresholds</code></td>
+<td>
+<p>(Optional) A float value, or a Python list of float
+threshold values in <code style="white-space: pre;">⁠[0, 1]⁠</code>. A threshold is compared with
+prediction values to determine the truth value of predictions (i.e.,
+above the threshold is <code>TRUE</code>, below is <code>FALSE</code>). If used with a
+loss function that sets <code>from_logits=TRUE</code> (i.e. no sigmoid
+applied to predictions), <code>thresholds</code> should be set to 0.
+One metric value is generated for each threshold value.
+If neither <code>thresholds</code> nor <code>top_k</code> are set,
+the default is to calculate recall with <code>thresholds=0.5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top_k</code></td>
+<td>
+<p>(Optional) Unset by default. An int value specifying the top-k
+predictions to consider when calculating recall.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_id</code></td>
+<td>
+<p>(Optional) Integer class ID for which we want binary metrics.
+This must be in the half-open interval <code style="white-space: pre;">⁠[0, num_classes)⁠</code>, where
+<code>num_classes</code> is the last dimension of predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>Metric</code> instance is returned. The <code>Metric</code> instance can be passed
+directly to <code>compile(metrics = )</code>, or used as a standalone object. See
+<code>?Metric</code> for example usage.
+</p>
+
+
+<h3>Usage</h3>
+
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre>m &lt;- metric_recall()
+m$update_state(c(0, 1, 1, 1),
+               c(1, 0, 1, 1))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.6666667, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$reset_state()
+m$update_state(c(0, 1, 1, 1),
+               c(1, 0, 1, 1),
+               sample_weight = c(0, 0, 1, 0))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(1.0, shape=(), dtype=float32)
+
+</pre></div>
+<p>Usage with <code>compile()</code> API:
+</p>
+<div class="sourceCode r"><pre>model |&gt; compile(
+  optimizer = 'sgd',
+  loss = 'binary_crossentropy',
+  metrics = list(metric_recall())
+)
+</pre></div>
+<p>Usage with a loss with <code>from_logits=TRUE</code>:
+</p>
+<div class="sourceCode r"><pre>model |&gt; compile(
+  optimizer = 'adam',
+  loss = loss_binary_crossentropy(from_logits = TRUE),
+  metrics = list(metric_recall(thresholds = 0))
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/metrics/classification_metrics#recall-class">https://keras.io/api/metrics/classification_metrics#recall-class</a>
+</p>
+</li></ul>
+<p>Other confusion metrics: <br><code>metric_auc()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

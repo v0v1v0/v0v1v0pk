@@ -1,0 +1,100 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KHQ5D_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KHQ five dimension data</h2>
+
+<h3>Description</h3>
+
+<p>This data set contains an example of 30 responses of the KHQ5D.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KHQ5D_data
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>This data frame has 30 rows and the following 5 columns:
+</p>
+
+<dl>
+<dt>RL</dt>
+<dd>
+<p>Role Limitations:
+1. Your bladder problem does not affect your household tasks, job, or normal daily activities outside the home;
+2. Your bladder problem slightly affects your household tasks, job, or normal daily activities outside the home;
+3. Your bladder problem moderately affects your household tasks, job, or normal daily activities outside the home;
+4. Your bladder problem affects your household tasks, job, or normal daily activities outside the home a lot.</p>
+</dd>
+<dt>PL</dt>
+<dd>
+<p>Physical Limitations:
+1. Your bladder problem does not affect your physical activities or ability to travel;
+2. Your bladder problem slightly affects your physical activities or ability to travel;
+3. Your bladder problem moderately affects your physical activities or ability to travel;
+4. Your bladder problem affects your physical activities or ability to travel a lot.</p>
+</dd>
+<dt>SL</dt>
+<dd>
+<p>Social Limitations:
+1. Your bladder problem does not limit your ability to see/visit friends or affect your family life;
+2. Your bladder problem slightly limits your ability to see/visit friends or affects your family life;
+3. Your bladder problem moderately limits your ability to see/visit friends or affects your family life;
+4. Your bladder problem limits your ability to see/visit friends or affects your family life a lot.</p>
+</dd>
+<dt>E</dt>
+<dd>
+<p>Emotions:
+1. Your bladder problem does not make you feel depressed or anxious and nervous;
+2. Your bladder problem makes you feel slightly depressed or anxious and nervous;
+3. Your bladder problem makes you feel moderately depressed or anxious and nervous;
+4. Your bladder problem makes you feel depressed or anxious and nervous a lot.</p>
+</dd>
+<dt>S</dt>
+<dd>
+<p>Sleep:
+1. Your bladder problem does not affect your sleep;
+2. Your bladder problem slightly affects your sleep;
+3. Your bladder problem moderately affects your sleep;
+4. Your bladder problem affects your sleep a lot.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Example data
+</p>
+
+
+<h3>References</h3>
+
+<p>Brazier J, Czoski-Murray C, Roberts J, Brown M, Symonds T, Kelleher C.
+Estimation of a preference-based index from a condition-specific measure:
+the King's Health Questionnaire. Med Decis Making. 2008 Jan-Feb;28(1):113-26.
+doi:10.1177/0272989X07301820.
+<a href="https://pubmed.ncbi.nlm.nih.gov/17641139/">PubMed</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+KHQ5D(scores = KHQ5D_data, country = "UK", type = "SG",
+  author = "Brazier", year = 2008, source = "KHQ",
+  ignore.invalid = TRUE)
+
+KHQ5D(scores = KHQ5D_data, country = "UK", type = "SG",
+  author = "Brazier", year = 2008, source = "KHQ",
+  save.xlsx = FALSE, filename = "Res_KHQ5D_uti_ind.xlsx",
+  sheetName = "Utility_Index", ignore.invalid = TRUE)
+
+
+</code></pre>
+
+
+</div>

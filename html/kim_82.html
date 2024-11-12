@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>order_rows_specifically_in_dt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Order rows specifically in a data table</h2>
+
+<h3>Description</h3>
+
+<p>Order rows in a data.table in a specific order
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">order_rows_specifically_in_dt(
+  dt = NULL,
+  col_to_order_by = NULL,
+  specific_order = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dt</code></td>
+<td>
+<p>a data.table object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_to_order_by</code></td>
+<td>
+<p>a character value indicating
+the name of the column by which to order the data.table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>specific_order</code></td>
+<td>
+<p>a vector indicating a specific order of
+the values in the column by which to order the data.table.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a data.table object whose rows will
+be ordered as specified.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">order_rows_specifically_in_dt(mtcars, "carb", c(3, 2, 1, 4, 8, 6))
+</code></pre>
+
+
+</div>

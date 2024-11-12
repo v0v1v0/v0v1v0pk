@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausur.gen.marks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate mark assignments</h2>
+
+<h3>Description</h3>
+
+<p>Create a vector of marks to be used by <code>klausur</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klausur.gen.marks(
+  mark.labels = NULL,
+  answ = NULL,
+  wght = NULL,
+  suggest = list(mean = NULL, sd = NULL),
+  minp = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mark.labels</code></td>
+<td>
+<p>Either a vector with labels (names) for all marks that should be assigned to certain test scores,
+or one of the arguments 6, 11, 16, "DIHK", "UK", "USA" or "A" (see Details). If NULL,
+you will be asked to type in labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>answ</code></td>
+<td>
+<p>Either an object with item names in klausuR scheme (see <code>klausur</code>),
+e.g. your observation data,
+or an integer representing the maximum score of the test. If NULL, you will
+be asked for the maximum score.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wght</code></td>
+<td>
+<p>A vector with weights for each item. If NULL,
+the number of items is used as maximum score, that is,
+each item gives a point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suggest</code></td>
+<td>
+<p>A list with the elements <code>mean</code> and <code>sd</code>. If both are not NULL,
+this function will suggest marks for achieved points
+assuming normal distribution. That is,
+"mean" and "sd" should be set to the corresponding values of the test's results.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minp</code></td>
+<td>
+<p>An integer value,
+in case there is a minimum score no-one can fall below (which can happen, e.g., with ET/NRET scoring and
+different numbers of answer alternatives). Should be left as is in most cases.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>mark.labels</code> is set to one of the arguments 6, 11, 16, "DIHK", "UK",
+"USA" or "A", often used schemes for marks will be used as
+a preset. In case of <code>mark.labels=6</code>, marks will go from 1 (best) to 6 (failed),
+as widely used in German schools.
+In case of <code>mark.labels=11</code>, marks will range from 1.0 (best) to 5.0 (failed),
+with the marks 1 through 3 being
+split into three decimal steps .0, .3 and .7,
+as is often used in academic institutions. In case of <code>mark.labels=16</code>,
+marks will be a range of points from 15 (best) to 0 (failed),
+as often used in German gymnasiums. If <code>mark.labels="A"</code>,
+marks A to F are given.
+</p>
+<p>For the other cases some more probably useful assumptions are being made,
+which percentage of achieved points leads to which mark.
+If <code>mark.labels="DIHK"</code>, marks will be 1 through 6,
+and  calculated according to usual standards of the Deutsche Industrie- und Handelskammer
+(1 &gt; 92%, 2 &gt; 81%, 3 &gt; 67%, 4 &gt; 50%, 5 &gt; 30%, 6 below that).
+If <code>mark.labels="UK"</code>, marks are A &gt; 90%, B &gt; 65%, C &gt; 35%,
+D &gt; 10% and E below that, and for <code>mark.labels="USA"</code> it's
+A &gt; 90%, B &gt; 80%, C &gt; 70%,
+D &gt; 60% and F below that. Please note that the percentages indicate individual test results
+and not "the best X percent of the sample".
+If you'd rather use your own system, either declare it as a vector, or leave as NULL,
+and you'll be
+asked (be sure to <strong>begin with the worst</strong> mark!).
+</p>
+<p>The parameter <code>answ</code> is quite versatile as well. You can just feed it your observation data,
+if it complies
+with the naming scheme for items (<code>Item###</code>,
+see also <code>klausur.gen</code>), and
+<code>klausur.gen.marks</code> will calculate the maximum score automatically. Or you assign the maximum directly as an integer
+value.
+</p>
+<p>Another feature can be toggled with the parameter <code>suggest</code>. If you feed it with the mean and standard deviation values of your test's
+results,
+marks are automatically assigned to the achieved score under the assumption of normal distribution. Please understand that
+the naming "suggest" is not an accident! This is only a suggestion, please review it,
+tweak it, revise it, until it fits your needs.
+However, this feature can directly be called by <code>klausur</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character vector.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+notenschluessel &lt;- klausur.gen.marks(mark.labels=11,answ=antworten)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

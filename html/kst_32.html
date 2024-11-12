@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reduction</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reduction of Knowledge Structures</h2>
+
+<h3>Description</h3>
+
+<p>Computes the reduction of knowledge structures.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  ## S3 method for class 'kstructure'
+reduction(x, operation=c("discrimination", "union", "intersection"),...)
+  ## S3 method for class 'kfamset'
+reduction(x, operation=c("discrimination", "union", "intersection"),...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code> or <code>kfamset</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>operation</code></td>
+<td>
+<p>The set operation under which the reduction is computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments to be passed to methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>reduction</code> performs the reduction of a knowledge structure by
+computing the minimal subset having the same closure as the knowledge
+structure. Additionally, it allows for computing the <em>discriminative</em>
+reduction of a knowledge structure. Such a discriminative reduction is a
+knowledge structure in which each notion contains a single item.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of the same class as <code>x</code> where each subset represents
+one knowledge state of the resulting reduction.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>, <code>knotions</code>, <code>closure</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+reduction(kst, operation="discrimination")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kissmigDummyS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get a simple suitability map</h2>
+
+<h3>Description</h3>
+
+<p><code>kissmigDummyS</code> is a support function to generate simple suitability maps based on mean annual air temperature for example code.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kissmigDummyS(mean, sd)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>temperature mean (degree celsius) of the suitability distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+<p>temperature standard deviation (degree celsius) of the  suitability distribution</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>kissmigDummyS</code> returns a suitability map for a given extent based on mean annual temperature. It uses
+data of WorldClim and calculates suitability as a normal distribution defined by <code>mean</code> and <code>sd</code>
+of mean annual temperature. The density function is linearly rescaled to a maximum of 1, the maximum suitability
+used in <code>kissmig</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="https://www.worldclim.org/">https://www.worldclim.org/</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kissmig</code>
+</p>
+
+
+</div>

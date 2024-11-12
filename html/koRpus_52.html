@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>danielson.bryan</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Danielson-Bryan</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">danielson.bryan(
+  txt.file,
+  db1 = c(cpb = 1.0364, cps = 0.0194, const = 0.6059),
+  db2 = c(const = 131.059, cpb = 10.364, cps = 0.194),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>db1</code></td>
+<td>
+<p>A numeric vector with named magic numbers,
+defining the relevant parameters for the first formula (regression).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>db2</code></td>
+<td>
+<p>A numeric vector with named magic numbers,
+defining the relevant parameters for the second formula (cloze equivalent).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Calculates the two Danielson-Bryan formulas. In contrast to
+<code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+<p>This formula doesn't need syllable count.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  danielson.bryan(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

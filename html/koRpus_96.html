@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get.kRp.env</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get koRpus session settings</h2>
+
+<h3>Description</h3>
+
+<p>The function <code>get.kRp.env</code> returns information on your session environment regarding the koRpus package,
+e.g.
+where your local TreeTagger installation resides, if it was set before using
+<code>set.kRp.env</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get.kRp.env(..., errorIfUnset = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Named parameters to get from the koRpus environment. Valid arguments are:
+</p>
+
+<dl>
+<dt>TT.cmd</dt>
+<dd>
+<p> Logical, whether the set tagger command should be returned.</p>
+</dd>
+<dt>lang</dt>
+<dd>
+<p> Logical, whether the set language should be returned.</p>
+</dd>
+<dt>TT.options</dt>
+<dd>
+<p> Logical,
+whether the set TT.options for <code>treetag</code> should be returned.</p>
+</dd>
+<dt>hyph.cache.file</dt>
+<dd>
+<p> Logical,
+whether the set hyphenation cache file for <code>hyphen</code> should be returned.</p>
+</dd>
+<dt>add.desc</dt>
+<dd>
+<p> Logical,
+whether tag descriptions should be added directly to tagged text objects.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>errorIfUnset</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> and the desired property is not set at all,
+the function will fail with an error message.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For the most part,
+<code>get.kRp.env</code> is a convenient wrapper for <code>getOption</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character string or list, possibly including:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>TT.cmd</code></td>
+<td>
+<p>Path information for the TreeTagger command</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>The specified language</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TT.options</code></td>
+<td>
+<p>A list with options for <code>treetag</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hyph.cache.file</code></td>
+<td>
+<p>The specified hyphenation cache file for <code>hyphen</code></p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>set.kRp.env</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.kRp.env(lang="en")
+get.kRp.env(lang=TRUE)
+</code></pre>
+
+
+</div>

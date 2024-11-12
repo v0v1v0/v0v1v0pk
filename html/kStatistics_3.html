@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cum2mom</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cumulants in terms of moments
+</h2>
+
+<h3>Description</h3>
+
+<p>The function computes a simple or a multivariate cumulant in terms of simple or multivariate moments.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cum2mom(n = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer or vector of integers</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Faa di Bruno's formula (the  <code>MFB</code> function) gives the coefficients of the exponential formal power series 
+<code>f[g()]</code> where <code>f</code> and <code>g</code> are exponential formal power series too. Simple cumulants 
+are expressed in terms of simple moments using the Faa di Bruno's formula obtained from the  <code>MFB</code> function in the case 
+"composition of univariate <code>f</code> with univariate <code>g</code>" with <code>f[i]=(-1)^(i-1)*(i-1)!, g[i]=m[i]</code> 
+for <code>i</code> from 1 to <code>n</code> and <code>m[i]</code> moments. Multivariate cumulants are expressed in terms 
+of multivariate moments using the Faa di Bruno's formula obtained from the  <code>MFB</code> function in the case "composition 
+of univariate <code>f</code> with multivariate <code>g</code>". In such a case the coefficients of <code>g</code> are the multivariate moments.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>string</code></td>
+<td>
+<p>the expression of the cumulant in terms of moments</p>
+</td>
+</tr></table>
+<h3>Warning</h3>
+
+<p>The value of the first parameter is the same as the <code>MFB</code> function in the univariate with 
+univariate case composition and in the univariate with multivariate case composition.</p>
+
+
+<h3>Note</h3>
+
+<p>This function calls the <code>MFB</code> function in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. 14(2), 440-468. (download from <a href="https://arxiv.org/pdf/math/0607623.pdf">https://arxiv.org/pdf/math/0607623.pdf</a>) 
+</p>
+<p>E. Di Nardo E., G. Guarino, D. Senato (2011) A new algorithm for computing the multivariate Faa di Bruno's formula. 
+Appl. Math. Comp. 217, 6286–6295. (download from <a href="https://arxiv.org/abs/1012.6008">https://arxiv.org/abs/1012.6008</a>)
+</p>
+<p>P. McCullagh, J. Kolassa (2009) Scholarpedia, 4(3):4699. <a href="http://www.scholarpedia.org/article/Cumulants">http://www.scholarpedia.org/article/Cumulants</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>MFB</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Return the simple cumulant k[5] in terms of the simple moments m[1],..., m[5].
+cum2mom(5)
+
+# Return the multivariate cumulant k[3,1] in terms of the multivariate moments m[i,j] for 
+# i=0,1,2,3 and j=0,1.
+cum2mom(c(3,1))
+</code></pre>
+
+
+</div>

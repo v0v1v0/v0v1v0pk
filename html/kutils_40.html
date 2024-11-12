@@ -1,0 +1,140 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>likert</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Percentage tables for Likert Scale variables</h2>
+
+<h3>Description</h3>
+
+<p>Creates a table with columns for allowed values and rows for
+variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">likert(data, vlist, columnlabels, valuelabels, rows = FALSE, digits = 2, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame. Function will try to include all
+variables in data, unless vlist is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vlist</code></td>
+<td>
+<p>A vector of column names in data that should be
+displayed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>columnlabels</code></td>
+<td>
+<p>Column labels, optional to beautify variable
+names. If not supplied, column names will be used as column
+labels. Provide either 1) A named vector that replaces one or
+more columns, <code>c(oldname1 = "newlabel1", oldname2 =
+"newlabel2")</code> where oldnames are in colnames(data), or 2) a
+vector of same length as vlist (or data if vlist is not
+supplied) that will replace them one for one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>valuelabels</code></td>
+<td>
+<p>A vector of values to beautify existing
+levels. If not supplied, factor levels will be used as row
+labels</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rows</code></td>
+<td>
+<p>Should output be transposed. This may help if there
+are many variables that need to fit on the page.  Percentages
+will appear on the rows, rather than columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>Number of decimals to display in percentages</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments to pass to R's table function. We suggest
+<code>useNA = "always"</code> to add missing value information and
+<code>exclude = original.value.label</code> to exclude values
+observed. Currently, <code>useNA = "ifany"</code> does not work as
+expected, the number of missings will be displayed, even if
+there are none.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list, including a frequency table (called "freqTab"),
+column counts ("counts"), column sums ("sums"), and
+column percents ("pcts").
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">vvector &lt;- c("Strongly Disagree", "Disagree", "Neutral",
+              "Agree", "Strongly Agree")
+set.seed(2342234)
+N &lt;- 28
+scales &lt;-
+    data.frame(Vegas = factor(sample(1:5, N, replace = TRUE),
+        levels = 1:5, labels = vvector),
+               NewYork = factor(sample(1:5, N, replace = TRUE),
+        levels = 1:5, labels = vvector),
+               Paris = factor(sample(1:5, N, replace = TRUE),
+        levels = 1:5, labels = vvector),
+               Berlin = factor(sample(1:5, N, replace = TRUE),
+        levels = 1:5, labels = vvector))
+
+likert(scales)
+
+likert(scales, exclude = "Disagree")
+
+likert(scales, exclude = "Strongly Disagree", useNA = "ifany")
+
+(mySummary1 &lt;- likert(data = scales, vlist = c("Vegas", "NewYork", "Paris")))
+mySummary1[["pcts"]]
+
+(mySummary2 &lt;- likert(scales, vlist = c("Vegas", "NewYork", "Paris"),
+                    valuelabels = c("SD", "D", "N", "A", "SA")))
+(mySummary3 &lt;- likert(scales, vlist = c("Vegas", "NewYork", "Paris"),
+                    valuelabels = c("Strongly Disagree" = "Strong Disagreement")))
+
+(mySummary5 &lt;- likert(scales, vlist = c("Vegas", "NewYork", "Paris"),
+      valuelabels = c("SD", "D", "N", "A", "SA"),
+      columnlabels = c("Vegas" = "Sin City"), rows = TRUE))
+
+ ## Example of how one might write this in a file. 
+ ## print(xtable::xtable(mySummary1[[1]], digits = 1),
+ ##       type = "html", file = "varCount-1.html")       
+  
+</code></pre>
+
+
+</div>

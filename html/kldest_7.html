@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_ci_bootstrap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Uncertainty of KL divergence estimate using Efron's bootstrap.</h2>
+
+<h3>Description</h3>
+
+<p>This function computes a confidence interval for KL divergence based on Efron's
+bootstrap. The approach only works for kernel density-based estimators since
+nearest neighbour-based estimators cannot deal with the ties produced when
+sampling with replacement.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_ci_bootstrap(
+  X,
+  Y,
+  estimator = kld_est_kde1,
+  B = 500L,
+  alpha = 0.05,
+  method = c("quantile", "se"),
+  include.boot = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> matrices, representing <code>n</code> samples from
+the true distribution <code class="reqn">P</code> and <code>m</code> samples from the approximate distribution
+<code class="reqn">Q</code>, both in <code>d</code> dimensions. Vector input is treated as a column matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>A function expecting two inputs <code>X</code> and <code>Y</code>, the
+Kullback-Leibler divergence estimation method. Defaults to <code>kld_est_kde1</code>,
+which can only deal with one-dimensional two-sample problems (i.e.,
+<code>d = 1</code> and <code>q = NULL</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>Number of bootstrap replicates (default: <code>500</code>), the larger, the
+more accurate, but also more computationally expensive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Error level, defaults to <code>0.05</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Either <code>"quantile"</code> (the default), also known as the reverse
+percentile method, or <code>"se"</code> for a normal approximation of the KL
+divergence estimator using the standard error of the subsamples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.boot</code></td>
+<td>
+<p>Boolean, <code>TRUE</code> means KL divergene estimates on bootstrap
+samples are included in the returned list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed on to <code>estimator</code>, i.e. as <code>estimator(X, Y, ...)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Reference:
+</p>
+<p>Efron, "Bootstrap Methods: Another Look at the Jackknife", The Annals of
+Statistics, Vol. 7, No. 1 (1979).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following fields:
+</p>
+
+<ul>
+<li> <p><code>"est"</code> (the estimated KL divergence),
+</p>
+</li>
+<li> <p><code>"boot"</code> (a length <code>B</code> numeric vector with KL divergence estimates on
+the bootstrap subsamples), only included if <code>include.boot = TRUE</code>,
+</p>
+</li>
+<li> <p><code>"ci"</code> (a length <code>2</code> vector containing the lower and upper limits of the
+estimated confidence interval).
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 1D Gaussian, two samples
+set.seed(0)
+X &lt;- rnorm(100)
+Y &lt;- rnorm(100, mean = 1, sd = 2)
+kld_gaussian(mu1 = 0, sigma1 = 1, mu2 = 1, sigma2 = 2^2)
+kld_est_kde1(X, Y)
+kld_ci_bootstrap(X, Y)
+
+</code></pre>
+
+
+</div>

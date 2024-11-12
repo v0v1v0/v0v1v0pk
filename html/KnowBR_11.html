@@ -1,0 +1,324 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SurveyQ</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Survey quality</h2>
+
+<h3>Description</h3>
+
+<p>Discriminations among good, fair and poor quality of surveys in cells and polygons.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SurveyQ(data, Longitude=NULL, Latitude=NULL, cell=60, Areas=NULL,
+variables=c("Slope","Completeness","Ratio"), completeness=c(50,90),
+slope=c(0.02,0.3), ratio=c(3,15), shape=NULL, shapenames=NULL, admAreas=TRUE,
+Area="World", minLon, maxLon, minLat, maxLat, main=NULL, PLOTP=NULL,
+PLOTB=NULL, POINTS=NULL, XLAB=NULL, YLAB=NULL, XLIM=NULL, YLIM=NULL,
+palette=c("blue","green","red"), COLOR=c("red","green","blue"), colm="black",
+labels=TRUE, sizelabels=1, LEGENDP=NULL, LEGENDM=NULL, file="Polar coordinates.csv",
+na="NA", dec=",", row.names=FALSE, jpg=FALSE, filejpg="Map.jpg")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data file exported by the functions KnowBPolygon or KnowB named "Estimators" with the values of records, observed richness, predicted richness, completeness and slope for each area polygon.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Longitude</code></td>
+<td>
+<p>Variable with the longitude of the cells if the file "Estimators" was obtained with the function KnowB, so it is the case when working with cells.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Latitude</code></td>
+<td>
+<p>Variable with the latitude of the cells if the file "Estimators" was obtained with the function KnowB, so it is the case when working with cells.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cell</code></td>
+<td>
+<p>Resolution of the cells (spatial units) in minutes on which calculations were carried out. In the present version the user can select any resolution between 1 and 60 minutes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Areas</code></td>
+<td>
+<p>Variable with the names of the polygons, if the file "Estimators" was obtained with the function KnowBPolygon, so it is the case when working with polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>The slope, completeness and ratio obtained in the file "Estimators", in that order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>completeness</code></td>
+<td>
+<p>Values of the completeness to define the thresholds for poor, fair and good quality surveys of the cells or polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>slope</code></td>
+<td>
+<p>Values of the slope to define the thresholds for poor, fair and good quality surveys of the cells or polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ratio</code></td>
+<td>
+<p>Values of the ratio to define the thresholds for poor, fair and good quality surveys of the cells or polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>If the estimators in the function link[KnowBR]KnowBPolygon were calculated using an external shape file, it is necessary to indicate the file in this argument. It is not necessary to select any polygon within the file, just to load the whole shape file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shapenames</code></td>
+<td>
+<p>Variable in the shapefile with the names of the polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>admAreas</code></td>
+<td>
+<p>If it is TRUE the border lines of the countries are depicted in the map.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Area</code></td>
+<td>
+<p>Only if using RWizard. A character with the name of the administrative area or a vector with several administrative areas (countries, regions, etc.) or river basins. If it is "World" (default) the entire world is plotted. For using administrative areas or river basins, in addition to use RWizard, it is also necessary to replace data(world) by @_Build_AdWorld_ (see examples of function KnowBPolygon).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLon, maxLon</code></td>
+<td>
+<p>Optionally it is possible to define the minimum and maximum longitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLat, maxLat</code></td>
+<td>
+<p>Optionally it is possible to define the minimum and maximum latitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>Main title of the map.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PLOTP</code></td>
+<td>
+<p>It allows to specify the characteristics of the function plot.default of the polar coordinates plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PLOTB</code></td>
+<td>
+<p>It allows to specify the characteristics of the function plot.default of the bubble chart.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>POINTS</code></td>
+<td>
+<p>It allows to modify the points of the bubble chart with the function points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XLAB</code></td>
+<td>
+<p>Legend of the X axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>YLAB</code></td>
+<td>
+<p>Legend of the Y axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XLIM</code></td>
+<td>
+<p>Vector with the limits of the X axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>YLIM</code></td>
+<td>
+<p>Vector with the limits of the Y axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>The color gradient of the bubble chart may be one of these palettes: "heat.colors", "terrain.colors", "gray.colors", "topo.colors" or "cm.colors".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>COLOR</code></td>
+<td>
+<p>It allows to modify the colors of the map and polar coordinates plot. It must be three colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colm</code></td>
+<td>
+<p>Color of the polygons without information when using when using an external shape file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>If it is FALSE, points are depicted instead of the labels of the polygons in the polar coordinates plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sizelabels</code></td>
+<td>
+<p>Text size of the labels of the polygons in the polar coordinates plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>LEGENDP</code></td>
+<td>
+<p>It allows to modify the legend of the polar coordinates plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>LEGENDM</code></td>
+<td>
+<p>It allows to modify the legend of the map.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>CSV FILES. Filename with the polar coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na</code></td>
+<td>
+<p>CSV FILE. Text that is used in the cells without data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>CSV FILE. It defines if the comma "," is used as decimal separator or the dot ".".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row.names</code></td>
+<td>
+<p>CSV FILE. Logical value that defines if identifiers are put in rows or a vector with a text for each of the rows.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg</code></td>
+<td>
+<p>If TRUE the map is exported to jpg files instead of using the windows device.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filejpg</code></td>
+<td>
+<p>Name of the jpg file.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function has been designed to identify and plot the cells or polygons with good, fair and poor quality surveys. This function uses the file called "Estimators" obtained from the functions KnowBPolygon or KnowB to estimate the polar coordinates of all cells or polygons and to discriminate among cells or polygons according to the quality of the survey.
+</p>
+<p>The variables used by this function are slope, completeness and ratio (number of records/species observed). The default values to identify the cells or polygons with good, fair and poor quality surveys are: slope lower than 0.02, completeness higher than 90% and ratio higher than 15 for good quality surveys, and slope higher than 0.3, completeness lower than 50% and ratio lower than 3 for poor quality surveys.
+</p>
+<p>The order of the variables is important for the estimation of the polar coordinates because a different angle is assigned to each variable. Therefore, the variables must be introduced in this order: slope, completeness and ratio.
+</p>
+<p>All variables are transformed to a scale ranged between -1 and 1. For each value the X and Y polar coordinates are estimated using the following equations:
+</p>
+
+<table><tr>
+<td style="text-align: left;">
+<code class="reqn">X=\displaystyle\sum_{i=1}^{3}|z_j|cos(\alpha)</code> </td>
+<td style="text-align: left;"> <code class="reqn">Y=\displaystyle\sum_{i=1}^{3}|z_j|sin(\alpha)</code>
+</td>
+</tr></table>
+<p>where <em>z</em> is the value of the variable <em>j</em>.
+</p>
+<p>Each variable is assigned an angle (<code class="reqn">\alpha</code>). The increment value of the angle is always 60. Therefore, the first variable (slope) if the transformed value is <code class="reqn">\geq0</code> the <code class="reqn">\alpha</code> value is 60 and if the transformed value is <code class="reqn">&lt;0</code> the value is 240.
+</p>
+<p>For the second variable (completeness) if the transformed value is <code class="reqn">\geq0</code> the <code class="reqn">\alpha</code> value is 120 and if the value is <code class="reqn">&lt;0</code> the value is 300.
+</p>
+<p>For the third variable (ratio) if the value is <code class="reqn">\geq0</code> the <code class="reqn">\alpha</code> value is 180 and if the transformed value is <code class="reqn">&lt;0</code> the value is 360.
+</p>
+<p>Degrees to radians angle conversion is carried out assuming that 1 degree = pi/180 radians.
+</p>
+<p><strong>EXAMPLES</strong>
+Polar coordinates of the records of freshwater fish species in all countries of the world.
+</p>
+
+<table><tr>
+<td style="text-align: center;">
+<img src="../help/figures/F6.jpg" width="50" alt="F6.jpg">
+</td>
+</tr></table>
+<p>Quality survey of the records of freshwater fish species in all countries of the world.
+</p>
+
+<table><tr>
+<td style="text-align: center;">
+<img src="../help/figures/F7.jpg" width="50" alt="F7.jpg">
+</td>
+</tr></table>
+<p>Bubble chart of the relationship between log(Ratio) and completeness, being the color gradient the slope value.
+</p>
+
+<table><tr>
+<td style="text-align: center;">
+<img src="../help/figures/F8.jpg" width="50" alt="F8.jpg">
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>It is depicted a plot with the polar coordinates of each polygon or cell, a map with the quality survey of the cells or polygons and a file with the polar coordinates of the cells or polygons.</p>
+
+
+<h3>References</h3>
+
+<p>Guisande, C., Manjarrés-Hernández, A., Pelayo-Villamil, P., Granado-Lorencio, C., Riveiro, I., Acuña, A., Prieto-Piraquive, E., Janeiro, E., Matías, J.M., Patti, C., Patti, B., Mazzola, S., Jiménez, S., Duque, V. &amp; Salmerón, F. (2010) IPez: An expert system for the taxonomic identification of fishes based on machine learning techniques. <em>Fisheries Research</em>, 102, 240-247.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+
+data(adworld)
+data(Estimators)
+SurveyQ(data=Estimators, Areas="Area")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

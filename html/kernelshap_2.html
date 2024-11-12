@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.kernelshap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check for kernelshap</h2>
+
+<h3>Description</h3>
+
+<p>Is object of class "kernelshap"?
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">is.kernelshap(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An R object.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>TRUE</code> if <code>object</code> is of class "kernelshap", and <code>FALSE</code> otherwise.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kernelshap()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fit &lt;- lm(Sepal.Length ~ ., data = iris)
+s &lt;- kernelshap(fit, iris[1:2, -1], bg_X = iris[, -1])
+is.kernelshap(s)
+is.kernelshap("a")
+</code></pre>
+
+
+</div>

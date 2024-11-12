@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to.data.frame-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Puts a set function under the form of a data.frame</h2>
+
+<h3>Description</h3>
+
+<p>Puts a set function under the form of a
+<code>data.frame</code>. This function can be used to write a set function to a
+file.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.card.set.func" </dt>
+<dd>
+<p>Returns a <code>data.frame</code>.</p>
+</dd>
+<dt>object = "Mobius.set.func" </dt>
+<dd>
+<p>Returns a <code>data.frame</code>.</p>
+</dd>
+<dt>object = "card.set.func" </dt>
+<dd>
+<p>Returns a <code>data.frame</code>.</p>
+</dd>
+<dt>object = "set.func" </dt>
+<dd>
+<p>Returns a <code>data.frame</code>.</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## the Mobius representation of set function
+a &lt;- Mobius.set.func(-1:-16,4,4)
+
+## to data.frame
+d &lt;- to.data.frame(a)
+## Not run: write.table(d,"my.set.func.csv",sep="\t")
+</code></pre>
+
+
+</div>

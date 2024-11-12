@@ -1,0 +1,130 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>contract</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Group the Chosen Players in a Network</h2>
+
+<h3>Description</h3>
+
+<p><code>contract</code> combines selected nodes into one large pseudo-node and provides a reduced network.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">contract(adj.matrix, nodes, method = c("min", "max", "union", "add"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>Matrix indicating the adjacency matrix of the network.
+The inputted adjacency matrix for the diffusion centrality should
+be properly transfomred to the probability interpretation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nodes</code></td>
+<td>
+<p>Integer indicating the column index of the chosen player
+in the adjacenncy matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Indication of which grouping criterion should be used.<br><code>method="min"</code> indicates the "minimum" criterion (edge values as distances).<br><code>method="max"</code> indicates the "maximum" criterion (edge values as non-cummulative strengths).<br><code>method="add"</code> indicates the "addition" criterion (edge values as cummulative strengths).<br><code>method="union"</code> indicates the "union" criterion (edge values as probability).<br>
+The default is "min". See details for examples.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Minimum Criterion: the edge value between a group and an outside node
+is measured as the minimal value among all the (nonzero) edge values between
+any node in the group and the outside node. Suggested if edge values are
+interpreted as distances.<br><em>Example: suppose node A to C has distance 2 and B to C has distance 1,
+then according to the minimum criterion, the distance between C and
+the merged set AB is 1. Note that if B and C are not connected,
+the algorithm takes the distance between A and C to describe
+the distance between AB and C.</em>
+</p>
+<p>Maximun Criterion: the edge value between a group and an outside node
+is measured as the maximal value among all the (nonzero) edge values between
+any node in the group and the outside node. Suggested if edge values are
+interpreted as non-cummulative strengths. <br><em>Example: we keep using the above example, but the figure now indicates
+the strength of tie. According to the maximum criterion, the strength of tie
+between AB and C is 2.</em>
+</p>
+<p>Addition Criterion: the edge value between a group and an outside node
+is measured as the sum of all the edge values between any node in the group
+and the outside node. Suggested if edge values are as cummulative strengths. <br><em>Example: according to the addition criterion, the strength of tie between
+AB and C is 3</em>
+</p>
+<p>Union Criterion: the edge value between a group and an outside node is measured
+as the probability that there is at least one path connecting the group with
+the outside node. Suggested if edge values are as probability. <br><em>Example: suppose A has probability 0.2 to reach C and B has probability
+0.5 to reach C, then C can be reached from merged AB with probability
+1-(1-0.2)*(1-0.5)=0.6 according to the union criterion.</em>
+</p>
+
+
+<h3>Value</h3>
+
+<p>A new adjacency matrix after contracting the chosen nodes (named
+<code>set</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weihua An <a href="mailto:weihua.an@emory.edu">weihua.an@emory.edu</a>; Yu-Hsin Liu <a href="mailto:ugeneliu@meta.com">ugeneliu@meta.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>An, Weihua and Yu-Hsin Liu (2016). "keyplayer: An R Package for Locating Key Players in Social Networks."
+<em>The R Journal</em>, 8(1): 257-268.<br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>kpcent</code>;
+<code>kpset</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Create a 5x5 weighted and directed adjacency matrix, where edge values
+# represent the strength of tie
+W &lt;- matrix(
+  c(0,1,3,0,0,
+    0,0,0,4,0,
+    1,1,0,2,0,
+    0,0,0,0,3,
+    0,2,0,0,0),
+    nrow=5, ncol=5, byrow = TRUE)
+
+# If the strength is believed to be non-accumulative for a group of nodes,
+# it is proper to use the "maximum" criterion to contract node 2 and 3
+contract(W,c(2,3),"max")
+
+# Transform the edge value to probability interpretaion
+P &lt;- W *0.2
+
+# Contract node 2 and 3 using the "union" criterion as it is proper for
+# probability matrix input
+contract(P,c(2,3),"union")
+
+</code></pre>
+
+
+</div>

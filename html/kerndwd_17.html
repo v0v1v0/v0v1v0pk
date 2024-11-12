@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.kerndwd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>predict class labels for new observations</h2>
+
+<h3>Description</h3>
+
+<p>Predict the binary class labels or the fitted values of an <code>kerndwd</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kerndwd'
+predict(object, kern, x, newx, type=c("class", "link"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted <code>kerndwd</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern</code></td>
+<td>
+<p>The kernel function used when fitting the <code>kerndwd</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The predictor matrix, i.e., the <code>x</code> matrix used when fitting the <code>kerndwd</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newx</code></td>
+<td>
+<p>A matrix of new values for <code>x</code> at which predictions are to be made. We note that <code>newx</code> must be a matrix, <code>predict</code> function does not accept a vector or other formats of <code>newx</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p><code>"class"</code> or <code>"link"</code>? <code>"class"</code> produces the predicted binary class labels and <code>"link"</code> returns the fitted values. Default is <code>"class"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Not used. Other arguments to <code>predict</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>"type"</code> is <code>"class"</code>, the function returns the predicted class labels. If <code>"type"</code> is <code>"link"</code>, the result is <code class="reqn">\beta_0 + x_i'\beta</code> for the linear case and <code class="reqn">\beta_0 + K_i'\alpha</code> for the kernel case.</p>
+
+
+<h3>Value</h3>
+
+<p>Returns either the predicted class labels or the fitted values, depending on the choice of <code>type</code>.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Boxiang Wang and Hui Zou<br>
+Maintainer: Boxiang Wang  <a href="mailto:boxiang-wang@uiowa.edu">boxiang-wang@uiowa.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Wang, B. and Zou, H. (2018)
+“Another Look at Distance Weighted Discrimination," 
+<em>Journal of Royal Statistical Society, Series B</em>, <b>80</b>(1), 177–198. <br><a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244">https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244</a><br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>kerndwd</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(BUPA)
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
+lambda = 10^(seq(-3, 3, length.out=10))
+kern = rbfdot(sigma=sigest(BUPA$X))
+m1 = kerndwd(BUPA$X, BUPA$y, kern,
+  qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+predict(m1, kern, BUPA$X, tail(BUPA$X))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,189 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mixed_ks_test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Computes the p-value for a one-sample two-sided Kolmogorov-Smirnov test when the cdf under the null hypothesis is mixed
+</h2>
+
+<h3>Description</h3>
+
+<p>Computes the p-value <code class="reqn">P(D_{n} \ge d_{n})</code>, where <code class="reqn">d_{n}</code> is the value of the KS test statistic computed based on a data sample <code class="reqn">\{x_{1}, ..., x_{n}\}</code>, when <code class="reqn">F(x)</code> is mixed, using the Exact-KS-FFT method expressing the p-value as a double-boundary non-crossing probability for a homogeneous Poisson process, which is then efficiently computed using FFT (see Dimitrova, Kaishev, Tan (2020)).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mixed_ks_test(x, jump_points, Mixed_dist, ..., tol = 1e-10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>a numeric vector of data sample values <code class="reqn">\{x_{1}, ..., x_{n}\}</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jump_points</code></td>
+<td>
+
+<p>a numeric vector containing the points of (jump) discontinuity, i.e. where the underlying cdf <code class="reqn">F(x)</code> has jump(s)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mixed_dist</code></td>
+<td>
+
+<p>a pre-specified (user-defined) mixed cdf, <code class="reqn">F(x)</code>, under the null hypothesis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>values of the parameters of the cdf, <code class="reqn">F(x)</code> specified (as a character string) by <code>Mixed_dist</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+
+<p>the value of <code class="reqn">\epsilon</code> that is used to compute the values of <code class="reqn">A_{i}</code> and <code class="reqn">B_{i}</code>, <code class="reqn">i = 1, ..., n</code>, as detailed in Step 1 of Section 2.1 in Dimitrova, Kaishev and Tan (2020) (see also (ii) in the Procedure Exact-KS-FFT therein). By default, <code>tol = 1e-10</code>. Note that a value of <code>NA</code> or <code>0</code> will lead to an error!
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given a random sample <code class="reqn">\{X_{1}, ..., X_{n}\}</code> of size <code>n</code> with an empirical cdf <code class="reqn">F_{n}(x)</code>, the Kolmogorov-Smirnov goodness-of-fit statistic is defined as <code class="reqn">D_{n} = \sup | F_{n}(x) - F(x) | </code>, where <code class="reqn">F(x)</code> is the cdf of a prespecified theoretical distribution under the null hypothesis <code class="reqn">H_{0}</code>, that <code class="reqn">\{X_{1}, ..., X_{n}\}</code> comes from <code class="reqn">F(x)</code>.
+</p>
+<p>The function <code>mixed_ks_test</code> implements the Exact-KS-FFT method expressing the p-value as a double-boundary non-crossing probability for a homogeneous Poisson process, which is then efficiently computed using FFT (see Dimitrova, Kaishev, Tan (2020)).
+This algorithm ensures a total worst-case run-time of order <code class="reqn">O(n^{2}log(n))</code>.
+</p>
+<p>The function <code>mixed_ks_test</code> computes the p-value <code class="reqn">P(D_{n} \ge d_{n})</code>, where <code class="reqn">d_{n}</code> is the value of the KS test statistic computed based on a user-provided data sample <code class="reqn">\{x_{1}, ..., x_{n}\}</code>, when <code class="reqn">F(x)</code> is mixed,
+</p>
+<p>We have not been able to identify alternative, fast and accurate, method (software) that has been developed/implemented when the hypothesized <code class="reqn">F(x)</code> is mixed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class "htest" containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>statistic </code></td>
+<td>
+<p>the value of the statistic.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.value </code></td>
+<td>
+<p>the p-value of the test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alternative </code></td>
+<td>
+<p>"two-sided".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name </code></td>
+<td>
+<p>a character string giving the name of the data.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Dimitrina S. Dimitrova, Vladimir K. Kaishev, Senren Tan. (2020) "Computing the Kolmogorov-Smirnov Distribution When the Underlying CDF is Purely Discrete, Mixed or Continuous". Journal of Statistical Software, <b>95</b>(10): 1-42. doi:10.18637/jss.v095.i10.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example to compute the p-value of the one-sample two-sided KS test,
+# when the underlying distribution is a mixed distribution
+# with two jumps at 0 and log(2.5),
+# as in Example 3.1 of Dimitrova, Kaishev, Tan (2020)
+
+# Defining the mixed distribution
+
+Mixed_cdf_example &lt;- function(x)
+{
+     result &lt;- 0
+     if (x &lt; 0){
+         result &lt;- 0
+     }
+     else if (x == 0){
+         result &lt;- 0.5
+     }
+     else if (x &lt; log(2.5)){
+         result &lt;- 1 - 0.5 * exp(-x)
+     }
+     else{
+         result &lt;- 1
+     }
+
+     return (result)
+}
+test_data &lt;- c(0,0,0,0,0,0,0.1,0.2,0.3,0.4,
+            0.5,0.6,0.7,0.8,log(2.5),log(2.5),
+            log(2.5),log(2.5),log(2.5),log(2.5))
+KSgeneral::mixed_ks_test(test_data, c(0, log(2.5)),
+                         Mixed_cdf_example)
+
+
+## Compute the p-value of a two-sided K-S test
+## when F(x) follows a zero-and-one-inflated
+## beta distribution, as in Example 3.3
+## of Dimitrova, Kaishev, Tan (2020)
+
+## The data set is the proportion of inhabitants
+## living within a 200 kilometer wide costal strip
+## in 232 countries in the year 2010
+
+data("Population_Data")
+mu &lt;- 0.6189
+phi &lt;- 0.6615
+a &lt;- mu * phi
+b &lt;- (1 - mu) * phi
+
+Mixed_cdf_example &lt;- function(x)
+{
+     result &lt;- 0
+     if (x &lt; 0){
+         result &lt;- 0
+     }
+     else if (x == 0){
+         result &lt;- 0.1141
+     }
+     else if (x &lt; 1){
+         result &lt;- 0.1141 + 0.4795 * pbeta(x, a, b)
+     }
+     else{
+         result &lt;- 1
+     }
+
+     return (result)
+}
+KSgeneral::mixed_ks_test(Population_Data, c(0, 1), Mixed_cdf_example)
+
+
+</code></pre>
+
+
+</div>

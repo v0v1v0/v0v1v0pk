@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callSampleLables</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Call sample labels based on feature counts</h2>
+
+<h3>Description</h3>
+
+<p><code>callSampleLables()</code> assigns labels (stored as <code>colData</code> column) to cells using feature count data in <code>colData</code>.
+This is most useful for assigning barcode labels based on barcoded reads (see countBarcodedReads).
+For <code>method = max</code>, labels are dictated by whichever <code>input.features</code> column has the highest number of counts.
+By default, ties are broken by choosing whichever label has the lowest index position (<code>ties.method = "first"</code>).
+Samples with 0 counts for all <code>input.features</code> columns are labeled according to <code>neg.label</code>.
+If only one feature column is used, labels are assigned to cells with counts &gt; <code>min.count.threshold</code>, and <code>neg.label</code> otherwise.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callSampleLables(
+  TapestriExperiment,
+  input.features,
+  output.feature = "sample.call",
+  return.table = FALSE,
+  neg.label = NA,
+  method = "max",
+  ties.method = "first",
+  min.count.threshold = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p>A <code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input.features</code></td>
+<td>
+<p>Character vector, column names in <code>colData</code> to evaluate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output.feature</code></td>
+<td>
+<p>Character, column name to use for the call output. Default "sample.call".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return.table</code></td>
+<td>
+<p>Logical, if <code>TRUE</code>, returns a data.frame of the sample.calls. If <code>FALSE</code> (default), returns updated <code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>neg.label</code></td>
+<td>
+<p>Character, label for samples with no counts. Default <code>NA</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Character, call method. Only "max" currently supported, calls based on whichever <code>input.features</code> column has the most counts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ties.method</code></td>
+<td>
+<p>Character, passed to <code>max.col()</code> indicating how to break ties. Default "first".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.count.threshold</code></td>
+<td>
+<p>Numeric, minimum number of counts per cell to use for call. Default 1.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>TapestriExperiment</code> object with sample calls added to <code>colData</code> column <code>sample.name</code>. If <code>return.table == TRUE</code>, a <code>data.frame</code> of sample calls.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+colData(tap.object)$gRNA1 &lt;- 2 # example barcode counts
+colData(tap.object)$gRNA2 &lt;- 10 # example barcode counts
+tap.object &lt;- callSampleLables(tap.object,
+  input.features = c("gRNA1", "gRNA2"),
+  output.feature = "sample.grna"
+)
+</code></pre>
+
+
+</div>

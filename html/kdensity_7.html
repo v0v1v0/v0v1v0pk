@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_kernel_start_support</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fill in missing kernel, start or support given the supplied values.</h2>
+
+<h3>Description</h3>
+
+<p>This function takes the supplied values of kernel, start, and support
+and fills in the non-supplied ones. It also handles inconsistencies,
+such as providing a support on (-Inf, Inf) but a kernel on (0, Inf).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_kernel_start_support(kernel, start, support)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>Supplied kernel; string or list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>Supplied parametric start; string or list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>support</code></td>
+<td>
+<p>Binary vector.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>kernel</code> and <code>start</code> parameters are either strings or
+adhering to the kernel/start list structure. <code>support</code> is a
+numeric vector of length two.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list with members kernel, kernel_str, start, start_str,
+and support.
+</p>
+
+
+</div>

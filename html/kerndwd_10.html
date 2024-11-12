@@ -1,0 +1,200 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kerndwd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>solve Linear DWD and Kernel DWD</h2>
+
+<h3>Description</h3>
+
+<p>Fit the linear generalized distance weighted discrimination (DWD) model and the generalized DWD on Reproducing kernel Hilbert space. The solution path is computed at a grid of values of tuning parameter <code>lambda</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kerndwd(x, y, kern, lambda, qval=1, wt, eps=1e-05, maxit=1e+05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A numerical matrix with <code class="reqn">N</code> rows and <code class="reqn">p</code> columns for predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A vector of length <code class="reqn">N</code> for binary responses. The element of <code>y</code> is either -1 or 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern</code></td>
+<td>
+<p>A kernel function; see <code>dots</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>A user supplied <code>lambda</code> sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qval</code></td>
+<td>
+<p>The exponent index of the generalized DWD. Default value is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wt</code></td>
+<td>
+<p>A vector of length <code class="reqn">n</code> for weight factors. When <code>wt</code> is missing or <code>wt=NULL</code>, an unweighted DWD is fitted. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>The algorithm stops when (i.e. <code class="reqn">\sum_j(\beta_j^{new}-\beta_j^{old})^2</code> is less than <code>eps</code>, where <code class="reqn">j=0,\ldots, p</code>. Default value is <code>1e-5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxit</code></td>
+<td>
+<p>The maximum of iterations allowed. Default is 1e5.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Suppose that the generalized DWD loss is <code class="reqn">V_q(u)=1-u</code> if <code class="reqn">u \le q/(q+1)</code> and <code class="reqn">\frac{1}{u^q}\frac{q^q}{(q+1)^{(q+1)}}</code> if <code class="reqn">u &gt; q/(q+1)</code>. The value of <code class="reqn">\lambda</code>, i.e., <code>lambda</code>, is user-specified. 
+</p>
+<p>In the linear case (<code>kern</code> is the inner product and N &gt; p), the <code>kerndwd</code> fits a linear DWD by minimizing the L2 penalized DWD loss function,
+</p>
+<p style="text-align: center;"><code class="reqn">\frac{1}{N}\sum_{i=1}^n V_q(y_i(\beta_0 + X_i'\beta)) + \lambda \beta' \beta.</code>
+</p>
+ 
+<p>If a linear DWD is fitted when N &lt; p, a kernel DWD with the linear kernel is actually solved. In such case, the coefficient <code class="reqn">\beta</code> can be obtained from <code class="reqn">\beta = X'\alpha.</code> 
+</p>
+<p>In the kernel case, the <code>kerndwd</code> fits a kernel DWD by minimizing
+</p>
+<p style="text-align: center;"><code class="reqn">\frac{1}{N}\sum_{i=1}^n V_q(y_i(\beta_0 + K_i' \alpha)) + \lambda \alpha' K \alpha,</code>
+</p>
+
+<p>where <code class="reqn">K</code> is the kernel matrix and <code class="reqn">K_i</code> is the ith row. 
+</p>
+<p>The weighted linear DWD and the weighted kernel DWD are formulated as follows,
+</p>
+<p style="text-align: center;"><code class="reqn">\frac{1}{N}\sum_{i=1}^n w_i \cdot V_q(y_i(\beta_0 + X_i'\beta)) + \lambda \beta' \beta,</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">\frac{1}{N}\sum_{i=1}^n w_i \cdot V_q(y_i(\beta_0 + K_i' \alpha)) + \lambda \alpha' K \alpha,</code>
+</p>
+
+<p>where <code class="reqn">w_i</code> is the ith element of <code>wt</code>. The choice of weight factors can be seen in the reference below.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with S3 class <code>kerndwd</code>.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>A matrix of DWD coefficients at each <code>lambda</code> value. The dimension is <code>(p+1)*length(lambda)</code> in the linear case and <code>(N+1)*length(lambda)</code> in the kernel case.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>The <code>lambda</code> sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>npass</code></td>
+<td>
+<p>Total number of MM iterations for all lambda values. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jerr</code></td>
+<td>
+<p>Warnings and errors; 0 if none.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>info</code></td>
+<td>
+<p>A list including parameters of the loss function, <code>eps</code>, <code>maxit</code>, <code>kern</code>, and <code>wt</code> if a weight vector was used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The call that produced this object.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Boxiang Wang and Hui Zou<br>
+Maintainer: Boxiang Wang  <a href="mailto:boxiang-wang@uiowa.edu">boxiang-wang@uiowa.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Wang, B. and Zou, H. (2018)
+“Another Look at Distance Weighted Discrimination," 
+<em>Journal of Royal Statistical Society, Series B</em>, <b>80</b>(1), 177–198. <br><a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244">https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244</a><br>
+Karatzoglou, A., Smola, A., Hornik, K., and Zeileis, A. (2004)
+“kernlab – An S4 Package for Kernel Methods in R", 
+<em>Journal of Statistical Software</em>, <b>11</b>(9), 1–20.<br><a href="https://www.jstatsoft.org/v11/i09/paper">https://www.jstatsoft.org/v11/i09/paper</a><br>
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized
+linear models via coordinate descent," <em>Journal of Statistical Software</em>, <b>33</b>(1), 1–22.<br><a href="https://www.jstatsoft.org/v33/i01/paper">https://www.jstatsoft.org/v33/i01/paper</a><br>
+Marron, J.S., Todd, M.J., and Ahn, J. (2007)
+“Distance-Weighted Discrimination"", 
+<em>Journal of the American Statistical Association</em>, <b>102</b>(408), 1267–1271.<br><a href="https://www.tandfonline.com/doi/abs/10.1198/016214507000001120">https://www.tandfonline.com/doi/abs/10.1198/016214507000001120</a><br>
+Qiao, X., Zhang, H., Liu, Y., Todd, M., Marron, J.S. (2010)
+“Weighted distance weighted discrimination and its asymptotic properties", 
+<em>Journal of the American Statistical Association</em>, <b>105</b>(489), 401–414.<br><a href="https://www.tandfonline.com/doi/abs/10.1198/jasa.2010.tm08487">https://www.tandfonline.com/doi/abs/10.1198/jasa.2010.tm08487</a><br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>predict.kerndwd</code>, <code>plot.kerndwd</code>, and <code>cv.kerndwd</code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(BUPA)
+# standardize the predictors
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
+
+# a grid of tuning parameters
+lambda = 10^(seq(3, -3, length.out=10))
+
+# fit a linear DWD
+kern = vanilladot()
+DWD_linear = kerndwd(BUPA$X, BUPA$y, kern,
+  qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+
+# fit a DWD using Gaussian kernel
+kern = rbfdot(sigma=1)
+DWD_Gaussian = kerndwd(BUPA$X, BUPA$y, kern,
+  qval=1, lambda=lambda, eps=1e-5, maxit=1e5)
+
+# fit a weighted kernel DWD
+kern = rbfdot(sigma=1)
+weights = c(1, 2)[factor(BUPA$y)]
+DWD_wtGaussian = kerndwd(BUPA$X, BUPA$y, kern,
+  qval=1, lambda=lambda, wt = weights, eps=1e-5, maxit=1e5)
+</code></pre>
+
+
+</div>

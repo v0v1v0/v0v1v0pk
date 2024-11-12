@@ -1,0 +1,182 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_normalization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer that normalizes continuous features.</h2>
+
+<h3>Description</h3>
+
+<p>This layer will shift and scale inputs into a distribution centered around
+0 with standard deviation 1. It accomplishes this by precomputing the mean
+and variance of the data, and calling <code>(input - mean) / sqrt(var)</code> at
+runtime.
+</p>
+<p>The mean and variance values for the layer must be either supplied on
+construction or learned via <code>adapt()</code>. <code>adapt()</code> will compute the mean and
+variance of the data and store them as the layer's weights. <code>adapt()</code> should
+be called before <code>fit()</code>, <code>evaluate()</code>, or <code>predict()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_normalization(
+  object,
+  axis = -1L,
+  mean = NULL,
+  variance = NULL,
+  invert = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>Integer, list of integers, or NULL. The axis or axes that should
+have a separate mean and variance for each index in the shape.
+For example, if shape is <code style="white-space: pre;">⁠(NULL, 5)⁠</code> and <code>axis=1</code>, the layer will
+track 5 separate mean and variance values for the last axis.
+If <code>axis</code> is set to <code>NULL</code>, the layer will normalize
+all elements in the input by a scalar mean and variance.
+When <code>-1</code>, the last axis of the input is assumed to be a
+feature dimension and is normalized per index.
+Note that in the specific case of batched scalar inputs where
+the only axis is the batch axis, the default will normalize
+each index in the batch separately.
+In this case, consider passing <code>axis=NULL</code>. Defaults to <code>-1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>The mean value(s) to use during normalization. The passed value(s)
+will be broadcast to the shape of the kept axes above;
+if the value(s) cannot be broadcast, an error will be raised when
+this layer's <code>build()</code> method is called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variance</code></td>
+<td>
+<p>The variance value(s) to use during normalization. The passed
+value(s) will be broadcast to the shape of the kept axes above;
+if the value(s) cannot be broadcast, an error will be raised when
+this layer's <code>build()</code> method is called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>invert</code></td>
+<td>
+<p>If <code>TRUE</code>, this layer will apply the inverse transformation
+to its inputs: it would turn a normalized input back into its
+original form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p>Calculate a global mean and variance by analyzing the dataset in <code>adapt()</code>.
+</p>
+<div class="sourceCode r"><pre>adapt_data &lt;- op_array(c(1., 2., 3., 4., 5.), dtype='float32')
+input_data &lt;- op_array(c(1., 2., 3.), dtype='float32')
+layer &lt;- layer_normalization(axis = NULL)
+layer %&gt;% adapt(adapt_data)
+layer(input_data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([-1.4142135  -0.70710677  0.        ], shape=(3), dtype=float32)
+
+</pre></div>
+<p>Calculate a mean and variance for each index on the last axis.
+</p>
+<div class="sourceCode r"><pre>adapt_data &lt;- op_array(rbind(c(0., 7., 4.),
+                       c(2., 9., 6.),
+                       c(0., 7., 4.),
+                       c(2., 9., 6.)), dtype='float32')
+input_data &lt;- op_array(matrix(c(0., 7., 4.), nrow = 1), dtype='float32')
+layer &lt;- layer_normalization(axis=-1)
+layer %&gt;% adapt(adapt_data)
+layer(input_data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([[-1. -1. -1.]], shape=(1, 3), dtype=float32)
+
+</pre></div>
+<p>Pass the mean and variance directly.
+</p>
+<div class="sourceCode r"><pre>input_data &lt;- op_array(rbind(1, 2, 3), dtype='float32')
+layer &lt;- layer_normalization(mean=3., variance=2.)
+layer(input_data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[-1.4142135 ]
+##  [-0.70710677]
+##  [ 0.        ]], shape=(3, 1), dtype=float32)
+
+</pre></div>
+<p>Use the layer to de-normalize inputs (after adapting the layer).
+</p>
+<div class="sourceCode r"><pre>adapt_data &lt;- op_array(rbind(c(0., 7., 4.),
+                       c(2., 9., 6.),
+                       c(0., 7., 4.),
+                       c(2., 9., 6.)), dtype='float32')
+input_data &lt;- op_array(c(1., 2., 3.), dtype='float32')
+layer &lt;- layer_normalization(axis=-1, invert=TRUE)
+layer %&gt;% adapt(adapt_data)
+layer(input_data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([[ 2. 10.  8.]], shape=(1, 3), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/preprocessing_layers/numerical/normalization#normalization-class">https://keras.io/api/layers/preprocessing_layers/numerical/normalization#normalization-class</a>
+</p>
+</li></ul>
+<p>Other numerical features preprocessing layers: <br><code>layer_discretization()</code> <br></p>
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_feature_space()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br><code>layer_text_vectorization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

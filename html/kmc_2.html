@@ -1,0 +1,183 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmc.bjtest</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculate the NPMLE with constriants for accelerated failure time model with given coefficients.
+</h2>
+
+<h3>Description</h3>
+
+<p>Use the empirical likelihood ratio and Wilks theorem to test if the regression coefficient equals
+beta. 
+</p>
+<p style="text-align: center;"><code class="reqn">El(F)=\prod_{i=1}^{n}(\Delta F(T_i))^{\delta_i}(1-F(T_i))^{1-\delta_i}</code>
+</p>
+
+<p>with constraints
+</p>
+<p style="text-align: center;"><code class="reqn">
+	\sum_i g(T_i)\Delta F(T_i)=0,\quad,i=1,2,\ldots
+</code>
+</p>
+
+<p>Instead of EM algorithm, this function calculates the Kaplan-Meier estimator with mean constraints recursively to test <code class="reqn">H_0:~\beta=\beta_0</code> in the accelerated failure time model:
+</p>
+<p style="text-align: center;"><code class="reqn">
+	\log(T_i) = y_i = x_i\beta^\top + \epsilon_i,
+</code>
+</p>
+
+<p>where <code class="reqn">\epsilon</code> is distribution free.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmc.bjtest(y, d, x, beta,init.st="naive")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>Response variable vector (length n).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>Status vector (length n), 0: right censored; 1 uncensored.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>n by p explanatory variable matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+
+<p>The value of the regression coeffiecnt vector (length p) to be tested.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init.st</code></td>
+<td>
+
+<p>Type of methods to initialize the algorithm. By default, init.st is set to 1/n
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The empirical likelihood is the likelihood of the error term when the coefficients are specified. Model assumptions are the same as requirements of a standard Buckley-James estimator.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+
+<p>the probabilities that max the empirical likelihood under estimating equation.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logel1</code></td>
+<td>
+
+<p>the log empirical likelihood without constraints, i.e. under Kaplan-Merier of residuals'
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logel2</code></td>
+<td>
+
+<p>the log empirical likelihood with constraints, i.e. under null hypotheses or estimation equations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>"-2LLR"</code></td>
+<td>
+
+<p>the -2 loglikelihood ratio; have approximate chisq distribution under null hypotheses
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence</code></td>
+<td>
+
+<p>an indicator:
+</p>
+<p>0: fails to converge
+</p>
+<p>1: converged
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Mai Zhou(mai@ms.uky.edu), Yifan Yang(yfyang.86@hotmail.com)
+</p>
+
+
+<h3>References</h3>
+
+<p>Buckley, J. and James, I. (1979). Linear regression with censored data. <em>Biometrika</em>, <b>66</b> 429-36
+</p>
+<p>Zhou, M., &amp; Li, G. (2008).
+Empirical likelihood analysis of the Buckley-James estimator. 
+<em>Journal of multivariate analysis</em>, <b>99(4)</b>, 649-664.
+</p>
+<p>Zhou, M. and Yang, Y. (2015).
+A recursive formula for the Kaplan-Meier estimator with mean constraints and its application to empirical likelihood
+<em>Computational Statistics</em>. <b>Online ISSN</b> 1613-9658.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plotkmc2D</code>, <code>bjtest</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+stanford5 &lt;- stanford2[!is.na(stanford2$t5), ]
+y &lt;- log10(stanford5$time)
+d &lt;- stanford5$status
+oy &lt;- order(y, -d)
+d &lt;- d[oy]
+y &lt;- y[oy]
+x &lt;- cbind(1, stanford5$age)[oy,]
+beta0  &lt;-  c(3.2, -0.015)
+ss  &lt;-  kmc.bjtest(y, d, x=x, beta=beta0, init.st="naive")
+</code></pre>
+
+
+</div>

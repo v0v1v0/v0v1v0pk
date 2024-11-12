@@ -1,0 +1,167 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_hashed_crossing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer which crosses features using the "hashing trick".</h2>
+
+<h3>Description</h3>
+
+<p>This layer performs crosses of categorical features using the "hashing
+trick". Conceptually, the transformation can be thought of as:
+<code>hash(concatenate(features)) %% num_bins</code>.
+</p>
+<p>This layer currently only performs crosses of scalar inputs and batches of
+scalar inputs. Valid input shapes are <code style="white-space: pre;">⁠(batch_size, 1)⁠</code>, <code>(batch_size)</code> and
+<code style="white-space: pre;">⁠()⁠</code>.
+</p>
+<p><strong>Note:</strong> This layer wraps <code>tf.keras.layers.HashedCrossing</code>. It cannot
+be used as part of the compiled computation graph of a model with
+any backend other than TensorFlow.
+It can however be used with any backend when running eagerly.
+It can also always be used as part of an input preprocessing pipeline
+with any backend (outside the model itself), which is how we recommend
+to use this layer.
+</p>
+<p><strong>Note:</strong> This layer is safe to use inside a <code>tfdatasets</code> pipeline
+(independently of which backend you're using).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_hashed_crossing(
+  object,
+  num_bins,
+  output_mode = "int",
+  sparse = FALSE,
+  name = NULL,
+  dtype = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_bins</code></td>
+<td>
+<p>Number of hash bins.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_mode</code></td>
+<td>
+<p>Specification for the output of the layer. Values can be
+<code>"int"</code>, or <code>"one_hot"</code> configuring the layer as follows:
+</p>
+
+<ul>
+<li> <p><code>"int"</code>: Return the integer bin indices directly.
+</p>
+</li>
+<li> <p><code>"one_hot"</code>: Encodes each individual element in the input into an
+array the same size as <code>num_bins</code>, containing a 1 at the input's
+bin index. Defaults to <code>"int"</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sparse</code></td>
+<td>
+<p>Boolean. Only applicable to <code>"one_hot"</code> mode and only valid
+when using the TensorFlow backend. If <code>TRUE</code>, returns
+a <code>SparseTensor</code> instead of a dense <code>Tensor</code>. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>datatype (e.g., <code>"float32"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Keyword arguments to construct a layer.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>feat1 &lt;- c('A', 'B', 'A', 'B', 'A') |&gt; as.array()
+feat2 &lt;- c(101, 101, 101, 102, 102) |&gt; as.integer() |&gt; as.array()
+</pre></div>
+<p><strong>Crossing two scalar features.</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_hashed_crossing(num_bins = 5)
+layer(list(feat1, feat2))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([1 4 1 1 3], shape=(5), dtype=int64)
+
+</pre></div>
+<p><strong>Crossing and one-hotting two scalar features.</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_hashed_crossing(num_bins = 5, output_mode = 'one_hot')
+layer(list(feat1, feat2))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0. 1. 0. 0. 0.]
+##  [0. 0. 0. 0. 1.]
+##  [0. 1. 0. 0. 0.]
+##  [0. 1. 0. 0. 0.]
+##  [0. 0. 0. 1. 0.]], shape=(5, 5), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/preprocessing_layers/categorical/hashed_crossing#hashedcrossing-class">https://keras.io/api/layers/preprocessing_layers/categorical/hashed_crossing#hashedcrossing-class</a>
+</p>
+</li></ul>
+<p>Other categorical features preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_hashing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_string_lookup()</code> <br></p>
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_feature_space()</code> <br><code>layer_hashing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_normalization()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br><code>layer_text_vectorization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

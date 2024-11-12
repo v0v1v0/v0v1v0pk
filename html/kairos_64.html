@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MeanDate-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mean Date</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to store the weighted mean date (e.g. Mean Ceramic Date) of
+archaeological assemblages.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>dates</code></dt>
+<dd>
+<p>A length-<code class="reqn">p</code> <code>numeric</code> vector giving the dates of the
+(ceramic) types expressed in <em>rata die</em>.</p>
+</dd>
+<dt><code>replications</code></dt>
+<dd>
+<p>A <code>numeric</code> <code>matrix</code> giving the replications.</p>
+</dd>
+</dl>
+<h3>Coerce</h3>
+
+<p>In the code snippets below, <code>x</code> is a <code>MeanDate</code> object.
+</p>
+
+<dl>
+<dt><code>as.data.frame(x)</code></dt>
+<dd>
+<p>Coerces to a <code>data.frame</code>.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This class inherits from <code>aion::TimeSeries</code>: dates are internally
+stored as <em>rata die</em>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>aion::TimeSeries</code>
+</p>
+<p>Other classes: 
+<code>AoristicSum-class</code>,
+<code>CountApportion-class</code>,
+<code>EventDate-class</code>,
+<code>IncrementTest-class</code>,
+<code>PermutationOrder-class</code>,
+<code>RateOfChange-class</code>,
+<code>RefinePermutationOrder-class</code>
+</p>
+
+
+</div>

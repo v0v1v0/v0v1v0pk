@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>RBF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Gaussian RBF (Radial Basis Function) kernel</h2>
+
+<h3>Description</h3>
+
+<p>'RBF()' computes the RBF kernel between all possible pairs of rows of a
+matrix or data.frame with dimension <em>NxD</em>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">RBF(X, g = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Matrix or data.frame that contains real numbers ("integer", "float" or "double").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>Gamma hyperparameter. If g=0 or NULL, 'RBF()' returns the matrix of squared Euclidean
+distances instead of the RBF kernel matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Let <code class="reqn">x_i,x_j</code> be two real vectors. Then, the RBF kernel is defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">K_{RBF}(x_i,x_j)=\exp(-\gamma \|x_i - x_j \|^2)</code>
+</p>
+
+<p>Sometimes the RBF kernel is given a hyperparameter called sigma. In that case:
+<code class="reqn">\gamma = 1/\sigma^2</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Kernel matrix (dimension: <em>NxN</em>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- matrix(rnorm(250),ncol=50,nrow=5)
+RBF(dat,g=0.1)
+</code></pre>
+
+
+</div>

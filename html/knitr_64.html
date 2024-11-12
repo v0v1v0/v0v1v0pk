@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knit_exit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Exit knitting early</h2>
+
+<h3>Description</h3>
+
+<p>Sometimes we may want to exit the knitting process early, and completely
+ignore the rest of the document. This function provides a mechanism to
+terminate <code>knit()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knit_exit(append, fully = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>append</code></td>
+<td>
+<p>A character vector to be appended to the results from
+<code>knit()</code> so far. By default, this is ‘<span class="samp">⁠\end{document}⁠</span>’ for LaTeX
+output, and ‘<span class="samp">⁠&lt;/body&gt;&lt;/html&gt;⁠</span>’ for HTML output, to make the output
+document complete. For other types of output, it is an empty string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fully</code></td>
+<td>
+<p>Whether to fully exit the knitting process if <code>knit_exit()</code>
+is called from a child document. If <code>FALSE</code>, only exit the knitting
+process of the child document.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisible <code>NULL</code>. An internal signal is set up (as a side
+effect) to notify <code>knit()</code> to quit as if it had reached the end of the
+document.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># see https://github.com/yihui/knitr-examples/blob/master/096-knit-exit.Rmd
+</code></pre>
+
+
+</div>

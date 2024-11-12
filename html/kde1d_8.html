@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kde1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting kde1d objects</h2>
+
+<h3>Description</h3>
+
+<p>Plotting kde1d objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kde1d'
+plot(x, ...)
+
+## S3 method for class 'kde1d'
+lines(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p><code>kde1d</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to <code>plot.default()</code></p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>kde1d()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## continuous data
+x &lt;- rbeta(100, shape1 = 0.3, shape2 = 0.4) # simulate data
+fit &lt;- kde1d(x) # unbounded estimate
+plot(fit, ylim = c(0, 4)) # plot estimate
+curve(dbeta(x, 0.3, 0.4), # add true density
+  col = "red", add = TRUE
+)
+fit_bounded &lt;- kde1d(x, xmin = 0, xmax = 1) # bounded estimate
+lines(fit_bounded, col = "green")
+
+## discrete data
+x &lt;- rpois(100, 3) # simulate data
+x &lt;- ordered(x, levels = 0:20) # declare variable as ordered
+fit &lt;- kde1d(x) # estimate density
+plot(fit, ylim = c(0, 0.25)) # plot density estimate
+points(ordered(0:20, 0:20), # add true density values
+  dpois(0:20, 3),
+  col = "red"
+)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernelFactory</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Binary classification with Kernel Factory</h2>
+
+<h3>Description</h3>
+
+<p><code>kernelFactory</code> implements an ensemble method for kernel machines (Ballings and Van den Poel, 2013).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernelFactory(x = NULL, y = NULL, cp = 1, rp = round(log(nrow(x), 10)),
+  method = "burn", ntree = 500, filter = 0.01, popSize = rp * cp * 7,
+  iters = 80, mutationChance = 1/(rp * cp), elitism = max(1, round((rp *
+  cp) * 0.05)), oversample = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame of predictors (numeric, integer or factor). Categorical variables need to be factors. Indicator values should not be too imbalanced because this might produce constants in the subsetting process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A factor containing the response vector. Only {0,1} is allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cp</code></td>
+<td>
+<p>The number of column partitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rp</code></td>
+<td>
+<p>The number of row partitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Can be one of the following: POLynomial kernel function (<code>pol</code>), LINear kernel function (<code>lin</code>), Radial Basis kernel Function <code>rbf</code>), random choice (random=pol, lin, rbf) (<code>random</code>), burn- in choice of best function (burn=pol, lin, rbf ) (<code>burn</code>). Use <code>random</code> or <code>burn</code> if you don't know in advance which kernel function is best.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ntree</code></td>
+<td>
+<p>Number of trees in the Random Forest base classifiers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filter</code></td>
+<td>
+<p>either NULL (deactivate) or a percentage denoting the minimum class size of dummy predictors. This parameter is used to remove near constants. For example if nrow(xTRAIN)=100, and filter=0.01 then all dummy predictors with any class size equal to 1 will be removed. Set this higher (e.g., 0.05 or 0.10) in case of errors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>popSize</code></td>
+<td>
+<p>Population size of the genetic algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iters</code></td>
+<td>
+<p>Number of generations of the genetic algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mutationChance</code></td>
+<td>
+<p>Mutationchance of the genetic algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>elitism</code></td>
+<td>
+<p>Elitism parameter of the genetic algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>oversample</code></td>
+<td>
+<p>Oversample the smallest class. This helps avoid problems related to the subsetting procedure (e.g., if rp is too high).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>kernelFactory</code>, which is a list with the following elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>trn</code></td>
+<td>
+<p>Training data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trnlst</code></td>
+<td>
+<p>List of training partitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rbfstre</code></td>
+<td>
+<p>List of used kernel functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rbfmtrX</code></td>
+<td>
+<p>List of augmented kernel matrices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rsltsKF</code></td>
+<td>
+<p>List of models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cpr</code></td>
+<td>
+<p>Number of column partitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rpr</code></td>
+<td>
+<p>Number of row partitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cntr</code></td>
+<td>
+<p>Number of partitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wghts</code></td>
+<td>
+<p>Weights of the ensemble members.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nmDtrn</code></td>
+<td>
+<p>Vector indicating the numeric (and integer) features.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rngs</code></td>
+<td>
+<p>Ranges of numeric predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constants</code></td>
+<td>
+<p>To exclude from newdata.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Authors: Michel Ballings and Dirk Van den Poel, Maintainer: <a href="mailto:Michel.Ballings@GMail.com">Michel.Ballings@GMail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Ballings, M. and Van den Poel, D. (2013), Kernel Factory: An Ensemble of Kernel Machines. Expert Systems With Applications, 40(8), 2904-2913.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>predict.kernelFactory</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Credit Approval data available at UCI Machine Learning Repository
+data(Credit)
+#take subset (for the purpose of a quick example) and train and test
+Credit &lt;- Credit[1:100,]
+train.ind &lt;- sample(nrow(Credit),round(0.5*nrow(Credit)))
+
+#Train Kernel Factory on training data
+kFmodel &lt;- kernelFactory(x=Credit[train.ind,names(Credit)!= "Response"],
+          y=Credit[train.ind,"Response"], method=random)
+
+#Deploy Kernel Factory to predict response for test data
+#predictedresponse &lt;- predict(kFmodel, newdata=Credit[-train.ind,names(Credit)!= "Response"])
+</code></pre>
+
+
+</div>

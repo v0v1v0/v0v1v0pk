@@ -1,0 +1,125 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pedigree.legend</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot a legend for a pedigree</h2>
+
+<h3>Description</h3>
+
+<p>circular legend for a pedigree as a key to the affection statuses
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pedigree.legend(
+  ped,
+  labels = dimnames(ped$affected)[[2]],
+  edges = 200,
+  radius = NULL,
+  location = "bottomright",
+  new = TRUE,
+  density = c(-1, 35, 65, 20),
+  angle = c(90, 65, 40, 0),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ped</code></td>
+<td>
+<p>Pedigree data frame with ped (pedigree id), id (id of individual),
+father (id of father), mother (id of mother), sex, affected (affection status), 
+and avail (DNA availability).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>names for the affected indicators</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edges</code></td>
+<td>
+<p>Number of edges for each polygon. Higher numbers give better
+resolution for the circle</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>radius</code></td>
+<td>
+<p>radius (inches) of the circle</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>location</code></td>
+<td>
+<p>similar to how the location of a base-R legend is given,
+used only if new=TRUE.  A character string indicating which of the four corners
+to plot the legend, given by "bottomright", "bottomleft", "topleft", or "topright".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new</code></td>
+<td>
+<p>Logical. If TRUE, plot the legend on the current plot. Otherwise, plot
+on a separate plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>density</code></td>
+<td>
+<p>Density of lines shaded in sections of the circle. These match the
+density settings for the plot.pedigree function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>angle</code></td>
+<td>
+<p>The angle at which lines are shaded in sections of the circle. These
+match the angles for the plot.pedigree function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional parameters for the plot function that apply to text</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jason Sinnwell
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pedigree</code>, <code>plot.pedigree</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(sample.ped)
+fam1 &lt;- sample.ped[sample.ped$ped==1,]
+ped1 &lt;- with(fam1, pedigree(id, father, mother, sex,
+             affected=cbind(avail,affected)))
+plot(ped1)
+pedigree.legend(ped1, location="bottomright", radius=.8)
+pedigree.legend(ped1, location="topleft", radius=.6, cex=1.2)
+pedigree.legend(ped1, new=FALSE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

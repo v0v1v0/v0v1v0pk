@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kde1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting kde1d objects</h2>
+
+<h3>Description</h3>
+
+<p>Plotting kde1d objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kde1d'
+plot(x, ...)
+
+## S3 method for class 'kde1d'
+lines(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p><code>kde1d</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to <code>plot.default</code>.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>kde1d</code>
+<code>lines.kde1d</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc)  # load data
+fit &lt;- kde1d(wdbc[, 7])  # estimate density
+plot(fit)  # plot density estimate
+
+fit2 &lt;- kde1d(as.ordered(wdbc[, 1])) # discrete variable
+plot(fit2, col = 2)
+
+</code></pre>
+
+
+</div>

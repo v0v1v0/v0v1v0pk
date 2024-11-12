@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bezier_angle</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Intersection of two Bezier curves</h2>
+
+<h3>Description</h3>
+
+<p>Description of the intersection of two Bezier curves including position
+and angle of the point of intersection.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bezier_angle(P1, P2)
+bezier_intersect(P1,P2, type='pos', ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>P1,P2</code></td>
+<td>
+<p>Control points for two Bezier curves as per
+<code>bezier()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>In function <code>bezier_intersect()</code>, string argument
+governing what exactly is to be returned; see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>In function <code>bezier_intersect()</code>, further arguments
+passed to <code>constOptim()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>bezier_intersect()</code> uses <code>constOptim()</code> to find
+the point of closest approach.
+</p>
+<p>Function <code>bezier_angle()</code> returns the square of the cosine of the
+intersection angle (so strands crossing at right angles return zero).
+If the strands do not intersect, then return 1.  This is needed
+because sometimes, strands which intersect are perturbed by the
+optimization routine so that they are disjoint.
+</p>
+<p>In function <code>bezier_intersect()</code>, argument <code>type</code> may take
+the following values:
+</p>
+
+<dl>
+<dt>pos</dt>
+<dd>
+<p>Position of intersection point</p>
+</dd>
+<dt>cons</dt>
+<dd>
+<p>Boolean, indicating whether the strands abut; the
+‘intersection’ point is the end of one curve and the
+beginning of the other</p>
+</dd>
+<dt>bool</dt>
+<dd>
+<p>Boolean, indicating whether or not the strands actually
+intersect</p>
+</dd>
+<dt>para</dt>
+<dd>
+<p>Bezier parameter <code class="reqn">t</code> for the intersection point;
+actually return two parameters, one for each curve</p>
+</dd>
+<dt>opt</dt>
+<dd>
+<p>Details of the optimization output</p>
+</dd>
+<dt>all</dt>
+<dd>
+<p>Everything</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>If the curves intersect in more than one point, the behaviour of these
+routines is not defined.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bezier</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+P1 &lt;- matrix(c(1, 3, 6, 4, 7, 3, 2, 2),ncol=2)
+P2 &lt;- matrix(c(4, 5, 5, 3, 7, 2, 5, 1),ncol=2)
+
+x1 &lt;- bezier(P1,n=100)
+x2 &lt;- bezier(P2,n=100)
+
+plot(x1,asp=1,xlim=c(0,8),ylim=c(0,8))
+points(x2)
+
+myseg(P1)
+myseg(P2)
+
+jj &lt;- bezier_intersect(P1,P2)
+points(x=jj[1],y=jj[2],pch=16,cex=3,col='blue')
+
+# looks close to orthogonal, actually 82 degrees:
+acos(sqrt(bezier_angle(P1,P2)))*180/pi 
+
+
+</code></pre>
+
+
+</div>

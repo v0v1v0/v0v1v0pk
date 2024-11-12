@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kroc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot for kernel receiver operating characteristic curve (ROC) estimate</h2>
+
+<h3>Description</h3>
+
+<p>Plot for kernel receiver operating characteristic curve (ROC) estimate 1- to 3-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kroc'
+plot(x, add=FALSE, add.roc.ref=FALSE, xlab, ylab, 
+   alpha=1, col=1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>kroc</code> (output from <code>kroc</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+<p>flag to add to current plot. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.roc.ref</code></td>
+<td>
+<p>flag to add reference ROC curve. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>x-axis label. Default is "False positive rate
+(bar(specificity))".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>y-axis label. Default is "True positive rate (sensitivity)".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha,col</code></td>
+<td>
+<p>transparency value and colour of line</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphics parameters used in <code>plot.kde</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Plots for 1-d and 2-d are sent to graphics window. Plot for 3-d is sent to
+graphics/RGL window. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.kde</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(fgl, package="MASS")
+x1 &lt;- fgl[fgl[,"type"]=="WinF",c("RI", "Na")]
+x2 &lt;- fgl[fgl[,"type"]=="Head",c("RI", "Na")]
+Rhat &lt;- kroc(x1=x1, x2=x2) 
+plot(Rhat, add.roc.ref=TRUE)
+</code></pre>
+
+
+</div>

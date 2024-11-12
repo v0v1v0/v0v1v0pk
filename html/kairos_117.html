@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>seriate_rank</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reciprocal Ranking Seriation</h2>
+
+<h3>Description</h3>
+
+<p>Reciprocal Ranking Seriation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">seriate_rank(object, ...)
+
+## S4 method for signature 'data.frame'
+seriate_rank(object, EPPM = FALSE, margin = c(1, 2), stop = 100)
+
+## S4 method for signature 'matrix'
+seriate_rank(object, EPPM = FALSE, margin = c(1, 2), stop = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EPPM</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the seriation be computed on EPPM
+instead of raw data?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>A <code>numeric</code> vector giving the subscripts which the
+rearrangement will be applied over: <code>1</code> indicates rows, <code>2</code> indicates
+columns, <code>c(1, 2)</code> indicates rows then columns, <code>c(2, 1)</code> indicates columns
+then rows.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stop</code></td>
+<td>
+<p>An <code>integer</code> giving the stopping rule (i.e. maximum number of
+iterations) to avoid infinite loop.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This procedure iteratively rearrange rows and/or columns according to their
+weighted rank in the data matrix until convergence.
+</p>
+<p>Note that this procedure could enter into an infinite loop. If no
+convergence is reached before the maximum number of iterations, it stops
+with a warning.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A RankPermutationOrder object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Desachy, B. (2004). Le sériographe EPPM: un outil informatisé de sériation
+graphique pour tableaux de comptages. <em>Revue archéologique de Picardie</em>,
+3(1), 39-56. <a href="https://doi.org/10.3406/pica.2004.2396">doi:10.3406/pica.2004.2396</a>.
+</p>
+<p>Dunnell, R. C. (1970). Seriation Method and Its Evaluation. <em>American
+Antiquity</em>, 35(03), 305-319. <a href="https://doi.org/10.2307/278341">doi:10.2307/278341</a>.
+</p>
+<p>Ihm, P. (2005). A Contribution to the History of Seriation in Archaeology.
+In C. Weihs &amp; W. Gaul (Eds.), <em>Classification: The Ubiquitous
+Challenge</em>. Berlin Heidelberg: Springer, p. 307-316.
+<a href="https://doi.org/10.1007/3-540-28084-7_34">doi:10.1007/3-540-28084-7_34</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other seriation methods: 
+<code>permute()</code>,
+<code>seriate_average()</code>,
+<code>seriate_refine()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Replicates Desachy 2004 results
+data("compiegne", package = "folio")
+
+## Get seriation order for columns on EPPM using the reciprocal averaging method
+## Expected column order: N, A, C, K, P, L, B, E, I, M, D, G, O, J, F, H
+(indices &lt;- seriate_rank(compiegne, EPPM = TRUE, margin = 2))
+
+## Get permutation order
+get_order(indices, 1) # rows
+get_order(indices, 2) # columns
+
+## Permute columns
+(new &lt;- permute(compiegne, indices))
+
+## See the vignette
+## Not run: 
+utils::vignette("seriation")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

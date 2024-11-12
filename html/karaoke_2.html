@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>karaoke</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Remove vocals from a song    
+</h2>
+
+<h3>Description</h3>
+
+<p>Attempt to remove vocals from a stereo '.wav' recording of a song.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">karaoke(infile = NULL, outfile = NULL, sampf = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>infile</code></td>
+<td>
+
+<p>filename of a stereo '.wav' recording of a song
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outfile</code></td>
+<td>
+
+<p>filename for the output '.wav' file
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sampf</code></td>
+<td>
+
+<p>sometimes optional sampling frequency
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>John R. Dixon &lt;gbm2sas@gmail.com&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Well known trick.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#We use some '.wav' samples included in the seewave package to construct an example.
+data(orni)
+data(peewit)
+data(tico)
+#Extend all the samples to be at least 20 seconds long.
+for(loop in 1:5) orni&lt;-pastew(orni,orni,f=22050, output="Wave")
+for(loop in 1:5) peewit&lt;-pastew(peewit,peewit,f=22050, output="Wave")
+for(loop in 1:5) tico&lt;-pastew(tico,tico,f=22050, output="Wave")
+#Cut all samples down to exactly 20 seconds long.
+orni&lt;-cutw(orni,f=22050,from=0,to=20, output="Wave")
+tico&lt;-cutw(tico,f=22050,from=0,to=20, output="Wave")
+peewit&lt;-cutw(peewit,f=22050,from=0,to=20, output="Wave")
+#Construct and write the example song to a '.wav' file.  The tweeting bird, "tico", will be the 
+#"vocalist", mixed to center.  The "rhythm section" will be "orni" and "peewit", not mixed to 
+#center.  (Usually in stereo song recordings, the vocals are most mixed to center, allowing the 
+#trick employed by the "karaoke" function to work.)
+left&lt;-normalize(tico+orni)
+right&lt;-normalize(tico+peewit)
+wobj&lt;-stereo(left,right)
+slot(wobj,"pcm")&lt;-FALSE
+writeWave(wobj, filename="song.wav")
+#Make the karaoke version: the vocal from "tico" is removed.
+karaoke(infile="song.wav", outfile="song4karaoke.wav")
+file.remove("song.wav")
+file.remove("song4karaoke.wav")
+</code></pre>
+
+
+</div>

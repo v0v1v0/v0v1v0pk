@@ -1,0 +1,342 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scatterplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scatterplot</h2>
+
+<h3>Description</h3>
+
+<p>Creates a scatter plot and calculates a correlation between two variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scatterplot(
+  data = NULL,
+  x_var_name = NULL,
+  y_var_name = NULL,
+  dot_label_var_name = NULL,
+  weight_var_name = NULL,
+  alpha = 1,
+  annotate_stats = TRUE,
+  annotate_y_pos_rel = 5,
+  annotate_y_pos_abs = NULL,
+  annotated_stats_color = "green4",
+  annotated_stats_font_size = 6,
+  annotated_stats_font_face = "bold",
+  line_of_fit_type = "lm",
+  ci_for_line_of_fit = FALSE,
+  line_of_fit_color = "blue",
+  line_of_fit_thickness = 1,
+  dot_color = "black",
+  x_axis_label = NULL,
+  y_axis_label = NULL,
+  x_axis_tick_marks = NULL,
+  y_axis_tick_marks = NULL,
+  dot_size = 2,
+  dot_label_size = NULL,
+  dot_size_range = c(3, 12),
+  jitter_x_y_percent = 0,
+  jitter_x_percent = 0,
+  jitter_y_percent = 0,
+  cap_axis_lines = TRUE,
+  color_dots_by = NULL,
+  png_name = NULL,
+  save_as_png = FALSE,
+  width = 13,
+  height = 9
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_var_name</code></td>
+<td>
+<p>name of the variable that will go on the x axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_var_name</code></td>
+<td>
+<p>name of the variable that will go on the y axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_label_var_name</code></td>
+<td>
+<p>name of the variable that will be used to
+label individual observations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_var_name</code></td>
+<td>
+<p>name of the variable by which to weight
+the individual observations for calculating correlation and plotting
+the line of fit</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>opacity of the dots (0 = completely transparent,
+1 = completely opaque)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotate_stats</code></td>
+<td>
+<p>if <code>TRUE</code>, the correlation and p-value will
+be annotated at the top of the plot (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotate_y_pos_rel</code></td>
+<td>
+<p>position of the annotated stats, expressed
+as a percentage of the range of y values by which the annotated
+stats will be placed above the maximum value of y in the data set
+(default = 5). This value will be determined relative to the data.
+If <code>annotate_y_pos_rel = 5</code>, and the minimum and
+maximum y values in the data set are 0 and 100, respectively,
+the annotated stats will be placed at 5% of the y range (100 - 0)
+above the maximum y value, y = 0.05 * (100 - 0) + 100 = 105.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotate_y_pos_abs</code></td>
+<td>
+<p>as an alternative to the argument
+<code>annotate_y_pos_rel</code>, the input for this argument will determine the
+position of the annotated stats. If <code>annotate_y_pos_abs = 7.5</code>,
+then the annotated stats will be placed at the y coordinate of 7.5.
+By default, this argument will be ignored unless it receives an input.
+That is, by default, the function will use the default value of
+the <code>annotate_y_pos_rel</code> argument to determine the y coordinate
+of the annotated stats.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotated_stats_color</code></td>
+<td>
+<p>color of the annotated stats
+(default = "green4").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotated_stats_font_size</code></td>
+<td>
+<p>font size of the annotated stats
+(default = 6).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotated_stats_font_face</code></td>
+<td>
+<p>font face of the annotated stats
+(default = "bold").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_of_fit_type</code></td>
+<td>
+<p>if <code>line_of_fit_type = "lm"</code>, a regression
+line will be fit; if <code>line_of_fit_type = "loess"</code>, a local
+regression line will be fit; if <code>line_of_fit_type = "none"</code>,
+no line will be fit</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci_for_line_of_fit</code></td>
+<td>
+<p>if <code>ci_for_line_of_fit = TRUE</code>,
+confidence interval for the line of fit will be shaded</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_of_fit_color</code></td>
+<td>
+<p>color of the line of fit (default = "blue")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_of_fit_thickness</code></td>
+<td>
+<p>thickness of the line of fit (default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_color</code></td>
+<td>
+<p>color of the dots (default = "black")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_label</code></td>
+<td>
+<p>alternative label for the x axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_label</code></td>
+<td>
+<p>alternative label for the y axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_tick_marks</code></td>
+<td>
+<p>a numeric vector indicating the
+positions of the tick marks on the x axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_tick_marks</code></td>
+<td>
+<p>a numeric vector indicating the
+positions of the tick marks on the y axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_size</code></td>
+<td>
+<p>size of the dots on the plot (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_label_size</code></td>
+<td>
+<p>size for dots' labels on the plot. If no
+input is entered for this argument, it will be set as
+<code>dot_label_size = 5</code> by default. If the plot is to be
+weighted by some variable, this argument will be ignored, and
+dot sizes will be determined by the argument <code>dot_size_range</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot_size_range</code></td>
+<td>
+<p>minimum and maximum size for dots
+on the plot when they are weighted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter_x_y_percent</code></td>
+<td>
+<p>horizontally and vertically jitter dots
+by a percentage of the respective ranges of x and y values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter_x_percent</code></td>
+<td>
+<p>horizontally jitter dots by a percentage of the
+range of x values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter_y_percent</code></td>
+<td>
+<p>vertically jitter dots by a percentage of the
+range of y values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cap_axis_lines</code></td>
+<td>
+<p>logical. Should the axis lines be capped at the
+outer tick marks? (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color_dots_by</code></td>
+<td>
+<p>name of the variable that will determine
+colors of the dots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>png_name</code></td>
+<td>
+<p>name of the PNG file to be saved. By default, the name
+will be "scatterplot_" followed by a timestamp of the
+current time.
+The timestamp will be in the format, jan_01_2021_1300_10_000001,
+where "jan_01_2021" would indicate January 01, 2021;
+1300 would indicate 13:00 (i.e., 1 PM); and 10_000001 would
+indicate 10.000001 seconds after the hour.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save_as_png</code></td>
+<td>
+<p>if <code>save = TRUE</code>, the plot will be saved
+as a PNG file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>width of the plot to be saved. This argument will be
+directly entered as the <code>width</code> argument for the <code>ggsave</code>
+function within <code>ggplot2</code> package (default = 16)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>height of the plot to be saved. This argument will be
+directly entered as the <code>height</code> argument for the <code>ggsave</code>
+function within <code>ggplot2</code> package (default = 9)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If a weighted correlation is to be calculated, the following package(s)
+must be installed prior to running the function:
+Package 'weights' v1.0 (or possibly a higher version) by
+John Pasek (2018),
+<a href="https://cran.r-project.org/package=weights">https://cran.r-project.org/package=weights</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>the output will be a scatter plot, a ggplot object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+scatterplot(data = mtcars, x_var_name = "wt", y_var_name = "mpg")
+scatterplot(
+  data = mtcars, x_var_name = "wt", y_var_name = "mpg",
+  dot_label_var_name = "hp", weight_var_name = "drat",
+  annotate_stats = TRUE)
+scatterplot(
+  data = mtcars, x_var_name = "wt", y_var_name = "mpg",
+  dot_label_var_name = "hp", weight_var_name = "cyl",
+  dot_label_size = 7, annotate_stats = TRUE)
+scatterplot(
+data = mtcars, x_var_name = "wt", y_var_name = "mpg",
+color_dots_by = "gear")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

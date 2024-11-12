@@ -1,0 +1,149 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>prinKrige</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Principal Kriging Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>Principal Kriging Functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+prinKrige(object)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object with class <code>"gp"</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The Principal Kriging Functions (PKF) are the eigenvectors of a
+symmetric positive matrix <code class="reqn">\mathbf{B}</code> named the <em>Bending
+Energy Matrix</em> which is met when combining a linear trend and a
+covariance kernel as done in <code>gp</code>. This matrix has
+dimension <code class="reqn">n \times n</code> and rank <code class="reqn">n - p</code>. The PKF are
+given in the <em>ascending</em> order of the eigenvalues <code class="reqn">e_i</code>
+</p>
+<p style="text-align: center;"><code class="reqn">e_1 = e_2 = \dots = e_p = 0 &lt; e_{p+1} \leq e_{p+2} \leq \dots
+  \leq e_n.</code>
+</p>
+<p> The <code class="reqn">p</code> first PKF generate the same space as do the
+<code class="reqn">p</code> columns of the trend matrix <code class="reqn">\mathbf{F}</code>, say
+<code class="reqn">\textrm{colspan}(\mathbf{F})</code>. The following
+<code class="reqn">n-p</code> PKFs generate a supplementary of the subspace
+<code class="reqn">\textrm{colspan}(\mathbf{F})</code>, and they have a decreasing
+influence on the response. So the <code class="reqn">p +1</code>-th PKF can give a hint on
+a possible deterministic trend functions that could be added to the
+<code class="reqn">p</code> existing ones.
+</p>
+<p>The matrix <code class="reqn">\mathbf{B}</code> is such that <code class="reqn">\mathbf{B} \mathbf{F}
+    = \mathbf{0}</code>, so the columns of <code class="reqn">\mathbf{F}</code> can be
+thought of as the eigenvectors that are associated with the zero
+eigenvalues <code class="reqn">e_1</code>, <code class="reqn">\dots</code>, <code class="reqn">e_p</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+
+<p>The eigenvalues of the energy bending matrix in <em>ascending</em>
+order. The first <code class="reqn">p</code> values must be very close to zero, but
+will not be zero since they are provided by numerical linear
+algebra.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vectors</code></td>
+<td>
+
+<p>A matrix <code class="reqn">\mathbf{U}</code> with its columns
+<code class="reqn">\mathbf{u}_i</code> equal to the eigenvectors of the
+energy bending matrix, in correspondence with the eigenvalues
+<code class="reqn">e_i</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+
+<p>The Energy Bending Matrix <code class="reqn">\mathbf{B}</code>. Remind that the
+eigenvectors are used here in the ascending order of the
+eigenvalues, which is the reverse of the usual order.
+</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>When an eigenvalue <code class="reqn">e_i</code> is such that <code class="reqn">e_{i-1} &lt; e_i &lt;
+    e_{i+1}</code> (which can happen only for <code class="reqn">i &gt;
+    p</code>), the corresponding PKF is unique up to a change of sign. However a
+run of <code class="reqn">r &gt; 1</code> identical eigenvalues is associated with a
+<code class="reqn">r</code>-dimensional eigenspace and the corresponding PKFs have no
+meaning when they are considered individually.
+</p>
+
+
+<h3>References</h3>
+
+<p>Sahu S.K. and Mardia K.V. (2003).  A Bayesian kriged Kalman
+model for short-term forecasting of air pollution levels.
+<em>Appl. Statist.</em> 54 (1), pp. 223-244.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(kergp)
+set.seed(314159)
+n &lt;- 100
+x &lt;- sort(runif(n))
+y &lt;- 2 + 4 * x  + 2 * x^2 + 3 * sin(6 * pi * x ) + 1.0 * rnorm(n)
+nNew &lt;- 60; xNew &lt;- sort(runif(nNew))
+df &lt;- data.frame(x = x, y = y)
+
+##-------------------------------------------------------------------------
+## use a Matern 3/2 covariance and a mispecified trend. We should guess
+## that it lacks a mainily linear and slightly quadratic part.
+##-------------------------------------------------------------------------
+
+myKern &lt;- k1Matern3_2
+inputNames(myKern) &lt;- "x"
+mygp &lt;- gp(formula = y ~ sin(6 * pi * x),
+           data = df, 
+           parCovLower = c(0.01, 0.01), parCovUpper = c(10, 100),
+           cov = myKern, estim = TRUE, noise = TRUE)
+PK &lt;- prinKrige(mygp)
+
+## the third PKF suggests a possible linear trend term, and the
+## fourth may suggest a possible quadratic linear trend
+
+matplot(x, PK$vectors[ , 1:4], type = "l", lwd = 2)
+
+</code></pre>
+
+
+</div>

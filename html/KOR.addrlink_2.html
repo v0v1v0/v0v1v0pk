@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>addrlink</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Merge Data To Reference Index</h2>
+
+<h3>Description</h3>
+
+<p>Takes two data.frames with address data and merges them together. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">addrlink(df_ref, df_match, 
+col_ref = c("Strasse", "Hausnummer", "Hausnummernzusatz"), 
+col_match = c("Strasse", "Hausnummer", "Hausnummernzusatz"), 
+fuzzy_threshold = 0.9, seed = 1234)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df_ref</code></td>
+<td>
+<p>data.frame with address references</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_match</code></td>
+<td>
+<p>data.frame with addresses to be matched</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_ref</code></td>
+<td>
+<p>character vector of length three, naming the df_ref columns which contain the steet names, house numbers and additional letters (in that order)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_match</code></td>
+<td>
+<p>character vector of length three, naming the df_match columns which contain the steet names, house numbers and additional letters (in that order)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fuzzy_threshold</code></td>
+<td>
+<p>The threshold used for fuzzy matching street names</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Seed for random numbers</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The matching is done in four stages. 
+</p>
+<p><b>Stage 1</b> (qAdress = 1). This is an exact match (highest quality, qscore = 1)
+</p>
+<p><b>Stage 2</b> (qAdress = 2). Exact match on street name, but no valid house 
+number could be found. Be aware that random house numbers might be used. 
+Consider setting your own seed. qscore indicates the match quality. 
+See <code>match_number</code> for details.
+</p>
+<p><b>Stage 3</b> (qAdress = 3). No exact match on street name could be found. 
+Street names are fuzzy matched. The method "jw" (Jaro-Winkler distance) from 
+package stringdist is used (see stringdist-metrics). If 1 - [Jaro-Winkler distance] 
+is greater than fuzzy_threshold, a match is assumed. The highest score is 
+taken and house number matching is done as outlined in Stage 2. 
+qscore is fuzzy_score*[house number score]. 
+</p>
+<p><b>Stage 4</b> (qAdress = 4). No match (qscore = 0)
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>ret</code></td>
+<td>
+<p>The merged dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>QA</code></td>
+<td>
+<p>The quality markers (qAdress and qscore)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Daniel Schürmann</p>
+
+
+<h3>See Also</h3>
+
+<p><code>split_address</code>, <code>split_number</code></p>
+
+
+</div>

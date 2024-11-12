@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nPerm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Permutations of a list or a vector</h2>
+
+<h3>Description</h3>
+
+<p>The function returns all possible different permutations of objects in a list or in a vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nPerm(L = c())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>List/Vector</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>In order to manage permutations of numbers or vectors, the standard permutation process is applied.
+</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>list</code></td>
+<td>
+<p>all the permutations of <code>L</code></p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>C. A. Charalambides (2002) Enumerative Combinatoris, Chapman &amp; Haii/CRC. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# permutations of 1,2,3  
+nPerm( c(1,2,3) )
+
+# permutations of 1,2,1 (two elements are equal) 
+nPerm( c(1,2,1) )
+
+# permutations of the words "Alice", "Bob","Jack"
+nPerm( c("Alice", "Bob","Jack") )
+
+# permutations of the vectors c(0,1), c(2,3), c(7,3)
+nPerm( list(c(0,1), c(2,3), c(7,3)) )
+</code></pre>
+
+
+</div>

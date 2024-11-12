@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>correlation_kim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate the correlation between two variables</h2>
+
+<h3>Description</h3>
+
+<p>Estimate the correlation between two variables
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">correlation_kim(
+  x = NULL,
+  y = NULL,
+  data = NULL,
+  x_var_name = NULL,
+  y_var_name = NULL,
+  ci_range = 0.95,
+  round_r = 2,
+  round_p = 3,
+  output_type = "summary"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a numeric vector of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>(optional) a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_var_name</code></td>
+<td>
+<p>(optional) name of the first variable
+(if using a data set as an input)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_var_name</code></td>
+<td>
+<p>(optional) name of the second variable
+(if using a data set as an input)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci_range</code></td>
+<td>
+<p>range of the confidence interval for the correlation
+coefficient. If <code>ci_range = FALSE</code>, no confidence interval
+will be estimated. By default, <code>ci_range = 0.95</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_r</code></td>
+<td>
+<p>number of decimal places to which to round
+correlation coefficients (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_p</code></td>
+<td>
+<p>number of decimal places to which to round
+p-values (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_type</code></td>
+<td>
+<p>type of the output. If <code>output_type = "dt"</code>,
+the function's output will be a data.table with the results from the
+correlation analysis. If <code>output_type = "summary"</code>, the function's
+output will be a statement (a string) summarizing the results from
+the correlation analysis. By default, <code>output_type = "summary"</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+correlation_kim(x = 1:4, y = c(1, 3, 2, 4))
+correlation_kim(x = 1:4, y = c(1, 3, 2, 4), ci_range = FALSE)
+# output as a data table
+correlation_kim(x = 1:4, y = c(1, 3, 2, 4), output_type = "dt")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>weilines</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add Lines onto a Weibull Plot</h2>
+
+<h3>Description</h3>
+
+<p>Weibull distributed data plots as a straight line on log-log plot using
+<code>wlines()</code>. It is best used after function <code>wplot()</code> has been
+called.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">weilines(x, y, lty = NULL, lwd = NULL, col = "black", type = "l",
+  pch = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>vector of values the same length as x</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty</code></td>
+<td>
+<p>line type</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>line width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>line color</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>type of plotting</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch</code></td>
+<td>
+<p>symbol type for type = "b"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A Weibull plot uses log paper and has log(1/(1-F(x)) versus x,
+where the data values x have an empirical cdf of F(x). The plot
+margins may need to be adjusted so that the right hand axis is
+visible.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>wplot()</code> creates the Weibull plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+dummy &lt;- c(0,0)
+weiplot(dummy, xlim = c(1e-3, 10), type = "n")
+x &lt;- 10^seq(-3, 2, length = 100)
+weilines(x, pexp(x), col = "red")
+weilines(x, pweibull(x, 2), col = "blue")
+weilines(x, pweibull(x, 3), col = "green")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>congCombined</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Congressional District Public Opinion Ideology in 2010</h2>
+
+<h3>Description</h3>
+
+<p>These data present measures of ideology in 2010 for 434 districts for the U.S. 
+House of Representatives, recorded as the variable <code>krige.cong</code>. Forecasts 
+are based on a kriging model fitted over the 2008 Cooperative Congressional 
+Election Survey (CCES), paired with predictive data from the 2010 Census. Each 
+district's public ideology is paired with the DW-NOMINATE common space score 
+of each of its representative in 2011 (update from McCarty, Poole and Rosenthal 
+1997). Eight districts have repeated observations in order to include the DW-NOMINATE 
+score when a member was replaced mid-term.
+</p>
+
+
+<h3>Format</h3>
+
+<p>The <code>congCombined</code> dataset has 442 observations and 12 variables. 4
+34 out of 435 congressional districts are covered, with eight districts duplicated 
+when a member was replaced mid-term.
+</p>
+
+<dl>
+<dt><code>stateCD</code></dt>
+<dd>
+<p>Unique identifier for each congressional district by state. 
+The first two digits are <code>STATEA</code>, and the second two are <code>cd</code>.</p>
+</dd>
+<dt><code>krige.cong</code></dt>
+<dd>
+<p>The ideology of the average citizen in the congressional district.</p>
+</dd>
+<dt><code>krige.state.var</code></dt>
+<dd>
+<p>The variance of ideology among the district's citizens.</p>
+</dd>
+<dt><code>cong</code></dt>
+<dd>
+<p>The term of Congress studied–112 for this dataset.</p>
+</dd>
+<dt><code>idno</code></dt>
+<dd>
+<p>Identification number for the House member–ICPSR numbers 
+continued by Poole &amp; Rosenthal.</p>
+</dd>
+<dt><code>state</code></dt>
+<dd>
+<p>The ICPSR code for the state.</p>
+</dd>
+<dt><code>cd</code></dt>
+<dd>
+<p>The congressional district number.</p>
+</dd>
+<dt><code>statenm</code></dt>
+<dd>
+<p>The first seven letters of the state's name.</p>
+</dd>
+<dt><code>party</code></dt>
+<dd>
+<p>Political party of the House member. 100=Democrat, 200=Republican.</p>
+</dd>
+<dt><code>name</code></dt>
+<dd>
+<p>Last name of the House member, followed by first name if ambiguous.</p>
+</dd>
+<dt><code>dwnom1</code></dt>
+<dd>
+<p>First dimension DW-NOMINATE common space score for the House member. Higher values are usually interpreted as more right-wing, with lower values as more left-wing.</p>
+</dd>
+<dt><code>STATEA</code></dt>
+<dd>
+<p>The FIPS code for the state.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+
+<p>Ansolabehere, Stephen. 2011. "CCES, Common Content, 2008." Ver. 4.
+</p>
+<p>McCarty, Nolan M., Keith T. Poole and Howard Rosenthal. 1997. <em>Income 
+Redistribution and the Realignment of American Politics</em>. American Enterprise 
+Institude Studies on Understanding Economic Inequality. Washington: AEI Press.
+</p>
+<p>Minnesota Population Center. 2011. <em>National Historical Geographic Information 
+System: Version 2.0.</em> Minneapolis, MN: University of Minnesota. ‘<span class="samp">⁠https://www.nhgis.org⁠</span>’
+
+</p>
+
+
+<h3>References</h3>
+
+<p>Jeff Gill. 2020. Measuring Constituency Ideology Using Bayesian Universal Kriging. 
+<em>State Politics &amp; Policy Quarterly</em>. <code>doi:10.1177/1532440020930197</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">    
+# Descriptive Statistics
+summary(congCombined)
+
+# Correlate House Members' DW-NOMINATE Scores with Public Opinion Ideology
+cor(congCombined$dwnom1,congCombined$krige.cong)
+
+# Plot House Members' DW-NOMINATE Scores against Public Opinion Ideology
+plot(y=congCombined$dwnom1,x=congCombined$krige.cong,
+   xlab="District Ideology (Kriging)", ylab="Legislator Ideology (1st Dim., Common Space)", 
+   main="U.S. House of Representatives", type="n")
+points(y=congCombined$dwnom1[congCombined$party==200],
+   x=congCombined$krige.cong[congCombined$party==200],pch="R",col="red")
+   points(y=congCombined$dwnom1[congCombined$party==100],
+   x=congCombined$krige.cong[congCombined$party==100],pch="D",col="blue")
+</code></pre>
+
+
+</div>

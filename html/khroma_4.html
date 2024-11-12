@@ -1,0 +1,198 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>colour</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Color Schemes</h2>
+
+<h3>Description</h3>
+
+<p>Provides qualitative, diverging and sequential color schemes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">colour(
+  palette,
+  reverse = FALSE,
+  names = FALSE,
+  lang = "en",
+  force = FALSE,
+  ...
+)
+
+color(palette, reverse = FALSE, names = FALSE, lang = "en", force = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>A <code>character</code> string giving the name of the scheme to be
+used (see <code>info()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the resulting vector of colors
+should be reversed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the names of the colors should be
+kept in the resulting vector?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>A <code>character</code> string specifying the language for the color
+names. It must be one of "<code>en</code>" (English, the default) or "<code>fr</code>" (French).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>A <code>logical</code> scalar. If <code>TRUE</code>, forces the color scheme to be
+interpolated. It should not be used routinely with qualitative color
+schemes, as they are designed to be used as is to remain color-blind safe.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed to
+colorRampPalette.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>function</code> function with the following attributes, that when called
+with a single argument (an <code>integer</code> specifying the number of colors)
+returns a (named) vector of colors.
+</p>
+
+<dl>
+<dt>palette</dt>
+<dd>
+<p>A <code>character</code> string giving the name of the
+color scheme.</p>
+</dd>
+<dt>type</dt>
+<dd>
+<p>A <code>character</code> string giving the corresponding
+data type. One of "<code>qualitative</code>", "<code>diverging</code>" or "<code>sequential</code>".</p>
+</dd>
+<dt>interpolate</dt>
+<dd>
+<p>A <code>logical</code> scalar: can the color palette be
+interpolated?</p>
+</dd>
+<dt>missing</dt>
+<dd>
+<p>A <code>character</code> string giving the the hexadecimal
+representation of the color that should be used for <code>NA</code> values.</p>
+</dd>
+<dt>max</dt>
+<dd>
+<p>An <code>integer</code> giving the maximum number of color values.
+Only relevant for non-interpolated color schemes.</p>
+</dd>
+</dl>
+<p>For color schemes that can be interpolated (diverging and sequential data),
+the color range can be limited with an additional argument. <code>range</code> allows
+to remove a fraction of the color domain (before being interpolated; see
+examples).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Crameri, F. (2018). Geodynamic diagnostics, scientific visualisation and
+StagLab 3.0. <em>Geosci. Model Dev.</em>, 11, 2541-2562.
+<a href="https://doi.org/10.5194/gmd-11-2541-2018">doi:10.5194/gmd-11-2541-2018</a>
+</p>
+<p>Crameri, F., Shephard, G. E. &amp; Heron, P. J. (2020). The misuse of colour in
+science communication. <em>Nature Communications</em>, 11, 5444.
+<a href="https://doi.org/10.1038/s41467-020-19160-7">doi:10.1038/s41467-020-19160-7</a>
+</p>
+<p>Jones, A., Montanarella, L. &amp; Jones, R. (Ed.) (2005). <em>Soil atlas of
+Europe</em>. Luxembourg: European Commission, Office for Official Publications
+of the European Communities. 128 pp. ISBN: 92-894-8120-X.
+</p>
+<p>Okabe, M. &amp; Ito, K. (2008). <em>Color Universal Design (CUD): How to Make
+Figures and Presentations That Are Friendly to Colorblind People</em>.
+URL: <a href="https://jfly.uni-koeln.de/color/">https://jfly.uni-koeln.de/color/</a>.
+</p>
+<p>Tol, P. (2021). <em>Colour Schemes</em>. SRON. Technical Note No.
+SRON/EPS/TN/09-002, issue 3.2.
+URL: <a href="https://personal.sron.nl/~pault/data/colourschemes.pdf">https://personal.sron.nl/~pault/data/colourschemes.pdf</a>
+</p>
+<p><a href="https://ccgm.org/">Commission for the Geological Map of the World</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other color schemes: 
+<code>info()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Okabe and Ito colour scheme
+colour("okabe ito")(8)
+plot_scheme(colour("okabe ito")(8))
+
+## Paul Tol's colour schemes
+### Qualitative data
+plot_scheme(colour("bright")(7))
+plot_scheme(colour("high contrast")(3))
+plot_scheme(colour("vibrant")(7))
+plot_scheme(colour("muted")(9))
+plot_scheme(colour("medium contrast")(6))
+plot_scheme(colour("pale")(6))
+plot_scheme(colour("dark")(6))
+plot_scheme(colour("light")(9))
+### Diverging data
+plot_scheme(colour("sunset")(11))
+plot_scheme(colour("BuRd")(9))
+plot_scheme(colour("PRGn")(9))
+### Sequential data
+plot_scheme(colour("YlOrBr")(9))
+plot_scheme(colour("iridescent")(23))
+plot_scheme(colour("discrete rainbow")(14))
+plot_scheme(colour("discrete rainbow")(23))
+plot_scheme(colour("smooth rainbow")(34))
+
+## Scientific colour schemes
+### Geologic timescale
+plot_scheme(colour("stratigraphy")(175))
+### AVHRR global land cover classification
+plot_scheme(colour("land")(14))
+### FAO soil reference groups
+plot_scheme(colour("soil")(24))
+
+## Adjust colour levels
+PRGn &lt;- colour("PRGn")
+plot_scheme(PRGn(9, range = c(0.5, 1)))
+</code></pre>
+
+
+</div>

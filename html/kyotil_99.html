@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_count_from_xy_coor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Imaging analysis for spatial region
+</h2>
+
+<h3>Description</h3>
+
+<p>Counting the number of masks in a rectangular region
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_count_from_xy_coor(file, topleft, bottomright, image, plot)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+
+<p>_sizes_coordinates.txt
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>topleft</code></td>
+<td>
+
+<p>topleft (x,y) coordiate for a rectangular box
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bottomright</code></td>
+<td>
+
+<p>bottomright: bottomright (x,y) coordiate for a rectangular box  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>image</code></td>
+<td>
+
+<p>image: an image for plotting
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+
+<p>plot: plot=TRUE shows image with rectangular box
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function counts cells inside of rectangular box made by the topleft and bottomright xy-coordinates.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The number of masks inside of the rectangular box 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Sunwoo Han
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#get_count_from_xy_coor(file='M926910_Position1_CD3-BUV395_sizes_coordinates.txt', 
+  #topleft=c(500,0), bottomright=c(1392,500), 
+  #image='M926910_Position1_CD3-BUV395.tiff', plot=TRUE)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dmdirichlet</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Functions related to mixture Dirichlet distribution
+</h2>
+
+<h3>Description</h3>
+
+<p>Functions related to mixture Dirichlet distribution
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dmdirichlet(x, mAlpha, mixtureCoef)
+ddirichlet (x, alpha)
+rdirichlet (n, alpha) 
+rmdirichlet (mAlpha, mixtureCoef) 
+modifyDirichlet (prior, y) 
+logIntegrateMixDirichlet(y, prior, tau=1) 
+logIntegrateDirichlet (y, alpha) 
+
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector containing a single deviate or matrix containing one random deviate per row.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mAlpha</code></td>
+<td>
+<p>matrix. Each row is a parameter of Dirichlet</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>numeric vector. Parameter for a Dirichlet distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mixtureCoef</code></td>
+<td>
+<p>numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prior</code></td>
+<td>
+<p>list of two components: alpha and mix.coef</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric vector of counts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tau</code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>ddirichlet andn rdirichlet are identically copied from MCMCpack
+</p>
+
+
+</div>

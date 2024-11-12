@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>unlock_gpg_key_passphrase</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Functions that attempts to unlock a gpg key for decryption</h2>
+
+<h3>Description</h3>
+
+<p>This function will attempt to unlock a specific GPG key by first encrypting a
+small amount of information using the (public) key and then immediately
+decrypting it using the (private) key, thereby causing the keyring to
+temporarily store the key passphrase. This can be helpful if one is trying
+to knit a document with encrypted data chunks, but the key for those
+data chunks is locked with a passphrase. See the package vignette section
+<code>Workarounds for GPG data chunk error: Password callback did not return a string value</code>
+for more details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">unlock_gpg_key_passphrase(
+  id = ifelse(is.null(name), ifelse(is.null(email), NULL,
+    gpg::gpg_list_keys()$id[gpg::gpg_list_keys()$email == email]),
+    gpg::gpg_list_keys()$id[gpg::gpg_list_keys()$name == name]),
+  name = NULL,
+  email = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>Identifier of the GPG key</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Name associated with the desired GPG key</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>email</code></td>
+<td>
+<p>Email associated with the desired GPG key</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Will return the identifier of the GPG key that was unlocked.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>David M. Kaplan <a href="mailto:dmkaplan2000@gmail.com">dmkaplan2000@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>data_encode</code>, <code>gpg_encrypt</code>.
+</p>
+
+
+</div>

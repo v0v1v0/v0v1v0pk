@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_walls</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check the walls user's provided world</h2>
+
+<h3>Description</h3>
+
+<p>This is a helper function to check ver_walls and hor_walls. It's called by check_user_world twice.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_walls(dataset, name, nx, ny)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dataset</code></td>
+<td>
+<p>Either hor_walls or ver_walls</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Character string: "hor_walls" or "ver_walls"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nx, </code></td>
+<td>
+<p>ny Size of the world</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If a misespecification is found, this function produces a stop and
+provides a descriptive error message.
+</p>
+
+
+</div>

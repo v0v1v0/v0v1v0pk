@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>implementation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Keras implementation</h2>
+
+<h3>Description</h3>
+
+<p>Obtain a reference to the Python module used for the implementation of Keras.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">implementation()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>There are currently two Python modules which implement Keras:
+</p>
+
+<ul>
+<li>
+<p> keras ("keras")
+</p>
+</li>
+<li>
+<p> tensorflow.keras ("tensorflow")
+</p>
+</li>
+</ul>
+<p>This function returns a reference to the implementation being currently
+used by the keras package. The default implementation is "keras".
+You can override this by setting the <code>KERAS_IMPLEMENTATION</code> environment
+variable to "tensorflow".
+</p>
+
+
+<h3>Value</h3>
+
+<p>Reference to the Python module used for the implementation of Keras.
+</p>
+
+
+</div>

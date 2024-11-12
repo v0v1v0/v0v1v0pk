@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sew.knitxl_output_text</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extend <code>knitr::sew()</code> generic to write text, vectors and data table to the
+output .xlsx file.</h2>
+
+<h3>Description</h3>
+
+<p>These functions are called within <code>knitr::knit()</code> to write either text
+vector or a table into the output .xlsx file produced by <code>knitxl()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'knitxl_output_text'
+sew(x, options, ...)
+
+## S3 method for class 'knitxl_output_vector'
+sew(x, options, ...)
+
+## S3 method for class 'knitxl_output_data_frame'
+sew(x, options, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output from evaluate::evaluate().</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>A list of chunk options used to control output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments to pass to methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisibly returns <code>NULL</code>.
+</p>
+
+
+</div>

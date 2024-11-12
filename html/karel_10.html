@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_beepers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create dataset about beepers</h2>
+
+<h3>Description</h3>
+
+<p>Given the elements provided in the world, this function generates a dataset
+with info about the beepers present in the world. This function is called
+from <code>generar_mundo()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_beepers(nx = NULL, pos_x = NULL, pos_y = NULL, n = NULL, moment = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>nx</code></td>
+<td>
+<p>horizontal size of the world</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pos_x, </code></td>
+<td>
+<p>pos_y vectors of coordinates of cells with non-zero amount of
+beepers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of beepers in each cell indicated by coordinates in
+<code>pos_x</code> and <code>pos_y</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>moment</code></td>
+<td>
+<p>time</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble with as many rows as cells with beepers in the world and 5
+columns: <code>x</code> and <code>y</code> for the coordinates of the cell, <code>cell</code>
+is the number of the cell counting as cell number 1 the cell in the bottom
+left corner and going upwards by row (meaning cell number 2 would be the
+cell in coordinates x=2 and y=1), <code>n</code> the number of beepers in this
+cell and <code>moment</code> the moment in which this state of the world
+corresponds to.
+</p>
+
+
+</div>

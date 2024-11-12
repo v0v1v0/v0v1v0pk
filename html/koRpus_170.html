@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot method for objects of class kRp.text</h2>
+
+<h3>Description</h3>
+
+<p>Plot method for S4 objects of class <code>kRp.text</code>,
+plots the frequencies of tagged word classes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot(x, y, ...)
+
+## S4 method for signature 'kRp.text,missing'
+plot(x, what = "wclass", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of class <code>kRp.text</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>From the generic <code>plot</code> function, ignored for koRpus class objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Any other argument suitable for plot()</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>what</code></td>
+<td>
+<p>Character string, valid options are:
+</p>
+
+<dl>
+<dt>
+<code>"wclass"</code>:</dt>
+<dd>
+<p>Barplot of distribution of word classes</p>
+</dd>
+<dt>
+<code>"letters"</code>:</dt>
+<dd>
+<p>Line plot of distribution of word length in letters</p>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>kRp.text</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># code is only run when the english language package can be loaded
+if(require("koRpus.lang.en", quietly = TRUE)){
+  sample_file &lt;- file.path(
+    path.package("koRpus"), "examples", "corpus", "Reality_Winner.txt"
+  )
+  tokenized.obj &lt;- tokenize(
+    txt=sample_file,
+    lang="en"
+  )
+  plot(tokenized.obj)
+} else {}
+</code></pre>
+
+
+</div>

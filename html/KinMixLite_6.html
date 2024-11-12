@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convertIBD</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert relationship information to IBD pattern distribution</h2>
+
+<h3>Description</h3>
+
+<p>Construct IBD pattern distribution from one of several alternative representations
+of multi-person condensed coefficients of identity</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">as.IBD(x='sibs', targets=NULL, ped=FALSE) 
+convertIBD(x='sibs', targets=NULL, ped=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A string, a vector of length 3 or 9, a list with components <code>pr</code> and <code>patt</code>, or a list with two components, a pedigree and a vector of target id's; see Details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>targets</code></td>
+<td>
+<p>character vector of individual tags</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ped</code></td>
+<td>
+<p>logical, should complete pedigree be added as an attribute to the output, if available?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Possible formats for the input <code>x</code> are:
+</p>
+
+<ol>
+<li>
+<p> certain verbal mnemonics; currently one of the following (or an unambiguous partial match):
+c('sibs','parent-child','half-sibs',
+'cousins','half-cousins','second-cousins',
+'double-first-cousins',
+'quadruple-half-first-cousins',
+'3cousins-cyclic','3cousins-star','trio')
+</p>
+</li>
+<li>
+<p> a vector of 3 kappas
+</p>
+</li>
+<li>
+<p> a vector of 9 Deltas
+</p>
+</li>
+<li>
+<p> a list with matrix or vector valued component <code>patt</code>, with or without component <code>pr</code>
+</p>
+</li>
+<li>
+<p> a list with 2 components, the first being a pedigree in the sense of the <code>pedtools</code> package, the second a vector of target id's
+</p>
+</li>
+<li>
+<p> a 3-column character matrix of individual tags, each row denoting a child/mother/triple - an alternative compact representation of a pedigree 
+</p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p>IBD pattern distribution as a list with components <code>pr</code> and <code>patt</code></p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pedtools</code>, <code>formats</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+IBD&lt;-convertIBD('parent-child')
+
+IBD&lt;-convertIBD(c(0.5,0.5,0.0))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kcca-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "kcca"</h2>
+
+<h3>Description</h3>
+
+<p>The "kcca" class  </p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("kcca", ...)</code>.
+or by the calling the <code>kcca</code> function. 
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>kcor</code>:</dt>
+<dd>
+<p>Object of class <code>"vector"</code> describing the correlations</p>
+</dd>
+<dt>
+<code>xcoef</code>:</dt>
+<dd>
+<p>Object of class <code>"matrix"</code> estimated coefficients for the <code>x</code> variables</p>
+</dd>
+<dt>
+<code>ycoef</code>:</dt>
+<dd>
+<p>Object of class <code>"matrix"</code> estimated coefficients for the <code>y</code> variables </p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>kcor</dt>
+<dd>
+<p><code>signature(object = "kcca")</code>: returns the correlations</p>
+</dd>
+<dt>xcoef</dt>
+<dd>
+<p><code>signature(object = "kcca")</code>: returns the estimated coefficients for the <code>x</code> variables</p>
+</dd>
+<dt>ycoef</dt>
+<dd>
+<p><code>signature(object = "kcca")</code>: returns the estimated coefficients for the <code>y</code> variables </p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Alexandros Karatzoglou <br><a href="mailto:alexandros.karatzoglou@ci.tuwien.ac.at">alexandros.karatzoglou@ci.tuwien.ac.at</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>kcca</code>,
+<code>kpca-class</code> 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## dummy data
+x &lt;- matrix(rnorm(30),15)
+y &lt;- matrix(rnorm(30),15)
+
+kcca(x,y,ncomps=2)
+
+</code></pre>
+
+
+</div>

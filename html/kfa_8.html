@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_std_loadings</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Standardized factor loadings matrix</h2>
+
+<h3>Description</h3>
+
+<p>Extract standardized factor loadings from lavaan object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_std_loadings(object, type = "std.all", df = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a <code>lavaan</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>standardize on the latent variables (<code>"std.lv"</code>),
+latent and observed variables (<code>"std.all"</code>, default), or latent and observed variables
+but not exogenous variables (<code>"std.nox"</code>)? See <code>standardizedSolution</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>should loadings be returned as a <code>matrix</code> (default) or <code>data.frame</code>?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>matrix</code> or <code>data.frame</code> of factor loadings
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(HolzingerSwineford1939, package = "lavaan")
+HS.model &lt;- ' visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+
+fit &lt;- lavaan::cfa(HS.model, data = HolzingerSwineford1939)
+get_std_loadings(fit)
+
+</code></pre>
+
+
+</div>

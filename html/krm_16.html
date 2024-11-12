@@ -1,0 +1,199 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>krm.most</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Kernel-based Regression Model Maximum of adjusted Score Test
+</h2>
+
+<h3>Description</h3>
+
+<p>Performs maximum of adjusted score test for kernel-based regression models. Both Euclidean and protein sequence covariates can be used to form kernels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">krm.most (formula, data, regression.type=c("logistic","linear"), 
+    kern.type=c("rbf","mi","mm","prop"), n.rho=10, range.rho=0.99, 
+    n.mc=2000, 
+    seq.file.name=NULL, formula.kern=NULL, seq.start=NULL, seq.end=NULL,
+    inference.method=c("parametric.bootstrap", "perturbation", "Davies"),
+    verbose=FALSE) 
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>a formula object describing the null model
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>data frame
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regression.type</code></td>
+<td>
+
+<p>logistic regression or linear regression
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern.type</code></td>
+<td>
+
+<p>rbf: radial basis function kernel, a kernel type for Euclidean covariates. 
+The other three kernels are for protein sequence covariates (Fong et al. 2014). mm: match-mismatch, prop: physicochemical properties, mi: mutual information, 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.rho</code></td>
+<td>
+
+<p>integer. Number of rhos to maximize over
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range.rho</code></td>
+<td>
+
+<p>numeric. A number between 0 and 1. It controls the range of rhos to use to compute kernel
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.file.name</code></td>
+<td>
+
+<p>There are two ways to provide protein sequence information. One is to supply a sequence file named 'seq.file.name', which contains sequences in fasta format.
+Two is to supply a formula through formula.kern, and the variable name should be part of data.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula.kern</code></td>
+<td>
+
+<p>The formula for the covariates used to form the kernel. It may specify Euclidean covariates or a string covariate that contains protein sequences.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.start</code></td>
+<td>
+
+<p>integer. Start position of subsequence to be used in computing kernel. Only supported when the sequence is specified through formula.kern.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.end</code></td>
+<td>
+
+<p>integer. End position of subsequence to be used in computing kernel. Only supported when the sequence is specified through formula.kern.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.mc</code></td>
+<td>
+
+<p>integer. Number of bootstrap samples used to compute p-values.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inference.method</code></td>
+<td>
+
+<p>parametric.bootstrap implements methods from Fong et al. (2014). 
+perturbation uses methods from Wu et a. (2013)
+Davies uses the upper bound method from Davies (1987) and Liu et al. (2008). 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>boolean
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of class krm
+</p>
+<table><tr style="vertical-align: top;">
+<td><code>p.values</code></td>
+<td>
+<p>If inference.method=="Davies", a single p-value. If inference.method=="perturbation" or "parametric.bootstrap", 
+a vector of four p-values, named chiI, chiII, normI, normII. For perturbation, chiII and normII are NA.
+chiI/chiII p-values are based on chi-squared approximation and normI/normII are based on normal approximations.
+chiI/normI p-values are based on plugin estimator of  mean and variance of score statistic, chiII/normII are based on modified estimator of mean and variance of score statistic. 
+chiII or normII are more powerful than chiI and normI. For more details, see Fong et al. (2014)</p>
+</td>
+</tr></table>
+<h3>References</h3>
+
+<p>Fong, Y. and Datta, S. and Georgiev, I. and Kwong, P. and Tomaras, G. (2014) Kernel-based
+Logistic Regression Model for Protein Sequence Without Vectorialization, Biostatistics.
+</p>
+<p>Wu et al. (2013) Kernel Machine SNP-Set Testing Under Multiple Candidate Kernels, Genetic epidemiology.
+</p>
+<p>Davies, R. (1987) Hypothesis testing when a nuisance parameter is present only under the
+alternative, Biometrika, 74, 33-43.
+</p>
+<p>Liu, D., Ghosh, D. and Lin, X. (2008) Estimation and testing for the effect of a genetic
+pathway on a disease outcome using logistic kernel machine regression via logistic mixed
+models, BMC Bioinformatics, 9, 292.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# in addition to the examples listed here, there are more examples 
+# under folder R/library/krm/unitTests
+
+## Not run: 
+# the examples are not run during package build because it takes a little too long to run
+
+# an Euclidean kernel example from Liu et al. (2008)
+data=sim.liu.2008 (n=100, a=.1, seed=1) 
+test = krm.most(y~x, data, formula.kern=~z.1+z.2+z.3+z.4+z.5, kern.type="rbf")
+
+
+# a protein sequence kernel example
+dat.file.name=paste(system.file(package="krm")[1],'/misc/y1.txt', sep="") 
+seq.file.name=paste(system.file(package="krm")[1],'/misc/sim1.fasta', sep="")
+dat=read.table(dat.file.name); names(dat)="y"
+test = krm.most (y~1, dat, seq.file.name=seq.file.name, kern.type="mi")
+
+
+
+## End(Not run) 
+
+
+</code></pre>
+
+
+</div>

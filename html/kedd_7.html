@@ -1,0 +1,202 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>h.amise</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+AMISE for Optimal Bandwidth Selectors
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>h.amise</code> evaluates the asymptotic 
+mean integrated squared error <b>AMISE</b> for optimal smoothing
+parameters <code class="reqn">h</code> of r'th derivative of kernel density 
+estimator one-dimensional.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">h.amise(x, ...)
+## Default S3 method:
+h.amise(x, deriv.order = 0, lower = 0.1 * hos, upper = 2 * hos, 
+         tol = 0.1 * lower, kernel = c("gaussian", "epanechnikov", "triweight", 
+         "tricube", "biweight", "cosine"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower, upper</code></td>
+<td>
+<p>range over which to minimize. The default is
+almost always satisfactory. <code>hos</code> (Over-smoothing) is calculated internally
+from an <code>kernel</code>, see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the convergence tolerance for <code>optimize</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, with default
+<code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>h.amise</code> asymptotic mean integrated squared error implements for choosing 
+the optimal bandwidth <code class="reqn">h</code> of a r'th derivative kernel density estimator.<br></p>
+<p>We Consider the following AMISE version of the r'th derivative of <code class="reqn">f</code> the r'th 
+derivative of the kernel estimate (see Scott 1992, pp 131):
+</p>
+<p style="text-align: center;"><code class="reqn">AMISE(h;r)= \frac{R\left(K^{(r)}\right)}{nh^{2r+1}} + \frac{1}{4} h^{4} \mu_{2}^{2}(K) R\left(f^{(r+2)}\right)</code>
+</p>
+
+<p>The optimal bandwidth minimizing this function is:
+</p>
+<p style="text-align: center;"><code class="reqn">h_{(r)}^{\ast} = \left[\frac{(2r+1)R\left(K^{(r)}\right)}{\mu_{2}^{2}(K) R\left(f^{(r+2)}\right)}\right]^{1/(2r+5)} n^{-1/(2r+5)}</code>
+</p>
+
+<p>whereof
+</p>
+<p style="text-align: center;"><code class="reqn">\inf_{h &gt; 0} AMISE(h;r) = \frac{2r+5}{4} R\left(K^{(r)}\right)^{\frac{4}{(2r+5)}} \left[ \frac{\mu_{2}^{2}(K)R\left(f^{(r+2)}\right)}{2r+1} \right]^{\frac{2r+1}{2r+5}} n^{-\frac{4}{2r+5}}</code>
+</p>
+
+<p>which is the smallest possible AMISE for estimation of <code class="reqn">f^{(r)}(x)</code> using the kernel <code class="reqn">K(x)</code>, 
+where <code class="reqn">R\left(K^{(r)}\right) = \int_{R} K^{(r)}(x)^{2} dx</code> and <code class="reqn">\mu_{2}(K) = \int_{R}x^{2} K(x) dx</code>.<br></p>
+<p>The range over which to minimize is <code>hos</code> Oversmoothing bandwidth, the default is almost always 
+satisfactory. See George and Scott (1985), George (1990), Scott (1992, pp 165), Wand and Jones (1995, pp 61).
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>the deparsed name of the <code>x</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the sample size after elimination of missing values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>value of bandwidth parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>amise</code></td>
+<td>
+<p>the AMISE value.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Bowman, A. W. and Azzalini, A. (1997).
+<em>Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with 
+S-Plus Illustrations</em>.
+Oxford University Press, Oxford.
+</p>
+<p>Radhey, S. S. (1987).
+MISE of kernel estimates of a density and its derivatives.
+<em>Statistics and Probability Letters</em>, <b>5</b>, 153–159.
+</p>
+<p>Scott, D. W. (1992).
+<em>Multivariate Density Estimation. Theory, Practice and Visualization</em>.
+New York: Wiley.
+</p>
+<p>Sheather, S. J. (2004).
+Density estimation.
+<em>Statistical Science</em>, <b>19</b>, 588–597.
+</p>
+<p>Silverman, B. W. (1986).
+<em>Density Estimation for Statistics and Data Analysis</em>.
+Chapman &amp; Hall/CRC. London.
+</p>
+<p>Wand, M. P. and Jones, M. C. (1995).
+<em>Kernel Smoothing</em>.
+Chapman and Hall, London.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.h.amise</code>, see <code>nmise</code> in package <a href="https://CRAN.R-project.org/package=sm"><span class="pkg">sm</span></a> this function 
+evaluates the mean integrated squared error of a density estimate (<code>deriv.order = 0</code>) 
+which is constructed from data which follow a normal distribution.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Derivative order = 0
+
+h.amise(kurtotic,deriv.order = 0)
+
+## Derivative order = 1
+
+h.amise(kurtotic,deriv.order = 1)
+</code></pre>
+
+
+</div>

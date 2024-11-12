@@ -1,0 +1,146 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The K-distribution.</h2>
+
+<h3>Description</h3>
+
+<p>Density, distribution function, quantile function and random generation for
+the K-distribution with parameters <code>shape</code> and <code>scale</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dk(x, shape = 1, scale = 1, intensity = FALSE, log = FALSE)
+
+pk(q, shape = 1, scale = 1, intensity = FALSE, log.p = FALSE,
+  lower.tail = TRUE)
+
+qk(p, shape = 1, scale = 1, intensity = FALSE, log.p = FALSE)
+
+rk(n, shape = 1, scale = 1, intensity = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, q</code></td>
+<td>
+<p>vector of quantiles</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape, scale</code></td>
+<td>
+<p>shape and scale parameters both defaulting to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intensity</code></td>
+<td>
+<p>logical; if TRUE, quantiles are intensities not amplitudes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log, log.p</code></td>
+<td>
+<p>logical; if TRUE, probabilities p are given as log(p).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower.tail</code></td>
+<td>
+<p>logical; if TRUE (default), probabilities are P[X = x],
+otherwise, P[X &gt; x].</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>vector of probabilities</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of observations</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The K-distribution with <code>shape</code> parameter <code class="reqn">\nu</code> and 
+<code>scale</code> parameter <code class="reqn">b</code> has amplitude density given by
+<code class="reqn">f(x) = [4 x^\nu / \Gamma(\nu)]
+                     [(\nu / b)^(1+\nu/2)]
+                     K(2 x \sqrt(\nu/b),\nu-1)</code>.
+Where <code class="reqn">K</code> is a modified Bessel function of the second kind.
+For <code class="reqn">\nu -&gt; Inf</code>, the K-distrubution tends to a Rayleigh
+distribution, and for <code class="reqn">\nu = 1</code> it is the Exponential
+distribution.
+The function <code>base::besselK</code> is used in the calculation, and
+care should be taken with large input arguements to this function,
+e.g. <code class="reqn">b</code> very small or <code class="reqn">x, \nu</code> very large.
+The cumulative distribution function for
+the amplitude, <code class="reqn">x</code> is given by
+<code class="reqn">F(x) = 1 - 2 x^\nu (\nu/b)^(\nu/2) K(2 x \sqrt(\nu/b), \nu)</code>.
+The K-Distribution is a compound distribution, with Rayleigh
+distributed amplitudes (exponential intensities) modulated by another
+underlying process whose amplitude is chi-distributed and whose
+intensity is Gamma distributed. An Exponential distributed number
+multiplied by a Gamma distributed random number is used to
+generate the random variates.
+The <code class="reqn">m</code>th moments are given by <code class="reqn">\mu_m = (b/\nu)^(m/2) \Gamma(0.5m + 1)
+         \Gamma(0.5m + \nu) / \Gamma(\nu)</code>, so that the root mean square
+value of x is the <code>scale</code> factor, <code class="reqn">&lt;x^2&gt; = b</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function <code>dk</code> gives the density, <code>pk</code> gives the distribution
+function, <code>qk</code> gives the quantile function, and <code>rk</code>
+generates random variates.
+</p>
+
+
+<h3>References</h3>
+
+<p>E Jakeman and R J A Tough, "Non-Gaussian models for the
+statistics of scattered waves", Adv. Phys., 1988, vol. 37, No. 5,
+pp471-529
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://CRAN.R-project.org/view=Distributions">Distributions</a>
+for other standard distributions, including <code>dweibull</code> for the Weibull
+distribution and <code>dexp</code> for the exponential distribution.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#=====
+r &lt;- rk(10000, shape = 3, scale = 5, intensity = FALSE)
+fn &lt;- stats::ecdf(r)
+x &lt;- seq(0, 10, length = 100)
+plot(x, fn(x))
+lines(x, pk(x, shape = 3, scale = 5, intensity = FALSE))
+#======
+r &lt;- rk(10000, shape = 3, scale = 5, intensity = FALSE)
+d &lt;- density(r)
+x &lt;- seq(0, 10, length = 100)
+plot(d, xlim=c(0,10))
+lines(x, dk(x, shape = 3, scale = 5, intensity = FALSE))
+</code></pre>
+
+
+</div>

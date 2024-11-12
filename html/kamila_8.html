@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>wkmeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Weighted k-means for mixed-type data</h2>
+
+<h3>Description</h3>
+
+<p>Weighted k-means for mixed continuous and categorical variables. A 
+user-specified weight <code>conWeight</code> controls the relative contribution of the
+variable types to the cluster solution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">wkmeans(conData, catData, conWeight, nclust, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conData</code></td>
+<td>
+<p>The continuous variables. Must be coercible to a data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catData</code></td>
+<td>
+<p>The categorical variables, either as factors or dummy-coded variables. Must be coercible to a data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conWeight</code></td>
+<td>
+<p>The continuous weight; must be between 0 and 1. The categorical weight is <code>1-conWeight</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nclust</code></td>
+<td>
+<p>The number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments passed to <code>kmeans</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A simple adaptation of <code>stats::kmeans</code> to mixed-type data.  Continuous
+variables are multiplied by the input parameter <code>conWeight</code>, and categorical
+variables are multipled by <code>1-conWeight</code>. If factor variables are input to
+<code>catData</code>, they are transformed to 0-1 dummy coded variables with the function
+<code>dummyCodeFactorDf</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A stats::kmeans results object, with additional slots <code>conCenters</code> and <code>catCenters</code> giving the actual centers adjusted for the weighting process.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dummyCodeFactorDf</code>
+</p>
+<p><code>kmeans</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate toy data set with poor quality categorical variables and good
+# quality continuous variables.
+set.seed(1)
+dat &lt;- genMixedData(200, nConVar=2, nCatVar=2, nCatLevels=4, nConWithErr=2,
+  nCatWithErr=2, popProportions=c(.5,.5), conErrLev=0.3, catErrLev=0.8)
+catDf &lt;- data.frame(apply(dat$catVars, 2, factor), stringsAsFactors = TRUE)
+conDf &lt;- data.frame(scale(dat$conVars), stringsAsFactors = TRUE)
+
+# A clustering that emphasizes the continuous variables
+r1 &lt;- with(dat,wkmeans(conDf, catDf, 0.9, 2))
+table(r1$cluster, dat$trueID)
+
+# A clustering that emphasizes the categorical variables; note argument
+# passed to the underlying stats::kmeans function
+r2 &lt;- with(dat,wkmeans(conDf, catDf, 0.1, 2, nstart=4))
+table(r2$cluster, dat$trueID)
+</code></pre>
+
+
+</div>

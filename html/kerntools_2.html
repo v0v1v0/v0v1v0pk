@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Acc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Accuracy</h2>
+
+<h3>Description</h3>
+
+<p>'Acc()' computes the accuracy between the output
+of a classification model and the actual values of the target.
+It can also compute the weighted accuracy, which is useful in
+imbalanced classification problems. The weighting is applied according
+to the class frequencies in the target. In balanced problems, weighted Acc = Acc.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Acc(ct, weighted = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ct</code></td>
+<td>
+<p>Confusion Matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weighted</code></td>
+<td>
+<p>If TRUE, the weighted accuracy is returned. (Defaults: FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Accuracy of the model (a single value).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y &lt;- c(rep("a",3),rep("b",2))
+y_pred &lt;- c(rep("a",2),rep("b",3))
+ct &lt;- table(y,y_pred)
+Acc(ct)
+Acc(ct,weighted=TRUE)
+</code></pre>
+
+
+</div>

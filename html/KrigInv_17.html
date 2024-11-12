@@ -1,0 +1,217 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict_nobias_km</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Kriging predictions</h2>
+
+<h3>Description</h3>
+
+<p>This function is similar to the predict.km function from the DiceKriging package. 
+The only change is the additionnal F.newdata output.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predict_nobias_km(object, newdata, type = "UK", 
+se.compute = TRUE, cov.compute = FALSE, low.memory=FALSE,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>A Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+
+<p>Vector, matrix or data frame containing the points where to perform predictions.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Character string corresponding to the kriging family, to be chosen between simple kriging ("SK"), or universal kriging ("UK").
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.compute</code></td>
+<td>
+
+<p>Optional boolean. If <code>FALSE</code>, only the kriging mean is computed. If <code>TRUE</code>, the kriging standard deviation and confidence intervals are computed too.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.compute</code></td>
+<td>
+
+<p>Optional boolean. If <code>TRUE</code> the conditional covariance matrix is computed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>low.memory</code></td>
+<td>
+
+<p>Optional boolean. If set to <code>TRUE</code> the function will only return kriging means and standard deviations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>No other arguments.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mean </code></td>
+<td>
+<p> kriging mean (including the trend) computed at <code>newdata</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd </code></td>
+<td>
+<p> kriging standard deviation computed at <code>newdata</code>. 
+Not computed if <code>se.compute=FALSE</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov </code></td>
+<td>
+<p> kriging conditional covariance matrix. Not computed if <code>cov.compute=FALSE</code> (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower95, </code></td>
+<td>
+ </td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper95 </code></td>
+<td>
+<p> bounds of the 95 % confidence interval computed at <code>newdata</code> (to be interpreted with special care when parameters are estimated, see description above). Not computed if <code>se.compute=FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c </code></td>
+<td>
+<p> an auxiliary matrix, containing all the covariances between newdata and the initial design points. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tinv.c </code></td>
+<td>
+<p> an auxiliary vector, equal to <code>T^(-1)*c</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F.newdata</code></td>
+<td>
+<p>value of the trend function at <code>newdata</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Warning</h3>
+
+<p>Beware that the only consistency check between <code>newdata</code> and the experimental design is to test whether they have same number of columns. In that case, the columns of <code>newdata</code> are interpreted in the same order as the initial design.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>O. Roustant (Ecole des Mines de St-Etienne, France)
+</p>
+<p>David Ginsbourger (IDIAP Martigny and University of Bern, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>N.A.C. Cressie (1993), <em>Statistics for spatial data</em>, Wiley series in probability and mathematical statistics.
+</p>
+<p>A.G. Journel and C.J. Huijbregts (1978), <em>Mining Geostatistics</em>, Academic Press, London.
+</p>
+<p>D.G. Krige (1951), A statistical approach to some basic mine valuation problems on the witwatersrand, <em>J. of the Chem., Metal. and Mining Soc. of South Africa</em>, <b>52</b> no. 6, 119-139.
+</p>
+<p>J.D. Martin and T.W. Simpson (2005), Use of kriging models to approximate deterministic computer models, <em>AIAA Journal</em>, <b>43</b> no. 4, 853-863.
+</p>
+<p>G. Matheron (1963), Principles of geostatistics, <em>Economic Geology</em>, <b>58</b>,
+1246-1266.
+</p>
+<p>G. Matheron (1969), Le krigeage universel, <em>Les Cahiers du Centre de Morphologie Mathematique de Fontainebleau</em>, <b>1</b>.
+</p>
+<p>J.-S. Park and J. Baek (2001), Efficient computation of maximum likelihood estimators in a spatial linear model with power exponential covariogram, <em>Computer Geosciences</em>, <b>27</b> no. 1, 1-7.
+</p>
+<p>C.E. Rasmussen and C.K.I. Williams (2006), <em>Gaussian Processes for Machine Learning</em>, the MIT Press, <a href="https://gaussianprocess.org/gpml/">https://gaussianprocess.org/gpml/</a>
+</p>
+<p>J. Sacks, W.J. Welch, T.J. Mitchell, and H.P. Wynn (1989), Design and analysis of computer experiments, <em>Statistical Science</em>, <b>4</b>, 409-435.
+</p>
+
+
+<h3>See Also</h3>
+
+  <p><code>predict.km</code>,  <code>km</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#predict_nobias_km
+set.seed(9)
+N &lt;- 20 #number of observations
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+n.grid &lt;- 100
+x.grid &lt;- y.grid &lt;- seq(0,1,length=n.grid)
+
+newdata &lt;- expand.grid(x.grid,y.grid)
+pred &lt;- predict_nobias_km(object=model,newdata=newdata,type="UK",se.compute=TRUE)
+
+z.grid1 &lt;- matrix(pred$mean, n.grid, n.grid)
+z.grid2 &lt;- matrix(pred$sd, n.grid, n.grid)
+
+par(mfrow=c(1,2))
+
+#plots: contour of the kriging mean and stdev
+image(x=x.grid,y=y.grid,z=z.grid1,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid1,15,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+title("Kriging mean")
+
+image(x=x.grid,y=y.grid,z=z.grid2,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid2,15,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+title("Kriging standard deviation")
+</code></pre>
+
+
+</div>

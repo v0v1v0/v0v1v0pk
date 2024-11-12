@@ -1,0 +1,134 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convergence_rate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Empirical convergence rate of a KL divergence estimator</h2>
+
+<h3>Description</h3>
+
+<p>Subsampling-based confidence intervals computed by <code>kld_ci_subsampling()</code>
+require the convergence rate of the KL divergence estimator as an input. The
+default rate of <code>0.5</code> assumes that the variance term dominates the bias term.
+For high-dimensional problems, depending on the data, the convergence rate
+might be lower. This function allows to empirically derive the convergence
+rate.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convergence_rate(
+  estimator,
+  X,
+  Y = NULL,
+  q = NULL,
+  n.sizes = 4,
+  spacing.factor = 1.5,
+  typical.subsample = function(n) sqrt(n),
+  B = 500L,
+  plot = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>A KL divergence estimator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> data frames or matrices (multivariate
+samples), or numeric/character vectors (univariate samples, i.e. <code>d = 1</code>),
+representing <code>n</code> samples from the true distribution <code class="reqn">P</code> and <code>m</code>
+samples from the approximate distribution <code class="reqn">Q</code> in <code>d</code> dimensions.
+<code>Y</code> can be left blank if <code>q</code> is specified (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>The density function of the approximate distribution <code class="reqn">Q</code>. Either
+<code>Y</code> or <code>q</code> must be specified. If the distributions are all continuous or
+all discrete, <code>q</code> can be directly specified as the probability density/mass
+function. However, for mixed continuous/discrete distributions, <code>q</code> must
+be given in decomposed form, <code class="reqn">q(y_c,y_d)=q_{c|d}(y_c|y_d)q_d(y_d)</code>,
+specified as a named list with field <code>cond</code> for the conditional density
+<code class="reqn">q_{c|d}(y_c|y_d)</code> (a function that expects two arguments <code>y_c</code> and
+<code>y_d</code>) and <code>disc</code> for the discrete marginal density <code class="reqn">q_d(y_d)</code> (a
+function that expects one argument <code>y_d</code>). If such a decomposition is not
+available, it may be preferable to instead simulate a large sample from
+<code class="reqn">Q</code> and use the two-sample syntax.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.sizes</code></td>
+<td>
+<p>Number of different subsample sizes to use (default: <code>4</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spacing.factor</code></td>
+<td>
+<p>Multiplicative factor controlling the spacing of sample
+sizes (default: <code>1.5</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>typical.subsample</code></td>
+<td>
+<p>A function that produces a typical subsample size,
+used as the geometric mean of subsample sizes (default: <code>sqrt(n)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>Number of subsamples to draw per subsample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>A boolean (default: <code>FALSE</code>) controlling whether to produce a
+diagnostic plot visualizing the fit.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>References:
+</p>
+<p>Politis, Romano and Wolf, "Subsampling", Chapter 8 (1999), for theory.
+</p>
+<p>The implementation has been adapted from lecture notes by C. J. Geyer,
+https://www.stat.umn.edu/geyer/5601/notes/sub.pdf
+</p>
+
+
+<h3>Value</h3>
+
+<p>A scalar, the parameter <code class="reqn">\beta</code> in the empirical convergence
+rate <code class="reqn">n^-\beta</code> of the <code>estimator</code> to the true KL divergence.
+It can be used in the <code>convergence.rate</code> argument of <code>kld_ci_subsampling()</code>
+as <code>convergence.rate = function(n) n^beta</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">    # NN method usually has a convergence rate around 0.5:
+    set.seed(0)
+    convergence_rate(kld_est_nn, X = rnorm(1000), Y = rnorm(1000, mean = 1, sd = 2))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,184 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>results</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Results of the classification process</h2>
+
+<h3>Description</h3>
+
+<p>Returns the results of the classification process.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">results(orig.class, predict)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>orig.class</code></td>
+<td>
+<p>Data with the original classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predict</code></td>
+<td>
+<p>Data with classes of results of classifiers.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mse</code></td>
+<td>
+<p>Mean squared error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mae</code></td>
+<td>
+<p>Mean absolute error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rae</code></td>
+<td>
+<p>Relative absolute error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.mtx</code></td>
+<td>
+<p>Confusion matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate.hits</code></td>
+<td>
+<p>Hit rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate.error</code></td>
+<td>
+<p>Error rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.hits</code></td>
+<td>
+<p>Number of correct instances.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.error</code></td>
+<td>
+<p>Number of wrong instances.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa</code></td>
+<td>
+<p>Kappa coefficient.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>roc.curve</code></td>
+<td>
+<p>Data for the ROC curve in classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prc.curve</code></td>
+<td>
+<p>Data for the PRC curve in classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res.class</code></td>
+<td>
+<p>General results of the classes: Sensitivity, Specificity, Precision, TP Rate, FP Rate, NP Rate, F-Score, MCC, ROC Area, PRC Area.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani</p>
+
+
+<h3>References</h3>
+
+<p>Chicco, D.; Warrens, M. J. and Jurman, G. The matthews correlation coefficient (mcc) is more informative than cohen's kappa and brier score in binary classification assessment. <em>IEEE Access, IEEE</em>, v. 9, p. 78368-78381, 2021.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot_curve</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+data  &lt;- iris
+names &lt;- colnames(data)
+colnames(data) &lt;- c(names[1:4],"class")
+
+#### Start - hold out validation method ####
+dat.sample = sample(2, nrow(data), replace = TRUE, prob = c(0.7,0.3))
+data.train = data[dat.sample == 1,] # training data set
+data.test  = data[dat.sample == 2,] # test data set
+class.train = as.factor(data.train$class) # class names of the training data set
+class.test  = as.factor(data.test$class)  # class names of the test data set
+#### End - hold out validation method ####
+
+
+dist = "euclidean" 
+# dist = "manhattan"
+# dist = "minkowski"
+# dist = "canberra"
+# dist = "maximum"
+# dist = "chebyshev"
+
+k = 1
+lambda = 5
+
+r &lt;- (ncol(data) - 1)
+res &lt;- knn(train = data.train[,1:r], test = data.test[,1:r], class = class.train, 
+           k = 1, dist = dist, lambda = lambda)
+
+resp &lt;- results(orig.class = class.test, predict = res$predict)
+
+message("Mean squared error:"); resp$mse
+message("Mean absolute error:"); resp$mae
+message("Relative absolute error:"); resp$rae
+message("Confusion matrix:"); resp$conf.mtx  
+message("Hit rate: ", resp$rate.hits)
+message("Error rate: ", resp$rate.error)
+message("Number of correct instances: ", resp$num.hits)
+message("Number of wrong instances: ", resp$num.error)
+message("Kappa coefficient: ", resp$kappa)
+# message("Data for the ROC curve in classes:"); resp$roc.curve 
+# message("Data for the PRC curve in classes:"); resp$prc.curve
+message("General results of the classes:"); resp$res.class
+
+dat &lt;- resp$roc.curve; tp = "roc"; ps = 3
+# dat &lt;- resp$prc.curve; tp = "prc"; ps = 4
+
+plot_curve(data = dat, type = tp, title = NA, xlabel = NA, ylabel = NA,  
+           posleg = ps, boxleg = FALSE, axis = TRUE, size = 1.1, grid = TRUE, 
+           color = TRUE, classcolor = NA, savptc = FALSE, width = 3236, 
+           height = 2000, res = 300, casc = FALSE)
+
+</code></pre>
+
+
+</div>

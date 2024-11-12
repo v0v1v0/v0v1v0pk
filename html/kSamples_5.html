@@ -1,0 +1,223 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>contingency2xt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Kruskal-Wallis Test for the 2 x t Contingency Table 
+</h2>
+
+<h3>Description</h3>
+
+<p>This function uses the Kruskal-Wallis criterion to test
+the hypothesis of no association between the counts 
+for two responses
+"A" and "B" across t categories.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">contingency2xt(Avec, Bvec, 
+	method = c("asymptotic", "simulated", "exact"), 
+	dist = FALSE, tab0 = TRUE, Nsim = 1e+06)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Avec</code></td>
+<td>
+
+<p>vector of length <code class="reqn">t</code> giving the counts <code class="reqn">A_1,\ldots, A_t</code>
+for response "A" according to <code class="reqn">t</code> categories. 
+<code class="reqn">m = A_1 + \ldots + A_t</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Bvec</code></td>
+<td>
+
+<p>vector of length <code class="reqn">t</code> giving the counts <code class="reqn">B_1,\ldots, B_t</code>
+for response "B" according to <code class="reqn">t</code> categories. 
+<code class="reqn">n = B_1 + \ldots + B_t = N-m</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>= <code>c("asymptotic","simulated","exact")</code>, where
+</p>
+<p><code>"asymptotic"</code> uses only an asymptotic chi-square approximation 
+with <code class="reqn">t-1</code> degrees of freedom to approximate the <code class="reqn">P</code>-value. 
+This calculation is always done.
+</p>
+<p><code>"simulated"</code> uses <code>Nsim</code> simulated counts for <code>Avec</code> and 
+<code>Bvec</code> with the observed marginal totals, <code>m, n, d = Avec+Bvec</code>, 
+to estimate the <code class="reqn">P</code>-value.
+</p>
+<p><code>"exact"</code> enumerates all counts for <code>Avec</code> and <code>Bvec</code> with 
+the observed marginal totals to get an exact <code class="reqn">P</code>-value. It is used only 
+when <code>Nsim</code> is at least as large as the number <code>choose(m+t-1,t-1)</code>
+of full enumerations. 
+Otherwise, <code>method</code> reverts to <code>"simulated"</code> using the given <code>Nsim</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist</code></td>
+<td>
+<p><code>FALSE</code> (default) or <code>TRUE</code>. If <code>dist = TRUE</code>, the distribution of the
+simulated or fully enumerated Kruskal-Wallis test statistics is
+returned as <code>null.dist</code>, if <code>dist = FALSE</code> the value
+of <code>null.dist</code> is <code>NULL</code>.
+The coice <code>dist = TRUE</code> also limits <code>Nsim &lt;- min(Nsim,1e8)</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tab0</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>. If <code>tab0 = TRUE</code>, the null distribution
+is returned in 2 column matrix form when 
+<code>method = "simulated"</code>. When <code>tab0 = FALSE</code> the simulated null distribution 
+is returned as a vector of all simulated values of the test statistic.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Nsim</code></td>
+<td>
+<p><code>=10000</code> (default), number of simulated <code>Avec</code> splits to use.	
+It is only used when <code>method = "simulated"</code>,
+or when <code>method = "exact"</code> reverts to <code>method =</code>
+<code>"simulated"</code>, as previously explained.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For this data scenario the Kruskal-Wallis criterion is
+</p>
+<p style="text-align: center;"><code class="reqn">K.star = \frac{N(N-1)}{mn}(\sum\frac{A_i^2}{d_i}-\frac{m^2}{N})</code>
+</p>
+
+<p>with <code class="reqn">d_i=A_i+B_i</code>, treating "A" responses
+as 1 and "B" responses as 2, and using midranks as explained in Lehmann (2006), Chapter 5.3.
+</p>
+<p>For small sample sizes exact null distribution
+calculations are possible, based on Algorithm C (Chase's sequence) in Knuth (2011),
+which allows the enumeration of all possible splits of <code class="reqn">m</code> into counts
+<code class="reqn">A_1,\ldots, A_t</code> such that 
+<code class="reqn">m = A_1 + \ldots + A_t</code>,
+followed by the calculation of the statistic 
+<code class="reqn">K.star</code> for each such split. 
+Simulation of <code class="reqn">A_1,\ldots, A_t</code> uses the probability model (5.35) in Lehmann (2006)
+to successively generate hypergeometric counts <code class="reqn">A_1,\ldots, A_t</code>.
+Both these processes, enumeration and simulation, are done in C.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>kSamples</code> with components 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>test.name</code></td>
+<td>
+<p><code>"2 x t Contingency Table"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>number of classification categories</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KW.cont</code></td>
+<td>
+<p>2 (3) vector giving the observed KW statistic, its asymptotic 
+<code class="reqn">P</code>-value (and simulated or exact <code class="reqn">P</code>-value) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>null.dist</code></td>
+<td>
+<p>simulated or enumerated null distribution 
+of the test statistic. It is given as an <code>M</code> by 2 matrix,
+where the first column (named <code>KW</code>) gives the <code>M</code> unique ordered 
+values of the Kruskal-Wallis 
+statistic and the second column (named <code>prob</code>) gives the corresponding (simulated or exact)
+probabilities. 
+</p>
+<p>This format of <code>null.dist</code> is returned when <code>method = "exact"</code> 
+and <code>dist</code> <code>= TRUE</code> or when <code>method =</code><code> "simulated"</code> 
+and <code>dist = TRUE</code> and <code>tab0</code> <code>= TRUE</code> are specified.
+</p>
+<p>For <code>method =</code> <code>"simulated"</code>, <code>dist = TRUE</code>, and 
+<code>tab0 = FALSE</code> the null distribution <code>null.dist</code> is returned as the vector of
+all simulated test statistic values. This is used in <code>contingency2xt.comb</code>
+in the simulation mode.
+</p>
+<p><code>null.dist = NULL</code> is returned 
+when <code>dist = FALSE</code> or when <code>method =</code>
+<code>"asymptotic"</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the <code>method</code> used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Nsim</code></td>
+<td>
+<p>the number of simulations.</p>
+</td>
+</tr>
+</table>
+<h3>warning</h3>
+
+<p><code>method = "exact"</code> should only be used with caution.
+Computation time is proportional to the number of enumerations. In most cases
+<code>dist = TRUE</code> should not be used, i.e.,  
+when the returned distribution objects 
+become too large for R's work space.</p>
+
+
+<h3>References</h3>
+
+<p>Knuth, D.E. (2011), <em>The Art of Computer Programming, Volume 4A 
+Combinatorial Algorithms Part 1</em>, Addison-Wesley
+</p>
+<p>Kruskal, W.H. (1952), A Nonparametric Test for the Several Sample Problem,
+<em>The Annals of Mathematical Statistics</em>,
+<b>Vol 23, No. 4</b>, 525-540
+</p>
+<p>Kruskal, W.H. and Wallis, W.A. (1952), Use of Ranks in One-Criterion Variance Analysis,
+<em>Journal of the American Statistical Association</em>, 
+<b>Vol 47, No. 260</b>, 583–621. 
+</p>
+<p>Lehmann, E.L. (2006), <em>Nonparametrics, Statistical Methods Based on Ranks</em>,
+Revised First Edition, 
+Springer, New York.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">contingency2xt(c(25,15,20),c(16,6,18),method="exact",dist=FALSE,
+	tab0=TRUE,Nsim=1e3)
+</code></pre>
+
+
+</div>

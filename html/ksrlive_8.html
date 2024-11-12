@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random.data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create random data</h2>
+
+<h3>Description</h3>
+
+<p><code>random.data</code> returns a data frame of random numeric values
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random.data(data, back_data = NULL, n = 50, random.seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data frame of time course of substrates, each substrate is a row</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>back_data</code></td>
+<td>
+<p>data frame of numeric values that can to be used as background data, 
+if not provided a values are drawn from a uniform distribution between minimum and maximum
+of input data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>numeric specifying how many rows should be contained in the resulting data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random.seed</code></td>
+<td>
+<p>numeric used as seed</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function random.data returns a data frame of random numeric values with the same 
+number of columns as the input data and with n-nrow(data) rows. By default the values are drawn
+from a uniform distribution of values between the minimum and the maximum of the input data. Values
+can be drawn from background data instead if included.
+</p>
+
+
+<h3>Value</h3>
+
+<p>data frame of random numeric values with n-nrow(data) rows and same number of 
+columns as input data
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(phosphonetworkdf)
+data(datakin)
+# only need what is present in data
+phosphonetwork_data &lt;- phosphonetwork_df[
+phosphonetwork_df[,"SUB_IDENT"] %in% data_kin[,"SUB_IDENT"]
+,]
+fam &lt;- list(akt = c("P31749", "P31751"))
+kin_data_fam_exc &lt;- KSR.list(phosphonetwork_data[, c("SUB_IDENT", "KIN_ACC_ID")], 
+                             kinasefamilies = fam,
+                             exclusive = TRUE)
+# only do for Akt and Mtor (P31749, P42345)
+substrate_profiles &lt;- lapply(kin_data_fam_exc[c("P31749", "P42345")], 
+function(x){data_kin[match(x, data_kin[,"SUB_IDENT"]),1:9]})
+
+substrate_profiles_random &lt;- lapply(substrate_profiles, 
+function(x){rbind(x, random.data(x, random.seed = 123))})
+</code></pre>
+
+
+</div>

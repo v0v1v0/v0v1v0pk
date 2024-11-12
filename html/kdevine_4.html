@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dkdevine</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate the density of a kdevine object</h2>
+
+<h3>Description</h3>
+
+<p>Evaluate the density of a kdevine object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dkdevine(x, obj)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>(<code class="reqn">m x d</code>) matrix of evaluation points (or vector of length <code class="reqn">d</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>a <code>kdevine</code> object.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The density estimate evaluated at <code>x</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdevine</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># load data
+data(wdbc)
+
+# estimate density (use xmin to indicate positive support)
+fit &lt;- kdevine(wdbc[, 5:7], xmin = rep(0, 3))
+
+# evaluate density estimate
+dkdevine(c(1000, 0.1, 0.1), fit)
+
+</code></pre>
+
+
+</div>

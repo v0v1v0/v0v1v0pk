@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mcd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mean Ceramic Date</h2>
+
+<h3>Description</h3>
+
+<p>Estimates the Mean Ceramic Date of an assemblage.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mcd(object, dates, ...)
+
+## S4 method for signature 'numeric,numeric'
+mcd(object, dates, calendar = CE())
+
+## S4 method for signature 'data.frame,numeric'
+mcd(object, dates, calendar = CE())
+
+## S4 method for signature 'matrix,numeric'
+mcd(object, dates, calendar = CE())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dates</code></td>
+<td>
+<p>A length-<code class="reqn">p</code> <code>numeric</code> vector of dates expressed in years.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the calendar
+of <code>dates</code> (see <code>calendar()</code>). Defaults to Gregorian Common Era.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Mean Ceramic Date (MCD) is a point estimate of the occupation of an
+archaeological site (South 1977). The MCD is estimated as the weighted mean
+of the date midpoints of the ceramic types (based on absolute dates or the
+known production interval) found in a given assemblage. The weights are the
+relative frequencies of the respective types in the assemblage.
+</p>
+<p>A bootstrapping procedure is used to estimate the confidence interval of a
+given MCD. For each assemblage, a large number of new bootstrap replicates
+is created, with the same sample size, by resampling the original
+assemblage with replacement. MCDs are calculated for each replicates and
+upper and lower boundaries of the confidence interval associated with each
+MCD are then returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>MeanDate</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>South, S. A. (1977). <em>Method and Theory in Historical Archaeology</em>.
+New York: Academic Press.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>plot(), bootstrap(),
+jackknife(), simulate()
+</p>
+<p>Other dating methods: 
+<code>event()</code>,
+<code>predict_event()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Peeples and Schachner 2012
+data("zuni", package = "folio")
+
+## Set the start and end dates for each ceramic type
+dates &lt;- list(
+  LINO = c(600, 875), KIAT = c(850, 950), RED = c(900, 1050),
+  GALL = c(1025, 1125), ESC = c(1050, 1150), PUBW = c(1050, 1150),
+  RES = c(1000, 1200), TULA = c(1175, 1300), PINE = c(1275, 1350),
+  PUBR = c(1000, 1200), WING = c(1100, 1200), WIPO = c(1125, 1225),
+  SJ = c(1200, 1300), LSJ = c(1250, 1300), SPR = c(1250, 1300),
+  PINER = c(1275, 1325), HESH = c(1275, 1450), KWAK = c(1275, 1450)
+)
+
+## Calculate date midpoints
+mid &lt;- vapply(X = dates, FUN = mean, FUN.VALUE = numeric(1))
+
+## Calculate MCD
+(mc_dates &lt;- mcd(zuni[100:125, ], dates = mid))
+
+## Get MCD in years CE
+time(mc_dates, calendar = CE())
+
+## Plot
+plot(mc_dates)
+
+## Bootstrap resampling
+boot &lt;- bootstrap(mc_dates, n = 30)
+head(boot)
+
+## Jackknife resampling
+jack &lt;- jackknife(mc_dates)
+head(jack)
+
+## Simulation
+sim &lt;- simulate(mc_dates, nsim = 30)
+plot(sim, interval = "range", pch = 16)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,148 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kanjivec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot kanjivec objects</h2>
+
+<h3>Description</h3>
+
+<p>Plot kanjivec objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kanjivec'
+plot(
+  x,
+  type = c("kanji", "dend"),
+  seg_depth = 0,
+  palette = "Dark 3",
+  pal.extra = 0,
+  numbers = FALSE,
+  offset = c(0.025, 0),
+  family = NULL,
+  lwd = 8,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class <code>kanjivec</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>either "kanji" or "dend". Whether to plot the actual kanji, coloring strokes
+according to levels of segmentation, or to plot a representation of the tree structure
+underlying this segmentation. Among the following named parameters, only <code>family</code> is
+for use with <code>type = "dend"</code>; all others are for <code>type = "dend"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seg_depth</code></td>
+<td>
+<p>an integer. How many steps down the segmentation hierarchy we use
+different colors for different groups. If zero (the default), only one color is used
+that can be specified with <code>col</code> passed via <code>...</code> as usual</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>a valid name of a hcl palette (one of <code>hcl.pals()</code>). Used for coloring the
+components if <code>seg_depth</code> is <code class="reqn">&gt;0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pal.extra</code></td>
+<td>
+<p>an integer. How many extra colors are picked in the specified palette.
+If this is 0 (the default), palette is used with as many colors as we have components.
+Since many hcl palettes run from dark to light colors, the last (few) components may
+be too light. Increasing pal.extra then makes the component colors somewhat more similar,
+but the last component darker.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numbers</code></td>
+<td>
+<p>logical. Shall the stroke numbers be displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>the (x,y)-offset for the numbers relative to the positions from kanjivg saved
+in the kanjivec object. Either a vector of length 2 specifying some fixed offset for
+all numbers or a matrix of dimension kanjivec$nstrokes times 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the font-family for labeling the nodes if <code>type = dend</code>. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>the usual line width graphics parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further parameters passed to <code>lines</code> if <code>type = "kanji"</code> and to <code>plot.dendrogram</code>
+if <code>type = "dend"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Setting up nice labels for the nodes if <code>type = "dend"</code> is not easy. For many
+font families it appears that some "kanji components" cannot be displayed in plots
+even with the help of package <code>showtext</code> and if the
+font contains glyphs for the corresponding codepoints that display correctly in text documents.
+This concerns in increasing severity of the problem Unicode blocks 2F00–2FDF (Kangxi Radicals),
+2E80–2EFF (CJK Radicals Supplement) and 31C0–31EF (CJK Strokes). For the strokes it seems
+nearly impossible which is why leaves are simply annotated with the number of the strokes.
+</p>
+<p>For the other it is up to the user to find a suitable font and pass it via the argument
+font family. The default <code>family = NULL</code> first tries to use <code>default_font</code>
+if this option has been set (via <code>kanjistat_options</code>) and otherwise
+uses <code>wqy-microhei</code>, the Chinese default font that comes with package <code>showtext</code>
+and cannot display any radicals from the supplement.
+</p>
+<p>On a Mac the experience is that "hiragino_sans" works well. In addition there is the issue of
+font size which is currently not judiciously set and may be too large for some (especially
+on-screen) devices. The parameter <code>cex</code> (via <code>...</code>) fixes this.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No return value, called for side effects.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kanji &lt;- fivebetas[[2]]
+plot(kanji, type = "kanji", seg_depth = 2)
+plot(kanji, type = "dend")  
+  # gives a warning if get_kanjistat_option("default_font") is NULL
+
+</code></pre>
+
+
+</div>

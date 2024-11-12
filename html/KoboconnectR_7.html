@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kobo_media_downloader</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Downloads media data from Kobotoolbox</h2>
+
+<h3>Description</h3>
+
+<p>'kobo_media_downloader' downloads media from data downloaded using 'kobo_df_download'. Loops through media columns and downloads files individually.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kobo_media_downloader(
+  url = "eu.kobotoolbox.org",
+  uname,
+  pwd,
+  assetid,
+  fsep = ";",
+  sleep = 2,
+  identifier = "URL",
+  timeoutval = 300,
+  destfolder = "media"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>The '[url]' of kobotoolbox Default is "eu.kobotoolbox.org".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>uname</code></td>
+<td>
+<p>is username of your kobotoolbox account</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pwd</code></td>
+<td>
+<p>is the password of the account</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>assetid</code></td>
+<td>
+<p>is the id of the asset for which the export is to be created</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fsep</code></td>
+<td>
+<p>is the separator of the downloaded csv file. In most of the cases, it is ";", which is the default. However,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sleep</code></td>
+<td>
+<p>is the sleep time between API actions. For example, it takes time to download an export. But R does not wait for the download to finish before going to next step. Hence the need to provide a break between consecutive API actions. Default value is 2 (seconds).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>identifier</code></td>
+<td>
+<p>is the key using with the columns with URL is identified. Default value is "URL" because in most of the cases, the columns
+containing the URL values end with "URL". Please note that any other column name with similar value may cause error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeoutval</code></td>
+<td>
+<p>is the timeout value in seconds to download the media files. Default is 300 seconds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>destfolder</code></td>
+<td>
+<p>is the folder where the media is to be stored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function creates an export of survey data in 'csv'. If successful, it attempts to download the data and and returns a data frame. From that data frame, the function extracts the URLs of media and attempts to download them.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function returns a data frame of data downloaded from 'Kobotoolbox'.
+</p>
+
+
+</div>

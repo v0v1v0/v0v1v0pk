@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mixMLX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Maximises mixture likelihood when extra findings present</h2>
+
+<h3>Description</h3>
+
+<p>Replacement for mixML in DNAmixtures that calls logLX instead of logL.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mixMLX(mixture, expr.extra.findings, pars, constraints = NULL, phi.eq = FALSE, 
+    val = NULL, trace = FALSE, order.unknowns = TRUE, initialize = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>Compiled DNAmixture object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expr.extra.findings</code></td>
+<td>
+<p>expression containing the extra findings</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pars</code></td>
+<td>
+<p>Parameters, in <code>mixpar</code> format.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constraints</code></td>
+<td>
+<p>as in <code>mixML</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phi.eq</code></td>
+<td>
+<p>as in <code>mixML</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>val</code></td>
+<td>
+<p>as in <code>mixML</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>as in <code>mixML</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order.unknowns</code></td>
+<td>
+<p>as in <code>mixML</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize</code></td>
+<td>
+<p>should all entered evidence be removed from the networks in <code>mixture</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>as in <code>mixML</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing
+</p>
+
+<dl>
+<dt>mle</dt>
+<dd>
+<p>The (suggested) MLE.</p>
+</dd>
+<dt>lik</dt>
+<dd>
+<p>The log of the likelihood (log e).</p>
+</dd>
+</dl>
+<p>as well as the output from the optimisation.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>mixML</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+# set threshold C
+C&lt;-0.001
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db)
+
+# find MLE's and maximised likelihood
+# adding evidence individual 1 is Male 
+
+expr.extra.findings&lt;-expr.make.findings(list(list('Male',ind=1)))
+
+startpar&lt;-mixpar(rho=list(60),eta=list(24),xi=list(0.16),phi=list(c(U1=0.75,U2=0.25)))
+mlDM&lt;-mixMLX(mixD,expr.extra.findings,startpar,trace=FALSE) 
+pars&lt;-mlDM$mle
+cat('\nBaseline model maximised likelihood:',mlDM$lik,'\n')
+cat('and MLEs:\n')
+print(mlDM$mle)
+</code></pre>
+
+
+</div>

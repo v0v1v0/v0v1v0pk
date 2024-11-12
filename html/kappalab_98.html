@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.kadditive-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test method</h2>
+
+<h3>Description</h3>
+
+<p>Tests whether a set function is <code>k</code>-additive, i.e., if its
+Möbius function vanishes for subsets of more than k elements. The set
+function can be given either under the form of an object of class
+<code>set.func</code>, <code>card.set.func</code> or
+<code>Mobius.set.func</code>. </p>
+
+
+<h3>Details</h3>
+
+<p>In order to test whether a coefficient is equal to zero, its
+absolute value is compared with <code>epsilon</code> whose default
+value is <code>1e-9</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.set.func", k = "numeric", epsilon = "numeric",
+epsilon = "numeric" </dt>
+<dd>
+<p>Returns an object of class <code>logical</code>.</p>
+</dd>
+<dt>object = "card.set.func", k = "numeric", epsilon = "numeric" </dt>
+<dd>
+<p>Returns an object of class <code>logical</code>.</p>
+</dd>
+<dt>object = "set.func", k = "numeric", epsilon = "numeric" </dt>
+<dd>
+<p>Returns an object of class <code>logical</code>.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>M. Grabisch (1997), <em>k-order additive discrete fuzzy measures and their
+representation</em>, Fuzzy Sets and Systems 92(2), pages 167–189.
+</p>
+<p>M. Grabisch (2000), <em>The interaction and Möbius
+representations of fuzzy measures on finites spaces, k-additive
+measures: a survey</em>, in: Fuzzy Measures and Integrals: Theory and
+Applications, M. Grabisch, T. Murofushi, and M. Sugeno Eds, Physica
+Verlag, pages 70-93.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.set.func-class</code>, 
+<br><code>card.set.func-class</code>, 
+<br><code>set.func-class</code>, 
+<br><code>Mobius-methods</code>, <br><br><code>k.truncate.Mobius-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a set function
+mu &lt;- set.func(c(0,1,1,1,2,2,2,3))
+mu
+is.kadditive(mu,2)
+is.kadditive(mu,1)
+
+## the Mobius representation of a set function, 2-additive by construction 
+a &lt;- Mobius.set.func(c(0,1,2,1,3,1,2,1,2,3,1),4,2)
+is.kadditive(a,2)
+is.kadditive(a,1)
+</code></pre>
+
+
+</div>

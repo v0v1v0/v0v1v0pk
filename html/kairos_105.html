@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>resample_mcd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Resample Mean Ceramic Dates</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>bootstrap()</code> generate bootstrap estimations of an MCD.
+</p>
+</li>
+<li> <p><code>jackknife()</code> generate jackknife estimations of an MCD.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'MeanDate'
+bootstrap(object, n = 1000, f = NULL, calendar = getOption("kairos.calendar"))
+
+## S4 method for signature 'MeanDate'
+jackknife(object, f = NULL, calendar = getOption("kairos.calendar"))
+
+## S4 method for signature 'MeanDate'
+simulate(object, nsim = 1000)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>MeanDate</code> object (typically returned by <code>mcd()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A non-negative <code>integer</code> specifying the number of bootstrap
+replications.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>A <code>function</code> that takes a single numeric vector (the result of
+the resampling procedure) as argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>An <code>aion::TimeScale</code> object specifying the target
+calendar (see <code>calendar()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>A non-negative <code>integer</code> specifying the number of simulations.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>f</code> is <code>NULL</code>, <code>bootstrap()</code> and <code>jackknife()</code> return a <code>data.frame</code>
+with the following elements (else, returns the result of <code>f</code> applied to the
+<code>n</code> resampled values) :
+</p>
+
+<dl>
+<dt>original</dt>
+<dd>
+<p>The observed value.</p>
+</dd>
+<dt>mean</dt>
+<dd>
+<p>The bootstrap/jackknife estimate of mean.</p>
+</dd>
+<dt>bias</dt>
+<dd>
+<p>The bootstrap/jackknife estimate of bias.</p>
+</dd>
+<dt>error</dt>
+<dd>
+<p>The boostrap/jackknife estimate of standard erro.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other resampling methods: 
+<code>resample_event</code>
+</p>
+
+
+</div>

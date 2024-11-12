@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>optimMethods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimization Methods (or Algorithms) for the <code>mle</code>
+Method</h2>
+
+<h3>Description</h3>
+
+<p>Optimization methods (or algorithms) for the <code>mle</code> method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">optimMethods(optimMethod = NULL,
+             optimFun = c("both", "nloptr::nloptr", "stats::optim"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>optimMethod</code></td>
+<td>
+
+<p>A character string used to find a method in a possible approximated
+fashion, see <b>Examples</b>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimFun</code></td>
+<td>
+
+<p>Value of the corresponding formal argument of the <code>mle</code> method,
+or <code>"both"</code>. In the later case the full list of algorithms will
+be obtained.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame with four character columns: <code>optimFun</code>,
+<code>optimMethod</code>, <code>globLoc</code> and <code>derNo</code>. The column
+<code>globLoc</code> indicate whether the method is global (<code>"G"</code>) or
+local (<code>"L"</code>). The column <code>derNo</code> indicates whether the
+method uses derivatives (<code>D</code>) or not (<code>"N"</code>) or
+<em>possibly</em> uses it (<code>"P"</code>). Only methods corresponding the
+<code>optimFun = "stats::optim"</code> can have the value <code>"P"</code> for
+<code>derNo</code>. The data frame can be zero-row if <code>optimMethod</code> is
+given and no method match.
+</p>
+
+
+<h3>Caution</h3>
+
+<p>The optimization method given in the argument
+<code>optimMethod</code> of the <code>mle</code> method should be compliant
+with the <code>compGrad</code> argument. Only a small number of
+possibilities have been tested, including the default values.
+</p>
+
+
+<h3>References</h3>
+
+<p>See <a href="https://nlopt.readthedocs.io/en/latest/">The NLopt website</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mle-methods</code>, <code>optim</code>,
+<code>nloptr</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">optimMethods()
+optimMethods(optimMethod = "cobyla")
+optimMethods(optimMethod = "nelder")
+optimMethods(optimMethod = "BFGS")
+optimMethods("CMAES")
+</code></pre>
+
+
+</div>

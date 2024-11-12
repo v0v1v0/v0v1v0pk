@@ -1,0 +1,300 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.pedigree</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+plot pedigrees
+</h2>
+
+<h3>Description</h3>
+
+<p>plot objects created with the pedigree function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'pedigree'
+plot(x, id = x$id, status = x$status, 
+                        affected = x$affected, 
+                        cex = 1, col = 1,
+                        symbolsize = 1, branch = 0.6, 
+                        packed = TRUE, align = c(1.5,2), width = 8, 
+                        density=c(-1, 35,65,20), #mar=c(3.1, 1, 3.1, 1),
+                        angle=c(90,65,40,0), keep.par=FALSE,
+                        subregion, pconnect=.5, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>object created by the function pedigree.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+
+<p>id variable - used for labeling.  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>status</code></td>
+<td>
+
+<p>can be missing.  If it exists, 0=alive/missing and 1=death.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>affected</code></td>
+<td>
+
+<p>vector, or matrix with up to 4 columns for affected
+indicators. Subject's symbol is divided into sections for each
+status, shaded if indicator is 1, not-shaded for 0, and symbol "?"
+if missing (NA)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex</code></td>
+<td>
+
+<p>controls text size.  Default=1.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+
+<p>color for each id.  Default assigns the same color to everyone.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbolsize</code></td>
+<td>
+
+<p>controls symbolsize. Default=1.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>branch</code></td>
+<td>
+
+<p>defines how much angle is used to connect various levels of nuclear families.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>packed</code></td>
+<td>
+
+<p>default=T.  If T, uniform distance between all individuals at a given level.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align</code></td>
+<td>
+<p> these parameters control the extra effort spent trying to
+align children underneath parents, but without making the pedigree too
+wide.  Set to F to speed up plotting.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+
+<p>default=8.  For a packed pedigree, the minimum width allowed in the
+realignment of pedigrees.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>density</code></td>
+<td>
+
+<p>defines density used in the symbols.  Takes up to 4 different values.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mar</code></td>
+<td>
+<p>margin parmeters, as in the <code>par</code> function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>angle</code></td>
+<td>
+
+<p>defines angle used in the symbols.  Takes up to 4 different values.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep.par</code></td>
+<td>
+
+<p>Default = F, allows user to keep the parameter settings the same as they
+were for plotting (useful for adding extras to the plot)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subregion</code></td>
+<td>
+<p>4-element vector for (min x, max x, min depth, max depth),
+used to edit away portions of the plot coordinates returned by
+align.pedigree
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pconnect</code></td>
+<td>
+<p>when connecting parent to children the program will try
+to make the connecting line as close to vertical as possible, subject
+to it lying inside the endpoints of the line that connects the
+children by at least <code>pconnect</code> people.  Setting this option
+to a large number will force the line to connect at the midpoint of
+the children.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Extra options that feed into the plot function.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+  
+<p>Two important parameters control the looks of the result.
+One is the user specified
+maximum width.  The smallest possible width is the maximum number of subjects
+on a line, if the user's suggestion  
+is too low it is increased to 1+ that
+amount (to give just a little wiggle room).
+To make a pedigree where all children are centered under parents simply
+make the width large enough, however, the symbols may get very small.
+</p>
+<p>The second is <code>align</code>, a vector of 2 alignment parameters $a$ and $b$.
+For each set of siblings at a set of locations
+<code>x</code> and with parents at <code>p=c(p1,p2)</code> the
+alignment penalty is
+</p>
+<p style="text-align: center;"><code class="reqn">(1/k^a)\sum{i=1}{k} [(x_i - (p1+p2)/2)]^2</code>
+</p>
+
+<p>where k is the number of siblings in the set.
+when $a=1$ moving a sibship with $k$ sibs one unit to the left or
+right of optimal will incur the same cost as moving one with only 1 or
+two sibs out of place.  If $a=0$ then large sibships are harder to move
+than small ones, with the default value $a=1.5$ they are slightly easier 
+to move than small ones.  The rationale for the default is as long as the
+parents are somewhere between the first and last siblings the result looks
+fairly good, so we are more flexible with the spacing of a large family.
+By tethering all the sibs to a single spot they are kept close to 
+each other.
+The alignment penalty for spouses is
+<code class="reqn">b(x_1 - x_2)^2</code>, which tends to keep 
+them together.  The size of $b$ controls the relative importance of sib-parent
+and spouse-spouse closeness.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an invisible list containing
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>plist</code></td>
+<td>
+<p>a list that contains all the position information for
+plotting the pedigree.  This will useful for further functions
+(yet unwritten) for manipulating the plot, but likely not to an
+ordinary user.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x,y</code></td>
+<td>
+<p>the x an and y plot coordinates of each subject in the
+plot. The coordinate is for the top of the plotted symbol.
+These will be in the same order as the input pedigree.  If
+someone in the pedigree does not appear in the plot their
+coordinates will be NA.  If they appear multiple times one of the
+instances is chosen.  (Which one is a function of the order in
+which the pedigree was constructed.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boxh</code></td>
+<td>
+<p>the height of the symbol, in user coordinates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boxw</code></td>
+<td>
+<p>the width of the symbol</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>a copy of the call that generated the plot</p>
+</td>
+</tr>
+</table>
+<h3>Side Effects</h3>
+
+<p>creates plot on current plotting device.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pedigree</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(sample.ped)
+
+pedAll &lt;- pedigree(sample.ped$id, sample.ped$father, sample.ped$mother, 
+       sample.ped$sex,  #affected=sample.ped$affected,
+       affected=cbind(sample.ped$affected, sample.ped$avail), 
+       famid=sample.ped$ped)
+
+ped2 &lt;- pedAll['2']
+
+print(ped2)
+
+
+## plot(ped2)
+
+</code></pre>
+
+
+</div>

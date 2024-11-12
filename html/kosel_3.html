@@ -1,0 +1,159 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ko.sel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Variable selection with the knockoffs procedure.</h2>
+
+<h3>Description</h3>
+
+<p>Performs variable selection from an object (vector of statistics W) returned by <code>ko.glm</code> or <code>ko.ordinal</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ko.sel(W, print = FALSE, method = "stats")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>A vector of length nvars corresponding to the statistics W. Object returned by the functions <code>ko.glm</code> or <code>ko.ordinal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print</code></td>
+<td>
+<p>Logical. If <code>TRUE</code>, positive statistics W are displayed in increasing order. If <code>FALSE</code>, nothing is displayed. If <code>method = 'manual'</code>, <code>print</code> is automatically <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Can be <code>'stats'</code>, <code>'gaps'</code> or <code>'manual'</code>. If <code>'stats'</code>, the threshold used is the W-threshold. If <code>'gaps'</code>, the threshold used is the gaps-threshold. If <code>'manual'</code>, the user can choose its own threshold using the graph of the positive statistics W sorted in increasing order.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing two elements:
+</p>
+
+<ul>
+<li> <p><code>threshold</code>  A positive real value corresponding to the threshold used.
+</p>
+</li>
+<li> <p><code>estimation</code> A binary vector of length nvars corresponding to the variable selection: 1*(W &gt;= threshold). 1 indicates that the associated covariate belongs to the estimated model.
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Gegout-Petit Anne, Gueudin Aurelie, Karmann Clemence (2019). <a href="https://arxiv.org/pdf/1907.03153.pdf"><em>The revisited knockoffs method for variable selection in L1-penalised regressions</em>, arXiv:1907.03153.</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ko.glm</code>, <code>ko.ordinal</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(graphics)
+
+# linear Gaussian regression
+n = 100
+p = 20
+set.seed(11)
+x = matrix(rnorm(n*p),nrow = n,ncol = p)
+beta = c(rep(1,5),rep(0,15))
+y = x%*%beta + rnorm(n)
+W = ko.glm(x,y)
+ko.sel(W, print = TRUE)
+
+
+# logistic regression
+n = 100
+p = 20
+set.seed(11)
+x = matrix(runif(n*p, -1,1),nrow = n,ncol = p)
+u = runif(n)
+beta = c(c(3:1),rep(0,17))
+y = rep(0, n)
+a = 1/(1+exp(0.1-x%*%beta))
+y = 1*(u&gt;a)
+W = ko.glm(x,y, family = 'binomial', nVal = 50)
+ko.sel(W, print = TRUE)
+
+
+# cumulative logit regression
+n = 100
+p = 10
+set.seed(11)
+x = matrix(runif(n*p),nrow = n,ncol = p)
+u = runif(n)
+beta = c(3,rep(0,9))
+y = rep(0, n)
+a = 1/(1+exp(0.8-x%*%beta))
+b = 1/(1+exp(-0.6-x%*%beta))
+y = 1*(u&lt;a) + 2*((u&gt;=a) &amp; (u&lt;b)) + 3*(u&gt;=b)
+W = ko.ordinal(x,as.factor(y), nVal = 20)
+ko.sel(W, print = TRUE)
+
+
+# adjacent logit regression
+n = 100
+p = 10
+set.seed(11)
+x = matrix(rnorm(n*p),nrow = n,ncol = p)
+U = runif(n)
+beta = c(5,rep(0,9))
+alpha = c(-2,1.5)
+M = 2
+y = rep(0, n)
+for(i in 1:n){
+  eta = alpha + sum(beta*x[i,])
+  u = U[i]
+  Prob = rep(1,M+1)
+  for(j in 1:M){
+   Prob[j] = exp(sum(eta[j:M]))
+  }
+  Prob = Prob/sum(Prob)
+  C = cumsum(Prob)
+  C = c(0,C)
+  j = 1
+  while((C[j]&gt; u) || (u &gt;= C[j+1])){j = j+1}
+  y[i] = j
+}
+W = ko.ordinal(x,as.factor(y), family = 'acat', nVal = 10)
+ko.sel(W, method = 'manual')
+0.4
+
+
+# How to use randomness?
+n = 100
+p = 20
+set.seed(11)
+x = matrix(rnorm(n*p),nrow = n,ncol = p)
+beta = c(5:1,rep(0,15))
+y = x%*%beta + rnorm(n)
+Esti = 0
+for(i in 1:100){
+  W = ko.glm(x,y, random = TRUE)
+  Esti = Esti + ko.sel(W, method = 'gaps')$estimation
+}
+Esti
+
+</code></pre>
+
+
+</div>

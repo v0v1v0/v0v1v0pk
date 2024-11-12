@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_pkg_env</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get Karel's environment</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the environment called pkg_env created by the package.
+It's useful for debugging and checking. It's an internal function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_pkg_env()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p><code>pkg_env</code> is an environment created inside the package to store
+and share between functions all the objects related to Karel's world and
+its state. Since the functions that will be used by the students should be
+simple and without arguments (for example, <code>move()</code>), these functions
+modify internally <code>pkg_env</code>.
+</p>
+<p>The components of this environment are:
+</p>
+
+<ol>
+<li> <p><code>nx</code>: TODO
+</p>
+</li>
+<li> <p><code>ny</code>:
+</p>
+</li>
+<li> <p><code>hor_walls</code>:
+</p>
+</li>
+<li> <p><code>ver_walls</code>:
+</p>
+</li>
+<li> <p><code>open_moves</code>:
+</p>
+</li>
+<li> <p><code>karel</code>:
+</p>
+</li>
+<li> <p><code>dir_now</code>:
+</p>
+</li>
+<li> <p><code>x_now</code>:
+</p>
+</li>
+<li> <p><code>y_now</code>:
+</p>
+</li>
+<li> <p><code>moment</code>:
+</p>
+</li>
+<li> <p><code>beepers_any</code>:
+</p>
+</li>
+<li> <p><code>beepers_bag</code>:
+</p>
+</li>
+<li> <p><code>beepers_now</code>:
+</p>
+</li>
+<li> <p><code>beepers_all</code>:
+</p>
+</li>
+<li> <p><code>base_plot</code>:
+</p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p>An enviroment with objects that represent Karel's world.
+</p>
+
+
+</div>

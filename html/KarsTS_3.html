@@ -1,0 +1,36 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>aggregateKTS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+aggregateKTS: creation of time series of aggregated values
+</h2>
+
+<h3>Description</h3>
+
+<p>This function creates time series of aggregated values.The user choses the inputs via interface: time series to aggregate, aggregation period, statistic, name for the output and NA treatment (see details).
+</p>
+
+
+<h3>Details</h3>
+
+<p>The statistics available are: median, mean, minimum, maximum, standard deviation and sum.
+The NA treatment can be: ignore or propagate. In the first case, the statistic is computed using the observations available in the window, as long as the window is not completely missing.In the second case, incomplete windows are assigned NA.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A time series of aggregated values appears in the environment KTSEnv
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

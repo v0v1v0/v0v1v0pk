@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kMatern</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Matérn Kernels
+</h2>
+
+<h3>Description</h3>
+
+<p>Matérn kernels, obtained by plugging the Euclidian norm into a
+1-dimensional Matérn function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+   kMatern(d, nu = "5/2")
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>Dimension.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+
+<p>Character corresponding to the smoothness parameter <code class="reqn">\nu</code> of
+Matérn kernels. At this stage, the possible values are "1/2"
+(exponential kernel), "3/2" or "5/2".  </p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>"covMan"</code> with default parameters: 1 for
+ranges and variance values.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Notice that these kernels are NOT obtained by tensor product.
+</p>
+
+
+<h3>References</h3>
+
+<p>C.E. Rasmussen and C.K.I. Williams (2006), <em>Gaussian Processes
+for Machine Learning</em>, the MIT Press,
+<a href="https://doi.org/10.7551/mitpress/3206.001.0001">doi:10.7551/mitpress/3206.001.0001</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kMatern()  # default: d = 1, nu = 5/2
+kMatern(d = 2)
+myMatern &lt;- kMatern(d = 5, nu = "3/2")
+coef(myMatern) &lt;- c(range = 1:5, sigma2 = 0.1)
+myMatern
+try(kMatern(nu = 2))  # error
+</code></pre>
+
+
+</div>

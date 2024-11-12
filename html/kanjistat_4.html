@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compare_neighborhoods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compare distances of nearest kanji</h2>
+
+<h3>Description</h3>
+
+<p>List distances to nearest neighbors of a given kanji in terms of a reference distance
+(which is currently only the stroke edit distance) and compare with values in terms of
+another distance (currently only the component transport distance, a.k.a. kanji distance).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compare_neighborhoods(
+  kan,
+  refdist = "strokedit",
+  refnn = 10,
+  compdist = "kanjidist",
+  compnn = 0,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kan</code></td>
+<td>
+<p>a kanji (currently only as a single UTF-8 character).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refdist</code></td>
+<td>
+<p>the name of the reference distance (currently only "strokedit").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refnn</code></td>
+<td>
+<p>the number of nearest neighbors in terms of the reference distance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compdist</code></td>
+<td>
+<p>a character vector. The name(s) of one or several other distances to compare with
+(currently only "kanjidist").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compnn</code></td>
+<td>
+<p>the number of nearest neighbors in terms of the other distance(s). If this is
+positive it is assumed that the suggested package kanjistat.data is available.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further parameters that are passed to <code>kanjidist()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A matrix of distances with <code>refnn + compnn</code> columns named by the nearest neighbors of <code>kan</code> (first
+in terms of the reference distance, then the other distances) and <code>1 + length(compdist)</code> rows named
+by the type of distance.
+</p>
+
+
+<h3>Warning</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a><br>
+This is only a first draft of the function and its interface and details may change considerably in the future.
+As there is currently no precomputed kanjidist matrix, there is a huge difference in computation time between
+setting <code>compnn = 0</code> (only kanji distances to the <code>refnn</code> nearest neighbors in terms of <code>refdist</code> have to be
+computed) and setting <code>compnn</code> to any value $&gt; 0$ (kanji distances to all 2135 other Jouyou kanji have to be
+computed in order to determine the <code>compnn</code> nearest neighbors; depending on the system and parameter settings
+this can take (roughly) anywhere between 2 minutes and an hour).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># compare_neighborhoods("\u6674", refnn=5, compo_seg_depth=4, approx="pcweighted",
+#                       compnn=0, minor_warnings=FALSE)
+</code></pre>
+
+
+</div>

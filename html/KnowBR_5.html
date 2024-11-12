@@ -1,0 +1,652 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KnowB</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Discriminating well surveyed cell units from exhaustive biodiversity databases</h2>
+
+<h3>Description</h3>
+
+<p>Advances during the last decades in information technology allow us to store, retrieve, transmit and manipulate an unprecedented magnitude of massive information about species distributions (Guralnick <em>et al</em>., 2007). Unfortunately, this compilation process suffers from three main shortcomings:
+</p>
+<p>i) <em>Unknown survey effort</em>. A lack of knowledge of the effort devoted to survey each territorial unit that is due to most occurrence records lacking any associated measure of the effort carried out to obtain them.
+</p>
+<p>ii) <em>Unknown absences</em>. As almost all the available information involves only species occurrences (i.e., the localities in which a species has been collected), without any indication of the likelihood that a species is actually absent from the localities where it was not collected (whether these have been surveyed or not).
+</p>
+<p>iii) <em>Unknown recurrence</em>. Which results from the incomplete compilation of species occurrences in many biodiversity databases, as multiple records of the same species in the same site or territorial unit are considered redundant and not reported (Hortal <em>et al</em>. 2007); this prevents teasing apart occasional records from the continued presence of the species in an area.
+</p>
+<p>These three limitations are mutually interrelated, so when all known occurrences are compiled exhaustively it is possible to estimate survey effort with some reliability. Therefore, a biodiversity database that compiles exhaustively all available information on the identity and distribution of a group of species would enable both identifying well-surveyed areas (e.g. Hortal and Lobo 2005) and obtaining estimates of the repeated occurrence and/or the probability of absence of particular species (e.g. Guillera-Arroita <em>et al</em>. 2010).
+</p>
+<p>Employing statistical shortcuts on data with unknown levels of error and bias can generate unreliable results. Consequently, good practice in biodiversity informatics requires knowledge about the number, location and degree of completeness of surveys for those territorial units that have been, at least relatively, well inventoried. Such knowledge would facilitate identifying localities where the lack of records for a target species can be reliably assumed to correspond to its actual absence. Nonetheless, it can be used to guide the location of future surveys and/or determine uncertain or ignorance areas in which biodiversity data are insufficiently consistent (Hortal and Lobo 2005, Ladle and Hortal 2013, Hortal <em>et al</em>. 2015, Ruete 2015, Meyer <em>et al</em>. 2015, 2016).
+</p>
+<p>Despite the widely recognized importance of evaluating data quality as a preliminary step in any biodiversity study, this process is often neglected. Arguably, this is in part because such evaluation process is highly time-consuming, for it requires using analyses spread over several software applications and/or R packages, and repeating the same process for each one of the territorial units or sites considered (or, in general, for any type of spatial unit). Here we present KnowBR, a freely available R package to estimate the survey coverage of species inventories across an unlimited number of territorial units or sites simultaneously. Starting with any biodiversity database, KnowBR calculates the survey coverage per spatial unit as the final slope of the relationship between the number of collected species and the number of database records, which is used as a surrogate of the survey effort. To do this, KnowBR estimates the accumulation curve (the accumulated increase in the number of species with the addition of database records) for each one of the spatial units according to the <em>exact</em> estimator of Ugland <em>et al</em>. (2003), as well as performing 200 permutations of the observed data (<em>random</em> estimator) to obtain a smoothed accumulation curve. This curve is subsequently adjusted to four different functions with three or less parameters, and the obtained extrapolated asymptotic value used to obtain a completeness percentage (the percentage representing the observed number of species against the predicted one) that also may be used to estimate the territorial units with probable reliable inventories.
+</p>
+<p>These territorial units can be regular cells of any resolution (<em>cell</em> option) but also irregular polygons (<em>polygon</em> option) according to user preferences. RWizard includes in the "Area" argument the possibility of select the administrative spatial units (countries, regions, departments and/or provinces) or the rivers basins of different levels in which to perform the calculations. Instead of using the polygons available in RWizard, the user may also include any shapefile containing the desired irregular polygons (e.g. protected areas, countries, etc) by means of the "shape" argument.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KnowB(data, format="A", cell=60, curve= "Rational", estimator=1, cutoff=1,
+cutoffCompleteness= 0, cutoffSlope= 1, largematrix=FALSE, Area="World",
+extent=TRUE, minLon, maxLon, minLat, maxLat, colbg="transparent",
+colcon="transparent", colf="black", pro=TRUE, inc=0.005, exclude=NULL,
+colexc=NULL, colfexc="black", colscale=c("#C8FFFFFF","#64FFFFFF","#00FFFFFF",
+"#64FF64FF","#C8FF00FF","#FFFF00FF","#FFC800FF","#FF6400FF","#FF0000FF"),
+legend.pos="y", breaks=9, xl=0, xr=0, yb=0, yt=0, asp, lab=NULL, xlab="Longitude",
+ylab="Latitude", main1="Observed richness", main2="Records", main3="Completeness",
+main4="Slope", cex.main=1.6, cex.lab=1.4, cex.axis=1.2, cex.legend=1.2,
+family="sans", font.main=2, font.lab=1, font.axis=1, lwdP=0.6, lwdC=0.1,
+trans=c(1,1), log=c(0,0), ndigits=0, save="CSV", file1="Observed richness",
+file2="List of species", file3="Species per site", file4="Estimators",
+file5="Species per record", file6="Records", file7="Completeness", file8="Slope",
+file9="Standard error of the estimators", na="NA", dec=",", row.names=FALSE,
+jpg=TRUE, jpg1="Observed richness.jpg", jpg2="Records.jpg", jpg3="Completeness.jpg",
+jpg4="Slope.jpg",cex=1.5, pch=15, cex.labels=1.5, pchcol="red", ask=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data is introduced as a CSV, TXT or RData file following two simple formats: one in which only four columns are included (see format A; species name, longitude, latitude and a number reflecting the incidence of the species) and another one including the longitude and latitude of each spatial unit and as many columns as species (see format B in the following table). The CSV file with the format A may be obtained using ModestR (see details).
+</p>
+
+<table><tr>
+<td style="text-align: center;">
+<img src="../help/figures/F1.jpg" width="50" alt="F1.jpg">
+</td>
+</tr></table>
+<p>The primary matrix used in <em>KnowBR</em> has a special characteristic - it must be derived from an exhaustive database including all the available georeferenced information including even those apparently redundant records of a species from the same locality provided that is a difference in some of the collection conditions for a species at a locality (i.e. date of capture, food source, collector, type of microhabitat, etc.). Thus, any difference in any database field value yields a new database record regardless of the number of individuals (see for example Lobo &amp; Martín-Piera, 2002). As biodiversity data can derive from heterogeneous sources with different collector methodologies, no universal sampling effort measure capable of offering  reliable comparisons exists and the number of database records is used as a surrogate (see Soberón <em>et al</em>., 2007; Lobo, 2008). This approach is particularly appropriate for poorly surveyed groups and/or regions lacking sufficient information to correct unequal sampling efforts arising from standardized survey protocols.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>If it is "A" (default), the format of the data frame is species, longitude, latitude and a count value (format A of the table showed above). If it is "B" the format of the data frame is longitude, latitude and the rest of columns are the presence of the species in each site (format B of the table showed above). If numeric values higher than 1 are included in these data a (Count or Sp columns), a database record is considered for each unit. This in the example of format A, four different records are included for the Sp3 with same geographical coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cell</code></td>
+<td>
+<p>Resolution of the cells (spatial units) in minutes on which calculations were carried out. In the present version the user can select any resolution between 1 and 60 minutes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>curve</code></td>
+<td>
+<p>The smoothed accumulation curve generated by the accumulation curve can be adjusted to a "Clench", "Exponential", "Saturation" or "Rational" function (see equations in details section), calculating the asymptotic extrapolated values to further derive a completeness percentage (the percentage representing the observed number of species against the predicted one).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>Vector that defines the used estimator:
+</p>
+<p>0 The data for the estimation of the accumulation curve and the final slope are obtained with both the "exact" and "random" procedures. When the predicted richness is estimated with the type of curve selected by the user ("Clench", "Nexponential", "Saturation" or "Rational") using the data generated by the methods "exact" and "random" at the same time, the mean of both richness values is used to calculate completeness (the percentage representing the observed number of species against the predicted one).
+</p>
+<p>1 It is the "exact" estimator of Ugland <em>et al.</em> (2003) (default option) to obtain a smoothed accumulation curve.
+</p>
+<p>2 If the chosen option is "random". It adds records at random performing 200 permutations in the order of records entry to generate the accumulation curve.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff</code></td>
+<td>
+<p>This number reflects the ratio between the number of database records and the number of species. If this ratio is lower than the selected threshold value in each considered spatial unit, any one of the estimators will be calculated and these spatial units are considered as lacking information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoffCompleteness</code></td>
+<td>
+<p>If the value of completeness is lower than this threshold, the completeness is not calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoffSlope</code></td>
+<td>
+<p>If the slope is higher than this threshold, the completeness is not calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>largematrix</code></td>
+<td>
+<p>When there many species and/or many records resulting in a species per record matrix with more than <code class="reqn">2^{31}</code> cells, it is impossible to create the CSV or RData file with the species per record due to memory limits in R. If this argument is TRUE, the function creates a TXT file with the species per record, but the process is computationally intensive, so it may takes several hours and it may create a large TXT file. The default value is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Area</code></td>
+<td>
+<p>A character with the name of the administrative area or a vector with several administrative areas. If a vector with several administrative areas are used, it is necessary to use RWizard (see details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extent</code></td>
+<td>
+<p>If TRUE the minimum and maximum longitudes and latitudes are delimited by the minimum and maximum of the data (default). If FALSE the minimum and maximum longitudes and latitudes are delimited by the arguments Area and, minLat, maxLat, minLon and maxLon.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLon, maxLon</code></td>
+<td>
+<p>Optionally it is possible to define the minimum and maximum longitude (see details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLat, maxLat</code></td>
+<td>
+<p>Optionally it is possible to define the minimum and maximum latitude (see details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colbg</code></td>
+<td>
+<p>Background color of the map (in some cases this is the sea).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colcon</code></td>
+<td>
+<p>Background color of the administrative areas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colf</code></td>
+<td>
+<p>Color of administrative areas border.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pro</code></td>
+<td>
+<p>If it is TRUE an automatic calculation is made in order to correct the
+aspect ratio y/x along latitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inc</code></td>
+<td>
+<p>Adds some room along the map margins with the limits x and y thus not exactly the limits of the selected areas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exclude</code></td>
+<td>
+<p>A character with the name of the administrative area or a vector with several administrative areas that can be plotted with a different color on the map.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colexc</code></td>
+<td>
+<p>Background color of areas selected in the argument exclude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colfexc</code></td>
+<td>
+<p>Color of borders of the areas selected in the argument exclude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colscale</code></td>
+<td>
+<p>Palette color.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.pos</code></td>
+<td>
+<p>Whether to have a horizontal (x) or vertical (y) color gradient.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p>Number of breakpoints of the color legend.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xl,xr,yb,yt</code></td>
+<td>
+<p>The lower left and upper right coordinates of the color legend in user coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>asp</code></td>
+<td>
+<p>The y/x aspect ratio.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lab</code></td>
+<td>
+<p>A numerical vector of the form c(x. Y) which modified the default method by which axes are annotated. The values of x and y give the (approximate) number of tick marks on the x and y axes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>A title for the x axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>A title for the y axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main1</code></td>
+<td>
+<p>An overall title for the plot of the observed species richness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main2</code></td>
+<td>
+<p>An overall title for the plot of the records.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main3</code></td>
+<td>
+<p>An overall title for the plot of the completeness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main4</code></td>
+<td>
+<p>An overall title for the plot of the slope between the last species richness value and the previous value for each one of the accumulation methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.main</code></td>
+<td>
+<p>The magnification to be used for main titles relative to the current setting of cex.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.lab</code></td>
+<td>
+<p>The magnification to be used for x and y labels relative to the current setting of cex.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis</code></td>
+<td>
+<p>The magnification to be used for axis annotation relative to the current setting of cex.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.legend</code></td>
+<td>
+<p>The magnification to be used in the numbers of the color legend relative to the current setting of cex.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>The name of a font family for drawing text.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>font.main</code></td>
+<td>
+<p>The font to be used for plot main titles.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>font.lab</code></td>
+<td>
+<p>The font to be used for x and y labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>font.axis</code></td>
+<td>
+<p>The font to be used for axis annotation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwdP</code></td>
+<td>
+<p>Line width of the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwdC</code></td>
+<td>
+<p>Line width of the borders.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trans</code></td>
+<td>
+<p>It is possible to multiply or divide the dataset by a value. For a vector with two values, the first may be 0 (divide) or 1 (multiply), and the second number is the value of the division or multiplication.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log</code></td>
+<td>
+<p>It is possible to apply a logarithmic transformation to the dataset. For a vector with two values, the first may be 0 (do not log transform) or 1 (log transformation), and the second number is the value to be added in case of log transformation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ndigits</code></td>
+<td>
+<p>Number of decimals in legend of the color scale.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save</code></td>
+<td>
+<p>If "CSV" the files are save as CSV and if "RData" the files are save as RData.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file1</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the observed richness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file2</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the list of species.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file3</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the species incidences per site.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file4</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the estimators per site.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file5</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the species per records.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file6</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the records.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file7</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the completeness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file8</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the slopes of the accumulation analyses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file9</code></td>
+<td>
+<p>RData or CSV file. A character string naming the file with the standard error of the estimators.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na</code></td>
+<td>
+<p>CSV FILE. Text that is used in the cells without data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>CSV FILE. It defines if the comma "," is used as decimal separator or the dot ".".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row.names</code></td>
+<td>
+<p>CSV FILE. Logical value that defines if identifiers are put in rows or a vector with a text for each of the rows.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg</code></td>
+<td>
+<p>If TRUE the plots are exported to jpg files instead of using the windows device.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg1</code></td>
+<td>
+<p>Name of the jpg file with the values of the observed richness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg2</code></td>
+<td>
+<p>Name of the jpg file with the records.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg3</code></td>
+<td>
+<p>Name of the jpg file with the completeness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg4</code></td>
+<td>
+<p>Name of the jpg file with the slopes of the accumulation analyses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex</code></td>
+<td>
+<p>A numerical value giving the amount by which plotting symbols should be magnified relative to the default in the correlation matrix plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch</code></td>
+<td>
+<p>Either an integer specifying a symbol or a single character to be used as the default in plotting points in the correlation matrix plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.labels</code></td>
+<td>
+<p>Size of labels in the correlation matrix plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pchcol</code></td>
+<td>
+<p>Color of the symbols in the correlation matrix plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>If TRUE (and the R session is interactive) the user is asked for input before a new figure is drawn.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The CSV file required in the argument <em>data</em> with the format A (species, longitude, latitude and count) may be obtained using ModestR (available at the web site www.ipez.es/ModestR) juast selecting Export/Export maps of the select branch/To RWizard Applications/To KnowBR.
+</p>
+<p>In ModestR is possible to export the valid samples or pseudosamples. The pseudosamples are grid cells for instance of 5' x 5', 30' x 30', 1º x 1º, etc. Therefore, the output of ModestR is a list of species within each of the grid cells with the cell size defined by the user. It is therefore possible to obtain the number of records for each species within the grid cell or just the records available for all the species, with the format described above.
+</p>
+<p>Area = "World" to plot the entire world. If the coordinates minLon, maxLon, minLat and maxLat are not specified, they are calculated automatically based on the selected administrative areas. If some administrative areas are selected, e.g. some countries, so the argument is not "World", it only works with RWizard.
+</p>
+<p>It is important to emphasize that the quality of the geographical records of the administrative areas is lower if it is used the entire world(<em>Area="World"</em>, because the file adworld is used), than if it is selected some countries, departments, etc., because the geographical records of the administrative areas available in RWizard are used. It means that the records inside the polygons may vary depending on the selection specified in the argument <em>Area</em>.
+</p>
+<p>The type of curves are:
+</p>
+<p>1) The curve of Clench (Clench, 1979), which is a modification of the function of Monod (Monod, 1950), and was proposed to butterflies.
+</p>
+<p>2) The exponential (Miller &amp; Wiegert, 1989) that was proposed for rare plant species.
+</p>
+<p>3) The saturation curve that was used to show the relationship between growth of phytoplankton, a toxic algae of the genus <em>Alexandrium</em> and the concentration of phosphate (Frangópulos et al., 2004), which is similar to von Bertalanffy growth curve but adapting the coefficients to better explain the pattern of accumulation function.
+</p>
+<p>4) The rational function (Ratkowski, 1990) that can be used when there is no clear criterion which model to use (Falther, 1996).
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<strong>Name</strong> </td>
+<td style="text-align: left;"> <strong>Function</strong> </td>
+<td style="text-align: left;"> <strong>Reference</strong>
+</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Clench </td>
+<td style="text-align: left;"> <code class="reqn">y=\frac{ax}{1+bx}</code> </td>
+<td style="text-align: left;"> (Clench, 1979)</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Negative exponential </td>
+<td style="text-align: left;"> <code class="reqn">y=a\left(1-e^{-bx}\right)</code> </td>
+<td style="text-align: left;"> (Miller &amp; Wiegert, 1989)</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Saturation </td>
+<td style="text-align: left;"> <code class="reqn">y=a\left(1-e^{-b(x-c)}\right)</code> </td>
+<td style="text-align: left;"> (Frangópulos et al., 2004)</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Rational </td>
+<td style="text-align: left;"> <code class="reqn">y=\frac{(a+bx)}{(1+cx)}</code> </td>
+<td style="text-align: left;"> (Ratkowski, 1990)</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p><strong>FUNCTIONS</strong>
+</p>
+<p>The estimators exact and random were estimated with the function specaccum of the package vegan (Oksanen <em>et al</em>., 2014).
+</p>
+<p>The color legend of the maps is depicted with the function color.legend of the package plotrix (Lemon et al., 2014).
+</p>
+<p><strong>EXAMPLE</strong>
+</p>
+<p>The database of the example includes 15,142 records for the 54 Iberian species of the Scarabaeidae (Coleoptera) previously compiled in the so called BANDASCA database (Lobo &amp; Martín-Piera, 2002). The following map show the slopes obtained in cells of 60ºx 60º using the estimator exact and the Rational's curve.
+</p>
+
+<table>
+<tr>
+<td style="text-align: center;">
+<img src="../help/figures/F2.jpg" width="50" alt="F2.jpg">
+</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+</td>
+</tr>
+</table>
+<p>The maps may be easily modified using the function MapCell using the exported CSV or RData files detailing the observed species richness (with alias ObservedRichness), the records (with alias Records), the completeness (with alias Completeness) and the slope (with alias Slope).
+</p>
+
+
+<h3>Value</h3>
+
+<p>RData or CSV files: 1) Observed richness, 2) List of species, 3) Species per site, 4) Estimators, 5) Species per record, 6) Records, 7) Completeness, Slope and 9) Standard error of the estimators.
+</p>
+<p>JPG files with maps: 1) Observed richness, 2) Records, 3) Completeness and 4) Slope.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Spatial database of the location of the world's administrative areas (or administrative boundaries) was obtained from the Web Site http://www.openstreet.org/.</p>
+
+
+<h3>References</h3>
+
+<p>Clench, H.K. (1979) How to make regional lists of butterflies: some invoking empirically based criteria in selecting among thoughts. <em>The Journal of the Lepidopterists' Society</em>, 33: 216-231.
+</p>
+<p>Flather, C.H. (1996) Fitting species-accumulation functions and assessing regional land use impacts on avian diversity. <em>Journal of Biogeography</em>, 23: 155-168.
+</p>
+<p>Frangópulos, M., Guisande, C., deBlas, E. y Maneiro, I. (2004) Toxin production and competitive abilities under phosphorus limitation of <em>Alexandrium</em> species. <em>Harmful Algae</em>, 3: 131-139.
+</p>
+<p>Guillera-Arroita, G., Ridout, M.S &amp; Morgan, B.J.T. (2010)Design of occupancy studies with imperfect detection. <em>Methods in Ecology and Evolution</em>, 1: 131-139. 
+</p>
+<p>Guralnick, R.P., Hill, A.W. &amp; Lane, M. 2007. Towards a collaborative, global infrastructure for biodiversity assessment. <em>Ecology Letters</em> 10: 663-672.
+</p>
+<p>Hortal, J., de Bello, F., Diniz-Filho, J.A.F., Lewinsohn, T.M., Lobo, J.M. &amp; Ladle, R.J. (2015) Seven shortfalls that beset large-scale knowledge of biodiversity. <em>Annual Review Ecology and Systematics</em>, 46: 523-549.
+</p>
+<p>Hortal, J. &amp; Lobo, J.M. 2005. An ED-based protocol for the optimal sampling of biodiversity. <em>Biodiversity and Conservation</em>, 14: 2913-2947.
+</p>
+<p>Hortal, J., Lobo, J.M. &amp; Jiménez-Valverde, A., 2007. Limitations of biodiversity databases: case study on seed-plant diversity in Tenerife (Canary Islands). <em>Conservation Biology</em> 21, 853-863.
+</p>
+<p>Ladle, R. &amp; Hortal, J. (2013) Mapping species distributions: living with uncertainty. <em>Frontiers of Biogeography</em>, 5: 8-9. 
+</p>
+<p>Lemon, J., Bolker, B., Oom, S., Klein, E., Rowlingson, B., Wickham, H., Tyagi, A., Eterradossi, O., Grothendieck, G., Toews, M., Kane, J., Turner, R., Witthoft, C., Stander, J., Petzoldt, T., Duursma, R., Biancotto, E., Levy, O., Dutang, C., Solymos, P., Engelmann, R., Hecker, M., Steinbeck, F., Borchers, H., Singmann, H., Toal, T. &amp; Ogle, D. (2017). Various plotting functions. R package version 3.6-5. Available at: http://CRAN.R-project.org/package=plotrix.
+</p>
+<p>Lobo, J.M., Baselga, A., Hortal, J., Jiménez-Valverde, A. &amp; Gómez, J.F. 2007. How does the knowledge about the spatial distribution of Iberian dung beetle species accumulate over time? <em>Diversity and Distributions</em> 13:772-780.
+</p>
+<p>Lobo, J.M. 2008. Database records as a surrogate for sampling effort provide higher species richness estimations. <em>Biodiversity and Conservation</em> 17: 873-881.
+</p>
+<p>Meyer, C., Kreft, H., Guralnick, R. &amp; Jetz, W. (2015) Global priorities for an effective information basis of biodiversity distributions. <em>Nature Communications</em>6: 8221.
+</p>
+<p>Meyer, C., Weigelt, P. &amp; Kreft, H. (2016) Multidimensional biases, gaps and uncertainties in global plant occurrence information. <em>Ecoly Letters</em>, 19: 992-1006.
+</p>
+<p>Miller, R.I. &amp; Wiegert, R.G. (1989) Documenting completeness species-area relations, and the species-abundance distribution of a regional flora. <em>Ecology</em>, 70: 16-22.
+</p>
+<p>Oksanen, J., Blanchet, F.G., Kindt, R., Legendre, P., Minchin, P.R., O'Hara, R.B., Simpson, G.L., Solymos, P., Henry, M., Stevens, H. &amp; Wagner, H. 2014. Community Ecology Package. R package version 2.0-10. Available at: https://CRAN.R-project.org/package=vegan.
+</p>
+<p>Ratkowski, D.A. (1990) <em>Handbook of nonlinear regression models</em>. Marcel Dekker, New York, 241 pp.
+</p>
+<p>Ruete, A. (2015) Displaying bias in sampling effort of data accessed from biodiversity databases using ignorance maps.  <em>Biodiversity Data Journal</em>3: e5361.
+</p>
+<p>Soberón, J., Jiménez, R., Golubov, J. &amp; Koleff, P., 2007. Assessing completeness of biodiversity databases at different spatial scales. <em>Ecography</em> 30, 152-160.
+</p>
+<p>Ugland, K.I., Gray J. S. &amp; Ellingsen, K.E. 2003. The species-accumulation curve and estimation of species richness. <em>Journal of Animal Ecology</em> 72: 888-897.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+
+#Example 1. Default conditions using estimator 1 (method exact)
+#but only slopes lower than 0.1 are selected for depicting
+#and, therefore, only the completeness is depicted for those
+#cells with the slope lower than 0.1.
+#If using RWizard, for a better quality of the geographic
+#coordinates, replace data(adworld) by @_Build_AdWorld_
+
+data(adworld)
+data(Beetles)
+KnowB(data=Beetles, save="RData", jpg=FALSE, cutoffSlope=0.1, xl=6.1, xr=6.3)
+
+#Only to be used with RWizard. 
+#Example 2. Using @_Build_AdWorld_
+
+data(Beetles)
+@_Build_AdWorld_
+KnowB(Beetles, cell=15, save="RData")
+
+
+## End(Not run)
+</code></pre>
+
+
+</div>

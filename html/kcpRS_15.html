@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>runAR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Running Autocorrelations</h2>
+
+<h3>Description</h3>
+
+<p>Extracts the running autocorrelations by sliding a window comprised of <code>wsize</code> time points, and in each window, the autocorrelation for each variable is computed.
+Each time the window is slid, the oldest time point is discarded and the latest time point is added.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">runAR(data, wsize = 25)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p><em>N</em> x <em>v</em> dataframe where <em>N</em> is the no. of time points and <em>v</em> the no. of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wsize</code></td>
+<td>
+<p>Window size</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Running autocorrelations time series
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">phase1=cbind(rnorm(50,0,1),rnorm(50,0,1)) #phase1: AutoCorr=0
+phase2=cbind(rnorm(50,0,1),rnorm(50,0,1))
+phase2=filter(phase2,.50, method="recursive") #phase2: AutoCorr=.5
+X=rbind(phase1,phase2)
+RS=runAR(data=X,wsize=25)
+ts.plot(RS, gpars=list(xlab="Window", ylab="Autocorrelation", col=1:2,lwd=2))
+</code></pre>
+
+
+</div>

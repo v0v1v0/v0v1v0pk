@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_resizing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Image resizing layer</h2>
+
+<h3>Description</h3>
+
+<p>Image resizing layer
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_resizing(
+  object,
+  height,
+  width,
+  interpolation = "bilinear",
+  crop_to_aspect_ratio = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>Integer, the height of the output shape.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>Integer, the width of the output shape.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interpolation</code></td>
+<td>
+<p>String, the interpolation method. Defaults to <code>"bilinear"</code>.
+Supports <code>"bilinear"</code>, <code>"nearest"</code>, <code>"bicubic"</code>, <code>"area"</code>, <code>"lanczos3"</code>,
+<code>"lanczos5"</code>, <code>"gaussian"</code>, and <code>"mitchellcubic"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crop_to_aspect_ratio</code></td>
+<td>
+<p>If TRUE, resize the images without aspect
+ratio distortion. When the original aspect ratio differs from the target
+aspect ratio, the output image will be cropped so as to return the largest
+possible window in the image (of size <code style="white-space: pre;">⁠(height, width)⁠</code>) that matches
+the target aspect ratio. By default (<code>crop_to_aspect_ratio = FALSE</code>),
+aspect ratio may not be preserved.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Resize the batched image input to target height and width. The input should
+be a 4D (batched) or 3D (unbatched) tensor in <code>"channels_last"</code> format.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Resizing">https://www.tensorflow.org/api_docs/python/tf/keras/layers/Resizing</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/preprocessing_layers/image_preprocessing/resizing">https://keras.io/api/layers/preprocessing_layers/image_preprocessing/resizing</a>
+</p>
+</li>
+</ul>
+<p>Other image preprocessing layers: 
+<code>layer_center_crop()</code>,
+<code>layer_rescaling()</code>
+</p>
+<p>Other preprocessing layers: 
+<code>layer_category_encoding()</code>,
+<code>layer_center_crop()</code>,
+<code>layer_discretization()</code>,
+<code>layer_hashing()</code>,
+<code>layer_integer_lookup()</code>,
+<code>layer_normalization()</code>,
+<code>layer_random_brightness()</code>,
+<code>layer_random_contrast()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_width()</code>,
+<code>layer_random_zoom()</code>,
+<code>layer_rescaling()</code>,
+<code>layer_string_lookup()</code>,
+<code>layer_text_vectorization()</code>
+</p>
+
+
+</div>

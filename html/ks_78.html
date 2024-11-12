@@ -1,0 +1,171 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kde.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel density based global two-sample comparison test</h2>
+
+<h3>Description</h3>
+
+<p>Kernel density based global two-sample comparison test for 1- to 6-dimensional data.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kde.test(x1, x2, H1, H2, h1, h2, psi1, psi2, var.fhat1, var.fhat2, 
+    binned=FALSE, bgridsize, verbose=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x1,x2</code></td>
+<td>
+<p>vector/matrix of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H1,H2,h1,h2</code></td>
+<td>
+<p>bandwidth matrices/scalar bandwidths. If these are
+missing, <code>Hpi.kfe</code>, <code>hpi.kfe</code> is called by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psi1,psi2</code></td>
+<td>
+<p>zero-th order kernel functional estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.fhat1,var.fhat2</code></td>
+<td>
+<p>sample variance of KDE estimates evaluated at x1, x2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>flag for binned estimation. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bgridsize</code></td>
+<td>
+<p>vector of binning grid sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>flag to print out progress information. Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The null hypothesis is <code class="reqn">H_0: f_1 \equiv f_2</code> where <code class="reqn">f_1, f_2</code> 
+are the respective density functions. The measure of discrepancy is
+the integrated squared error (ISE)
+<code class="reqn">T = \int [f_1(\bold{x}) - f_2(\bold{x})]^2 \, d \bold{x}</code>. If 
+we rewrite this as <code class="reqn">T = \psi_{0,1} - \psi_{0,12} - \psi_{0,21} + \psi_{0,2}</code> 
+where <code class="reqn">\psi_{0,uv} = \int f_u (\bold{x}) f_v (\bold{x})  \, d \bold{x}</code>,
+then we can use kernel functional estimators. This test statistic has a null 
+distribution which is asymptotically normal, so no bootstrap
+resampling is required to compute an approximate <code class="reqn">p</code>-value.     
+</p>
+<p>If <code>H1,H2</code> are missing then the  plug-in selector <code>Hpi.kfe</code>
+is automatically called by <code>kde.test</code> to estimate the
+functionals with <code>kfe(, deriv.order=0)</code>. Likewise for missing
+<code>h1,h2</code>. 
+</p>
+<p>For <span class="pkg">ks</span> <code class="reqn">\geq</code> 1.8.8, <code>kde.test(,binned=TRUE)</code> invokes binned
+estimation for the computation of the bandwidth selectors, and not the
+test statistic and <code class="reqn">p</code>-value.  
+</p>
+
+
+<h3>Value</h3>
+
+<p>A kernel two-sample global significance test is a list with fields:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Tstat</code></td>
+<td>
+<p>T statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zstat</code></td>
+<td>
+<p>z statistic - normalised version of Tstat</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvalue</code></td>
+<td>
+<p><code class="reqn">p</code>-value of the double sided test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean,var</code></td>
+<td>
+<p>mean and variance of null distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.fhat1,var.fhat2</code></td>
+<td>
+<p>sample variances of KDE values evaluated at data points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n1,n2</code></td>
+<td>
+<p>sample sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H1,H2</code></td>
+<td>
+<p>bandwidth matrices</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psi1,psi12,psi21,psi2</code></td>
+<td>
+<p>kernel functional estimates</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Duong, T., Goud, B. &amp; Schauer, K. (2012) Closed-form density-based framework for automatic detection of cellular morphology changes. <em>PNAS</em>, <b>109</b>, 8382-8387. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kde.local.test</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(8192)
+samp &lt;- 1000
+x &lt;- rnorm.mixt(n=samp, mus=0, sigmas=1, props=1)
+y &lt;- rnorm.mixt(n=samp, mus=0, sigmas=1, props=1)
+kde.test(x1=x, x2=y)$pvalue   ## accept H0: f1=f2
+
+data(crabs, package="MASS")
+x1 &lt;- crabs[crabs$sp=="B", c(4,6)]
+x2 &lt;- crabs[crabs$sp=="O", c(4,6)]
+kde.test(x1=x1, x2=x2)$pvalue  ## reject H0: f1=f2
+</code></pre>
+
+
+</div>

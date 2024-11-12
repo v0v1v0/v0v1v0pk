@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>standardized_regression</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Standardized Regression</h2>
+
+<h3>Description</h3>
+
+<p>This function standardizes all variables for a regression analysis
+(i.e., dependent variable and all independent variables) and then
+conducts a regression with the standardized variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">standardized_regression(
+  data = NULL,
+  formula = NULL,
+  reverse_code_vars = NULL,
+  sigfigs = NULL,
+  round_digits_after_decimal = NULL,
+  round_p = 3,
+  pretty_round_p_value = TRUE,
+  return_table_upper_half = FALSE,
+  round_r_squared = 3,
+  round_f_stat = 2,
+  prettify_reg_table_col_names = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>a formula object for the regression equation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse_code_vars</code></td>
+<td>
+<p>names of binary variables to reverse code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_digits_after_decimal</code></td>
+<td>
+<p>round to nth digit after decimal
+(alternative to <code>sigfigs</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_p</code></td>
+<td>
+<p>number of decimal places to which to round p-values
+(default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pretty_round_p_value</code></td>
+<td>
+<p>logical. Should the p-values be rounded
+in a pretty format (i.e., lower threshold: "&lt;.001").
+By default, <code>pretty_round_p_value = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_table_upper_half</code></td>
+<td>
+<p>logical. Should only the upper part
+of the table be returned?
+By default, <code>return_table_upper_half = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_r_squared</code></td>
+<td>
+<p>number of digits after the decimal both r-squared
+and adjusted r-squared values should be rounded to (default 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_f_stat</code></td>
+<td>
+<p>number of digits after the decimal the f statistic
+of the regression model should be rounded to (default 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prettify_reg_table_col_names</code></td>
+<td>
+<p>logical. Should the column names
+of the regression table be made pretty (e.g., change "std_beta" to
+"Std. Beta")? (Default = <code>TRUE</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a data.table showing multiple regression
+results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+standardized_regression(data = mtcars, formula = mpg ~ gear * cyl)
+standardized_regression(
+data = mtcars, formula = mpg ~ gear + gear:am + disp * cyl,
+round_digits_after_decimal = 3)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>assayHeatmap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate heatmap of assay data</h2>
+
+<h3>Description</h3>
+
+<p>Creates a heatmap of data from the indicated <code>TapestriObject</code> <code>assay</code> slot using the <code>ComplexHeatmap</code> package.
+Heatmaps are generated as transposed (i.e. x-y flipped) representations of the <code>assay</code> matrix.
+Additional <code>ComplexHeatmap::Heatmap()</code> parameters can be passed in to overwrite defaults.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">assayHeatmap(
+  TapestriExperiment,
+  alt.exp = NULL,
+  assay = NULL,
+  split.col.by = NULL,
+  split.row.by = NULL,
+  annotate.row.by = NULL,
+  color.preset = NULL,
+  color.custom = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.exp</code></td>
+<td>
+<p>Character, <code>altExp</code> slot to use. <code>NULL</code> (default) uses top-level/main experiment.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>assay</code></td>
+<td>
+<p>Character, <code>assay</code> slot to use. <code>NULL</code> (default) uses first-indexed assay (usually "counts").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>split.col.by</code></td>
+<td>
+<p>Character, <code>rowData</code> column to split columns by, i.e. "chr" or "arm". Default <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>split.row.by</code></td>
+<td>
+<p>Character, <code>colData</code> column to split rows by, i.e. "cluster". Default <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>annotate.row.by</code></td>
+<td>
+<p>Character, <code>colData</code> column to use for block annotation. Default <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color.preset</code></td>
+<td>
+<p>Character, color preset to use for heatmap color, either "copy.number" or "copy.number.denoise" (see <code>Details</code>). Overrides <code>color.custom</code>. <code>NULL</code> (default) uses default <code>ComplexHeatmap</code> coloring.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color.custom</code></td>
+<td>
+<p>Color mapping function given by <code>circlize::colorRamp2()</code>. <code>color.preset</code> must be <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional parameters to pass to <code>ComplexHeatmap::Heatmap()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>ComplexHeatmap</code> object
+</p>
+
+
+<h3>Options for <code>color.preset</code>
+</h3>
+
+
+
+<h4>"copy.number"</h4>
+
+<p>Blue-white-red gradient from 0-2-4. 4 to 8+ is red-black gradient.
+</p>
+<div class="sourceCode"><pre>circlize::colorRamp2(c(0,1,2,3,4,8),
+c('#2c7bb6','#abd9e9','#ffffff','#fdae61','#d7191c', "black"))
+</pre></div>
+
+
+
+<h4>"copy.number.denoise"</h4>
+
+<p>Similar to 'copy.number' present, but white range is from 1.5-2.5 to reduce the appearance of noise around diploid cells.
+</p>
+<div class="sourceCode"><pre>circlize::colorRamp2(c(0,1,1.5,2,2.5,3,4,8),
+c('#2c7bb6','#abd9e9','#ffffff','#ffffff','#ffffff','#fdae61','#d7191c', "black"))
+</pre></div>
+
+
+
+<h3>See Also</h3>
+
+<p>Heatmap
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+assayHeatmap(tap.object,
+  assay = "counts", split.row.by = "test.cluster",
+  annotate.row.by = "test.cluster", split.col.by = "chr"
+)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.kcmeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction Method for the K-Conditional-Means Estimator.</h2>
+
+<h3>Description</h3>
+
+<p>Prediction method for the K-Conditional-Means estimator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kcmeans'
+predict(object, newdata, clusters = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>kcmeans</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>A (sparse) feature matrix where the first column corresponds
+to the categorical predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clusters</code></td>
+<td>
+<p>A boolean indicating whether estimated clusters should be
+returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently unused.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numerical vector with predicted values (if <code>clusters = FALSE</code>)
+or predicted clusters (if <code>clusters = FALSE</code>).
+</p>
+
+
+<h3>References</h3>
+
+<p>Wiemann T (2023). "Optimal Categorical Instruments." <a href="https://arxiv.org/abs/2311.17021">https://arxiv.org/abs/2311.17021</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Simulate simple dataset with n=800 observations
+X &lt;- rnorm(800) # continuous predictor
+Z &lt;- sample(1:20, 800, replace = TRUE) # categorical predictor
+Z0 &lt;- Z %% 4 # lower-dimensional latent categorical variable
+y &lt;- Z0 + X + rnorm(800) # outcome
+# Compute kcmeans with four support points
+kcmeans_fit &lt;- kcmeans(y, cbind(Z, X), K = 4)
+# Calculate in-sample predictions
+fitted_values &lt;- predict(kcmeans_fit, cbind(Z, X))
+# Print sample share of estimated clusters
+clusters &lt;- predict(kcmeans_fit, cbind(Z, X), clusters = TRUE)
+table(clusters)
+</code></pre>
+
+
+</div>

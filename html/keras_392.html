@@ -1,0 +1,146 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_random_brightness</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer which randomly adjusts brightness during training</h2>
+
+<h3>Description</h3>
+
+<p>A preprocessing layer which randomly adjusts brightness during training
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_random_brightness(
+  object,
+  factor,
+  value_range = c(0, 255),
+  seed = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>Float or a list of 2 floats between -1.0 and 1.0. The
+factor is used to determine the lower bound and upper bound of the
+brightness adjustment. A float value will be chosen randomly between
+the limits. When -1.0 is chosen, the output image will be black, and
+when 1.0 is chosen, the image will be fully white. When only one float
+is provided, eg, 0.2, then -0.2 will be used for lower bound and 0.2
+will be used for upper bound.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value_range</code></td>
+<td>
+<p>Optional list of 2 floats for the lower and upper limit
+of the values of the input data. Defaults to <code style="white-space: pre;">⁠[0.0, 255.0]⁠</code>. Can be changed
+to e.g. <code style="white-space: pre;">⁠[0.0, 1.0]⁠</code> if the image input has been scaled before this layer.
+The brightness adjustment will be scaled to this range, and the
+output values will be clipped to this range.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>optional integer, for fixed RNG behavior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This layer will randomly increase/reduce the brightness for the input RGB
+images. At inference time, the output will be identical to the input.
+Call the layer with <code>training=TRUE</code> to adjust the brightness of the input.
+</p>
+<p>Note that different brightness adjustment factors
+will be apply to each the images in the batch.
+</p>
+<p>For an overview and full list of preprocessing layers, see the preprocessing
+<a href="https://www.tensorflow.org/guide/keras/preprocessing_layers">guide</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/RandomBrightness">https://www.tensorflow.org/api_docs/python/tf/keras/layers/RandomBrightness</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers">https://keras.io/api/layers</a>
+</p>
+</li>
+</ul>
+<p>Other image augmentation layers: 
+<code>layer_random_contrast()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_width()</code>,
+<code>layer_random_zoom()</code>
+</p>
+<p>Other preprocessing layers: 
+<code>layer_category_encoding()</code>,
+<code>layer_center_crop()</code>,
+<code>layer_discretization()</code>,
+<code>layer_hashing()</code>,
+<code>layer_integer_lookup()</code>,
+<code>layer_normalization()</code>,
+<code>layer_random_contrast()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_width()</code>,
+<code>layer_random_zoom()</code>,
+<code>layer_rescaling()</code>,
+<code>layer_resizing()</code>,
+<code>layer_string_lookup()</code>,
+<code>layer_text_vectorization()</code>
+</p>
+
+
+</div>

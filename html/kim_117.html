@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simple_effects_analysis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple Effects Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Conduct a simple effects analysis to probe a two-way interaction effect.
+See Field et al. (2012, ISBN: 978-1-4462-0045-2).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simple_effects_analysis(
+  data = NULL,
+  dv_name = NULL,
+  iv_1_name = NULL,
+  iv_2_name = NULL,
+  iv_1_levels = NULL,
+  iv_2_levels = NULL,
+  print_contrast_table = "weights_sums_and_products",
+  output = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable (DV)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_name</code></td>
+<td>
+<p>name of the first independent variable (IV1), whose
+main effects will be examined in the first set of contrasts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_name</code></td>
+<td>
+<p>name of the second independent variable (IV2), whose
+simple effects at each level of IV1 will be examined in the second set
+of contrasts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_levels</code></td>
+<td>
+<p>ordered levels of IV1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_levels</code></td>
+<td>
+<p>ordered levels of IV2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print_contrast_table</code></td>
+<td>
+<p>If
+<code>print_contrast_table = "weights_sums_and_products"</code>, contrasts'
+weights, sums of the weights and products will be printed. If
+<code>print_contrast_table = "weights_only"</code>, only the contrasts will
+be printed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output can be one of the following: <code>"lm_object"</code>,
+<code>"table"</code>, <code>"weights_only"</code>, <code>"weights_sums_and_products"</code>,
+<code>"all"</code> By default, <code>output = NULL</code>, and there will be no
+output from the function other than the tables of simple effects and
+constrasts which will be printed on the console by default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>By default, the function will print a table of contrasts and
+a table of simple effects.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+factorial_anova_2_way(
+  data = mtcars, dv_name = "mpg", iv_1_name = "vs",
+  iv_2_name = "am", iterations = 100, plot = TRUE)
+simple_effects_analysis(
+  data = mtcars, dv_name = "mpg", iv_1_name = "vs",
+  iv_2_name = "am")
+
+</code></pre>
+
+
+</div>

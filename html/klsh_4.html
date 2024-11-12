@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calc_idf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to calculate the inverse document frequency given a shingled bag of words</h2>
+
+<h3>Description</h3>
+
+<p>Function to calculate the inverse document frequency given a shingled bag of words
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calc_idf(sack_of_bags)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>sack_of_bags</code></td>
+<td>
+<p>Sack of bag of words</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Computes the inverse document frequency for a bag of words
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(RLdata500)
+data.500 &lt;- RLdata500[-c(2,4)]
+sack &lt;- sacks_of_bags_of_words(data.500[1:3,c(-2)],k=2)
+(idf &lt;- calc_idf(sack))
+match(names(sack[[1]]), names(idf))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>watch_progress_mp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>watch progress from multi process</h2>
+
+<h3>Description</h3>
+
+<p>sets up a "watcher" function that will report on the progress
+of a multi-process process that is being indicated by <code>set_progress_mp</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">watch_progress_mp(
+  n,
+  min_time = 0,
+  watch_location = NULL,
+  progress_location = make_kpb_output_decisions()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of times process is running</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_time</code></td>
+<td>
+<p>how long to wait</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>watch_location</code></td>
+<td>
+<p>where is the progress being written to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress_location</code></td>
+<td>
+<p>where to write the progress output</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>ProgressMPWatcher
+</p>
+
+
+<h3>See Also</h3>
+
+<p>set_progress_mp
+</p>
+
+
+</div>

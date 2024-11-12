@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>list_cached_files</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Show Cached Files of Specific User</h2>
+
+<h3>Description</h3>
+
+<p>Some users get individually composed, cached files. If you ordered such 
+a service you can list all files available to you.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">list_cached_files(username, api_key)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>username</code></td>
+<td>
+<p>Your dataservice user name</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>api_key</code></td>
+<td>
+<p><strong>character</strong> Your API key. An API key is needed if accessing non-public timeseries. 
+If downloading public timeseries parameter can be omitted.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">available_files &lt;- list_cached_files("kofdatapkg",
+"313984fcd9f343d3961891319b0ed321")
+available_files
+</code></pre>
+
+
+</div>

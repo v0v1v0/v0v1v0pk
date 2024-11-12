@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>estimate_gamma</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Gamma hyperparameter estimation (RBF kernel)</h2>
+
+<h3>Description</h3>
+
+<p>This function returns an estimation of the optimum value for the gamma hyperparameter
+(required by the RBF kernel function) using different heuristics:
+</p>
+
+<dl>
+<dt>
+<em>D</em> criterion</dt>
+<dd>
+<p>It returns the inverse of the number of features in X.</p>
+</dd>
+<dt>Scale criterion</dt>
+<dd>
+<p>It returns the inverse of the number of features,
+normalized by the total variance of X.</p>
+</dd>
+<dt>Quantiles criterion</dt>
+<dd>
+<p>A range of values, computed with the function
+'kernlab::sigest()'.</p>
+</dd>
+</dl>
+<h3>Usage</h3>
+
+<pre><code class="language-R">estimate_gamma(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Matrix or data.frame that contains real numbers ("integer", "float" or "double").</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list with the gamma value estimation according to different criteria.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- matrix(rnorm(150),ncol=50,nrow=30)
+gamma &lt;- estimate_gamma(data)
+gamma
+K &lt;- RBF(data, g = gamma$scale_criterion)
+K[1:5,1:5]
+</code></pre>
+
+
+</div>

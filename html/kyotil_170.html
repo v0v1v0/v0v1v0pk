@@ -1,0 +1,445 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print.functions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Print Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>roundup prints a specified number of digits after decimal point even if 0s are needed at the end. 
+formatInt prints a specified number of digits before decimal point even if 0s are needed at the beginning.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+myprint(object, ...)
+
+## Default S3 method:
+myprint(..., newline = TRUE, digits = 3, print.name=TRUE)
+
+## S3 method for class 'matrix'
+myprint(object, ...)
+
+formatInt(x, digits, fill = "0", ...)
+
+prettyprint (value, digit=2) 
+
+make.latex.coef.table(models, model.names = NULL, row.major = FALSE, round.digits = NULL)
+
+mysanitize.text(str) 
+mysanitize.numbers(x) 
+
+mytex(dat = NULL, file.name = "temp", digits = NULL, display
+                 = NULL, align = "r", include.rownames = TRUE,
+                 include.colnames = TRUE, col.headers = NULL, comment =
+                 FALSE, floating = FALSE, lines = TRUE, hline.after =
+                 NULL, add.to.row = NULL, sanitize.text.function =
+                 NULL, append = FALSE, preamble = "", input.foldername
+                 = NULL, save2input.only = NULL, caption = NULL, label
+                 = paste("tab", last(strsplit(file.name, "/")[[1]]),
+                 sep = " "), table.placement = "h!",
+                 add.clear.page.between.tables = FALSE, longtable =
+                 FALSE, verbose = FALSE, silent = TRUE, ...)
+
+mytex.begin(file.name, preamble = "")
+
+mytex.end(file.name)
+
+mywrite(x, ...)
+
+mywrite.csv(x, file = "tmp", row.names = FALSE, digits = NULL,
+                 silent = TRUE, ...)
+
+roundup (value, digits, na.to.empty=TRUE, remove.leading0=TRUE) 
+
+formatDouble(value, digits, na.to.empty=TRUE, remove.leading0=TRUE)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>digit</code></td>
+<td>
+
+<p>tbddigit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+
+<p>tbdnewline
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input.foldername</code></td>
+<td>
+
+<p>tbdnewline
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>tbdnewline
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newline</code></td>
+<td>
+
+<p>tbdnewline
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print.name</code></td>
+<td>
+
+<p>tbddigits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save2input.only</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.colnames</code></td>
+<td>
+<p>Boolean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.headers</code></td>
+<td>
+<p>string. Column headers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comment</code></td>
+<td>
+<p>Boolean, whether to include the version and timestamp comment</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hline.after</code></td>
+<td>
+<p>vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.to.row</code></td>
+<td>
+<p>a list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sanitize.text.function</code></td>
+<td>
+<p>a function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>str</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.leading0</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>caption</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longtable</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p> default to be the same as file.name stem
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>table.placement</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.to.empty</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+
+<p>tbdvalue
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+
+<p>tbddigits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fill</code></td>
+<td>
+
+<p>tbdfill
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>models</code></td>
+<td>
+
+<p>tbdmodels
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model.names</code></td>
+<td>
+
+<p>tbdmodel.names
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row.major</code></td>
+<td>
+
+<p>tbdrow.major
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round.digits</code></td>
+<td>
+
+<p>tbdround.digits
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+
+<p>tbddat
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file.name</code></td>
+<td>
+
+<p>tbdfile.name
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display</code></td>
+<td>
+
+<p>tbddisplay
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align</code></td>
+<td>
+
+<p>tbdalign
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>append</code></td>
+<td>
+
+<p>tbdappend
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>preamble</code></td>
+<td>
+
+<p>tbdpreamble
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.rownames</code></td>
+<td>
+
+<p>tbdinclude.rownames
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>floating</code></td>
+<td>
+
+<p>tbdfloating
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lines</code></td>
+<td>
+
+<p>tbdlines
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+
+<p>tbdfile
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row.names</code></td>
+<td>
+
+<p>tbdrow.names
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.clear.page.between.tables</code></td>
+<td>
+
+<p>tbdrow.names
+</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+roundup (3.1, 2) # 3.10
+
+formatInt(3, 2) # 03
+
+
+## Not run:  
+
+# demo of dimnames
+tab=diag(1:4); rownames(tab)&lt;-colnames(tab)&lt;-1:4; names(dimnames(tab))=c("age","height")
+# for greek letter in the labels, we need sanitize.text.function=identity
+rownames(tab)[1]="$\alpha$"
+# note that to use caption, floating needs to be TRUE
+mytex (tab, file="tmp1", sanitize.text.function=identity, 
+    caption="This is a caption .........................", caption.placement="top",
+    floating=TRUE)
+
+# col.headers has to have the RIGHT number of columns 
+# but align is more flexible, may not need to include the rownames col
+tab=diag(1:4); rownames(tab)&lt;-colnames(tab)&lt;-1:4
+mytex (tab, file="tmp", include.rownames = TRUE, 
+    align=c("c","c","c|","c","c"), col.headers=
+    "\hline\n &amp; \multicolumn{2}{c|}{Vaccine} &amp; \multicolumn{2}{c}{Control} \\ \n")
+# not include rownames
+mytex (tab, file="tmp", include.rownames = FALSE, 
+    align=c("c","c","c|","c","c"), col.headers=
+    "\hline\n     \multicolumn{2}{c|}{Vaccine} &amp; \multicolumn{2}{c}{Control} \\ \n") 
+# It should work even if some rownames are duplicated
+tab=diag(1:4); rownames(tab)=rep(1,4); colnames(tab)&lt;-1:4
+mytex (tab, file="tmp", include.rownames = TRUE, 
+    align=c("c","c|","c","c"), col.headers=
+    "\hline\n &amp; \multicolumn{2}{c|}{Vaccine} &amp; \multicolumn{2}{c}{Control} \\ \n") 
+
+
+# add.to.rows
+tab=diag(1:4); rownames(tab)&lt;-1:4; colnames(tab)&lt;-c("a","b","c","d")
+mytex (tab, file="tmp",
+    add.to.row=list( list(0,2),
+        c("          \multicolumn{5}{l}{Heading 1} \\ \n",
+          "\hline\n \multicolumn{5}{l}{Heading 2}\\ \n"
+    ))
+)
+
+
+
+## End(Not run)
+
+
+
+</code></pre>
+
+
+</div>

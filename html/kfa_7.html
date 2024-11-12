@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_k</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find k for k-fold cross-validation</h2>
+
+<h3>Description</h3>
+
+<p>This function is specifically for determining <em>k</em> in the context of factor analysis using
+change in RMSEA as the criterion for identifying the optimal factor model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_k(
+  variables,
+  n,
+  p,
+  m = NULL,
+  max.k = 10,
+  min.n = 200,
+  rmsea0 = 0.05,
+  rmseaA = 0.08,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>a <code>data.frame</code> (or convertible to a <code>data.frame</code>) with variables to factor analyze in columns and observations in rows.
+The power analysis assumes all observations have complete data. Use <code>n</code> argument or remove rows manually to account for missingness.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer; number of observations. Ignored if <code>variables</code> is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>integer; number of variables to factor analyze. Ignored if<code>variables</code> is provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>integer; maximum number of factors expected to be extracted from <code>variables</code>. Default is <code>p</code> / 4 (i.e., 4 variables per factor).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.k</code></td>
+<td>
+<p>integer; maximum number of folds. Default is 10. <code>NULL</code> indicates no maximum.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.n</code></td>
+<td>
+<p>integer; minimum sample size per fold. Default is 200 based on simulations from Curran et al. (2003).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rmsea0</code></td>
+<td>
+<p>numeric; RMSEA under the null hypothesis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rmseaA</code></td>
+<td>
+<p>numeric; RMSEA under the alternative hypothesis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments passed to <code>findRMSEAsamplesize</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>named vector with the number of folds (k), sample size suggested by the power analysis (power.n), and the actual sample size used for determining k (actual.n).
+</p>
+
+
+<h3>References</h3>
+
+<p>Curran, P. J., Bollen, K. A., Chen, F., Paxton, P., &amp; Kirby, J. B. (2003). Finite sampling properties of the point estimates and confidence intervals of the RMSEA. <em>Sociological Methods &amp; Research, 32</em>(2), 208-252. <a href="https://doi.org/10.1177/0049124103256130">doi:10.1177/0049124103256130</a>
+</p>
+<p>MacCallum, R. C., Browne, M. W., &amp; Sugawara, H. M. (1996). Power analysis and determination of sample size for covariance structure modeling. <em>Psychological Methods, 1</em>(2), 130–149. <a href="https://doi.org/10.1037/1082-989X.1.2.130">doi:10.1037/1082-989X.1.2.130</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">find_k(n = 900, p = 20, m = 3)
+
+# adjust precision
+find_k(n = 900, p = 20, m = 3, rmsea0 = .03, rmseaA = .10)
+
+</code></pre>
+
+
+</div>

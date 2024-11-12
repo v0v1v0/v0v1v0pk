@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>misc_subset_options</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>misc_subset_options</h2>
+
+<h3>Description</h3>
+
+<p>Miscellaneous helper function to subset R options by a keyword.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">misc_subset_options(keyword)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>keyword</code></td>
+<td>
+<p>A character. The keyword to subset the R options.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function subsets R's <code>options()</code> by a keyword. It returns a
+list of all available options that match with the <code>keyword</code>. The <code>keyword</code>
+is evaluated as a regular expression.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>list</code> is returned, containing the subset of R's <code>options()</code> that
+matches with the <code>keyword</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">misc_subset_options("default")
+</code></pre>
+
+
+</div>

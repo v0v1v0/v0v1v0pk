@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>genseed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Standard Error of the Difference Between Two Equating Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>Given two equating functions with associated standard error vectors, the standard error of the difference between two equating functions (SEED) is calculated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">genseed(in1, in2, linear = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>in1</code></td>
+<td>
+
+<p>S4 object of class keout containing information about the first equating function, as created by the function kequate.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>in2</code></td>
+<td>
+
+<p>S4 object of class keout containing information about the second equating function, as created by the function kequate.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear</code></td>
+<td>
+
+<p>A logical vector indicating if the two linear equatings are to be compared instead of the two equipercentile equatings. Default is FALSE.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The standard error of the difference between two equating functions (SEED) can be used to compare equating functions and decide which is most suitable to use. For example, if the difference between a linear and an equipercentile equating function is small and within the boundaries of the estimated SEED the simpler linear equating function may be preferable. Any two equipercentile or linear equating functions can be compared using genseed, given that the log-linear model is identical between the two (and that the designs are comparable). As an example, it is impossible to compare an EG equating to an SG equating in this manner as the log-linear models are not the same. It is however useful to compare a chain equating to a post-stratification equating in the NEAT design, or to compare post-stratification equatings with different weights. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame containing the difference between the equated values of two equating functions and the SEED of the two equatings for equating X to Y (eqYxD and SEEDYx).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Andersson, B., Branberg, K., and Wiberg, M. (2013). Performing the Kernel Method of Test Equating with the Package <b>kequate</b>. <em>Journal of Statistical Software</em>, <b>55(6)</b>, 1–25. &lt;doi:10.18637/jss.v055.i06&gt;
+</p>
+<p>von Davier, A.A., Holland, P.W., Thayer, D.T. (2004). <em>The Kernel Method of Test Equating.</em> Springer-Verlag New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kequate</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">P&lt;-c(5, 20, 35, 25, 15)
+Q&lt;-c(10, 30, 30, 20, 10)
+x&lt;-0:4
+glmx&lt;-glm(P~I(x)+I(x^2), family="poisson", x=TRUE)
+glmy&lt;-glm(Q~I(x)+I(x^2), family="poisson", x=TRUE)
+keEG&lt;-kequate("EG", 0:4, 0:4, glmx, glmy)
+keEGnew&lt;-kequate("EG", 0:4, 0:4, glmx, glmy, hx=0.33, hy=0.33)
+SEEDEG&lt;-genseed(keEG, keEGnew)
+plot(SEEDEG)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stringbreak</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Insert "\n" after the k'th character in a string. This IS vectorized,
+so can receive just one or many character strings in a vector.</h2>
+
+<h3>Description</h3>
+
+<p>If a string is long, insert linebreak "\n"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stringbreak(x, k = 20)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Character string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of characters after which to insert "\n". Default is 20</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If x is not a character string, x is returned without alteration. And
+without a warning
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character with "\n" inserted
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- "abcdef ghijkl mnopqrs tuvwxyz abc def ghi jkl mno pqr stv"
+stringbreak(x, 10)
+stringbreak(x, 20)
+stringbreak(x, 25)
+x &lt;- c("asdf asdfjl asfdjkl asdfjklasdfasd", "qrweqwer qwerqwerjklqw erjqwe")
+stringbreak(x, 5)
+</code></pre>
+
+
+</div>

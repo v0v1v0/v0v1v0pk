@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyToEnglish</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Key to English</h2>
+
+<h3>Description</h3>
+
+<p>Hashes field to sequence of words from a list.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyToEnglish(
+  x,
+  hash_function = "md5",
+  phrase_length = 5,
+  corpus_path = NA,
+  word_list = wl_common,
+  hash_subsection_size = 3,
+  sep = "",
+  word_trans = "camel",
+  suppress_warnings = FALSE,
+  hash_output_length = NA,
+  forced_limit = NA,
+  numeric_append_range = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>- field to hash</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hash_function</code></td>
+<td>
+<p>'character' name of hash function or hash 'function' itself,
+returning a hexadecimal character</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phrase_length</code></td>
+<td>
+<p>'numeric' of words to use in each hashed key</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corpus_path</code></td>
+<td>
+<p>'character' path to word list, as a single-column text file with one
+word per row</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>word_list</code></td>
+<td>
+<p>'character' list of words to use in phrases</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hash_subsection_size</code></td>
+<td>
+<p>'numeric' length of each subsection of hash to use for word index. 16^N
+unique words can be used for a size of N. This value times
+phrase_length must be less than or equal to the length of the
+hash output. Must be less than 14.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>'character' separator to use between each word.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>word_trans</code></td>
+<td>
+<p>A ‘function', 'list' of functions, or ’camel' (for CamelCase). If
+a list is used, then the index of the word of each phrase is
+mapped to the corresponding function with that index,
+recycling as necessary</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suppress_warnings</code></td>
+<td>
+<p>'logical' value indicating if warning of non-character
+input should be suppressed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hash_output_length</code></td>
+<td>
+<p>optional 'numeric' if the provided hash function is not a 'character'. This is used
+to send warnings if the hash output is too small to provide full range of all
+possible combinations of outputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>forced_limit</code></td>
+<td>
+<p>for multiple word lists, this is the maximum number of values used for calculating the index
+(prior to taking the modulus) for each word in a phrase. Using this may speed up processing
+longer word lists with a large least-common-multiple among individual word list lengths. This
+will introduce a small amount of bias into the randomness. This value should be much larger than
+any individual word list whose length is not a factor of this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numeric_append_range</code></td>
+<td>
+<p>optional 'numeric' value of two integers indicating range of integers to append onto data</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>'character' vector of hashed field resembling phrases
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># hash the numbers 1 through 5
+keyToEnglish(1:5)
+
+# alternate upper and lowercase, 3 words only
+keyToEnglish(1:5, word_trans=list(tolower, toupper), phrase_length=3)
+</code></pre>
+
+
+</div>

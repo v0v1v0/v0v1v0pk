@@ -1,0 +1,387 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SurveyQCZ</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Survey quality of climate zones</h2>
+
+<h3>Description</h3>
+
+<p>Estimation of the survey quality of different climate zones.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SurveyQCZ(data, Longitude="Longitude", Latitude="Latitude", cell=NULL, hull=TRUE,
+Area="World", shape=NULL, shapenames=NULL, aprox=TRUE, VIDTAXA=NULL, por=80, k=NULL,
+VIF=FALSE, VARSEDIG=FALSE, BUBBLE=FALSE, variables=c("Slope","Completeness","Ratio"),
+completeness=c(50,90), slope=c(0.02,0.3), ratio=c(3,15), minLon=NULL,
+maxLon=NULL, minLat=NULL, maxLat=NULL, xlab="Longitude", ylab="Latitude",
+colscale=c("#C8FFFFFF","#64FFFFFF","#00FFFFFF","#64FF64FF","#C8FF00FF",
+"#FFFF00FF","#FFC800FF","#FF6400FF","#FF0000FF"), colcon="transparent",
+breaks=10, ndigits=0, xl=0, xr=0, mfrowBOXPLOT=NULL, mfrowMAP=NULL,
+main="Percentage of ignorance/poor\n cells in each cluster", cexCM=0.5,
+legpos="bottomleft", jpg=FALSE, filejpg="Survey Quality CZ.jpg", dec=",")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data file exported by the function KnowB named "Estimators" with the values of records, observed richness, predicted richness, completeness and slope for each area polygon. This file may include the values of the environmental variables for each cell.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Longitude</code></td>
+<td>
+<p>Variable with the longitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Latitude</code></td>
+<td>
+<p>Variable with the latitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cell</code></td>
+<td>
+<p>Resolution of the cells (spatial units) in minutes. In the present version the user can select any resolution between 1 and 60 minutes. If it is NULL (default), it is used the resolution of the ASC files with the environmental variables. It is not NULL, the ASC files are rescaled to the resolution selected by the user.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hull</code></td>
+<td>
+<p>If it is TRUE, the extent is estimated as the convex null of the data. It is FALSE, it is used as extent the polygons defined in the arguments <em>shape</em> of <em>Area</em>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Area</code></td>
+<td>
+<p>Only if using RWizard. It allows to plot countries, regions, river basins, etc., as extentd. A character with the name of the administrative area or a vector with several administrative areas (countries, regions, etc.) or river basins. If it is "World" (default) the entire world is plotted. For using administrative areas or river basins, in addition to use RWizard, it is also necessary to replace data(world) by @_Build_AdWorld_.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>Optionally it may be used a shape file with the information of the polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shapenames</code></td>
+<td>
+<p>Variable in the shapefile with the names of the polygons.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aprox</code></td>
+<td>
+<p>If it is TRUE and there is not environmental data available in the cell, it is used the nearest cell available in the environmental data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>VIDTAXA</code></td>
+<td>
+<p>It accesses the VIDTAXA function of the VARSEDIG package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>por</code></td>
+<td>
+<p>Cut-off threshold specifying the cumulative variance percentage, to determine how many axes are selected from the Principal Components or Correspondence analyses. By default it is 80%, which means that the axes are selected until reaching an accumulated variance percentage of 80%.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of clusters in which the Dendrogram is divided. If it is NULL, the algorithm select automatically the maximum number of clusters in which the Dendrogram can be divided, which are those groups that are statistically different in at least one variable according to the U Mann-Whitney test. If the are is large, there may be many different climate zones, so with NULL option running time may be long.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>VIF</code></td>
+<td>
+<p>If it is TRUE, the inflation factor of the variance (VIF) is used to select the highly correlated variables and, therefore, not correlated variables are excluded from the Principal Components analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>VARSEDIG</code></td>
+<td>
+<p>If it is TRUE, the VARSEDIG algorithm is performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>The slope, completeness and ratio obtained in the file "Estimators", in that order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>BUBBLE</code></td>
+<td>
+<p>If it is TRUE, the BUBBLE plot the VARSEDIG function is depicted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>completeness</code></td>
+<td>
+<p>Values of the completeness to define the thresholds for poor, fair and good quality surveys of the cells.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>slope</code></td>
+<td>
+<p>Values of the slope to define the thresholds for poor, fair and good quality surveys of the cells.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ratio</code></td>
+<td>
+<p>Values of the ratio to define the thresholds for poor, fair and good quality surveys of the cells.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLon, maxLon</code></td>
+<td>
+<p>Optionally it is possible to define the minimum and maximum longitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLat, maxLat</code></td>
+<td>
+<p>Optionally it is possible to define the minimum and maximum latitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>Legend of the X axis in the map.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>Legend of the Y axis in the map.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colscale</code></td>
+<td>
+<p>Color of the bar scale.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colcon</code></td>
+<td>
+<p>Background color of the administrative areas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p>Number of breakpoints of the color legend.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ndigits</code></td>
+<td>
+<p>Number of decimals in legend of the color scale.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xl,xr</code></td>
+<td>
+<p>The lower left and right coordinates of the color legend in user coordinates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mfrowBOXPLOT</code></td>
+<td>
+<p>It allows to specify the boxplot panel. It is a vector with two numbers, for example c(2,5) which means that the boxplots are put in 2 rows and 5 columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mfrowMAP</code></td>
+<td>
+<p>It allows to specify the map panel. It is a vector with two numbers, for example c(3,2) which means that the map panel are put in 3 rows and 2 columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>Main title of the map with the percentage of ignorance/poor cells.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cexCM</code></td>
+<td>
+<p>Size of the points in the maps of the climate clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legpos</code></td>
+<td>
+<p>Legend position with the number of the cluster in the maps of the climate clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jpg</code></td>
+<td>
+<p>If TRUE the plots are exported to jpg files instead of using the windows device.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filejpg</code></td>
+<td>
+<p>Name of the jpg file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>CSV FILE. It defines if the comma "," is used as decimal separator or the dot ".".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The aim of this algorithm is to identify different climate zones and to estimate survey quality of these zones. The climate zones are classified from those with higher percentage of ignorance/poor survey quality cells (poor surveyed climate zones), to those with the lower percentage of ignorance/poor survey quality cells (better surveyed climate zones). This function uses the algorithm of the VARSEDIG function (Guisande et al., 2016; 2019; Guisande, 2019, which is briefly summarized as follows.
+</p>
+<p>This function only works if there are ASC files with the environmental variables in the working directory.
+</p>
+<p>In the first step of the algorithm, a Principal Components analysis is performed, being the cases the different cells and the variables the environmental variables. The aim is to determine the environmental variables responsible for the variability observed among the cells.
+</p>
+<p>To detect the potential groups being formed in the Principal Components analysis, a Dendrogram is applied to the scores obtained from the axes that absorb a greater variance. By default, the axes that absorb 80% of the variability are chosen, but this value can be modified by the user.
+</p>
+<p>Subsequently, a Discriminant Analysis is carried out to determine if the clusters that have been generated are well discriminated, that is, to determine the number of correctly identified cases in each cluster.
+</p>
+<p>Next, a U Mann-Whitney test is performed to determine if there are significant differences in the variables between the clusters.
+</p>
+<p>The idea of this function is to find the largest possible number of clusters with the highest discrimination percentage. To do this, the user should perform tests modifying the cut-off threshold by specifying the cumulative variance percentage to determine how many axes are selected from the Main Components (by default <em>por=80</em>) and the variables to be included, eliminating those that are not correlated and are not useful in the Principal Components analyses, as well as those that have little discrimination power in the Discriminant Analysis.
+</p>
+<p>Once the different climate zones have been identified, with the file Estimators.CSV obtained from the function KnowB (Lobo et al., 2018; Guisande &amp; Lobo, 2019), with the values of the slope, completeness and the ratio between the number of records and the observed species (R/S) for different cells, it is estimated the percentage of ignorance/poor cells in each climate zone. Ignorance cell are those for which was not possible to estimate the slope, completeness and/or R/S, because there are not records or the number of records in small. Poor quality surveys cells are those that slope &gt; 0.3, completeness &lt; 50
+</p>
+<p><strong>FUNCTIONS</strong>
+</p>
+<p>This function uses the algorithm of the VIDTAX function of the VARSEDIG package (Guisande et al., 2016; 2019). The Principal Components Analysis was performed with the prcomp function of the stats package. The vif function of the usdm package was used for the calculation of VIF (Naimi et al., 2014; Naimi, 2017). To perform the <em>biplot</em> graph the scatterplot function of the car package was used (Fox et al., 2018). The arrows are depicted with the function Arrows of the package IDPmisc (Locher &amp; Ruckstuhl, 2014). The convex hull is estimated with the function chull of the package grDevices. KMO test was performed with the function KMO of the package psych (Revelle, 2018).  The U Mann-Whitney test is performed with the <em>wilcox.test</em> function of the base stats package. The comparison between clusters with the VARSEDIG algorithm is done with the VARSEDIG function  (Guisande et al., 2016). The Linear Discriminant Analysis was performed with the functions candisc of the candisc package (Friendly, 2007; Friendly &amp; Fox, 2017) and lda of the MASS package (Venables &amp; Ripley, 2002; Ripley et al., 2018). The Quadratic Discriminant Analysis was performed with the function qda of the MASS package (Venables &amp; Ripley, 2002; Ripley et al., 2018). The graph with one dimension in the Discriminant analysis was performed with the function plot.cancor of the candisc package (Friendly, 2007; Friendly &amp; Fox, 2017).
+</p>
+<p><strong>EXAMPLE</strong>
+</p>
+<p>We used the file Estimators obtained with the function KnowB using a database that includes 121,709 records of freshwater fishes obtained from Pelayo-Villamil et al. (2015), with the Clench estimator and a cell resolution of 5'.
+</p>
+<p>In the working directory, there are the environmental variables BIO1, BO2, BIO4, BIO8, BIO12, BIO14, BIO15, BIO18 and BIO19 of the WorldClim data set (Hijmans et al., 2005), as ASC raster files. 
+</p>
+<p>As the argument <em>VIF=FALSE</em>, there is not information about VIF, and the first statistic obtained is the KMO test, which tells us if the variables are adequate for the Principal Components. The value must be greater than 0.5. Therefore, all variables that do not have a value greater than 0.5, could be eliminated from the analysis. In the case that the value is exactly 0.5, it means that it is not possible to estimate the KMO. The minimum value was 0.73 for BIO12, so all variables are adequate for the Principal Components.
+</p>
+<p>The next statistic that appears is Bartlett's test of sphericity, which tests whether the correlation matrix is an identity matrix, which would indicate that the factor model is inappropriate. A value <em>p</em> of the contrast smaller than the level of significance allows rejecting the hypothesis and concluding that there is correlation. Therefore, for the Principal Components analysis to be valid, the probability must be less than 0.05, as it is in this case, with a p&lt;0.001.
+</p>
+<p>The first figure is the Principal Components. The first axis accounts for 62.9%, the second for 16.5% and the third for 7% of the variance observed. The first three axes explain 86.5% of the variance. Since the default value of <em>por=80</em> was selected, these three Principal Component axes are selected.
+</p>
+<p>In the Dendrogram there were 22 clusters statistically different, because the argument <em>k=NULL</em> in the script (default option), which means that the algorithm finds the maximum number of statistically different climate zones. The results obtained in the files U Mann-Whitney test.CSV and Descriptive statistics of clusters.CSV show that there are statistical differences among all 22 clusters in at least one variable (U Mann-Whitney test, p&lt;0.001).
+</p>
+<p>Other plots and statistics are obtained, which are fully explained in the manuscript that describes the algorithm VIDTAXA (Guisande et al., 2019).
+</p>
+<p>The final plot is the map with the percentage of ignorance/poor cells (see map below). It is clear that the area with a better survey quality is in South-East of United Kingdom.
+</p>
+
+<table><tr>
+<td style="text-align: center;">
+<img src="../help/figures/F9.jpg" width="50" alt="F9.jpg">
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>It is obtained:
+</p>
+<p>1. A TXT file with the VIF (if the argument <em>VIF=TRUE</em>), the correlations between variables, the Kaiser-Meyer-Olkin (KMO) test, the Bartlett sphericity test and the results of the Principal Components or Correspondence analyses. The file is called by default "Output.TXT".
+</p>
+<p>2. A CSV FILE with the coordinates for each case of the Principal Components or Correspondence analyses. The file is called by default "Cat loadings.CSV".
+</p>
+<p>3. A CSV FILE with the descriptive statistics of each variable for each of the clusters obtained in the Dendrogram. The file is called by default "Descriptive statistics of clusters.CSV".
+</p>
+<p>4. A CSV FILE with the original data of the variables and the cluster to which each case belongs. The file is called by default "Original data and cluster number.CSV".
+</p>
+<p>5. A CSV FILE with the coordinates of the variables in the Linear Discriminant Analysis plot. The file is called by default "Var loadings-Linear.csv"
+</p>
+<p>6. A CSV FILE with the coordinates of the categories in the Linear Discriminant Analysis plot. The file is called by default "Cat loadings-Linear.csv".
+</p>
+<p>7. A CSV FILE with the predictions table using the cross-validation of Linear Discriminant Analysis. The file is called by default "Table cross-validation-Linear.csv".
+</p>
+<p>8. A CSV FILE with the group to which each case belongs and the prediction of the Discriminant Analysis using the cross-validation of the Linear Discriminant Analysis. The file is called by default "Cases cross-validation-Linear.csv".
+</p>
+<p>9. A CSV file with the predictions table using the cross-validation of the Quadratic Discriminant Analysis. The file is called by default "Table cross-validation-Quadratic.csv".
+</p>
+<p>10. A CSV file with the group to which each case belongs and the prediction of the Discriminant Analysis using the cross-validation of the Quadratic Discriminant Analysis. The file is called by default "Cases cross-validation-Quadratic.csv".
+</p>
+<p>11. A CSV file with the obtained probabilities of comparing all the variables among all the clusters with the U Mann-Whitney test. The file is called by default "U Mann-Whitney test.csv".
+</p>
+<p>12. A CSV file called by default "Priorization.csv", with the clusters of the different climate zones arranged from the cluster with the higher percentage of cells catalogued as ignorance/poor (lowest quality survey) to the cluster with the lower percentage of cells catalogued as ignorance/poor (highest quality survey).
+</p>
+<p>13. A scatterplot of the Principal Components or Correspondence analyses.
+</p>
+<p>14. A Dendrogram grouping by clusters according to the scores of the Principal Components or Correspondence analyses.
+</p>
+<p>15. A graphic panel with a boxplot for each variable comparing the values of these variables between each of the clusters obtained in the Dendrogram.
+</p>
+<p>16. A Graph of the Discriminant Analysis showing the influence of the variables on the discriminant axis I, differentiating the different clusters.
+</p>
+<p>17. A graph of the Discriminant Analysis showing the scores of the discriminant axes I and II, differentiating the different clusters.
+</p>
+<p>18. If the argument <em>BUBBLE=TRUE</em>, a bubble chart with the number of variables that are statistically different between clusters.
+</p>
+<p>19. The maps with the climate zones.
+</p>
+<p>20. The map with the percentage of ignorance/poor cells.
+</p>
+
+
+<h3>References</h3>
+
+<p>Fox, J., Weisberg, S., Adler, D., Bates, D., Baud-Bovy, G., Ellison, S., Firth, D., Friendly, M., Gorjanc, G., Graves, S., Heiberger, R., Laboissiere, R., Monette, G., Murdoch, D., Nilsson, H., Ogle, D., Ripley, B., Venables, W. &amp; Zeileis, A. (2018) Companion to Applied Regression. R package version 3.0-0. Available at: <a href="https://CRAN.R-project.org/package=car">https://CRAN.R-project.org/package=car</a>.
+</p>
+<p>Friendly, M. &amp; Fox, J. (2017) Visualizing Generalized Canonical Discriminant and Canonical Correlation Analysis. R package version 0.8-0. Available at: <a href="https://CRAN.R-project.org/package=candisc">https://CRAN.R-project.org/package=candisc</a>.
+</p>
+<p>Friendly, M. (2007). HE plots for Multivariate General Linear Models. <em>Journal of Computational and Graphical Statistics</em>, 16: 421-444.
+</p>
+<p>Guisande, C., Vari, R.P., Heine, J., GarcÃ­a-RosellÃ³, E., GonzÃ¡lez-Dacosta, J., PÃ©rez-Schofield, B.J., GonzÃ¡lez-Vilas, L. &amp; Pelayo-Villamil, P. (2016) VARSEDIG: an algorithm for morphometric characters selection and statistical validation in morphological taxonomy. <em>Zootaxa</em>, 4162: 571-580.
+</p>
+<p>Guisande, C., Rueda-Quecho, A.J., Rangel-Silva, F.A., Heine, J., GarcÃ­a-RosellÃ³, E., GonzÃ¡lez-Dacosta, J. &amp; Pelayo-Villamil, P. (2019) VIDTAXA: an algorithm for the identification of statistically different groups based on variability obtained in factorial analyses. <em>Ecological Informatics</em>, 46: 62-68.
+</p>
+<p>Hijmans, R.J., Cameron, S.E., Parra, J.L., Jones, P.G. &amp; Jarvis, A. (2005) Very high resolution interpolated climate surfaces for global land areas. <em>International Journal of Climatology</em>, 25: 1965-1978.
+</p>
+<p>Locher, R. &amp; Ruckstuhl, A. (2014) Utilities of Institute of Data Analyses and Process Design. R package version 1.1.17. Available at: <a href="https://CRAN.R-project.org/package=IDPmisc">https://CRAN.R-project.org/package=IDPmisc</a>.
+</p>
+<p>Naimi, B. (2017) Uncertainty analysis for species distribution models. R package version 1.1-18. Available at: <a href="https://CRAN.R-project.org/package=usdm">https://CRAN.R-project.org/package=usdm</a>.
+</p>
+<p>Naimi, B., Hamm, N.A.S., Groen, T.A., Skidmore, A.K., &amp; Toxopeus, A.G. (2014) Where is positional uncertainty a problem for species distribution modelling? <em>Ecography</em>, 37: 191-203.
+</p>
+<p>Pelayo-Villamil, P., Guisande, C., Vari, R.P., ManjarrÃ©s-HernÃ¡ndez, A., GarcÃ­a-RosellÃ³, E., GonzÃ¡lez-Dacosta, J., Heine, J., GonzÃ¡lez-Vilas, L., Patti, B., Quinci, E.M., JimÃ©nez, L.F., Granado-Lorencio, C., Tedesco, P.A., Lobo, J.M. (2015) Global diversity patterns of freshwater fishes-Potential victims of their own success. <em>Diversity and Distributions</em>, 21: 345-356.
+</p>
+<p>Revelle,W. (2018) Procedures for Psychological, Psychometric, and Personality Research. R package version 1.8.4. Available at: <a href="https://CRAN.R-project.org/package=psych">https://CRAN.R-project.org/package=psych</a>.
+</p>
+<p>Ripley, B., Venables, B., Bates, D.M., Hornik, K., Gebhardt, A. &amp; Firth, D. (2018) Support Functions and Datasets for Venables and Ripley's MASS. R package version 7.3-50. Available at: <a href="https://CRAN.R-project.org/package=MASS">https://CRAN.R-project.org/package=MASS</a>.
+</p>
+<p>Venables, W.N. &amp; Ripley, B.D. (2002) <em>Modern Applied Statistics with S</em>. Springer, fourth edition, New York. <a href="https://www.stats.ox.ac.uk/pub/MASS4/">https://www.stats.ox.ac.uk/pub/MASS4/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+####This script only works if there are ASC files, with
+####environmental variables, in the working directory
+
+data(FishIrelandUK)
+
+data(adworld)
+
+SurveyQCZ(data=FishIrelandUK, maxLon=3, mfrowBOXPLOT=c(3,3), cexCM=0.2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

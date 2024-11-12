@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sparse_encode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>sparse_encode</h2>
+
+<h3>Description</h3>
+
+<p>Sparse encoding method by closest neighbors. 
+Three methods are available:
+- hard encoding: each patient's closest neighbors are set to 1, others
+are set to 0
+- soft encoding: each patient's closest neighbors distances are
+transformed by the exponential norm, others are set to 0
+- epsilon encoding: each patient's neighbors closer than the mean of
+the distance matrix are transformed by the exponential norm and
+others are set to 0.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sparse_encode(
+  m_data,
+  dist_method = "norm_inprod",
+  encoding = c("epsilon", "hard", "soft"),
+  sigma,
+  n_neighbors = floor(nrow(m_data)/10),
+  scale_obs = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m_data</code></td>
+<td>
+<p>Numeric matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist_method</code></td>
+<td>
+<p>Distance method passed to qb_dist</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>Encoding method: one of hard, soft, or epsilon</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>Parameter for the exponential norm transform.
+Default is mean of std. dev. of distance matrix columns</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_neighbors</code></td>
+<td>
+<p>Number of neighbors (ignored in epsilon encoding)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale_obs</code></td>
+<td>
+<p>Scale by observations</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Projected matrix
+</p>
+
+
+</div>

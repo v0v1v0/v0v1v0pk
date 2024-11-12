@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>computeRealVolumeConstant</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A constant used to calculate the expected excursion set's volume variance</h2>
+
+<h3>Description</h3>
+
+<p>This function computes a constant used to calculate exactly the value of the <code>"jn"</code> criterion. 
+Computing this constant does NOT change the optimum of the <code>"jn"</code> criterion. 
+Therefore, its calculation is indicative only and is only necessary to know exactly (in expectation) the excursion set's volume variance. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">computeRealVolumeConstant(model,integration.points,
+integration.weights=NULL,T)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A Kriging model of <code>km</code> class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.points</code></td>
+<td>
+<p>p*d matrix of points for numerical integration in the X space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.weights</code></td>
+<td>
+<p>(Optional) Vector of size p corresponding to the weights of these integration points. If not provided, all weights are set to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>Target threshold.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Note that, even if the <code>"jn"</code> criterion can be used with more than one threshold, the computation of this constant is implemented only 
+when the number of threshold is equal to 1.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a scalar
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Bect J., Ginsbourger D., Vazquez E., Picheny V., Richet Y. (2014), <em>Fast parallel kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>, Technometrics, vol. 56(4), pp 455-465
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>precomputeUpdateData</code>, <code>predict_nobias_km</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#computeRealVolumeConstant
+
+set.seed(9)
+N &lt;- 20 #number of observations
+testfun &lt;- branin
+T &lt;- 80
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+            response = response,covtype="matern3_2")
+
+integcontrol &lt;- list(n.points=500,distrib="jn",init.distrib="MC")
+obj &lt;- integration_design(integcontrol=integcontrol,
+	lower=c(0,0),upper=c(1,1),model=model,T=T)
+	
+integration.points &lt;- obj$integration.points
+integration.weights &lt;- obj$integration.weights
+
+## Not run: 
+computeRealVolumeConstant(model=model,
+	integration.points=integration.points,
+        integration.weights=integration.weights,T=T)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

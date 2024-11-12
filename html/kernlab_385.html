@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kfa-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "kfa"</h2>
+
+<h3>Description</h3>
+
+<p>The class of the object returned by the Kernel Feature
+Analysis <code>kfa</code> function</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("kfa", ...)</code> or by
+calling the <code>kfa</code> method. The objects contain the features along with the
+alpha values. 
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>alpha</code>:</dt>
+<dd>
+<p>Object of class <code>"matrix"</code> containing the
+alpha values </p>
+</dd>
+<dt>
+<code>alphaindex</code>:</dt>
+<dd>
+<p>Object of class <code>"vector"</code> containing
+the indexes of the selected feature</p>
+</dd>
+<dt>
+<code>kernelf</code>:</dt>
+<dd>
+<p>Object of class <code>"kfunction"</code> containing
+the kernel function used</p>
+</dd>
+<dt>
+<code>xmatrix</code>:</dt>
+<dd>
+<p>Object of class <code>"matrix"</code> containing
+the selected features</p>
+</dd>
+<dt>
+<code>kcall</code>:</dt>
+<dd>
+<p>Object of class <code>"call"</code> containing the
+<code>kfa</code> function call</p>
+</dd>
+<dt>
+<code>terms</code>:</dt>
+<dd>
+<p>Object of class <code>"ANY"</code> containing the
+formula terms</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>alpha</dt>
+<dd>
+<p><code>signature(object = "kfa")</code>: returns the alpha values </p>
+</dd>
+<dt>alphaindex</dt>
+<dd>
+<p><code>signature(object = "kfa")</code>: returns the
+index of the selected features</p>
+</dd>
+<dt>kcall</dt>
+<dd>
+<p><code>signature(object = "kfa")</code>: returns the function call </p>
+</dd>
+<dt>kernelf</dt>
+<dd>
+<p><code>signature(object = "kfa")</code>: returns the kernel
+function used </p>
+</dd>
+<dt>predict</dt>
+<dd>
+<p><code>signature(object = "kfa")</code>: used to embed more
+data points to the feature base</p>
+</dd>
+<dt>xmatrix</dt>
+<dd>
+<p><code>signature(object = "kfa")</code>: returns the
+selected features. </p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Alexandros Karatzoglou<br><a href="mailto:alexandros.karatzoglou@ci.tuwien.ac.at">alexandros.karatzoglou@ci.tuwien.ac.at</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>kfa</code>, <code>kpca-class</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(promotergene)
+f &lt;- kfa(~.,data=promotergene)
+</code></pre>
+
+
+</div>

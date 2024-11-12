@@ -1,0 +1,309 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scale_crameri_vanimo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fabio Crameri's <em>vanimo</em> Diverging Color Scheme</h2>
+
+<h3>Description</h3>
+
+<p>Fabio Crameri's <em>vanimo</em> Diverging Color Scheme
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_colour_vanimo(
+  ...,
+  reverse = FALSE,
+  range = c(0, 1),
+  midpoint = 0,
+  discrete = FALSE,
+  aesthetics = "colour"
+)
+
+scale_color_vanimo(
+  ...,
+  reverse = FALSE,
+  range = c(0, 1),
+  midpoint = 0,
+  discrete = FALSE,
+  aesthetics = "colour"
+)
+
+scale_fill_vanimo(
+  ...,
+  reverse = FALSE,
+  range = c(0, 1),
+  midpoint = 0,
+  discrete = FALSE,
+  aesthetics = "fill"
+)
+
+scale_edge_colour_vanimo(
+  ...,
+  reverse = FALSE,
+  range = c(0, 1),
+  midpoint = 0,
+  discrete = FALSE,
+  aesthetics = "edge_colour"
+)
+
+scale_edge_color_vanimo(
+  ...,
+  reverse = FALSE,
+  range = c(0, 1),
+  midpoint = 0,
+  discrete = FALSE,
+  aesthetics = "edge_colour"
+)
+
+scale_edge_fill_vanimo(
+  ...,
+  reverse = FALSE,
+  range = c(0, 1),
+  midpoint = 0,
+  discrete = FALSE,
+  aesthetics = "edge_fill"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed to <code>ggplot2::continuous_scale()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse</code></td>
+<td>
+<p>A <code>logical</code> scalar. Should the resulting
+vector of colors be reversed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>A length-two <code>numeric</code> vector specifying the
+fraction of the scheme's color domain to keep.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>midpoint</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the midpoint
+(in data value) of the diverging scale. Defaults to <code>0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>discrete</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the color scheme be
+used as a discrete scale?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aesthetics</code></td>
+<td>
+<p>A <code>character</code> string or vector of character
+strings listing the name(s) of the aesthetic(s) that this scale works with.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A continuous scale.
+</p>
+
+
+<h3>Diverging Color Schemes</h3>
+
+<p>If more colors than defined are needed from a given scheme, the color
+coordinates are linearly interpolated to provide a continuous version of the
+scheme.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<strong>Palette</strong> </td>
+<td style="text-align: left;"> <strong>Max.</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>broc</code>      </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>cork</code>      </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>vik</code>       </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>lisbon</code>    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>tofino</code>    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>berlin</code>    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>roma</code>      </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>bam</code>       </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>vanimo</code>    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>brocO</code>*    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>corkO</code>*    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>vikO</code>*     </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>romaO</code>*    </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>bamO</code>*     </td>
+<td style="text-align: left;"> 256      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>*: cyclic color schemes.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>Source</h3>
+
+<p>Crameri, F. (2021). Scientific colour maps. <em>Zenodo</em>, v7.0.
+<a href="https://doi.org/10.5281/zenodo.4491293">doi:10.5281/zenodo.4491293</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Crameri, F. (2018). Geodynamic diagnostics, scientific visualisation and
+StagLab 3.0. <em>Geosci. Model Dev.</em>, 11, 2541-2562.
+<a href="https://doi.org/10.5194/gmd-11-2541-2018">doi:10.5194/gmd-11-2541-2018</a>
+</p>
+<p>Crameri, F., Shephard, G. E. &amp; Heron, P. J. (2020). The misuse of colour in
+science communication. <em>Nature Communications</em>, 11, 5444.
+<a href="https://doi.org/10.1038/s41467-020-19160-7">doi:10.1038/s41467-020-19160-7</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other diverging color schemes: 
+<code>scale_crameri_bam</code>,
+<code>scale_crameri_berlin</code>,
+<code>scale_crameri_broc</code>,
+<code>scale_crameri_cork</code>,
+<code>scale_crameri_lisbon</code>,
+<code>scale_crameri_roma</code>,
+<code>scale_crameri_tofino</code>,
+<code>scale_crameri_vik</code>,
+<code>scale_tol_BuRd</code>,
+<code>scale_tol_PRGn</code>,
+<code>scale_tol_nightfall</code>,
+<code>scale_tol_sunset</code>
+</p>
+<p>Other Fabio Crameri's color schemes: 
+<code>scale_crameri_acton</code>,
+<code>scale_crameri_bam</code>,
+<code>scale_crameri_bamO</code>,
+<code>scale_crameri_bamako</code>,
+<code>scale_crameri_batlow</code>,
+<code>scale_crameri_batlowK</code>,
+<code>scale_crameri_batlowW</code>,
+<code>scale_crameri_berlin</code>,
+<code>scale_crameri_bilbao</code>,
+<code>scale_crameri_broc</code>,
+<code>scale_crameri_brocO</code>,
+<code>scale_crameri_buda</code>,
+<code>scale_crameri_bukavu</code>,
+<code>scale_crameri_cork</code>,
+<code>scale_crameri_corkO</code>,
+<code>scale_crameri_davos</code>,
+<code>scale_crameri_devon</code>,
+<code>scale_crameri_fes</code>,
+<code>scale_crameri_grayC</code>,
+<code>scale_crameri_hawaii</code>,
+<code>scale_crameri_imola</code>,
+<code>scale_crameri_lajolla</code>,
+<code>scale_crameri_lapaz</code>,
+<code>scale_crameri_lisbon</code>,
+<code>scale_crameri_nuuk</code>,
+<code>scale_crameri_oleron</code>,
+<code>scale_crameri_oslo</code>,
+<code>scale_crameri_roma</code>,
+<code>scale_crameri_romaO</code>,
+<code>scale_crameri_tofino</code>,
+<code>scale_crameri_tokyo</code>,
+<code>scale_crameri_turku</code>,
+<code>scale_crameri_vik</code>,
+<code>scale_crameri_vikO</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(economics, package = "ggplot2")
+
+ggplot2::ggplot(economics, ggplot2::aes(psavert, pce, colour = unemploy)) +
+  ggplot2::geom_point() +
+  scale_colour_broc(reverse = TRUE, midpoint = 12000)
+
+ggplot2::ggplot(economics, ggplot2::aes(psavert, pce, colour = unemploy)) +
+  ggplot2::geom_point() +
+  scale_colour_berlin(midpoint = 9000)
+</code></pre>
+
+
+</div>

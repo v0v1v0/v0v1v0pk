@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lambdasearch</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Leave-one-out optimization to find <code class="reqn">\lambda</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Function conducts leave-one-out optimization to find <code class="reqn">\lambda</code> using a golden search search with caching. This function is called internally by <code>krls</code>. It would normally not be called by the user directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lambdasearch(L=NULL,
+           U=NULL,
+           y=NULL,
+           Eigenobject=NULL,
+           tol=NULL,
+           noisy=FALSE,
+           eigtrunc=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>Non-negative scalar that determines the lower bound of the search window. Default is <code>NULL</code> which means that the lower bound is found using an algorithm (see details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>U</code></td>
+<td>
+<p>Positive scalar that determines the upper bound of the search window. Default is <code>NULL</code> which means that the upper bound is found using an algorithm (see details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p><var>N</var> by <var>1</var> matrix of outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Eigenobject</code></td>
+<td>
+<p>List that contains the eigenvalues and eigenvectors of the kernel matrix <var>K</var>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>Positive scalar that determines the tolerance used in the optimization routine used to find <code class="reqn">\lambda</code>. Default is <code>NULL</code> which means that convergence is achieved when the difference in the sum of squared leave-one-out errors between the <code>i</code> and the <code>i+1</code> iteration is less than <code>N * 10^-3</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noisy</code></td>
+<td>
+<p>If <code>TRUE</code>, the function will print details of the golden section search.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eigtrunc</code></td>
+<td>
+
+<p>Positive scalar value that determines truncation of eigenvalues for lamnda search window. See <code>krls</code> for details. Default is <code>NULL</code> which means no truncation.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>By default, upper bound is found as follows:
+Set j to n, decrease by one until the following is longer true:
+sum(EigenValues / (EigenValues + j)) &lt; 1.
+</p>
+<p>By default, upper bound is found as follows:
+Get the position, q, of the eigenvalue that is closest to max(Eigenvalue)/1000.
+Set j to 0, increase in steps of 0.05 until the below is longer true: 
+sum(EigenValues / (EigenValues + j)) &gt; q.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A scalar that contains the <code class="reqn">\lambda</code> that minimizes the sum of squared leave-one-out errors.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krls</code>
+</p>
+
+
+</div>

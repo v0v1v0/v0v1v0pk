@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>importQualtrics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Import Qualtrics survey files, apply clean column names</h2>
+
+<h3>Description</h3>
+
+<p>Defaults are based on most common format received from Qualtrics
+downloads to CSV or XLSX (MS Excel) formats.  We assume that the
+file has the column names in row 1 and that 3 rows are skipped
+before the real data begins. If the parameter questrow is used, it
+designates a row that is interpreted as the survey questions
+themselves.  Often, this is in row 2.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">importQualtrics(
+  file,
+  namerow = 1,
+  questionrow = 2,
+  importidrow = 3,
+  skip = 3,
+  dropTEXT = TRUE,
+  stringsAsFactors = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>file name (including path if in another directory) of
+a CSV or XLSX file from Qualtrics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>namerow</code></td>
+<td>
+<p>Row number for variable names.  Default 1, the
+information to be used as column names (same as HEADER row in
+R's read.table function)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>questionrow</code></td>
+<td>
+<p>Row number to be treated as the questions in the
+survey. Default is 2. If questions do not seem to be present
+in this row, there will be a warning.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>importidrow</code></td>
+<td>
+<p>Row number to be treated as Qualtrics meta
+data. Default is 3. Many CSV created by Qualtrics will have
+row 3 with a character string such as
+<code>"{""ImportId"":""QID1303_4""}"</code>.  If importids are not
+present in this row, there will be a warning.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skip</code></td>
+<td>
+<p>Number of rows that are meta data. Current Qualtrics
+CSV files will usually have 3 metadata rows, 1 = name, 2 =
+question, 3 = ImportId. This function will try to guess how
+many rows of metadata are present. skip should be at least
+as large as <code>max(namerow, questions, and importids)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropTEXT</code></td>
+<td>
+<p>Default TRUE, columns ending in "_TEXT" are
+omitted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stringsAsFactors</code></td>
+<td>
+<p>Default FALSE, same meaning as R's
+read.csv. Does not affect importation of Excel files.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Data frame that has attribute "meta"
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+</div>

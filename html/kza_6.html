@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kolmogorov-Zurbenko Spline</h2>
+
+<h3>Description</h3>
+
+<p>Kolmogorov-Zurbenko Spline
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzs(y,m=NULL,k=3,t=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>smooth</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>The number of iterations for applying the KZFT</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>An indexing set</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Kolmogorov-Zurbenko Spline is essentially the Kolmogorov-Zurbenko Fourier Transform at the zero frequency.
+</p>
+
+
+<h3>References</h3>
+
+<p>I. G. Zurbenko, The spectral Analysis of Time Series. North-Holland, 1986.
+</p>
+<p>I. G. Zurbenko, P. S. Porter, Construction of high-resolution wavelets, Signal Processing 65: 315-327, 1998.
+</p>
+<p>R. H. Shumway, D. S. Stoffer, Time Series Analysis and Its Applications: With R Examples, Springer, 2006.
+</p>
+<p>Derek Cyr and Igor Zurbenko, kzs: Kolmogorov-Zurbenko Spatial Smoothing and Applications, R-Project 2008.
+</p>
+<p>Derek Cyr and Igor Zurbenko, A Spatial Spline Algorithm and an Application to Climate Waves Over the United States, 2008 Joint Statistical Meetings.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kzft</code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n &lt;- 1000
+x &lt;- (1:n)/n
+true&lt;-((exp(2.5*x)+sin(25*x))-1)/3
+
+noise &lt;- rnorm(n)
+y &lt;- true + noise 
+
+a&lt;-kzs(y,m=60)
+
+par(mfrow=c(2,1))
+plot(y,type='l')
+lines(true,col="red")
+
+plot(a,type='l', ylim=c(-2,4))
+lines(true,col="red")
+par(mfrow=c(1,1))
+
+################
+# second example
+################
+t &lt;- seq(from = -round(400*pi), to = round(400*pi), by = .25) 
+ts &lt;- 0.5*sin(sqrt((2*pi*abs(t))/200))
+signal &lt;- ifelse(t &lt; 0, -ts, ts)
+et &lt;- rnorm(length(t), mean = 0, sd = 1)
+yt &lt;- et + signal
+
+b&lt;-kzs(yt,m=400)
+par(mfrow=c(2,1))
+plot(yt,type='l')
+lines(signal,col="red")
+
+plot(b,type='l', ylim=c(-0.5,1))
+lines(signal,col="red")
+par(mfrow=c(1,1))
+
+</code></pre>
+
+
+</div>

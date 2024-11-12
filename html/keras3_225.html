@@ -1,0 +1,376 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_conv_lstm_3d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>3D Convolutional LSTM.</h2>
+
+<h3>Description</h3>
+
+<p>Similar to an LSTM layer, but the input transformations
+and recurrent transformations are both convolutional.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_conv_lstm_3d(
+  object,
+  filters,
+  kernel_size,
+  strides = 1L,
+  padding = "valid",
+  data_format = NULL,
+  dilation_rate = 1L,
+  activation = "tanh",
+  recurrent_activation = "sigmoid",
+  use_bias = TRUE,
+  kernel_initializer = "glorot_uniform",
+  recurrent_initializer = "orthogonal",
+  bias_initializer = "zeros",
+  unit_forget_bias = TRUE,
+  kernel_regularizer = NULL,
+  recurrent_regularizer = NULL,
+  bias_regularizer = NULL,
+  activity_regularizer = NULL,
+  kernel_constraint = NULL,
+  recurrent_constraint = NULL,
+  bias_constraint = NULL,
+  dropout = 0,
+  recurrent_dropout = 0,
+  seed = NULL,
+  return_sequences = FALSE,
+  return_state = FALSE,
+  go_backwards = FALSE,
+  stateful = FALSE,
+  ...,
+  unroll = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filters</code></td>
+<td>
+<p>int, the dimension of the output space (the number of filters
+in the convolution).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_size</code></td>
+<td>
+<p>int or tuple/list of 3 integers, specifying the size of the
+convolution window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strides</code></td>
+<td>
+<p>int or tuple/list of 3 integers, specifying the stride length
+of the convolution. <code>strides &gt; 1</code> is incompatible with
+<code>dilation_rate &gt; 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>string, <code>"valid"</code> or <code>"same"</code> (case-insensitive).
+<code>"valid"</code> means no padding. <code>"same"</code> results in padding evenly to
+the left/right or up/down of the input such that output has the same
+height/width dimension as the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>string, either <code>"channels_last"</code> or <code>"channels_first"</code>.
+The ordering of the dimensions in the inputs. <code>"channels_last"</code>
+corresponds to inputs with shape <code style="white-space: pre;">⁠(batch, steps, features)⁠</code>
+while <code>"channels_first"</code> corresponds to inputs with shape
+<code style="white-space: pre;">⁠(batch, features, steps)⁠</code>. It defaults to the <code>image_data_format</code>
+value found in your Keras config file at <code style="white-space: pre;">⁠~/.keras/keras.json⁠</code>.
+If you never set it, then it will be <code>"channels_last"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dilation_rate</code></td>
+<td>
+<p>int or tuple/list of 3 integers, specifying the dilation
+rate to use for dilated convolution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use. By default hyperbolic tangent
+activation function is applied (<code>tanh(x)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_activation</code></td>
+<td>
+<p>Activation function to use for the recurrent step.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>Boolean, whether the layer uses a bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_initializer</code></td>
+<td>
+<p>Initializer for the <code>kernel</code> weights matrix,
+used for the linear transformation of the inputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_initializer</code></td>
+<td>
+<p>Initializer for the <code>recurrent_kernel</code> weights
+matrix, used for the linear transformation of the recurrent state.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unit_forget_bias</code></td>
+<td>
+<p>Boolean. If <code>TRUE</code>, add 1 to the bias of the forget
+gate at initialization.
+Use in combination with <code>bias_initializer="zeros"</code>.
+This is recommended in <a href="https://proceedings.mlr.press/v37/jozefowicz15.pdf">Jozefowicz et al., 2015</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the <code>kernel</code> weights
+matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the
+<code>recurrent_kernel</code> weights matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activity_regularizer</code></td>
+<td>
+<p>Regularizer function applied to.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>kernel</code> weights
+matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_constraint</code></td>
+<td>
+<p>Constraint function applied to the
+<code>recurrent_kernel</code> weights matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+linear transformation of the inputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop
+for the linear transformation of the recurrent state.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Random seed for dropout.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_sequences</code></td>
+<td>
+<p>Boolean. Whether to return the last output
+in the output sequence, or the full sequence. Default: <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_state</code></td>
+<td>
+<p>Boolean. Whether to return the last state in addition
+to the output. Default: <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>go_backwards</code></td>
+<td>
+<p>Boolean (default: <code>FALSE</code>).
+If <code>TRUE</code>, process the input sequence backwards and return the
+reversed sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stateful</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>). If <code>TRUE</code>, the last state
+for each sample at index i in a batch will be used as initial
+state for the sample of index i in the following batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unroll</code></td>
+<td>
+<p>Boolean (default: <code>FALSE</code>).
+If <code>TRUE</code>, the network will be unrolled,
+else a symbolic loop will be used.
+Unrolling can speed-up a RNN,
+although it tends to be more memory-intensive.
+Unrolling is only suitable for short sequences.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Call Arguments</h3>
+
+
+<ul>
+<li> <p><code>inputs</code>: A 6D tensor.
+</p>
+</li>
+<li> <p><code>mask</code>: Binary tensor of shape <code style="white-space: pre;">⁠(samples, timesteps)⁠</code> indicating whether a
+given timestep should be masked.
+</p>
+</li>
+<li> <p><code>training</code>: Python boolean indicating whether the layer should behave in
+training mode or in inference mode.
+This is only relevant if <code>dropout</code> or <code>recurrent_dropout</code> are set.
+</p>
+</li>
+<li> <p><code>initial_state</code>: List of initial state tensors to be passed to the first
+call of the cell.
+</p>
+</li>
+</ul>
+<h3>Input Shape</h3>
+
+
+<ul>
+<li>
+<p> If <code>data_format='channels_first'</code>:
+5D tensor with shape: <code style="white-space: pre;">⁠(samples, time, channels, *spatial_dims)⁠</code>
+</p>
+</li>
+<li>
+<p> If <code>data_format='channels_last'</code>:
+5D tensor with shape: <code style="white-space: pre;">⁠(samples, time, *spatial_dims, channels)⁠</code>
+</p>
+</li>
+</ul>
+<h3>Output Shape</h3>
+
+
+<ul>
+<li>
+<p> If <code>return_state</code>: a list of tensors. The first tensor is the output.
+The remaining tensors are the last states,
+each 4D tensor with shape: <code style="white-space: pre;">⁠(samples, filters, *spatial_dims)⁠</code> if
+<code>data_format='channels_first'</code>
+or shape: <code style="white-space: pre;">⁠(samples, *spatial_dims, filters)⁠</code> if
+<code>data_format='channels_last'</code>.
+</p>
+</li>
+<li>
+<p> If <code>return_sequences</code>: 5D tensor with shape: <code style="white-space: pre;">⁠(samples, timesteps, filters, *spatial_dims)⁠</code> if data_format='channels_first'
+or shape: <code style="white-space: pre;">⁠(samples, timesteps, *spatial_dims, filters)⁠</code> if
+<code>data_format='channels_last'</code>.
+</p>
+</li>
+<li>
+<p> Else, 4D tensor with shape: <code style="white-space: pre;">⁠(samples, filters, *spatial_dims)⁠</code> if
+<code>data_format='channels_first'</code>
+or shape: <code style="white-space: pre;">⁠(samples, *spatial_dims, filters)⁠</code> if
+<code>data_format='channels_last'</code>.
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1506.04214v1">Shi et al., 2015</a>
+(the current implementation does not include the feedback loop on the
+cells output).
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/recurrent_layers/conv_lstm3d#convlstm3d-class">https://keras.io/api/layers/recurrent_layers/conv_lstm3d#convlstm3d-class</a>
+</p>
+</li></ul>
+<p>Other rnn layers: <br><code>layer_bidirectional()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_gru()</code> <br><code>layer_lstm()</code> <br><code>layer_rnn()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_time_distributed()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

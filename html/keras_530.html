@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict_proba</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>(Deprecated) Generates probability or class probability predictions for the input samples.</h2>
+
+<h3>Description</h3>
+
+<p>These functions were removed in Tensorflow version 2.6. See details for how to update your code:
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predict_proba(object, x, batch_size = NULL, verbose = 0, steps = NULL)
+
+predict_classes(object, x, batch_size = NULL, verbose = 0, steps = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Keras model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input data (vector, matrix, or array). You can also
+pass a <code>tfdataset</code> or a generator returning a list with <code style="white-space: pre;">⁠(inputs, targets)⁠</code> or
+<code style="white-space: pre;">⁠(inputs, targets, sample_weights)⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Integer. If unspecified, it will default to 32.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Verbosity mode, 0, 1, 2, or "auto". "auto" defaults to 1
+for for most cases and defaults to <code>verbose=2</code> when used with
+ParameterServerStrategy or with interactive logging disabled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>Total number of steps (batches of samples) before declaring the
+evaluation round finished. The default <code>NULL</code> is equal to the number of
+samples in your dataset divided by the batch size.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>How to update your code:
+</p>
+<p><code>predict_proba()</code>: use <code>predict()</code> directly.
+</p>
+<p><code>predict_classes()</code>:
+</p>
+
+<ul><li>
+<p> If your model does multi-class classification:
+(e.g. if it uses a <code>softmax</code> last-layer activation).
+</p>
+</li></ul>
+<div class="sourceCode r"><pre>     model %&gt;% predict(x) %&gt;% k_argmax()
+</pre></div>
+
+<ul><li>
+<p> if your model does binary classification
+(e.g. if it uses a <code>sigmoid</code> last-layer activation).
+</p>
+</li></ul>
+<div class="sourceCode r"><pre>     model %&gt;% predict(x) %&gt;% `&gt;`(0.5) %&gt;% k_cast("int32")
+</pre></div>
+<p>The input samples are processed batch by batch.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>fit_generator()</code>,
+<code>get_config()</code>,
+<code>get_layer()</code>,
+<code>keras_model()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_generator()</code>,
+<code>predict_on_batch()</code>,
+<code>summary.keras.engine.training.Model()</code>,
+<code>train_on_batch()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>variable.names.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Variable names of fitted models</h2>
+
+<h3>Description</h3>
+
+<p>Simple utility returning names of variables involved in a kernel semi parametric model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kspm'
+variable.names(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional optional argument (currently unused).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a list of character vectors. The first element correspond to the names of variables included in the linear part of the model. Then, a vector containing names of variables including in kernel part is provided for each kernel.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm, summary.kspm, case.names.kspm.
+</p>
+
+
+</div>

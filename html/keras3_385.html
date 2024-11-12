@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>new_learning_rate_schedule_class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>LearningRateSchedule</h2>
+
+<h3>Description</h3>
+
+<p><code>new_learning_rate_schedule_class()</code> is an alias for <code>LearningRateSchedule()</code>.
+See <code style="white-space: pre;">⁠?⁠</code><code>LearningRateSchedule()</code> for the full documentation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">new_learning_rate_schedule_class(
+  classname,
+  call = NULL,
+  initialize = NULL,
+  get_config = NULL,
+  ...,
+  public = list(),
+  private = list(),
+  inherit = NULL,
+  parent_env = parent.frame()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>String, the name of the custom class. (Conventionally, CamelCase).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call, initialize, get_config</code></td>
+<td>
+<p>Recommended methods to implement. See description and details sections.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>..., public</code></td>
+<td>
+<p>Additional methods or public members of the custom class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>private</code></td>
+<td>
+<p>Named list of R objects (typically, functions) to include in
+instance private environments. <code>private</code> methods will have all the same
+symbols in scope as public methods (See section "Symbols in Scope"). Each
+instance will have it's own <code>private</code> environment. Any objects
+in <code>private</code> will be invisible from the Keras framework and the Python
+runtime.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit</code></td>
+<td>
+<p>What the custom class will subclass. By default, the base keras class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>The R environment that all class methods will have as a grandparent.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A function that returns <code>LearningRateSchedule</code> instances, similar to the
+built-in <code style="white-space: pre;">⁠learning_rate_schedule_*⁠</code> family of functions.
+</p>
+
+
+</div>

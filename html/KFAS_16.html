@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.SSModel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test whether object is a valid <code>SSModel</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>is.SSModel</code> tests whether the object is a valid <code>SSModel</code>
+object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">is.SSModel(object, na.check = FALSE, return.logical = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object to be tested.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.check</code></td>
+<td>
+<p>Test the system matrices for <code>NA</code> and infinite values.
+Also checks for large values (&gt; 1e7) in covariance matrices <code>H</code>
+and <code>Q</code> which could cause large rounding errors in filtering.
+Positive semidefiniteness of these matrices is not checked. Default
+is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return.logical</code></td>
+<td>
+<p>If <code>FALSE</code> (default), an error is given if the the model is not
+a valid <code>SSModel</code> object. Otherwise logical value is returned.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Note that the validity of the values in <code>y</code> and <code>Z</code> are not tested.
+These can contain NA values (but not infinite values),  with condition that
+when <code>Z[i,,t]</code> contains NA value, the corresponding <code>y[t,i]</code> must
+also have NA value. In this case <code>Z[i,,t]</code> is not referenced in
+filtering and smoothing, and algorithms works properly.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Logical value or nothing, depending on the value of
+<code>return.logical</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">model &lt;- SSModel(rnorm(10) ~ 1)
+is.SSModel(model)
+model['H'] &lt;- 1
+is.SSModel(model)
+model$H[] &lt;- 1
+is.SSModel(model)
+model$H[,,1] &lt;- 1
+is.SSModel(model)
+model$H &lt;- 1
+is.SSModel(model)
+</code></pre>
+
+
+</div>

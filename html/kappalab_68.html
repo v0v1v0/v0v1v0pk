@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>entropy-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Normalized entropy of a capacity</h2>
+
+<h3>Description</h3>
+
+<p>Computes the normalized entropy of a capacity. The capacity
+can be given either under the form of an object of class
+<code>capacity</code>, <code>card.capacity</code> or <code>Mobius.capacity</code>.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.capacity" </dt>
+<dd>
+<p>The normalized entropy is computed
+from the
+Möbius transform of a capacity.</p>
+</dd>
+<dt>object = "capacity" </dt>
+<dd>
+<p>The normalized entropy is computed directly from a capacity.</p>
+</dd>
+<dt>object = "card.capacity" </dt>
+<dd>
+<p>The normalized entropy is computed from a cardinal capacity.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>J-L. Marichal (2002), <em>Entropy of discrete Choquet capacities</em>, European
+Journal of Operational Research, 3:137, 2002, pages 612-624.
+</p>
+<p>I. Kojadinovic, J-L. Marichal and M. Roubens (2005), <em>An axiomatic
+approach to the definition of the entropy of a discrete Choquet
+capacity</em>, Information Sciences 172, pages 131-153.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>capacity-class</code>, <br><code>Mobius.capacity-class</code>,
+<br><code>card.capacity-class</code>, <br><code>Mobius-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(c(0,0,0:13))
+
+## its Mobius transform
+a &lt;- Mobius(mu)
+
+## their normalized entropy
+entropy(mu)
+entropy(a)
+
+## similar examples with card.capacity objects
+mu &lt;- lower.capacity(4)
+entropy(mu)
+mu &lt;- uniform.capacity(4)
+entropy(mu)
+</code></pre>
+
+
+</div>

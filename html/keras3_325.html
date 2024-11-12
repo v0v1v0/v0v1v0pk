@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loss_log_cosh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the logarithm of the hyperbolic cosine of the prediction error.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode r"><pre>loss &lt;- mean(log(cosh(y_pred - y_true)), axis=-1)
+</pre></div>
+<p>Note that <code>log(cosh(x))</code> is approximately equal to <code>(x ** 2) / 2</code> for small
+<code>x</code> and to <code>abs(x) - log(2)</code> for large <code>x</code>. This means that 'logcosh' works
+mostly like the mean squared error, but will not be so strongly affected by
+the occasional wildly incorrect prediction.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loss_log_cosh(
+  y_true,
+  y_pred,
+  ...,
+  reduction = "sum_over_batch_size",
+  name = "log_cosh",
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>Ground truth values with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>The predicted values with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reduction</code></td>
+<td>
+<p>Type of reduction to apply to loss. Options are <code>"sum"</code>,
+<code>"sum_over_batch_size"</code> or <code>NULL</code>. Defaults to
+<code>"sum_over_batch_size"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Optional name for the instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>The dtype of the loss's computations. Defaults to <code>NULL</code>, which
+means using <code>config_floatx()</code>. <code>config_floatx()</code> is a
+<code>"float32"</code> unless set to different value
+(via <code>config_set_floatx()</code>). If a <code>keras$DTypePolicy</code> is
+provided, then the <code>compute_dtype</code> will be utilized.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Logcosh error values with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN-1]⁠</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>y_true &lt;- rbind(c(0., 1.), c(0., 0.))
+y_pred &lt;- rbind(c(1., 1.), c(0., 0.))
+loss &lt;- loss_log_cosh(y_true, y_pred)
+# 0.108
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/losses/regression_losses#logcosh-class">https://keras.io/api/losses/regression_losses#logcosh-class</a>
+</p>
+</li></ul>
+<p>Other losses: <br><code>Loss()</code> <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_focal_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_dice()</code> <br><code>loss_hinge()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+
+
+</div>

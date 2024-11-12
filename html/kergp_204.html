@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>warpNorm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Warpings for Ordinal Inputs
+</h2>
+
+<h3>Description</h3>
+
+<p>Given warpings for ordinal inputs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">warpNorm
+warpUnorm
+warpPower
+warpSpline1
+warpSpline2
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>The format is a list of 6:
+</p>
+<p>$ fun : the warping function. The second argument is the vector of
+parameters. The function returns a numeric vector with an attribute
+<code>"gradient"</code> giving the derivative w.r.t. the parameters.
+</p>
+<p>$ parNames  : names of warping parameters (character vector). 
+</p>
+<p>$ parDefault: default values of warping parameters (numeric vector).
+</p>
+<p>$ parLower  : lower bounds of warping parameters (numeric vector).
+</p>
+<p>$ parUpper  : upper bounds of warping parameters (numeric vector). 
+</p>
+<p>$ hasGrad : a boolean equal to <code>TRUE</code> if <code>gradient</code> is
+supplied as an attribute of <code>fun</code>.
+</p>
+
+
+<h3>Details</h3>
+
+<p>See <code>covOrd</code> for the definition of a warping in this
+context.  At this stage, two warpings corresponding to cumulative
+density functions (cdf) are implemented:
+</p>
+
+<ul>
+<li>
+<p> Normal distribution, truncated to <code class="reqn">[0,1]</code>: </p>
+<p style="text-align: center;"><code class="reqn">F(x) = [N(x) -
+      N(0)] / [N(1) - N(0)]</code>
+</p>
+<p> where <code class="reqn">N(x) = \Phi([x - \mu] /
+      \sigma)</code> is the cdf of the normal
+distribution with mean <code class="reqn">\mu</code> and standard deviation
+<code class="reqn">\sigma</code>.
+</p>
+</li>
+<li>
+<p> Power distribution on <code class="reqn">[0, 1]</code>: <code class="reqn">F(x) = x^{pow}</code>.
+</p>
+</li>
+</ul>
+<p>Furthermore, a warping corresponding to unnormalized Normal cdf is implemented, 
+as well as spline warpings of degree 1 and 2. 
+Splines are defined by a sequence of <code>k</code> knots between 0 and 1. The first knot is 0, and the last is 1.
+A spline warping of degree 1 is a continuous piecewise linear function. 
+It is parameterized by a positive vector of length <code>k-1</code>, representing the increments at knots.
+A spline warping of degree 2 is a non-decreasing quadratic spline. It is obtained by integrating a spline of degree 1.
+Its parameters form a positive vector of length <code>k</code>, representing the derivatives at knots. The implementation relies on the function <code>scalingFun1d</code> of <code>DiceKriging</code> package.
+</p>
+
+
+</div>

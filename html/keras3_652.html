@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random_dropout</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Randomly set some values in a tensor to 0.</h2>
+
+<h3>Description</h3>
+
+<p>Randomly set some portion of values in the tensor to 0.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random_dropout(inputs, rate, noise_shape = NULL, seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+<p>A tensor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate</code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noise_shape</code></td>
+<td>
+<p>A <code>shape()</code> value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Initial seed for the random number generator</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor that is a copy of <code>inputs</code> with some values set to <code>0</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other random: <br><code>random_beta()</code> <br><code>random_binomial()</code> <br><code>random_categorical()</code> <br><code>random_gamma()</code> <br><code>random_integer()</code> <br><code>random_normal()</code> <br><code>random_seed_generator()</code> <br><code>random_shuffle()</code> <br><code>random_truncated_normal()</code> <br><code>random_uniform()</code> <br></p>
+
+
+</div>

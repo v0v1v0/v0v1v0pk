@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_est_kde1</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>1-D kernel density-based estimation of Kullback-Leibler divergence</h2>
+
+<h3>Description</h3>
+
+<p>This estimation method approximates the densities of the unknown distributions
+<code class="reqn">P</code> and <code class="reqn">Q</code> by a kernel density estimate using function 'density' from
+package 'stats'. Only the two-sample, not the one-sample problem is implemented.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_est_kde1(X, Y, MC = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p>Numeric vectors or single-column matrices, representing samples
+from the true distribution <code class="reqn">P</code> and the approximate distribution
+<code class="reqn">Q</code>, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MC</code></td>
+<td>
+<p>A boolean: use a Monte Carlo approximation instead of numerical
+integration via the trapezoidal rule (default: <code>FALSE</code>)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further parameters to passed on to <code>stats::density</code> (e.g.,
+argument <code>bw</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar, the estimated Kullback-Leibler divergence <code class="reqn">\hat D_{KL}(P||Q)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># KL-D between two samples from 1D Gaussians:
+set.seed(0)
+X &lt;- rnorm(100)
+Y &lt;- rnorm(100, mean = 1, sd = 2)
+kld_gaussian(mu1 = 0, sigma1 = 1, mu2 = 1, sigma2 = 2^2)
+kld_est_kde1(X,Y)
+kld_est_kde1(X,Y, MC = TRUE)
+</code></pre>
+
+
+</div>

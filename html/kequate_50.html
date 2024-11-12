@@ -1,0 +1,419 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kequate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Test Equating Using the Kernel Method
+</h2>
+
+<h3>Description</h3>
+
+<p>A function to conduct an equating between two parallel tests using kernel equating. Designs available are equivalent groups (EG), single group (SG), counterbalanced (CB), non-equivalent groups with anchor test using either chain equating (NEAT CE) or post-stratification equating (NEAT PSE) and non-equivalent groups using covariates (NEC).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kequate(design, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>design</code></td>
+<td>
+
+<p>A character vector indicating which design to use. Possible designs are: EG, SG, CB, NEAT_CE, NEAT_PSE or NEC.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Further arguments which partly depend on the design chosen. (See section Details for further information.)
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Besides the above argument, additional arguments must be provided for the different equating designs.
+</p>
+
+
+<h4>EG design</h4>
+
+<p><br>
+‘x’    A vector of possible score values on the test X to be equated, ordered from the lowest to the highest score. 
+</p>
+<p>‘y’    A vector of possible score values on the test Y to be equated, ordered from the lowest to the highest score.  
+</p>
+<p>‘r’,‘s’    Numeric vectors containing the estimated or observed score probabilities for tests X and Y respectively.  Alternatively objects of class ‘glm’.  
+</p>
+<p>‘DMP’, ‘DMQ’    The design matrices from the log-linear models for the estimated score probabilities for X and Y.  Not needed if arguments r and s are of class ‘glm’.  
+</p>
+<p>‘N’, ‘M’    The sample sizes of the groups taking tests X and Y, respectively.  Not needed if arguments r and s are of class ‘glm’.  
+</p>
+<p>‘hx’, ‘hy’    Optional arguments to specify the continuization parameters manually.  (If linear=TRUE, then these arguments have no effect.)  
+</p>
+<p>‘hxlin’, ‘hylin’    Optional arguments to specify the continuization parameters manually in the linear case.
+</p>
+<p>‘KPEN’    The constant used in deciding the optimal continuization parameter.  Default is 0.
+</p>
+<p>‘wpen’    An argument denoting at which point the derivatives in the second part of the penalty function should be evaluated. Default is 1/4.
+</p>
+<p>‘linear’    Logical denoting if only a linear equating is to be performed.  Default is FALSE.
+</p>
+<p>‘irtx’, ‘irty’ Optional arguments to provide matrices of probabilities to answer correctly to the questions on the parallel tests X and Y, as estimated in an Item Response Theory (IRT) model.
+</p>
+<p>‘smoothed’    A logical argument denoting if the data provided are pre-smoothed or not. Default is TRUE.
+</p>
+<p>‘kernel’    A character vector indicating which kernel to use, either "gaussian", "logistic", "stdgaussian" or "uniform". Default is "gaussian".
+</p>
+<p>‘slog’    The parameter used in defining the logistic kernel. Default is 1.
+</p>
+<p>‘bunif’    The parameter used in defining the uniform kernel. Default is 0.5.
+</p>
+<p>‘altopt’    Logical which sets the bandwidth parameter equal to a variant of Silverman's rule of thumb. Default is FALSE.
+</p>
+<p>‘DS’    Logical which enables bandwidth selection with the double smoothing method.
+</p>
+
+
+
+<h4>SG design</h4>
+
+<p><br>
+‘x’    A vector of possible score values on the test X to be equated, ordered from the lowest to the highest score. 
+</p>
+<p>‘y’    A vector of possible score values on the test Y to be equated, ordered from the lowest to the highest score.  
+</p>
+<p>‘P’    The estimated or observed probability matrix for scores on tests X and Y, where the columns denote scores on test Y and the rows denote scores on test X. Alternatively a vector of score probabilities or an object of class ‘glm’, where the entries are ordered first by the Y-scores and then by the X-scores.
+</p>
+<p>‘DM’    The design matrix used in the log-linear model. Not needed if the argument P is of class ‘glm’.
+</p>
+<p>‘N’    The sample size. Not needed if the argument P is of class ‘glm’.
+</p>
+<p>‘hx’, ‘hy’    Optional arguments to specify the continuization parameter manually. (If linear=TRUE, then these arguments have no effect.)
+</p>
+<p>‘hxlin’, ‘hylin’    Optional arguments to specify the continuization parameters manually in the linear case.
+</p>
+<p>‘KPEN’    The constant used in deciding the optimal continuization parameter. Default is 0. 
+</p>
+<p>‘wpen’    An argument denoting at which point the derivatives in the second part of the penalty function should be evaluated. Default is 1/4.
+</p>
+<p>‘linear’    Logical denoting if only a linear equating is to be performed. Default is FALSE.
+</p>
+<p>‘irtx’, ‘irty’    Optional arguments to provide matrices of probabilities to answer correctly to the questions on the parallel tests X and Y, as estimated in an Item Response Theory (IRT) model.
+</p>
+<p>‘smoothed’    A logical argument denoting if the data provided are pre-smoothed or not. Default is TRUE.
+</p>
+<p>‘kernel’    A character vector indicating which kernel to use, either "gaussian", "logistic", "stdgaussian" or "uniform". Default is "gaussian".
+</p>
+<p>‘slog’    The parameter used in defining the logistic kernel. Default is 1.
+</p>
+<p>‘bunif’    The parameter used in defining the uniform kernel. Default is 0.5.
+</p>
+<p>‘DS’    Logical which enables bandwidth selection with the double smoothing method.
+</p>
+<p>‘CV’    Logical which enables bandwidth selection with the cross-validation method.
+</p>
+
+
+
+<h4>CB design</h4>
+
+<p><br>
+‘x’    A vector of possible score values on the test X to be equated, ordered from the lowest to the highest score. 
+</p>
+<p>‘y’    A vector of possible score values on the test Y to be equated, ordered from the lowest to the highest score.  
+</p>
+<p>‘P12’, ‘P21’    The estimated or observed probability matrices for scores on first taking test X and then taking test Y, and first taking test Y and then taking test X respectively, where the rows denote scores on tests X and the columns denote scores on test Y. Alternatively numeric vectors or objects of class ‘glm’, where the entries are ordered first by the Y-scores and then by the X-scores.
+</p>
+<p>‘DM12’, ‘DM21’    The design matrices from the log-linear models for the estimated score probabilities for the two test groups. Not needed if arguments P12 and P21 are of class ‘glm’.
+</p>
+<p>‘N’, ‘M’    The sample sizes for the tests X and A and the tests Y and A, respectively. Not needed if arguments P12 and P21 are of class ‘glm’.
+</p>
+<p>‘hx’, ‘hy’    Optional arguments to specify the continuization parameters manually. (If linear=TRUE, then these arguments have no effect)
+</p>
+<p>‘hxlin’, ‘hylin’    Optional arguments to specify the continuization parameters manually in the linear case. (Applies both when linear=FALSE and when linear=TRUE.)
+</p>
+<p>‘wcb’    The weighting of the two groups. Default is 0.5.
+</p>
+<p>‘KPEN’    Optional argument to specify the constant used in deciding the optimal continuization parameter. Default is 0. 
+</p>
+<p>‘wpen’    An argument denoting at which point the derivatives in the second part of the penalty function should be evaluated. Default is 1/4.
+</p>
+<p>‘linear’    Optional logical argument denoting if only a linear equating is to be performed. Default is FALSE.
+</p>
+<p>‘irtx’, ‘irty’ Optional arguments to provide matrices of probabilities to answer correctly to the questions on the parallel tests X and Y, as estimated in an Item Response Theory (IRT) model.
+</p>
+<p>‘smoothed’    A logical argument denoting if the data provided are pre-smoothed or not. Default is TRUE.
+</p>
+<p>‘kernel’    A character vector indicating which kernel to use, either "gaussian", "logistic", "stdgaussian" or "uniform". Default is "gaussian".
+</p>
+<p>‘slog’    The parameter used in defining the logistic kernel. Default is 1.
+</p>
+<p>‘bunif’    The parameter used in defining the uniform kernel. Default is 0.5.
+</p>
+<p>‘altopt’    Logical which sets the bandwidth parameter equal to a variant of Silverman's rule of thumb. Default is FALSE.
+</p>
+<p>‘DS’    Logical which enables bandwidth selection with the double smoothing method.
+</p>
+<p>‘CV’    Logical which enables bandwidth selection with the cross-validation method.
+</p>
+
+
+
+<h4>NEAT PSE or NEC design</h4>
+
+<p><br>
+‘x’    A vector of possible score values on the test X to be equated, ordered from the lowest to the highest score. 
+</p>
+<p>‘y’    A vector of possible score values on the test Y to be equated, ordered from the lowest to the highest score.  
+</p>
+<p>‘P’, ‘Q’    The estimated or observed probability matrices for scores on tests X and A and tests Y and A respectively, where the rows denote scores on tests X or Y and the columns denote scores on test A. Alternatively numeric vectors or objects of class ‘glm’, where the entries are ordered first by the X-scores/Y-scores and then by the A-scores.
+</p>
+<p>‘DMP’, ‘DMQ’    The design matrices from the log-linear models for the estimated score probabilities for X and A and Y and A. Not needed if arguments P and Q are of class ‘glm’.
+</p>
+<p>‘N’, ‘M’    The sample sizes for the tests X and A and the tests Y and A, respectively. Not needed if arguments P and Q are of class ‘glm’.
+</p>
+<p>‘w’    The weighting of the synthetic population. Default is 0.5.
+</p>
+<p>‘hx’, ‘hy’    Optional arguments to specify the continuization parameters manually. (If linear=TRUE, then these arguments have no effect)
+</p>
+<p>‘hxlin’, ‘hylin’    Optional arguments to specify the continuization parameters manually in the linear case. (Applies both when linear=FALSE and when linear=TRUE.)
+</p>
+<p>‘KPEN’    Optional argument to specify the constant used in deciding the optimal continuization parameter. Default is 0. 
+</p>
+<p>‘wpen’    An argument denoting at which point the derivatives in the second part of the penalty function should be evaluated. Default is 1/4.
+</p>
+<p>‘linear’    Optional logical argument denoting if only a linear equating is to be performed. Default is FALSE.
+</p>
+<p>‘irtx’, ‘irty’ Optional arguments to provide matrices of probabilities to answer correctly to the questions on the parallel tests X and Y, as estimated in an Item Response Theory (IRT) model.
+</p>
+<p>‘smoothed’    A logical argument denoting if the data provided are pre-smoothed or not. Default is TRUE.
+</p>
+<p>‘kernel’    A character vector indicating which kernel to use, either "gaussian", "logistic", "stdgaussian" or "uniform". Default is "gaussian".
+</p>
+<p>‘slog’    The parameter used in defining the logistic kernel. Default is 1.
+</p>
+<p>‘bunif’    The parameter used in defining the uniform kernel. Default is 0.5.
+</p>
+<p>‘altopt’    Logical which sets the bandwidth parameter equal to a variant of Silverman's rule of thumb. Default is FALSE.
+</p>
+<p>‘DS’    Logical which enables bandwidth selection with the double smoothing method.
+</p>
+<p>‘CV’    Logical which enables bandwidth selection with the cross-validation method.
+</p>
+
+
+
+<h4>NEAT CE design</h4>
+
+<p><br>
+‘x’    A vector of possible score values on the test X to be equated, ordered from the lowest to the highest score. 
+</p>
+<p>‘y’    A vector of possible score values on the test Y to be equated, ordered from the lowest to the highest score.  
+</p>
+<p>‘a’    A vector containing the possible score values on the anchor test, ordered from the lowest score to the highest.
+</p>
+<p>‘P’, ‘Q’    The estimated or observed probability matrices for scores on tests X and A and tests Y and A respectively, where the rows denote scores on test X or Y and the columns denote scores on test A. Alternatively numeric vectors or objects of class ‘glm’, where the entries are ordered first by the X-scores/Y-scores and then by the A-scores.
+</p>
+<p>‘DMP’, ‘DMQ’    The design matrices from the log-linear models for the estimated score probabilities for X and A and Y and A, respectively. Not needed if arguments P and Q are of class ‘glm’.
+</p>
+<p>‘N’, ‘M’    The sample sizes for the tests X and A and the tests Y and A, respectively. Not needed if arguments P and Q are of class ‘glm’.
+</p>
+<p>‘hxP’, ‘hyQ’, ‘haP’, ‘haQ’    Optional arguments to specify the continuization parameters manually. (If linear=TRUE, then these arguments have no effect.)
+</p>
+<p>‘hxPlin’, ‘hyQlin’, ‘haPlin’, ‘haQlin’    Optional arguments to specify the continuization parameters manually in the linear case. (Applies both when linear=FALSE and when linear=TRUE.)
+</p>
+<p>‘KPEN’    Optional argument to specify the constant used in deciding the optimal continuization parameter. Default is 0.
+</p>
+<p>‘wpen’    An argument denoting at which point the derivatives in the second part of the penalty function should be evaluated. Default is 1/4.
+</p>
+<p>‘linear’    Optional logical argument denoting if only a linear equating is to be performed. Default is FALSE.
+</p>
+<p>‘irtx’, ‘irty’ Optional arguments to provide matrices of probabilities to answer correctly to the questions on the parallel tests X and Y, as estimated in an Item Response Theory (IRT) model.
+</p>
+<p>‘smoothed’    A logical argument denoting if the data provided are pre-smoothed or not. Default is TRUE.
+</p>
+<p>‘kernel’    A character vector indicating which kernel to use, either "gaussian", "logistic", "stdgaussian" or "uniform". Default is "gaussian".
+</p>
+<p>‘slog’    The parameter used in defining the logistic kernel. Default is 1.
+</p>
+<p>‘bunif’    The parameter used in defining the uniform kernel. Default is 0.5.
+</p>
+<p>‘altopt’    Logical which sets the bandwidth parameter equal to a variant of Silverman's rule of thumb. Default is FALSE.
+</p>
+<p>‘DS’    Logical which enables bandwidth selection with the double smoothing method.
+</p>
+<p>‘CV’    Logical which enables bandwidth selection with the cross-validation method.
+</p>
+
+
+
+<h3>Value</h3>
+
+<p>Kequate returns an S4 object of class 'keout' which includes the following slots (accessed by using the get functions):
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Cr</code></td>
+<td>
+<p>The C-matrix from the log-linear model of test X on population P. (EG design only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Cs</code></td>
+<td>
+<p>The C-matrix from the log-linear model of test Y on population Q. (EG design only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Cp</code></td>
+<td>
+<p>The C-matrix from the log-linear model of tests X and Y or X and A on population P. (SG/NEAT CE/NEAT PSE/NEC designs only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Cq</code></td>
+<td>
+<p>The C-matrix from the log-linear model of tests X and Y or X and A on population Q. (NEAT CE/NEAT PSE/NEC designs only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>SEEvect</code></td>
+<td>
+<p>An object of class SEEvect consisting of matrices containing the standard error vectors for the equatings. If linear=TRUE, then only the standard error vectors for the linear case are included.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pest</code></td>
+<td>
+<p>The estimated probability matrix over population P.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pobs</code></td>
+<td>
+<p>The observed probability matrix over population P.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qest</code></td>
+<td>
+<p>The estimated probability matrix over population Q.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Qobs</code></td>
+<td>
+<p>The observed probability matrix over population Q.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scores</code></td>
+<td>
+<p>A list containing the score vectors for the tests to be equated and, in a NEAT CE design, the score vector of the anchor test. Also included are the estimated score probabilities and the continuized cumulative distribution functions for the respective tests.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear</code></td>
+<td>
+<p>A logical vector. TRUE if linear=TRUE was specified, otherwise FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PRE</code></td>
+<td>
+<p>A data frame containing the percent relative error in the ten first moments between the equated scores and the reference distribution. (For chain equating, the PRE is calculated for the linking from X to A and the linking from A to Y.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>A data frame containing the continuization parameters used in the equating.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>A character vector denoting the kernel used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character vector describing the design used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>equating</code></td>
+<td>
+<p>A data frame containing the equated values from X to Y and the associated standard errors (for either an equipercentile or a linear equating), as well as the SEED between the equipercentile and linear equating functions and the equated values and the associated standard errors in the linear case (if an equipercentile equating is conducted).</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Andersson, B., Branberg, K., and Wiberg, M. (2013). Performing the Kernel Method of Test Equating with the Package <b>kequate</b>. <em>Journal of Statistical Software</em>, <b>55(6)</b>, 1–25. &lt;doi:10.18637/jss.v055.i06&gt;
+</p>
+<p>von Davier, A.A., Holland, P.W., Thayer, D.T. (2004). <em>The Kernel Method of Test Equating.</em> Springer-Verlag New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>glm</code>,<code>kefreq</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#EG toy example with different kernels
+P&lt;-c(5, 20, 35, 25, 15)
+Q&lt;-c(10, 30, 30, 20, 10)
+x&lt;-0:4
+glmx&lt;-glm(P~I(x)+I(x^2), family="poisson", x=TRUE)
+glmy&lt;-glm(Q~I(x)+I(x^2), family="poisson", x=TRUE)
+keEG&lt;-kequate("EG", 0:4, 0:4, glmx, glmy)
+keEGlog&lt;-kequate("EG", 0:4, 0:4, glmx, glmy, kernel="logistic", slog=sqrt(3)/pi)
+keEGuni&lt;-kequate("EG", 0:4, 0:4, glmx, glmy, kernel="uniform", bunif=sqrt(3))
+plot(keEG)
+
+## Not run: 
+#NEAT example using simulated data
+data(simeq)
+freq1 &lt;- kefreq(simeq$bivar1$X, 0:20, simeq$bivar1$A, 0:10)
+freq2 &lt;- kefreq(simeq$bivar2$Y, 0:20, simeq$bivar2$A, 0:10)
+glm1&lt;-glm(frequency~I(X)+I(X^2)+I(X^3)+I(X^4)+I(X^5)+I(A)+I(A^2)+I(A^3)+I(A^4)+
+I(A):I(X)+I(A):I(X^2)+I(A^2):I(X)+I(A^2):I(X^2), family="poisson", data=freq1, x=TRUE)
+glm2&lt;-glm(frequency~I(X)+I(X^2)+I(A)+I(A^2)+I(A^3)+I(A^4)+I(A):I(X)+I(A):I(X^2)+
+I(A^2):I(X)+I(A^2):I(X^2), family="poisson", data=freq2, x=TRUE)
+keNEATPSE &lt;- kequate("NEAT_PSE", 0:20, 0:20, glm1, glm2)
+keNEATCE &lt;- kequate("NEAT_CE", 0:20, 0:20, 0:10, glm1, glm2)
+summary(keNEATPSE)
+summary(keNEATCE)
+
+#IRT observed-score equating
+keNEATCEirt &lt;- kequate("NEAT_CE", 0:20, 0:20, 0:10, glm1, glm2, irtx=simeq$irtNEATx, 
+irty=simeq$irtNEATy)
+getEquating(keNEATCEirt)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

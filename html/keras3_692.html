@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>use_backend</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Configure a Keras backend</h2>
+
+<h3>Description</h3>
+
+<p>Configure a Keras backend
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">use_backend(backend)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>backend</code></td>
+<td>
+<p>string, can be <code>"tensorflow"</code>, <code>"jax"</code>, <code>"numpy"</code>, or <code>"torch"</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>These functions allow configuring which backend keras will use.
+Note that only one backend can be configured at a time.
+</p>
+<p>The function should be called after <code>library(keras3)</code> and before calling
+other functions within the package (see below for an example).
+</p>
+<p>There is experimental support for changing the backend after keras has initialized.
+using <code>config_set_backend()</code>.
+</p>
+<div class="sourceCode r"><pre>library(keras3)
+use_backend("tensorflow")
+</pre></div>
+
+
+<h3>Value</h3>
+
+<p>Called primarily for side effects. Returns the provided <code>backend</code>, invisibly.
+</p>
+
+
+</div>

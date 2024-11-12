@@ -1,0 +1,154 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_tfsm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reload a Keras model/layer that was saved via <code>export_savedmodel()</code>.</h2>
+
+<h3>Description</h3>
+
+<p>Reload a Keras model/layer that was saved via <code>export_savedmodel()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_tfsm(
+  object,
+  filepath,
+  call_endpoint = "serve",
+  call_training_endpoint = NULL,
+  trainable = TRUE,
+  name = NULL,
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filepath</code></td>
+<td>
+<p>string, the path to the SavedModel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call_endpoint</code></td>
+<td>
+<p>Name of the endpoint to use as the <code>call()</code> method
+of the reloaded layer. If the SavedModel was created
+via <code>export_savedmodel()</code>,
+then the default endpoint name is <code>'serve'</code>. In other cases
+it may be named <code>'serving_default'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call_training_endpoint</code></td>
+<td>
+<p>see description</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trainable</code></td>
+<td>
+<p>see description</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>datatype (e.g., <code>"float32"</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>model &lt;- keras_model_sequential(input_shape = c(784)) |&gt; layer_dense(10)
+model |&gt; export_savedmodel("path/to/artifact")
+</pre></div>
+<div class="sourceCode"><pre>## Saved artifact at 'path/to/artifact'. The following endpoints are available:
+##
+## * Endpoint 'serve'
+##   args_0 (POSITIONAL_ONLY): TensorSpec(shape=(None, 784), dtype=tf.float32, name='keras_tensor')
+## Output Type:
+##   TensorSpec(shape=(None, 10), dtype=tf.float32, name=None)
+## Captures:
+##   136137249813136: TensorSpec(shape=(), dtype=tf.resource, name=None)
+##   136137249813328: TensorSpec(shape=(), dtype=tf.resource, name=None)
+
+</pre></div>
+<div class="sourceCode r"><pre>reloaded_layer &lt;- layer_tfsm(filepath = "path/to/artifact")
+input &lt;- random_normal(c(2, 784))
+output &lt;- reloaded_layer(input)
+stopifnot(all.equal(as.array(output), as.array(model(input))))
+</pre></div>
+<p>The reloaded object can be used like a regular Keras layer, and supports
+training/fine-tuning of its trainable weights. Note that the reloaded
+object retains none of the internal structure or custom methods of the
+original object – it's a brand new layer created around the saved
+function.
+</p>
+<p><strong>Limitations:</strong>
+</p>
+
+<ul>
+<li>
+<p> Only call endpoints with a single <code>inputs</code> tensor argument
+(which may optionally be a named list/list of tensors) are supported.
+For endpoints with multiple separate input tensor arguments, consider
+subclassing <code>layer_tfsm</code> and implementing a <code>call()</code> method with a
+custom signature.
+</p>
+</li>
+<li>
+<p> If you need training-time behavior to differ from inference-time behavior
+(i.e. if you need the reloaded object to support a <code>training=TRUE</code> argument
+in <code style="white-space: pre;">⁠__call__()⁠</code>), make sure that the training-time call function is
+saved as a standalone endpoint in the artifact, and provide its name
+to the <code>layer_tfsm</code> via the <code>call_training_endpoint</code> argument.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model()</code> <br><code>save_model_config()</code> <br><code>save_model_weights()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

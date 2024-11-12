@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kinpair_to_tsv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write <code>KinPairData</code> object to <code>.tsv</code> format</h2>
+
+<h3>Description</h3>
+
+<p>This function is part of suite of functions handling file import/export for kinship dispersal objects. Writing
+to .csv or .tsv formats strips most <code>KinPairData</code> &amp; <code>KinPairSimulation</code> class metadata and leaves a delimited file
+containing ids, kinship category, geographical distance, &amp; x &amp; y coordinates for each simulated pair. (removes class attributes)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kinpair_to_tsv(x, file, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Object of class <code>KinPairData</code> or <code>KinPairSimulation</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>The file path to write to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments to pass to <code>write_tsv</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisibly returns the initial object
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other export_functions: 
+<code>kinpair_to_csv()</code>,
+<code>kinpair_to_tibble()</code>,
+<code>write_kindata()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,33 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kofnGA-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kofnGA: A genetic algorithm for selection of fixed-size subsets.</h2>
+
+<h3>Description</h3>
+
+<p>A genetic algorithm (GA) to do subset selection:  search for a subset of a fixed size,
+k, from the integers 1:n, such that user-supplied function is minimized at that subset.
+</p>
+
+
+<h3>Details</h3>
+
+<p>This package provides the function <code>kofnGA</code>, which implements a GA to perform
+subset selection; that is, choosing the best <em>k</em> elements from among <em>n</em>
+possibilities. We label the set of possibilities from which we are choosing by the integers
+<code>1:n</code>, and a solution is represented by an index vector, i.e., a vector of integers in
+the range [1, n] (with no duplicates) indicating which members of the set to choose. The
+objective function (defining which solution is “best”) is arbitrary and user-supplied;
+the only restriction on this function is that its first argument must be an index vector
+encoding the solution.
+</p>
+<p>The search results output by <code>kofnGA</code> are a list object assigned to the S3 class
+<code>GAsearch</code>. The package includes <code>summary</code>, <code>print</code>, and <code>plot</code> methods
+for this class to make it easier to inspect the results.
+</p>
+
+
+</div>

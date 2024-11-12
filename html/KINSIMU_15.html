@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>trioPI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>LR in standard trio cases</h2>
+
+<h3>Description</h3>
+
+<p>Calculating LR in cases where 3 participants being available, a child, his/her biological mother (or father) whose parentage is confirmed, and a male (or female) who is unrelated to the confirmed parent and alleged to be specific relative of the child, usually the father. Null hypothesis, i.e., that the alleged participant is unrelated to the child, is taken as Hd.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">trioPI(
+  AR,
+  C,
+  TP,
+  af,
+  rare = NULL,
+  allelename = FALSE,
+  muAtoC = 0.002,
+  muTtoC = 0.002/3.5,
+  kappa1 = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>AR</code></td>
+<td>
+<p>Genotype of the alleged relative, which should be data.frame with 2 columns and ss rows, where ss stand for sample size;</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>Genotype of the child, see in <code>AR</code> for the data form</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TP</code></td>
+<td>
+<p>Genotype of the confirmed parent of the child, see in <code>AR</code> for the data form</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>af</code></td>
+<td>
+<p>name of allele frequency matrix, a data.frame of 1 column containing frequencies with allele names being row names</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rare</code></td>
+<td>
+<p>frequency of rare allele on the locus</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allelename</code></td>
+<td>
+<p>if TRUE, the input genotype data would be regarded as allelenames, otherwise, the position in the af matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>muAtoC</code></td>
+<td>
+<p>mutation rate from <code>AR</code> to <code>C</code> if AR is alleged to be the child's parent, with a default of 0.002, please note that mistakes would be introduced if the mutation rate is larger than 0.2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>muTtoC</code></td>
+<td>
+<p>mutation rate from <code>TP</code> to <code>C</code>, with a default of 0.002/3.5, please note that mistakes would be introduced if the mutation rate is larger than 0.2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa1</code></td>
+<td>
+<p>kappa_1 of the alleged relationship between AR and C, with a default of 1, meaning the AR is alleged to be the other parent of C</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If any one of TP or AR cannot provide any of the C's alleles through integer steps, <code>muAtoC</code> would be output when calculating PI, and under other situations, the case with minimum mutation steps, (AR to C)+(TP to C) under Hp and (TP to C) under Hd, would be considered. Much more is required for further discussion in PI calculation involving mutations.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a data.frame containing <code>ss</code> rows and 1 column, containing the log10 of LR for each group
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> # Three types of pedigrees are simulated: pedi1: father-mother-child; 
+ # pedi2: random male-mother-child; and pedi3: uncle-mother-child
+ pedi1 &lt;- data.frame(Person=c("F","M","C"),Father=c("RI","RI","F"),Mother=c("RI","RI","M"))
+ pedi2 &lt;- data.frame(Person=c("F","M","C"),Father=c("RI","RI","RI"),Mother=c("RI","RI","M"))
+ pedi3 &lt;- data.frame(Person=c("GF","GM","AR","F","M","C"),
+ Father=c("RI","RI","GF","GF","RI","F"),
+ Mother=c("RI","RI","GM","GM","RI","M"))
+ # Two types of LRs are calculated: PI_1 and PI_2: Paternity index in trio cases; 
+ # AI_1 and AI_2: Avuncular index in trio cases.
+ PI_1=PI_2=AI_1=AI_2=data.frame(Log10CLR=rep(0,10000))
+ # Simulation are carried out based on the frequency data of the 42 STRs in FortytwoSTR dataset
+ # Setting sample size as 10,000
+ for (i in 1:42) {
+   Genotype1&lt;-pedisimu(af = FortytwoSTR$afmatrix[[i]],ss = 10000,pedi = pedi1)
+   PI_1&lt;-PI_1+trioPI(AR=Genotype1[,1:2],TP=Genotype1[,3:4],
+                C=Genotype1[,5:6],af=FortytwoSTR$afmatrix[[i]],
+                rare=FortytwoSTR$rare[i])
+   Genotype2&lt;-pedisimu(af = FortytwoSTR$afmatrix[[i]],ss = 10000,pedi = pedi2)
+   PI_2&lt;-PI_2+trioPI(AR=Genotype2[,1:2],TP=Genotype2[,3:4],
+                C=Genotype2[,5:6],af=FortytwoSTR$afmatrix[[i]],
+                rare=FortytwoSTR$rare[i])
+   AI_2&lt;-AI_2+trioPI(AR=Genotype2[,1:2],TP=Genotype2[,3:4],
+                C=Genotype2[,5:6],af=FortytwoSTR$afmatrix[[i]],
+                rare=FortytwoSTR$rare[i],kappa1=0.5)             
+   Genotype3&lt;-pedisimu(af = FortytwoSTR$afmatrix[[i]],ss = 10000,pedi = pedi3)
+   AI_1&lt;-AI_1+trioPI(AR=Genotype3[,5:6],TP=Genotype3[,9:10],
+                C=Genotype3[,11:12],af=FortytwoSTR$afmatrix[[i]],
+                rare=FortytwoSTR$rare[i],kappa1=0.5)
+ }
+ #histogram of the final results
+ xmin1&lt;-floor(min(min(PI_1$Log10CLR),min(PI_2$Log10CLR)))
+ xmax1&lt;-ceiling(max(max(PI_1$Log10CLR),max(PI_2$Log10CLR)))
+ xmin2&lt;-floor(min(min(AI_1$Log10CLR),min(AI_2$Log10CLR)))
+ xmax2&lt;-ceiling(max(max(AI_1$Log10CLR),max(AI_2$Log10CLR)))
+ par(mfrow = c(2, 2))
+ hist(PI_1$Log10CLR,xlab = expression(log[10]~CPI),main = "True parentage cases",
+      xlim = c(xmin1,xmax1), col = "blue")
+ hist(AI_1$Log10CLR,xlab = expression(log[10]~CAI),main = "True avuncular cases",
+      xlim = c(xmin2,xmax2), col = "blue")  
+ hist(PI_2$Log10CLR,xlab = expression(log[10]~CPI),main = "False pedigree in parentage cases",
+      xlim = c(xmin1,xmax1), col = "red")
+ hist(AI_2$Log10CLR,xlab = expression(log[10]~CAI),main = "False pedigree in avuncular cases",
+      xlim = c(xmin2,xmax2), col = "red")
+
+
+</code></pre>
+
+
+</div>

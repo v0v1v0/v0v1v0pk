@@ -1,0 +1,246 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Paul Tol's Color Schemes</h2>
+
+<h3>Description</h3>
+
+<p>Paul Tol's Color Schemes
+</p>
+
+
+<h3>Details</h3>
+
+<p>The maximum number of supported colors is only relevant for the qualitative
+color schemes (divergent and sequential schemes are linearly interpolated).
+</p>
+
+<dl>
+<dt>Qualitative data</dt>
+<dd>
+<p><code>bright</code> (7), <code style="white-space: pre;">⁠high contrast⁠</code> (3), <code>vibrant</code> (7),
+<code>muted</code> (9), <code style="white-space: pre;">⁠medium contrast⁠</code> (6), <code>pale</code> (6), <code>dark</code> (6), <code>light</code> (9).</p>
+</dd>
+<dt>Diverging data</dt>
+<dd>
+<p><code>sunset</code> (11), <code>nightfall</code> (17), <code>BuRd</code> (9),
+<code>PRGn</code> (9).</p>
+</dd>
+<dt>Sequential data</dt>
+<dd>
+<p><code>YlOrBr</code> (9), <code>iridescent</code> (23), <code>incandescent</code>
+(11), <code style="white-space: pre;">⁠discrete rainbow⁠</code> (23), <code style="white-space: pre;">⁠smooth rainbow⁠</code> (34).</p>
+</dd>
+</dl>
+<h3>Qualitative Color Schemes</h3>
+
+<p>The qualitative color schemes are used as given (no interpolation):
+colors are picked up to the maximum number of supported values.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<strong>Palette</strong>      </td>
+<td style="text-align: left;"> <strong>Max.</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>bright</code>         </td>
+<td style="text-align: left;"> 7        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>highcontrast</code>   </td>
+<td style="text-align: left;"> 3        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>vibrant</code>        </td>
+<td style="text-align: left;"> 7        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>muted</code>          </td>
+<td style="text-align: left;"> 9        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>mediumcontrast</code> </td>
+<td style="text-align: left;"> 6        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>pale</code>           </td>
+<td style="text-align: left;"> 6        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>dark</code>           </td>
+<td style="text-align: left;"> 6        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>light</code>          </td>
+<td style="text-align: left;"> 9        </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>According to Paul Tol's technical note, the <code>bright</code>, <code>highcontrast</code>,
+<code>vibrant</code> and <code>muted</code> color schemes are color-blind safe. The
+<code>mediumcontrast</code> color scheme is designed for situations needing color
+pairs.
+</p>
+<p>The <code>light</code> color scheme is reasonably distinct for both normal or
+colorblind vision and is intended to fill labeled cells.
+</p>
+<p>The <code>pale</code> and <code>dark</code> schemes are not very distinct in either normal or
+colorblind vision and should be used as a text background or to highlight
+a cell in a table.
+</p>
+<p>Refer to the original document for details about the recommended uses (see
+references)
+</p>
+
+
+<h3>Diverging Color Schemes</h3>
+
+<p>If more colors than defined are needed from a given scheme, the color
+coordinates are linearly interpolated to provide a continuous version of the
+scheme.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<strong>Palette</strong> </td>
+<td style="text-align: left;"> <strong>Max.</strong> </td>
+<td style="text-align: left;"> <strong>NA value</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>sunset</code>    </td>
+<td style="text-align: left;"> 11       </td>
+<td style="text-align: left;"> #FFFFFF      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>nightfall</code> </td>
+<td style="text-align: left;"> 17       </td>
+<td style="text-align: left;"> #FFFFFF      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>BuRd</code>      </td>
+<td style="text-align: left;"> 9        </td>
+<td style="text-align: left;"> #FFEE99      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>PRGn</code>      </td>
+<td style="text-align: left;"> 9        </td>
+<td style="text-align: left;"> #FFEE99      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<h3>Sequential Color Schemes</h3>
+
+<p>If more colors than defined are needed from a given scheme, the color
+coordinates are linearly interpolated to provide a continuous version of the
+scheme.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<strong>Palette</strong>       </td>
+<td style="text-align: left;"> <strong>Max.</strong> </td>
+<td style="text-align: left;"> <strong>NA value</strong> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>YlOrBr</code>          </td>
+<td style="text-align: left;"> 9        </td>
+<td style="text-align: left;"> #888888      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>iridescent</code>      </td>
+<td style="text-align: left;"> 23       </td>
+<td style="text-align: left;"> #999999      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>discreterainbow</code> </td>
+<td style="text-align: left;"> 23       </td>
+<td style="text-align: left;"> #777777      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>smoothrainbow</code>   </td>
+<td style="text-align: left;"> 34       </td>
+<td style="text-align: left;"> #666666      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<h3>Rainbow Color Scheme</h3>
+
+<p>As a general rule, ordered data should not be represented using a rainbow
+scheme. There are three main arguments against such use (Tol 2018):
+</p>
+
+<ul>
+<li>
+<p>The spectral order of visible light carries no inherent magnitude
+message.
+</p>
+</li>
+<li>
+<p>Some bands of almost constant hue with sharp transitions between
+them, can be perceived as jumps in the data.
+</p>
+</li>
+<li>
+<p>Color-blind people have difficulty distinguishing some colors of
+the rainbow.
+</p>
+</li>
+</ul>
+<p>If such use cannot be avoided, Paul Tol's technical note provides two color
+schemes that are reasonably clear in color-blind vision. To remain
+color-blind safe, these two schemes must comply with the following
+conditions:
+</p>
+
+<dl>
+<dt><code>discreterainbow</code></dt>
+<dd>
+<p>This scheme must not be interpolated.</p>
+</dd>
+<dt><code>smoothrainbow</code></dt>
+<dd>
+<p>This scheme does not have to be used over the full
+range.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>Tol, P. (2021). <em>Colour Schemes</em>. SRON. Technical Note No.
+SRON/EPS/TN/09-002, issue 3.2.
+URL: <a href="https://personal.sron.nl/~pault/data/colourschemes.pdf">https://personal.sron.nl/~pault/data/colourschemes.pdf</a>
+</p>
+
+
+</div>

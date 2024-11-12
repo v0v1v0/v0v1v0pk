@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>derivatives</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computing kernel function derivatives</h2>
+
+<h3>Description</h3>
+
+<p><code>derivatives</code> is a function for "kspm" object computing pointwise partial derivatives of <code class="reqn">h(Z)</code> accroding to each <code class="reqn">Z</code> variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">derivatives(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>derivatives are not computed for interactions. If a variable is included in several kernels, the user may obtain the corresponding pointwise derivatives by summing the pointwise derivatives associated with each kernel.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an object of class 'derivatives'
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>derivmat</code></td>
+<td>
+<p>a list of <code class="reqn">n \times d</code> matrix (one for each kernel) where <code class="reqn">n</code> is the number of subjects and <code class="reqn">d</code> the number of variables included in the kernel</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rawmat</code></td>
+<td>
+<p>a <code class="reqn">n \times q</code> matrix with all variables included in the kernel part of the model <code class="reqn">q</code> the number of variables included in the whole kernel part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scalemat</code></td>
+<td>
+<p>scaled version of rawmat</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelmat</code></td>
+<td>
+<p>matrix of correspondance between variable and kernels</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Kim, Choongrak, Byeong U. Park, and Woochul Kim. "Influence diagnostics in semiparametric regression models." Statistics and probability letters 60.1 (2002): 49:58.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>plot.derivatives
+</p>
+
+
+</div>

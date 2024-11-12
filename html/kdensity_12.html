@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernels</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel functions</h2>
+
+<h3>Description</h3>
+
+<p>Kernel functions are an important part of <code>kdensity</code>. This document
+lists the available built-in functions and the structure of them. Any kernel
+in the list can be used in <code>kdensity</code> by using <code>kernel = "kernel"</code>
+for the intended kernel.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Be careful combining kernels with compact support with parametric starts,
+as the normalizing integral typically fails to converge. Use <code>gaussian</code>
+instead.
+</p>
+
+
+<h3>Symmetric kernels</h3>
+
+<p><code style="white-space: pre;">⁠gaussian, normal⁠</code>: The Gaussian kernel. The default argument when
+<code>starts</code> is supported on R.
+<code style="white-space: pre;">⁠epanechnikov, rectangular (uniform), triangular, biweight, cosine, optcosine⁠</code>: Standard symmetric kernels, also used in
+<code>stats::density()</code>.
+<code style="white-space: pre;">⁠tricube, triweight⁠</code>: Standard symmetric kernels. Not supported by
+<code>stats::density()</code>.
+<code>laplace</code>: Uses the Laplace density, also known as the double
+exponential density.
+</p>
+
+
+<h3>Asymmetric kernels</h3>
+
+<p><code style="white-space: pre;">⁠gamma, gamma_biased⁠</code>: The gamma kernel of Chen (2000). For use on the positive
+half-line. <code>gamma</code> is the recommended biased-corrected kernel.
+<code>gcopula</code>: The Gaussian copula kernel of Jones &amp; Henderson (2007). For use
+on the unit interval.
+<code style="white-space: pre;">⁠beta, beta_biased⁠</code>: The beta kernel of Chen (1999). For use on the unit interval.
+<code>beta</code> is the recommended bias-corrected kernel.
+</p>
+
+
+<h3>Structure</h3>
+
+<p>A kernel is a list containing two mandatory elements and one optional
+element. The mandatory element '<code>kernel</code>' is the kernel function.
+It takes arguments <code style="white-space: pre;">⁠y, x, h⁠</code>, where <code>x</code> is the data supplied
+to <code>kdensity</code> and <code>y</code> is the point of evaluation. <code>h</code> is
+the bandwidth. Internally, the kernel function is evaluated as
+<code>1/h*kernel(y, x, h)</code>. It should be vectorized in <code>x</code>, but
+vectorization in <code>y</code> is not needed.
+</p>
+<p>The second mandatory element is <code>support</code>, stating the domain of
+definition for the kernel. This is used to distinguish kernels on the
+unit interval / positive half-line from kernels on R.
+</p>
+<p><code>sd</code> is used for symmetric kernels, and states the standard error
+of the kernel. This is used to make kernels comparable to the Gaussian
+kernel when calculating bandwidths.
+</p>
+
+
+<h3>References</h3>
+
+<p>Chen, Song Xi. "Probability density function estimation using gamma kernels." Annals of the Institute of Statistical Mathematics 52.3 (2000): 471-480.
+Jones, M. C., and D. A. Henderson. "Kernel-type density estimation on the unit interval." Biometrika 94.4 (2007): 977-984.
+Chen, Song Xi. "Beta kernel estimators for density functions." Computational Statistics &amp; Data Analysis 31.2 (1999): 131-145.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdensity()</code>; <code>parametric_starts()</code>;
+<code>bandwidths()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">gaussian = list(
+  kernel  = function(y, x, h) stats::dnorm((y-x)/h),
+  sd = 1,
+  support = c(-Inf, Inf)
+)
+
+gcopula = list(
+  kernel  = function(y, x, h) {
+    rho = 1 - h^2
+    inside = rho^2*(qnorm(y)^2 + qnorm(x)^2)-2*rho*qnorm(y)*qnorm(x)
+    exp(-inside/(2*(1-rho^2)))
+  },
+  support = c(0, 1)
+)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logticks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add proper logarithm ticks to a plot axis.</h2>
+
+<h3>Description</h3>
+
+<p>Add proper logarithm ticks to a plot axis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logticks(
+  ax = 1,
+  n.minor = 9,
+  t.lims,
+  t.ratio = 0.5,
+  major.ticks = NULL,
+  base = c("ten", "ln", "two"),
+  ticks.only = FALSE,
+  ...
+)
+
+log_ticks(...)
+
+log2_ticks(...)
+
+log10_ticks(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ax</code></td>
+<td>
+<p>numeric; the axis number to add tick-marks to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.minor</code></td>
+<td>
+<p>numeric; the number of minor ticks to display</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.lims</code></td>
+<td>
+<p>numeric; the upper and lower tick limits (in log space)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.ratio</code></td>
+<td>
+<p>numeric; the ratio of minor to major tick lengths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>major.ticks</code></td>
+<td>
+<p>numeric; the axis limits.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base</code></td>
+<td>
+<p>numeric; the base of the logarithm (somewhat experimental)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ticks.only</code></td>
+<td>
+<p>logical; on the axis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional parameters passed to the <code>axis</code> call for the major ticks.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This uses <code>pretty</code> with <code>n==5</code>, and assumes 
+that the data along the axis <code>ax</code> has 
+<em>already</em> been transformed into its logarithm.
+<em>Only integer exponents are labeled.</em>
+</p>
+<p>The functions 
+<code>log_ticks</code>,
+<code>log2_ticks</code>, and
+<code>log10_ticks</code> are wrapper functions.
+</p>
+<p>Set the <code>axt</code> parameter (e.g. <code>xaxt</code>) to <code>'n'</code> 
+in the original plot command to prevent adding default tick marks.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>This was modified from a post on StackOverflow:
+<a href="https://stackoverflow.com/questions/6955440/displaying-minor-logarithmic-ticks-in-x-axis-in-r">https://stackoverflow.com/questions/6955440/displaying-minor-logarithmic-ticks-in-x-axis-in-r</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other PlotUtilities: 
+<code>wrsp-methods</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 10^(0:8)
+y &lt;- 1:9
+
+plot(log10(x),y,xaxt="n",xlab="x",xlim=c(0,9))
+logticks()
+logticks(ax=3, ticks.only=TRUE)
+
+par(tcl=0.5) # have tick marks show up on inside instead
+plot(log10(x),y,xaxt="n",xlab="x",xlim=c(0,9))
+logticks()
+logticks(ax=3, ticks.only=TRUE)
+</code></pre>
+
+
+</div>

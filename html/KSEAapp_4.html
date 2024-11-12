@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KSEA.Heatmap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The KSEA App Analysis (KSEA Heatmap Only)</h2>
+
+<h3>Description</h3>
+
+<p>Takes a list of the KSEA kinase score outputs from KSEA.Scores() 
+and creates a merged heatmap (only applicable for multi-treatment studies)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KSEA.Heatmap(score.list, sample.labels, stats, m.cutoff, p.cutoff,
+  sample.cluster)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>score.list</code></td>
+<td>
+<p>the data frame outputs from the KSEA.Scores() function, compiled in a list format</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample.labels</code></td>
+<td>
+<p>a character vector of all the sample names for heatmap annotation; 
+the names must be in the same order as the data in score.list;
+please avoid long names, as they may get cropped in the final image</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stats</code></td>
+<td>
+<p>character string of either "p.value" or "FDR" indicating 
+the data column to use for marking statistically significant scores</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m.cutoff</code></td>
+<td>
+<p>a numeric value between 0 and infinity indicating the min. # 
+of substrates a kinase must have to be included in the heatmap</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.cutoff</code></td>
+<td>
+<p>a numeric value between 0 and 1 indicating the p-value/FDR cutoff 
+for indicating significant kinases in the heatmap</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample.cluster</code></td>
+<td>
+<p>a binary input of TRUE or FALSE, indicating whether or not 
+to perform hierarchical clustering of the sample columns</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>exports a .png heatmap image highlighting the merged datasets; 
+heatmap was generated using the heatmap.2() function (gplots package);
+asterisks mark scores that met the statistical cutoff, as defined by p.cutoff;
+blue color indicates negative kinase score, and red indicates positive kinase score
+</p>
+
+
+<h3>References</h3>
+
+<p>Casado et al. (2013) Sci Signal. 6(268):rs6
+</p>
+<p>Hornbeck et al. (2015) Nucleic Acids Res. 43:D512-20
+</p>
+<p>Horn et al. (2014) Nature Methods 11(6):603-4
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#The score.list input must be a list of the data frame outputs from KSEA.Scores() function
+#KSEA.Scores.1, KSEA.Scores.2, and KSEA.Scores.3 are all 
+#sample datasets provided within this package
+
+KSEA.Heatmap(score.list=list(KSEA.Scores.1, KSEA.Scores.2, KSEA.Scores.3), 
+             sample.labels=c("Tumor.A", "Tumor.B", "Tumor.C"), 
+             stats="p.value", m.cutoff=3, p.cutoff=0.05, sample.cluster=TRUE)
+
+</code></pre>
+
+
+</div>

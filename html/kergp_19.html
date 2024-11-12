@@ -1,0 +1,280 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covQual-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Class <code>"covQual"</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Covariance kernel for qualitative inputs.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("covQual", ...)</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>covLevels</code>:</dt>
+<dd>
+<p>Object of class <code>"function"</code>. This function has
+arguments <code>'par'</code> and optional arguments <code>lowerSQRT</code> and
+<code>compGrad</code>. It returns the covariance matrix for an input 
+corresponding to all the levels. 
+</p>
+</dd>
+<dt>
+<code>covLevMat</code>:</dt>
+<dd>
+<p>Object of class <code>"matrix"</code>. This is the result returned by the 
+function <code>covLevels</code> (former slot) with <code>lowerSQRT = FALSE</code>
+and <code>gradient = FALSE</code>.
+</p>
+</dd>
+<dt>
+<code>hasGrad</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>.  When <code>TRUE</code>, the
+covariance matrix returned by the function in slot
+<code>covLevels</code> must compute the gradients. The returned 
+covariance matrix must have a <code>"gradient"</code> attribute;
+this must be an array with dimension <code>c(m, m, np)</code> where
+<code>m</code> stands for the number of levels and <code class="reqn">np</code> is the
+number of parameters.
+</p>
+</dd>
+<dt>
+<code>acceptLowerSQRT</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code>. When <code>TRUE</code>, the function
+in slot <code>covLevels</code> must have a formal <code>lowerSQRT</code>
+which can receive a logical value. When the value is <code>TRUE</code>
+the Cholesky (lower) root of the covariance is returned instead of
+the covariance.
+</p>
+</dd>
+<dt>
+<code>label</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. A description of the kernel
+which will remained attached with it.
+</p>
+</dd>
+<dt>
+<code>d</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. The dimension or number of
+(qualitative) inputs of the kernel.
+</p>
+</dd>
+<dt>
+<code>inputNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. The names of the (qualitative)
+inputs. These will be matched against the columns of a data frame
+when the kernel will be evaluated.
+</p>
+</dd>
+<dt>
+<code>nlevels</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. A vector with length
+<code>d</code> giving the number of levels for each of the <code>d</code>
+inputs.
+</p>
+</dd>
+<dt>
+<code>levels</code>:</dt>
+<dd>
+<p>Object of class <code>"list"</code>. A list of length <code>d</code>
+containing the <code>d</code> character vectors of levels for
+the <code>d</code> (qualitative) inputs.
+</p>
+</dd>
+<dt>
+<code>parLower</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Vector of <code>parN</code> lower
+values for the parameters of the structure. The value
+<code>-Inf</code> can be used when needed.
+</p>
+</dd>
+<dt>
+<code>parUpper</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Vector of <code>parN</code> upper
+values for the parameters of the structure. The value
+<code>Inf</code> can be used when needed.
+</p>
+</dd>
+<dt>
+<code>par</code>:</dt>
+<dd>
+<p>Object of class <code>"numeric"</code>. Vector of <code>parN</code>
+current values for the structure.
+</p>
+</dd>
+<dt>
+<code>parN</code>:</dt>
+<dd>
+<p>Object of class <code>"integer"</code>. Number of parameters for the
+structure, as returned by the <code>npar</code> method.
+</p>
+</dd>
+<dt>
+<code>kernParNames</code>:</dt>
+<dd>
+<p>Object of class <code>"character"</code>. Vector of length <code>parN</code>
+giving the names of the parameters. E.g. <code>"range"</code>,
+<code>"var"</code>, <code>"sigma2"</code> are popular names.
+</p>
+</dd>
+<dt>
+<code>ordered</code>:</dt>
+<dd>
+<p>Vector of class <code>"logical"</code> indicating whether the factors
+are ordered or not.
+</p>
+</dd>
+<dt>
+<code>intAsChar</code>:</dt>
+<dd>
+<p>Object of class <code>"logical"</code> indicating how to cope with an
+integer input. When <code>intAsChar</code> is <code>TRUE</code> the input is
+coerced into a character; the values taken by this character
+vector should then match the levels in the <code>covQual</code> object
+as given by <code>levels(object)[[1]]</code>. If instead
+<code>intAsChar</code> is <code>FALSE</code>, the integer values are assumed
+to correspond to the levels of the <code>covQual</code> object in the
+same order.
+</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>checkX</dt>
+<dd>
+<p><code>signature(object = "covQual", X = "data.frame")</code>: check that
+the inputs exist with suitable column names and suitable <em>factor</em>
+content. The levels should match the prescribed levels. Returns a
+matrix with the input columns in the order prescribed by
+<code>object</code>.
+</p>
+<p><code>signature(object = "covQual", X = "matrix")</code>: check that the
+inputs exist with suitable column names and suitable <em>numeric</em>
+content for coercion into a factor with the prescribed levels.
+Returns a data frame with the input columns in the order
+prescribed by <code>object</code>.
+</p>
+</dd>
+<dt>coef&lt;-</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: replace the whole vector of
+coefficients, as required during ML estimation.
+</p>
+</dd>
+<dt>coefLower&lt;-</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: replacement method for lower
+bounds on covQual coefficients.
+</p>
+</dd>
+<dt>coefLower</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: extracts the numeric values of
+the lower bounds.
+</p>
+</dd>
+<dt>coef</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: extracts the numeric values
+of the covariance parameters.
+</p>
+</dd>
+<dt>coefUpper&lt;-</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: replacement method for upper
+bounds on <code>covQual</code> coefficients.
+</p>
+</dd>
+<dt>coefUpper</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: ...
+</p>
+</dd>
+<dt>covMat</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: build the covariance matrix
+or the cross covariance matrix between two sets of locations for a
+<code>covQual</code> object.
+</p>
+</dd>
+<dt>npar</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: returns the number of
+parameters.
+</p>
+</dd>
+<dt>plot</dt>
+<dd>
+<p><code>signature(x = "covQual")</code>: see <code>plot,covQual-method</code>. </p>
+</dd>
+<dt>scores</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: return the vector of
+scores, i.e. the derivative of the log-likelihood w.r.t. the
+parameter vector at the current parameter values.
+</p>
+</dd>
+<dt>simulate</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: simulate <code>nsim</code> paths
+from a Gaussian Process having the covariance structure. The paths
+are indexed by the finite set of levels of factor inputs, and they
+are returned as columns of a matrix.
+</p>
+</dd>
+<dt>varVec</dt>
+<dd>
+<p><code>signature(object = "covQual")</code>: build the variance vector
+corresponding to a set locations for a <code>covQual</code> object.
+</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This class is to be regarded as experimental. The slot names or list
+may be changed in the future. The methods <code>npar</code>,
+<code>inputNames</code> or <code>`inputNames&lt;-`</code> should provide a more
+robust access to some slot values.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See <code>covMan</code> for a comparable structure dedicated
+to kernels with continuous inputs.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+showClass("covQual")
+
+</code></pre>
+
+
+</div>

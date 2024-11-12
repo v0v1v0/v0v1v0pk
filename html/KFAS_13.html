@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GlobalTemp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Two series of average global temperature deviations for years 1880-1987</h2>
+
+<h3>Description</h3>
+
+<p>This data set contains two series of average global temperature deviations
+for years 1880-1987. These series are same as used in Shumway and Stoffer
+(2006), where they are known as HL and Folland series. For more details, see
+Shumway and Stoffer (2006, p. 327).
+</p>
+
+
+<h3>Format</h3>
+
+<p>A time series object containing 108 times 2 observations.
+</p>
+
+
+<h3>Source</h3>
+
+<p>http://lib.stat.cmu.edu/general/stoffer/tsa2/
+</p>
+
+
+<h3>References</h3>
+
+<p>Shumway, Robert H. and Stoffer, David S. (2006). Time Series
+Analysis and Its Applications: With R examples.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Example of multivariate local level model with only one state
+# Two series of average global temperature deviations for years 1880-1987
+# See Shumway and Stoffer (2006), p. 327 for details
+
+data("GlobalTemp")
+
+model_temp &lt;- SSModel(GlobalTemp ~ SSMtrend(1, Q = NA, type = "common"),
+  H = matrix(NA, 2, 2))
+
+# Estimating the variance parameters
+inits &lt;- chol(cov(GlobalTemp))[c(1, 4, 3)]
+inits[1:2] &lt;- log(inits[1:2])
+fit_temp &lt;- fitSSM(model_temp, c(0.5*log(.1), inits), method = "BFGS")
+
+out_temp &lt;- KFS(fit_temp$model)
+
+ts.plot(cbind(model_temp$y, coef(out_temp)), col = 1:3)
+legend("bottomright",
+  legend = c(colnames(GlobalTemp), "Smoothed signal"), col = 1:3, lty = 1)
+
+</code></pre>
+
+
+</div>

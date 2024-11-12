@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mlh_outsample_row_indices</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>mlh_outsample_row_indices</h2>
+
+<h3>Description</h3>
+
+<p>Machine learning helper function to convert a vector of (in-
+sample) row indices of a fold into out-of-sample row indices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mlh_outsample_row_indices(fold_list, dataset_nrows, type = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fold_list</code></td>
+<td>
+<p>A list of integer vectors that describe the row indices
+of cross-validation folds. The list must be named.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataset_nrows</code></td>
+<td>
+<p>An integer. The number of rows in the dataset
+dataset. This parameter is required in order to compute the out-of-sample
+row indices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character. To be used if the out-of-sample row indices need to
+be formatted in a special manner (default: <code>NULL</code>). Currently, the only
+allowed value is <code>type = "glmnet"</code> in order to format the row indices as
+required by <code>glmnet::cv.glmnet</code>'s argument <code>foldid</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>type = NULL</code>, returns a list of same length as <code>fold_list</code> with
+each item containing a vector of out-of-sample row indices. If
+<code>type = "glmnet"</code>, a data.table is returned with two columns and each row
+representing one observation of the dataset that is assigned to a specific
+test fold. The column "fold_id" should be passed further on to the argument
+<code>foldid</code> of <code>glmnet::cv.glmnet</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fold_list &lt;- list(
+  "Fold1" = setdiff(seq_len(100), 1:33),
+  "Fold2" = setdiff(seq_len(100),66:100),
+  "Fold3" = setdiff(seq_len(100),34:65)
+)
+mlh_outsample_row_indices(fold_list, 100)
+mlh_outsample_row_indices(fold_list, 100, "glmnet")
+</code></pre>
+
+
+</div>

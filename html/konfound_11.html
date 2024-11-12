@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>konfound_glm_dichotomous</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Konfound Analysis for Generalized Linear Models with Dichotomous Outcomes</h2>
+
+<h3>Description</h3>
+
+<p>This function performs konfound analysis on a generalized linear model
+object with a dichotomous outcome. It uses 'broom' to tidy model outputs
+and calculates the sensitivity of inferences.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">konfound_glm_dichotomous(
+  model_object,
+  tested_variable_string,
+  alpha,
+  tails,
+  to_return,
+  n_treat,
+  switch_trm,
+  replace
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model_object</code></td>
+<td>
+<p>The model object produced by glm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tested_variable_string</code></td>
+<td>
+<p>The name of the variable being tested.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Significance level for hypothesis testing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tails</code></td>
+<td>
+<p>Number of tails for the test (1 or 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_return</code></td>
+<td>
+<p>The type of output to return.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_treat</code></td>
+<td>
+<p>Number of treatment cases.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>switch_trm</code></td>
+<td>
+<p>Term to switch for sensitivity analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>Boolean indicating whether to replace cases or not.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The results of the konfound analysis.
+</p>
+
+
+</div>

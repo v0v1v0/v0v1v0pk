@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getProTaos</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+getProTaos:calculate the probability of recurrence
+</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the probability of recurrence of a system, given by a recurrence matrix in KarsTS format. The RP is calculated for each diagonal (upper triangle).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getProTaos(RecMat, xlim = NULL, main = NULL, doPlot = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>RecMat</code></td>
+<td>
+
+<p>A recurrence matrix in KarsTS format
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+
+<p>X range of the plot.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+
+<p>Plot title
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>doPlot</code></td>
+<td>
+
+<p>Get the plot or not
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Tao </code></td>
+<td>
+<p>The diagonals where the RP was calculated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Prob </code></td>
+<td>
+<p>The RP for each diagonal</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>References</h3>
+
+<p>Romano, M. C. (2004). Synchronization Analysis by Means of Recurrences in Phase Space, Universitat Postdam. Doctoral dissertation.
+</p>
+
+
+</div>

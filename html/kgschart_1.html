@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>download_graph</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Download KGS rank graph</h2>
+
+<h3>Description</h3>
+
+<p>Access KGS server and download the latest rank graph of the specified player.
+Requires internet connection.
+Returns the path to the downloaded file if succeeded.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">download_graph(id, dst = tempfile(), lang = "en", country = "US",
+  method = "libcurl", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>KGS ID</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dst</code></td>
+<td>
+<p>destination file path or directory</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>language code, a lower case character of length 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>country</code></td>
+<td>
+<p>country code, an upper case character of length 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method to be used for downloading files. See <code>download.file</code> for details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for <code>download.file</code> other than
+<code>method</code> and <code>mode</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Default setting downloads the English version. Another good option is
+to set <code>lang='ja'</code> and <code>country='JP'</code>, which downloads the Japanese version.
+</p>
+
+
+<h3>Value</h3>
+
+<p>path to the saved file
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>download.file</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+f &lt;- download_graph('twoeye')
+p &lt;- png::readPNG(f)
+plot.new()
+rasterImage(p,0,0,1,1)
+## End(Not run)
+</code></pre>
+
+
+</div>

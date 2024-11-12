@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parameters</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Language Model Parameters</h2>
+
+<h3>Description</h3>
+
+<p>Get and set parameters of a language model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">param(object, which)
+
+## S3 method for class 'kgram_freqs'
+param(object, which)
+
+param(object, which) &lt;- value
+
+parameters(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a <code>language_model</code> or <code>kgram_freqs</code> class object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>a string. Name of the parameter to get or set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>new value for the parameter specified by <code>which</code>. Typically
+a length one numeric.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These functions are used to retrieve or modify the parameters of a
+<code>language_model</code> or a <code>kgram_freqs</code> object. Any object of,
+or inheriting from, any of these two classes has at least two parameters:
+</p>
+
+<ul>
+<li> <p><code>N</code>: higher order of k-grams considered in the model for
+<code>language_model</code>, or stored in memory for <code>kgram_freqs</code>.
+</p>
+</li>
+<li> <p><code>V</code>: size of the dictionary (excluding the special tokens
+<code>BOS()</code>, <code>EOS()</code>, <code>UNK()</code>).
+</p>
+</li>
+</ul>
+<p>For an object of class <code>kgram_freqs</code>, these are the only parameters,
+and they are read-only. <code>language_model</code>s allow to set <code>N</code> less
+than or equal to the order of the underlying <code>kgram_freqs</code> object.
+</p>
+<p>In addition to these, <code>language_model</code>s can have additional parameters,
+e.g. discount values or interpolation constants, depending on the particular
+smoother employed by the model. A list of parameters available for a given
+smoother can be obtained through <code>info()</code>
+(see smoothers).
+</p>
+<p>It is important to mention that setting a parameter is an in-place operation.
+This implies that if, say, object <code>m</code> is a <code>language_model</code> object,
+the code <code>m1 &lt;- m ; param(m1, which) &lt;- value</code> will set the parameter
+<code>which</code> to <code>value</code> both for <code>m1</code> <em>and</em> <code>m</code>. The
+reason for this is that, behind the scenes, both <code>m</code> and <code>m1</code> are
+pointers to the same C++ object. In order to create a true copy, one can use
+the copy constructor <code>language_model()</code>, see
+language_model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list for <code>parameters()</code>, a single value, typically numeric,
+for <code>param()</code> and <code>param()&lt;-</code> (the new value, in this last case).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get and set k-gram model parameters
+
+f &lt;- kgram_freqs("a a b a b", 3)
+param(f, "N")
+parameters(f)
+
+m &lt;- language_model(f, "sbo", lambda = 0.2)
+param(m, "V")
+param(m, "lambda")
+param(m, "N") &lt;- 2
+param(m, "lambda") &lt;- 0.4
+
+if (FALSE) {
+        param(m, "V") &lt;- 5 # Error: dictionary size cannot be set.  
+}
+
+if (FALSE) {
+        param(f, "N") &lt;- 4 # Error: parameters of 'kgram_freqs' cannot be set  
+}
+
+m1 &lt;- m
+param(m1, "lambda") &lt;- 0.5
+param(m, "lambda") # 0.5 ; param() modifies 'm' by reference!
+
+m2 &lt;- language_model(m) # This creates a true copy
+param(m2, "lambda") &lt;- 0.6
+param(m, "lambda") # 0.5
+
+</code></pre>
+
+
+</div>

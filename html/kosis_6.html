@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getStatList</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KOSIS Statistic List</h2>
+
+<h3>Description</h3>
+
+<p>KOSIS Statistic List
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getStatList(
+  vwCd = c("MT_ZTITLE", "MT_OTITLE", "MT_GTITLE01", "MT_GTITLE02", "MT_CHOSUN_TITLE",
+    "MT_HANKUK_TITLE", "MT_STOP_TITLE", "MT_RTITLE", "MT_BUKHAN", "MT_TM1_TITLE",
+    "MT_TM2_TITLE", "MT_ETITLE"),
+  parentListId = ""
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vwCd</code></td>
+<td>
+<p>A string specifying the view code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parentListId</code></td>
+<td>
+<p>A string specifying the parent list id</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<pre>
+## Example
+getStatList(vwCd = "MT_ZTITLE", parentListId = "")
+getStatList(vwCd = "MT_ZTITLE", parentListId = "F")
+getStatList(vwCd = "MT_ZTITLE", parentListId = "F_29")
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame object containing queried information
+</p>
+
+
+</div>

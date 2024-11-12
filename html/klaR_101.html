@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>triframe</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Barycentric plots</h2>
+
+<h3>Description</h3>
+
+<p>Function to add a frame to an existing (barycentric) plot.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">triframe(label = 1:3, label.col = 1, cex = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>labels for the three corners of the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label.col</code></td>
+<td>
+<p>text color for labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex</code></td>
+<td>
+<p>Magnification factor for label text relative to the default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further graphical parameters passed to <code>trilines</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Christian Röver, <a href="mailto:roever@statistik.tu-dortmund.de">roever@statistik.tu-dortmund.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>triplot</code>, <code>trilines</code>, <code>trigrid</code>, <code>centerlines</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">triplot(grid = TRUE, frame = FALSE)     # plot without frame 
+some.triangle &lt;- rbind(c(0, 0.65, 0.35), c(0.53, 0.47, 0), 
+                       c(0.72, 0, 0.28))[c(1:3, 1), ]
+trilines(some.triangle, col = "red", pch = 16, type = "b")
+triframe(label = c("left", "top", "right"), col = "blue", 
+         label.col = "green3")          # frame on top of points 
+</code></pre>
+
+
+</div>

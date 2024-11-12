@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>brcancer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>German Breast Cancer Study Data</h2>
+
+<h3>Description</h3>
+
+<p>German breast cancer study data, imported from Stata 16.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">brcancer
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 686 rows and 14 variables:
+</p>
+
+<ul>
+<li> <p><code>id</code> A numeric vector;
+</p>
+</li>
+<li> <p><code>hormon</code> Hormonal therapy;
+</p>
+</li>
+<li> <p><code>x1</code> Age, in years;
+</p>
+</li>
+<li> <p><code>x2</code> Menopausal status;
+</p>
+</li>
+<li> <p><code>x3</code> Tumour size, mm;
+</p>
+</li>
+<li> <p><code>x4</code> Tumour grade;
+</p>
+</li>
+<li> <p><code>x5</code> Number of positive nodes;
+</p>
+</li>
+<li> <p><code>x6</code> Progesterone receptor, fmol;
+</p>
+</li>
+<li> <p><code>rectime</code> Recurrence-free survival time, days;
+</p>
+</li>
+<li> <p><code>censrec</code> Censoring indicator;
+</p>
+</li>
+<li> <p><code>x4a</code> Tumour grade &gt;=2;
+</p>
+</li>
+<li> <p><code>x4b</code> Tumour grade == 3;
+</p>
+</li>
+<li> <p><code>x5e</code> exp(-0.12 * x5).
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>http://www.stata-press.com/data/r16/brcancer.dta
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("brcancer", package = "KMunicate")
+</code></pre>
+
+
+</div>

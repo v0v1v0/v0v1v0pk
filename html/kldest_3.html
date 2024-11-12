@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>constDiagMatrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Constant plus diagonal matrix</h2>
+
+<h3>Description</h3>
+
+<p>Specify a matrix with constant values on the diagonal and on the off-diagonals.
+Such matrices can be used to vary the degree of dependency in covariate matrices,
+for example when evaluating accuracy of KL-divergence estimation algorithms.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">constDiagMatrix(dim = 1, diag = 1, offDiag = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dim</code></td>
+<td>
+<p>Dimension</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diag</code></td>
+<td>
+<p>Value at the diagonal</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offDiag</code></td>
+<td>
+<p>Value at off-diagonals</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>dim</code>-by-<code>dim</code> matrix
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">constDiagMatrix(dim = 3, diag = 1, offDiag = 0.9)
+
+</code></pre>
+
+
+</div>

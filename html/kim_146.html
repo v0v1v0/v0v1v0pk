@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>z_to_r_transform</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Z to r transformation (Inverse of Fisher's Z transformation)</h2>
+
+<h3>Description</h3>
+
+<p>Perform the Z-to-r transformation (i.e., the inverse of Fisher's
+r-to-Z transformation) for given Z value(s).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">z_to_r_transform(z = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>z</code></td>
+<td>
+<p>a (vector of) Z values</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>the output will be a vector of correlation coefficient(s) that
+are the result(s) of the Z-to-r transformation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">z_to_r_transform(2.646652)
+z_to_r_transform(z = -3:3)
+</code></pre>
+
+
+</div>

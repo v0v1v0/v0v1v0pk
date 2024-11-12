@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>serialize_keras_object</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve the full config by serializing the Keras object.</h2>
+
+<h3>Description</h3>
+
+<p><code>serialize_keras_object()</code> serializes a Keras object to a named list
+that represents the object, and is a reciprocal function of
+<code>deserialize_keras_object()</code>. See <code>deserialize_keras_object()</code> for more
+information about the full config format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">serialize_keras_object(obj)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>the Keras object to serialize.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A named list that represents the object config.
+The config is expected to contain simple types only, and
+can be saved as json.
+The object can be
+deserialized from the config via <code>deserialize_keras_object()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/models/model_saving_apis/serialization_utils#serializekerasobject-function">https://keras.io/api/models/model_saving_apis/serialization_utils#serializekerasobject-function</a>
+</p>
+</li></ul>
+<p>Other serialization utilities: <br><code>deserialize_keras_object()</code> <br><code>get_custom_objects()</code> <br><code>get_registered_name()</code> <br><code>get_registered_object()</code> <br><code>register_keras_serializable()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

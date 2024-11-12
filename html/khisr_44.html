@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_data_sets_by_level</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieves Data Set Reporting Rate Metrics</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+<code>get_data_sets_by_level()</code> fetches the data set reporting metrics. The metric
+can be REPORTING_RATE, REPORTING_RATE_ON_TIME, ACTUAL_REPORTS, ACTUAL_REPORTS_ON_TIME, EXPECTED_REPORTS.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_data_sets_by_level(
+  dataset_ids,
+  start_date,
+  end_date = NULL,
+  level = 1,
+  org_ids = NULL,
+  ...,
+  call = caller_env()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dataset_ids</code></td>
+<td>
+<p>Required vector of data sets IDs for which to retrieve data. Required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_date</code></td>
+<td>
+<p>Optional start date to retrieve data. It is required and in the format <code>YYYY-MM-dd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end_date</code></td>
+<td>
+<p>Optional ending date for data retrieval (default is the current date).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Required desired organisation level of data (default: level 1) .</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>org_ids</code></td>
+<td>
+<p>Optional list of organization units IDs to be filtered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other options that can be passed onto DHIS2 API.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The caller environment.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble with detailed information, including:
+</p>
+
+<ul>
+<li>
+<p> Geographical identifiers (country, subnational, district, facility, depending on level)
+</p>
+</li>
+<li>
+<p> Reporting period (month, year, fiscal year)
+</p>
+</li>
+<li>
+<p> The reporting metric can be REPORTING_RATE, REPORTING_RATE_ON_TIME, ACTUAL_REPORTS, ACTUAL_REPORTS_ON_TIME, EXPECTED_REPORTS.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>get_organisations_by_level()</code> for getting the organisations units
+</p>
+</li>
+<li> <p><code>get_data_sets()</code> for retrieving the data sets
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# The MoH 745 Cancer Screening Program Monthly Summary Form
+dataset_id = c('WWh5hbCmvND')
+
+# Download data from February 2023 to current date
+data &lt;- get_data_sets_by_level(dataset_ids = dataset_id,
+                               start_date = '2023-02-01')
+data
+
+</code></pre>
+
+
+</div>

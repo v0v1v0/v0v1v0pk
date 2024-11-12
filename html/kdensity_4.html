@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bandwidths</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bandwidth Selectors</h2>
+
+<h3>Description</h3>
+
+<p>The available options for bandwidth selectors, passed as the <code>bw</code>
+argument to <code>kdensity</code>.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The input data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_str</code></td>
+<td>
+<p>A string specifying the kernel, e.g. "gaussian."</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_str</code></td>
+<td>
+<p>A string specifying the parametric start, e.g. "normal".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>support</code></td>
+<td>
+<p>The domain of definition for the kernel. (-Inf, Inf) for
+symmetric kernels.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The bandwidth functions are not exported. They are members of the
+environment <code>bw_environments</code>, and can be accessed by
+<code>kdensity:::bw_environments</code>.
+</p>
+
+
+<h3>Bandwidth selectors</h3>
+
+<p><code style="white-space: pre;">⁠"nrd0", "nrd", "bcv", "SJ"⁠</code>: Bandwidth selectors from <code>stats</code>.
+They are documented in <code style="white-space: pre;">⁠[bandwidth][stats::bandwidth] stats:bandwidth⁠</code>.
+"nrd0" is the standard bandwidth selector for symmetric kernels with
+constant parametric starts.
+</p>
+<p><code>"ucv"</code>: Unbiased cross validation. The standard option for
+asymmetric kernels.
+</p>
+<p><code>"RHE"</code>: Selector for parametric starts with a symmetric kernel,
+based on a reference rule with Hermite polynomials.
+Described in Hjort &amp; Glad (1995). The default method in <code>kdensity</code> when a parametric
+start is supplied and the kernel is symmetric.
+</p>
+<p><code>"JH"</code>: Selector for the Gaussian copula kernel, based on
+normal reference rule. Described in Jones &amp; Henderson. The default method when
+the <code>gcopula</code> kernel is used in <code>kdensity</code>.
+</p>
+
+
+<h3>Structure</h3>
+
+<p>The bandwidth selector is a function of four arguments: The data
+<code>x</code>, a kernel string <code>kernel</code>, a start string <code>start</code>,
+and a support vector <code>support</code>. To obtain the functions associated
+with these strings, use <code>get_kernel</code> and <code>get_start</code>. The
+function should return a double.
+</p>
+
+
+<h3>References</h3>
+
+<p>Jones, M. C., and D. A. Henderson. "Kernel-type density estimation on the unit interval." Biometrika 94.4 (2007): 977-984.
+Hjort, Nils Lid, and Ingrid K. Glad. "Nonparametric density estimation with a parametric start." The Annals of Statistics (1995): 882-904.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdensity()</code>, <code>stats::bandwidth.kernel()</code> for the
+bandwidth selectors of <code>stats::density()</code>. In addition,
+<code>kernels()</code>; <code>parametric_starts()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">   ## Not a serious bandwidth function.
+   silly_width = function(x, kernel = NULL, start = NULL, support = NULL) {
+     rexp(1)
+   }
+   kdensity(mtcars$mpg, start = "gumbel", bw = silly_width)
+</code></pre>
+
+
+</div>

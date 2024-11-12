@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>progress_estimated</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Progress bar with estimated time.</h2>
+
+<h3>Description</h3>
+
+<p>This provides a reference class representing a text progress bar that displays the
+estimated time remaining. When finished, it displays the total duration.  The
+automatic progress bar can be disabled by setting <code>progress_location = NULL</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">progress_estimated(
+  n,
+  min_time = 0,
+  progress_location = make_kpb_output_decisions()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Total number of items</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_time</code></td>
+<td>
+<p>Progress bar will wait until at least <code>min_time</code>
+seconds have elapsed before displaying any results.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress_location</code></td>
+<td>
+<p>where to write the progress to. Default is to make
+decisions based on location type using <code>make_kpb_output_decisions()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A ref class with methods <code>tick()</code>, <code>print()</code>,
+<code>pause()</code>, and <code>stop()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>make_kpb_output_decisions()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p &lt;- progress_estimated(3)
+p$tick()
+p$tick()
+p$tick()
+
+p &lt;- progress_estimated(3)
+for (i in 1:3) p$pause(0.1)$tick()$print()
+
+p &lt;- progress_estimated(3)
+p$tick()$print()$
+ pause(1)$stop()
+
+# If min_time is set, progress bar not shown until that many
+# seconds have elapsed
+p &lt;- progress_estimated(3, min_time = 3)
+for (i in 1:3) p$pause(0.1)$tick()$print()
+
+## Not run: 
+p &lt;- progress_estimated(10, min_time = 3)
+for (i in 1:10) p$pause(0.5)$tick()$print()
+
+# output to stderr
+p &lt;- progress_estimated(10, progress_location = stderr())
+
+# output to a file
+p &lt;- progress_estimated(10, progress_location = tempfile(fileext = ".log"))
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kobotools_kpi_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract data from kobotoolbox</h2>
+
+<h3>Description</h3>
+
+<p>'kobotools_kpi_data' is a wrapper for kobotoolbox API 'https://[URL]/api/v2/assets/[assetid]/data/'
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kobotools_kpi_data(
+  assetid,
+  url = "eu.kobotoolbox.org",
+  uname = "",
+  pwd = "",
+  encoding = "UTF-8",
+  format = "json"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>assetid</code></td>
+<td>
+<p>is the asset id of the asset for which the data is to be downloaded. The id can be found by running [kobotools_data_list_kc()]</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>The '[kpi-url]' of kobotoolbox. Default is "eu.kobotoolbox.org"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>uname</code></td>
+<td>
+<p>is username of your kobotoolbox account</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pwd</code></td>
+<td>
+<p>is the password of the account</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>is the encoding to be used. Default is "UTF-8".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>lets you define the format of output for e.g. json or xml</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function takes the url as one of the inputs. And asset id as another. Both are strings. The asset id is found by running
+the [kobotools_api()] function.Other parameters are username and password.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function returns the data in json format
+</p>
+
+
+</div>

@@ -1,0 +1,198 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>timeseries_dataset_from_array</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creates a dataset of sliding windows over a timeseries provided as array.</h2>
+
+<h3>Description</h3>
+
+<p>This function takes in a sequence of data-points gathered at
+equal intervals, along with time series parameters such as
+length of the sequences/windows, spacing between two sequence/windows, etc.,
+to produce batches of timeseries inputs and targets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">timeseries_dataset_from_array(
+  data,
+  targets,
+  sequence_length,
+  sequence_stride = 1L,
+  sampling_rate = 1L,
+  batch_size = 128L,
+  shuffle = FALSE,
+  seed = NULL,
+  start_index = NULL,
+  end_index = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>array or eager tensor
+containing consecutive data points (timesteps).
+The first dimension is expected to be the time dimension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>targets</code></td>
+<td>
+<p>Targets corresponding to timesteps in <code>data</code>.
+<code>targets[i]</code> should be the target
+corresponding to the window that starts at index <code>i</code>
+(see example 2 below).
+Pass <code>NULL</code> if you don't have target data (in this case the dataset
+will only yield the input data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sequence_length</code></td>
+<td>
+<p>Length of the output sequences
+(in number of timesteps).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sequence_stride</code></td>
+<td>
+<p>Period between successive output sequences.
+For stride <code>s</code>, output samples would
+start at index <code>data[i]</code>, <code>data[i + s]</code>, <code>data[i + 2 * s]</code>, etc.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sampling_rate</code></td>
+<td>
+<p>Period between successive individual timesteps
+within sequences. For rate <code>r</code>, timesteps
+<code style="white-space: pre;">⁠data[i], data[i + r], ... data[i + sequence_length]⁠</code>
+are used for creating a sample sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Number of timeseries samples in each batch
+(except maybe the last one). If <code>NULL</code>, the data will not be batched
+(the dataset will yield individual samples).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shuffle</code></td>
+<td>
+<p>Whether to shuffle output samples,
+or instead draw them in chronological order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Optional int; random seed for shuffling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_index</code></td>
+<td>
+<p>Optional int; data points earlier (exclusive)
+than <code>start_index</code> will not be used
+in the output sequences. This is useful to reserve part of the
+data for test or validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end_index</code></td>
+<td>
+<p>Optional int; data points later (exclusive) than <code>end_index</code>
+will not be used in the output sequences.
+This is useful to reserve part of the data for test or validation.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>tf$data$Dataset</code> instance. If <code>targets</code> was passed, the dataset yields
+list <code style="white-space: pre;">⁠(batch_of_sequences, batch_of_targets)⁠</code>. If not, the dataset yields
+only <code>batch_of_sequences</code>.
+</p>
+<p>Example 1:
+</p>
+<p>Consider indices <code style="white-space: pre;">⁠[0, 1, ... 98]⁠</code>.
+With <code style="white-space: pre;">⁠sequence_length=10,  sampling_rate=2, sequence_stride=3⁠</code>,
+<code>shuffle=FALSE</code>, the dataset will yield batches of sequences
+composed of the following indices:
+</p>
+<div class="sourceCode"><pre>First sequence:  [0  2  4  6  8 10 12 14 16 18]
+Second sequence: [3  5  7  9 11 13 15 17 19 21]
+Third sequence:  [6  8 10 12 14 16 18 20 22 24]
+...
+Last sequence:   [78 80 82 84 86 88 90 92 94 96]
+</pre></div>
+<p>In this case the last 2 data points are discarded since no full sequence
+can be generated to include them (the next sequence would have started
+at index 81, and thus its last step would have gone over 98).
+</p>
+<p>Example 2: Temporal regression.
+</p>
+<p>Consider an array <code>data</code> of scalar values, of shape <code style="white-space: pre;">⁠(steps,)⁠</code>.
+To generate a dataset that uses the past 10
+timesteps to predict the next timestep, you would use:
+</p>
+<div class="sourceCode r"><pre>data &lt;- op_array(1:20)
+input_data &lt;- data[1:10]
+targets &lt;- data[11:20]
+dataset &lt;- timeseries_dataset_from_array(
+  input_data, targets, sequence_length=10)
+iter &lt;- reticulate::as_iterator(dataset)
+reticulate::iter_next(iter)
+</pre></div>
+<div class="sourceCode"><pre>## [[1]]
+## tf.Tensor([[ 1  2  3  4  5  6  7  8  9 10]], shape=(1, 10), dtype=int32)
+##
+## [[2]]
+## tf.Tensor([11], shape=(1), dtype=int32)
+
+</pre></div>
+<p>Example 3: Temporal regression for many-to-many architectures.
+</p>
+<p>Consider two arrays of scalar values <code>X</code> and <code>Y</code>,
+both of shape <code style="white-space: pre;">⁠(100,)⁠</code>. The resulting dataset should consist samples with
+20 timestamps each. The samples should not overlap.
+To generate a dataset that uses the current timestamp
+to predict the corresponding target timestep, you would use:
+</p>
+<div class="sourceCode r"><pre>X &lt;- op_array(1:100)
+Y &lt;- X*2
+
+sample_length &lt;- 20
+input_dataset &lt;- timeseries_dataset_from_array(
+    X, NULL, sequence_length=sample_length, sequence_stride=sample_length)
+target_dataset &lt;- timeseries_dataset_from_array(
+    Y, NULL, sequence_length=sample_length, sequence_stride=sample_length)
+
+
+inputs &lt;- reticulate::as_iterator(input_dataset) %&gt;% reticulate::iter_next()
+targets &lt;- reticulate::as_iterator(target_dataset) %&gt;% reticulate::iter_next()
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/data_loading/timeseries#timeseriesdatasetfromarray-function">https://keras.io/api/data_loading/timeseries#timeseriesdatasetfromarray-function</a>
+</p>
+</li></ul>
+<p>Other dataset utils: <br><code>audio_dataset_from_directory()</code> <br><code>image_dataset_from_directory()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+<p>Other preprocessing: <br><code>image_dataset_from_directory()</code> <br><code>image_smart_resize()</code> <br><code>text_dataset_from_directory()</code> <br></p>
+
+
+</div>

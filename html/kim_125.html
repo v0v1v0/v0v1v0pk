@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>su</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>su: Sorted unique values</h2>
+
+<h3>Description</h3>
+
+<p>Extract unique elements and sort them
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">su(x = NULL, na.last = TRUE, decreasing = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector or a data frame or an array or NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.last</code></td>
+<td>
+<p>an argument to be passed onto the 'sort' function
+(in base R) for controlling the treatment of NA values.
+If <code>na.last = TRUE</code>, NA values in the data are put last;
+if <code>na.last = FALSE</code>, NA values are put first;
+if <code>na.last = NA</code>, NA values are removed.
+By default, <code>na.last = TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decreasing</code></td>
+<td>
+<p>logical. Should the sort be increasing or decreasing?
+An argument to be passed onto the 'sort' function (in base R).
+By default, <code>decreasing = FALSE</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a vector, data frame, or array-like 'x' but with duplicate
+elements/rows removed.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">su(c(10, 3, 7, 10, NA))
+su(c("b", "z", "b", "a", NA, NA, NA))
+</code></pre>
+
+
+</div>

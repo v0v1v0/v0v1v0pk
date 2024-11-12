@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getStatMeta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KOSIS Statistic Meta</h2>
+
+<h3>Description</h3>
+
+<p>KOSIS Statistic Meta
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getStatMeta(
+  orgId,
+  tblId,
+  type = c("TBL", "ORG", "PRD", "ITM", "CMMT", "UNIT", "SOURCE", "WGT", "NCD")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>orgId</code></td>
+<td>
+<p>A string specifying the organization id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tblId</code></td>
+<td>
+<p>A string specifying the table id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A string specifying the meta type</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<pre>
+## Example
+getStatMeta(orgId = "101", tblId = "DT_1IN0001")
+getStatMeta(orgId = "101", tblId = "DT_1IN0001", type = "ORG")
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame object containing queried information
+</p>
+
+
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.pvs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>predict method for pvs objects</h2>
+
+<h3>Description</h3>
+
+<p>Prediction of class membership and posterior probabilities using pairwise variable selection.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'pvs'
+predict(object, newdata, quick = FALSE, detail = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class ‘<code>pvs</code>’, as that created by the function “<code>pvs</code>” </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>a data frame or matrix containing new data. If not given the same datas as used for training the ‘<code>pvs</code>’-model are used. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quick</code></td>
+<td>
+<p>indicator (logical), whether a quick, but less accurate computation of posterior probabalities should be used or not.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>detail</code></td>
+<td>
+<p>indicator (logical), whether the returned object includes additional information about the posterior probabilities for each date in each submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments are passed to underlying <code>predict</code> calls.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If “<code>quick=FALSE</code>” the posterior probabilites for each case are computed using the pairwise coupling algorithm presented by Hastie, Tibshirani (1998). 
+If “<code>quick=FALSE</code>” a much quicker solution is used, which leads to less accurate posterior probabalities. 
+In almost all cases it doesn't has a negative effect on the classification result.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>the predicted classes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posterior</code></td>
+<td>
+<p>posterior probabilities for the classes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>details</code></td>
+<td>
+<p>(only if “<code>details=TRUE</code>”. A list containing matrices of posterior probabalities computated by the classification method for each case and classpair. </p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Gero Szepannek, <a href="mailto:szepannek@statistik.tu-dortmund.de">szepannek@statistik.tu-dortmund.de</a>, Christian Neumann</p>
+
+
+<h3>References</h3>
+
+<p>Szepannek, G. and Weihs, C. (2006)  Variable Selection for Classification of More than Two 
+Classes Where the Data are Sparse. In <em>From Data and Information Analysis to Kwnowledge Engineering.</em>,
+eds Spiliopolou, M., Kruse, R., Borgelt, C., Nuernberger, A. and Gaul, W. pp. 700-708. Springer, Heidelberg.</p>
+
+
+<h3>See Also</h3>
+
+<p>For more details and examples how to use this predict method, see <code>pvs</code>.
+</p>
+
+
+</div>

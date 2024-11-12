@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plineplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting marginal posterior class probabilities</h2>
+
+<h3>Description</h3>
+
+<p>For a given variable the posteriori probabilities of the classes given by a 
+classification method are plotted. The variable need not be used for the actual
+classifcation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plineplot(formula, data, method, x, col.wrong = "red", 
+          ylim = c(0, 1), loo = FALSE, mfrow, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>formula of the form <code>groups ~ x1 + x2 + ...</code>. 
+That is, the response is the grouping factor and the right hand side specifies the (non-factor) discriminators.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p> Data frame from which variables specified in formula are preferentially to be taken.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>character, name of classification function 
+(e.g. “<code>lda</code>”).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>variable that should be plotted. See examples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.wrong</code></td>
+<td>
+<p>color to use for missclassified objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+<p><code>ylim</code> for the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loo</code></td>
+<td>
+<p>logical, whether leave-one-out estimate is used for prediction</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mfrow</code></td>
+<td>
+<p>number of rows and columns in the graphics device, see <code>par</code>. 
+If missing, number of rows equals number of classes, and 1 column.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to the underlying classification method or plot functions.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The actual error rate.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>partimat</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(MASS)
+
+# The name of the variable can be used for x
+data(B3)
+plineplot(PHASEN ~ ., data = B3, method = "lda", 
+    x = "EWAJW", xlab = "EWAJW")
+
+# The plotted variable need not be in the data
+data(iris)
+iris2 &lt;- iris[ , c(1,3,5)]
+plineplot(Species ~ ., data = iris2, method = "lda", 
+    x = iris[ , 4], xlab = "Petal.Width")
+</code></pre>
+
+
+</div>

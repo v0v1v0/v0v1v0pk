@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cosnormX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cosine normalization of a matrix</h2>
+
+<h3>Description</h3>
+
+<p>Normalizes a numeric matrix dividing each row (if rows=TRUE) or column (if rows=FALSE)
+by their L2 norm. Thus, each row (or column) has unit norm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cosnormX(X, rows = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Numeric matrix or data.frame of any size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rows</code></td>
+<td>
+<p>If TRUE, the operation is done by row; otherwise, it is done by
+column. (Defaults: TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Cosine-normalized X.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- matrix(rnorm(50),ncol=5,nrow=10)
+cosnormX(dat)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>access_sigmas</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Access or assign dispersal sigmas of <code>KinPairSimulation</code> objects</h2>
+
+<h3>Description</h3>
+
+<p>These generics &amp; methods work with <code>KinPairSimulation</code> objects to access &amp; modify information about the dispersal
+sigma parameters that define the stored simulation. The <code>posigma()</code> method accesses the single dispersal parameter
+stored in a simulation with <code>simtype == "simple"</code>. The remaining parameters access the dispersal parameters stored
+in a simulation with <code>simtype == "composite"</code>. The dispersal kernel sigma parameters of <code>simtype == "custom"</code>
+simulations are not yet implemented here. Assignment operations currently only exist as generics (they are not yet applied
+to the <code>KinPairSimulation</code> class).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">posigma(x)
+
+posigma(x) &lt;- value
+
+initsigma(x)
+
+initsigma(x) &lt;- value
+
+breedsigma(x)
+
+breedsigma(x) &lt;- value
+
+gravsigma(x)
+
+gravsigma(x) &lt;- value
+
+ovisigma(x)
+
+ovisigma(x) &lt;- value
+
+## S4 method for signature 'KinPairSimulation'
+posigma(x)
+
+## S4 method for signature 'KinPairSimulation'
+initsigma(x)
+
+## S4 method for signature 'KinPairSimulation'
+breedsigma(x)
+
+## S4 method for signature 'KinPairSimulation'
+gravsigma(x)
+
+## S4 method for signature 'KinPairSimulation'
+ovisigma(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>KinPairSimulation</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>new value to assign</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KinPairSimulation</code></td>
+<td>
+<p>object of class KinPairSimulation</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>numeric</code> value of specified sigma parameter or modified <code>KinPairSimulation</code> object
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>posigma,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>initsigma,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>breedsigma,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>gravsigma,KinPairSimulation-method</code>: 
+</p>
+</li>
+<li> <p><code>ovisigma,KinPairSimulation-method</code>: 
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other kpsmethods: 
+<code>filter_methods</code>,
+<code>kernelshape()</code>,
+<code>kerneltype()</code>,
+<code>simtype()</code>
+</p>
+
+
+</div>

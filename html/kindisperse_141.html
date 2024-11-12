@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vector_to_kinpair</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert vector of kin separation distances to <code>KinPairData</code> class</h2>
+
+<h3>Description</h3>
+
+<p>Function takes at minimum a (numeric) vector of distances between related kinpairs, and
+returns a <code>KinPairData</code> object. Optional parameters can assign kinship and lifestage values to the
+returned object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vector_to_kinpair(vect, kinship = NULL, lifestage = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vect</code></td>
+<td>
+<p>vector of kinpair distances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>character or character vector containing kinship categories of kinpairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lifestage</code></td>
+<td>
+<p>character or character vector containing lifestages of kinpairs</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns valid <code>KinPairData</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other import_functions: 
+<code>csv_to_kinpair()</code>,
+<code>df_to_kinpair()</code>,
+<code>read_kindata()</code>,
+<code>tsv_to_kinpair()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">vector_to_kinpair(1:10, "FS", "immature")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_cosine_proximity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>(Deprecated) metric_cosine_proximity</h2>
+
+<h3>Description</h3>
+
+<p><code>metric_cosine_proximity()</code> is deprecated and will be removed in a future
+version. Please update your code to use <code>metric_cosine_similarity()</code> if
+possible. If you need the actual function and not a Metric object, (e.g,
+because you are using the intermediate computed values in a custom training
+loop before reduction), please use <code>loss_cosine_similarity()</code> or
+<code>tensorflow::tf$compat$v1$keras$metrics$cosine_proximity()</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_cosine_proximity(y_true, y_pred)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>Tensor of true targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>Tensor of predicted targets.</p>
+</td>
+</tr>
+</table>
+</div>

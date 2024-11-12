@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_discrete</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Analytical KL divergence for two discrete distributions</h2>
+
+<h3>Description</h3>
+
+<p>Analytical KL divergence for two discrete distributions
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_discrete(P, Q)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>P, Q</code></td>
+<td>
+<p>Numerical arrays with the same dimensions, representing discrete
+probability distributions</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A scalar (the Kullback-Leibler divergence)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 1-D example
+P &lt;- 1:4/10
+Q &lt;- rep(0.25,4)
+kld_discrete(P,Q)
+
+# The above example in 2-D
+P &lt;- matrix(1:4/10,nrow=2)
+Q &lt;- matrix(0.25,nrow=2,ncol=2)
+kld_discrete(P,Q)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,248 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kcpRS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KCP on the running statistics</h2>
+
+<h3>Description</h3>
+
+<p>Given a user-specified function <code>RS_fun</code> to compute the running statistics (see <code>runMean</code>, <code>runVar</code>, <code>runAR</code> and <code>runCorr</code>), a KCP permutation test (see <code>permTest</code>) is first implemented to test whether
+there is at least one significant change point, then through model selection most optimal number of change points is chosen.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kcpRS(
+  data,
+  RS_fun,
+  RS_name,
+  wsize = 25,
+  nperm = 1000,
+  Kmax = 10,
+  alpha = 0.05,
+  varTest = FALSE,
+  ncpu = 1
+)
+
+## S3 method for class 'kcpRS'
+plot(x, ...)
+
+## S3 method for class 'kcpRS'
+print(x, kcp_details = TRUE, ...)
+
+## S3 method for class 'kcpRS'
+summary(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data <em>N</em> x <em>v</em> dataframe where <em>N</em> is the number of time points and <em>v</em> the number of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RS_fun</code></td>
+<td>
+<p>Running statistics function: Should require <code>wsize</code> and <code>wstep</code> as input and return a dataframe of running statistics
+as output. The rows of this dataframe should correspond to the windows and the columns should correspond to the variable(s) on which the running statistics were computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RS_name</code></td>
+<td>
+<p>Name of the monitored running statistic.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wsize</code></td>
+<td>
+<p>Window size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nperm</code></td>
+<td>
+<p>Number of permutations used in the permutation test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kmax</code></td>
+<td>
+<p>Maximum number of change points desired</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Significance level of the permutation test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varTest</code></td>
+<td>
+<p>If set to FALSE, only the variance DROP test is implemented, and if set to TRUE, both the variance test and the variance DROP tests are implemented.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncpu</code></td>
+<td>
+<p>number of cpu cores to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of the type produced by <code>kcpRS</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further plotting arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kcp_details</code></td>
+<td>
+<p>If <em>TRUE</em>, then the matrix of optimal change points solutions given <em>k</em> is displayed.
+If FALSE, then this output is suppressed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of the type produced by <code>kcpRS_workflow</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>RS_name</code></td>
+<td>
+<p>Name indicated for the monitored running statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RS</code></td>
+<td>
+<p>Dataframe of running statistics with rows corresponding to the time window and columns corresponding to
+the (combination of) variable(s) on which the running statistics were computed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wsize</code></td>
+<td>
+<p>Selected window size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varTest</code></td>
+<td>
+<p>Selected choice of implementation for varTest</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nperm</code></td>
+<td>
+<p>Selected number of permutations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Selected significance level of the permutation test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subTest_alpha</code></td>
+<td>
+<p>Significance level of each subtest. If <code>varTest</code>=0, <code>subTest_alpha</code> is equal to <code>alpha</code> since only the variance drop test is implemented.
+If <code>varTest</code>=1, <code>subTest_alpha</code>=<code>alpha</code>/2 since two subtests are carried out and Bonferonni correction is applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>BestK</code></td>
+<td>
+<p>Optimal number of change points based on grid search</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>changePoints</code></td>
+<td>
+<p>Change point location(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p_var_test</code></td>
+<td>
+<p>P-value of the variance test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p_varDrop_test</code></td>
+<td>
+<p>P-value of the variance drop test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>CPs_given_K</code></td>
+<td>
+<p>A matrix comprised of the minimized variance criterion <em>Rmin</em> and the optimal change point location(s) for each <em>k</em> from 1 to <code>Kmax</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>changePoints_scree_test</code></td>
+<td>
+<p>Optimal number of change points based on scree test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scree_test</code></td>
+<td>
+<p>A matrix comprised of the scree values for each <em>k</em> from 1 to <code>Kmax-1</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>medianK</code></td>
+<td>
+<p>Median Euclidean distance between all pairs of running statistics</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Cabrieto, J., Tuerlinckx, F., Kuppens, P., Wilhelm, F., Liedlgruber, M., &amp; Ceulemans, E. (2018). Capturing correlation changes by applying kernel change point
+detection on the running correlations. <em>Information Sciences</em>, 447, 117-139. doi:10.1016/j.ins.2018.03.010
+</p>
+<p>Cabrieto, J., Adolf, J., Tuerlinckx, F., Kuppens, P., &amp; Ceulemans, E. (2018). Detecting long-lived autodependency changes in a multivariate system via change point detection
+and regime switching models. <em>Scientific Reports</em>, 8, 15637, 1-15. doi:10.1038/s41598-018-33819-8
+</p>
+<p>Cabrieto, J., Meers, K., Schat, E., Adolf, J. K., Kuppens, P., Tuerlinckx, F., &amp; Ceulemans, E. (2022). kcpRS: An R package for performing kernel change point detection on 
+the running statistics of multivariate time series. <em>Behavior Research Methods</em>, 54, 1092-1113. doi:10.3758/s13428-021-01603-8
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">phase1=cbind(rnorm(50,0,1),rnorm(50,0,1)) #phase1: Means=0
+phase2=cbind(rnorm(50,1,1),rnorm(50,1,1)) #phase2: Means=1
+X=rbind(phase1,phase2)
+res=kcpRS(data=X,RS_fun=runMean,RS_name="Mean",wsize=25,
+nperm=1000,Kmax=10,alpha=.05,varTest=FALSE,ncpu=1)
+
+summary(res)
+plot(res)
+
+</code></pre>
+
+
+</div>

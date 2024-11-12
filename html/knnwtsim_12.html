@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SwMatrixCalc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Weighted Similarity Matrix</h2>
+
+<h3>Description</h3>
+
+<p>A wrapper function which calls each of <code>StMatrixCalc(v = t.in)</code>,
+<code>SpMatrixCalc(v = p.in, nPeriods = nPeriods.in)</code>,
+and <code>SxMatrixCalc(A = X.in, XdistMetric = XdistMetric.in)</code> to generate the three matrices of using the component measures of <code>S_w</code>. Then
+generates the final weighted similarity matrix as the sum of each component matrix multiplied by its corresponding <code>weights</code>.
+The first value in <code>weights</code> will be multiplied by <code>S_t</code>, the second <code>S_p</code>, and the third <code>S_x</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SwMatrixCalc(
+  t.in,
+  p.in,
+  nPeriods.in,
+  X.in,
+  XdistMetric.in = "euclidean",
+  weights = c(1/3, 1/3, 1/3)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>t.in</code></td>
+<td>
+<p>numeric vector of time orders for points in the response series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.in</code></td>
+<td>
+<p>numeric vector of period within a seasonal cycle (ex. 1 for January points in monthly data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nPeriods.in</code></td>
+<td>
+<p>numeric scalar indicating the maximum value <code>p.in</code> could take on (ex. 12 for monthly data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X.in</code></td>
+<td>
+<p>numeric vector or matrix of exogenous predictors, where the rows correspond to points in the response series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XdistMetric.in</code></td>
+<td>
+<p>character describing the method <code>stats::dist()</code> should use. This must be one of <code>"euclidean"</code>,
+<code>"maximum"</code>, <code>"manhattan"</code>, <code>"canberra"</code>, <code>"binary"</code>, or <code>"minkowski"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>numeric vector where first value represents weight for <code>S_t</code>, second value the weight for <code>S_p</code>, and the third value the weight for <code>S_x</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric matrix of similarities which is calculated using <code>S_w</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li>
+<p> Trupiano (2021) arXiv:2112.06266 for information on the formulation of <code>S_w</code>.
+</p>
+</li>
+<li> <p><code>StMatrixCalc()</code> for information on the calculation of <code>S_t</code>.
+</p>
+</li>
+<li> <p><code>SpMatrixCalc()</code> for information on the calculation of <code>S_p</code>.
+</p>
+</li>
+<li> <p><code>SxMatrixCalc()</code> for information on the calculation of <code>S_x</code>.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">t &lt;- c(1, 2, 3)
+p &lt;- c(1, 2, 1)
+X &lt;- matrix(c(1, 1, 1, 2, 2, 2, 3, 3, 3), nrow = 3, ncol = 3, byrow = TRUE)
+SwMatrixCalc(
+  t.in = t,
+  p.in = p, nPeriods.in = 2,
+  X.in = X,
+  weights = c(1 / 4, 1 / 4, 1 / 2)
+)
+</code></pre>
+
+
+</div>

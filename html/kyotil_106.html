@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>iorw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Causal Mediation Analysis of Cowling et al.
+</h2>
+
+<h3>Description</h3>
+
+<p>Estimate the total, direct, and indirect effects using IORW method (inverse odds ratio weighting) and compute 95
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">iorw(formula.effect, formula.mediators, data, family =
+ NULL, nboot = 10000, numCores = 1, save.steps = FALSE,
+ verbose = FALSE)
+
+## S3 method for class 'iorw'
+print(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula.effect</code></td>
+<td>
+
+<p>a formula object for the total and direct effect regression. The first term on the right is assumed to be the binary treatment/exposure variable.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula.mediators</code></td>
+<td>
+
+<p>a formula object for logistic regression. It should be of the form: ~ mediation marker1 + mediation marker2.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>a data frame.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+
+<p>if Cox regression, leave as NULL; otherwise, it will be passed to glm().
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboot</code></td>
+<td>
+
+<p>an integer. Number of bootstrap replicates.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCores</code></td>
+<td>
+
+<p>an interger. Number of cores to use for parallel procesing.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save.steps</code></td>
+<td>
+
+<p>boolean. Whether or not to save the fits from the three steps and the weights.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>Object of type iorw
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>boolean. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Additional arguments passed to the print function. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Code by Cowling and Lim was downloaded from https://datadryad.org/stash/dataset/doi:10.5061/dryad.cv37539
+<br>
+If a bootstrap replicate generates warnings during regression, NA will be returned for that replicate. The number of such occurrences is recorded in an attribute of boot.perc in the return value.
+<br>
+It does not handle sampling weights yet.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Point estimates and percentile bootstrap confidence intervals.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Youyi Fong, based on code by Cowling and Lim
+</p>
+
+
+<h3>References</h3>
+
+<p>Cowling, B. J., Lim, W. W., Perera, R. A., Fang, V. J., Leung, G. M., Peiris, J. M., &amp; Tchetgen Tchetgen, E. J. (2019). Influenza hemagglutination-inhibition antibody titer as a mediator of vaccine-induced protection for influenza B. Clinical Infectious Diseases, 68(10), 1713-1717.
+<br>
+Nguyen, Q. C., Osypuk, T. L., Schmidt, N. M., Glymour, M. M., &amp; Tchetgen Tchetgen, E. J. (2015). Practical guidance for conducting mediation analysis with multiple mediators using inverse odds ratio weighting. American journal of epidemiology, 181(5), 349-356.
+<br>
+Tchetgen Tchetgen, E. J. (2013). Inverse odds ratio-weighted estimation for causal mediation analysis. Statistics in medicine, 32(26), 4567-4580.
+<br>
+Imai, K., Keele, L., &amp; Tingley, D. (2010). A general approach to causal mediation analysis. Psychological methods, 15(4), 309.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+#### Cox regression
+
+# without adjusting for baseline markers
+library(survival)
+formula.effect=Surv(surv_time, flu)~vaccine+age
+formula.mediators=~log2(postvax.B.Brisbane/5)
+res.1=iorw(formula.effect, formula.mediators, kid, nboot=10, numCores=1); res.1
+stopifnot(max(abs(res.1$boot[1,] - c(0.2029779,0.6070105,0.3039110,0.4283389,0.2124268)))&lt;1e-6)
+
+# adjust for baseline markers
+formula.effect=Surv(surv_time, flu)~vaccine+log2(prevax.B.Brisbane)+age
+formula.mediators=~log2(postvax.B.Brisbane/5)
+res.2=iorw(formula.effect, formula.mediators, kid, nboot=10, numCores=1); res.2
+
+
+#### Logistic regression
+
+# without adjusting for baseline markers
+formula.effect=flu~vaccine+age
+formula.mediators=~log2(postvax.B.Brisbane/5)
+res.3=iorw(formula.effect, formula.mediators, kid, family=binomial(), nboot=10, numCores=1); res.3
+stopifnot(max(abs(res.3$boot[1,] - c(0.1960024,0.6154349,0.2937164,0.4145470,0.2168644)))&lt;1e-6)
+
+# adjust for baseline markers
+formula.effect=flu~vaccine+log2(prevax.B.Brisbane)+age
+formula.mediators=~log2(postvax.B.Brisbane/5)
+res.4=iorw(formula.effect, formula.mediators, kid, family=binomial(), nboot=10, numCores=1); res.4
+
+
+
+
+
+
+</code></pre>
+
+
+</div>

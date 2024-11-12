@@ -1,0 +1,258 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kvalidate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Validate Prerequisite Relations or Knowledge Structures</h2>
+
+<h3>Description</h3>
+
+<p>Validates prerequisite relations or knowledge structures
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  kvalidate(x, rpatterns=NULL, method=c("gamma","percent","VC","DI","DA"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rpatterns</code></td>
+<td>
+<p>A binary data frame or matrix where each row specifies
+the response pattern of one individual to the set of domain problems in x.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>The desired validation method (see details).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>kvalidate</code> calculates validity coefficients for prerequisite
+relations and knowledge structures.
+</p>
+<p>The <em><code class="reqn">\gamma</code>-Index</em> (method <code>"gamma"</code>) validates
+the prerequisite relation underlying a knowledge structure and assumes
+that not every response pattern is represented by a prerequisite relation.
+For this purpose it compares the number of response patterns that are
+represented by a prerequisite relation (i.e., concordant pairs) with the
+number of response patterns that are not represented by a prerequisite
+relation (i.e., discordant pairs). Formally, the <code class="reqn">\gamma</code>-Index
+is defined as </p>
+<p style="text-align: center;"><code class="reqn">\gamma = \frac{N_c - N_d}{N_c + N_d}</code>
+</p>
+
+<p>where <code class="reqn">N_c</code> is the number of concordant pairs and <code class="reqn">N_d</code>
+the number of discordant pairs. Generally, a positive <code class="reqn">\gamma</code>-value
+supports the validity of prerequisite relations.
+</p>
+<p>The validation method <code>"percent"</code> likewise validates prerequisite
+relations and assumes that more difficult or complex domain problems are
+solved less frequently than less difficult or complex domain problems.
+For this purpose it calculates the relative solution frequency for each
+of the domain problems in <em>Q</em>.
+</p>
+<p>The <em>Violational Coefficient</em> (method <code>"VC"</code>) also validates
+prerequisite relations. For this purpose, the number of violations
+(i.e., the earlier mentioned discordant pairs) against a prerequisite
+relation are calculated. Formally, the VC is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">VC = \frac{1}{n(|S| - m)} \sum_{x,y} v_{xy}</code>
+</p>
+
+<p>where <code class="reqn">n</code> denotes the number of response vectors, <code class="reqn">|S|</code>
+refers to the number of pairs in the relation, <code class="reqn">m</code> denotes the number
+of items, and <code class="reqn">v_{xy}</code> again refers to the number of discordant
+pairs. Generally, a low VC supports the validity of prerequisite relations.
+</p>
+<p>In contrast to the other three indices, the <em>Discrepancy Index</em> (method
+<code>"DI"</code> and the <em>Distance Agreement
+Coefficient</em> (method <code>"DA"</code>) validate the resulting knowledge
+structure. The Discrepancy Index is the average distance between the response patterns
+and the knowledge structure
+</p>
+<p style="text-align: center;"><code class="reqn">DI = \sum_{r\in R}\min_{K\in\mathcal{K}}d(r,K) \frac{1}{n}</code>
+</p>
+
+<p>where <code class="reqn">d</code> is the symmetric set difference. Generally, a lower DI.value indicates
+a better fit between a knowledge structure and a set of response patterns.
+</p>
+<p>The Distance Agreement Coefficient compares the average symmetric distance
+between the knowledge structure and respone patterns (referred to as
+<em>ddat</em>) to the average symmetric distance between the knowledge
+structure and the power set of response patterns (referred to as
+<em>dpot</em>). By calculating the ratio of <em>ddat</em> and <em>dpot</em>,
+the DA is determined. Generally, a lower DA-value indicates a better fit
+between a knowledge structure and a set of response patterns. Please note that 
+the <em>ddat</em> value is equal to the <em>DI</em> index. The DA coefficient is insofar 
+a further development of the DI index as it takes into account the sizes of
+the domain and the knowledge structure and thus makes the DA values better
+comparable.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Depending on the desired assessment method, a data frame with results for
+each domain problem (method <code>"percent"</code>), or a list
+(methods <code>"gamma"</code>, <code>"VC"</code>, <code>"DI"</code> and <code>"DA"</code>) with
+the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>gamma</code></td>
+<td>
+<p>The gamma-value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nc</code></td>
+<td>
+<p>Number of concordant pairs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nd</code></td>
+<td>
+<p>Number of discordant pairs.</p>
+</td>
+</tr>
+</table>
+<p>for the <code>"gamma"</code> method,
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>vc</code></td>
+<td>
+<p>The VC-value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nd</code></td>
+<td>
+<p>Number of discordant pairs.</p>
+</td>
+</tr>
+</table>
+<p>for the <code>"VC"</code> method,
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>di</code></td>
+<td>
+<p>The DI-value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>di_dist</code></td>
+<td>
+<p>The distance table for DI.</p>
+</td>
+</tr>
+</table>
+<p>for the <code>"DI"</code> method, and
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>ddat</code></td>
+<td>
+<p>The ddat-value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ddat_dist</code></td>
+<td>
+<p>The distance table for ddat.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpot</code></td>
+<td>
+<p>The dpot-value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpot_dist</code></td>
+<td>
+<p>The distance table for dpot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DA</code></td>
+<td>
+<p>The Distance Agreement Coefficient.</p>
+</td>
+</tr>
+</table>
+<p>for the <code>"DA"</code> nethod.
+</p>
+
+
+<h3>References</h3>
+
+<p>Goodman, L. A. &amp; Kruskal, W. H. (1972) Measures of association for
+cross classification. <em>Journal of the American Statistical
+Association,</em> 67.
+</p>
+<p>Kambouri, M., Koppen, M., Villano, M., &amp; Falmagne, J.-C. (1994). Knowledge assessment:
+Tapping human expertise by the QUERY routine. International <em>Journal of
+Human–Computer–Studies, 40,</em> 119–151.
+</p>
+<p>Schrepp, M. (1999) An empirical test of a process model for letter
+series completion problems. In D. Albert &amp; J. Lukas (Eds.),
+<em>Knowledge Spaces: Theories, Emprical Research, Applications</em>.
+Mahwah, NJ: Lawrence Erlbaum Associates.
+</p>
+<p>Schrepp, M., Held, T., &amp; Albert, D. (1999) Component-based
+construction of surmise relations for chess problems. In D. Albert &amp;
+J. Lukas (Eds.), <em>Knowledge Spaces: Theories, Empirical Research,
+Applications</em>. Mahwah, NJ: Lawrence Erlbaum Associates.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set("a"), set("a","b"), set("a","c"), set("d","e"), 
+   set("a","b","d","e"), set("a","c","d","e"), set("a","b","c","d","e")))
+rp &lt;- data.frame(a=c(1,1,0,1,1,1,1,0,0,0),b=c(0,1,0,1,0,1,0,1,0,0),
+   c=c(0,0,0,0,1,1,1,0,1,0),d=c(0,0,1,1,1,1,0,0,0,1), e=c(0,0,1,1,1,1,0,0,0,0))
+
+# Gamma Index
+kvalidate(kst, rpatterns=rp, method="gamma")
+
+# Percent
+kvalidate(kst, rpatterns=rp, method="percent")
+
+# Violational Coefficient
+kvalidate(kst, rpatterns=rp, method="VC")
+
+# Discrepancy Index
+kvalidate(kst, rpatterns=rp, method="DI")
+
+# Distance Agreement Coefficient
+kvalidate(kst, rpatterns=rp, method="DA")
+</code></pre>
+
+
+</div>

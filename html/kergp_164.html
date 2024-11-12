@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>q1LowRank</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Qualitative Correlation or Covariance Kernel with one Input and
+Low-Rank Correlation
+</h2>
+
+<h3>Description</h3>
+
+<p>Qualitative correlation or covariance kernel with one input and
+low-rank correlation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+q1LowRank(factor, rank = 2L, input = "x",
+          cov = c("corr", "homo", "hete"), intAsChar = TRUE)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+
+<p>A factor with the wanted levels for the covariance kernel object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rank</code></td>
+<td>
+
+<p>The wanted rank, which must be <code class="reqn">\geq 2</code> and <code class="reqn">&lt; m</code>
+where <code class="reqn">m</code> is the number of levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+
+<p>Name of (qualitative) input for the kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>Character telling what variance structure will be chosen:
+<em>correlation</em> with no variance parameter, <em>homoscedastic</em>
+with one variance parameter or <em>heteroscedastic</em> with <code class="reqn">m</code>
+variance parameters.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intAsChar</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), an integer-valued input will be
+coerced into a character. Otherwise, it will be coerced into a factor.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The correlation structure involves <code class="reqn">(r - 1)(m - r /2)</code> parameters.
+The parameterization of Rapisarda et al is used: the correlation
+parameters are angles <code class="reqn">\theta_{i,j}</code> corresponding to
+<code class="reqn">1 &lt; i \leq r</code> and <code class="reqn">1 \leq j &lt; i</code>
+or to <code class="reqn">r &lt; i \leq m</code> and
+<code class="reqn">1 \leq j &lt; r</code>. The
+correlation matrix <code class="reqn">\mathbf{C}</code> for the levels, with size
+<code class="reqn">m</code>, factors as
+<code class="reqn">\mathbf{C} = \mathbf{L}\mathbf{L}^\top</code>
+where <code class="reqn">\mathbf{L}</code> is a lower-triangular
+matrix with dimension <code class="reqn">m \times r</code> with all its rows
+having unit Euclidean norm. Note that the diagonal elements of
+<code class="reqn">\mathbf{L}</code> can be negative and correspondingly the angles
+<code class="reqn">\theta_{i,1}</code> are taken in the interval
+<code class="reqn">[0, 2\pi)</code> for <code class="reqn">1 &lt; i \leq r</code>. The
+matrix <code class="reqn">\mathbf{L}</code> is not unique. As explained in Grubišić and
+Pietersz, the parameterization is surjective: any correlation with
+rank <code class="reqn">\leq r</code> is obtained by choosing a suitable vector
+of parameters, but this vector is not unique.
+</p>
+<p>Correlation kernels are needed in tensor products because the tensor
+product of two covariance kernels each with unknown variance would not
+be identifiable.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with class <code>"covQual"</code> with <code>d = 1</code> qualitative
+input.
+</p>
+
+
+<h3>References</h3>
+
+<p>Francesco Rapisarda, Damanio Brigo, Fabio Mercurio (2007).
+"Parameterizing Correlations a Geometric Interpretation".
+<em>IMA Journal of Management Mathematics</em>, <b>18</b>(1):
+55-73.
+</p>
+<p>Igor Grubišić, Raoul Pietersz
+(2007). "Efficient Rank Reduction of Correlation Matrices". <em>Linear
+Algebra and its Applications</em>, <b>422</b>: 629-653.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The <code>q1Symm</code> function to create a kernel object for the
+full-rank case and <code>corLevLowRank</code> for the correlation
+function.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">myFact &lt;- factor(letters[1:8])
+myCov &lt;- q1LowRank(factor = myFact, rank = 3)
+## corrplot
+plot(myCov)
+## find the rank using a pivoted Cholesky
+chol(covMat(myCov), pivot = TRUE)
+</code></pre>
+
+
+</div>

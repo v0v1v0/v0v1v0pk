@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gmm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Returns a Gaussian Mixture Model</h2>
+
+<h3>Description</h3>
+
+<p>Returns a Gaussian Mixture Model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gmm(nComp = NULL, mu = NULL, sigma = NULL, weights = NULL, d = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>nComp</code></td>
+<td>
+<p>(scalar) : number of components</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>(d by k): mean of each component</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>(d by d by k): covariance of each component</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>(1 by k) : mixing weight of each proportion (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>: number of dimensions of vector (optional)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>model : A Gaussian Mixture Model generated from the given parameters
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Default 1-d gaussian mixture model
+model &lt;- gmm()
+
+# 1-d Gaussian mixture model with 3 components
+model &lt;- gmm(nComp = 3)
+
+# 3-d Gaussian mixture model with 3 components, with specified mu,sigma and weights
+mu &lt;- matrix(c(1,2,3,2,3,4,5,6,7),ncol=3)
+sigma &lt;- array(diag(3),c(3,3,3))
+model &lt;- gmm(nComp = 3, mu = mu, sigma=sigma, weights = c(0.2,0.4,0.4), d = 3)
+</code></pre>
+
+
+</div>

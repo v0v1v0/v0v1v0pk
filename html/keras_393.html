@@ -1,0 +1,132 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_random_contrast</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adjust the contrast of an image or images by a random factor</h2>
+
+<h3>Description</h3>
+
+<p>Adjust the contrast of an image or images by a random factor
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_random_contrast(object, factor, seed = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factor</code></td>
+<td>
+<p>a positive float represented as fraction of value, or a list of
+size 2 representing lower and upper bound. When represented as a single
+float, lower = upper. The contrast factor will be randomly picked between
+<code style="white-space: pre;">⁠[1.0 - lower, 1.0 + upper]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Integer. Used to create a random seed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Contrast is adjusted independently for each channel of each image during
+training.
+</p>
+<p>For each channel, this layer computes the mean of the image pixels in the
+channel and then adjusts each component <code>x</code> of each pixel to
+<code>(x - mean) * contrast_factor + mean</code>.
+</p>
+<p>Input shape:
+3D (unbatched) or 4D (batched) tensor with shape:
+<code style="white-space: pre;">⁠(..., height, width, channels)⁠</code>, in <code>"channels_last"</code> format.
+</p>
+<p>Output shape:
+3D (unbatched) or 4D (batched) tensor with shape:
+<code style="white-space: pre;">⁠(..., height, width, channels)⁠</code>, in <code>"channels_last"</code> format.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/RandomContrast">https://www.tensorflow.org/api_docs/python/tf/keras/layers/RandomContrast</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/preprocessing_layers/">https://keras.io/api/layers/preprocessing_layers/</a>
+</p>
+</li>
+</ul>
+<p>Other image augmentation layers: 
+<code>layer_random_brightness()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_width()</code>,
+<code>layer_random_zoom()</code>
+</p>
+<p>Other preprocessing layers: 
+<code>layer_category_encoding()</code>,
+<code>layer_center_crop()</code>,
+<code>layer_discretization()</code>,
+<code>layer_hashing()</code>,
+<code>layer_integer_lookup()</code>,
+<code>layer_normalization()</code>,
+<code>layer_random_brightness()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_width()</code>,
+<code>layer_random_zoom()</code>,
+<code>layer_rescaling()</code>,
+<code>layer_resizing()</code>,
+<code>layer_string_lookup()</code>,
+<code>layer_text_vectorization()</code>
+</p>
+
+
+</div>

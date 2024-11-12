@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scores</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Generic Function: Scores for a Covariance Kernel Object
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function returning the scores for a covariance kernel object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scores(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>A covariance object.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Other arguments passed to methods.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Compute the derivatives <code class="reqn">\partial_{\theta_k}\ell </code>
+for the (possibly concentrated) log-likelihood <code class="reqn">\ell :=
+  \log L</code> of a covariance object with parameter vector
+<code class="reqn">\boldsymbol{\theta}</code>.  The score for
+<code class="reqn">\theta_k</code> is obtained as a matrix scalar product
+</p>
+<p style="text-align: center;"><code class="reqn">
+    \partial_{\theta_k} \ell
+    = \textrm{trace}(\mathbf{W} \mathbf{D})
+  </code>
+</p>
+
+<p>where <code class="reqn">\mathbf{D} := \partial_{\theta_k} \mathbf{C}</code>
+and where  <code class="reqn">\mathbf{W}</code> is the matrix
+<code class="reqn">
+    \mathbf{W} := \mathbf{e}\mathbf{e}^\top - \mathbf{C}^{-1}
+  </code>.
+The vector <code class="reqn">\mathbf{e}</code> is the vector of residuals
+and the matrix <code class="reqn">\mathbf{C}</code>
+is the covariance computed for the design <code class="reqn">\mathbf{X}</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector of length <code>npar(object)</code> containing the scores.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The scores can be efficiently computed when the matrix
+<code class="reqn">\mathbf{W}</code> has already been pre-computed.
+</p>
+
+
+</div>

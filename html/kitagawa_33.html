@@ -1,0 +1,162 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>owrsp-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generic methods for objects with class <code>'owrsp'</code>.</h2>
+
+<h3>Description</h3>
+
+<p>An object with class 'owrsp' is a list containing the
+response information, and the
+mechanical, hydraulic, and material properties used to
+generate the response for an open well.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'owrsp'
+as.data.frame(x, ...)
+
+data.frame.owrsp(x, ...)
+
+## S3 method for class 'owrsp'
+print(x, n = 3, ...)
+
+## S3 method for class 'owrsp'
+summary(object, ...)
+
+## S3 method for class 'summary.owrsp'
+print(x, ...)
+
+## S3 method for class 'owrsp'
+lines(x, series = c("amp", "phs"), ...)
+
+## S3 method for class 'owrsp'
+points(x, series = c("amp", "phs"), pch = "+", ...)
+
+## S3 method for class 'owrsp'
+plot(
+  x,
+  xlims = c(-3, 1),
+  ylims = list(amp = NULL, phs = 185 * c(-1, 1)),
+  logamp = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>'owrsp' object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>numeric; the number of <code>head</code> and <code>tail</code> to print</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>'owrsp' object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>series</code></td>
+<td>
+<p>character; the series to plot (amplitude or phase)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch</code></td>
+<td>
+<p>point character, as in <code>par</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlims</code></td>
+<td>
+<p>limits for x-axis (applies to both amp and phs frames)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylims</code></td>
+<td>
+<p>optional list of limits for y-axis (i.e., <code>list(amp=c(..),phs=c(...))</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logamp</code></td>
+<td>
+<p>logical; should the amplitude be in log10 units</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The response information is a
+matrix with frequency, complex response
+[<code class="reqn">\omega</code>, <code class="reqn">Z_\alpha (\omega)</code>]
+where the units of <code class="reqn">\omega</code> will be as they were input.
+The amplitude of <code class="reqn">Z</code>
+is in meters per strain, 
+and the phase is in radians.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>open_well_response</code>
+</p>
+<p><code>kitagawa-package</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">S. &lt;- 1e-5  	# Storativity [nondimensional]
+T. &lt;- 1e-4		# Transmissivity [m**2 / s]
+frq &lt;- 1/(1:200)
+# Defaults to the Rojstaczer formulation
+W &lt;- open_well_response(frq, T. = T., S. = S., Rs. = 0.12, freq.units="Hz")
+# (warning message about missing 'z')
+W &lt;- open_well_response(frq, T. = T., S. = S., Rs. = 0.12, freq.units="Hz", z=1)
+str(W)
+print(W)
+print(summary(W))
+plot(rnorm(10), xlim=c(-1,11), ylim=c(-2,2))
+lines(W)
+lines(W, "phs", col="red")
+points(W)
+points(W, "phs")
+#
+Wdf &lt;- as.data.frame(W)
+plot(Mod(wellresp) ~ omega, Wdf) # amplitude
+plot(Arg(wellresp) ~ omega, Wdf) # phase
+plot(W)
+# change limits:
+plot(W, xlims=c(-4,0), ylims=list(amp=c(-7,-3), phs=185*c(-1,1)))
+</code></pre>
+
+
+</div>

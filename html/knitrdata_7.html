@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_data_chunk_dialog</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Invoke Shiny gadget to create a data chunk</h2>
+
+<h3>Description</h3>
+
+<p>Opens a Shiny dialog allowing the user to specify the content and chunk
+options of a data chunk. As different dialog elements are specified, other
+elements will be modified to suggest likely desired values. For example, if a
+binary file is uploaded, then the <code>format</code> will be set to <code>binary</code>,
+the <code>encoding</code> will be set to <code>base64</code> and the <code>Encode data?</code>
+option will be checked. If these options are not appropriate, then they can
+be altered afterwards.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_data_chunk_dialog(insert.editor.doc = FALSE)
+
+insert_data_chunk_dialog(insert.editor.doc = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>insert.editor.doc</code></td>
+<td>
+<p>Whether or not to insert output chunk into active
+RStudio editor document at cursor position. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>When the <code>Create chunk</code> button is clicked, the function will return the
+chunk contents including header and tail. If <code>insert.editor.doc==TRUE</code>,
+then the resulting chunk will be inserted into the active document in the
+RStudio editor at the cursor position.
+</p>
+<p><code>insert_data_chunk_dialog</code> is a wrapper for
+<code>create_data_chunk_dialog(insert.editor.doc=TRUE)</code>.
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>create_data_chunk_dialog</code>: Invisibly returns the text of the data
+chunk as a character vector, one line of text per element.
+</p>
+</li>
+<li> <p><code>insert_data_chunk_dialog</code>: Invisibly returns the text of the data
+chunk as a character vector, one line of text per element, if a chunk was
+inserted. Returns <code>NULL</code> otherwise.
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>David M. Kaplan <a href="mailto:dmkaplan2000@gmail.com">dmkaplan2000@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other Chunk tools: 
+<code>create_chunk()</code>,
+<code>insert_data_chunk_template()</code>,
+<code>list_rmd_chunks()</code>,
+<code>remove_chunks_dialog()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+create_data_chunk_dialog()
+
+## End(Not run)
+
+## Not run: 
+insert_data_chunk_dialog()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

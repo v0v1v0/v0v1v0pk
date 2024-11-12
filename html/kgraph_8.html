@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>df_embeds_dict</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A dictionary for the m_embeds object</h2>
+
+<h3>Description</h3>
+
+<p>Dataframe with columns id (for the CUI), desc (textual
+description), group and color (higher level groups)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("df_embeds_dict")
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A dataframe with 1118 rows and 4 columns.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Each row corresponds to one rowname of m_embeds.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('m_embeds')
+data('df_embeds_dict')
+
+fit_kg = fit_embeds_kg(m_embeds, 'cosine')
+target_nodes_idxs = grep('suicide', df_embeds_dict$desc) %&gt;% head(2)
+target_nodes = df_embeds_dict$id[target_nodes_idxs]
+
+kg_obj = build_kgraph_from_fit(target_nodes, m_embeds, fit_kg,
+                               df_dict = df_embeds_dict)
+
+</code></pre>
+
+
+</div>

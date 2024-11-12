@@ -1,0 +1,210 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>badness</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Badness of knots</h2>
+
+<h3>Description</h3>
+
+<p>Various functions that calculate different aspects of
+the badness of a knot, generally with low values representing
+pleasing visual representations</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">badness(b, cpb, weights, prob=0, give=FALSE)
+curvature_switching_badness(b)
+curvature_consecutive_segment_switching_badness(b, ...)
+midpoint_badness(b,cpb)
+node_crossing_badness(b,cpb)
+total_string_length(b)
+total_bending_energy(b,power=2)
+total_crossing_potential_energy(b,cpb)
+total_crossing_angle_badness(b,cpb)
+metrics(b,cpb)
+always_left_badness(b)
+non_crossing_strand_close_approach_badness(b,cpb)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>A description of a knot, coerced to a <code>controlpoints</code>
+object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cpb</code></td>
+<td>
+<p>Optional argument containing information on crossing
+points (it is short for ‘<code>crossing_points(b)</code>’).  It is
+time-consuming to calculate, so providing a precalculated value
+makes the code run faster</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>In function <code>badness()</code>, the probability of plotting
+a knotplot.  I used nonzero values  in the early stages of
+developing the package: when optimizing a knot it was useful to
+keep tabs on the process</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>give</code></td>
+<td>
+<p>In function <code>badness()</code>, Boolean with default
+<code>FALSE</code> meaning to return the sum of the badnesses, and
+<code>TRUE</code> meaning to return them separately</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power</code></td>
+<td>
+<p>Function <code>total_bending_energy()</code> returns the arc
+integral of <code class="reqn">R^{-p}</code>; defaults to 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>A vector of weights specifying the relative importance
+of the various badness measures.  See details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>In function
+<code>curvature_consecutive_segment_switching_badness()</code>, extra
+arguments passed to <code>integrate()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Various functions that calculate different aspects of the badness of a
+knot, generally with low values representing pleasing visual
+representations.  Function <code>badness()</code> returns a weighted sum of
+nine individual badnesses.
+</p>
+<p>The list below details the values returned by <code>metrics()</code>; the
+description of each item is the name of corresponding weight assigned by
+the <code>weights</code> argument of <code>badness()</code>.
+</p>
+
+<dl>
+<dt>pot</dt>
+<dd>
+<p>Function <code>total_crossing_potential_energy()</code> gives the
+potential energy of the nodes, under an inverse square force law</p>
+</dd>
+<dt>ang</dt>
+<dd>
+<p>Function <code>total_crossing_angle_badness()</code> returns a high value if
+strands cross at angles far from 90 degrees.  It returns the sum, over
+all crossings, of <code>bezier_angle()</code></p>
+</dd>
+<dt>ben</dt>
+<dd>
+<p>Function <code>total_bending_energy()</code> gives the total bending
+energy, effectively the arc integral of the reciprocal of the square
+of the radius of curvature</p>
+</dd>
+<dt>len</dt>
+<dd>
+<p>Function <code>total_string_length()</code> returns <code class="reqn">\ell</code>, the
+total string length.  The badness is proportional to
+<code class="reqn">(\ell-5000)^2</code>.  A length of 5000 corresponds to
+knots that look about right on a sheet of A4 paper</p>
+</dd>
+<dt>mid</dt>
+<dd>
+<p>Function <code>midpoint_badness()</code> penalizes knots with
+crossing points far from the midpoint of segments</p>
+</dd>
+<dt>clo</dt>
+<dd>
+<p>Function <code>node_crossing_badness()</code> penalizes knots with
+nodes too close together (compare function
+<code>total_crossing_potential_energy()</code>)</p>
+</dd>
+<dt>swi</dt>
+<dd>
+<p>Function <code>curvature_switching_badness()</code> provides a
+penalty for consecutive segments with curvatures that switch sign.
+The magnitude of the penalty is zero if both curvatures are of the
+same sign, otherwise proportional to the square of the minimum of
+the maximum value of the absolute value of the positive and negative
+curvatures.  The source code is easier to look at, honest</p>
+</dd>
+<dt>con</dt>
+<dd>
+<p>Function
+<code>curvature_consecutive_segment_switching_badness()</code> penalizes
+knots with consecutive segments that switch curvature from positive
+to negative</p>
+</dd>
+<dt>ncn</dt>
+<dd>
+<p>Function <code>always_left_badness()</code> penalizes knots that are
+<em>supposed</em> to curve to the left all the time (eg knot
+<code class="reqn">8_{18}</code>).  The penalty is proportional to the greatest
+rightward curvature over the whole knot</p>
+</dd>
+</dl>
+<p>The <code>weights</code> argument is nominally a vector of length 9 which is
+used to assign weights to different aspects of the badness of a knot.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns a scalar badness</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>crossing</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# use the k_infinity knot for speed:
+
+system.time(badness(k_infinity))
+
+cc &lt;- crossing_points(k_infinity)
+
+system.time(badness(k_infinity,cc))
+
+metrics(k_infinity,cc)
+
+
+
+## default:
+badness(k_infinity, weights=c(1,1,1,1,1,1,1,1,1))
+
+
+## downweight the importance of strands crossing at 90 degrees:
+badness(k_infinity, weights=c(1,0.1,1,1,1,1,1,1,1))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>round_flexibly</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Round flexibly</h2>
+
+<h3>Description</h3>
+
+<p>Round numbers to a flexible number of significant digits.
+"Flexible" rounding refers to rounding all numbers to the highest
+level of precision seen among numbers that would have resulted
+from the 'signif()' function in base R. The usage examples of
+this function demonstrate flexible rounding (see below).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">round_flexibly(x = NULL, sigfigs = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to flexibly round to.
+By default, <code>sigfigs = 3</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a numeric vector with values rounded
+to the highest level of precision seen among numbers that result
+from the 'signif()' function in base R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example 1
+# First, observe results from the 'signif' function:
+c(0.00012345, pi)
+signif(c(0.00012345, pi), 3)
+# In the result above, notice how info is lost on some digits
+# (e.g., 3.14159265 becomes 3.140000).
+# In contrast, flexible rounding retains the lost info in the digits
+round_flexibly(x = c(0.00012345, pi), sigfigs = 3)
+
+# Example 2
+# Again, first observe results from the 'signif' function:
+c(0.12345, 1234, 0.12, 1.23, .01)
+signif(c(0.12345, 1234, 0.12, 1.23, .01), 3)
+# In the result above, notice how info is lost on some digits
+# (e.g., 1234 becomes 1230.000).
+# In contrast, flexible rounding retains the lost info in the digits.
+# Specifically, in the example below, 0.12345 rounded to 3 significant
+# digits (default) is signif(0.12345, 3) = 0.123 (3 decimal places).
+# Because this 3 decimal places is the highest precision seen among
+# all numbers, all other numbers will also be rounded to 3 decimal places.
+round_flexibly(
+c(0.12345, 1234, 0.12, 1.23, .01))
+
+# Example 3
+# If the input is a character vector, the original input will be returned.
+round_flexibly(c("a", "b", "c"))
+
+# Example 4
+# If the input is a list (e.g., a data.frame) that contains at least
+# one numeric vector, the numeric vector element(s) will be rounded
+# flexibly.
+round_flexibly(data.frame(a = c(1.2345, 123.45), b = c("a", "b")))
+
+# Example 5
+# If the input is a matrix, all numbers will be rounded flexibly
+round_flexibly(matrix(
+c(1.23, 2.345, 3.4567, 4.56789), ncol = 2), sigfigs = 3)
+
+</code></pre>
+
+
+</div>

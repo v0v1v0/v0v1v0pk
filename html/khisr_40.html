@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_data_elements_with_category_options</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get Data Elements with Category Options</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+<code>get_data_elements_with_category_options()</code> fetches data elements metadata with the
+category options from the DHIS2 API server.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_data_elements_with_category_options(
+  element_ids,
+  auth = NULL,
+  call = caller_env()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>element_ids</code></td>
+<td>
+<p>The data element identifiers whose details being retrieved</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auth</code></td>
+<td>
+<p>The authentication object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The caller environment</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble containing the following columns:
+</p>
+
+<ul>
+<li>
+<p> element_id - The unique identifier for the data element.
+</p>
+</li>
+<li>
+<p> element    - The name of the data element.
+</p>
+</li>
+<li>
+<p> category   - The category options for the elements
+</p>
+</li>
+<li>
+<p> category_id - The unique identifier for the category options
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Fetch the data element metadata for particular element id
+elements &lt;- get_data_elements_with_category_options('htFuvGJRW1X')
+elements
+
+</code></pre>
+
+
+</div>

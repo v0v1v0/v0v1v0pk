@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_binary_iou</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the Intersection-Over-Union metric for class 0 and/or 1.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode r"><pre>iou &lt;- true_positives / (true_positives + false_positives + false_negatives)
+</pre></div>
+<p>Intersection-Over-Union is a common evaluation metric for semantic image
+segmentation.
+</p>
+<p>To compute IoUs, the predictions are accumulated in a confusion matrix,
+weighted by <code>sample_weight</code> and the metric is then calculated from it.
+</p>
+<p>If <code>sample_weight</code> is <code>NULL</code>, weights default to 1.
+Use <code>sample_weight</code> of 0 to mask values.
+</p>
+<p>This class can be used to compute IoUs for a binary classification task
+where the predictions are provided as logits. First a <code>threshold</code> is applied
+to the predicted values such that those that are below the <code>threshold</code> are
+converted to class 0 and those that are above the <code>threshold</code> are converted
+to class 1.
+</p>
+<p>IoUs for classes 0 and 1 are then computed, the mean of IoUs for the classes
+that are specified by <code>target_class_ids</code> is returned.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_binary_iou(
+  ...,
+  target_class_ids = list(0L, 1L),
+  threshold = 0.5,
+  name = NULL,
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target_class_ids</code></td>
+<td>
+<p>A list or list of target class ids for which the
+metric is returned. Options are <code>0</code>, <code>1</code>, or <code>c(0, 1)</code>. With
+<code>0</code> (or <code>1</code>), the IoU metric for class 0 (or class 1,
+respectively) is returned. With <code>c(0, 1)</code>, the mean of IoUs for the
+two classes is returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>A threshold that applies to the prediction logits to convert
+them to either predicted class 0 if the logit is below <code>threshold</code>
+or predicted class 1 if the logit is above <code>threshold</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>Metric</code> instance is returned. The <code>Metric</code> instance can be passed
+directly to <code>compile(metrics = )</code>, or used as a standalone object. See
+<code>?Metric</code> for example usage.
+</p>
+
+
+<h3>Note</h3>
+
+<p>with <code>threshold=0</code>, this metric has the same behavior as <code>IoU</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre>m &lt;- metric_binary_iou(target_class_ids=c(0L, 1L), threshold = 0.3)
+m$update_state(c(0, 1, 0, 1), c(0.1, 0.2, 0.4, 0.7))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[1. 1.]
+##  [1. 1.]], shape=(2, 2), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.33333334, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$reset_state()
+m$update_state(c(0, 1, 0, 1), c(0.1, 0.2, 0.4, 0.7),
+               sample_weight = c(0.2, 0.3, 0.4, 0.1))
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0.2 0.4]
+##  [0.3 0.1]], shape=(2, 2), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.17361109, shape=(), dtype=float32)
+
+</pre></div>
+<p>Usage with <code>compile()</code> API:
+</p>
+<div class="sourceCode r"><pre>model %&gt;% compile(
+    optimizer = 'sgd',
+    loss = 'mse',
+    metrics = list(metric_binary_iou(
+        target_class_ids = 0L,
+        threshold = 0.5
+    ))
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other iou metrics: <br><code>metric_iou()</code> <br><code>metric_mean_iou()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simgraph_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple kin dispersal simulation for graphical display. (returns the data side as a tibble).</h2>
+
+<h3>Description</h3>
+
+<p>Simple kin dispersal simulation for graphical display. (returns the data side as a tibble).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simgraph_data(nsims = 1000, posigma = 50, dims = 250, kinship = "2C")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>nsims</code></td>
+<td>
+<p>Integer. The number of kin dispersal families to simulate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posigma</code></td>
+<td>
+<p>Integer. The axial deviation of the (simple) parent-offspring dispersal kernel governing this simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dims</code></td>
+<td>
+<p>Integer. Lays out the length of the sides of a square within which parent individuals are seeded.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>Character. Lists the kin category the simulation is reconstructing. One of "PO", "FS", "HS", "AV", "GG", "HAV", "GGG", "1C", "1C1", "2C", "GAV" (no half-categories included)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a tibble containing the coordinates of the f0 to f2 generations, as well as coordinates and distances relative to the 'focus' kinship categories. (kindist, kinmid, k1 &amp; k2)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other simgraph: 
+<code>simgraph_graph()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">simgraph_data(nsims = 100, dims = 1000, kinship = "GAV")
+</code></pre>
+
+
+</div>

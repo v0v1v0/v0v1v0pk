@@ -1,0 +1,139 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>distMat.KernelKnn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kernel k-nearest-neighbors using a distance matrix</h2>
+
+<h3>Description</h3>
+
+<p>kernel k-nearest-neighbors using a distance matrix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">distMat.KernelKnn(
+  DIST_mat,
+  TEST_indices = NULL,
+  y,
+  k = 5,
+  h = 1,
+  weights_function = NULL,
+  regression = F,
+  threads = 1,
+  extrema = F,
+  Levels = NULL,
+  minimize = T
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>DIST_mat</code></td>
+<td>
+<p>a distance matrix (square matrix) having a <em>diagonal</em> filled with either zero's (<em>0</em>) or NA's (<em>missing values</em>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TEST_indices</code></td>
+<td>
+<p>a numeric vector specifying the indices of the test data in the distance matrix (row-wise or column-wise). If the parameter equals NULL then no test data is included in the distance matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a numeric vector (in classification the labels must be numeric from 1:Inf). It is assumed that if the <em>TEST_indices</em> is not NULL then the length of <em>y</em> equals to the rows of the train data <em>( nrow(DIST_mat) - length(TEST_indices) )</em>, otherwise  <em>length(y) == nrow(DIST_mat)</em>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>an integer specifying the k-nearest-neighbors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>the bandwidth (applicable if the weights_function is not NULL, defaults to 1.0)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights_function</code></td>
+<td>
+<p>there are various ways of specifying the kernel function. See the details section.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regression</code></td>
+<td>
+<p>a boolean (TRUE,FALSE) specifying if regression or classification should be performed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threads</code></td>
+<td>
+<p>the number of cores to be used in parallel (openmp will be employed)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extrema</code></td>
+<td>
+<p>if TRUE then the minimum and maximum values from the k-nearest-neighbors will be removed (can be thought as outlier removal)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Levels</code></td>
+<td>
+<p>a numeric vector. In case of classification the unique levels of the response variable are necessary</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minimize</code></td>
+<td>
+<p>either TRUE or FALSE. If TRUE then lower values will be considered as relevant for the k-nearest search, otherwise higher values.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function takes a distance matrix (square matrix where the diagonal is filled with <em>0</em> or <em>NA</em>) as input. If the <em>TEST_indices</em> parameter is NULL then the predictions for the train data will be returned, whereas if the <em>TEST_indices</em> parameter is not NULL then the predictions for the test data will be returned.
+There are three possible ways to specify the weights function, 1st option : if the weights_function is NULL then a simple k-nearest-neighbor is performed. 2nd option : the weights_function is one of 'uniform', 'triangular', 'epanechnikov', 'biweight', 'triweight', 'tricube', 'gaussian', 'cosine', 'logistic', 'gaussianSimple', 'silverman', 'inverse', 'exponential'. The 2nd option can be extended by combining kernels from the existing ones (adding or multiplying). For instance, I can multiply the tricube with the gaussian kernel by giving 'tricube_gaussian_MULT' or I can add the previously mentioned kernels by giving 'tricube_gaussian_ADD'. 3rd option : a user defined kernel function
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector (if regression is TRUE), or a data frame with class probabilities (if regression is FALSE)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Lampros Mouselimis
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(Boston)
+
+X = Boston[, -ncol(Boston)]
+y = Boston[, ncol(Boston)]
+
+dist_obj = dist(X)
+
+dist_mat = as.matrix(dist_obj)
+
+out = distMat.KernelKnn(dist_mat, TEST_indices = NULL, y, k = 5, regression = TRUE)
+
+</code></pre>
+
+
+</div>

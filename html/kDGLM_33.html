@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>eval_dlm_norm_const</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Auxiliary function for evaluating normalizing constant for the posterior of a fitted DLM.</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates the normalizing constant for the posterior of a fitted DLM.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">eval_dlm_norm_const(model, lin.pred = model$n &gt; 2 * model$k)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>fitted_dlm: A fitted_dlm object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lin.pred</code></td>
+<td>
+<p>boolean: A flag indicating if the normalizing constant should be calculated using the linear predictors.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar representing the normalizing constant for the posterior of a fitted DLM.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for fitted_dlm objects: 
+<code>coef.fitted_dlm()</code>,
+<code>fit_model()</code>,
+<code>forecast.fitted_dlm()</code>,
+<code>simulate.fitted_dlm()</code>,
+<code>smoothing()</code>,
+<code>update.fitted_dlm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- c(AirPassengers)
+
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+outcome &lt;- Poisson(lambda = "rate", data = data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+eval_dlm_norm_const(fitted.data)
+
+</code></pre>
+
+
+</div>

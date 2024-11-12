@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>TnKnn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tn with geometric graphs</h2>
+
+<h3>Description</h3>
+
+<p>Calculate <code class="reqn">T_n</code> using directed K-NN graph or minimum spanning tree (MST).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">TnKnn(Y, X, k, Knn = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a matrix of response (n by dy)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a matrix of predictors (n by dx)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>a function <code class="reqn">k(y, y')</code> of class <code>kernel</code>. It can be the kernel implemented in <code>kernlab</code> e.g. Gaussian kernel: <code>rbfdot(sigma = 1)</code>, linear kernel: <code>vanilladot()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Knn</code></td>
+<td>
+<p>the number of K-nearest neighbor to use; or "MST".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code class="reqn">T_n</code> is an estimate of <code class="reqn">E[E[k(Y_1,Y_1')|X]]</code>, with <code class="reqn">Y_1</code>, <code class="reqn">Y_1'</code> drawn iid from <code class="reqn">Y|X</code>, given <code class="reqn">X</code>.
+For K-NN graph, ties will be broken at random. Algorithm finding the MST is implemented the package <code>emstreeR</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The algorithm returns a real number which is the value of Tn.
+</p>
+
+
+</div>

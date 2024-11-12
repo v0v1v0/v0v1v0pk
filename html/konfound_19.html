@@ -1,0 +1,374 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pkonfound</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform sensitivity analysis for published studies</h2>
+
+<h3>Description</h3>
+
+<p>For published studies, this command calculates (1) how much bias there must be in an estimate to invalidate/sustain an inference; (2) the impact of an omitted variable necessary to invalidate/sustain an inference for a regression coefficient.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pkonfound(
+  est_eff,
+  std_err,
+  n_obs,
+  n_covariates = 1,
+  alpha = 0.05,
+  tails = 2,
+  index = "RIR",
+  nu = 0,
+  n_treat = NULL,
+  switch_trm = TRUE,
+  model_type = "ols",
+  a = NULL,
+  b = NULL,
+  c = NULL,
+  d = NULL,
+  two_by_two_table = NULL,
+  test = "fisher",
+  replace = "control",
+  sdx = NA,
+  sdy = NA,
+  R2 = NA,
+  far_bound = 0,
+  eff_thr = NA,
+  FR2max = 0,
+  FR2max_multiplier = 1.3,
+  to_return = "print"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>est_eff</code></td>
+<td>
+<p>the estimated effect (such as an unstandardized beta coefficient or a group mean difference)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>std_err</code></td>
+<td>
+<p>the standard error of the estimate of the unstandardized regression coefficient</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_obs</code></td>
+<td>
+<p>the number of observations in the sample</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_covariates</code></td>
+<td>
+<p>the number of covariates in the regression model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>probability of rejecting the null hypothesis (defaults to 0.05)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tails</code></td>
+<td>
+<p>integer whether hypothesis testing is one-tailed (1) or two-tailed (2; defaults to 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>whether output is RIR or IT (impact threshold); defaults to "RIR"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>what hypothesis to be tested; defaults to testing whether est_eff is significantly different from 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_treat</code></td>
+<td>
+<p>the number of cases associated with the treatment condition; applicable only when model_type = "logistic"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>switch_trm</code></td>
+<td>
+<p>whether to switch the treatment and control cases; defaults to FALSE; applicable only when model_type = "logistic"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_type</code></td>
+<td>
+<p>the type of model being estimated; defaults to "ols" for a linear regression model; the other option is "logistic"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>cell is the number of cases in the control group showing unsuccessful results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>cell is the number of cases in the control group showing successful results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+<p>cell is the number of cases in the treatment group showing unsuccessful results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>cell is the number of cases in the treatment group showing successful results</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>two_by_two_table</code></td>
+<td>
+<p>table that is a matrix or can be coerced to one (data.frame, tibble, tribble) from which the a, b, c, and d arguments can be extracted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>whether using Fisher's Exact Test or A chi-square test; defaults to Fisher's Exact Test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>whether using entire sample or the control group to calculate the base rate; default is control</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdx</code></td>
+<td>
+<p>the standard deviation of X</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdy</code></td>
+<td>
+<p>the standard deviation of Y</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R2</code></td>
+<td>
+<p>the unadjusted, original R2 in the observed function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>far_bound</code></td>
+<td>
+<p>whether the estimated effect is moved to the boundary closer (default 0) or further away (1);</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eff_thr</code></td>
+<td>
+<p>for RIR: unstandardized coefficient threshold to change an inference; for IT: correlation defining the threshold for inference</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FR2max</code></td>
+<td>
+<p>the largest R2, or R2max, in the final model with unobserved confounder</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FR2max_multiplier</code></td>
+<td>
+<p>the multiplier of R2 to get R2max, default is set to 1.3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_return</code></td>
+<td>
+<p>whether to return a data.frame (by specifying this argument to equal "raw_output" for use in other analyses) or a plot ("plot"); default is to print ("print") the output to the console; can specify a vector of output to return</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>pkonfound prints the bias and the number of cases that would have to be replaced with cases for which there is no effect to nullify the inference. If to_return = "raw_output," a list will be given with the following components:
+</p>
+
+<dl>
+<dt>obs_r</dt>
+<dd>
+<p>correlation between predictor of interest (X) and outcome (Y) in the sample data.</p>
+</dd>
+<dt>act_r</dt>
+<dd>
+<p>correlation between predictor of interest (X) and outcome (Y) from the sample regression based on the t-ratio accounting for non-zero null hypothesis.</p>
+</dd>
+<dt>critical_r</dt>
+<dd>
+<p>critical correlation value at which the inference would be nullified (e.g., associated with p=.05).</p>
+</dd>
+<dt>r_final</dt>
+<dd>
+<p>final correlation value given CV. Should be equal to critical_r.</p>
+</dd>
+<dt>rxcv</dt>
+<dd>
+<p>correlation between predictor of interest (X) and CV necessary to nullify the inference for smallest impact.</p>
+</dd>
+<dt>rycv</dt>
+<dd>
+<p>correlation between outcome (Y) and CV necessary to nullify the inference for smallest impact.</p>
+</dd>
+<dt>rxcvGz</dt>
+<dd>
+<p>correlation between predictor of interest and CV necessary to nullify the inference for smallest impact conditioning on all observed covariates (given z).</p>
+</dd>  
+<dt>rycvGz</dt>
+<dd>
+<p>correlation between outcome and CV necessary to nullify the inference for smallest impact conditioning on all observed covariates (given z).</p>
+</dd>
+<dt>itcvGz</dt>
+<dd>
+<p>ITCV conditioning on the observed covariates.</p>
+</dd>
+<dt>itcv</dt>
+<dd>
+<p>Unconditional ITCV.</p>
+</dd>
+<dt>r2xz</dt>
+<dd>
+<p>R2 using all observed covariates to explain the predictor of interest (X).</p>
+</dd>
+<dt>r2yz</dt>
+<dd>
+<p>R2 using all observed covariates to explain the outcome (Y).</p>
+</dd>
+<dt>delta_star</dt>
+<dd>
+<p>delta calculated using Oster's unrestricted estimator.</p>
+</dd>
+<dt>delta_star_restricted</dt>
+<dd>
+<p>delta calculated using Oster's restricted estimator.</p>
+</dd>
+<dt>delta_exact</dt>
+<dd>
+<p>correlation-based delta.</p>
+</dd>
+<dt>delta_pctbias</dt>
+<dd>
+<p>percent of bias when comparing delta_star with delta_exact.</p>
+</dd>
+<dt>cor_oster</dt>
+<dd>
+<p>correlation matrix implied by delta_star.</p>
+</dd>
+<dt>cor_exact</dt>
+<dd>
+<p>correlation matrix implied by delta_exact.</p>
+</dd>
+<dt>beta_threshold</dt>
+<dd>
+<p>threshold value for estimated effect.</p>
+</dd>
+<dt>beta_threshold_verify</dt>
+<dd>
+<p>estimated effect given RIR. Should be equal to beta_threshold.</p>
+</dd>
+<dt>perc_bias_to_change</dt>
+<dd>
+<p>percent bias to change the inference.</p>
+</dd>
+<dt>RIR_primary</dt>
+<dd>
+<p>Robustness of Inference to Replacement (RIR).</p>
+</dd>
+<dt>RIR_supplemental</dt>
+<dd>
+<p>RIR for an extra row or column that is needed to nullify the inference.</p>
+</dd>
+<dt>RIR_perc</dt>
+<dd>
+<p>RIR as % of total sample (for linear regression) or as % of data points in the cell where replacement takes place (for logistic and 2 by 2 table).</p>
+</dd>
+<dt>fragility_primary</dt>
+<dd>
+<p>Fragility. the number of switches (e.g., treatment success to treatment failure) to nullify the inference.</p>
+</dd>
+<dt>fragility_supplemental</dt>
+<dd>
+<p>Fragility for an extra row or column that is needed to nullify the inference.</p>
+</dd> 
+<dt>starting_table</dt>
+<dd>
+<p>Observed 2 by 2 table before replacement and switching. Implied table for logistic regression.</p>
+</dd>
+<dt>final_table</dt>
+<dd>
+<p>The 2 by 2 table after replacement and switching.</p>
+</dd>
+<dt>user_SE</dt>
+<dd>
+<p>user entered standard error. Only applicable for logistic regression.</p>
+</dd>
+<dt>needtworows</dt>
+<dd>
+<p>whether double row switches are needed.</p>
+</dd>
+<dt>analysis_SE</dt>
+<dd>
+<p>the standard error used to generate a plausible 2 by 2 table. Only applicable for logistic regression.</p>
+</dd>
+<dt>Fig_ITCV</dt>
+<dd>
+<p>figure for ITCV.</p>
+</dd> 
+<dt>Fig_RIR</dt>
+<dd>
+<p>figure for RIR.</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># using pkonfound for linear models
+pkonfound(2, .4, 100, 3)
+pkonfound(-2.2, .65, 200, 3)
+pkonfound(.5, 3, 200, 3)
+pkonfound(-0.2, 0.103, 20888, 3, n_treat = 17888, model_type = "logistic")
+
+pkonfound(2, .4, 100, 3, to_return = "thresh_plot")
+pkonfound(2, .4, 100, 3, to_return = "corr_plot")
+
+# using pkonfound for a 2x2 table
+pkonfound(a = 35, b = 17, c = 17, d = 38)
+pkonfound(a = 35, b = 17, c = 17, d = 38, alpha = 0.01)
+pkonfound(a = 35, b = 17, c = 17, d = 38, alpha = 0.01, switch_trm = FALSE)
+pkonfound(a = 35, b = 17, c = 17, d = 38, test = "chisq")
+
+# use pkonfound to calculate delta* and delta_exact 
+pkonfound(est_eff = .4, std_err = .1, n_obs = 290, sdx = 2, sdy = 6, R2 = .7,
+ eff_thr = 0, FR2max = .8, index = "COP", to_return = "raw_output")
+# use pkonfound to calculate rxcv and rycv when preserving standard error
+pkonfound(est_eff = .5, std_err = .056, n_obs = 6174, eff_thr = .1,
+sdx = 0.22, sdy = 1, R2 = .3, index = "PSE", to_return = "raw_output")
+
+</code></pre>
+
+
+</div>

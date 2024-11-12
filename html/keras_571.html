@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to_categorical</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts a class vector (integers) to binary class matrix.</h2>
+
+<h3>Description</h3>
+
+<p>Converts a class vector (integers) to binary class matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">to_categorical(y, num_classes = NULL, dtype = "float32")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Class vector to be converted into a matrix (integers from 0 to num_classes).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_classes</code></td>
+<td>
+<p>Total number of classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>The data type expected by the input, as a string</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>E.g. for use with <code>loss_categorical_crossentropy()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A binary matrix representation of the input.
+</p>
+
+
+</div>

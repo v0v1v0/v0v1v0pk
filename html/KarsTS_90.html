@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getRollStatistics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+getRollStatistics: get rolling statistics
+It is used internally
+</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates a certain statistic in centered sliding windows along a time series. The available statistics are: minimum, first quartile,median, mean, third quartile, maximum and standard deviation. Incomplete windows can be assigned NA (option tailsTS = FALSE); alternatively, the statistic can be calculated with the available values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getRollStatistics(selTs, selTsName, slidingWin, tailsTS = FALSE, selStatisTF)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>selTs</code></td>
+<td>
+
+<p>The input time series
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selTsName</code></td>
+<td>
+
+<p>The input time series name
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>slidingWin</code></td>
+<td>
+
+<p>The sliding window size
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tailsTS</code></td>
+<td>
+
+<p>The action regarding the tails (TRUE or FALSE)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selStatisTF</code></td>
+<td>
+
+<p>A data frame containing seven columns. Each column corresponds to a statistic. When the user selects a statistic, its value is TRUE; otherwise, it is FALSE. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>For each selected statistic, the function creates a time series in the environment susEnv (for example, a time series of mean values).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

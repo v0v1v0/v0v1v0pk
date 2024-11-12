@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>backend_env</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Environment variable keyring backend</h2>
+
+<h3>Description</h3>
+
+<p>This is a simple keyring backend, that stores/uses secrets in
+environment variables of the R session.
+</p>
+
+
+<h3>Details</h3>
+
+<p>It does not support multiple keyrings. It also does not support listing
+all keys, since there is no way to distinguish keys from regular
+environment variables.
+</p>
+<p>It does support service names and usernames: they will be separated
+with a <code>:</code> character in the name of the environment variable. (Note that
+such an environment variable typically cannot be set or queried from a
+shell, but it can be set and queried from R or other programming
+languages.)
+</p>
+<p>See backend for the documentation of the class's methods.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other keyring backends: 
+<code>backend_file</code>,
+<code>backend_macos</code>,
+<code>backend_secret_service</code>,
+<code>backend_wincred</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+env &lt;- backend_env$new()
+env$set("r-keyring-test", username = "donaldduck")
+env$get("r-keyring-test", username = "donaldduck")
+Sys.getenv("r-keyring-test:donaldduck")
+
+# This is an error
+env$list()
+
+# Clean up
+env$delete("r-keyring-test", username = "donaldduck")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

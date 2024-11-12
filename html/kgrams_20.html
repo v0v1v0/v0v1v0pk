@@ -1,0 +1,357 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kgram_freqs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k-gram Frequency Tables</h2>
+
+<h3>Description</h3>
+
+<p>Extract k-gram frequency counts from a text or a connection.
+</p>
+
+
+<h4>Principal methods supported by objects of class <code>kgram_freqs</code>
+</h4>
+
+
+<ul>
+<li> <p><code>query()</code>: query k-gram counts from the table.
+See query
+</p>
+</li>
+<li> <p><code>probability()</code>: compute word continuation and sentence probabilities
+using Maximum Likelihood estimates. See probability.
+</p>
+</li>
+<li> <p><code>language_model()</code>: build a k-gram language model using various
+probability smoothing techniques. See language_model.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">kgram_freqs(object, ...)
+
+## S3 method for class 'numeric'
+kgram_freqs(
+  object,
+  .preprocess = identity,
+  .tknz_sent = identity,
+  dict = NULL,
+  ...
+)
+
+## S3 method for class 'kgram_freqs'
+kgram_freqs(object, ...)
+
+## S3 method for class 'character'
+kgram_freqs(
+  object,
+  N,
+  .preprocess = identity,
+  .tknz_sent = identity,
+  dict = NULL,
+  open_dict = is.null(dict),
+  verbose = FALSE,
+  ...
+)
+
+## S3 method for class 'connection'
+kgram_freqs(
+  object,
+  N,
+  .preprocess = identity,
+  .tknz_sent = identity,
+  dict = NULL,
+  open_dict = is.null(dict),
+  verbose = FALSE,
+  max_lines = Inf,
+  batch_size = max_lines,
+  ...
+)
+
+process_sentences(
+  text,
+  freqs,
+  .preprocess = attr(freqs, ".preprocess"),
+  .tknz_sent = attr(freqs, ".tknz_sent"),
+  open_dict = TRUE,
+  in_place = TRUE,
+  verbose = FALSE,
+  ...
+)
+
+## S3 method for class 'character'
+process_sentences(
+  text,
+  freqs,
+  .preprocess = attr(freqs, ".preprocess"),
+  .tknz_sent = attr(freqs, ".tknz_sent"),
+  open_dict = TRUE,
+  in_place = TRUE,
+  verbose = FALSE,
+  ...
+)
+
+## S3 method for class 'connection'
+process_sentences(
+  text,
+  freqs,
+  .preprocess = attr(freqs, ".preprocess"),
+  .tknz_sent = attr(freqs, ".tknz_sent"),
+  open_dict = TRUE,
+  in_place = TRUE,
+  verbose = FALSE,
+  max_lines = Inf,
+  batch_size = max_lines,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>any type allowed by the available methods. The type defines the
+behaviour of <code>kgram_freqs()</code> as a default constructor, a copy
+constructor or a constructor of a non-trivial object. See ‘Details’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to or from other methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.preprocess</code></td>
+<td>
+<p>a function taking a character vector as input and returning
+a character vector as output. Optional preprocessing transformation
+applied to text before k-gram tokenization. See  ‘Details’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.tknz_sent</code></td>
+<td>
+<p>a function taking a character vector as input and
+returning a character vector as output. Optional sentence tokenization step
+applied to text after preprocessing and before k-gram tokenization. See
+‘Details’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dict</code></td>
+<td>
+<p>anything coercible to class
+dictionary. Optional pre-specified word dictionary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>a length one integer. Maximum order of k-grams to be considered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>open_dict</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code>. If <code>TRUE</code>, any new
+word encountered during processing not appearing in the original dictionary
+is included into the dictionary. Otherwise, new words are replaced by an
+unknown word token. It is by default <code>TRUE</code> if <code>dict</code> is
+specified, <code>FALSE</code> otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Print current progress to the console.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_lines</code></td>
+<td>
+<p>a length one positive integer or <code>Inf</code>.
+Maximum number of lines to be read from the <code>connection</code>.
+If <code>Inf</code>, keeps reading until the End-Of-File.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>a length one positive integer less than or equal to
+<code>max_lines</code>.Size of text batches when reading text from
+<code>connection</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>a character vector or a connection. Source of text from which
+k-gram frequencies are to be extracted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freqs</code></td>
+<td>
+<p>a <code>kgram_freqs</code> object, to which new k-gram counts from
+<code>text</code> are to be added.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>in_place</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code>. Should the initial
+<code>kgram_freqs</code> object be modified in place?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function <code>kgram_freqs()</code> is a generic constructor for
+objects of class <code>kgram_freqs</code>, i.e. k-gram frequency tables. The
+constructor from <code>integer</code> returns an empty 'kgram_freqs' of fixed
+order, with an optional
+predefined dictionary (which can be empty) and <code>.preprocess</code> and
+<code>.tknz_sent</code> functions to be used as defaults in other <code>kgram_freqs</code>
+methods. The constructor from <code>kgram_freqs</code> returns a copy of an
+existing object, and it is provided because, in general, <code>kgram_freqs</code>
+objects have reference semantics, as discussed below.
+</p>
+<p>The following discussion focuses on <code>process_sentences()</code> generic, as
+well as on the <code>character</code> and <code>connection</code> methods of the
+constructor <code>kgram_freqs()</code>. These functions extract k-gram
+frequency counts from a text source, which may be either a character vector
+or a connection. The second option is useful if one wants to avoid loading
+the full text corpus in physical memory, allowing to process text from
+different sources such as files, compressed files or URLs.
+</p>
+<p>The returned object is of class <code>kgram_freqs</code> (a thin wrapper
+around the internal C++ class where all k-gram computations take place).
+<code>kgram_freqs</code> objects have methods for querying bare k-gram frequencies
+(query) and maximum likelihood estimates of sentence
+probabilities or word continuation probabilities
+(see probability)) . More importantly
+<code>kgram_freqs</code> objects are used to create language_model
+objects, which support various probability smoothing techniques.
+</p>
+<p>The function <code>kgram_freqs()</code> is used to <em>construct</em> a new
+<code>kgram_freqs</code> object, initializing it with the k-gram counts from
+the <code>text</code> input, whereas <code>process_sentences()</code> is used to
+add k-gram counts from a new <code>text</code> to an <em>existing</em>
+<code>kgram_freqs</code> object, <code>freqs</code>. In this second case, the initial
+object <code>freqs</code> can either be modified in place
+(for <code>in_place == TRUE</code>, the default) or by making a copy
+(<code>in_place == FALSE</code>), see the examples below.
+The final object is returned invisibly when modifying in place,
+visibly in the second case. It is worth to mention that modifying in place
+a <code>kgram_freqs</code> object <code>freqs</code> will also affect
+<code>language_model</code> objects created from <code>freqs</code> with
+<code>language_model()</code>, which will also be updated with the new information.
+If one wants to avoid this behaviour, one can make copies using either the
+<code>kgram_freqs()</code> copy constructor, or the <code>in_place = FALSE</code>
+argument.
+</p>
+<p>The <code>dict</code> argument allows to provide an initial set of known
+words. Subsequently, one can either work with such a closed dictionary
+(<code>open_dict == FALSE</code>), or extended the dictionary with all
+new words encountered during k-gram processing
+(<code>open_dict == TRUE</code>)  .
+</p>
+<p>The <code>.preprocess</code> and <code>.tknz_sent</code> functions are applied
+<em>before</em> k-gram counting takes place, and are in principle
+arbitrary transformations of the original text.
+<em>After</em> preprocessing and sentence tokenization, each line of the
+transformed input is presented to the k-gram counting algorithm as a separate
+sentence (these sentences are implicitly padded
+with <code>N - 1</code> Begin-Of-Sentence (BOS) and one End-Of-Sentence (EOS)
+tokens, respectively. This is illustrated in the examples). For basic
+usage, this package offers the utilities preprocess and
+tknz_sent. Notice that, strictly speaking, there is
+some redundancy in these two arguments, as the processed input to the k-gram
+counting algorithm is <code>.tknz_sent(.preprocess(text))</code>.
+They appear explicitly as separate arguments for two main reasons:
+</p>
+
+<ul>
+<li>
+<p> The presence of <code>.tknz_sent</code> is a reminder of the
+fact that sentences have to be explicitly separeted in different entries
+of the processed input, in order for <code>kgram_freqs()</code> to append the
+correct Begin-Of-Sentence and End-Of-Sentence paddings to each sentence.
+</p>
+</li>
+<li>
+<p> At prediction time (e.g. with probability), by default only
+<code>.preprocess</code> is applied when computing conditional probabilities,
+whereas both <code>.preprocess()</code> and <code>.tknz_sent()</code> are
+applied when computing sentence absolute probabilities.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A <code>kgram_freqs</code> class object: k-gram frequency table storing
+k-gram counts from text. For <code>process_sentences()</code>, the updated
+<code>kgram_freqs</code> object is returned invisibly if <code>in_place</code> is
+<code>TRUE</code>, visibly otherwise.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>See Also</h3>
+
+<p>query, probability
+language_model, dictionary
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Build a k-gram frequency table from a character vector
+
+f &lt;- kgram_freqs("a b b a a", 3)
+f
+summary(f)
+query(f, c("a", "b")) # c(3, 2)
+query(f, c("a b", "a" %+% EOS(), BOS() %+% "a b")) # c(1, 1, 1)
+query(f, "a b b a") # NA (counts for k-grams of order k &gt; 3 are not known)
+
+process_sentences("b", f)
+query(f, c("a", "b")) # c(3, 3): 'f' is updated in place
+
+f1 &lt;- process_sentences("b", f, in_place = FALSE)
+query(f, c("a", "b")) # c(3, 3): 'f' is copied
+query(f1, c("a", "b")) # c(3, 4): the new 'f1' stores the updated counts
+
+
+
+
+# Build a k-gram frequency table from a file connection
+
+## Not run: 
+f &lt;- kgram_freqs(file("my_text_file.txt"), 3)
+
+## End(Not run)
+
+
+# Build a k-gram frequency table from an URL connection
+## Not run: 
+f &lt;- kgram_freqs(url("http://my.website/my_text_file.txt"), 3)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getStatExpl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KOSIS Statistic Explanation</h2>
+
+<h3>Description</h3>
+
+<p>KOSIS Statistic Explanation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getStatExpl(orgId, tblId, statId, metaItm = "ALL")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>orgId</code></td>
+<td>
+<p>A string specifying the organization id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tblId</code></td>
+<td>
+<p>A string specifying the table id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statId</code></td>
+<td>
+<p>A string specifying the stat id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metaItm</code></td>
+<td>
+<p>A string specifying the meta item</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<pre>
+## Example
+getStatExpl(orgId = "101", tblId = "DT_1L9V054")
+getStatExpl(statId = "1962009")
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame object containing queried information
+</p>
+
+
+</div>

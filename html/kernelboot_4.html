@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernelboot-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>'kernelboot' class object</h2>
+
+<h3>Description</h3>
+
+<p>'kernelboot' class object
+</p>
+
+
+<h3>Details</h3>
+
+<p>Object of class <code>"kernelboot"</code>, is a list with components including
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>orig.stat</code>          </td>
+<td style="text-align: left;">  estimates from <code>statistic</code> on the original data, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>boot.samples</code>       </td>
+<td style="text-align: left;">  samples drawn, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>call</code>               </td>
+<td style="text-align: left;">  function call, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>statistic</code>          </td>
+<td style="text-align: left;">  actual <code>statistic</code> function that was used, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>orig.data</code>          </td>
+<td style="text-align: left;">  original data used for bootstrapping, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>variables</code>          </td>
+<td style="text-align: left;">  used variables: it is <code>NULL</code> for univariate data and
+                                for multivariate data it contains two lists of <code>smoothed</code>
+                                and <code>ignored</code> variables (names or column indexes) during
+                                the smoothing phase. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>type</code>               </td>
+<td style="text-align: left;">  type of kernel density that was used ("univariate", "product",
+                                "multivariate"), </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>param</code>              </td>
+<td style="text-align: left;">  list of parameters that were used.
+</td>
+</tr>
+</table>
+<p><code>param</code> section contains:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>R</code>                  </td>
+<td style="text-align: left;">  number of bootstrap iterations, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>bw</code>                 </td>
+<td style="text-align: left;">  the bandwidth that was used, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>weights</code>            </td>
+<td style="text-align: left;">  vector of the weights that were applied, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>kernel</code>             </td>
+<td style="text-align: left;">  name of the kernel that was used ("multivariate",
+                                "gaussian", "epanechnikov", "rectangular",
+                                "triangular", "biweight", "cosine", "optcosine",
+                                "none"), </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>shrinked</code>           </td>
+<td style="text-align: left;">  value of the <code>shrinked</code> parameter, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>parallel</code>           </td>
+<td style="text-align: left;">  indicates if parallel computation was used, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>random.seed</code>        </td>
+<td style="text-align: left;">  random seed used to initialize the random number
+                                generator (see <code>.Random.seed</code>).
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>kernelboot</code>
+</p>
+
+
+</div>

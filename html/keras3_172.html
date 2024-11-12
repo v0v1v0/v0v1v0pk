@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>image_smart_resize</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Resize images to a target size without aspect ratio distortion.</h2>
+
+<h3>Description</h3>
+
+<p>Image datasets typically yield images that have each a different
+size. However, these images need to be batched before they can be
+processed by Keras layers. To be batched, images need to share the same
+height and width.
+</p>
+<p>You could simply do, in TF (or JAX equivalent):
+</p>
+<div class="sourceCode r"><pre>size &lt;- c(200, 200)
+ds &lt;- ds$map(\(img) tf$image$resize(img, size))
+</pre></div>
+<p>However, if you do this, you distort the aspect ratio of your images, since
+in general they do not all have the same aspect ratio as <code>size</code>. This is
+fine in many cases, but not always (e.g. for image generation models
+this can be a problem).
+</p>
+<p>Note that passing the argument <code>preserve_aspect_ratio = TRUE</code> to <code>tf$image$resize()</code>
+will preserve the aspect ratio, but at the cost of no longer respecting the
+provided target size.
+</p>
+<p>This calls for:
+</p>
+<div class="sourceCode r"><pre>size &lt;- c(200, 200)
+ds &lt;- ds$map(\(img) image_smart_resize(img, size))
+</pre></div>
+<p>Your output images will actually be <code style="white-space: pre;">⁠(200, 200)⁠</code>, and will not be distorted.
+Instead, the parts of the image that do not fit within the target size
+get cropped out.
+</p>
+<p>The resizing process is:
+</p>
+
+<ol>
+<li>
+<p> Take the largest centered crop of the image that has the same aspect
+ratio as the target size. For instance, if <code>size = c(200, 200)</code> and the input
+image has size <code style="white-space: pre;">⁠(340, 500)⁠</code>, we take a crop of <code style="white-space: pre;">⁠(340, 340)⁠</code> centered along
+the width.
+</p>
+</li>
+<li>
+<p> Resize the cropped image to the target size. In the example above,
+we resize the <code style="white-space: pre;">⁠(340, 340)⁠</code> crop to <code style="white-space: pre;">⁠(200, 200)⁠</code>.
+</p>
+</li>
+</ol>
+<h3>Usage</h3>
+
+<pre><code class="language-R">image_smart_resize(
+  x,
+  size,
+  interpolation = "bilinear",
+  data_format = "channels_last",
+  backend_module = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input image or batch of images (as a tensor or array).
+Must be in format <code style="white-space: pre;">⁠(height, width, channels)⁠</code>
+or <code style="white-space: pre;">⁠(batch_size, height, width, channels)⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>Tuple of <code style="white-space: pre;">⁠(height, width)⁠</code> integer. Target size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interpolation</code></td>
+<td>
+<p>String, interpolation to use for resizing.
+Supports <code>"bilinear"</code>, <code>"nearest"</code>, <code>"bicubic"</code>,
+<code>"lanczos3"</code>, <code>"lanczos5"</code>.
+Defaults to <code>'bilinear'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p><code>"channels_last"</code> or <code>"channels_first"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>backend_module</code></td>
+<td>
+<p>Backend module to use (if different from the default
+backend).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Array with shape <code style="white-space: pre;">⁠(size[1], size[2], channels)⁠</code>.
+If the input image was an array, the output is an array,
+and if it was a backend-native tensor,
+the output is a backend-native tensor.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other image utils: <br><code>image_array_save()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_to_array()</code> <br><code>op_image_affine_transform()</code> <br><code>op_image_crop()</code> <br><code>op_image_extract_patches()</code> <br><code>op_image_hsv_to_rgb()</code> <br><code>op_image_map_coordinates()</code> <br><code>op_image_pad()</code> <br><code>op_image_resize()</code> <br><code>op_image_rgb_to_grayscale()</code> <br><code>op_image_rgb_to_hsv()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_from_array()</code> <br><code>image_load()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+<p>Other preprocessing: <br><code>image_dataset_from_directory()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br></p>
+
+
+</div>

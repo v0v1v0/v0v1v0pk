@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fst.hudson</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the average fixation index (Fst) between two groups of individuals
+from Single-nucleotide polymorphism (SNP)</h2>
+
+<h3>Description</h3>
+
+<p>Fixation index (Fst) calculation was implemented using Hudson
+method as in Bhatia (2013) and Hudson (1992).
+</p>
+<p>Fixation index (Fst) calculation was implemented using Hudson
+method as in Bhatia (2013) and Hudson (1992).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fst.hudson(X, idx.p1, idx.p2)
+
+fst.hudson(X, idx.p1, idx.p2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix contains the number 0, 1, and 2 representing SNP in
+additive coding. Rows represent individuals and columns represent SNP.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idx.p1</code></td>
+<td>
+<p>An integer vector contains the row indices of first population
+in the matrix X.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idx.p2</code></td>
+<td>
+<p>An integer vector contains the row indices of second population
+in the matrix X.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns an average Fst value between 2 specified groups.
+</p>
+<p>The function returns an average Fst value between 2 specified groups.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bhatia, G., Patterson, N., Sankararaman, S., and Price, A.L. (2013).
+Estimating and interpreting FST: The impact of rare variants. Genome Res. 23,
+1514-1521.
+</p>
+<p>Hudson, R.R., Slatkin, M., and Maddison, W.P. (1992). Estimation of levels of
+gene flow from DNA sequence data. Genetics 132, 583-589.
+</p>
+<p>Bhatia, G., Patterson, N., Sankararaman, S., and Price, A.L. (2013).
+Estimating and interpreting FST: The impact of rare variants. Genome Res. 23,
+1514-1521.
+</p>
+<p>Hudson, R.R., Slatkin, M., and Maddison, W.P. (1992). Estimation of levels of
+gene flow from DNA sequence data. Genetics 132, 583-589.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fst.each.snp.hudson</code>
+</p>
+<p><code>fst.each.snp.hudson</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+#Load simulated dataset
+data(example_SNP)
+
+idx1 &lt;- which(sample_labels == 'pop1')
+idx2 &lt;- which(sample_labels == 'pop2')
+fst &lt;- fst.hudson(simsnp$snp, idx1, idx2)
+
+#Print out the Fst value between 'pop1' and 'pop2'
+print(fst)
+
+
+
+#Load simulated dataset
+data(example_SNP)
+
+idx1 &lt;- which(sample_labels == 'pop1')
+idx2 &lt;- which(sample_labels == 'pop2')
+fst &lt;- fst.hudson(simsnp$snp, idx1, idx2)
+
+#Print out the Fst value between 'pop1' and 'pop2'
+print(fst)
+
+</code></pre>
+
+
+</div>

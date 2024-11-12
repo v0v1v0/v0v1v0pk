@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hsic.clust</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>HSIC cluster permutation conditional independence test</h2>
+
+<h3>Description</h3>
+
+<p>Conditional independence test using HSIC and permutation with clusters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hsic.clust(x, y, z, sig = 1, p = 100, numCluster = 10, numCol = 50,
+  eps = 0.1, paral = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>first variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>second variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>z</code></td>
+<td>
+<p>set of variables on which we condition</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig</code></td>
+<td>
+<p>the with of the Gaussian kernel</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>the number of permutations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCluster</code></td>
+<td>
+<p>number of clusters for clustering z</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCol</code></td>
+<td>
+<p>maximum number of columns that we use for the incomplete Cholesky decomposition</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>normalization parameter for HSIC cluster test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paral</code></td>
+<td>
+<p>number of cores used</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Let x and y be two samples of length n. Gram matrices K and L are defined as: <code class="reqn">K_{i,j} = \exp\frac{(x_i-x_j)^2}{\sigma^2}</code>, <code class="reqn">L_{i,j} = \exp\frac{(y_i-y_j)^2}{\sigma^2}</code> and <code class="reqn">M_{i,j} = \exp\frac{(z_i-z_j)^2}{\sigma^2}</code>. <code class="reqn">H_{i,j} = \delta_{i,j} - \frac{1}{n}</code>. Let <code class="reqn">A=HKH</code>, <code class="reqn">B=HLH</code> and <code class="reqn">C=HMH</code>. <code class="reqn">HSIC(X,Y|Z) = \frac{1}{n^2}Tr(AB-2AC(C+\epsilon I)^{-2}CB+AC(C+\epsilon I)^{-2}CBC(C+\epsilon I)^{-2}C)</code>. Permutation test clusters Z and then permutes Y in the clusters of Z p times to get <code class="reqn">Y_{(p)}</code> and calculates <code class="reqn">HSIC(X,Y_{(p)}|Z)</code>. <code class="reqn">pval = \frac{1(HSIC(X,Y|Z)&gt;HSIC(Z,Y_{(p)}|Z))}{p}</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>hsic.clust() returns a list with class htest containing
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>description of test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>observed value of the test statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate</code></td>
+<td>
+<p>HSIC(x,y)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimates</code></td>
+<td>
+<p>a vector: [HSIC(x,y), mean of HSIC(x,y), variance of HSIC(x,y)]</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replicates</code></td>
+<td>
+<p>replicates of the test statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p>approximate p-value of the test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>desciption of data</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>) and Nina Ines Bertille Desgranges
+</p>
+
+
+<h3>References</h3>
+
+<p>Tillman, R. E., Gretton, A. and Spirtes, P. (2009). Nonlinear directed acyclic structure learning with weakly additive noise model. NIPS 22, Vancouver.
+</p>
+<p>K. Fukumizu et al. (2007). Kernel Measures of Conditional Dependence. NIPS 20. <a href="https://papers.nips.cc/paper/3340-kernel-measures-of-conditional-dependence.pdf">https://papers.nips.cc/paper/3340-kernel-measures-of-conditional-dependence.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>hsic.gamma, hsic.perm, kernelCItest
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(energy)
+set.seed(10)
+# x and y dependent, but independent conditionally on z
+z &lt;- 10*runif(300)
+x &lt;- sin(z) + runif(300)
+y &lt;- cos(z) + runif(300)
+plot(x,y)
+hsic.gamma(x,y)
+hsic.perm(x,y)
+dcov.test(x,y)
+hsic.clust(x,y,z)
+</code></pre>
+
+
+</div>

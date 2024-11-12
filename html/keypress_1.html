@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>has_keypress_support</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check if the current platform/terminal supports reading
+single keys.</h2>
+
+<h3>Description</h3>
+
+<p>Check if the current platform/terminal supports reading
+single keys.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">has_keypress_support()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>Supported platforms:
+</p>
+
+<ul>
+<li>
+<p> Terminals in Windows and Unix.
+</p>
+</li>
+<li>
+<p> RStudio terminal.
+</p>
+</li>
+</ul>
+<p>Not supported:
+</p>
+
+<ul>
+<li>
+<p> RStudio (if not in the RStudio terminal).
+</p>
+</li>
+<li>
+<p> R.app on macOS.
+</p>
+</li>
+<li>
+<p> Rgui on Windows.
+</p>
+</li>
+<li>
+<p> Emacs ESS.
+</p>
+</li>
+<li>
+<p> Others.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>Whether there is support for waiting for individual
+keypressses.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other keypress function: 
+<code>keypress()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">has_keypress_support()
+</code></pre>
+
+
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>multi_analysis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Continuous Information</h2>
+
+<h3>Description</h3>
+
+<p>Summarization of the continuous information.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">multi_analysis  (data, 
+                 y, 
+                 FUN=c("continuous.test","correlation.test"), ...)                 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the matrix containing the continuous values. Each row corresponds to a different sample. Each column corresponds to a different variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the classification of the cohort.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>function to be considered. Choices are "<code>continuous.test</code>" and "<code>correlation.test</code>"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to or from methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a table with the summarized information. If the number of group is equal to two, the p-value is computed using the Wilcoxon rank-sum test, Kruskal-Wallis test otherwise.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>categorical.test</code>,<code>continuous.test</code>,<code>correlation.test</code>, <code>txtsummary</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(clinical)
+
+
+multi_analysis(clinical[,c("BMI","Age")],clinical[,"Hospital"],FUN="continuous.test")
+
+</code></pre>
+
+
+</div>

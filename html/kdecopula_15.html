@@ -1,0 +1,249 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kdecop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bivariate kernel copula density estimation</h2>
+
+<h3>Description</h3>
+
+<p>Based on samples from a bivariate copula, the copula density is estimated.
+The user can choose between different methods. If no bandwidth is provided
+by the user, it will be set by a method-specific automatic selection
+procedure. The related (d/p/r)kdecop functions evaluate the density and cdf
+or simulate synthetic data, respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kdecop(udata, bw = NA, mult = 1, method = "TLL2nn", knots = 30,
+  renorm.iter = 3L, info = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>udata</code></td>
+<td>
+<p><code>nx2</code> matrix of copula data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+<p>bandwidth specification; if <code>NA</code>, <code>bw</code> is selected
+automatically (see Details); Otherwise, please provide <br><code>"T", "TLL1", "TLL2"</code>: a <code class="reqn">2x2</code> bandwidth matrix, <br><code>"TLL1nn", "TLL2nn"</code>: a list with (named) entries <code>B</code>, <code>alpha</code>,
+and <code>kappa</code>, <br><code>"TTCV", "TTPI"</code>: a numeric vector of length four containing <code class="reqn">(h,
+\rho, \theta_1, \theta_2)</code>, c.f. Wen and Wu (2015), <br><code>"MR", "beta"</code>: a positive real number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mult</code></td>
+<td>
+<p>bandwidth multiplier, has to be positive; useful for making
+estimates more/less smooth manually.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p><code>"T"</code>: transformation estimator based on classical bivariate kernel
+estimation (e.g., Geenenens et al., 2014), <br><code>"TLL1"</code>: transformation estimator with log-linear local likelihood
+estimation (Geenenens et al., 2014), <br><code>"TLL2"</code>: transformation estimator with log-quadratic local likelihood
+estimation (Geenenens et al., 2014), <br><code>"TLL1nn"</code>: transformation estimator with log-linear local likelihood
+estimation and nearest-neighbor bandwidths (Geenenens et al., 2014), <br><code>"TLL2nn"</code>: transformation estimator with log-quadratic local likelihood
+estimation and nearest-neighbor bandwidths (Geenenens et al., 2014), <br><code>"TTPI"</code>: tapered transformation estimator with plug-in bandwidths
+(Wu and Wen, 2015), <br><code>"TTCV"</code>: tapered transformation estimator with profile cross-validation
+bandwidths (Wu and Wen, 2015), <br><code>"MR"</code>: mirror-reflection estimator (Gijbels and Mielniczuk, 1990), <br><code>"beta"</code>: beta kernel estimator (Charpentier et al., 2006), <br><code>"bern"</code>: Bernstein copula estimator (Sanchetta and Satchell, 2004); the
+coefficients are adjusted by the method of Weiss and Scheffer (2012).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>knots</code></td>
+<td>
+<p>integer; number of knots in each dimension for the spline
+approximation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>renorm.iter</code></td>
+<td>
+<p>integer; number of iterations for the renormalization
+procedure (see <em>Details</em>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>info</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, additional information about the
+estimate will be gathered (see <em>Value</em>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>We use a Gaussian product kernel function for all methods
+except the beta kernel and Bernstein estimators. For details on bandwidth
+selection for a specific method, see: <code>bw_t</code>,
+<code>bw_tll</code>, <code>bw_tll_nn</code>, <code>bw_tt_pi</code>,
+<code>bw_tt_cv</code>, <code>bw_mr</code>, <code>bw_beta</code>,
+<code>bw_bern</code>.
+<br></p>
+<p>Kernel estimates are usually no proper copula densities. In particular, the
+estimated marginal densities are not uniform. We mitigate this issue by
+a renormalization procedure. The number of iterations of the
+renormalization algorithm can be specified with the <code>renorm.iter</code>
+argument. Typically, a very small number of iterations is sufficient. <br></p>
+
+
+<h3>Value</h3>
+
+<p>The function <code>kdecop</code> returns an
+object of class <code>kdecopula</code> that contains all information necessary for
+evaluation of the estimator. If no bandwidth was provided in the function
+call, the automatically selected value can be found in the variable
+<code>object$bw</code>. If <code>info=TRUE</code>, also the following will be available
+under <code>object$info</code>:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>likvalues</code></td>
+<td>
+<p>Estimator evaluated in sample points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loglik</code></td>
+<td>
+<p>Log likelihood</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effp</code></td>
+<td>
+<p>Effective number of parameters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>AIC</code></td>
+<td>
+<p>Akaike information criterion</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cAIC</code></td>
+<td>
+<p>Bias-corrected version of Akaike information criterion</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>BIC</code></td>
+<td>
+<p>Bayesian information criterion.</p>
+</td>
+</tr>
+</table>
+<p><br>
+The density estimate can be evaluated on arbitrary points with
+<code>dkdecop</code>; the cdf with
+<code>pkdecop</code>. Furthermore, synthetic data can be
+simulated with <code>rkdecop</code>, and several plotting
+options are available with <code>plot</code>
+and <code>contour</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The implementation of the tapered transformation estimator ("TTPI"/"TTCV")
+was kindly provided by Kuangyu Wen.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Nagler
+</p>
+
+
+<h3>References</h3>
+
+<p>Nagler, T. (2018)
+kdecopula: An R Package for the Kernel Estimation of Bivariate Copula
+Densities.
+Journal of Statistical Software 84(7), 1-22
+<br><br>
+Geenens, G., Charpentier, A., and Paindaveine, D. (2017).
+Probit transformation for nonparametric kernel estimation of the copula
+density.
+Bernoulli, 23(3), 1848-1873.
+<br><br>
+Wen, K. and Wu, X. (2015).
+Transformation-Kernel Estimation of the Copula Density,
+Working paper,
+<a href="http://agecon2.tamu.edu/people/faculty/wu-ximing/agecon2/public/copula.pdf">http://agecon2.tamu.edu/people/faculty/wu-ximing/agecon2/public/copula.pdf</a>
+<br><br>
+Gijbels, I. and Mielniczuk, J. (1990).
+Estimating the density of a copula function.
+Communications in Statistics - Theory and Methods, 19(2):445-464.
+<br><br>
+Charpentier, A., Fermanian, J.-D., and Scaillet, O. (2006).
+The estimation of copulas: Theory and practice.
+In Rank, J., editor, Copulas: From theory to application in finance. Risk Books.
+<br><br>
+Weiss, G. and Scheffer, M. (2012).
+Smooth Nonparametric Bernstein Vine Copulas.
+arXiv:1210.2043
+<br><br>
+Nagler, T. (2014).
+Kernel Methods for Vine Copula Estimation.
+Master's Thesis, Technische Universitaet Muenchen,
+<a href="https://mediatum.ub.tum.de/node?id=1231221">https://mediatum.ub.tum.de/node?id=1231221</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdecopula</code>,
+<code>plot.kdecopula</code>,
+<code>predict.kdecopula</code>,
+<code>fitted.kdecopula</code>,
+<code>simulate.kdecopula</code>,
+<code>dkdecop</code>,
+<code>pkdecop</code>,
+<code>rkdecop</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load data and transform with empirical cdf
+data(wdbc)
+udat &lt;- apply(wdbc[, -1], 2, function(x) rank(x) / (length(x) + 1))
+
+## estimation of copula density of variables 5 and 6
+fit &lt;- kdecop(udat[, 5:6])
+summary(fit)
+plot(fit)
+contour(fit)
+
+## evaluate density estimate at (u1,u2)=(0.123,0.321)
+dkdecop(c(0.123, 0.321), fit)
+
+## evaluate cdf estimate at (u1,u2)=(0.123,0.321)
+pkdecop(c(0.123, 0.321), fit)
+
+## simulate 500 samples from density estimate
+plot(rkdecop(500, fit))  # pseudo-random
+plot(rkdecop(500, fit, quasi = TRUE))  # quasi-random
+
+
+</code></pre>
+
+
+</div>

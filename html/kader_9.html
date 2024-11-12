@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fnhat_SS2011</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>(Non-robust) Kernel Density Estimator of Srihera &amp; Stute (2011)</h2>
+
+<h3>Description</h3>
+
+<p>Implementation of eq. (1.6) in Srihera &amp; Stute (2011) for given and fixed
+scalars <code class="reqn">\sigma</code> and <code class="reqn">\theta</code> (and, of course, for fixed and given
+location(s) in <code class="reqn">x</code>, data <code class="reqn">(X_1, \ldots, X_n)</code>, a kernel function
+<code class="reqn">K</code> and a bandwidth <code class="reqn">h</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fnhat_SS2011(x, data, K, h, theta, sigma)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric vector with the location(s) at which the density estimate
+is to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Numeric vector <code class="reqn">(X_1, \ldots, X_n)</code> of the data from which
+the estimate is to be computed. Missing or infinite values are
+not allowed and entail an error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A kernel function to be used for the estimator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar for bandwidth <code class="reqn">h</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Numeric scalar for value of location parameter <code class="reqn">\theta</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>Numeric scalar for value of scale parameter <code class="reqn">\sigma</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The formula upon which the computational version implemented here is based
+is given in eq. (15.3) of Eichner (2017). This function does mainly only a
+simple preparatory computation and then calls <code>compute_fnhat</code>
+which does the actual work.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with class "density" whose underlying structure is
+a list containing the following components (as described in
+<code>density</code>), so that the <code>print</code> and
+<code>plot</code> methods for <code>density</code>-objects are
+immediately available):
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+ <code>x</code>  </td>
+<td style="text-align: left;"> the n coordinates of the points where the density is
+                estimated. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>y</code>  </td>
+<td style="text-align: left;"> the estimated density values from eq. (1.6) in Srihera &amp;
+                Stute (2011). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>bw</code> </td>
+<td style="text-align: left;"> the bandwidth used. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>n</code>  </td>
+<td style="text-align: left;"> the sample size. (Recall: missing or infinite values are
+                not allowed here.) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>call</code>      </td>
+<td style="text-align: left;"> the call which produced the result. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>data.name</code> </td>
+<td style="text-align: left;"> the deparsed name of the x argument. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>has.na</code>    </td>
+<td style="text-align: left;"> logical, for compatibility (always FALSE). </td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ Additionally: </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>theta</code> </td>
+<td style="text-align: left;"> as in Arguments. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>sigma</code> </td>
+<td style="text-align: left;"> as in Arguments. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ </td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Srihera &amp; Stute (2011) and Eichner (2017): see kader.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fnhat_ES2013</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats);   require(grDevices);    require(datasets)
+
+ # Simulated N(0,1)-data and one sigma-value
+set.seed(2017);     n &lt;- 100;     d &lt;- rnorm(n)
+xgrid &lt;- seq(-4, 4, by = 0.1)
+(fit &lt;- fnhat_SS2011(x = xgrid, data = d, K = dnorm, h = n^(-1/5),
+  theta = mean(d), sigma = 1))
+
+plot(fit, ylim = range(0, dnorm(0), fit$y), col = "blue")
+curve(dnorm, add = TRUE);   rug(d, col = "red")
+legend("topleft", lty = 1, col = c("blue", "black", "red"),
+  legend = expression(tilde(f)[n], phi, "data")) 
+
+ # The same data, but several sigma-values
+sigmas &lt;- seq(1, 4, length = 4)
+(fit &lt;- lapply(sigmas, function(sig)
+  fnhat_SS2011(x = xgrid, data = d, K = dnorm, h = n^(-1/5),
+    theta = mean(d), sigma = sig)))
+
+ymat &lt;- sapply(fit, "[[", "y")
+matplot(x = xgrid, y = ymat, type = "l", lty = 1, col = 3:6,
+  ylim = range(0, dnorm(0), ymat), main = "", xlab = "", ylab = "Density")
+curve(dnorm, add = TRUE);   rug(d, col = "red")
+legend("topleft", lty = 1, col = c("black", "red", NA), bty = "n",
+  legend = expression(phi, "data", tilde(f)[n]~"in other colors")) 
+
+ # Old-Faithful-eruptions-data and several sigma-values
+d &lt;- faithful$eruptions;     n &lt;- length(d);     er &lt;- extendrange(d)
+xgrid &lt;- seq(er[1], er[2], by = 0.1);    sigmas &lt;- seq(1, 4, length = 4)
+(fit &lt;- lapply(sigmas, function(sig)
+   fnhat_SS2011(x = xgrid, data = d, K = dnorm, h = n^(-1/5),
+     theta = mean(d), sigma = sig)))
+
+ymat &lt;- sapply(fit, "[[", "y");     dfit &lt;- density(d, bw = "sj")
+plot(dfit, ylim = range(0, dfit$y, ymat), main = "", xlab = "")
+rug(d, col = "red")
+matlines(x = xgrid, y = ymat, lty = 1, col = 3:6)
+legend("top", lty = 1, col = c("black", "red", NA), bty = "n",
+  legend = expression("R's est.", "data", tilde(f)[n]~"in other colors")) 
+</code></pre>
+
+
+</div>

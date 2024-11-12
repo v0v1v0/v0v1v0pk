@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>breeding_cycle</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Access breeding cycle at sampling of <code>DispersalModel</code> object.</h2>
+
+<h3>Description</h3>
+
+<p>Access breeding cycle at sampling of <code>DispersalModel</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">breeding_cycle(x)
+
+## S4 method for signature 'DispersalModel'
+breeding_cycle(x)
+
+## S4 method for signature 'KinPairData'
+breeding_cycle(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>DispersalModel</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DispersalModel</code></td>
+<td>
+<p>object of class <code>DispersalModel</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KinPairData</code></td>
+<td>
+<p>object of class <code>KinPairData</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>integer(s) &gt;= -1</code> Breeding cycle numbers of modeled dispersed kin. Represents the number of complete
+breeding cycles each indivdiual has undergone before the sampling point, where the time between birth and first
+reproduction is coded as <code>0</code>, that between first and second reproduction <code>1</code>, etc.
+</p>
+
+
+<h3>Methods (by class)</h3>
+
+
+<ul>
+<li> <p><code>DispersalModel</code>: 
+</p>
+</li>
+<li> <p><code>KinPairData</code>: 
+</p>
+</li>
+</ul>
+</div>

@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modifyVector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Use new information to update a vector. Similar in concept to
+R's modify list</h2>
+
+<h3>Description</h3>
+
+<p>Original purpose was to receive 2 named vectors, x and y, and copy
+"updated" named values from y into x. If x or y are not named,
+however, this will do something useful.
+</p>
+
+<ul>
+<li>
+<p> Both vectors are named: values in x for which y names match will be
+updated with values from y. If <code>augment</code> is true, then named
+values in y that are not present in x will be added to x.
+</p>
+</li>
+<li>
+<p> If neither vector is named: returns a new vector with x as the values
+and y as the names. Same as returning <code>names(x) &lt;- y</code>.
+</p>
+</li>
+<li>
+<p> If x is not named, y is named: replaces elements in x with values of y
+where suitable (x matches names(y)). For matches, returns x = y[x]
+if names(y) include x.
+</p>
+</li>
+<li>
+<p> If x is named, y is not named: returns y, but with names from x. Lengths
+of x and y must be identical.
+</p>
+</li>
+<li>
+<p> If y is NULL or not provided, x is returned unaltered.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">modifyVector(x, y, augment = FALSE, warnings = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector to be updated, may be named or not.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>possibly a named vector. If unnamed, must match
+length of x. If named, and length is shorter than x, then
+name-value pairs in x will be replaced with name-value pairs
+with y. If names in y are not in x, the augment argument
+determines the result.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>augment</code></td>
+<td>
+<p>If TRUE, add new items in x from y. Otherwise,
+ignore named items in y that are not in x.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warnings</code></td>
+<td>
+<p>Defaults as FALSE. Show warnings about augmentation
+of the target vector.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an updated vector
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c(a = 1, b = 2, c = 3)
+y &lt;- c(b = 22)
+modifyVector(x, y)
+y &lt;- c(c = 7, a = 13, e = 8)
+## If augment = TRUE, will add more elements to x
+modifyVector(x, y, augment = TRUE)
+modifyVector(x, y)
+x &lt;- c("a", "b", "c")
+y &lt;- c("income", "education", "sei")
+## Same as names(x) &lt;- y
+modifyVector(x, y)
+x &lt;- c("a", "b", "c")
+y &lt;- c(a = "happy")
+modifyVector(x, y)
+y &lt;- c(a = "happy", g = "glum")
+## Will give error unless augment = TRUE
+modifyVector(x, y, augment = TRUE)
+</code></pre>
+
+
+</div>

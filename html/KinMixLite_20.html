@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logL.UKX</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluates mixture log likelihood for unknown contributors with extra findings</h2>
+
+<h3>Description</h3>
+
+<p>Replacement for logL.UK in DNAmixtures that calls <code>extra.findings</code> immediately before 
+propagating all findings and returning the normalising constant for the network.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logL.UKX(mixture, expr.extra.findings, initialize = FALSE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>Compiled DNAmixture object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expr.extra.findings</code></td>
+<td>
+<p>expression containing the extra findings</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize</code></td>
+<td>
+<p>should all entered evidence be removed from the networks in <code>mixture</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The log likelihood.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>logL.UK</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+
+# set threshold C
+C&lt;-0.001
+
+pars&lt;-mixpar(rho=list(2),eta=list(100),xi=list(0.1),phi=list(c(U1=0.9,U2=0.1)))
+
+mixMBN&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db,triangulate=FALSE,compile=FALSE)
+cgtcaca&lt;-gt2aca(mixMBN,Cgt)
+add.child.meiosis.nodes(mixMBN,cgtcaca,1)
+logL.UKX(mixMBN,
+	expr.make.findings(list(
+	list('Male',ind=1),
+	list('Caca',aca='cgtcaca')
+	)))(pars)
+
+</code></pre>
+
+
+</div>

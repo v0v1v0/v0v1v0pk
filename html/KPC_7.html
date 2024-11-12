@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KPCRKHS_VS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Variable selection with RKHS estimator</h2>
+
+<h3>Description</h3>
+
+<p>The algorithm performs a forward stepwise variable selection using RKHS estimators.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KPCRKHS_VS(
+  Y,
+  X,
+  num_features,
+  ky = kernlab::rbfdot(1/(2 * stats::median(stats::dist(Y))^2)),
+  kS = NULL,
+  eps = 0.001,
+  appro = FALSE,
+  tol = 1e-05,
+  numCores = parallel::detectCores(),
+  verbose = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a matrix of responses (n by dy)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a matrix of predictors (n by dx)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_features</code></td>
+<td>
+<p>the number of variables to be selected, cannot be larger than dx.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ky</code></td>
+<td>
+<p>a function <code class="reqn">k(y, y')</code> of class <code>kernel</code>. It can be the kernel implemented in <code>kernlab</code> e.g., Gaussian kernel: <code>rbfdot(sigma = 1)</code>, linear kernel: <code>vanilladot()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kS</code></td>
+<td>
+<p>a function that takes X and a subset of indices S as inputs, and then outputs the kernel for X_S. The first argument of kS is X, and the second argument is a vector of positive integer. If <code>kS == NULL</code>, Gaussian kernel with empitical bandwidth <code>kernlab::rbfdot(1/(2*stats::median(stats::dist(X[,S]))^2))</code> will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>a positive number; the regularization parameter for the RKHS estimator</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>appro</code></td>
+<td>
+<p>whether to use incomplete Cholesky decomposition for approximation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>tolerance used for incomplete Cholesky decomposition (<code>inchol</code> in package <code>kernlab</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCores</code></td>
+<td>
+<p>number of cores that are going to be used for parallelizing the process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>whether to print each selected variables during the forward stepwise algorithm</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A stepwise forward selection of variables using KPC. At each step it selects the <code class="reqn">X_j</code> that maximizes <code class="reqn">\tilde{\rho^2}(Y,X_j |</code>selected <code class="reqn">X_i)</code>.
+It is suggested to normalize the features before applying the algorithm.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The algorithm returns a vector of the indices from <code>1,...,dx</code> of the selected variables in the same order that they were selected. The variables at the front are expected to be more informative in predicting Y.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KPCgraph</code>, <code>KPCRKHS</code>, <code>KFOCI</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n = 200
+p = 10
+X = matrix(rnorm(n * p), ncol = p)
+Y = X[, 1] * X[, 2] + sin(X[, 1] * X[, 3])
+library(kernlab)
+kS = function(X,S) return(rbfdot(1/length(S)))
+KPCRKHS_VS(Y, X, num_features = 3, rbfdot(1), kS, eps = 1e-3, appro = FALSE, numCores = 1)
+kS = function(X,S) return(rbfdot(1/(2*stats::median(stats::dist(X[,S]))^2)))
+KPCRKHS_VS(Y, X, num_features = 3, rbfdot(1), kS, eps = 1e-3, appro = FALSE, numCores = 1)
+</code></pre>
+
+
+</div>

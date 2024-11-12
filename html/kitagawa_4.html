@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>alpha_constants</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate any constants depending on effective stress coefficient <code class="reqn">\alpha</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>This function accesses the appropriate method to calculate the
+<code class="reqn">\alpha</code>-dependent constant associated with the choice of <code>c.type</code>.  
+There are currently four such constants, which correspond to
+<strong>Equations 10, 11, 18, 19</strong> in Kitagawa et al (2011).
+</p>
+<p><em>This function is not likely to be needed by the user.</em>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">alpha_constants(alpha = 0, c.type = c("Phi", "Psi", "A", "Kel"))
+
+## Default S3 method:
+alpha_constants(alpha = 0, c.type = c("Phi", "Psi", "A", "Kel"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the constant alpha (see <code>omega_constants</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c.type</code></td>
+<td>
+<p>the constant to calculate</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+
+<h4>What is <code>"alpha"</code>?</h4>
+
+<p>The constant <code class="reqn">\alpha</code> is a function of frequency <code class="reqn">\omega</code> as well 
+as aquifer and well parameters; it is formally defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\alpha \equiv R_S \sqrt{\omega S / T}</code>
+</p>
+
+<p>where <code class="reqn">S</code> is the storativity, <code class="reqn">T</code> is the aquifer's effective
+transmissivity, and <code class="reqn">R_S</code> is the radius of the screened portion
+of the well.
+</p>
+
+
+
+<h4>What is calculated?</h4>
+
+<p>The various constants which may be calculated with this function are
+</p>
+
+<dl>
+<dt><code>Phi</code></dt>
+<dd>
+<p>Given as <code class="reqn">\Phi</code> in Eqn. 10</p>
+</dd>
+<dt><code>Psi</code></dt>
+<dd>
+<p>Given as <code class="reqn">\Psi</code> in Eqn. 11</p>
+</dd>
+<dt><code>A</code></dt>
+<dd>
+<p>Given as <code class="reqn">A_i, i=1,2</code> in Eqns. 18, 19</p>
+</dd>
+<dt><code>Kel</code></dt>
+<dd>
+<p>The complex Kelvin functions (see Abramowitz and Stegun, 1972)</p>
+</dd>
+</dl>
+<h3>Value</h3>
+
+<p>Complex matrix having values representing the constant 
+represented by <code>c.type</code>, 
+<em>as well as</em> any other <code class="reqn">\alpha</code>-dependent constants 
+which are needed in the computation.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>A. J. Barbour &lt;andy.barbour@gmail.com&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>omega_constants</code>, <code>well_response</code>
+</p>
+<p>Other ConstantsCalculators: 
+<code>kitagawa-constants</code>,
+<code>omega_constants()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">alpha_constants()   # kelvin::Keir gives warning
+alpha_constants(1)  # defaults to constant 'Phi' (note output also has Kel)
+alpha_constants(1:10, c.type="A")  # constant 'A' (again, note output)
+</code></pre>
+
+
+</div>

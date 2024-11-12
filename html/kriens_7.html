@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>path</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Compose all the function in a list
+</h2>
+
+<h3>Description</h3>
+
+<p>It applies the <code>compose</code> opertor recursively on all the elements of the list provided as argument
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">path(fs)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>fs</code></td>
+<td>
+
+<p>The list of the functions that must be composed together (e.g: list(f1, f2, f3, ...)).
+</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A function of the type <code>g(x, ret)</code> result of the pairwise composition of each element in the list.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matteo Provenzano<br><a href="http://www.alephdue.com">http://www.alephdue.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># define a function that doubles its argument
+times.two &lt;- function(x, ret) {
+  ret(x*2)
+}
+
+# define a function that loops over a list of list and double every element
+loop &lt;- forget(path(list(lapply, lapply, times.two)))
+
+#returns list(list(2, 4, 6), list(8,10,12))
+loop(list(list(1,2,3),list(4,5,6)))
+</code></pre>
+
+
+</div>

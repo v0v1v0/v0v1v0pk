@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausur.gen</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate empty data sets for the use with klausur</h2>
+
+<h3>Description</h3>
+
+<p>Generate empty data sets for the use with klausur
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klausur.gen(items = NULL, obs = 1, items.char = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>items</code></td>
+<td>
+<p>An integer declaring the number of items to be created</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs</code></td>
+<td>
+<p>Integer, numer ob observations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items.char</code></td>
+<td>
+<p>Logical,
+will the answers be coded as characters or integer numbers (default)?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data.frame containing the variables "No", "Name", "FirstName", "MatrNo", "Pseudonym",
+"Form" and the number of items as needed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>, <code>compare</code>,
+<code>klausur.gen.marks</code>,
+<code>klausur.gen.corr</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">antworten2 &lt;- klausur.gen(items=20,obs=40)
+</code></pre>
+
+
+</div>

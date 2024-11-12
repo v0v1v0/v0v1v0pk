@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export_savedmodel.keras.src.models.model.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a TF SavedModel artifact for inference (e.g. via TF-Serving).</h2>
+
+<h3>Description</h3>
+
+<p>(e.g. via TF-Serving).
+</p>
+<p><strong>Note:</strong> This can currently only be used with
+the TensorFlow or JAX backends.
+</p>
+<p>This method lets you export a model to a lightweight SavedModel artifact
+that contains the model's forward pass only (its <code>call()</code> method)
+and can be served via e.g. TF-Serving. The forward pass is registered
+under the name <code>serve()</code> (see example below).
+</p>
+<p>The original code of the model (including any custom layers you may
+have used) is <em>no longer</em> necessary to reload the artifact – it is
+entirely standalone.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.src.models.model.Model'
+export_savedmodel(object, export_dir_base, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A keras model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>export_dir_base</code></td>
+<td>
+<p>string, file path where to save
+the artifact.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This is called primarily for the side effect of exporting <code>object</code>.
+The first argument, <code>object</code> is also returned, invisibly, to enable usage
+with the pipe.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># Create the artifact
+model |&gt; tensorflow::export_savedmodel("path/to/location")
+
+# Later, in a different process/environment...
+library(tensorflow)
+reloaded_artifact &lt;- tf$saved_model$load("path/to/location")
+predictions &lt;- reloaded_artifact$serve(input_data)
+
+# see tfdeploy::serve_savedmodel() for serving a model over a local web api.
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other saving and loading functions: <br><code>layer_tfsm()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model()</code> <br><code>save_model_config()</code> <br><code>save_model_weights()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

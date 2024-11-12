@@ -1,0 +1,146 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nPolyk</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>K-Statistics Master function</h2>
+
+<h3>Description</h3>
+
+<p>The master function executes one of the functions to compute simple k-statistics <code>(nKS)</code>, 
+multivariate k-statistics <code>(nKM)</code>, simple polykays <code>(nPS)</code> or multivariate polykays <code>(nPM)</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nPolyk( L = NULL, data = NULL, bhelp=NULL ) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>vector of orders</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>vector of a (univariate or multivariate) sample data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bhelp</code></td>
+<td>
+<p><code>T=true</code> or <code>F=false</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The master function analizes the first two input variables and recalls one of the <code>nKS</code>, <code>nKM</code>, 
+<code>nPS</code> or <code>nPM</code>  functions in the <code>kStatistics</code> package. <br><br> 
+Given a sample data:
+</p>
+
+<ol>
+<li>
+<p> simple       k-statistics are computed using <code>nPolyk(c(r), data))</code> or <code>nPolyk(list(c(r)), data))</code> 
+<br></p>
+</li>
+<li>
+<p> multivariate k-statistics are computed using <code>nPolyk(c(r, s), data))</code> or <code>nPolyk( list(c(r, s)), 
+data))</code> <br></p>
+</li>
+<li>
+<p> simple       polykays     are computed using <code>nPolyk(list(c(r),c(s)...),data))</code> <br></p>
+</li>
+<li>
+<p> multivariate polykays     are computed using <code>nPolyk(list(c(r1, r2,...),c(s1, s2,...),...),data))</code></p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>float</code></td>
+<td>
+<p>the estimate of the (joint) cumulant or of the (joint) cumulant product</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>The dimension of the vector with the sample data depends on the first parameter.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. 14(2), 440-468. (download from <a href="https://arxiv.org/pdf/math/0607623.pdf">https://arxiv.org/pdf/math/0607623.pdf</a>) 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) Symbolic computation of moments of sampling distributions. 
+Comp. Stat. Data Analysis. 52(11), 4909-4922. (download from <a href="https://arxiv.org/abs/0806.0129">https://arxiv.org/abs/0806.0129</a>) 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2009) A new method for fast computing unbiased estimators of cumulants. 
+Statistics and Computing, 19, 155-165.  (download from <a href="https://arxiv.org/abs/0807.5008">https://arxiv.org/abs/0807.5008</a>) 
+</p>
+<p>P. McCullagh, J. Kolassa (2009), Scholarpedia, 4(3):4699. <a href="http://www.scholarpedia.org/article/Cumulants">http://www.scholarpedia.org/article/Cumulants</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>nKS</code>,
+<code>nKM</code>,
+<code>nPS</code>,
+<code>nPM</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Data assignment
+data1&lt;-c(16.34, 10.76, 11.84, 13.55, 15.85, 18.20, 7.51, 10.22, 12.52, 14.68, 16.08,
+19.43,8.12, 11.20, 12.95, 14.77, 16.83, 19.80, 8.55, 11.58, 12.10, 15.02, 16.83, 
+16.98, 19.92, 9.47, 11.68, 13.41, 15.35, 19.11)
+
+# Display "KS:[1] -1.44706" which indicates the type of subfunction (nKS) called by 
+# the master function nPolyk and gives the estimate of the third cumulant 
+nPolyk(c(3),data1, TRUE) 
+ 
+# Display "[1] -1.44706" (without the indication of the employed subfunction)
+nPolyk(c(3),data1, FALSE)
+
+# Display "PS:[1] 177.4233" which indicates the type of subfunction (nPS) called by 
+# the master function nPolyk and gives the estimate of the product between the 
+# variance k[2] and the mean k[1] 
+nPolyk( list(  c(2), c(1) ),data1,TRUE)
+
+# Data assignment
+data2&lt;-list(c(5.31,11.16),c(3.26,3.26),c(2.35,2.35),c(8.32,14.34),c(13.48,49.45),
+c(6.25,15.05),c(7.01,7.01),c(8.52,8.52),c(0.45,0.45),c(12.08,12.08),c(19.39,10.42))
+
+# Display "KM:[1] -23.7379" which indicates the type of subfunction (nKM) called by 
+# the master function nPolyk and gives the estimate of k[2,1]  
+nPolyk(c(2,1),data2,TRUE)
+
+# Display "PM:[1] 48.43243" which indicates the type of subfunction (nPM) called by 
+# the master function nPolyk and gives the estimate of k[2,1]*k[1,0]  
+nPolyk( list(  c(2,1), c(1,0) ),data2,TRUE)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CAR_prior</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>CAR prior</h2>
+
+<h3>Description</h3>
+
+<p>Defines the prior of a structural block as a Conditional Autoregressive (CAR) prior.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CAR_prior(block, adj.matrix, scale, rho, var.index = 1:block$n)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>block</code></td>
+<td>
+<p>dlm_block object: The structural block.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>matrix: The adjacency matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>numeric: The tau parameter for the CAR model (see references).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>numeric: The rho parameter for the CAR model (see references).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.index</code></td>
+<td>
+<p>integer: The index of the variables from which to set the prior.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The filtering algorithm used in this package requires a proper prior for the latent space. As such, this implementation of the CAR prior imposes a zero-sum constraint in the regional effects.
+The discount factor must be the same for all variables whose prior is being modified.
+</p>
+<p>For a revision of the CAR prior, see Schmidt and Nobre (2018).
+</p>
+<p>For the details about the implementation see dos Santos et al. (2024).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dlm_block object with the desired prior.
+</p>
+
+
+<h3>References</h3>
+
+<p>Alexandra
+M. Schmidt, Widemberg
+S. Nobre (2018).
+“Conditional Autoregressive (CAR) Model.”
+In <em>Wiley StatsRef: Statistics Reference Online</em>, chapter Conditional Autoregressive (CAR) Model, 1-11.
+John Wiley &amp; Sons, Ltd.
+ISBN 9781118445112, <a href="https://doi.org/10.1002/9781118445112.stat08048">doi:10.1002/9781118445112.stat08048</a>, https://onlinelibrary.wiley.com/doi/pdf/10.1002/9781118445112.stat08048, <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118445112.stat08048">https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118445112.stat08048</a>.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Auxiliary functions for creating structural blocks <code>polynomial_block</code>, <code>regression_block</code>, <code>harmonic_block</code>, <code>TF_block</code>.
+</p>
+<p>Other auxiliary functions for defining priors.: 
+<code>joint_prior()</code>,
+<code>zero_sum_prior()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Creating an arbitrary adjacency matrix
+adj.matrix &lt;- matrix(
+  c(
+    0, 1, 1, 0, 0,
+    1, 0, 1, 0, 0,
+    1, 1, 0, 0, 0,
+    0, 0, 0, 0, 1,
+    0, 0, 0, 1, 0
+  ),
+  5, 5,
+  byrow = TRUE
+)
+
+polynomial_block(mu = 1, D = 0.95) |&gt;
+  block_mult(5) |&gt;
+  CAR_prior(scale = 9, rho = 1, adj.matrix = adj.matrix)
+
+</code></pre>
+
+
+</div>

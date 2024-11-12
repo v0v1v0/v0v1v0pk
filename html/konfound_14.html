@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mkonfound</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Meta-Analysis and Sensitivity Analysis for Multiple Studies</h2>
+
+<h3>Description</h3>
+
+<p>Performs sensitivity analysis for multiple models, where parameters 
+are stored in a data frame. It calculates the amount of bias required to 
+invalidate or sustain an inference for each case in the data frame.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mkonfound(d, t, df, alpha = 0.05, tails = 2, return_plot = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>A data frame or tibble containing t-statistics and associated 
+degrees of freedom.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>Column name or vector of t-statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>Column name or vector of degrees of freedom associated 
+with t-statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Significance level for hypothesis testing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tails</code></td>
+<td>
+<p>Number of tails for the test (1 or 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_plot</code></td>
+<td>
+<p>Whether to return a plot of the percent bias 
+(default is 'FALSE').</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Depending on 'return_plot', either returns a data frame with 
+analysis results or a plot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+mkonfound_ex
+str(d)
+mkonfound(mkonfound_ex, t, df)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anonomize</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create unique anonymous id values</h2>
+
+<h3>Description</h3>
+
+<p>Obscure participant id values by replacing them with "anon-1" and
+so forth.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anonomize(x, prefix = "anon")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A column of "confidential" names, possibly with repeats</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix</code></td>
+<td>
+<p>Character string to use as prefix in result.
+Default is "anon"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Caution: the true "confidential" names are used as names in the
+output vector
+</p>
+
+
+<h3>Value</h3>
+
+<p>Named character vector of anonymized id names.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+x &lt;- c("bill", "bob", "fred", "bill")
+(anonomize(x, prefix = "id"))
+</p>
+
+
+</div>

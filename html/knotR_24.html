@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bezier_integrals</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Arcwise integrals over Bezier curves
+</h2>
+
+<h3>Description</h3>
+
+<p>Various integrals over Bezier curves such as total arc length and
+bending energy
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bezier_arclength(P, t1=0,t2=1,give=FALSE,...)
+bezier_bending_energy(P, t1=0,t2=1, give=FALSE, power=2, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>Control points in the form of a 4 by 2 matrix with rows
+corresponding to <code class="reqn">P_0</code> to <code class="reqn">P_3</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>give</code></td>
+<td>
+<p>Boolean, with <code>TRUE</code> meaning to return more
+information and default <code>FALSE</code> meaning to return just the
+value of the integration as estimated by the numerical routine</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power</code></td>
+<td>
+<p>Function <code>bezier_bending_energy()</code> returns
+bending energy is <code class="reqn">\int_S\frac{ds}{R^\mathrm{power}}</code>, where <code class="reqn">R=R(s)</code> is the radius of curvature.
+If <code class="reqn">\mathrm{power}=2</code> this corresponds to the Eulerian
+bending energy of a flexible beam</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t1,t2</code></td>
+<td>
+<p>In function <code>bezier_arclength()</code>, the values of
+<code>t</code> to start and end the integration at</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed to <code>integrate()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These functions use numerical integration, specifically
+<code>integrate()</code>, between two specified points on a Bezier curve.
+</p>
+
+<ol>
+<li>
+<p> Function <code>bezier_bending_energy()</code> gives the 
+and bending energy (<code class="reqn">\int R^{-1}ds</code>).
+</p>
+</li>
+<li>
+<p> Function <code>bezier_arclength()</code> gives the arc length.
+</p>
+</li>
+</ol>
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bezier_angle</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+P &lt;- matrix(c(0, 1, 2, 2, 2, 0, 3, 2),4,2)
+
+bezier_arclength(P)
+
+</code></pre>
+
+
+</div>

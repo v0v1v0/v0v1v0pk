@@ -1,0 +1,31 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>render_bootstrap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set knitr bootstrap output functions</h2>
+
+<h3>Description</h3>
+
+<p>This function sets the appropriate knitr output hooks to produce a bootstrap
+styled report.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">render_bootstrap()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>This will allow use of the knitr bootstrap output hooks without the
+rmarkdown package.  Note you still need to use pandoc to generate the HTML
+document, as the sundown library in the markdown package cannot handle
+markdown embedded in HTML tags, which knitr bootstrap uses.
+</p>
+
+
+</div>

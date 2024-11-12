@@ -1,0 +1,417 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_text_vectorization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer which maps text features to integer sequences.</h2>
+
+<h3>Description</h3>
+
+<p>This layer has basic options for managing text in a Keras model. It
+transforms a batch of strings (one example = one string) into either a list
+of token indices (one example = 1D tensor of integer token indices) or a
+dense representation (one example = 1D tensor of float values representing
+data about the example's tokens). This layer is meant to handle natural
+language inputs. To handle simple string inputs (categorical strings or
+pre-tokenized strings) see <code>layer_string_lookup()</code>.
+</p>
+<p>The vocabulary for the layer must be either supplied on construction or
+learned via <code>adapt()</code>. When this layer is adapted, it will analyze the
+dataset, determine the frequency of individual string values, and create a
+vocabulary from them. This vocabulary can have unlimited size or be capped,
+depending on the configuration options for this layer; if there are more
+unique values in the input than the maximum vocabulary size, the most
+frequent terms will be used to create the vocabulary.
+</p>
+<p>The processing of each example contains the following steps:
+</p>
+
+<ol>
+<li>
+<p> Standardize each example (usually lowercasing + punctuation stripping)
+</p>
+</li>
+<li>
+<p> Split each example into substrings (usually words)
+</p>
+</li>
+<li>
+<p> Recombine substrings into tokens (usually ngrams)
+</p>
+</li>
+<li>
+<p> Index tokens (associate a unique int value with each token)
+</p>
+</li>
+<li>
+<p> Transform each example using this index, either into a vector of ints or
+a dense float vector.
+</p>
+</li>
+</ol>
+<p>Some notes on passing callables to customize splitting and normalization for
+this layer:
+</p>
+
+<ol>
+<li>
+<p> Any callable can be passed to this Layer, but if you want to serialize
+this object you should only pass functions that are registered Keras
+serializables (see <code>register_keras_serializable()</code>
+for more details).
+</p>
+</li>
+<li>
+<p> When using a custom callable for <code>standardize</code>, the data received
+by the callable will be exactly as passed to this layer. The callable
+should return a tensor of the same shape as the input.
+</p>
+</li>
+<li>
+<p> When using a custom callable for <code>split</code>, the data received by the
+callable will have the 1st dimension squeezed out - instead of
+<code>list("string to split", "another string to split")</code>, the Callable will
+see <code>c("string to split", "another string to split")</code>.
+The callable should return a <code>tf.Tensor</code> of dtype <code>string</code>
+with the first dimension containing the split tokens -
+in this example, we should see something like <code>list(c("string", "to", "split"), c("another", "string", "to", "split"))</code>.
+</p>
+</li>
+</ol>
+<p><strong>Note:</strong> This layer uses TensorFlow internally. It cannot
+be used as part of the compiled computation graph of a model with
+any backend other than TensorFlow.
+It can however be used with any backend when running eagerly.
+It can also always be used as part of an input preprocessing pipeline
+with any backend (outside the model itself), which is how we recommend
+to use this layer.
+</p>
+<p><strong>Note:</strong> This layer is safe to use inside a <code>tf.data</code> pipeline
+(independently of which backend you're using).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_text_vectorization(
+  object,
+  max_tokens = NULL,
+  standardize = "lower_and_strip_punctuation",
+  split = "whitespace",
+  ngrams = NULL,
+  output_mode = "int",
+  output_sequence_length = NULL,
+  pad_to_max_tokens = FALSE,
+  vocabulary = NULL,
+  idf_weights = NULL,
+  sparse = FALSE,
+  ragged = FALSE,
+  encoding = "utf-8",
+  name = NULL,
+  ...
+)
+
+get_vocabulary(object, include_special_tokens = TRUE)
+
+set_vocabulary(object, vocabulary, idf_weights = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_tokens</code></td>
+<td>
+<p>Maximum size of the vocabulary for this layer. This should
+only be specified when adapting a vocabulary or when setting
+<code>pad_to_max_tokens=TRUE</code>. Note that this vocabulary
+contains 1 OOV token, so the effective number of tokens is
+<code style="white-space: pre;">⁠(max_tokens - 1 - (1 if output_mode == "int" else 0))⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>standardize</code></td>
+<td>
+<p>Optional specification for standardization to apply to the
+input text. Values can be:
+</p>
+
+<ul>
+<li> <p><code>NULL</code>: No standardization.
+</p>
+</li>
+<li> <p><code>"lower_and_strip_punctuation"</code>: Text will be lowercased and all
+punctuation removed.
+</p>
+</li>
+<li> <p><code>"lower"</code>: Text will be lowercased.
+</p>
+</li>
+<li> <p><code>"strip_punctuation"</code>: All punctuation will be removed.
+</p>
+</li>
+<li>
+<p> Callable: Inputs will passed to the callable function,
+which should be standardized and returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>split</code></td>
+<td>
+<p>Optional specification for splitting the input text.
+Values can be:
+</p>
+
+<ul>
+<li> <p><code>NULL</code>: No splitting.
+</p>
+</li>
+<li> <p><code>"whitespace"</code>: Split on whitespace.
+</p>
+</li>
+<li> <p><code>"character"</code>: Split on each unicode character.
+</p>
+</li>
+<li>
+<p> Callable: Standardized inputs will passed to the callable
+function, which should be split and returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ngrams</code></td>
+<td>
+<p>Optional specification for ngrams to create from the
+possibly-split input text. Values can be <code>NULL</code>, an integer
+or list of integers; passing an integer will create ngrams
+up to that integer, and passing a list of integers will
+create ngrams for the specified values in the list.
+Passing <code>NULL</code> means that no ngrams will be created.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_mode</code></td>
+<td>
+<p>Optional specification for the output of the layer.
+Values can be <code>"int"</code>, <code>"multi_hot"</code>, <code>"count"</code> or <code>"tf_idf"</code>,
+configuring the layer as follows:
+</p>
+
+<ul>
+<li> <p><code>"int"</code>: Outputs integer indices, one integer index per split
+string token. When <code>output_mode == "int"</code>,
+0 is reserved for masked locations;
+this reduces the vocab size to <code>max_tokens - 2</code>
+instead of <code>max_tokens - 1</code>.
+</p>
+</li>
+<li> <p><code>"multi_hot"</code>: Outputs a single int array per batch, of either
+vocab_size or max_tokens size, containing 1s in all elements
+where the token mapped to that index exists at least
+once in the batch item.
+</p>
+</li>
+<li> <p><code>"count"</code>: Like <code>"multi_hot"</code>, but the int array contains
+a count of the number of times the token at that index
+appeared in the batch item.
+</p>
+</li>
+<li> <p><code>"tf_idf"</code>: Like <code>"multi_hot"</code>, but the TF-IDF algorithm
+is applied to find the value in each token slot.
+For <code>"int"</code> output, any shape of input and output is supported.
+For all other output modes, currently only rank 1 inputs
+(and rank 2 outputs after splitting) are supported.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_sequence_length</code></td>
+<td>
+<p>Only valid in INT mode. If set, the output will
+have its time dimension padded or truncated to exactly
+<code>output_sequence_length</code> values, resulting in a tensor of shape
+<code style="white-space: pre;">⁠(batch_size, output_sequence_length)⁠</code> regardless of how many tokens
+resulted from the splitting step. Defaults to <code>NULL</code>. If <code>ragged</code>
+is <code>TRUE</code> then <code>output_sequence_length</code> may still truncate the
+output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pad_to_max_tokens</code></td>
+<td>
+<p>Only valid in  <code>"multi_hot"</code>, <code>"count"</code>,
+and <code>"tf_idf"</code> modes. If <code>TRUE</code>, the output will have
+its feature axis padded to <code>max_tokens</code> even if the number
+of unique tokens in the vocabulary is less than <code>max_tokens</code>,
+resulting in a tensor of shape <code style="white-space: pre;">⁠(batch_size, max_tokens)⁠</code>
+regardless of vocabulary size. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vocabulary</code></td>
+<td>
+<p>Optional. Either an array of strings or a string path to a
+text file. If passing an array, can pass a list, list,
+1D NumPy array, or 1D tensor containing the string vocabulary terms.
+If passing a file path, the file should contain one line per term
+in the vocabulary. If this argument is set,
+there is no need to <code>adapt()</code> the layer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idf_weights</code></td>
+<td>
+<p>An R vector, 1D numpy array, or 1D tensor of inverse
+document frequency weights with equal length to vocabulary. Must be set if
+output_mode is "tf_idf". Should not be set otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sparse</code></td>
+<td>
+<p>Boolean. Only applicable to <code>"multi_hot"</code>, <code>"count"</code>, and
+<code>"tf_idf"</code> output modes. Only supported with TensorFlow
+backend. If <code>TRUE</code>, returns a <code>SparseTensor</code>
+instead of a dense <code>Tensor</code>. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ragged</code></td>
+<td>
+<p>Boolean. Only applicable to <code>"int"</code> output mode.
+Only supported with TensorFlow backend.
+If <code>TRUE</code>, returns a <code>RaggedTensor</code> instead of a dense <code>Tensor</code>,
+where each sequence may have a different length
+after string splitting. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>Optional. The text encoding to use to interpret the input
+strings. Defaults to <code>"utf-8"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include_special_tokens</code></td>
+<td>
+<p>If TRUE, the returned vocabulary will include
+the padding and OOV tokens, and a term's index in the vocabulary will equal
+the term's index when calling the layer. If FALSE, the returned vocabulary
+will not include any padding or OOV tokens.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<p>This example instantiates a <code>TextVectorization</code> layer that lowercases text,
+splits on whitespace, strips punctuation, and outputs integer vocab indices.
+</p>
+<div class="sourceCode r"><pre>max_tokens &lt;- 5000  # Maximum vocab size.
+max_len &lt;- 4  # Sequence length to pad the outputs to.
+# Create the layer.
+vectorize_layer &lt;- layer_text_vectorization(
+    max_tokens = max_tokens,
+    output_mode = 'int',
+    output_sequence_length = max_len)
+</pre></div>
+<div class="sourceCode r"><pre># Now that the vocab layer has been created, call `adapt` on the
+# list of strings to create the vocabulary.
+vectorize_layer %&gt;% adapt(c("foo bar", "bar baz", "baz bada boom"))
+</pre></div>
+<div class="sourceCode r"><pre># Now, the layer can map strings to integers -- you can use an
+# embedding layer to map these integers to learned embeddings.
+input_data &lt;- rbind("foo qux bar", "qux baz")
+vectorize_layer(input_data)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[4 1 3 0]
+##  [1 2 0 0]], shape=(2, 4), dtype=int64)
+
+</pre></div>
+<p>This example instantiates a <code>TextVectorization</code> layer by passing a list
+of vocabulary terms to the layer's <code>initialize()</code> method.
+</p>
+<div class="sourceCode r"><pre>vocab_data &lt;- c("earth", "wind", "and", "fire")
+max_len &lt;- 4  # Sequence length to pad the outputs to.
+# Create the layer, passing the vocab directly. You can also pass the
+# vocabulary arg a path to a file containing one vocabulary word per
+# line.
+vectorize_layer &lt;- layer_text_vectorization(
+    max_tokens = max_tokens,
+    output_mode = 'int',
+    output_sequence_length = max_len,
+    vocabulary = vocab_data)
+</pre></div>
+<div class="sourceCode r"><pre># Because we've passed the vocabulary directly, we don't need to adapt
+# the layer - the vocabulary is already set. The vocabulary contains the
+# padding token ('') and OOV token ('[UNK]')
+# as well as the passed tokens.
+vectorize_layer %&gt;% get_vocabulary()
+</pre></div>
+<div class="sourceCode"><pre>## [1] ""      "[UNK]" "earth" "wind"  "and"   "fire"
+
+</pre></div>
+<div class="sourceCode r"><pre># ['', '[UNK]', 'earth', 'wind', 'and', 'fire']
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/preprocessing_layers/text/text_vectorization#textvectorization-class">https://keras.io/api/layers/preprocessing_layers/text/text_vectorization#textvectorization-class</a>
+</p>
+</li></ul>
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_feature_space()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_normalization()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

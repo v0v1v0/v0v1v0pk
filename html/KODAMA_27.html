@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scaling</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scaling Methods</h2>
+
+<h3>Description</h3>
+
+<p>Collection of Different Scaling Methods.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scaling(Xtrain,Xtest=NULL, method = "autoscaling")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Xtrain</code></td>
+<td>
+<p>a matrix of data (training data set).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xtest</code></td>
+<td>
+<p>a matrix of data (test data set).(by default = NULL).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the scaling method to be used. Choices are "<code>none</code>", "<code>centering</code>", "<code>autoscaling</code>", "<code>rangescaling</code>", "<code>paretoscaling</code>" (by default = "<code>autoscaling</code>"). A partial string sufficient to uniquely identify the choice is permitted.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A number of different scaling methods are provided:
+</p>
+
+<ul>
+<li>
+<p> "<code>none</code>": no scaling method is applied.
+</p>
+</li>
+<li>
+<p> "<code>centering</code>": centers the mean to zero.
+</p>
+</li>
+<li>
+<p> "<code>autoscaling</code>": centers the mean to zero and scales data by dividing each variable by the variance.
+</p>
+</li>
+<li>
+<p> "<code>rangescaling</code>": centers the mean to zero and scales data by dividing each variable by the difference between the minimum and the maximum value.
+</p>
+</li>
+<li>
+<p> "<code>paretoscaling</code>": centers the mean to zero and scales data by dividing each variable by the square root of the standard deviation. Unit scaling divides each variable by the standard deviation so that each variance equal to 1.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>The function returns a list with 1 item or 2 items (if a test data set is present):
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>newXtrain</code></td>
+<td>
+<p>a scaled matrix (training data set).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newXtest</code></td>
+<td>
+<p>a scale matrix (test data set).</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore and Leonardo Tenori</p>
+
+
+<h3>References</h3>
+
+<p>van den Berg RA, Hoefsloot HCJ, Westerhuis JA, <em>et al.</em><br>
+Centering, scaling, and transformations: improving the biological information content of metabolomics data. <br><em>BMC Genomics</em> 2006;7(1):142.
+<br><br>
+Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>normalization</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(MetRef)
+u=MetRef$data;
+u=u[,-which(colSums(u)==0)]
+u=normalization(u)$newXtrain
+u=scaling(u)$newXtrain
+class=as.numeric(as.factor(MetRef$gender))
+cc=pca(u)
+plot(cc$x,pch=21,bg=class,xlab=cc$txt[1],ylab=cc$txt[2])
+</code></pre>
+
+
+</div>

@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>combine_data_across_cols</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Combine data across columns</h2>
+
+<h3>Description</h3>
+
+<p>Combine data across columns. If NA is the only value across all focal
+columns for given row(s), NA will be returned for those row(s).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">combine_data_across_cols(data = NULL, cols = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols</code></td>
+<td>
+<p>a character vector containing names of columns, across
+which to combine data</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a numeric or character vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dt &lt;- data.frame(v1 = c(1, NA), v2 = c(NA, 2))
+dt
+combine_data_across_cols(data = dt, cols = c("v1", "v2"))
+dt &lt;- data.frame(v1 = c(1, 2, NA), v2 = c(NA, 4, 3))
+dt
+combine_data_across_cols(data = dt, cols = c("v1", "v2"))
+dt &lt;- data.frame(v1 = c(1, NA, NA), v2 = c(NA, 2, NA))
+dt
+combine_data_across_cols(data = dt, cols = c("v1", "v2"))
+</code></pre>
+
+
+</div>

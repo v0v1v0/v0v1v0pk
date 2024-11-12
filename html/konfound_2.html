@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cal_delta_star</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate delta star for sensitivity analysis</h2>
+
+<h3>Description</h3>
+
+<p>Calculate delta star for sensitivity analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cal_delta_star(
+  FR2max,
+  R2,
+  R2_uncond,
+  est_eff,
+  eff_thr,
+  var_x,
+  var_y,
+  est_uncond,
+  rxz,
+  n_obs
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>FR2max</code></td>
+<td>
+<p>maximum R2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R2</code></td>
+<td>
+<p>current R2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R2_uncond</code></td>
+<td>
+<p>unconditional R2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>est_eff</code></td>
+<td>
+<p>estimated effect</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eff_thr</code></td>
+<td>
+<p>effect threshold</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var_x</code></td>
+<td>
+<p>variance of X</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var_y</code></td>
+<td>
+<p>variance of Y</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>est_uncond</code></td>
+<td>
+<p>unconditional estimate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rxz</code></td>
+<td>
+<p>correlation coefficient between X and Z</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_obs</code></td>
+<td>
+<p>number of observations</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>delta star value
+</p>
+
+
+</div>

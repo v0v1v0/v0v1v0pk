@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loglinear_analysis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Loglinear analysis</h2>
+
+<h3>Description</h3>
+
+<p>Conduct a loglinear analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loglinear_analysis(
+  data = NULL,
+  dv_name = NULL,
+  iv_1_name = NULL,
+  iv_2_name = NULL,
+  iv_1_values = NULL,
+  iv_2_values = NULL,
+  output = "all",
+  round_p = 3,
+  round_chi_sq = 2,
+  mosaic_plot = TRUE,
+  report_as_field = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_name</code></td>
+<td>
+<p>name of the first independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_name</code></td>
+<td>
+<p>name of the second independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_1_values</code></td>
+<td>
+<p>restrict all analyses to observations having
+these values for the first independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_2_values</code></td>
+<td>
+<p>restrict all analyses to observations having
+these values for the second independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>type of the output. If <code>output_type = "all"</code>,
+the function will return a results summary and print a mosaic plot.
+(default = "all")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_p</code></td>
+<td>
+<p>number of decimal places to which to round
+p-values (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_chi_sq</code></td>
+<td>
+<p>number of decimal places to which to round
+chi-squared test statistics (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mosaic_plot</code></td>
+<td>
+<p>If <code>mosaic_plot = TRUE</code>, a mosaic plot will
+be printed (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>report_as_field</code></td>
+<td>
+<p>If <code>report_as_field = TRUE</code>, reports summary
+will follow the format suggested by Andy Field (2012)
+(ISBN: 978-1-4462-0045-2, p. 851)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+loglinear_analysis(data = data.frame(Titanic), "Survived", "Sex", "Age")
+
+</code></pre>
+
+
+</div>

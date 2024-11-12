@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.woe</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Weights of evidence</h2>
+
+<h3>Description</h3>
+
+<p>Applies weight of evidence transform of factor variables for binary classification based on a model of class <code>woe</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'woe'
+predict(object, newdata, replace = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object resulting from a call of <code>woe</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>A matrix or data frame where WOE transform should be applied of the same dimension as the data used for training the <code>woe</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>Logical flag specifying whether the original factor variables should be kept in the output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Data frame including the transformed numeric <code>woe</code> variables. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Gero Szepannek</p>
+
+
+<h3>References</h3>
+
+<p>Good, I. (1950): <em>Probability and the Weighting of Evidences.</em> Charles Griffin, London.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>woe</code>, <code>plot.woe</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># see examples in ?woe
+</code></pre>
+
+
+</div>

@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dts</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Delete trailing slash</h2>
+
+<h3>Description</h3>
+
+<p>This function cleans up a path string by removing the trailing
+slash.  This is necessary on MS Windows, <code>file.exists(fn)</code> fails
+if "/" is on end of file name. Deleting the trailing slash is thus
+required on Windows and it is not harmful on other platforms.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dts(name)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>A path</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>All usages of <code>file.exists(fn)</code> in R should be revised
+to be multi-platform safe by writing <code>file.exists(dts(fn))</code>.
+</p>
+<p>This version also removes repeated adjacent slashes, so that
+<code>"/tmp///paul//test/"</code> becomes <code>"/tmp/paul/test"</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Same path with trailing "/" removed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+</div>

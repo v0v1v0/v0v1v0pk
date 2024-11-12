@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getLinkedPairs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Identify linked marker pairs</h2>
+
+<h3>Description</h3>
+
+<p>This function returns a "maximal" set of disjoint pairs of linked markers,
+given a genetic marker map and a subset of the markers included in the map.
+The pairs are identified in a greedy manner, successively choosing the
+closest markers on each chromosome.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getLinkedPairs(markers, linkageMap, maxdist = Inf)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>markers</code></td>
+<td>
+<p>A character vector containing marker names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linkageMap</code></td>
+<td>
+<p>A data frame with columns including <code>Marker</code>, <code>Chrom</code> and
+<code>PosCM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxdist</code></td>
+<td>
+<p>A positive number indicating the maximum linkage distance (in
+cM). Markers further apart than this are considered unlinked.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of character vectors, each containing two marker names.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example using the built-in map of 50 STR markers
+map = KLINK::LINKAGEMAP
+
+getLinkedPairs(map$Marker, map, maxdist = 25)
+</code></pre>
+
+
+</div>

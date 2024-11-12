@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fduplicated/funique</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Fast duplicated and unique</h2>
+
+<h3>Description</h3>
+
+<p>Similar to base R functions <code>duplicated</code> and <code>unique</code>, <code>fduplicated</code> and <code>funique</code> are slightly faster for vectors and much faster for <code>data.frame</code>. Function <code>uniqLen</code> is equivalent to base R <code>length(unique)</code> or <code>data.table::uniqueN</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  fduplicated(x, fromLast = FALSE)
+  funique(x, fromLast = FALSE)
+  uniqLen(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p> A vector, data.frame or matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fromLast</code></td>
+<td>
+<p> A logical value to indicate whether the search should start from the end or beginning. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Function <code>fduplicated</code> returns a logical vector and <code>funique</code> returns a vector of the same type as <code>x</code> without the duplicated value. Function <code>uniqLen</code> returns an integer.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgan Jacob</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example 1: fduplicated
+fduplicated(iris$Species)
+
+# Example 2: funique
+funique(iris$Species)
+
+# Example 3: uniqLen
+uniqLen(iris$Species)
+
+# Benchmarks
+# ----------
+# x = sample(c(1:10,NA_integer_),1e8,TRUE) # 382 Mb
+# microbenchmark::microbenchmark(
+#   duplicated(x),
+#   fduplicated(x),
+#   times = 5L
+# )
+# Unit: seconds
+#           expr  min   lq  mean  median   uq   max neval
+# duplicated(x)  2.21 2.21  2.48    2.21 2.22  3.55     5
+# fduplicated(x) 0.38 0.39  0.45    0.48 0.49  0.50     5
+#
+# vs data.table
+# -------------
+# df = iris[,5:1]
+# for (i in 1:16) df = rbind(df, df)  # 338 Mb
+# dt = data.table::as.data.table(df)
+# microbenchmark::microbenchmark(
+#   kit = funique(df),
+#   data.table = unique(dt),
+#   times = 5L
+# )
+# Unit: seconds
+#       expr  min   lq  mean  median    uq  max neval
+# kit        1.22 1.27  1.33    1.27  1.36 1.55     5
+# data.table 6.20 6.24  6.43    6.33  6.46 6.93     5 # (setDTthreads(1L))
+# data.table 4.20 4.25  4.47    4.26  4.32 5.33     5 # (setDTthreads(2L))
+#
+# microbenchmark::microbenchmark(
+#   kit=uniqLen(x),
+#   data.table=uniqueN(x),
+#   times = 5L, unit = "s"
+# )
+# Unit: seconds
+#       expr  min    lq  mean  median   uq  max neval
+# kit        0.17  0.17  0.17   0.17  0.17 0.17     5
+# data.table 1.66  1.68  1.70   1.71  1.71 1.72     5 # (setDTthreads(1L))
+# data.table 1.13  1.15  1.16   1.16  1.18 1.18     5 # (setDTthreads(2L))
+</code></pre>
+
+
+</div>

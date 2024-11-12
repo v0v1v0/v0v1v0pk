@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_mean_wrapper</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Wrap a stateless metric function with the <code>Mean</code> metric.</h2>
+
+<h3>Description</h3>
+
+<p>You could use this class to quickly build a mean metric from a function. The
+function needs to have the signature <code>fn(y_true, y_pred)</code> and return a
+per-sample loss array. <code>metric_mean_wrapper$result()</code> will return
+the average metric value across all samples seen so far.
+</p>
+<p>For example:
+</p>
+<div class="sourceCode r"><pre>mse &lt;- function(y_true, y_pred) {
+  (y_true - y_pred)^2
+}
+
+mse_metric &lt;- metric_mean_wrapper(fn = mse)
+mse_metric$update_state(c(0, 1), c(1, 1))
+mse_metric$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.5, shape=(), dtype=float32)
+
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_mean_wrapper(..., fn, name = NULL, dtype = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Keyword arguments to pass on to <code>fn</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>The metric function to wrap, with signature
+<code>fn(y_true, y_pred)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>Metric</code> instance is returned. The <code>Metric</code> instance can be passed
+directly to <code>compile(metrics = )</code>, or used as a standalone object. See
+<code>?Metric</code> for example usage.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other reduction metrics: <br><code>metric_mean()</code> <br><code>metric_sum()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

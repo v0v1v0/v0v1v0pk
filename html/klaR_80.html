@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>quadtrafo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Transforming of 4 dimensional values in a barycentric coordinate system.</h2>
+
+<h3>Description</h3>
+
+<p>Transforming of 4 dimensional values in a barycentric coordinate system.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">quadtrafo(e, f = NULL, g = NULL, h = NULL)
+        
+quadlines(e, f = NULL, g = NULL, h = NULL, sp, ...)
+
+quadpoints(e, f = NULL, g = NULL, h = NULL, sp, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>e</code></td>
+<td>
+<p>either a matrix with 4 columns represanting the membership values or a 
+vector with the membership values of the first class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>vector with the membership values of the second class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>vector with the membership values of the third class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>vector with the membership values of the forth class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sp</code></td>
+<td>
+<p><code>scatterplot3d</code> object to which <code>points</code> or <code>lines</code> should be plotted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to the underlyind <code>plot</code> functions</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>For <code>quadtrafo</code> the 3 dimensional values in the barycentrix coordinate system. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>triplot</code>, <code>quadplot</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(MASS)
+data(B3)
+posterior &lt;- predict(lda(PHASEN ~ ., data = B3))$post
+quadtrafo(posterior)
+</code></pre>
+
+
+</div>

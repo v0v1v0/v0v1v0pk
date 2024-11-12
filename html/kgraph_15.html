@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_cutoff_threshold</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get cut-off threshold</h2>
+
+<h3>Description</h3>
+
+<p>Get cut-off threshold
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_cutoff_threshold(roc_obj, specificity_lvl = 0.95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>roc_obj</code></td>
+<td>
+<p>Object returned by pROC::roc</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>specificity_lvl</code></td>
+<td>
+<p>Specificity threshold
+(default 0.95 is equivalent to 5 percent false positives,
+and 0.9 to 10 percent false positives)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Similarity value threshold
+</p>
+
+
+</div>

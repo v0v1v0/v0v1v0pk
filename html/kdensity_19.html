@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>recycle</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Recycles arguments.</h2>
+
+<h3>Description</h3>
+
+<p>Recycles arguments.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">recycle(..., prototype)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>A list of arguments to be recycled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prototype</code></td>
+<td>
+<p>an optional argument. If given, repeats all arguments
+up to the length of the prototype. If an element of the list has the name,
+it is used. If not, the variable itself is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Recycles arguments so that all vectors are equally long. If a
+prototype is given, each vector will have the same size as the prototype.
+</p>
+
+
+</div>

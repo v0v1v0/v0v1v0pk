@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kin_pair_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make new KinPairData object</h2>
+
+<h3>Description</h3>
+
+<p>Make new KinPairData object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kin_pair_data(data = NULL, kinship = NULL, lifestage = NULL, cycle = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>tlb_df. Tibble of kinpair distances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>character. - one of PO, FS, HS, AV, HAV, GG, 1C, H1C, GAV, HGAV, 1C1, H1C1, GGG, 2C, H2C &amp; UN.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lifestage</code></td>
+<td>
+<p>character. - one of 'unknown', 'immature' or 'ovipositional', or alternatively a custom
+stage that corresponds to a dispersal stage contained in a <code>DispersalModel</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cycle</code></td>
+<td>
+<p>non-negative integer of length one or two (here, 1 is equivalent to c(1, 1)). Represents
+the number of complete breeding cycles each individual has undergone before the sampling point, where the time between
+birth and first reproduction is coded as '0', that between first and second reproduction '1', etc. (default 0). If the first individual
+was sampled as a juvenile &amp; the second as an adult of equivalent stage, the vector c(0, 1) would be used.
+In most situations, the default will be appropriate</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns an object of class <code>KinPairData</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kin_pair_data()
+</code></pre>
+
+
+</div>

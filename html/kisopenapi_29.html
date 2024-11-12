@@ -1,0 +1,100 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>set_trading_env</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set KIS account number, account product code, app key and app secret</h2>
+
+<h3>Description</h3>
+
+<p>Save environment variables for the current session. To set it permanently, <br>
+please add the following line to your .Renvrion file: <br></p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">set_trading_env(cano, acnt_prdt_cd, app_key, app_secret, is_paper = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cano</code></td>
+<td>
+<p>A string specifying KIS common account number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>acnt_prdt_cd</code></td>
+<td>
+<p>A string specifying KIS account product code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>app_key</code></td>
+<td>
+<p>A string specifying KIS app key</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>app_secret</code></td>
+<td>
+<p>A string specifying KIS app secret</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>is_paper</code></td>
+<td>
+<p>A string specifying paper trading or not, default <code>FALSE</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No return value, called to set environment variables
+</p>
+
+
+<h3>For live trading</h3>
+
+<p>KIS_CANO="YOUR ACCOUNT NUMBER" (first 8 digits of your account) <br>
+KIS_ACNT_PRDT_CD="01" (last 2 digits of your account) <br>
+KIS_APP_KEY="YOUR APP KEY" <br>
+KIS_APP_SECRET="YOUR APP SECRET"
+</p>
+
+
+<h3>For paper trading</h3>
+
+<p>KIS_PAPER_CANO="YOUR PAPER ACCOUNT NUMBER" (first 8 digits of your paper account) <br>
+KIS_PAPER_ACNT_PRDT_CD="01" (last 2 digits of your paper account) <br>
+KIS_PAPER_APP_KEY="YOUR PAPER APP KEY" <br>
+KIS_PAPER_APP_SECRET="YOUR PAPER APP SECRET"
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Set app key for the current session
+## Not run: 
+## Set trading environment only for the current session
+set_trading_env(
+  cano = "your account number",
+  acnt_prdt_no = "your account product code",
+  app_key = "your app key",
+  app_secret = "your app secret"
+)
+## Check environment variables
+print_cano()
+print_acnt_prdt_cd()
+print_app_key()
+print_app_secret()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

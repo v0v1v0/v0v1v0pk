@@ -1,0 +1,154 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hsic.perm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hilber Schmidt Independence Criterion permutation test</h2>
+
+<h3>Description</h3>
+
+<p>Test to check the independence between two variables x and y using HSIC.
+The hsic.perm() function, uses Hilbert-Schmidt independence criterion to test for independence between
+random variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hsic.perm(x, y, sig = 1, p = 100, numCol = 50)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data of first sample</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>data of second sample</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig</code></td>
+<td>
+<p>Gaussian kernel width for HSIC tests. Default is 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Number of permutations. Default is 100</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numCol</code></td>
+<td>
+<p>maximum number of columns that we use for the incomplete Cholesky decomposition</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Let x and y be two samples of length n. Gram matrices K and L are defined as: <code class="reqn">K_{i,j} = \exp\frac{(x_i-x_j)^2}{\sigma^2}</code> and <code class="reqn">L_{i,j} = \exp\frac{(y_i-y_j)^2}{\sigma^2}</code>. <code class="reqn">H_{i,j} = \delta_{i,j} - \frac{1}{n}</code>. Let <code class="reqn">A=HKH</code> and <code class="reqn">B=HLH</code>, then <code class="reqn">HSIC(x,y)=\frac{1}{n^2}Tr(AB)</code>. Permutation test permutes y p times to get <code class="reqn">y_{(p)}</code> and calculates HSIC(x,y_(p)). <code class="reqn">pval = \frac{1(HSIC(x,y)&gt;HSIC(x,y_{(p)}))}{p}</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>hsic.perm() returns a list with class htest containing
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>description of test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>observed value of the test statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate</code></td>
+<td>
+<p>HSIC(x,y)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimates</code></td>
+<td>
+<p>a vector: [HSIC(x,y), mean of HSIC(x,y), variance of HSIC(x,y)]</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replicates</code></td>
+<td>
+<p>replicates of the test statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p>approximate p-value of the test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>desciption of data</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>) and Nina Ines Bertille Desgranges
+</p>
+
+
+<h3>References</h3>
+
+<p>A. Gretton et al. (2005). Kernel Methods for Measuring Independence. JMLR 6 (2005) 2075-2129.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>hsic.gamma, hsic.clust, kernelCItest
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(energy)
+set.seed(10)
+#independence
+x &lt;- runif(300)
+y &lt;- runif(300)
+
+hsic.gamma(x,y)
+hsic.perm(x,y)
+dcov.gamma(x,y)
+dcov.test(x,y)
+
+#uncorelated but not dependent
+z &lt;- 10*(runif(300)-0.5)
+w &lt;- z^2 + 10*runif(300)
+
+cor(z,w)
+hsic.gamma(z,w)
+hsic.perm(z,w)
+dcov.gamma(z,w)
+dcov.test(z,w)
+</code></pre>
+
+
+</div>

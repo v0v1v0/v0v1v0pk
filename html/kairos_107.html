@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>roc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rate of Change</h2>
+
+<h3>Description</h3>
+
+<p>Computes the rate of change from an aoristic analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">roc(object, ...)
+
+## S4 method for signature 'AoristicSum'
+roc(object, n = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An <code>AoristicSum</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A non-negative <code>integer</code> giving the number of replications (see
+details).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>RateOfChange</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Baxter, M. J. &amp; Cool, H. E. M. (2016). Reinventing the Wheel? Modelling
+Temporal Uncertainty with Applications to Brooch Distributions in Roman
+Britain. <em>Journal of Archaeological Science</em>, 66: 120-27.
+<a href="https://doi.org/10.1016/j.jas.2015.12.007">doi:10.1016/j.jas.2015.12.007</a>.
+</p>
+<p>Crema, E. R. (2012). Modelling Temporal Uncertainty in Archaeological
+Analysis. <em>Journal of Archaeological Method and Theory</em>, 19(3): 440-61.
+<a href="https://doi.org/10.1007/s10816-011-9122-3">doi:10.1007/s10816-011-9122-3</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>aoristic()</code>, <code>plot()</code>
+</p>
+<p>Other chronological analysis: 
+<code>aoristic()</code>,
+<code>apportion()</code>,
+<code>fit()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Data from Husi 2022
+data("loire", package = "folio")
+
+## Get time range
+loire_range &lt;- loire[, c("lower", "upper")]
+
+## Calculate aoristic sum (normal)
+aorist_raw &lt;- aoristic(loire_range, step = 50, weight = FALSE)
+plot(aorist_raw, col = "grey")
+
+## Calculate aoristic sum (weights)
+aorist_weighted &lt;- aoristic(loire_range, step = 50, weight = TRUE)
+plot(aorist_weighted, col = "grey")
+
+## Calculate aoristic sum (weights) by group
+aorist_groups &lt;- aoristic(loire_range, step = 50, weight = TRUE,
+                          groups = loire$area)
+plot(aorist_groups, flip = TRUE, col = "grey")
+image(aorist_groups)
+
+## Rate of change
+roc_weighted &lt;- roc(aorist_weighted, n = 30)
+plot(roc_weighted)
+
+## Rate of change by group
+roc_groups &lt;- roc(aorist_groups, n = 30)
+plot(roc_groups, flip = TRUE)
+</code></pre>
+
+
+</div>

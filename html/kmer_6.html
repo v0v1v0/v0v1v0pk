@@ -1,0 +1,196 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mbed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert sequences to vectors of distances to a subset of seed sequences.</h2>
+
+<h3>Description</h3>
+
+<p>This function computes a matrix of
+distances from each sequence to a subset of 'seed' sequences using
+the method outlined in Blacksheilds et al (2010).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mbed(x, seeds = NULL, k = 5, residues = NULL, gap = "-",
+  counts = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a matrix of aligned sequences or a list of unaligned sequences.
+Accepted modes are "character" and "raw" (the latter is for "DNAbin"
+and "AAbin" objects).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seeds</code></td>
+<td>
+<p>optional integer vector indicating which sequences should
+be used as the seed sequences. If <code>seeds = NULL</code> a set of
+log(<em>n</em>, 2)^2 non-identical sequences is randomly selected from the
+sequence set (where <em>n</em> is the number of sequences; see Blacksheilds et al.
+2010). Alternatively, if <code>seeds = 'all'</code> a standard <em>n</em> * <em>n</em>
+distance matrix is computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>integer representing the k-mer size to be used for calculating
+the distance matrix. Defaults to 5. Note that high values of k
+may be slow to compute and use a lot of memory due to the large numbers
+of calculations required, particularly when the residue alphabet is
+also large.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>residues</code></td>
+<td>
+<p>either NULL (default; emitted residues are automatically
+detected from the sequences), a case sensitive character vector
+specifying the residue alphabet, or one of the character strings
+"RNA", "DNA", "AA", "AMINO". Note that the default option can be slow for
+large lists of character vectors. Specifying the residue alphabet is therefore
+recommended unless x is a "DNAbin" or "AAbin" object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gap</code></td>
+<td>
+<p>the character used to represent gaps in the alignment matrix
+(if applicable). Ignored for <code>"DNAbin"</code> or <code>"AAbin"</code> objects.
+Defaults to "-" otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>counts</code></td>
+<td>
+<p>logical indicating whether the (usually large) matrix of
+k-mer counts should be returned as an attribute of the returned
+object. Defaults to FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function computes a <em>n</em> * log(<em>n</em>, 2)^2 k-mer distance matrix
+(where <em>n</em> is the number of sequences), returning an object of class
+<code>"mbed"</code>. If the number of sequences is less than or equal to 19, the full
+<em>n</em> * <em>n</em> distance matrix is produced (since the rounded up value of
+log(<em>19</em>, 2)^2 is 19). Currently the only distance measure supported is
+that of Edgar (2004).
+</p>
+<p>For maximum information retention following the embedding process
+it is generally desirable to select the seed sequences based on their
+uniqueness, rather than simply selecting a random subset
+(Blackshields et al. 2010).
+Hence if 'seeds' is set to NULL (the default setting) the the 'mbed'
+function selects the subset by clustering the sequence set into
+<em>t</em> groups using the k-means algorithm (<em>k</em> = <em>t</em>),
+and choosing one representative from each group.
+Users can alternatively pass an integer vector (as in the above example)
+to specify the seeds manually. See Blackshields et al (2010) for other
+seed selection options.
+</p>
+<p>DNA and amino acid sequences can be passed to the function
+either as a list of non-aligned sequences or as a matrix of aligned sequences,
+preferably in the "DNAbin" or "AAbin" raw-byte format
+(Paradis et al 2004, 2012; see the <code>ape</code> package
+documentation for more information on these S3 classes).
+Character sequences are supported; however ambiguity codes may
+not be recognized or treated appropriately, since raw ambiguity
+codes are counted according to their underlying residue frequencies
+(e.g. the 5-mer "ACRGT" would contribute 0.5 to the tally for "ACAGT"
+and 0.5 to that of "ACGGT").
+</p>
+<p>To minimize computation time when counting longer k-mers (k &gt; 3),
+amino acid sequences in the raw "AAbin" format are automatically
+compressed using the Dayhoff-6 alphabet as detailed in Edgar (2004).
+Note that amino acid sequences will not be compressed if they
+are supplied as a list of character vectors rather than an "AAbin"
+object, in which case the k-mer length should be reduced
+(k &lt; 4) to avoid excessive memory use and computation time.
+</p>
+<p>Note that agglomerative (bottom-up) tree-building methods
+such as neighbor-joining and UPGMA depend on a full
+<em>n</em> * <em>n</em> distance matrix.
+See the <code>kdistance</code> function for details on computing
+symmetrical distance matrices.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns an object of class <code>"mbed"</code>, whose primary object is
+an <em>n</em> * log(<em>n</em>, 2)^2 matrix
+(where <em>n</em> is the number of sequences). The returned
+object contains additional attributes including an
+integer vector of seed sequence indices ("seeds"), a logical vector
+identifying the duplicated sequences ("duplicates"), an integer vector
+giving the matching indices of the non-duplicated sequences ("pointers"),
+a character vector of MD5 digests of the sequences ("hashes"),
+an integer vector of sequence lengths ("seqlengths"), and if
+<code>counts = TRUE</code>, the matrix of k-mer counts ("kcounts";
+see <code>kcount</code> for details).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shaun Wilkinson
+</p>
+
+
+<h3>References</h3>
+
+<p>Blackshields G, Sievers F, Shi W, Wilm A, Higgins DG (2010) Sequence embedding
+for fast construction of guide trees for multiple sequence alignment.
+<em>Algorithms for Molecular Biology</em>, <strong>5</strong>, 21.
+</p>
+<p>Edgar RC (2004) Local homology recognition and distance measures in
+linear time using compressed amino acid alphabets.
+<em>Nucleic Acids Research</em>, <strong>32</strong>, 380-385.
+</p>
+<p>Paradis E, Claude J, Strimmer K, (2004) APE: analyses of phylogenetics
+and evolution in R language. <em>Bioinformatics</em> <strong>20</strong>, 289-290.
+</p>
+<p>Paradis E (2012) Analysis of Phylogenetics and Evolution with R
+(Second Edition). Springer, New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdistance</code> for full <em>n</em> * <em>n</em> distance
+matrix computation.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  ## compute an embedded k-mer distance matrix for the woodmouse
+  ## dataset (ape package) using a k-mer size of 5
+  library(ape)
+  data(woodmouse)
+  ## randomly select three sequences as seeds
+  suppressWarnings(RNGversion("3.5.0"))
+  set.seed(999)
+  seeds &lt;- sample(1:15, size = 3)
+  ## embed the woodmouse dataset in three dimensions
+  woodmouse.mbed &lt;- mbed(woodmouse, seeds = seeds, k = 5)
+  ## print the distance matrix (without attributes)
+  print(woodmouse.mbed[,], digits = 2)
+</code></pre>
+
+
+</div>

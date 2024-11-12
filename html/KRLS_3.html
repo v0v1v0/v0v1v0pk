@@ -1,0 +1,393 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>krls</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Kernel-based Regularized Least Squares (KRLS)
+</h2>
+
+<h3>Description</h3>
+
+<p>Function implements Kernel-Based Regularized Least Squares (KRLS), a machine learning method described in Hainmueller and Hazlett (2014) that allows users to solve regression and classification problems without manual specification search and strong functional form assumptions. KRLS finds the best fitting function by minimizing a Tikhonov regularization problem with a squared loss, using Gaussian Kernels as radial basis functions. KRLS reduces misspecification bias since it learns the functional form from the data. Yet, it nevertheless allows for interpretability and inference in ways similar to ordinary regression models. In particular, KRLS provides closed-form estimates for the predicted values, variances, and the pointwise partial derivatives that characterize the marginal effects of each independent variable at each data point in the covariate space. The distribution of pointwise marginal effects can be used to examine effect heterogeneity and or interactions. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">krls(X = NULL, y = NULL, whichkernel = "gaussian", lambda = NULL,
+sigma = NULL, derivative = TRUE, binary= TRUE, vcov=TRUE, 
+print.level = 1,L=NULL,U=NULL,tol=NULL,eigtrunc=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p><var>N</var> by <var>D</var> data numeric matrix that contains the values of <var>D</var> predictor variables for <code class="reqn">i=1,\ldots,N</code> observations. The matrix may not contain missing values or constants. Note that no intercept is required since the function operates on demeaned data and subtracting the mean of <var>y</var> is equivalent to including an (unpenalized) intercept into the model.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p><var>N</var> by <var>1</var> data numeric matrix or vector that contains the values of the response variable for all observations. This vector may not contain missing values. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whichkernel</code></td>
+<td>
+
+<p>String vector that specifies which kernel should be used. Must be one of <code>gaussian</code>, <code>linear</code>, <code>poly1</code>, <code>poly2</code>, <code>poly3</code>, or <code>poly4</code> (see details). Default is <code>gaussian</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+
+<p>A positive scalar that specifies the <code class="reqn">\lambda</code> parameter for the regularizer (see details). It governs the tradeoff between model fit and complexity. By default, this parameter is chosen by minimizing the sum of the squared leave-one-out errors.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+
+<p>A positive scalar that specifies the bandwidth of the Gaussian kernel (see <code>gausskernel</code> for details). 
+By default, the bandwidth is set equal to <var>D</var> (the number of dimensions) which typically yields a reasonable scaling of the distances between observations in the standardized data that is used for the fitting. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>derivative</code></td>
+<td>
+
+<p>Logical that specifies whether pointwise partial derivatives should be computed. Currently, derivatives are only implemented for the Gaussian Kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary</code></td>
+<td>
+
+<p>Logical that specifies whether first-differences instead of pointwise partial derivatives should be computed for binary predictors. Ignored unless <code>derivative=TRUE</code>. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vcov</code></td>
+<td>
+
+<p>Logical that specifies whether variance-covariance matrix for the choice coefficients <var>c</var> and fitted values should be computed. Note that <code>derivative=TRUE</code> requires that <code>vcov=TRUE</code>. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print.level</code></td>
+<td>
+
+<p>Positive integer that determines the level of printing. Set to 0 for no printing and 2 for more printing.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+
+<p>Non-negative scalar that determines the lower bound of the search window for the leave-one-out optimization to find <code class="reqn">\lambda</code>. Default is <code>NULL</code> which means that the lower bound is found by using an algorithm outlined in <code>lambdasearch</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>U</code></td>
+<td>
+
+<p>Positive scalar that determines the upper bound of the search window for the leave-one-out optimization to find <code class="reqn">\lambda</code>. Default is <code>NULL</code> which means that the upper bound is found by using an algorithm outlined in <code>lambdasearch</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+
+<p>Positive scalar that determines the tolerance used in the optimization routine used to find <code class="reqn">\lambda</code>. Default is <code>NULL</code> which means that convergence is achieved when the difference in the sum of squared leave-one-out errors between the <var>i</var> and the <var>i+1</var> iteration is less than <var>N * 10^-3</var>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eigtrunc</code></td>
+<td>
+
+<p>Positive scalar that determines how much eignvalues should be trunacted for finding the upper bound of the search window in the algorithm outlined in <code>lambdasearch</code>. If <code>eigtrunc</code> is set to <var>10^-6</var> this means that we keep only eigenvalues that are <var>10^-6</var> as large as the first. Default is <code>eigtrunc=NULL</code> which means no truncation is used. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>krls</code> implements the Kernel-based Regularized Least Squares (KRLS) estimator as described in Hainmueller and Hazlett (2014). Please consult this reference for any details.
+</p>
+<p>Kernel-based Regularized Least Squares (KRLS) arises as a Tikhonov minimization problem with a squared loss. Assume we have data of the from <code class="reqn">y_i,\,x_i</code> where <var>i</var> indexes observations, <code class="reqn">y_i \in R</code> is the outcome and <code class="reqn">x_i \in R^D</code> is a <var>D</var>-dimensional vector of predictor values. Then KRLS searches over a space of functions <code class="reqn">H</code> and chooses the best fitting function <code class="reqn">f</code> according to the rule: 
+</p>
+<p style="text-align: center;"><code class="reqn">argmin_{f \in H} \sum_i^N (y_i - f(x_i))^2 + \lambda ||f||_{H^2}</code>
+</p>
+ 
+<p>where <code class="reqn">(y_i - f(x_i))^2</code> is a loss function that computes how ‘wrong’ the function 
+is at each observation <var>i</var> and <code class="reqn">|| f ||_{H^2}</code> is the regularizer that measures the complexity of the function according to the <code class="reqn">L_2</code> norm <code class="reqn">||f||^2 = \int f(x)^2 dx</code>. <code class="reqn">\lambda</code> is the scalar regularization parameter that governs the tradeoff between model fit and complexity. By default, <code class="reqn">\lambda</code> is chosen by minimizing the sum of the squared leave-one-out errors, but it can also be specified by the user in the <code>lambda</code> argument to implement other approaches. 
+</p>
+<p>Under fairly general conditions, the function that minimizes the regularized loss 
+within the hypothesis space established by the choice of a (positive semidefinite) kernel function <code class="reqn">k(x_i,x_j)</code> is of the form
+</p>
+<p style="text-align: center;"><code class="reqn">f(x_j)= \sum_i^N c_i k(x_i,x_j)</code>
+</p>
+ 
+<p>where the kernel function <code class="reqn">k(x_i,x_j)</code> measures the distance 
+between two observations <code class="reqn">x_i</code> and <code class="reqn">x_j</code> and <code class="reqn">c_i</code> is the choice coefficient for each observation <code class="reqn">i</code>. Let <code class="reqn">K</code> be the <code class="reqn">N</code> by <code class="reqn">N</code> kernel matrix with all pairwise distances <code class="reqn">K_ij=k(x_i,x_j)</code> and <code class="reqn">c</code> be the  <code class="reqn">N</code> by <code class="reqn">1</code> vector of choice coefficients for all observations then in matrix notation the space is <code class="reqn">y=Kc</code>. 
+</p>
+<p>Accordingly, the <code>krls</code> function solves the following minimization problem
+</p>
+<p style="text-align: center;"><code class="reqn">argmin_{f \in H} \sum_i^n (y - Kc)'(y-Kc)+ \lambda c'Kc</code>
+</p>
+
+<p>which is convex in <code class="reqn">c</code> and solved by <code class="reqn">c=(K +\lambda I)^-1 y</code> where <code class="reqn">I</code> is the identity matrix. Note that this linear solution provides a flexible fitted response surface that typically reduces misspecification bias because it can learn a wide range of nonlinear and or nonadditive functions of the predictors. 
+</p>
+<p>If <code>vcov=TRUE</code> is specified, <code>krls</code> also computes the variance-covariance matrix for the choice coefficients <code class="reqn">c</code> and fitted values <code class="reqn">y=Kc</code> based on a variance estimator developed in Hainmueller and Hazlett (2014). Note that both matrices are <var>N</var> by <var>N</var> and therefore this results in increased memory and computing time.
+</p>
+<p>By default, <code>krls</code> uses the Gaussian Kernel (<code>whichkernel = "gaussian"</code>) given by 
+</p>
+<p style="text-align: center;"><code class="reqn">k(x_i,x_j)=exp(\frac{-|| x_i - x_j ||^2}{\sigma^2})</code>
+</p>
+
+<p>where <code class="reqn">||x_i - x_j||</code> is the Euclidean distance. The kernel bandwidth <code class="reqn">\sigma^2</code> is set to <code class="reqn">D</code>, the number of dimensions, by default, but the user can also specify other values using the <code>sigma</code> argument to implement other approaches. 
+</p>
+<p>If <code>derivative=TRUE</code> is specified, <code>krls</code> also computes the pointwise partial derivatives of the fitted function wrt to each predictor using the estimators developed in Hainmueller and Hazlett (2014). These can be used to examine the marginal effects of each predictor and how the marginal effects vary across the covariate space. Average derivatives are also computed with variances. Note that the <code>derivative=TRUE</code> option results in increased computing time and is only supported for the Gaussian kernel, i.e. when <code>whichkernel = "gaussian"</code>. Also <code>derivative=TRUE</code> requires that <code>vcov=TRUE</code>. 
+</p>
+<p>If <code>binary=TRUE</code> is also specified, the function will identify binary predictors and return first differences for these predictors instead of partial derivatives. First differences are computed going from the minimum to the maximum value of each binary predictor. Note that first differences are more appropriate to summarize the effects for binary predictors (see Hainmueller and Hazlett (2014) for details). 
+</p>
+<p>A few other kernels are also implemented, but derivatives are currently not supported for these: "linear": <code class="reqn">k(x_i,x_j)=x_i'x_j</code>, "poly1", "poly2", "poly3", "poly4" are polynomial kernels based on  <code class="reqn">k(x_i,x_j)=(x_i'x_j +1)^p</code> where <code class="reqn">p</code> is the order.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list object of class <code>krls</code> with the following elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p><var>N</var> by <var>N</var> matrix of pairwise kernel distances between observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeffs </code></td>
+<td>
+<p><var>N</var> by 1 vector of choice coefficients <var>c</var>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Le</code></td>
+<td>
+<p>scalar with sum of squared leave-one-out errors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fitted</code></td>
+<td>
+<p><var>N</var> by 1 vector of fitted values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>original <var>N</var> by <var>D</var> predictor data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>original <var>N</var> by 1 matrix of values of the outcome variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>scalar with value of bandwidth, <code class="reqn">\sigma^2</code>, used for the Gaussian kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>scalar with value of regularization parameter, <code class="reqn">\lambda</code>, used (user specified or based on leave-one-out cross-validation).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R2</code></td>
+<td>
+<p>scalar with value of R-squared</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vcov.c</code></td>
+<td>
+<p><var>N</var> by <var>N</var> variance covariance matrix for choice coefficients (<code>NULL</code> unless <code>vcov=TRUE</code> is specified).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vcov.fitted</code></td>
+<td>
+<p><var>N</var> by <var>N</var> variance covariance matrix for fitted values (<code>NULL</code> unless <code>vcov=TRUE</code> is specified).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>derivatives</code></td>
+<td>
+<p><var>N</var> by <var>D</var> matrix of pointwise partial derivatives based on the Gaussian kernel (<code>NULL</code> unless <code>derivative=TRUE</code> is specified. If <code>binary=TRUE</code> is specified, first differences are returned for binary predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>avgderivatives</code></td>
+<td>
+<p>1 by <var>D</var> matrix of average derivative based on the Gaussian kernel (<code>NULL</code> unless <code>derivative=TRUE</code> is specified. If <code>binary=TRUE</code> is specified, average first differences are returned for binary predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.avgderivatives</code></td>
+<td>
+<p>1 by <var>D</var> matrix of variances for average derivative based on gaussian kernel (<code>NULL</code> unless <code>derivative=TRUE</code> is specified. If <code>binary=TRUE</code> is specified, variances for average first differences are returned for binary predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binaryindicator</code></td>
+<td>
+<p>1 by <var>D</var> matrix that indicates for each predictor if it is treated as binary or not (evaluates to FALSE unless <code>binary=TRUE</code> is specified and a predictor is recognized binary.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The function requires the storage of a <var>N</var> by <var>N</var> kernel matrix and can therefore exceed the memory limits for very large datasets.
+</p>
+<p>Setting <code>derivative=FALSE</code> and <code>vcov=FALSE</code> is useful to reduce computing time if pointwise partial derivatives and or variance covariance matrices are not needed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jens Hainmueller (Stanford) and Chad Hazlett (MIT)
+</p>
+
+
+<h3>References</h3>
+
+<p>Jeremy Ferwerda, Jens Hainmueller, Chad J. Hazlett (2017). Kernel-Based Regularized Least Squares in R (KRLS) and Stata (krls).
+Journal of Statistical Software, 79(3), 1-26. doi:10.18637/jss.v079.i03
+</p>
+<p>Hainmueller, J. and Hazlett, C. (2014). Kernel Regularized Least Squares: Reducing Misspecification Bias with a Flexible and Interpretable Machine Learning Approach. Political Analysis, 22(2)
+</p>
+<p>Rifkin, R. 2002. Everything Old is New Again: A fresh look at historical approaches in machine learning. Thesis, MIT. September, 2002.
+</p>
+<p>Evgeniou, T., Pontil, M., and Poggio, T. (2000). Regularization networks and support vector machines. Advances In Computational Mathematics, 13(1):1-50.
+</p>
+<p>Schoelkopf, B., Herbrich, R. and Smola, A.J. (2001) A generalized representer theorem. In 14th Annual Conference on Computational Learning Theory, pages 416-426.
+</p>
+<p>Kimeldorf, G.S. Wahba, G. 1971. Some results on Tchebycheffian spline functions. Journal of Mathematical Analysis and Applications, 33:82-95.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>predict.krls</code> for fitted values and predictions. <code>summary.krls</code> for summary of the fit. <code>plot.krls</code> for plots of the fit. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Linear example
+# set up data
+N &lt;- 200
+x1 &lt;- rnorm(N)
+x2 &lt;- rbinom(N,size=1,prob=.2)
+y &lt;- x1 + .5*x2 + rnorm(N,0,.15)
+X &lt;- cbind(x1,x2)
+# fit model
+krlsout &lt;- krls(X=X,y=y)
+# summarize marginal effects and contribution of each variable
+summary(krlsout)
+# plot marginal effects and conditional expectation plots
+plot(krlsout)
+
+
+# non-linear example
+# set up data
+N &lt;- 200
+x1 &lt;- rnorm(N)
+x2 &lt;- rbinom(N,size=1,prob=.2)
+y &lt;- x1^3 + .5*x2 + rnorm(N,0,.15)
+X &lt;- cbind(x1,x2)
+
+# fit model
+krlsout &lt;- krls(X=X,y=y)
+# summarize marginal effects and contribution of each variable
+summary(krlsout)
+# plot marginal effects and conditional expectation plots
+plot(krlsout)
+
+## 2D example:
+# predictor data
+X &lt;- matrix(seq(-3,3,.1))
+# true function
+Ytrue &lt;- sin(X)
+# add noise 
+Y     &lt;- sin(X) + rnorm(length(X),sd=.3)
+# approximate function using KRLS
+out &lt;- krls(y=Y,X=X)
+# get fitted values and ses
+fit &lt;- predict(out,newdata=X,se.fit=TRUE)
+# results
+par(mfrow=c(2,1))
+plot(y=Ytrue,x=X,type="l",col="red",ylim=c(-1.2,1.2),lwd=2,main="f(x)")
+points(y=fit$fit,X,col="blue",pch=19)
+arrows(y1=fit$fit+1.96*fit$se.fit,
+       y0=fit$fit-1.96*fit$se.fit,
+       x1=X,x0=X,col="blue",length=0)
+legend("bottomright",legend=c("true f(x)=sin(x)","KRLS fitted f(x)"),
+       lty=c(1,NA),pch=c(NA,19),lwd=c(2,NA),col=c("red","blue"),cex=.8)
+
+plot(y=cos(X),x=X,type="l",col="red",ylim=c(-1.2,1.2),lwd=2,main="df(x)/dx")
+points(y=out$derivatives,X,col="blue",pch=19)
+
+legend("bottomright",legend=c("true df(x)/dx=cos(x)","KRLS fitted df(x)/dx"),
+       lty=c(1,NA),pch=c(NA,19),lwd=c(2,NA),col=c("red","blue"),,cex=.8)
+
+## 3D example
+# plot true function
+par(mfrow=c(1,2))
+f&lt;-function(x1,x2){ sin(x1)*cos(x2)}
+x1 &lt;- x2 &lt;-seq(0,2*pi,.2)
+z   &lt;-outer(x1,x2,f)
+persp(x1, x2, z,theta=30,main="true f(x1,x2)=sin(x1)cos(x2)")
+# approximate function with KRLS
+# data and outcomes
+X &lt;- cbind(sample(x1,200,replace=TRUE),sample(x2,200,replace=TRUE))
+y   &lt;- f(X[,1],X[,2])+ runif(nrow(X))
+# fit surface
+krlsout &lt;- krls(X=X,y=y)
+# plot fitted surface
+ff  &lt;- function(x1i,x2i,krlsout){predict(object=krlsout,newdata=cbind(x1i,x2i))$fit}
+z   &lt;- outer(x1,x2,ff,krlsout=krlsout)
+persp(x1, x2, z,theta=30,main="KRLS fitted f(x1,x2)")
+
+</code></pre>
+
+
+</div>

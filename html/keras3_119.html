@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>constraint_unitnorm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Constrains the weights incident to each hidden unit to have unit norm.</h2>
+
+<h3>Description</h3>
+
+<p>Constrains the weights incident to each hidden unit to have unit norm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">constraint_unitnorm(axis = 1L)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>integer, axis along which to calculate weight norms.
+For instance, in a <code>Dense</code> layer the weight matrix
+has shape <code style="white-space: pre;">⁠(input_dim, output_dim)⁠</code>,
+set <code>axis</code> to <code>0</code> to constrain each weight vector
+of length <code style="white-space: pre;">⁠(input_dim,)⁠</code>.
+In a <code>Conv2D</code> layer with <code>data_format = "channels_last"</code>,
+the weight tensor has shape
+<code style="white-space: pre;">⁠(rows, cols, input_depth, output_depth)⁠</code>,
+set <code>axis</code> to <code style="white-space: pre;">⁠[0, 1, 2]⁠</code>
+to constrain the weights of each filter tensor of size
+<code style="white-space: pre;">⁠(rows, cols, input_depth)⁠</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code>Constraint</code> instance, a callable that can be passed to layer
+constructors or used directly by calling it with tensors.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/constraints#unitnorm-class">https://keras.io/api/layers/constraints#unitnorm-class</a>
+</p>
+</li></ul>
+<p>Other constraints: <br><code>Constraint()</code> <br><code>constraint_maxnorm()</code> <br><code>constraint_minmaxnorm()</code> <br><code>constraint_nonneg()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Saves a model as a <code>.keras</code> file.</h2>
+
+<h3>Description</h3>
+
+<p>Saves a model as a <code>.keras</code> file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_model(model, filepath = NULL, overwrite = FALSE, zipped = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A keras model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filepath</code></td>
+<td>
+<p>string,
+Path where to save the model. Must end in <code>.keras</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Whether we should overwrite any existing model
+at the target location, or instead ask the user
+via an interactive prompt.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zipped</code></td>
+<td>
+<p>Whether to save the model as a zipped <code>.keras</code>
+archive (default when saving locally), or as an unzipped directory
+(default when saving on the Hugging Face Hub).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>filepath</code> is provided, then this function is called primarily
+for side effects, and <code>model</code> is returned invisibly. If <code>filepath</code> is not
+provided or <code>NULL</code>, then the serialized model is returned as an R raw
+vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>model &lt;- keras_model_sequential(input_shape = c(3)) |&gt;
+  layer_dense(5) |&gt;
+  layer_activation_softmax()
+
+model |&gt; save_model("model.keras")
+loaded_model &lt;- load_model("model.keras")
+</pre></div>
+<div class="sourceCode r"><pre>x &lt;- random_uniform(c(10, 3))
+stopifnot(all.equal(
+  model |&gt; predict(x),
+  loaded_model |&gt; predict(x)
+))
+</pre></div>
+<p>The saved <code>.keras</code> file is a <code>zip</code> archive that contains:
+</p>
+
+<ul>
+<li>
+<p> The model's configuration (architecture)
+</p>
+</li>
+<li>
+<p> The model's weights
+</p>
+</li>
+<li>
+<p> The model's optimizer's state (if any)
+</p>
+</li>
+</ul>
+<p>Thus models can be reinstantiated in the exact same state.
+</p>
+<div class="sourceCode r"><pre>zip::zip_list("model.keras")[, "filename"]
+</pre></div>
+<div class="sourceCode"><pre>## [1] "metadata.json"    "config.json"      "model.weights.h5"
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p><code>load_model()</code>
+</p>
+<p>Other saving and loading functions: <br><code>export_savedmodel.keras.src.models.model.Model()</code> <br><code>layer_tfsm()</code> <br><code>load_model()</code> <br><code>load_model_weights()</code> <br><code>register_keras_serializable()</code> <br><code>save_model_config()</code> <br><code>save_model_weights()</code> <br><code>with_custom_object_scope()</code> <br></p>
+
+
+</div>

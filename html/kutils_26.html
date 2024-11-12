@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyCheck</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check a key for consistency of names, values with classes.</h2>
+
+<h3>Description</h3>
+
+<p>Split the key into blocks of rows defined by "name_new". Within
+these blocks, Perform these checks: 1. name_old must be
+homogeneous (identical) within a block of rows. class_old and
+class_new must also be identical.
+2. elements in "value_new" must be consistent with "class_new".
+If values cannot be coerced to match the class specified by
+class_new, there must be user error.
+Same for "value_old" and "class_old".
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyCheck(
+  key,
+  colname = c("name_new", "class_old", "class_new"),
+  na.strings = c("\\.", "", "\\s+", "N/A")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>A variable key object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colname</code></td>
+<td>
+<p>Leave as default to check consistency between classes, values, and names.
+One can specify a check only on "class_old" or "class_new", for example.  But now that
+all work correctly, I suggest you leave the default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>A regular expression of allowed text strings that represent missings.
+Now it amounts to any of these: ".", "NA", "N/A", or any white space or tab as signified by \s+.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Profuse warnings and a list of failed key blocks.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt; and Ben Kite &lt;bakite@ku.edu&gt;
+</p>
+
+
+</div>

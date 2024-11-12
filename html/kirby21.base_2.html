@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>copy_kirby21_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Copy Kirby21 Data to an output directory</h2>
+
+<h3>Description</h3>
+
+<p>Copies files from Kirby21 Package to an output directory
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">copy_kirby21_data(copydir, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>copydir</code></td>
+<td>
+<p>Output directory for data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments to pass to <code>get_image_filenames</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Logical if files are copied
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">on_cran = !identical(Sys.getenv("NOT_CRAN"), "true")
+on_ci &lt;- nzchar(Sys.getenv("CI"))
+local_run = grepl("musch", tolower(Sys.info()[["user"]]))
+run_example = !on_cran || on_ci || local_run
+if (run_example) {
+tdir = tempfile()
+dir.create(tdir)
+outdir = tempdir()
+surv_installed = "kirby21.survey" %in% installed.packages()
+if (!surv_installed) {
+testthat::expect_error(
+download_kirby21_data("SURVEY", 
+    force = FALSE))
+} else {
+download_kirby21_data("SURVEY", 
+    force = FALSE)
+}
+res = download_kirby21_data("SURVEY", outdir = outdir, force = TRUE)
+if (!surv_installed) {
+try({remove.packages("kirby21.survey")})
+}
+copy_kirby21_data(copydir = tdir, outdir = outdir)
+}
+</code></pre>
+
+
+</div>

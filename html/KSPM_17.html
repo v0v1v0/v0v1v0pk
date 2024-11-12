@@ -1,0 +1,145 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>flexible.summary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summarizing Kernel Semi parametric Model Fits with flexible parameters for Davies' approximation method</h2>
+
+<h3>Description</h3>
+
+<p>for flexibility in summary method for an object of class "summary.kspm"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">flexible.summary(object, method = "davies", acc = 1e-06, lim = 10000)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "summary.kspm", usually, a result of a call to <code>summary.kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method to approximate the chi square distribution in p-value computation, default is 'davies', another possibility is 'imhof'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>acc, lim</code></td>
+<td>
+<p>see davies and imhof functions in CompQuadForm package.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>the description of the model, including coefficients for the linear part and if asked for, test(s) of variance components associated with kernel part.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Computes and returns the followimg summary statistics of the fitted kernel semi parametric model given in object
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>residuals</code></td>
+<td>
+<p>residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coefficients</code></td>
+<td>
+<p>a <code class="reqn">p \times 4</code> matrix with columns for the estimated coefficient, its standard error, t statistic and corresponding (two sided) p value for the linear part of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>the square root of the estimated variance of the random error <code class="reqn">\sigma^2 = \frac{RSS}{edf} </code> where <code class="reqn">RSS</code> is the residual sum of squares and <code class="reqn">edf</code> is the effective degree of freedom.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edf</code></td>
+<td>
+<p>effective degrees of freedom</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r.squared</code></td>
+<td>
+<p><code class="reqn">R^2</code>, the fraction of variance explained by the model, <code class="reqn">1 - \frac{\sum e_i^2}{\sum(y_i - y^{\ast})^2}</code> where <code class="reqn">y^{\ast}</code> is the mean of <code class="reqn">y_i</code> if there is an intercept and zero otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adj.r.squared</code></td>
+<td>
+<p>the above <code class="reqn">R^2</code> statistics, adjusted, penalizing for higher <code class="reqn">p</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score.test</code></td>
+<td>
+<p>a <code class="reqn">q \times 3</code> matrix with colums for the estimated lambda, tau and p value for the q kernels for which a test should be performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global.p.value</code></td>
+<td>
+<p>p value from the score test for the global model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample.size</code></td>
+<td>
+<p>sample size (all: global sample size, inc: complete data sample size).</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Liu, D., Lin, X., and Ghosh, D. (2007). Semiparametric regression of multidimensional genetic pathway data: least squares kernel machines and linear mixed models. Biometrics, 63(4), 1079:1088.
+</p>
+<p>Schweiger, Regev, et al. "RL SKAT: an exact and efficient score test for heritability and set tests." Genetics (2017): genetics 300395.
+</p>
+<p>Li, Shaoyu, and Yuehua Cui. "Gene centric gene gene interaction: A model based kernel machine method." The Annals of Applied Statistics 6.3 (2012): 1134:1161.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm for fitting model, predict.kspm for predictions, plot.kspm for diagnostics
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+z1 &lt;- runif(15, 1, 6)
+z2 &lt;- rnorm(15, 1, 2)
+y &lt;- 3*x + (z1 + z2)^2 + rnorm(15, 0, 2)
+fit &lt;- kspm(y, linear = ~ x, kernel = ~ Kernel(~ z1 + z2,
+kernel.function = "polynomial", d= 2, rho = 1, gamma = 0))
+summary.fit &lt;- summary(fit)
+flexible.summary(summary.fit, acc = 0.000001, lim = 1000)
+
+</code></pre>
+
+
+</div>

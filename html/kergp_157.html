@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot for a qualitative input
+</h2>
+
+<h3>Description</h3>
+
+<p>Plots of the covariance matrix or the correlation matrix of a qualitative input. 
+For an ordinal factor, the warping function can also be plotted. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'covQual'
+plot(x, y, type = c("cov", "cor", "warping"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p> An object of class <code>covQual-class</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p> Not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p> A character indicating the desired type of plot. Type <code>warping</code> only works for an ordinal input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p> Other arguments passed to <code>corrplot::corrplot</code> or <code>plot</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Covariance / correlation plots are done with package <code>corrplot</code> if loaded, or <code>lattice</code> else.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>covOrd</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">u &lt;- ordered(1:6, levels = letters[1:6])
+
+myCov2 &lt;- covOrd(ordered = u, k1Fun1 = k1Fun1Cos, warpFun = "norm")
+coef(myCov2) &lt;- c(mean = 0.5, sd = 0.05, theta = 0.1) 
+
+plot(myCov2, type = "cor", method = "ellipse")
+plot(myCov2, type = "warp", col = "blue", lwd = 2)
+</code></pre>
+
+
+</div>

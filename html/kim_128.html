@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>theme_kim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Theme Kim</h2>
+
+<h3>Description</h3>
+
+<p>A custom ggplot theme
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">theme_kim(
+  legend_position = "none",
+  legend_spacing_y = 1,
+  legend_key_size = 3,
+  base_size = 20,
+  axis_tick_font_size = 20,
+  axis_tick_marks_color = "black",
+  axis_title_font_size = 24,
+  y_axis_title_vjust = 0.85,
+  axis_title_margin_size = 24,
+  cap_axis_lines = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>legend_position</code></td>
+<td>
+<p>position of the legend (default = "none")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_spacing_y</code></td>
+<td>
+<p>vertical spacing of the legend keys in
+the unit of "cm" (default = 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_key_size</code></td>
+<td>
+<p>size of the legend keys in the unit of "lines"
+(default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base_size</code></td>
+<td>
+<p>base font size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis_tick_font_size</code></td>
+<td>
+<p>font size for axis tick marks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis_tick_marks_color</code></td>
+<td>
+<p>color of the axis tick marks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis_title_font_size</code></td>
+<td>
+<p>font size for axis title</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_axis_title_vjust</code></td>
+<td>
+<p>position of the y axis title (default = 0.85).
+If default is used, <code>y_axis_title_vjust = 0.85</code>, the y axis title
+will be positioned at 85% of the way up from the bottom of the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis_title_margin_size</code></td>
+<td>
+<p>size of the margin between axis title
+and the axis line</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cap_axis_lines</code></td>
+<td>
+<p>logical. Should the axis lines be capped at the
+outer tick marks? (default = FALSE)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If a axis lines are to be capped at the ends, the following package(s)
+must be installed prior to running the function:
+Package 'lemon' v0.4.4 (or possibly a higher version) by
+Edwards et al. (2020),
+<a href="https://cran.r-project.org/package=lemon">https://cran.r-project.org/package=lemon</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>a ggplot object; there will be no meaningful output from
+this function. Instead, this function should be used with another
+ggplot object, e.g., <code>
+ggplot(mtcars , aes(x = disp, y = mpg)) + theme_kim()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+prep(ggplot2)
+ggplot2::ggplot(mtcars, aes(x = cyl, y = mpg)) +
+geom_point() + theme_kim()
+
+</code></pre>
+
+
+</div>

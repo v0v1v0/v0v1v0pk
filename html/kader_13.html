@@ -1,0 +1,215 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kade</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Adaptive Density Estimator</h2>
+
+<h3>Description</h3>
+
+<p>Wrapper function which does some preparatory calculations and then calls
+the actual “workhorse” functions which do the main computations for
+kernel adaptive density estimation of Srihera &amp; Stute (2011) or Eichner
+&amp; Stute (2013). Finally, it structures and returns the obtained results.
+Summarizing information and technical details can be found in Eichner
+(2017).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kade(x, data, kernel = c("gaussian", "epanechnikov", "rectangular"),
+  method = c("both", "ranktrafo", "nonrobust"), Sigma = seq(0.01, 10, length
+  = 51), h = NULL, theta = NULL, ranktrafo = J2, ticker = FALSE,
+  plot = FALSE, parlist = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of location(s) at which the density estimate is
+to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Vector <code class="reqn">(X_1, \ldots, X_n)</code> of the data from which the
+estimate is to be computed. <code>NA</code>s or infinite values are
+removed (and a warning is issued).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>A character string naming the kernel to be used for the
+adaptive estimator. This must partially match one of
+"gaussian", "rectangular" or "epanechnikov", with default
+"gaussian", and may be abbreviated to a unique prefix.
+(Currently, this kernel is also used for the initial,
+non-adaptive Parzen-Rosenblatt estimator which enters
+into the estimators of bias and variance as described in the
+references.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A character string naming the method to be used for the
+adaptive estimator. This must partially match one of
+"both", "ranktrafo" or "nonrobust", with default "both",
+and may be abbreviated to a unique prefix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma</code></td>
+<td>
+<p>Vector of value(s) of the scale parameter <code class="reqn">\sigma</code>.
+If of length 1 no adaptation is performed. Otherwise
+considered as the initial grid over which the optimization
+of the adaptive method will be performed. Defaults to
+<code>seq(0.01, 10, length = 51)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar for bandwidth <code class="reqn">h</code>. Defaults to NULL and is then
+internally set to <code class="reqn">n^{-1/5}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Numeric scalar for value of location parameter <code class="reqn">\theta</code>.
+Defaults to NULL and is then internally set to the arithmetic
+mean of <code class="reqn">x_1, \ldots, x_n</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ranktrafo</code></td>
+<td>
+<p>Function used for the rank transformation. Defaults to
+<code>J2</code> (with its default <code>cc = sqrt(5))</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ticker</code></td>
+<td>
+<p>Logical; determines if a 'ticker' documents the iteration
+progress through <code>Sigma</code>. Defaults to FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>Logical or character or numeric and indicates if graphical
+output should be produced. Defaults to FALSE (i.e., no
+graphical output is produced) and is passed to
+<code>adaptive_fnhat()</code> which does the actual work. For
+details on how it is processed see there.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parlist</code></td>
+<td>
+<p>A list of graphical parameters that is passed to
+<code>adaptive_fnhat()</code>; see there. Default:
+<code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments possibly passed down. Currently ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>In the case of only one method a data frame whose components
+have the following names and meanings:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>x</code> </td>
+<td style="text-align: left;"> x_0. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>y</code> </td>
+<td style="text-align: left;"> Estimate of f(x_0). </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>sigma.adap</code> </td>
+<td style="text-align: left;"> The found minimizer of the MSE-estimator, i.e.,
+                         the adaptive smoothing parameter value. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>msehat.min</code> </td>
+<td style="text-align: left;"> The found minimum of the MSE-estimator. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>discr.min.smaller</code> </td>
+<td style="text-align: left;"> TRUE iff the numerically found minimum
+                                was smaller than the discrete one. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>sig.range.adj</code> </td>
+<td style="text-align: left;"> Number of adjustments of sigma-range. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  </td>
+</tr>
+</table>
+<p>In the case of both methods a list of two data frames of the
+just described structure.
+</p>
+
+
+<h3>References</h3>
+
+<p>Srihera &amp; Stute (2011), Eichner &amp; Stute (2013), and Eichner
+(2017): see <code>kader</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+
+ # Generating N(0,1)-data
+set.seed(2017);     n &lt;- 80;     d &lt;- rnorm(n)
+
+ # Estimating f(x0) for one sigma-value
+x0 &lt;- 1
+(fit &lt;- kade(x = x0, data = d, method = "nonrobust", Sigma = 1))
+
+ # Estimating f(x0) for sigma-grid
+x0 &lt;- 1
+(fit &lt;- kade(x = x0, data = d, method = "nonrobust",
+  Sigma = seq(0.01, 10, length = 10), ticker = TRUE))
+
+## Not run: 
+ # Estimating f(x0) for sigma-grid and Old-Faithful-eruptions-data
+x0 &lt;- 2
+(fit &lt;- kade(x = x0, data = faithful$eruptions, method = "nonrobust",
+  Sigma = seq(0.01, 10, length = 51), ticker = TRUE, plot = TRUE))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

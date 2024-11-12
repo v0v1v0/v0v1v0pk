@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bw_tt_pi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Nearest-neighbor bandwidth selection for the tapered transformation estimator</h2>
+
+<h3>Description</h3>
+
+<p>The smoothing parameters are selected by the method of Wen and Wu (2015).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bw_tt_pi(udata, rho.add = TRUE)
+
+bw_tt_cv(udata, rho.add = T)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>udata</code></td>
+<td>
+<p>data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho.add</code></td>
+<td>
+<p>logical; whether a rotation (correlation) parameter shall be
+included.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Optimal smoothing parameters as in Wen and Wu (2015): a numeric
+vector of length 4; entries are <code class="reqn">(h, \rho, \theta_1, \theta_2)</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Kuangyu Wen
+</p>
+
+
+<h3>References</h3>
+
+<p>Wen, K. and Wu, X. (2015).
+Transformation-Kernel Estimation of the Copula Density,
+Working paper,
+<a href="http://agecon2.tamu.edu/people/faculty/wu-ximing/agecon2/public/copula.pdf">http://agecon2.tamu.edu/people/faculty/wu-ximing/agecon2/public/copula.pdf</a>
+</p>
+
+
+</div>

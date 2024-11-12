@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>build_kgraph_from_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Build a knowledge graph from a fit object</h2>
+
+<h3>Description</h3>
+
+<p>Computes similarities for nodes of interest on the fly to avoid having to
+deal with very large similarity matrices when number of features is large.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">build_kgraph_from_fit(selected_concepts, m_embeds, fit_kg, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>selected_concepts</code></td>
+<td>
+<p>Concepts of interest</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m_embeds</code></td>
+<td>
+<p>Embeddings matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit_kg</code></td>
+<td>
+<p>Fit object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed to build_kgraph</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Knowledge graph, list of slots df_nodes and df_links
+</p>
+
+
+</div>

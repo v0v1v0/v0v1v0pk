@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>initializer_zeros</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Initializer that generates tensors initialized to 0.</h2>
+
+<h3>Description</h3>
+
+<p>Initializer that generates tensors initialized to 0.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">initializer_zeros()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>An <code>Initializer</code> instance that can be passed to layer or variable
+constructors, or called directly with a <code>shape</code> to return a Tensor.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre># Standalone usage:
+initializer &lt;- initializer_zeros()
+values &lt;- initializer(shape = c(2, 2))
+</pre></div>
+<div class="sourceCode r"><pre># Usage in a Keras layer:
+initializer &lt;- initializer_zeros()
+layer &lt;- layer_dense(units = 3, kernel_initializer = initializer)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/initializers#zeros-class">https://keras.io/api/layers/initializers#zeros-class</a>
+</p>
+</li></ul>
+<p>Other constant initializers: <br><code>initializer_constant()</code> <br><code>initializer_identity()</code> <br><code>initializer_ones()</code> <br></p>
+<p>Other initializers: <br><code>initializer_constant()</code> <br><code>initializer_glorot_normal()</code> <br><code>initializer_glorot_uniform()</code> <br><code>initializer_he_normal()</code> <br><code>initializer_he_uniform()</code> <br><code>initializer_identity()</code> <br><code>initializer_lecun_normal()</code> <br><code>initializer_lecun_uniform()</code> <br><code>initializer_ones()</code> <br><code>initializer_orthogonal()</code> <br><code>initializer_random_normal()</code> <br><code>initializer_random_uniform()</code> <br><code>initializer_truncated_normal()</code> <br><code>initializer_variance_scaling()</code> <br></p>
+
+
+</div>

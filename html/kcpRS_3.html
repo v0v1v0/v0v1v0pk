@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getScatterMatrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get the matrix of optimized scatters used in locating the change points.</h2>
+
+<h3>Description</h3>
+
+<p>Get the matrix of optimized scatters used in locating the change points.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getScatterMatrix(II_, X_, H_)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>II_</code></td>
+<td>
+<p>A D x N matrix where D is the maximum no. of segments (Kmax+1) and N is the no. of windows</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_</code></td>
+<td>
+<p>An N x r dataframe where N is the no. of windows and r the no. of running statistics monitored</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H_</code></td>
+<td>
+<p>A D x N matrix where D is the maximum no. of segments (Kmax+1) and N is the no. of windows</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>II</code></td>
+<td>
+<p>A matrix of optimized scatters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>A matrix of candidate changes point locations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>medianK</code></td>
+<td>
+<p>Median of the pairwise Euclidean distances</p>
+</td>
+</tr>
+</table>
+</div>

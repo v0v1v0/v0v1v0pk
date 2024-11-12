@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>agg_loadings</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Aggregated factor loadings</h2>
+
+<h3>Description</h3>
+
+<p>The factor loadings aggregated over k-folds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">agg_loadings(models, flag = 0.3, digits = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>models</code></td>
+<td>
+<p>An object returned from <code>kfa</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flag</code></td>
+<td>
+<p>threshold below which loading will be flagged</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>integer; number of decimal places to display in the report.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>data.frame</code> of mean factor loadings for each factor model and <code>vector</code> with count of folds with a flagged loading
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(example.kfa)
+agg_loadings(example.kfa)
+
+</code></pre>
+
+
+</div>

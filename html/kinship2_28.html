@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pedigree.unrelated</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Determine set of maximum number of unrelated available subjects
+from a pedigree
+</h2>
+
+<h3>Description</h3>
+
+<p>Determine set of maximum number of unrelated available subjects
+from a pedigree, given vectors id, father, and mother for a pedigree structure,
+and status vector of T/F for whether each subject is available (e.g. has DNA)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pedigree.unrelated(ped, avail)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ped</code></td>
+<td>
+
+<p>A pedigree objects with unique id, father index, mother index
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>avail</code></td>
+<td>
+
+<p>Vector of availability status (e.g., genotyped) 0/1 or TRUE/FALSE
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a greedy algorithm that uses the kinship matrix, sequentially
+removing rows/cols that are non-zero for subjects that have the most
+number of zero kinship coefficients (greedy by choosing a row of
+kinship matrix that has the most number of zeros, and then remove any
+cols and their corresponding rows that are non-zero. To account for
+ties of the count of zeros for rows, a random choice is made. Hence,
+running this function multiple times can return different sets of
+unrelated subjects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of the ids of subjects that are unrelated.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kinship</code>,
+<code>pedigree</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(sample.ped)
+fam1 &lt;- sample.ped[sample.ped$ped==1,]
+
+
+ped1 &lt;- pedigree(fam1$id, fam1$father, fam1$mother,
+                 fam1$sex, fam1$affected, fam1$avail)
+
+## to see plot:
+## plot.pedigree(ped1, align=FALSE)
+id1 &lt;- pedigree.unrelated(ped1, avail=fam1$avail)
+
+id1
+## some possible vectors
+##[1] "110" "113" "133" "109"
+##[1] "113" "118" "141" "109" 
+##[1] "113" "118" "140" "109" 
+##[1] "110" "113" "116" "109" 
+##[1] "113" "133" "141" "109" 
+
+ 
+fam2 &lt;- sample.ped[sample.ped$ped==2,]
+
+ped2 &lt;- pedigree(fam2$id, fam2$father, fam2$mother,
+               fam2$sex, fam2$affected, fam2$avail)
+
+## to see plot:
+## plot.pedigree(ped2, align=FALSE)
+
+id2 &lt;- pedigree.unrelated(ped2, avail=fam2$avail)
+
+## some possible vectors
+##[1] "203" "207"
+##[1] "203" "204"
+##[1] "201" "203"
+##[1] "214" "203"
+id2
+
+</code></pre>
+
+
+</div>

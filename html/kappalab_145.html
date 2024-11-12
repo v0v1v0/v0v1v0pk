@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>orness-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Orness degree</h2>
+
+<h3>Description</h3>
+
+<p>Computes the orness degree of a Choquet integral from the
+underlying <b>normalized</b> capacity. The capacity can be given either under the form
+of an object of class <code>capacity</code>, <code>card.capacity</code> or
+<code>Mobius.capacity</code>.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.capacity" </dt>
+<dd>
+<p>The orness degree is computed from the Möbius transform of a capacity.</p>
+</dd>
+<dt>object = "capacity" </dt>
+<dd>
+<p>The orness degree is computed directly from a capacity.</p>
+</dd>
+<dt>object = "card.capacity" </dt>
+<dd>
+<p>The orness degree is computed from a cardinal capacity.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>J.-L. Marichal (2000), <em>Behavioral analysis of aggregation in
+multicriteria decision aid</em>, in Preferences and Decisions under
+Incomplete Knowledge, J. Fodor and B. De Baets and P. Perny Eds,
+Physica-Verlag, pages 153-178, 2000.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>capacity-class</code>,
+<br><code>Mobius.capacity-class</code>,
+<br><code>card.capacity-class</code>,
+<br><code>Mobius-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## the upper capacity
+mu &lt;- capacity(c(0,rep(1,15)))
+
+## the Choquet integral w.r.t mu behaves like the maximum operator
+f &lt;- c(0.1,0.1,0,0.9)
+Choquet.integral(mu,f)
+
+## its orness is 1
+orness(mu)
+
+## the same example with a Mobius.capacity object
+a &lt;- Mobius(mu)
+Choquet.integral(a,f)
+orness(a)
+
+## the same example with a card.capacity object
+mu &lt;- upper.capacity(4)
+Choquet.integral(mu,f)
+orness(mu)
+</code></pre>
+
+
+</div>

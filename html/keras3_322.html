@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loss_hinge</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the hinge loss between <code>y_true</code> &amp; <code>y_pred</code>.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode r"><pre>loss &lt;- mean(maximum(1 - y_true * y_pred, 0), axis=-1)
+</pre></div>
+<p><code>y_true</code> values are expected to be -1 or 1. If binary (0 or 1) labels are
+provided we will convert them to -1 or 1.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loss_hinge(
+  y_true,
+  y_pred,
+  ...,
+  reduction = "sum_over_batch_size",
+  name = "hinge",
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>The ground truth values. <code>y_true</code> values are expected to be -1
+or 1. If binary (0 or 1) labels are provided they will be converted
+to -1 or 1 with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>The predicted values with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reduction</code></td>
+<td>
+<p>Type of reduction to apply to the loss. In almost all cases
+this should be <code>"sum_over_batch_size"</code>.
+Supported options are <code>"sum"</code>, <code>"sum_over_batch_size"</code> or <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Optional name for the loss instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>The dtype of the loss's computations. Defaults to <code>NULL</code>, which
+means using <code>config_floatx()</code>. <code>config_floatx()</code> is a
+<code>"float32"</code> unless set to different value
+(via <code>config_set_floatx()</code>). If a <code>keras$DTypePolicy</code> is
+provided, then the <code>compute_dtype</code> will be utilized.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Hinge loss values with shape = <code style="white-space: pre;">⁠[batch_size, d0, .. dN-1]⁠</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>y_true &lt;- array(sample(c(-1,1), 6, replace = TRUE), dim = c(2, 3))
+y_pred &lt;- random_uniform(c(2, 3))
+loss &lt;- loss_hinge(y_true, y_pred)
+loss
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([1.0610152  0.93285507], shape=(2), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/losses/hinge_losses#hinge-class">https://keras.io/api/losses/hinge_losses#hinge-class</a>
+</p>
+</li></ul>
+<p>Other losses: <br><code>Loss()</code> <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_focal_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_dice()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_log_cosh()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+
+
+</div>

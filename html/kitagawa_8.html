@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kitagawa-constants</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Access to constants used by default</h2>
+
+<h3>Description</h3>
+
+<p>The response of an aquifer depends on its mechanical
+and hydrological properties; if these are not known or 
+specified, these constants are used.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">constants(do.str = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>do.str</code></td>
+<td>
+<p>logical; should the structure be printed?</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The function <code>constants</code>
+shows the structure of (optionally),
+and returns the assumed constants, which do <em>not</em> reside in
+the namespace.
+</p>
+
+
+<h4>Values</h4>
+
+
+<dl>
+<dt>For water: </dt>
+<dd>
+<p>Density and bulk modulus</p>
+</dd>
+<dt>Gravity: </dt>
+<dd>
+<p>Standard gravitational acceleration at 6371km radius (Earth)</p>
+</dd>
+<dt>Conversions: </dt>
+<dd>
+<p>Degrees to radians</p>
+</dd>
+</dl>
+<h3>Value</h3>
+
+<p>The constants, invisibly.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>well_response</code> and <code>open_well_response</code>
+</p>
+<p><code>kitagawa-package</code>
+</p>
+<p>Other ConstantsCalculators: 
+<code>alpha_constants()</code>,
+<code>omega_constants()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">constants()
+constants(FALSE) # returns invisibly
+</code></pre>
+
+
+</div>

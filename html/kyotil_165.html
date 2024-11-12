@@ -1,0 +1,501 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>base.functions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Some Base Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>cbinduneven binds together a list of matrixes/dataframes of different lengths, rows are matched by names
+binary returns binary representation of an integer. 
+binary2 returns binary representatin of an integer with leading 0, the length of string is n.
+mysystem can call any exe file that is in the PATH
+f2c convert temperature from f to c/
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+mytable (..., exclude = if (useNA == "no") c(NA, NaN), useNA = "ifany", 
+  dnn = list.names(...), deparse.level = 1) 
+
+cbinduneven(li)
+
+binary(i)
+
+multi.outer (f, ... ) 
+
+myreshapelong(dat, cols.to.be.stacked, label.cols.to.be.stacked, new.col.name)
+
+binary2(i, n)
+
+f2c(f)
+
+ftoi(f)
+
+keepWarnings(expr)
+
+meanmed(x, na.rm = FALSE)
+
+
+myaggregate(x, by, FUN, new.col.name = "aggregate.value", ...)
+
+myreshapewide(formula, dat, idvar, keep.extra.col=FALSE)
+
+mysapply(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE, ret.mat = TRUE)
+
+myscale(x)
+
+mysystem(cmd, ...)
+
+mytapply(X, INDEX, FUN = NULL, ..., simplify = TRUE)
+
+read.sv(file, header = TRUE, ...)
+
+read.tsv(file, header = TRUE, sep = "\t", ...)
+
+table.prop(x,y=NULL,digit=1,style=2,whole.table.add.to.1=FALSE,useNA="ifany",
+    add.perc=FALSE, add.total.column = FALSE)
+
+table.cases  (case,group,include.all=TRUE,desc="cases")
+table.cases.3(case,group1,group2)
+
+unix()
+
+mycor (x, use = "everything", method = c("pearson", "kendall", "spearman"), 
+    alternative = c("two.sided", "less", "greater"), exact = NULL, 
+    conf.level = 0.95, continuity = FALSE, 
+    digits.coef=2, digits.pval=3,
+    ...) 
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>exclude</code></td>
+<td>
+
+<p>exclude
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dnn</code></td>
+<td>
+
+<p>dnn
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deparse.level</code></td>
+<td>
+
+<p>deparse.level
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.total.column</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alternative</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.level</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>continuity</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits.coef</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits.pval</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols.to.be.stacked</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label.cols.to.be.stacked</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>li</code></td>
+<td>
+<p>a list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i</code></td>
+<td>
+
+<p>tbdi
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>tbdn
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>In multi.out, f is a function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>case</code></td>
+<td>
+<p>vector of 0/1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>vector of multi-group indicators</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>a formula object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+
+<p>tbdexpr
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+
+<p>tbdna.rm
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+
+<p>tbdby
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+
+<p>tbdby
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whole.table.add.to.1</code></td>
+<td>
+
+<p>Boolean
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.col.name</code></td>
+<td>
+
+<p>tbdnew.col.name
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+
+<p>tbddat
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idvar</code></td>
+<td>
+
+<p>tbdidvar
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>tbdX
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+
+<p>tbdsimplify
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>USE.NAMES</code></td>
+<td>
+
+<p>tbdUSE.NAMES
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ret.mat</code></td>
+<td>
+
+<p>tbdret.mat
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmd</code></td>
+<td>
+
+<p>tbdcmd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>INDEX</code></td>
+<td>
+
+<p>tbdINDEX
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+
+<p>tbdfile
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>header</code></td>
+<td>
+
+<p>tbdheader
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+
+<p>tbdsep
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digit</code></td>
+<td>
+
+<p>tbddigit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>style</code></td>
+<td>
+
+<p>tbdstyle
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep.extra.col</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>useNA</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.perc</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.all</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group1</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group2</code></td>
+<td>
+
+<p>tbdFUN
+</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+binary(5) ###  101
+binary2(5, 4)
+
+a=data.frame("x"=1:2)
+b=data.frame("y"=3:5);#rownames(b)[3]=""
+cbinduneven(list(a,b))
+
+## Not run: 
+# the formula in myreshapewide can only have one variable in the right hand side
+    myreshapewide(fi~week, dat, c("ptid","stim"))
+
+    myreshapelong(dat.201.neut, cols.to.be.stacked=c("MN.3","SF162","SVA.MLV"), 
+        label.cols.to.be.stacked="antigen", new.col.name="y")
+
+    myaggregate(subset(dat.poc, select=c(HIV, trt)), list(dat.poc$f), function(x) 
+      with(x, c(fisher.test(HIV, trt)$estimate, fisher.test(HIV, trt)$p.value)))
+
+
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Mobius-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Möbius transform</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Möbius transform of a set function. The Möbius transform is the inverse of the zeta transform.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "capacity" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.capacity</code>.</p>
+</dd>
+<dt>object = "card.set.func" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.card.set.func</code>.</p>
+</dd>
+<dt>object = "game" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.game</code>.</p>
+</dd>
+<dt>object = "set.func" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.set.func</code>.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>G-C. Rota (1964), <em>On the foundations of combinatorial theory. I. Theory
+of Möbius functions</em>, Z. Wahrscheinlichkeitstheorie und
+Verw. Gebiete 2, pages 340-368.
+</p>
+<p>A. Chateauneuf and J-Y. Jaffray (1989), <em>Some characterizations of lower 
+probabilities and other monotone capacities through the use of Möbius inversion</em>,
+Mathematical Social Sciences 17, pages 263-283.
+</p>
+<p>M. Grabisch, J-L. Marichal and M. Roubens (2000), <em>Equivalent
+representations of set functions</em>, Mathematics of Operations
+Research 25:2, pages 157-178.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Mobius.capacity-class</code>, 
+<br><code>Mobius.card.set.func-class</code>, 
+<br><code>Mobius.game-class</code>,
+<br><code>Mobius.set.func-class</code>,
+<br><code>capacity-class</code>, 
+<br><code>card.set.func-class</code>, 
+<br><code>game-class</code>,
+<br><code>set.func-class</code>, 
+<br><code>zeta-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(0:15)
+mu
+
+## its Mobius transform
+a &lt;- Mobius(mu)
+a
+
+## its zeta transform
+zeta(a)
+
+## a similar example with a game object
+mu &lt;- game(c(0,-2:12))
+mu
+Mobius(mu)
+zeta(Mobius(mu))
+
+## a similar example with a set.func object
+mu &lt;- set.func(-7:8)
+mu
+Mobius(mu)
+zeta(Mobius(mu))
+
+## a similar example with a card.set.func object
+mu &lt;- card.set.func(-3:4)
+mu
+Mobius(mu)
+zeta(Mobius(mu))
+</code></pre>
+
+
+</div>

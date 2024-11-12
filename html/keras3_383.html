@@ -1,0 +1,415 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>new_callback_class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Callback</h2>
+
+<h3>Description</h3>
+
+<p><code>new_callback_class()</code> is an alias for <code>Callback()</code>.
+See <code style="white-space: pre;">⁠?⁠</code><code>Callback()</code> for the full documentation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">new_callback_class(
+  classname,
+  on_epoch_begin = NULL,
+  on_epoch_end = NULL,
+  on_train_begin = NULL,
+  on_train_end = NULL,
+  on_train_batch_begin = NULL,
+  on_train_batch_end = NULL,
+  on_test_begin = NULL,
+  on_test_end = NULL,
+  on_test_batch_begin = NULL,
+  on_test_batch_end = NULL,
+  on_predict_begin = NULL,
+  on_predict_end = NULL,
+  on_predict_batch_begin = NULL,
+  on_predict_batch_end = NULL,
+  ...,
+  public = list(),
+  private = list(),
+  inherit = NULL,
+  parent_env = parent.frame()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>String, the name of the custom class. (Conventionally, CamelCase).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_epoch_begin</code></td>
+<td>
+<div class="sourceCode r"><pre>\(epoch, logs = NULL)
+</pre></div>
+<p>Called at the start of an epoch.
+</p>
+<p>Subclasses should override for any actions to run. This function should
+only be called during TRAIN mode.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>epoch</code>: Integer, index of epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named List. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_epoch_end</code></td>
+<td>
+<div class="sourceCode r"><pre>\(epoch, logs = NULL)
+</pre></div>
+<p>Called at the end of an epoch.
+</p>
+<p>Subclasses should override for any actions to run. This function should
+only be called during TRAIN mode.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>epoch</code>: Integer, index of epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named List, metric results for this training epoch, and for the
+validation epoch if validation is performed. Validation result
+keys are prefixed with <code>val_</code>. For training epoch, the values of
+the <code>Model</code>'s metrics are returned. Example:
+<code>list(loss = 0.2, accuracy = 0.7)</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_begin</code></td>
+<td>
+<div class="sourceCode"><pre>\(logs = NULL)
+</pre></div>
+<p>Called at the beginning of training.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Args:
+</p>
+
+<ul><li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_end</code></td>
+<td>
+<div class="sourceCode"><pre>\(logs = NULL)
+</pre></div>
+<p>Called at the end of training.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Args:
+</p>
+
+<ul><li> <p><code>logs</code>: Named list. Currently the output of the last call to
+<code>on_epoch_end()</code> is passed to this argument for this method but
+that may change in the future.
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_batch_begin</code></td>
+<td>
+<div class="sourceCode"><pre>\(batch, logs = NULL)
+</pre></div>
+<p>Called at the beginning of a training batch in <code>fit()</code> methods.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Note that if the <code>steps_per_execution</code> argument to <code>compile</code> in
+<code>Model</code> is set to <code>N</code>, this method will only be called every
+<code>N</code> batches.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>batch</code>: Integer, index of batch within the current epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_train_batch_end</code></td>
+<td>
+<div class="sourceCode"><pre>\(batch, logs=NULL)
+</pre></div>
+<p>Called at the end of a training batch in <code>fit()</code> methods.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Note that if the <code>steps_per_execution</code> argument to <code>compile</code> in
+<code>Model</code> is set to <code>N</code>, this method will only be called every
+<code>N</code> batches.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>batch</code>: Integer, index of batch within the current epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named list. Aggregated metric results up until this batch.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_begin</code></td>
+<td>
+<div class="sourceCode r"><pre>\(logs = NULL)
+</pre></div>
+<p>Called at the beginning of evaluation or validation.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Args:
+</p>
+
+<ul><li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_end</code></td>
+<td>
+<div class="sourceCode r"><pre>\(logs = NULL)
+</pre></div>
+<p>Called at the end of evaluation or validation.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Args:
+</p>
+
+<ul><li> <p><code>logs</code>: Named list. Currently the output of the last call to
+<code>on_test_batch_end()</code> is passed to this argument for this method
+but that may change in the future.
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_batch_begin</code></td>
+<td>
+<div class="sourceCode r"><pre>\(batch, logs = NULL)
+</pre></div>
+<p>Called at the beginning of a batch in <code>evaluate()</code> methods.
+</p>
+<p>Also called at the beginning of a validation batch in the <code>fit()</code>
+methods, if validation data is provided.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Note that if the <code>steps_per_execution</code> argument to <code>compile()</code> in
+<code>Model</code> is set to <code>N</code>, this method will only be called every
+<code>N</code> batches.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>batch</code>: Integer, index of batch within the current epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_test_batch_end</code></td>
+<td>
+<div class="sourceCode r"><pre>\(batch, logs = NULL)
+</pre></div>
+<p>Called at the end of a batch in <code>evaluate()</code> methods.
+</p>
+<p>Also called at the end of a validation batch in the <code>fit()</code>
+methods, if validation data is provided.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Note that if the <code>steps_per_execution</code> argument to <code>compile()</code> in
+<code>Model</code> is set to <code>N</code>, this method will only be called every
+<code>N</code> batches.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>batch</code>: Integer, index of batch within the current epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named list. Aggregated metric results up until this batch.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_begin</code></td>
+<td>
+<div class="sourceCode r"><pre>\(logs = NULL)
+</pre></div>
+<p>Called at the beginning of prediction.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Args:
+</p>
+
+<ul><li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_end</code></td>
+<td>
+<div class="sourceCode r"><pre>\(logs = NULL)
+</pre></div>
+<p>Called at the end of prediction.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Args:
+</p>
+
+<ul><li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_batch_begin</code></td>
+<td>
+<div class="sourceCode r"><pre>\(batch, logs = NULL)
+</pre></div>
+<p>Called at the beginning of a batch in <code>predict()</code> methods.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Note that if the <code>steps_per_execution</code> argument to <code>compile()</code> in
+<code>Model</code> is set to <code>N</code>, this method will only be called every
+<code>N</code> batches.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>batch</code>: Integer, index of batch within the current epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named list. Currently no data is passed to this argument for this
+method but that may change in the future.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>on_predict_batch_end</code></td>
+<td>
+<div class="sourceCode r"><pre>\(batch, logs = NULL)
+</pre></div>
+<p>Called at the end of a batch in <code>predict()</code> methods.
+</p>
+<p>Subclasses should override for any actions to run.
+</p>
+<p>Note that if the <code>steps_per_execution</code> argument to <code>compile</code> in
+<code>Model</code> is set to <code>N</code>, this method will only be called every
+<code>N</code> batches.
+</p>
+<p>Args:
+</p>
+
+<ul>
+<li> <p><code>batch</code>: Integer, index of batch within the current epoch.
+</p>
+</li>
+<li> <p><code>logs</code>: Named list. Aggregated metric results up until this batch.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>..., public</code></td>
+<td>
+<p>Additional methods or public members of the custom class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>private</code></td>
+<td>
+<p>Named list of R objects (typically, functions) to include in
+instance private environments. <code>private</code> methods will have all the same
+symbols in scope as public methods (See section "Symbols in Scope"). Each
+instance will have it's own <code>private</code> environment. Any objects
+in <code>private</code> will be invisible from the Keras framework and the Python
+runtime.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit</code></td>
+<td>
+<p>What the custom class will subclass. By default, the base keras class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>The R environment that all class methods will have as a grandparent.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A function that returns the custom <code>Callback</code> instances,
+similar to the builtin callback functions.
+</p>
+
+
+</div>

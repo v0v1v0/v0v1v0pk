@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>karlen</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>qPCR data sets by Karlen et al. (2007)</h2>
+
+<h3>Description</h3>
+
+<p>One single tabular tidy data set in long format, encompassing 32 dilution
+series, for seven PCR targets and four biological samples. The targeted
+amplicons are within the murine genes: Cav1, Ccn2, Eln, Fn1, Rpl27, Hspg2, and
+Serpine1, respectively. Dilution series: scheme 1 (Cav1, Eln, Hspg2,
+Serpine1): 1-fold, 10-fold, 50-fold, and 100-fold; scheme 2 (Ccn2, Rpl27,
+Fn1): 1-fold, 10-fold, 50-fold, 100-fold and 1000-fold. For each concentration
+there are five replicates, except for the 1000-fold concentration, where only
+two replicates were performed. Each amplification curve is 40 cycles long.
+Please read the sections <em>Experimental set of qPCR data</em> and <em>Quantitative
+PCR assays</em> of Karlen et al. (2007) for more details.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A tibble providing amplification curve data
+in long format.
+</p>
+
+<dl>
+<dt><code>plate</code></dt>
+<dd>
+<p>Plate identifier. This corresponds, loosely, to the name of
+the targets. In the original publication the amplicons are indicated by gene
+symbol synonyms which we do use here for naming each plate. This differs from
+the names used in the column <code>target</code> where actual murine gene symbols are
+used.</p>
+</dd>
+<dt><code>well</code></dt>
+<dd>
+<p>Well identifier, i.e. the position within the 96-well plate.</p>
+</dd>
+<dt><code>target</code></dt>
+<dd>
+<p>Target identifier: murine gene symbol where the amplicon maps
+to.</p>
+</dd>
+<dt><code>dye</code></dt>
+<dd>
+<p>Type of fluorescence dye, in this data set it is always SYBR
+Green I master mix (Roche) (<code>"SYBR"</code>).</p>
+</dd>
+<dt><code>sample</code></dt>
+<dd>
+<p>Name of the biological sample.</p>
+</dd>
+<dt><code>sample_type</code></dt>
+<dd>
+<p>Sample type. Most reactions in this data set are
+standard curves, i.e. <code>"std"</code>, but a few no template controls (<code>"ntc"</code>) are
+also included.</p>
+</dd>
+<dt><code>replicate</code></dt>
+<dd>
+<p>Replicate identifier: 1 thru 5.</p>
+</dd>
+<dt><code>copies</code></dt>
+<dd>
+<p>Standard copy number.</p>
+</dd>
+<dt><code>dilution</code></dt>
+<dd>
+<p>Dilution factor. Higher number means greater dilution, e.g.
+<code>10</code> means a 1:10 (ten-fold) dilution.</p>
+</dd>
+<dt><code>cycle</code></dt>
+<dd>
+<p>PCR cycle.</p>
+</dd>
+<dt><code>fluor</code></dt>
+<dd>
+<p>Raw fluorescence values.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="https://doi.org/10.1186/1471-2105-8-131">doi:10.1186/1471-2105-8-131</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">karlen
+
+</code></pre>
+
+
+</div>

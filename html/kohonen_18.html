@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>peppaPic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Synthetic image of a pepper plant with peppers</h2>
+
+<h3>Description</h3>
+
+<p>A data matrix with four columns representing a 600 by 800
+image of a pepper plant. Each row is a pixel in the image. The first
+column is the class label; the other columns contain the RGB values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("peppaPic")</code></pre>
+
+
+<h3>Source</h3>
+
+<p>http://dx.doi.org/10.4121/uuid:884958f5-b868-46e1-b3d8-a0b5d91b02c0
+</p>
+
+
+<h3>References</h3>
+
+<p>This is image 10039 from a set of 10,500 images described in
+</p>
+<p>Barth R, IJsselmuiden J, Hemming J, and van Henten E (2017). "Data
+Synthesis Methods for Semantic Segmentation in Agriculture. A Capsicum
+annuum Dataset." Submitted.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(peppaPic)
+head(peppaPic)
+## show ground truth per pixel
+image(t(matrix(peppaPic[,1], 600, 800))[,600:1], col = rainbow(10))
+</code></pre>
+
+
+</div>

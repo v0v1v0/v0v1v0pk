@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keras_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Keras Model (Functional API)</h2>
+
+<h3>Description</h3>
+
+<p>A model is a directed acyclic graph of layers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keras_model(inputs = NULL, outputs = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+<p>Input tensor(s) (from <code>keras_input()</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outputs</code></td>
+<td>
+<p>Output tensors (from calling layers with <code>inputs</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Any additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>Model</code> instance.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>library(keras3)
+
+# input tensor
+inputs &lt;- keras_input(shape = c(784))
+
+# outputs compose input + dense layers
+predictions &lt;- inputs |&gt;
+  layer_dense(units = 64, activation = 'relu') |&gt;
+  layer_dense(units = 64, activation = 'relu') |&gt;
+  layer_dense(units = 10, activation = 'softmax')
+
+# create and compile model
+model &lt;- keras_model(inputs = inputs, outputs = predictions)
+model |&gt; compile(
+  optimizer = 'rmsprop',
+  loss = 'categorical_crossentropy',
+  metrics = c('accuracy')
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: <br><code>get_config()</code> <br><code>get_layer()</code> <br><code>keras_model_sequential()</code> <br><code>pop_layer()</code> <br><code>summary.keras.src.models.model.Model()</code> <br></p>
+<p>Other model creation: <br><code>keras_input()</code> <br><code>keras_model_sequential()</code> <br></p>
+
+
+</div>

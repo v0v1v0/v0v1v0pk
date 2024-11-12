@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mentari</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Position &amp; kinship information of <em>Aedes aegypti</em> from Mentari Court, Malaysia</h2>
+
+<h3>Description</h3>
+
+<p>A data file containing the positions &amp; kinship values of 98 <em>Ae. aegypti</em> larval
+kin pairs collected between September 19 &amp; October 10, 2017 in Mentari Court
+(Petaling Jaya), Malaysia.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mentari
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 98 rows and 10 variables
+</p>
+
+<dl>
+<dt>id1</dt>
+<dd>
+<p>id of first individual of kinpair</p>
+</dd>
+<dt>id2</dt>
+<dd>
+<p>id of second individual of kinpair</p>
+</dd>
+<dt>kinship</dt>
+<dd>
+<p>kinship category of the pairing</p>
+</dd>
+<dt>distance</dt>
+<dd>
+<p>geographical distance between kinpair</p>
+</dd>
+<dt>x1</dt>
+<dd>
+<p>relative x coordinate of first individual in metres</p>
+</dd>
+<dt>y1</dt>
+<dd>
+<p>relative y coordinate of first individual in metres</p>
+</dd>
+<dt>x2</dt>
+<dd>
+<p>relative x coordinate of second individual in metres</p>
+</dd>
+<dt>y2</dt>
+<dd>
+<p>relative y coordinate of second individual in metres</p>
+</dd>
+<dt>lifestage</dt>
+<dd>
+<p>lifestage at time of sampling of kinpair</p>
+</dd>
+<dt>k_loiselle</dt>
+<dd>
+<p>calculated Loiselle's <em>k</em> value for kinpair</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>162 individuals were sourced as larvae from ovitraps placed in eight apartment
+buildings (in floors three or four for each), collected over three weeks. Entire
+larval bodies were extracted and sequenced using the double-digest restriction-site-
+associated DNA sequencing protocol for <em>Ae. aegypti</em>
+(doi: <a href="https://doi.org/10.1186/1471-2164-15-275">10.1186/1471-2164-15-275</a>. After sequencing &amp; genotyping,
+Loiselle's <em>k</em> was used as an initial estimate of genetic kinship. The program
+ML-Relate (doi: <a href="https://doi.org/10.1111/j.1471-8286.2006.01256.x">10.1111/j.1471-8286.2006.01256.x</a>) was then used to
+estimate the pedigree kinships for the FS and HS categories. Following simulation
+work described in doi: <a href="https://doi.org/10.1111/1755-0998.13043">10.1111/1755-0998.13043</a> the
+1C category was assigned to all remaining unassigned individuals with a Loiselle's
+<em>k</em> of less than 0.06.
+</p>
+
+
+<h3>Value</h3>
+
+<p>returns an object of class <code>tbl_df</code>
+</p>
+
+
+<h3>Source</h3>
+
+<p>doi: <a href="https://doi.org/10.1111/1755-0998.13043">10.1111/1755-0998.13043</a>
+</p>
+
+
+</div>

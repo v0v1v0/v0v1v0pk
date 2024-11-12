@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_vars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Figure out what variable represents time. Called by main 'kronos' function.</h2>
+
+<h3>Description</h3>
+
+<p>Extracts time from the formula and from the time argument. Also handles inconsistencies.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_vars(formula, time, data, verbose = verbose)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula. Use the <code>time</code> function to designate which variable represents time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>A string. Should be the column name containing the time values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>input data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A boolean. Toggles whether to print diagnostic information while running. Useful for debugging errors on large data sets.</p>
+</td>
+</tr>
+</table>
+</div>

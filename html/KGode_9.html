@@ -1,0 +1,322 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rkg3</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The 'rkg3' class object</h2>
+
+<h3>Description</h3>
+
+<p>This class provides advanced gradient matching method by using the ode as a regularizer.
+</p>
+
+
+<h3>Format</h3>
+
+<p><code>R6Class</code> object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an  <code>R6Class</code> object which can be used for improving ode parameters estimation by using ode as a regularizer.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt><code>iterate(iter,innerloop,lamb)</code></dt>
+<dd>
+<p>Iteratively updating ode parameters and interpolation regression coefficients.</p>
+</dd> 
+<dt><code>witerate(iter,innerloop,dtilda,lamb)</code></dt>
+<dd>
+<p>Iteratively updating ode parameters and the warped interpolation regression coefficients.</p>
+</dd>  
+<dt><code>full(par,lam)</code></dt>
+<dd>
+<p>Updating ode parameters and rkhs interpolation regression coefficients simultaneously. This method is slow but guarantee convergence.</p>
+</dd> </dl>
+<h3>Public fields</h3>
+
+<div class="r6-fields">
+
+<dl>
+<dt><code>rk</code></dt>
+<dd>
+<p>the 'rkhs' class object containing the interpolation information for each state of the ode.</p>
+</dd>
+<dt><code>ode_m</code></dt>
+<dd>
+<p>the 'ode' class object containing the information about the odes.</p>
+</dd>
+</dl>
+</div>
+
+
+<h3>Active bindings</h3>
+
+<div class="r6-active-bindings">
+
+<dl>
+<dt><code>ode_m</code></dt>
+<dd>
+<p>the 'ode' class object containing the information about the odes.</p>
+</dd>
+</dl>
+</div>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-rkg3-new"><code>rkg3$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-greet"><code>rkg3$greet()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-add"><code>rkg3$add()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-iterate"><code>rkg3$iterate()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-witerate"><code>rkg3$witerate()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-full"><code>rkg3$full()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-wfull"><code>rkg3$wfull()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-opfull"><code>rkg3$opfull()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-wopfull"><code>rkg3$wopfull()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-cross"><code>rkg3$cross()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-fullos"><code>rkg3$fullos()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-rkg3-clone"><code>rkg3$clone()</code></a>
+</p>
+</li>
+</ul>
+<hr>
+<a id="method-rkg3-new"></a>
+
+
+
+<h4>Method <code>new()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$new(rk = NULL, odem = NULL)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-greet"></a>
+
+
+
+<h4>Method <code>greet()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$greet()</pre></div>
+
+
+<hr>
+<a id="method-rkg3-add"></a>
+
+
+
+<h4>Method <code>add()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$add(x)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-iterate"></a>
+
+
+
+<h4>Method <code>iterate()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$iterate(iter, innerloop, lamb)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-witerate"></a>
+
+
+
+<h4>Method <code>witerate()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$witerate(iter, innerloop, dtilda, lamb)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-full"></a>
+
+
+
+<h4>Method <code>full()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$full(par, lam)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-wfull"></a>
+
+
+
+<h4>Method <code>wfull()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$wfull(par, lam, dtilda)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-opfull"></a>
+
+
+
+<h4>Method <code>opfull()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$opfull(lam)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-wopfull"></a>
+
+
+
+<h4>Method <code>wopfull()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$wopfull(lam, dtilda)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-cross"></a>
+
+
+
+<h4>Method <code>cross()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$cross(lam, testX, testY)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-fullos"></a>
+
+
+
+<h4>Method <code>fullos()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$fullos(par)</pre></div>
+
+
+<hr>
+<a id="method-rkg3-clone"></a>
+
+
+
+<h4>Method <code>clone()</code>
+</h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>rkg3$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt>
+<dd>
+<p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+</div>
+
+
+
+
+<h3>Author(s)</h3>
+
+<p>Mu Niu, <a href="mailto:mu.niu@glasgow.ac.uk">mu.niu@glasgow.ac.uk</a>
+</p>
+
+
+</div>

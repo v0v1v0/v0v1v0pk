@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>clustering</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Return clustering assignments produced by tight.clust</h2>
+
+<h3>Description</h3>
+
+<p><code>clustering</code> returns vectors of clustering assignments
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">clustering(tightclust, data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tightclust</code></td>
+<td>
+<p>list of objects returned by the tight.clust function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data frame of time course of substrates, each substrate is a row</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function clustering creates a named list of cluster assignments for substrates.
+</p>
+
+
+<h3>Value</h3>
+
+<p>named list containing named vectors of cluster assignments, names correspond to rownames in data
+and names of list are kinase identifiers
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(phosphonetworkdf)
+data(datakin)
+# only need what is present in data
+phosphonetwork_data &lt;- phosphonetwork_df[
+phosphonetwork_df[,"SUB_IDENT"] %in% data_kin[,"SUB_IDENT"]
+,]
+fam &lt;- list(akt = c("P31749", "P31751"))
+kin_data_fam_exc &lt;- KSR.list(phosphonetwork_data[, c("SUB_IDENT", "KIN_ACC_ID")], 
+                             kinasefamilies = fam,
+                             exclusive = TRUE)
+# only do for Akt and Mtor (P31749, P42345)
+substrate_profiles &lt;- lapply(kin_data_fam_exc[c("P31749", "P42345")], 
+function(x){data_kin[match(x, data_kin[,"SUB_IDENT"]),1:9]})
+
+substrate_profiles_random &lt;- lapply(substrate_profiles, 
+function(x){rbind(x, random.data(x, random.seed = 123))})
+
+target &lt;- 3
+substrate_profiles_tight &lt;- lapply(substrate_profiles_random, function(x){
+tightClust::tight.clust(x, target = target, k.min = 7, resamp.num = 100, random.seed = 12345)
+})
+
+kin_clust&lt;- mapply(function(x,y){clustering(x, y)}, 
+                        substrate_profiles_tight, substrate_profiles, SIMPLIFY = FALSE)
+</code></pre>
+
+
+</div>

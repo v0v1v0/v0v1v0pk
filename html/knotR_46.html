@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>head.inkscape</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Head and tail methods for inkscape objects
+</h2>
+
+<h3>Description</h3>
+
+<p>Head and tail methods for inkscape objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'inkscape'
+head(x, ...)
+## S3 method for class 'inkscape'
+tail(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Primary argument, an inkscape object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments, passed to <code>head()</code> or <code>tail()</code></p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">a &lt;- reader(system.file("7_1.svg",package="knotR"))
+head(a)
+tail(a)
+
+head(as.inkscape(k8_2))
+</code></pre>
+
+
+</div>

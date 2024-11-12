@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_alpha</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Show a diagnosis plot of alpha</h2>
+
+<h3>Description</h3>
+
+<p>Show a diagnosis plot of alpha
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_alpha(x, start = 0, show_topic = NULL, scales = "fixed")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the output from a keyATM model (see <code>keyATM()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>integer. The start of slice iteration. Default is <code>0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_topic</code></td>
+<td>
+<p>a vector to specify topic indexes to show. Default is <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scales</code></td>
+<td>
+<p>character. Control the scale of y-axis (the parameter in ggplot2::facet_wrap()): <code>free</code> adjusts y-axis for parameters. Default is <code>fixed</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>keyATM_fig object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>save_fig()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,180 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>weightedLDA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Weighted LDA main function</h2>
+
+<h3>Description</h3>
+
+<p>Fit weighted LDA models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">weightedLDA(
+  docs,
+  model,
+  number_of_topics,
+  model_settings = list(),
+  priors = list(),
+  options = list(),
+  keep = c()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>docs</code></td>
+<td>
+<p>texts read via <code>keyATM_read()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Weighted LDA model: <code>base</code>, <code>covariates</code>, and <code>dynamic</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>number_of_topics</code></td>
+<td>
+<p>the number of regular topics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_settings</code></td>
+<td>
+<p>a list of model specific settings (details are in the online documentation).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>a list of priors of parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>a list of options (details are in the documentation of <code>keyATM()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep</code></td>
+<td>
+<p>a vector of the names of elements you want to keep in output.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>keyATM_output</code> object containing:
+</p>
+
+<dl>
+<dt>V</dt>
+<dd>
+<p>number of terms (number of unique words)</p>
+</dd>
+<dt>N</dt>
+<dd>
+<p>number of documents</p>
+</dd>
+<dt>model</dt>
+<dd>
+<p>the name of the model</p>
+</dd>
+<dt>theta</dt>
+<dd>
+<p>topic proportions for each document (document-topic distribution)</p>
+</dd>
+<dt>phi</dt>
+<dd>
+<p>topic specific word generation probabilities (topic-word distribution)</p>
+</dd>
+<dt>topic_counts</dt>
+<dd>
+<p>number of tokens assigned to each topic</p>
+</dd>
+<dt>word_counts</dt>
+<dd>
+<p>number of times each word type appears</p>
+</dd>
+<dt>doc_lens</dt>
+<dd>
+<p>length of each document in tokens</p>
+</dd>
+<dt>vocab</dt>
+<dd>
+<p>words in the vocabulary (a vector of unique words)</p>
+</dd>
+<dt>priors</dt>
+<dd>
+<p>priors</p>
+</dd>
+<dt>options</dt>
+<dd>
+<p>options</p>
+</dd>
+<dt>keywords_raw</dt>
+<dd>
+<p><code>NULL</code> for LDA models</p>
+</dd>
+<dt>model_fit</dt>
+<dd>
+<p>perplexity and log-likelihood</p>
+</dd>
+<dt>pi</dt>
+<dd>
+<p>estimated pi for the last iteration (<code>NULL</code> for LDA models)</p>
+</dd>
+<dt>values_iter</dt>
+<dd>
+<p>values stored during iterations</p>
+</dd>
+<dt>number_of_topics</dt>
+<dd>
+<p>number of topics</p>
+</dd>
+<dt>kept_values</dt>
+<dd>
+<p>outputs you specified to store in <code>keep</code> option</p>
+</dd>
+<dt>information</dt>
+<dd>
+<p>information about the fitting</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><a href="https://keyatm.github.io/keyATM/articles/pkgdown_files/Options.html">https://keyatm.github.io/keyATM/articles/pkgdown_files/Options.html</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  library(keyATM)
+  library(quanteda)
+  data(keyATM_data_bills)
+  bills_dfm &lt;- keyATM_data_bills$doc_dfm  # quanteda dfm object
+  keyATM_docs &lt;- keyATM_read(bills_dfm)
+
+  # Weighted LDA
+  out &lt;- weightedLDA(docs = keyATM_docs, model = "base",
+                     number_of_topics = 5)
+
+  # Visit our website for full examples: https://keyatm.github.io/keyATM/
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

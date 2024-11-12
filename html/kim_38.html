@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>duplicated_values</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Duplicated values in a vector</h2>
+
+<h3>Description</h3>
+
+<p>Return all duplicated values in a vector. This function is a copy of
+the earlier function, find_duplicates, in Package 'kim'
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">duplicated_values(vector = NULL, na.rm = TRUE, sigfigs = 2, output = "summary")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a vector whose elements will be checked for duplicates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>logical. If <code>na.rm = TRUE</code>, NA values in the vector
+will be removed before searching for duplicates.
+If <code>na.rm = FALSE</code>, NA values will be included in the search
+as potentially duplicated values. By default, <code>na.rm = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to in
+the percent column of the summary (default = 2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>type of output. If <code>output = "summary"</code>, the function's
+output will be a data.table summarizing duplicated values and
+their counts. If <code>output = "duplicated_values"</code>, the function's
+output will be a vector of duplicated values.
+If <code>output = "non_duplicated_values"</code>, the function's output will
+be a vector of non-duplicated values (default = "summary")</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a data.table object (summary),
+a vector of duplicated values, or a vector non-duplicated values.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">duplicated_values(mtcars$cyl)
+duplicated_values(mtcars$cyl, output = "duplicated_values")
+duplicated_values(vector = c(mtcars$cyl, 11:20, NA, NA))
+duplicated_values(vector = c(mtcars$cyl, 11:20, NA, NA), na.rm = FALSE)
+duplicated_values(vector = c(mtcars$cyl, 11:20, NA, NA),
+na.rm = FALSE, sigfigs = 4, output = "duplicated_values")
+</code></pre>
+
+
+</div>

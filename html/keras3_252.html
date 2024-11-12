@@ -1,0 +1,251 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_hashing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer which hashes and bins categorical features.</h2>
+
+<h3>Description</h3>
+
+<p>This layer transforms categorical inputs to hashed output. It element-wise
+converts a ints or strings to ints in a fixed range. The stable hash
+function uses <code style="white-space: pre;">⁠tensorflow::ops::Fingerprint⁠</code> to produce the same output
+consistently across all platforms.
+</p>
+<p>This layer uses <a href="https://github.com/google/farmhash">FarmHash64</a> by default,
+which provides a consistent hashed output across different platforms and is
+stable across invocations, regardless of device and context, by mixing the
+input bits thoroughly.
+</p>
+<p>If you want to obfuscate the hashed output, you can also pass a random
+<code>salt</code> argument in the constructor. In that case, the layer will use the
+<a href="https://github.com/google/highwayhash">SipHash64</a> hash function, with
+the <code>salt</code> value serving as additional input to the hash function.
+</p>
+<p><strong>Note:</strong> This layer internally uses TensorFlow. It cannot
+be used as part of the compiled computation graph of a model with
+any backend other than TensorFlow.
+It can however be used with any backend when running eagerly.
+It can also always be used as part of an input preprocessing pipeline
+with any backend (outside the model itself), which is how we recommend
+to use this layer.
+</p>
+<p><strong>Note:</strong> This layer is safe to use inside a <code>tf.data</code> pipeline
+(independently of which backend you're using).
+</p>
+<p><strong>Example (FarmHash64)</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_hashing(num_bins = 3)
+inp &lt;- c('A', 'B', 'C', 'D', 'E') |&gt; array(dim = c(5, 1))
+layer(inp)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[1]
+##  [0]
+##  [1]
+##  [1]
+##  [2]], shape=(5, 1), dtype=int64)
+
+</pre></div>
+<p><strong>Example (FarmHash64) with a mask value</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_hashing(num_bins=3, mask_value='')
+inp &lt;- c('A', 'B', '', 'C', 'D') |&gt; array(dim = c(5, 1))
+layer(inp)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[1]
+##  [1]
+##  [0]
+##  [2]
+##  [2]], shape=(5, 1), dtype=int64)
+
+</pre></div>
+<p><strong>Example (SipHash64)</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_hashing(num_bins=3, salt=c(133, 137))
+inp &lt;- c('A', 'B', 'C', 'D', 'E') |&gt; array(dim = c(5, 1))
+layer(inp)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[1]
+##  [2]
+##  [1]
+##  [0]
+##  [2]], shape=(5, 1), dtype=int64)
+
+</pre></div>
+<p><strong>Example (Siphash64 with a single integer, same as <code style="white-space: pre;">⁠salt=[133, 133]⁠</code>)</strong>
+</p>
+<div class="sourceCode r"><pre>layer &lt;- layer_hashing(num_bins=3, salt=133)
+inp &lt;- c('A', 'B', 'C', 'D', 'E') |&gt; array(dim = c(5, 1))
+layer(inp)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[0]
+##  [0]
+##  [2]
+##  [1]
+##  [0]], shape=(5, 1), dtype=int64)
+
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_hashing(
+  object,
+  num_bins,
+  mask_value = NULL,
+  salt = NULL,
+  output_mode = "int",
+  sparse = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_bins</code></td>
+<td>
+<p>Number of hash bins. Note that this includes the <code>mask_value</code>
+bin, so the effective number of bins is <code>(num_bins - 1)</code>
+if <code>mask_value</code> is set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mask_value</code></td>
+<td>
+<p>A value that represents masked inputs, which are mapped to
+index 0. <code>NULL</code> means no mask term will be added and the
+hashing will start at index 0. Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>salt</code></td>
+<td>
+<p>A single unsigned integer or <code>NULL</code>.
+If passed, the hash function used will be SipHash64,
+with these values used as an additional input
+(known as a "salt" in cryptography).
+These should be non-zero. If <code>NULL</code>, uses the FarmHash64 hash
+function. It also supports list of 2 unsigned
+integer numbers, see reference paper for details.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_mode</code></td>
+<td>
+<p>Specification for the output of the layer. Values can be
+<code>"int"</code>, <code>"one_hot"</code>, <code>"multi_hot"</code>, or
+<code>"count"</code> configuring the layer as follows:
+</p>
+
+<ul>
+<li> <p><code>"int"</code>: Return the integer bin indices directly.
+</p>
+</li>
+<li> <p><code>"one_hot"</code>: Encodes each individual element in the input into an
+array the same size as <code>num_bins</code>, containing a 1
+at the input's bin index. If the last dimension is size 1,
+will encode on that dimension.
+If the last dimension is not size 1, will append a new
+dimension for the encoded output.
+</p>
+</li>
+<li> <p><code>"multi_hot"</code>: Encodes each sample in the input into a
+single array the same size as <code>num_bins</code>,
+containing a 1 for each bin index
+index present in the sample. Treats the last dimension
+as the sample dimension, if input shape is
+<code style="white-space: pre;">⁠(..., sample_length)⁠</code>, output shape will be
+<code style="white-space: pre;">⁠(..., num_tokens)⁠</code>.
+</p>
+</li>
+<li> <p><code>"count"</code>: As <code>"multi_hot"</code>, but the int array contains a count of
+the number of times the bin index appeared in the sample.
+Defaults to <code>"int"</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sparse</code></td>
+<td>
+<p>Boolean. Only applicable to <code>"one_hot"</code>, <code>"multi_hot"</code>,
+and <code>"count"</code> output modes. Only supported with TensorFlow
+backend. If <code>TRUE</code>, returns a <code>SparseTensor</code> instead of
+a dense <code>Tensor</code>. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Keyword arguments to construct a layer.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Input Shape</h3>
+
+<p>A single string, a list of strings, or an <code>int32</code> or <code>int64</code> tensor
+of shape <code style="white-space: pre;">⁠(batch_size, ...,)⁠</code>.
+</p>
+
+
+<h3>Output Shape</h3>
+
+<p>An <code>int32</code> tensor of shape <code style="white-space: pre;">⁠(batch_size, ...)⁠</code>.
+</p>
+
+
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://en.wikipedia.org/wiki/SipHash">SipHash with salt</a>
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/preprocessing_layers/categorical/hashing#hashing-class">https://keras.io/api/layers/preprocessing_layers/categorical/hashing#hashing-class</a>
+</p>
+</li></ul>
+<p>Other categorical features preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_string_lookup()</code> <br></p>
+<p>Other preprocessing layers: <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_discretization()</code> <br><code>layer_feature_space()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_normalization()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_rescaling()</code> <br><code>layer_resizing()</code> <br><code>layer_string_lookup()</code> <br><code>layer_text_vectorization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

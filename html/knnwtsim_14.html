@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>TempAbsDissimilarity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Temporal Absolute Dissimilarity</h2>
+
+<h3>Description</h3>
+
+<p>Simply takes the absolute difference between two points, meaning points close
+in time will have smaller dissimilarity. This is equivalent to Euclidean Distance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">TempAbsDissimilarity(p1, p2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p1</code></td>
+<td>
+<p>numeric value representing the time order of the point in the response series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p2</code></td>
+<td>
+<p>numeric value representing the time order of the point in the response series.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric value of the absolute difference between <code>p1</code> and <code>p2</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">TempAbsDissimilarity(1, 3)
+</code></pre>
+
+
+</div>

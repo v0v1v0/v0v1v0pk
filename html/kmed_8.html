@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>csv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Centroid shadow value (CSV) index and plot</h2>
+
+<h3>Description</h3>
+
+<p>This function computes centroid shadow values and shadow value plots of
+each cluster. The plot presents the mean of the shadow values as well.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">csv(distdata, idmedoid, idcluster, title = "")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>distdata</code></td>
+<td>
+<p>A distance matrix (n x n) or dist object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idmedoid</code></td>
+<td>
+<p>A vector of id medoids (see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idcluster</code></td>
+<td>
+<p>A vector of cluster membership (see <strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>A title of the plot.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The origin of the centroid shadow value is calculated in the <code>shadow</code>
+function of the <span class="pkg">flexclust</span> package, in which it is based on the first and
+second closest centroid. The <code>csv</code> function in this package modifies
+the centroid into medoid such that the formula to compute shadow value of
+object i is
+</p>
+<p style="text-align: center;"><code class="reqn">csv(i) = \frac{2d(i, m(i))}{d(i, m(i)) + d(i, m'(i))}</code>
+</p>
+
+<p>where <code class="reqn">d(i, m(i))</code> is the distance between object i to the first
+closest medoid and d(i, m'(i)) is the distance between object
+i to the second closest medoid.
+</p>
+<p>The <code>idmedoid</code> argument corresponds to the <code>idcluster</code> argument.
+If the length of <code>idmedoid</code> is 3, for example, the <code>idcluster</code> has
+to have 3 unique cluster memberships, or it returns <code>Error</code> otherwise.
+The length of the <code>idcluster</code> has also to be equal to n
+(the number of objects). In contrast to the silhoutte value,
+the centoird shadow value is interpreted that lower value is the better
+cluster separation.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a list with following components:
+</p>
+<p><code>result</code> is a data frame of the shadow values for all objects
+</p>
+<p><code>plot</code> is the shadow value plots of each cluster.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>F. Leisch. 2010 Neighborhood graphs, stripes and shadow plots
+for cluster visualization. Statistics and Computing. vol. 20, pp. 457-469
+</p>
+<p>W. Budiaji. 2019 Medoid-based shadow value validation and visualization.
+International Journal of Advances in Intelligent Informatics.  Vol 5 No 2
+pp. 76-88
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">distiris &lt;- as.matrix(dist(iris[,1:4]))
+res &lt;- fastkmed(distiris, 3)
+sha &lt;- csv(distiris, res$medoid, res$cluster)
+sha$result[c(1:3,70:75,101:103),]
+sha$plot
+
+</code></pre>
+
+
+</div>

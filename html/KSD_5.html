@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>demo_simple_gamma</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tests 1-dimensional Gamma Distribution with customized parameters</h2>
+
+<h3>Description</h3>
+
+<p>We generate a gamma distribution with given parameters,
+and add gaussian noise to this dataset. We then compute the score
+of each dataset for the original true distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">demo_simple_gamma(
+  trueshape = 10,
+  truescale = 3,
+  noisemu = 5,
+  noisesd = 2,
+  n = 100
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>trueshape</code></td>
+<td>
+<p>shape of true gamma distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>truescale</code></td>
+<td>
+<p>scale of true gamma distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noisemu</code></td>
+<td>
+<p>mean of gaussian noise to add</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noisesd</code></td>
+<td>
+<p>standard deviation of gaussian noise to add</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of samples to generate</p>
+</td>
+</tr>
+</table>
+</div>

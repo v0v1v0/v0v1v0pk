@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parMap-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Map the Parameters of a Structure on the Inputs and Kernel Parameters
+</h2>
+
+<h3>Description</h3>
+
+<p>Map the parameters of a structure on the inputs and kernel parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'covTS'
+parMap(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object with class <code>"covTS"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Not used yet.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A matrix with integer values. The rows correspond to the inputs of the
+object and the columns to the <code class="reqn">1d</code> kernel parameters.
+The matrix element is the number of the corresponding official
+coefficient. The same parameter of the structure can be used for
+several inputs but not (yet) for several kernel parameters. So
+each row must have different integer elements, while the same
+element can be repeated within a column.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function is for internal use only.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">myCov &lt;- covTS(d = 3, kernel = "k1Gauss",
+               dep = c(range = "input"), value = c(range = 1.1))
+parMap(myCov)
+</code></pre>
+
+
+</div>

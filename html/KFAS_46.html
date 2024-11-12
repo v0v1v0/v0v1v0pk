@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>[&lt;-.SSModel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract or Replace Parts of a State Space Model</h2>
+
+<h3>Description</h3>
+
+<p>S3 methods for getting and setting parts of object of class
+<code>SSModel</code>. These methods ensure that dimensions of system matrices are
+not altered.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 replacement method for class 'SSModel'
+x[element, states, etas, series, times, ...] &lt;- value
+
+## S3 method for class 'SSModel'
+x[element, states, etas, series, times, drop = TRUE, ...]
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Object of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>element</code></td>
+<td>
+<p>Which element(s) is chosen.  Typical values are <code>"y"</code>, 
+<code>"Z"</code>, <code>"H"</code>, <code>"T"</code>, <code>"R"</code>, <code>"Q"</code>, <code>"a1"</code>, 
+<code>"P1"</code>, <code>"P1inf"</code>, and <code>"u"</code>. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>states</code></td>
+<td>
+<p>Which states are chosen. Either a numeric vector containing the indices of the
+states, or a character vector defining the types of the states. Possible choices are
+<code>"all"</code>,  <code>"level"</code>, <code>"slope"</code>,
+<code>"trend"</code>,  <code>"regression"</code>, <code>"arima"</code>, <code>"custom"</code>,
+<code>"cycle"</code> or <code>"seasonal"</code>, where <code>"trend"</code> extracts all states relating to trend.
+These can be combined. Default is <code>"all"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>etas</code></td>
+<td>
+<p>Which disturbances eta are chosen. Used for elements <code>"R"</code> and <code>"Q"</code>.
+Either a numeric vector containing the indices of the etas, or a character vector defining the
+types of the etas. Possible choices are <code>"all"</code>,  <code>"level"</code>, <code>"slope"</code>,
+<code>"trend"</code>,  <code>"regression"</code>, <code>"arima"</code>, <code>"custom"</code>,
+<code>"cycle"</code> or <code>"seasonal"</code>, where <code>"trend"</code> extracts all etas relating to trend.
+These can be combined. Default is <code>"all"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>series</code></td>
+<td>
+<p>Numeric. Which series are chosen. Used for elements
+<code>"y"</code>, <code>"Z"</code>, and <code>"u"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>Numeric. Which time points are chosen.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>A value to be assigned to x.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop</code></td>
+<td>
+<p>Logical. If <code>TRUE</code> (default) the result is coerced to the lowest possible
+dimension.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>element</code> is not one of 
+<code>"y"</code>, <code>"Z"</code>, <code>"H"</code>, <code>"T"</code>, <code>"R"</code>, <code>"Q"</code>, 
+<code>"a1"</code>, <code>"P1"</code>, <code>"P1inf"</code>, <code>"u"</code>,
+the default single bracket list extraction 
+and assignments (<code>x[element]</code> and <code>x[element] &lt;- value</code>) 
+are used (and other arguments are ignored). 
+</p>
+<p>If <code>element</code> is one of 
+<code>"y"</code>, <code>"Z"</code>, <code>"H"</code>, <code>"T"</code>, <code>"R"</code>, <code>"Q"</code>, 
+<code>"a1"</code>, <code>"P1"</code>, <code>"P1inf"</code>, <code>"u"</code> and if the arguments 
+<code>states</code>, <code>etas</code>, <code>times</code> and <code>series</code> are 
+all missing, the double bracket list 
+extraction <code>x[[element]]</code> and modified double bracket list assignment
+<code>x[[element]][] &lt;- value</code> are used.
+</p>
+<p>If neither of above holds, then for example in case of <code>element = Z</code> 
+the extraction is of form <code>x$Z[series, states, times, drop]</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A selected subset of the chosen element or a value.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1)
+model &lt;- SSModel(rnorm(10) ~ 1)
+model["H"]
+model["H"] &lt;- 10
+# H is still an array:
+model["H"]
+logLik(model)
+model$H &lt;- 1
+# model["H"] throws an error as H is now scalar:
+model$H
+logLik(model, check.model = TRUE) #with check.model = FALSE R crashes!
+</code></pre>
+
+
+</div>

@@ -1,0 +1,148 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_analytics_by_level</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieves Analytics Table Data</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+<code>get_analytics_by_level()</code> fetches data from the DHIS2 analytics tables for a
+given period and data element(s), without performing any aggregation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_analytics_by_level(
+  element_ids,
+  start_date,
+  end_date = NULL,
+  level = 1,
+  org_ids = NULL,
+  ...,
+  call = caller_env()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>element_ids</code></td>
+<td>
+<p>Required vector of data element IDs for which to retrieve data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_date</code></td>
+<td>
+<p>Required start date to retrieve data. It is required and in the format <code>YYYY-MM-dd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end_date</code></td>
+<td>
+<p>Optional ending date for data retrieval (default is the current date).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>The desired organisation level of data (default: level 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>org_ids</code></td>
+<td>
+<p>Optional list of organization units IDs to be filtered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other options that can be passed onto DHIS2 API.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The caller environment.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li>
+<p> Retrieves data directly from DHIS2 analytics tables.
+</p>
+</li>
+<li>
+<p> Supports optional arguments for providing organization lists, data elements, and categories.
+</p>
+</li>
+<li>
+<p> Allows specifying DHIS2 session objects, retry attempts, and logging verbosity.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A tibble with detailed information, including:
+</p>
+
+<ul>
+<li>
+<p> Geographical identifiers (country, subnational, district, facility, depending on level)
+</p>
+</li>
+<li>
+<p> Reporting period (month, year, fiscal year)
+</p>
+</li>
+<li>
+<p> Data element names
+</p>
+</li>
+<li>
+<p> Category options
+</p>
+</li>
+<li>
+<p> Reported values
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>get_organisations_by_level()</code> for getting the organisations units
+</p>
+</li>
+<li> <p><code>get_data_elements_with_category_options()</code> for retrieving the data elements
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Clinical Breast Examination data elements
+# XEX93uLsAm2 = CBE Abnormal
+# cXe64Yk0QMY = CBE Normal
+element_id = c('cXe64Yk0QMY', 'XEX93uLsAm2')
+
+# Download data from February 2023 to current date
+data &lt;- get_analytics_by_level(element_ids = element_id,
+                               start_date = '2023-02-01')
+data
+
+</code></pre>
+
+
+</div>

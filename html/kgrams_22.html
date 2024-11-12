@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>language_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k-gram Language Models</h2>
+
+<h3>Description</h3>
+
+<p>Build a k-gram language model.
+</p>
+
+
+<h4>Principal methods supported by objects of class <code>language_model</code>
+</h4>
+
+
+<ul>
+<li> <p><code>probability()</code>: compute word continuation and sentence probabilities.
+See probability.
+</p>
+</li>
+<li> <p><code>sample_sentences()</code>: generate random text by sampling from the
+language model probability distribution at arbitary temperature. See
+sample_sentences.
+</p>
+</li>
+<li> <p><code>perplexity()</code>: Compute the language model perplexity on a test
+corpus. See perplexity.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">language_model(object, ...)
+
+## S3 method for class 'language_model'
+language_model(object, ...)
+
+## S3 method for class 'kgram_freqs'
+language_model(object, smoother = "ml", N = param(object, "N"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object which stores the information required to build the
+k-gram model. At present, necessarily a <code>kgram_freqs</code> object, or a
+<code>language_model</code> object of which a copy is desired (see Details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>possible additional parameters required by the smoother.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smoother</code></td>
+<td>
+<p>a length one character vector. Indicates the smoothing
+technique to be applied to compute k-gram continuation probabilities. A list
+of available smoothers can be obtained with <code>smoothers()</code>, and
+further information on a particular smoother through
+<code>info()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>a length one integer. Maximum order of k-grams to use in the language
+model. This muss be less than or equal to the order of the underlying
+<code>kgram_freqs</code> object.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These generics are used to construct objects of class <code>language_model</code>.
+The <code>language_model</code> method is only needed to create copies of
+<code>language_model</code> objects (that is to say, new copies which are not
+altered by methods which modify the original object in place,
+see e.g. parameters). The discussion below focuses on
+language models and the <code>kgram_freqs</code> method.
+</p>
+<p>kgrams supports several k-gram language models, including
+Interpolated Kneser-Ney, Stupid Backoff and others
+(see smoothers). The objects created by
+<code>language_models()</code> have methods for computing word continuation and
+sentence probabilities (see probability),
+random text generation (see sample_sentences)
+and other type of language modeling tasks such as computing perplexities and
+word prediction accuracies.
+</p>
+<p>Smoothers have often tuning parameters, which need to be specified by
+(exact) name through the <code>...</code> arguments; otherwise,
+<code>language_model()</code> will use default values and, once per session, throw
+a warning. <code>info(smoother)</code> lists all parameters needed by a
+specific smoother, together with their allowed parameter space.
+</p>
+<p>The run-time of <code>language_model()</code> may vary substantially for different
+smoothing methods, depending on whether or not a method requires the
+computation of additional quantities (that is to say, beyond k-gram counts)
+for its operativity (this is, for instance, the case for the Kneser-Ney
+smoother).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>language_model</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Create an interpolated Kneser-Ney 2-gram language model
+
+freqs &lt;- kgram_freqs("a a b a a b a b a b a b", 2)
+model &lt;- language_model(freqs, "kn", D = 0.5)
+model
+summary(model)
+probability("a" %|% "b", model)
+
+# For more examples, see ?probability, ?sample_sentences and ?perplexity.
+
+</code></pre>
+
+
+</div>

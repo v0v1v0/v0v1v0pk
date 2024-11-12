@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ggsave_quick</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ggsave quick</h2>
+
+<h3>Description</h3>
+
+<p>quickly save the current plot with a timestamp
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ggsave_quick(
+  name = NULL,
+  file_name_extension = "png",
+  timestamp = NULL,
+  width = 16,
+  height = 9
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>a character string of the png file name.
+By default, if no input is given (<code>name = NULL</code>),
+the file name will begin with "ggplot".
+If the desired output file name is "myplot.png",
+enter <code>name = "myplot", timestamp = FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file_name_extension</code></td>
+<td>
+<p>file name extension (default = "png").
+If <code>file_name_extension = "svg"</code>, Package svglite needs to
+be installed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timestamp</code></td>
+<td>
+<p>if <code>timestamp = TRUE</code>, a timestamp of the
+current time will be appended to the file name.
+The timestamp will be in the format, jan_01_2021_1300_10_000001,
+where "jan_01_2021" would indicate January 01, 2021;
+1300 would indicate 13:00 (i.e., 1 PM); and 10_000001 would
+indicate 10.000001 seconds after the hour.
+By default, <code>timestamp</code> will be set as TRUE, if no input
+is given for the <code>name</code> argument, and as FALSE, if an input
+is given for the <code>name</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>width of the plot to be saved. This argument will be
+directly entered as the <code>width</code> argument for the <code>ggsave</code>
+function within <code>ggplot2</code> package (default = 16)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>height of the plot to be saved. This argument will be
+directly entered as the <code>height</code> argument for the <code>ggsave</code>
+function within <code>ggplot2</code> package (default = 9)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a .png image file in the working directory.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+kim::histogram(rep(1:30, 3))
+ggsave_quick()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

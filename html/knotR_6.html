@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>as</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Conversions between various forms of a knot
+</h2>
+
+<h3>Description</h3>
+
+<p>Conversions between various forms of a knot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">as.knotvec(x)
+as.minobj(x)
+as.inkscape(x)
+as.controlpoints(x)
+as.minsymvec(x,symobj)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Object to be converted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symobj</code></td>
+<td>
+<p>A symmetry object</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>as.foo()</code> functions are meant to be user-friendly; they use
+low-level functions like <code>make_knotvec_from_minobj()</code> (all of
+which are documented at <code>utilities.Rd</code>), which are a bit messy.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>utilities</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">as.minobj(k6_2)
+
+x &lt;- reader(system.file("6_3.svg",package="knotR"))  # x is class inkscape
+
+as.minsymvec(x,symmetry_object(k6_3)) # as.minsymvec() needs a symmetry object
+
+as.controlpoints(x)
+
+as.knotvec(x)
+
+
+</code></pre>
+
+
+</div>

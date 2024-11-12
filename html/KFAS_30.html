@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>residuals.KFS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract Residuals of KFS output</h2>
+
+<h3>Description</h3>
+
+<p>Extract Residuals of KFS output
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'KFS'
+residuals(object, type = c("recursive", "pearson", "response", "state"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>KFS object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Character string defining the type of residuals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For object of class KFS, several types of residuals can be computed:
+</p>
+ 
+<ul>
+<li>  <p><code>"recursive"</code>: One-step-ahead prediction residuals
+<code class="reqn">v_{t,i}=y_{t,i}-Z_{t,i}a_{t,i}</code>. For non-Gaussian case recursive
+residuals are computed as <code class="reqn">y_{t}-f(Z_{t}a_{t})</code>, i.e.
+non-sequentially. Computing recursive residuals for large non-Gaussian
+models can be time consuming as filtering is needed.
+</p>
+</li>
+<li> <p><code>"pearson"</code>:  </p>
+<p style="text-align: center;"><code class="reqn">(y_{t,i}-\theta_{t,i})/\sqrt{V(\mu_{t,i})},
+  \quad i=1,\ldots,p,t=1,\ldots,n,</code>
+</p>
+<p> where <code class="reqn">V(\mu_{t,i})</code> is the
+variance function of the series <code class="reqn">i</code>
+</p>
+</li>
+<li> <p><code>"response"</code>: Data minus fitted values, <code class="reqn">y-E(y)</code>.
+</p>
+</li>
+<li> <p><code>"state"</code>:  Residuals based on the smoothed disturbance terms
+<code class="reqn">\eta</code> are defined as </p>
+<p style="text-align: center;"><code class="reqn">\hat \eta_t, \quad t=1,\ldots,n.</code>
+</p>
+
+<p>Only defined for fully Gaussian models.
+</p>
+</li>
+</ul>
+</div>

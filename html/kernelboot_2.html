@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bw.silv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bandwidth selector for multivariate kernel density estimation</h2>
+
+<h3>Description</h3>
+
+<p>Rule of thumb bandwidth selectors for Gaussian kernels as described by
+Scott (1992) and Silverman (1986).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bw.silv(x, na.rm = FALSE)
+
+bw.scott(x, na.rm = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric matrix or data.frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>a logical value indicating whether <code>NA</code> values should
+be stripped before the computation proceeds.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Scott's (1992) rule is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">
+H = n^{-2/(m+4)} \hat\Sigma
+</code>
+</p>
+
+<p>Silverman's (1986; see Chacon, Duong and Wand, 2011) rule is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">
+H = \left(\frac{4}{n(m+2)}\right)^{2/(m+4)} \hat\Sigma
+</code>
+</p>
+
+<p>where <code class="reqn">m</code> is number of variables, <code class="reqn">n</code> is sample size, <code class="reqn">\hat\Sigma</code>
+is the empirical covariance matrix. The bandwidth is returned as a <em>covariance matrix</em>,
+so to use it for a product kernel, take square root of it's diagonal: <code>sqrt(diag(H))</code>.
+</p>
+<p><code>bw.silv</code> corresponds to <code>Hns</code> method with <code>deriv.order=0</code> from the
+<span class="pkg">ks</span> package.
+</p>
+
+
+<h3>References</h3>
+
+<p>Silverman, B.W. (1986). Density estimation for statistics and data analysis. Chapman and Hall/CRC.
+</p>
+<p>Wand, M.P. and Jones, M.C. (1995). Kernel smoothing. Chapman and Hall/CRC.
+</p>
+<p>Scott, D.W. (1992). Multivariate density estimation: theory, practice,
+and visualization. John Wiley &amp; Sons.
+</p>
+<p>Chacon J.E., Duong, T. and Wand, M.P. (2011). Asymptotics for general multivariate kernel density
+derivative estimators. Statistica Sinica, 21, 807-840.
+</p>
+<p>Epanechnikov, V.A. (1969). Non-parametric estimation of a multivariate probability density.
+Theory of Probability &amp; Its Applications, 14(1): 153-158.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bandwidth</code>
+</p>
+
+
+</div>

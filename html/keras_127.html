@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_weights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Layer/Model weights as R arrays</h2>
+
+<h3>Description</h3>
+
+<p>Layer/Model weights as R arrays
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_weights(object, trainable = NA)
+
+set_weights(object, weights)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Layer or model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trainable</code></td>
+<td>
+<p>if <code>NA</code> (the default), all weights are returned. If <code style="white-space: pre;">⁠TRUE, ⁠</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>Weights as R array</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>You can access the Layer/Model as <code>tf.Tensors</code> or <code>tf.Variables</code> at
+<code>object$weights</code>, <code>object$trainable_weights</code>, or
+<code>object$non_trainable_weights</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model persistence: 
+<code>model_to_json()</code>,
+<code>model_to_yaml()</code>,
+<code>save_model_hdf5()</code>,
+<code>save_model_tf()</code>,
+<code>save_model_weights_hdf5()</code>,
+<code>serialize_model()</code>
+</p>
+<p>Other layer methods: 
+<code>count_params()</code>,
+<code>get_config()</code>,
+<code>get_input_at()</code>,
+<code>reset_states()</code>
+</p>
+
+
+</div>

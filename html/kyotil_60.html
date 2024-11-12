@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>crossvalidation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Cross Validation Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>Cross validation utility functions. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+sample.for.cv (dat, v, seed)
+get.kfold.splits (dat, k, seed)
+kfold.split (k, n1, n0)
+ran.kfold.split(k, n1, n0, replicates)
+lpo.split(n1, n0)
+get.splits (dat, cv.scheme=c("LPO","5fold","50xrandom4:1"), seed) 
+
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>a data frame. One of the columns must be named y and y should be 0/1 with 1 for case and 0 for control</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>v-fold cross validation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>seed for random number generators</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+
+<p>var.equal
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n1</code></td>
+<td>
+
+<p>var.equal
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n0</code></td>
+<td>
+
+<p>var.equal
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replicates</code></td>
+<td>
+
+<p>var.equal
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv.scheme</code></td>
+<td>
+
+<p>var.equal
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>sample.for.cv: case and controls are sampled separately.
+</p>
+
+
+<h3>Value</h3>
+
+<p>sample.for.cv returns a list of two vector of integers: train and test, which refer to the rows of dat
+</p>
+
+
+</div>

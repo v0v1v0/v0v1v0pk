@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cdist-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "cdist"</h2>
+
+<h3>Description</h3>
+
+<p>Stores conditional means, variances, skewnesses and kurtoses of observed and estimated bivariate distributions of test scores.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code>new("cdist", ...)</code>.
+
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>est1</dt>
+<dd>
+<p>Matrix of conditional means, variances, skewnesses and kurtoses of X given A for the estimated score distribution.</p>
+</dd>
+<dt>est2</dt>
+<dd>
+<p>Matrix of conditional means, variances, skewnesses and kurtoses of A given X for the estimated score distribution.</p>
+</dd>
+<dt>obs1</dt>
+<dd>
+<p>Matrix of conditional means, variances, skewnesses and kurtoses of X given A for the observed score distribution.</p>
+</dd>
+<dt>obs2</dt>
+<dd>
+<p>Matrix of conditional means, variances, skewnesses and kurtoses of A given X for the observed score distribution.</p>
+</dd>
+</dl>
+<h3>Methods</h3>
+
+
+<dl>
+<dt>plot</dt>
+<dd>
+<p><code>signature(x = "keout")</code>: ... </p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cdist</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">showClass("cdist")
+</code></pre>
+
+
+</div>

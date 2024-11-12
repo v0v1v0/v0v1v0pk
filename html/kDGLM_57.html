@@ -1,0 +1,175 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>noise_block</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>noise_block</h2>
+
+<h3>Description</h3>
+
+<p>Creates the structure for a Noise block. This block represents an independent random noise that should be added to the linear predictor.
+The variance of the noise cannot be formally estimated, as such we use a discount strategy similar to that of West and Harrison (1997) to specify it.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">noise_block(..., name = "Noise", D = 0.99, R1 = 0.1, H = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Named values for the planning matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String: An optional argument providing the name for this block. Can be useful to identify the models with meaningful labels, also, the name used will be used in some auxiliary functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>scalar or vector: A sequence of values specifying the desired discount factor for each time. It should have length 1 or t, where t is the size of the series. If both D and H are specified, the value of D is ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R1</code></td>
+<td>
+<p>scalar: The prior variance of the noise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>scalar: The variance of the noise. If both D and H are specified, the value of D is ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For the details about the implementation see dos Santos et al. (2024).
+</p>
+<p>For the details about dynamic regression models in the context of DLMs, see West and Harrison (1997), chapters 6 and 9.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dlm_block object containing the following values:
+</p>
+
+<ul>
+<li>
+<p> FF Array: A 3D-array containing the regression matrix for each time. Its dimension should be n x k x t, where n is the number of latent states, k is the number of linear predictors in the model and t is the time series length.
+</p>
+</li>
+<li>
+<p> FF.labs Matrix: A n x k character matrix describing the type of value of each element of FF.
+</p>
+</li>
+<li>
+<p> G Matrix: A 3D-array containing the evolution matrix for each time. Its dimension should be n x n x t, where n is the number of latent states and t is the time series length.
+</p>
+</li>
+<li>
+<p> G.labs Matrix: A n x n character matrix describing the type of value of each element of G.
+</p>
+</li>
+<li>
+<p> D Array: A 3D-array containing the discount factor matrix for each time. Its dimension should be n x n x t, where n is the number of latent states and t is the time series length.
+</p>
+</li>
+<li>
+<p> H Array: A 3D-array containing the covariance matrix of the noise for each time. Its dimension should be the same as D.
+</p>
+</li>
+<li>
+<p> a1 Vector: The prior mean for the latent vector.
+</p>
+</li>
+<li>
+<p> R1 Matrix: The prior covariance matrix for the latent vector.
+</p>
+</li>
+<li>
+<p> var.names list: A list containing the variables indexes by their name.
+</p>
+</li>
+<li>
+<p> order Positive integer: Same as argument.
+</p>
+</li>
+<li>
+<p> n Positive integer: The number of latent states associated with this block (2).
+</p>
+</li>
+<li>
+<p> t Positive integer: The number of time steps associated with this block. If 1, the block is compatible with blocks of any time length, but if t is greater than 1, this block can only be used with blocks of the same time length.
+</p>
+</li>
+<li>
+<p> k Positive integer: The number of outcomes associated with this block. This block can only be used with blocks with the same outcome length.
+</p>
+</li>
+<li>
+<p> pred.names Vector: The name of the linear predictors associated with this block.
+</p>
+</li>
+<li>
+<p> monitoring Vector: The combination of monitoring, monitoring and monitoring.pulse.
+</p>
+</li>
+<li>
+<p> type Character: The type of block (Noise).
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Mike West, Jeff Harrison (1997).
+<em>Bayesian Forecasting and Dynamic Models (Springer Series in Statistics)</em>.
+Springer-Verlag.
+ISBN 0387947256.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p>Other auxiliary functions for structural blocks: 
+<code>TF_block()</code>,
+<code>block_mult()</code>,
+<code>block_rename()</code>,
+<code>block_superpos()</code>,
+<code>harmonic_block()</code>,
+<code>intervention()</code>,
+<code>polynomial_block()</code>,
+<code>regression_block()</code>,
+<code>specify.dlm_block()</code>,
+<code>summary.dlm_block()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+noise_block(mu = 1, D = 0.99, R1 = 1e-2)
+
+</code></pre>
+
+
+</div>

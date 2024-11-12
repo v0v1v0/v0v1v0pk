@@ -1,0 +1,157 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kernel.conv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Convolutions of r'th Derivative for Kernel Function
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>kernel.conv</code> computes the convolution 
+of r'th derivative for kernel function. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kernel.conv(x, ...)
+## Default S3 method:
+kernel.conv(x = NULL, deriv.order = 0,kernel = c("gaussian","epanechnikov", 
+             "uniform", "triangular", "triweight", "tricube", 
+             "biweight", "cosine", "silverman"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>points at which the convolution of kernel derivative 
+is to be evaluated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, 
+with default <code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The convolution of r'th derivative for kernel function is written <code class="reqn">K^{(r)}\ast K^{(r)}</code>. It is defined as 
+the integral of the product of the derivative for kernel. As such, it is a particular kind of integral transform:
+</p>
+<p style="text-align: center;"><code class="reqn">K^{(r)} \ast K^{(r)}(x) = \int_{-\infty}^{+\infty} K^{(r)}(y)K^{(r)}(x-y)dy</code>
+</p>
+
+<p>where: </p>
+<p style="text-align: center;"><code class="reqn">K^{(r)}(x) = \frac{d^{r}}{d x^{r}} K(x)</code>
+</p>
+
+<p>for <code class="reqn">r = 0, 1, 2, \dots</code>
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kernel </code></td>
+<td>
+<p>name of kernel to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order </code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x </code></td>
+<td>
+<p>the n coordinates of the points where the convolution of kernel 
+derivative is evaluated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kx </code></td>
+<td>
+<p>the convolution of kernel derivative values.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Olver, F. W., Lozier, D. W., Boisvert, R. F. and Clark, C. W. (2010).
+<em>NIST Handbook of Mathematical Functions</em>.
+Cambridge University Press, New York, USA.
+</p>
+<p>Scott, D. W. (1992).
+<em>Multivariate Density Estimation. Theory, Practice and Visualization</em>.
+New York: Wiley.
+</p>
+<p>Silverman, B. W. (1986).
+<em>Density Estimation for Statistics and Data Analysis</em>.
+Chapman &amp; Hall/CRC. London.
+</p>
+<p>Wand, M. P. and Jones, M. C. (1995).
+<em>Kernel Smoothing.</em>
+Chapman and Hall, London.
+</p>
+<p>Wolfgang, H. (1991).
+<em>Smoothing Techniques, With Implementation in S.</em>
+Springer-Verlag, New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.kernel.conv</code>, <code>kernapply</code> in package "stats"
+for computes the convolution between an input sequence, and <code>convolve</code>
+use the Fast Fourier Transform (<code>fft</code>) to compute the several kinds of 
+convolutions of two sequences.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kernels &lt;- eval(formals(kernel.conv.default)$kernel)
+kernels
+
+## gaussian
+kernel.conv(x = 0,kernel=kernels[1],deriv.order=0)
+kernel.conv(x = 0,kernel=kernels[1],deriv.order=1)
+
+## silverman
+kernel.conv(x = 0,kernel=kernels[9],deriv.order=0)
+kernel.conv(x = 0,kernel=kernels[9],deriv.order=1)
+</code></pre>
+
+
+</div>

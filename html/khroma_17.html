@@ -1,0 +1,130 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>palette_color_picker</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Color Mapping</h2>
+
+<h3>Description</h3>
+
+<p>Maps values to colors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">palette_color_picker(
+  scheme,
+  domain = NULL,
+  midpoint = NULL,
+  ordered = FALSE,
+  missing = NULL,
+  ...
+)
+
+palette_colour_picker(
+  scheme,
+  domain = NULL,
+  midpoint = NULL,
+  ordered = FALSE,
+  missing = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>scheme</code></td>
+<td>
+<p>A <code>character</code> string giving the name of the scheme to be
+used (see <code>color()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>domain</code></td>
+<td>
+<p>A <code>numeric</code> range or a vector of categorical data specifying
+the possible values that can be mapped.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>midpoint</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector specifying the mid-point of
+input range.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ordered</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the levels be treated as already
+in the correct order?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>missing</code></td>
+<td>
+<p>The color to return for <code>NA</code> values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further parameters to be passed to <code>color()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A wrapper around <code>palette_color_continuous()</code> and
+<code>palette_color_discrete()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A palette <code>function</code> that when called with a single argument returns
+a <code>character</code> vector of colors.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other palettes: 
+<code>palette_color_continuous()</code>,
+<code>palette_color_discrete()</code>,
+<code>palette_shape()</code>,
+<code>palette_size_range()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Visualize a simple DEM model
+## Distribution of elevation values
+elevation &lt;- hist(volcano)
+
+## Where are breaks?
+elevation$breaks
+
+## Build palette functions
+ramp_BuRd &lt;- palette_color_picker("BuRd")
+
+(col &lt;- ramp_BuRd(elevation$breaks))
+image(volcano, col = col)
+legend("topright", legend = elevation$breaks, fill = col)
+
+## Rescale to midpoint
+ramp_BuRd &lt;- palette_color_picker("BuRd", midpoint = 160)
+
+(col &lt;- ramp_BuRd(elevation$breaks))
+image(volcano, col = col)
+legend("topright", legend = elevation$breaks, fill = col)
+</code></pre>
+
+
+</div>

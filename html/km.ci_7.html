@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>km.ci</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence Intervals for the Kaplan-Meier Estimator.</h2>
+
+<h3>Description</h3>
+
+<p>Computes pointwise and simultaneous confidence intervals for the
+Kaplan-Meier estimator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">km.ci(survi, conf.level = 0.95, tl = NA, tu = NA, method = "rothman")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>survi</code></td>
+<td>
+<p>A survival object for which the new confidence limits should be
+computed. This can be built using the "Surv" and the "survfit" function in
+the R package "survival". "km.ci" modifies the confidence limits in this
+object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.level</code></td>
+<td>
+<p>The level for a two-sided confidence interval on the
+survival curve. Default is 0.95.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tl</code></td>
+<td>
+<p>The lower time boundary for the simultaneous confidence limits. If
+it is missing the smallest event time is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tu</code></td>
+<td>
+<p>The upper time boundary for the simultaneous confidence limits. If
+it is missing the largest event time is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>One of '"peto"', '"linear"', '"log"', "loglog"', '"rothman"',
+"grunkemeier"', '"hall-wellner"', '"loghall"', "epband"', "logep"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A simulation study showed, that three confidence intervals produce
+satisfying confidence limits. One is the "loglog" confidence interval, an
+interval which is based on the log of the hazard. The other competitive
+confidence concept was introduced by Rothman (1978) and is using the
+assumption that the survival estimator follows a binomial distribution.
+Another good confidence concept was invented by Thomas and Grunkemeier
+(1975) and is derived by minimizing the likelihood function under certain
+constraints. Special thanks goes to Robert Gentleman for providing code for
+the confidence interval by Thomas and Grunkemeier.
+</p>
+<p>The confidence interval using Peto's variance can not be recommended since
+it yields confidence limits outside the admissible range [0;1] as well as
+the "linear" and the "log" (which is based on the logarithm of S(t)).
+</p>
+<p>The function can produce simultaneous confidence bands, too. The
+Hall-Wellner band (1980) and the Equal Precision band by Nair (1984)
+together with their log-transformed counterpart. From all simultaneous
+confidence intervals only the log-transformed Equal Precision "logep" band
+can be recommended. The limits are computed according to the statistical
+tables in Klein and Moeschberger (2002).
+</p>
+
+
+<h3>Value</h3>
+
+<p>a 'survfit' object;
+</p>
+<p>see the help on 'survfit.object' for details.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Strobl, R.
+</p>
+
+
+<h3>References</h3>
+
+<p>Strobl, R., Dirschedl, P. and Mansmann, U..  Comparison of
+simultaneous and pointwise confidence intervals for survival functions.
+(2005, submitted to Biom. J.).
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>survfit</code>,
+<code>print.survfit</code>, <code>plot.survfit</code>,
+<code>lines.survfit</code>,
+<code>summary.survfit</code>,
+<code>survfit.object</code>, <code>coxph</code>,
+<code>Surv</code>, <code>strata</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+require(survival)
+data(rectum.dat)
+
+# fit a Kaplan-Meier and plot it
+fit &lt;- survfit(Surv(time, status) ~ 1, data=rectum.dat)
+plot(fit)
+fit2 &lt;- km.ci(fit)
+plot(fit2)
+
+</code></pre>
+
+
+</div>

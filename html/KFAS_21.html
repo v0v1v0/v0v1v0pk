@@ -1,0 +1,227 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logLik.SSModel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Log-likelihood of the State Space Model.</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>logLik.SSmodel</code> computes the log-likelihood value of a state
+space model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'SSModel'
+logLik(
+  object,
+  marginal = FALSE,
+  nsim = 0,
+  antithetics = TRUE,
+  theta,
+  check.model = TRUE,
+  transform = c("ldl", "augment"),
+  maxiter = 50,
+  seed,
+  convtol = 1e-08,
+  expected = FALSE,
+  H_tol = 1e+15,
+  transform_tol,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>State space model of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marginal</code></td>
+<td>
+<p>Logical. Compute marginal instead of diffuse likelihood (see
+details). Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>Number of independent samples used in estimating the
+log-likelihood of the non-Gaussian state space model. Default is 0, which
+gives good starting value for optimization. Only used for non-Gaussian
+model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>antithetics</code></td>
+<td>
+<p>Logical. If TRUE, two antithetic variables are used in
+simulations, one for location and another for scale. Default is TRUE. Only
+used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Initial values for conditional mode theta. Only used for
+non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>check.model</code></td>
+<td>
+<p>Logical. If TRUE, function <code>is.SSModel</code> is called
+before computing the likelihood. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+<p>How to transform the model in case of non-diagonal
+covariance matrix <code class="reqn">H</code>. Defaults to <code>"ldl"</code>. See function
+<code>transformSSM</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>The maximum number of iterations used in linearisation.
+Default is 50. Only used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>The value is used as a seed via <code>set.seed</code> function. Only used for
+non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convtol</code></td>
+<td>
+<p>Tolerance parameter for convergence checks for Gaussian
+approximation. Only used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expected</code></td>
+<td>
+<p>Logical value defining the approximation of H_t in case of Gamma 
+and negative binomial distribution. Default is <code>FALSE</code> which matches the 
+algorithm of Durbin &amp; Koopman (1997), whereas <code>TRUE</code> uses the expected value
+of observations in the equations, leading to results which match with <code>glm</code> (where applicable).
+The latter case was the default behaviour of KFAS before version 1.3.8.
+Essentially this is the difference between observed and expected information. Only used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H_tol</code></td>
+<td>
+<p>Tolerance parameter for check <code>max(H) &gt; tol_H</code>, which suggests that the approximation 
+converged to degenerate case with near zero signal-to-noise ratio. Default is very generous 1e15. 
+Only used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform_tol</code></td>
+<td>
+<p>Tolerance parameter for LDL decomposition in case of a 
+non-diagonal H and <code>transform = "ldl"</code>. See <code>transformSSM</code> and <code>ldl</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>As KFAS is based on diffuse initialization, the log-likelihood is also diffuse,
+which coincides with restricted likelihood (REML) in an appropriate (mixed)
+models. However, in typical REML estimation constant term <code class="reqn">log|X'X|</code> is
+omitted from the log-likelihood formula. Similar term is also missing in
+diffuse log-likelihood formulations of state space models, but unlike in simpler
+linear models this term is not necessarily constant. Therefore omitting this
+term can lead to suboptimal results in model estimation if there is unknown
+parameters in diffuse parts of Zt or Tt (Francke et al. 2011). Therefore
+so called marginal log-likelihood (diffuse likelihood + extra term) is
+recommended. See also Gurka (2006) for model comparison in mixed model
+settings using REML with and without the additional (constant) term.
+The marginal log-likelihood can be computed by setting <code>marginal = TRUE</code>.
+</p>
+<p>Note that for non-Gaussian models with importance sampling derivative-free
+optimization methods such as Nelder-Mead might be more reliable than methods
+which use finite difference approximations. This is due to noise caused by
+the relative stopping criterion used for finding approximating Gaussian
+model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Log-likelihood of the model.
+</p>
+
+
+<h3>References</h3>
+
+<p>Francke, M. K., Koopman, S. J. and De Vos, A. F. (2010),
+Likelihood functions for state space models with diffuse initial
+conditions. Journal of Time Series Analysis, 31: 407–414.<br></p>
+<p>Gurka, M. J (2006), Selecting the Best Linear Mixed Model Under REML. The
+American Statistician, Vol. 60.<br></p>
+<p>Casals, J., Sotoca, S., Jerez, M. (2014), Minimally conditioned likelihood
+for a nonstationary state space model. Mathematics and Computers in
+Simulation, Vol. 100.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Example of estimating AR model with covariates, and how to deal with possible
+# non-stationarity in optimization.
+
+set.seed(1)
+x &lt;- rnorm(100)
+y &lt;- 2 * x + arima.sim(n = 100, model = list(ar = c(0.5, -0.3)))
+
+model&lt;- SSModel(y ~ SSMarima(ar = c(0.5, -0.3),  Q = 1) + x, H = 0)
+
+obj &lt;- function(pars, model, estimate = TRUE) {
+  #guard against stationarity
+  armamod &lt;- try(SSMarima(ar = artransform(pars[1:2]), Q = exp(pars[3])), silent = TRUE)
+  if(class(armamod) == "try-error") {
+    return(Inf)
+  } else {
+    # use advanced subsetting method for SSModels, see ?`[.SSModel`
+    model["T", states = "arima"] &lt;- armamod$T
+    model["Q", eta = "arima"]  &lt;- armamod$Q
+    model["P1", states = "arima"]  &lt;- armamod$P1
+    if(estimate) {
+      -logLik(model)
+    } else {
+      model
+    }
+  }
+}
+fit &lt;- optim(p = c(0.5,-0.5,1), fn = obj, model = model, method ="BFGS")
+
+model &lt;- obj(fit$par, model, FALSE)
+model$T
+model$Q
+coef(KFS(model), last = TRUE)
+
+</code></pre>
+
+
+</div>

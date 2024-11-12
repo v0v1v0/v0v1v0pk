@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_keras_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Keras model</h2>
+
+<h3>Description</h3>
+
+<p>Converts a Keras model to dot format and save to a file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_keras_model(
+  model,
+  to_file = "model.png",
+  show_shapes = FALSE,
+  show_layer_names = TRUE,
+  rankdir = "TB",
+  expand_nested = FALSE,
+  dpi = 96
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A Keras model instance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_file</code></td>
+<td>
+<p>File name of the plot image.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_shapes</code></td>
+<td>
+<p>whether to display shape information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_layer_names</code></td>
+<td>
+<p>whether to display layer names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rankdir</code></td>
+<td>
+<p>'rankdir' argument passed to PyDot, a string specifying the format of the plot: 
+'TB' creates a vertical plot; 'LR' creates a horizontal plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expand_nested</code></td>
+<td>
+<p>Whether to expand nested models into clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpi</code></td>
+<td>
+<p>Dots per inch.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>saves a png image on the system and builds a plot in R
+</p>
+
+
+</div>

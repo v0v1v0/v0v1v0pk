@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kntn_file</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>'kintone' File API</h2>
+
+<h3>Description</h3>
+
+<p>Get a file from kintone API and parse it with content. If you want to parse it by yourself,
+specify <code>as = "raw"</code> or <code>as = "text"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kntn_file(fileKey, verbose = FALSE, as = NULL, type = NULL, encoding = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fileKey</code></td>
+<td>
+<p>File key.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If <code>TRUE</code>, output logs verbosely.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as</code></td>
+<td>
+<p><code>as</code> parameter passed to content.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p><code>type</code> parameter passed to content.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p><code>encoding</code> parameter passed to content.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><a href="https://developer.kintone.io/hc/en-us/articles/212494468/">https://developer.kintone.io/hc/en-us/articles/212494468/</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+kntn_set_auth()
+app &lt;- 10
+
+# get a single record with a file attachment field
+d &lt;- kntn_record(app, id = 1)
+
+f &lt;- kntn_file(fileKey = x$Attachment[[1]]$fileKey[1])
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cancer_pathways</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>70 pathways from MSigDB c2CP</h2>
+
+<h3>Description</h3>
+
+<p>70 pathways from MSigDB c2CP
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("cancer_pathways")
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>a list of 70 relevant pathways from an old version of MSigDB c2CP containing the Entrez IDs.
+</p>
+
+
+<h3>References</h3>
+
+<p>MJ van de Vijver,YD He, LJ van't Veer, H Dai, AAM Hart, DW Voskuil,
+A gene-expression signature as a predictor of survival in breast cancer,
+<em>The New England Journal of Medicine</em>, 347(25):1999-2009, 2002.
+</p>
+<p>T Cai, G Tonini, X Lin, Kernel Machine Approach to Testing the
+Significance of Multiple Genetic Markers for Risk Prediction, <em>Biometrics</em>,
+67(3):975-986, 2011.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("cancer_pathways")
+
+if(interactive()){
+##get the data from Vijver publication
+
+#clinical data
+import_xls_from_zip &lt;- function(urlPath, filename, zipname, skip=0){
+ zipFile &lt;- paste0(zipname, ".zip")
+ download.file(paste0(urlPath, zipFile), zipFile)
+ unzip(zipFile, exdir="./temp_unzip")
+ xlsFile &lt;- paste0("./temp_unzip/", filename, ".xls")
+ res &lt;- readxl::read_xls(xlsFile, skip=skip)
+ unlink(zipFile)
+ unlink("./temp_unzip", recursive=TRUE)
+ return(res)
+}
+
+BC_dat_clin &lt;- import_xls_from_zip2(urlPath="http://ccb.nki.nl/data/",
+                                  filename="Table1_ClinicalData_Table",
+                                  zipname="nejm_table1",
+                                  skip=2
+                                  )
+BC_dat_clin &lt;- BC_dat_clin[order(BC_dat_clin$SampleID), ]
+col2rmv &lt;- 1:ncol(BC_dat_clin)
+BC_dat_clin$ID &lt;- paste0("S", BC_dat_clin$SampleID)
+rownames(BC_dat_clin) &lt;- BC_dat_clin$ID
+BC_dat_clin$evdeath &lt;- BC_dat_clin$EVENTdeath
+BC_dat_clin$tsurv &lt;- BC_dat_clin$TIMEsurvival
+BC_dat_clin$evmeta &lt;- BC_dat_clin$EVENTmeta
+BC_dat_clin$tmeta&lt;- pmin(BC_dat_clin$TIMEsurvival, BC_dat_clin$TIMEmeta, na.rm=TRUE)
+samples2rmv &lt;- c("S28", "S122", "S123", "S124", "S133", "S138", "S139", "S141", "S221", "S222",
+                "S224", "S226", "S227", "S228", "S229", "S230", "S231", "S237", "S238", "S240",
+                "S241", "S248", "S250", "S251", "S252", "S254", "S292", "S317", "S342", "S371",
+                "S379", "S380", "S397", "S398", "S401")
+BC_dat_clin &lt;- BC_dat_clin[-which(BC_dat_clin$ID %in% samples2rmv), -col2rmv]
+head(BC_dat_clin)
+
+
+
+#import genomics data
+urlPath="http://ccb.nki.nl/data/"
+zipFile &lt;- paste0("ZipFiles295Samples", ".zip")
+download.file(paste0(urlPath, zipFile), zipFile)
+unzip(zipFile, exdir="./temp_unzip")
+unlink(zipFile)
+unlink("./temp_unzip/Readme.txt", recursive=FALSE)
+txtfiles &lt;- list.files("./temp_unzip/")
+BC_dat_exp &lt;- NULL
+for(f in txtfiles){
+ temp_exp &lt;- read.delim(paste0("./temp_unzip/", f))
+ if(f==txtfiles[1]){
+   gene_id &lt;- as.character(temp_exp[-1, 1])
+   gene_symbol &lt;- as.character(temp_exp[-1, 2])
+ }
+ temp_exp &lt;- temp_exp[-1, grep("Sample.", colnames(temp_exp))]
+ colnames(temp_exp) &lt;- gsub("Sample.", "S", colnames(temp_exp))
+ if(f==txtfiles[1]){
+   BC_dat_exp &lt;- temp_exp
+ }else{
+   BC_dat_exp &lt;- cbind(BC_dat_exp, temp_exp)
+ }
+}
+BC_dat_exp_all &lt;- cbind.data.frame("SYMBOL"=gene_symbol, BC_dat_exp[,  BC_dat_clin$ID])
+unlink("./temp_unzip", recursive=TRUE)
+
+# translating the pathways from Entrez ID to gene symbol
+if (requireNamespace("org.Hs.eg.db", quietly = TRUE)){
+ library(org.Hs.eg.db)
+ x &lt;- org.Hs.egSYMBOL
+ mapped_genes &lt;- mappedkeys(x)
+ xx &lt;- as.list(x[mapped_genes])
+ cancer_pathways_Symbol &lt;- lapply(cancer_pathways, function(v){unlist(xx[v])})
+ sapply(cancer_pathways, function(x){length(intersect(x, rownames(BC_dat_exp)))/length(x)})
+}
+}
+
+</code></pre>
+
+
+</div>

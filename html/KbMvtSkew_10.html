@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pcKbSkew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Principal-component-based Khattree-Bahuguna's Multivariate Skewness</h2>
+
+<h3>Description</h3>
+
+<p>Compute Principal-component-based Khattree-Bahuguna's Multivariate Skewness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pcKbSkew(x, cor = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a matrix of original scale observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor</code></td>
+<td>
+<p>a logical value indicating whether the calculation should use the correlation matrix (<code>cor = TRUE</code>) or the covariance matrix (<code>cor = FALSE</code>). The default value is <code>cor = FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Let <code class="reqn">\mathbf{X} = X_1, \ldots, X_p</code> be a <code class="reqn">p</code>-dimensional multivariate random vector. We compute the sample skewness for <code class="reqn">p</code> principal components of <code class="reqn">\mathbf{X}</code> respectively by the sample Khattree-Bahuguna's univariate skewness formula (see details of <code>kbSkew</code> that follows). Let <code class="reqn">\eta_1, \eta_2, \ldots, \eta_p</code> be the <code class="reqn">p</code> univariate skewnesses for <code class="reqn">p</code> principal components. Principal-component-based Khattree-Bahuguna's multivariate skewness for a sample is then defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\eta = \sum_{i=1}^{p} \eta_i.</code>
+</p>
+
+<p>Clearly, <code class="reqn">0 \le \eta \le \frac{p}{2}</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>pcKbSkew</code> gives the sample principal-component-based Khattree-Bahuguna's multivairate skewness.
+</p>
+
+
+<h3>References</h3>
+
+<p>Khattree, R. and Bahuguna, M. (2019). An alternative data analytic approach to measure the univariate and multivariate skewness. <em>International Journal of Data Science and Analytics</em>, Vol. 7, No. 1, 1-16.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kbSkew</code> for Khattree-Bahuguna's univariate skewness.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute principal-component-based Khattree-Bahuguna's multivairate skewness
+
+data(OlymWomen)
+pcKbSkew(OlymWomen[, c("m800","m1500","m3000","marathon")])
+
+</code></pre>
+
+
+</div>

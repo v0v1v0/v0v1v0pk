@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_Normal_Gamma</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>convert_Normal_Gamma</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the parameters of the log-Normal that best approximates the given Inverse-Gamma distribution.
+The approximation is the best in the sense that it minimizes the KL divergence from the Inverse-Gamma to the log-Normal
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_Normal_Gamma(conj.param, parms)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>list: A vector containing the parameters of the Inverse-Gamma (alpha,beta).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list: A list of extra known parameters of the distribution. Not used in this function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The parameters of the Normal distribution of the linear predictor.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Gamma outcome with known shape: 
+<code>convert_Gamma_Normal()</code>,
+<code>gamma_pred()</code>,
+<code>update_Gamma()</code>
+</p>
+
+
+</div>

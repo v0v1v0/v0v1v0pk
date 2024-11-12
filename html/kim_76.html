@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>merge_data_table_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Merge a list of data tables</h2>
+
+<h3>Description</h3>
+
+<p>Successively merge a list of data.table objects in a recursive
+fashion. That is, merge the (second data table in the list) around
+the first data table in the list; then, around this resulting data table,
+merge the third data table in the list; and so on.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">merge_data_table_list(dt_list = NULL, id = NULL, silent = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dt_list</code></td>
+<td>
+<p>a list of data.table objects</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>name(s) of the column(s) that will contain the ID values
+in the two data tables. The name(s) of the ID column(s) must be identical
+in the two data tables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>If <code>silent = TRUE</code>, no message will be printed
+regarding how many ID values and column names were duplicated.
+If <code>silent = FALSE</code>, messages will be printed regarding
+how many column names were duplicated.
+In cases where only one column was used as the 'id' column (which is the
+most common case), <code>silent = FALSE</code> will also print messages
+regarding how many input ID values were duplicated.
+By default, <code>silent = FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If there are any duplicated ID values and column names across
+the data tables, the cell values in the earlier data table will
+remain intact and the cell values in the later data table will be
+discarded for the resulting merged data table in each recursion.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a data.table object, which successively merges (joins)
+a data table around (i.e., outside) the previous data table in the
+list of data tables.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data_1 &lt;- data.table::data.table(
+id_col = c(4, 2, 1, 3),
+a = 3:6,
+b = 5:8,
+c = c("w", "x", "y", "z"))
+data_2 &lt;- data.table::data.table(
+id_col = c(1, 4, 99),
+d = 6:8,
+b = c("p", "q", "r"),
+e = c(TRUE, FALSE, FALSE))
+data_3 &lt;- data.table::data.table(
+id_col = c(200, 3),
+f = 11:12,
+b = c(300, "abc"))
+merge_data_table_list(
+dt_list = list(data_1, data_2, data_3), id = "id_col")
+</code></pre>
+
+
+</div>

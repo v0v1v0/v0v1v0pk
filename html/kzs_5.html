@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kzs.params</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Restrictions for KZS Parameters </h2>
+
+<h3>Description</h3>
+
+<p>For a <em>d</em>-dimensional vector of input variables, this function will calculate the values by
+which the parameters <code>smooth</code> and <code>scale</code> are bounded by. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kzs.params(x, dimension)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+ 
+<p>a matrix or data frame containing the input variable(s) that is to be used in <code>kzs</code>, <code>kzs.2d</code>, 
+or <code>kzs.md</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dimension</code></td>
+<td>
+ 
+<p>an integer specifying the dimensionality of <code>x</code>; i.e, the number of columns in <code>x</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The compilation of functions within the <span class="pkg">kzs</span> package requires the specification of two 
+parameters: the first is <code>smooth</code>, the range of smoothing along each variable in <code>x</code>; 
+the second is <code>scale</code>, a scale reading of each corresponding input variable in <code>x</code>. 
+Each parameter is subject to two restrictions; <code>smooth[i]</code> and <code>scale[i]</code> must be 
+positive real numbers; <code>scale[i]</code> must be less than or equal to the difference of sorted, 
+consecutive <code>x[,i]</code> values and <code>smooth[i]</code> must be much less than the difference of the
+maximum and minimum values for its corresponding input variable, <code>x[,i]</code>. For each input 
+variable in <code>x</code>, there must be a corresponding <code>smooth</code> and <code>scale</code>. This function
+was developed to be used prior to any of the functions within <span class="pkg">kzs</span> in order to increase the 
+efficiency of use.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Derek Cyr <a href="mailto:cyr.derek@gmail.com">cyr.derek@gmail.com</a> and Igor Zurbenko <a href="mailto:igorg.zurbenko@gmail.com">igorg.zurbenko@gmail.com</a> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate 3 random sequences of numbers that would act as the input data set 
+x1 &lt;- rnorm(100, 3, 6)
+x2 &lt;- rnorm(100, 4, 5)
+x3 &lt;- runif(100, 0, 1)
+
+# A matrix or a data frame will work 
+mat &lt;- matrix(c(x1, x2, x3), nrow = 100, ncol = 3)
+
+# Dimensionality is 3 since there are 3 input variables
+kzs.params(x = mat, dimension = 3)
+</code></pre>
+
+
+</div>

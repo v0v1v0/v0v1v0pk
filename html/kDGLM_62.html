@@ -1,0 +1,125 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.fitted_dlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Visualizing a fitted kDGLM model</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the predictive mean and some quantile for the observed data and show a plot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'fitted_dlm'
+plot(
+  x,
+  outcomes = NULL,
+  latent.states = NULL,
+  linear.predictors = NULL,
+  pred.cred = 0.95,
+  lag = NA,
+  cutoff = floor(x$t/10),
+  plot.pkg = "auto",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>fitted_dlm object: A fitted DGLM.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcomes</code></td>
+<td>
+<p>character: The name of the outcomes to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>latent.states</code></td>
+<td>
+<p>character: The name of the latent states to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear.predictors</code></td>
+<td>
+<p>character: The name of the linear predictors to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>numeric: The credibility value for the credibility interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>integer: The number of steps ahead to be used for prediction. If lag&lt;0, the smoothed distribution is used and, if lag==0, the filtered interval.score is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff</code></td>
+<td>
+<p>integer: The number of initial steps that should be skipped in the plot. Usually, the model is still learning in the initial steps, so the predictions are not reliable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.pkg</code></td>
+<td>
+<p>character: A flag indicating if a plot should be produced. Should be one of 'auto', 'base', 'ggplot2' or 'plotly'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra arguments passed to the plot method.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>ggplot or plotly object: A plot showing the predictive mean and credibility interval with the observed data.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p>Other auxiliary visualization functions for the fitted_dlm class: 
+<code>plot.dlm_coef()</code>,
+<code>summary.fitted_dlm()</code>,
+<code>summary.searched_dlm()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- c(AirPassengers)
+
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+outcome &lt;- Poisson(lambda = "rate", data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+
+plot(fitted.data, plot.pkg = "base")
+
+</code></pre>
+
+
+</div>

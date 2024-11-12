@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>protected.mixML</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Protect against numerical errors in maximum likelihood computation</h2>
+
+<h3>Description</h3>
+
+<p>Attempts to catch numerical errors in maximum likelihood computation, by replacing logL values by a default value instead of NaN or other failures</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">protected.mixML(mixture, pars, constraints = NULL, phi.eq = FALSE, val = NULL,
+  trace = FALSE, order.unknowns = TRUE, default=-999999, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A DNAmixture object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pars</code></td>
+<td>
+<p>A mixpar parameter used as a starting value for the optimisation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constraints</code></td>
+<td>
+<p>Equality constraint function as function of an array of parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phi.eq</code></td>
+<td>
+<p>Should the mixture proportions be the same for all traces? Defaults to FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>val</code></td>
+<td>
+<p>Vector of values to be satisfied for the equality constraints.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>Print the evaluations of the likelihood-function during optimisation?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order.unknowns</code></td>
+<td>
+<p>Should unknown contributors be ordered according to decreasing contributions? Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed on to solnp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default</code></td>
+<td>
+<p>value of logL to be used if numerical errors are encountered</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mle</code></td>
+<td>
+<p>The (suggested) MLE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lik</code></td>
+<td>
+<p>The log of the likelihood (log e).</p>
+</td>
+</tr>
+</table>
+<p>as well as the output from the optimisation.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+</div>

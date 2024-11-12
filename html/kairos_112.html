@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>seriate_average</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Correspondence Analysis-Based Seriation</h2>
+
+<h3>Description</h3>
+
+<p>Correspondence Analysis-Based Seriation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">seriate_average(object, ...)
+
+## S4 method for signature 'data.frame'
+seriate_average(object, margin = c(1, 2), axes = 1, ...)
+
+## S4 method for signature 'matrix'
+seriate_average(object, margin = c(1, 2), axes = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code class="reqn">m \times p</code> <code>numeric</code> <code>matrix</code> or
+<code>data.frame</code> of count data (absolute frequencies giving the number of
+individuals for each category, i.e. a contingency table). A <code>data.frame</code>
+will be coerced to a <code>numeric</code> <code>matrix</code> via <code>data.matrix()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to internal methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>A <code>numeric</code> vector giving the subscripts which the
+rearrangement will be applied over: <code>1</code> indicates rows, <code>2</code> indicates
+columns, <code>c(1, 2)</code> indicates rows then columns, <code>c(2, 1)</code> indicates columns
+then rows.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>An <code>integer</code> vector giving the subscripts of the CA axes to be
+used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Correspondence analysis (CA) is an effective method for the seriation of
+archaeological assemblages. The order of the rows and columns is given by
+the coordinates along one dimension of the CA space, assumed to account for
+temporal variation. The direction of temporal change within the
+correspondence analysis space is arbitrary: additional information is needed
+to determine the actual order in time.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <code>AveragePermutationOrder</code> object.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Ihm, P. (2005). A Contribution to the History of Seriation in Archaeology.
+In C. Weihs &amp; W. Gaul (Eds.), <em>Classification: The Ubiquitous
+Challenge</em>. Berlin Heidelberg: Springer, p. 307-316.
+<a href="https://doi.org/10.1007/3-540-28084-7_34">doi:10.1007/3-540-28084-7_34</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dimensio::ca()</code>
+</p>
+<p>Other seriation methods: 
+<code>permute()</code>,
+<code>seriate_rank()</code>,
+<code>seriate_refine()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Replicates Desachy 2004 results
+data("compiegne", package = "folio")
+
+## Get seriation order for columns on EPPM using the reciprocal averaging method
+## Expected column order: N, A, C, K, P, L, B, E, I, M, D, G, O, J, F, H
+(indices &lt;- seriate_rank(compiegne, EPPM = TRUE, margin = 2))
+
+## Get permutation order
+get_order(indices, 1) # rows
+get_order(indices, 2) # columns
+
+## Permute columns
+(new &lt;- permute(compiegne, indices))
+
+## See the vignette
+## Not run: 
+utils::vignette("seriation")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

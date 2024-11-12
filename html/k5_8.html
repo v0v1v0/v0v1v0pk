@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>count_na</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Count missing</h2>
+
+<h3>Description</h3>
+
+<p>Count the total values of <code>x</code> that are <code>NA</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">count_na(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector to check.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p><code>sum(is.na(x))</code>
+</p>
+
+
+<h3>Value</h3>
+
+<p>The sum of <code>x</code> that are <code>NA</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other counting wrappers: 
+<code>count_diff()</code>,
+<code>count_in()</code>,
+<code>count_out()</code>,
+<code>na_in()</code>,
+<code>na_out()</code>,
+<code>na_rep()</code>,
+<code>prop_distinct()</code>,
+<code>prop_in()</code>,
+<code>prop_na()</code>,
+<code>prop_out()</code>,
+<code>what_in()</code>,
+<code>what_out()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">count_na(c("VT", "NH", NA, "ME"))
+</code></pre>
+
+
+</div>

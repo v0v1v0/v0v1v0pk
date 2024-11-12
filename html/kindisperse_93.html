@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_kindata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reads <code>.kindata</code> filetype back to <code>KinPairData</code> or <code>KinPairSimulation</code> object.</h2>
+
+<h3>Description</h3>
+
+<p>This function is part of suite of functions handling file import/export for kinship dispersal objects.
+</p>
+<p>The custom <code>.kindata</code> format enables complete preservation of <code>KinPairData</code> &amp; <code>KinPairSimulation</code> formats
+without any loss of class attributes or metadata - ideal for saving and retrieving simulation data that is intended for further in-package
+processing with kindisperse. This function loads a previously stored object into its original class format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_kindata(file)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>Character giving path reference to file with extension <code>.kinpair</code></p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Returns either <code>KinPairData</code> or <code>KinPairSimulation</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other import_functions: 
+<code>csv_to_kinpair()</code>,
+<code>df_to_kinpair()</code>,
+<code>tsv_to_kinpair()</code>,
+<code>vector_to_kinpair()</code>
+</p>
+
+
+</div>

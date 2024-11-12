@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>top_words</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Show the top words for each topic</h2>
+
+<h3>Description</h3>
+
+<p>If <code>show_keyword</code> is <code>TRUE</code> then words in their keyword topics
+are suffixed with a check mark. Words from another keyword topic
+are labeled with the name of that category.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">top_words(x, n = 10, measure = c("probability", "lift"), show_keyword = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the output (see <code>keyATM()</code> and <code>by_strata_TopicWord()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer. The number terms to visualize. Default is <code>10</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>measure</code></td>
+<td>
+<p>character. The way to sort the terms: <code>probability</code> (default) or <code>lift</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_keyword</code></td>
+<td>
+<p>logical. If <code>TRUE</code>, mark keywords. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An n x k table of the top n words in each topic
+</p>
+
+
+</div>

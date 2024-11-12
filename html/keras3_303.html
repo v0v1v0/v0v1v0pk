@@ -1,0 +1,184 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LearningRateSchedule</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Define a custom <code>LearningRateSchedule</code> class</h2>
+
+<h3>Description</h3>
+
+<p>Subclass the Keras <code>LearningRateSchedule</code> base class.
+</p>
+<p>You can use a learning rate schedule to modulate how the learning rate
+of your optimizer changes over time.
+</p>
+<p>Several built-in learning rate schedules are available, such as
+<code>learning_rate_schedule_exponential_decay()</code> or
+<code>learning_rate_schedule_piecewise_constant_decay()</code>:
+</p>
+<div class="sourceCode r"><pre>lr_schedule &lt;- learning_rate_schedule_exponential_decay(
+  initial_learning_rate = 1e-2,
+  decay_steps = 10000,
+  decay_rate = 0.9
+)
+optimizer &lt;- optimizer_sgd(learning_rate = lr_schedule)
+</pre></div>
+<p>A <code>LearningRateSchedule()</code> instance can be passed in as the <code>learning_rate</code>
+argument of any optimizer.
+</p>
+<p>To implement your own schedule object, you should implement the <code>call</code>
+method, which takes a <code>step</code> argument (a scalar integer backend tensor, the
+current training step count).
+Note that <code>step</code> is 0-based (i.e., the first step is <code>0</code>).
+Like for any other Keras object, you can also optionally
+make your object serializable by implementing the <code>get_config()</code>
+and <code>from_config()</code> methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LearningRateSchedule(
+  classname,
+  call = NULL,
+  initialize = NULL,
+  get_config = NULL,
+  ...,
+  public = list(),
+  private = list(),
+  inherit = NULL,
+  parent_env = parent.frame()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>classname</code></td>
+<td>
+<p>String, the name of the custom class. (Conventionally, CamelCase).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call, initialize, get_config</code></td>
+<td>
+<p>Recommended methods to implement. See description and details sections.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>..., public</code></td>
+<td>
+<p>Additional methods or public members of the custom class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>private</code></td>
+<td>
+<p>Named list of R objects (typically, functions) to include in
+instance private environments. <code>private</code> methods will have all the same
+symbols in scope as public methods (See section "Symbols in Scope"). Each
+instance will have it's own <code>private</code> environment. Any objects
+in <code>private</code> will be invisible from the Keras framework and the Python
+runtime.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inherit</code></td>
+<td>
+<p>What the custom class will subclass. By default, the base keras class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>The R environment that all class methods will have as a grandparent.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A function that returns <code>LearningRateSchedule</code> instances, similar to the
+built-in <code style="white-space: pre;">⁠learning_rate_schedule_*⁠</code> family of functions.
+</p>
+
+
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>my_custom_learning_rate_schedule &lt;- LearningRateSchedule(
+  classname = "MyLRSchedule",
+
+  initialize = function(initial_learning_rate) {
+    self$initial_learning_rate &lt;- initial_learning_rate
+  },
+
+  call = function(step) {
+    # note that `step` is a tensor
+    # and call() will be traced via tf_function() or similar.
+
+    str(step) # &lt;KerasVariable shape=(), dtype=int64, path=SGD/iteration&gt;
+
+    # print 'step' every 1000 steps
+    op_cond((step %% 1000) == 0,
+            \() {tensorflow::tf$print(step); NULL},
+            \() {NULL})
+    self$initial_learning_rate / (step + 1)
+  }
+)
+
+optimizer &lt;- optimizer_sgd(
+  learning_rate = my_custom_learning_rate_schedule(0.1)
+)
+
+# You can also call schedule instances directly
+# (e.g., for interactive testing, or if implementing a custom optimizer)
+schedule &lt;- my_custom_learning_rate_schedule(0.1)
+step &lt;- keras$Variable(initializer = op_ones,
+                       shape = shape(),
+                       dtype = "int64")
+schedule(step)
+</pre></div>
+<div class="sourceCode"><pre>## &lt;KerasVariable shape=(), dtype=int64, path=variable&gt;
+
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.0, shape=(), dtype=float64)
+
+</pre></div>
+
+
+<h3>Methods available:</h3>
+
+
+<ul><li>
+<div class="sourceCode"><pre>get_config()
+</pre></div>
+</li></ul>
+<h3>Symbols in scope</h3>
+
+<p>All R function custom methods (public and private) will have the
+following symbols in scope:
+</p>
+
+<ul>
+<li> <p><code>self</code>: The custom class instance.
+</p>
+</li>
+<li> <p><code>super</code>: The custom class superclass.
+</p>
+</li>
+<li> <p><code>private</code>: An R environment specific to the class instance.
+Any objects assigned here are invisible to the Keras framework.
+</p>
+</li>
+<li> <p><code style="white-space: pre;">⁠__class__⁠</code> and <code>as.symbol(classname)</code>: the custom class type object.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other optimizer learning rate schedules: <br><code>learning_rate_schedule_cosine_decay()</code> <br><code>learning_rate_schedule_cosine_decay_restarts()</code> <br><code>learning_rate_schedule_exponential_decay()</code> <br><code>learning_rate_schedule_inverse_time_decay()</code> <br><code>learning_rate_schedule_piecewise_constant_decay()</code> <br><code>learning_rate_schedule_polynomial_decay()</code> <br></p>
+
+
+</div>

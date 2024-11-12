@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kssa_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kssa_plot function</h2>
+
+<h3>Description</h3>
+
+<p>Function to plot the results of kssa for easy interpretation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kssa_plot(results, type, metric)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>results</code></td>
+<td>
+<p>An object with results produced with function <code>kssa</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character value with the type of plot to show.
+It can be "summary" or "complete".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metric</code></td>
+<td>
+<p>A character with the performance metric to be plotted.
+It can be  "rmse", "mase," "cor", or "smape"
+</p>
+
+<ul>
+<li>
+<p>"rmse" -  Root Mean Squared Error (default choice)
+</p>
+</li>
+<li>
+<p>"mase" - Mean Absolute Scaled Error
+</p>
+</li>
+<li>
+<p>"smape" - Symmetric Mean Absolute Percentage Error
+</p>
+</li>
+<li>
+<p>"cor" - Pearson correlation coefficient
+</p>
+</li>
+</ul>
+<p>For further details on these metrics please check package Metrics</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot of kssa results in which imputation methods are ordered
+from lower to higher (left to right) error.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Example 1: Plot the results from comparing all imputation methods
+
+library("kssa")
+library("imputeTS")
+
+# Create 20% random missing data in tsAirgapComplete time series from imputeTS
+airgap_na &lt;- missMethods::delete_MCAR(as.data.frame(tsAirgapComplete), 0.2)
+
+# Convert to time series object
+airgap_na_ts &lt;- ts(airgap_na, start = c(1959, 1), end = c(1997, 12), frequency = 12)
+
+# Apply the kssa algorithm with 5 segments,
+# 10 iterations, 20% of missing data, and
+# compare among all available methods in the package.
+# Remember that percentmd must match with
+# the real percentage of missing data in the input time series
+
+results_kssa &lt;- kssa(airgap_na_ts,
+  start_methods = "all",
+  actual_methods = "all",
+  segments = 5,
+  iterations = 10,
+  percentmd = 0.2
+)
+
+kssa_plot(results_kssa, type = "complete", metric = "rmse")
+
+# Conclusion: Since kssa_plot is ordered from lower to
+# higher error (left to right), method 'linear_i' is the best to
+# impute missing data in airgap_na_ts. Notice that method 'locf' is the worst
+
+# To obtain imputations with the best method, or any method of preference
+# please use function get_imputations
+
+
+
+
+# Example 2: Plot the results when only applying locf and linear interpolation
+
+library("kssa")
+library("imputeTS")
+
+# Create 20% random missing data in tsAirgapComplete time series from imputeTS
+airgap_na &lt;- missMethods::delete_MCAR(as.data.frame(tsAirgapComplete), 0.2)
+
+# Convert to time series object
+airgap_na_ts &lt;- ts(airgap_na, start = c(1959, 1), end = c(1997, 12), frequency = 12)
+
+# Apply the kssa algorithm with 5 segments,
+# 10 iterations, 20% of missing data, and compare among all
+# applied methods (locf and linear interpolation).
+# Remember that percentmd must match with
+# the real percentage of missing data in the input time series
+
+results_kssa &lt;- kssa(airgap_na_ts,
+  start_methods = c("linear_i", "locf"),
+  actual_methods = c("linear_i", "locf"),
+  segments = 5,
+  iterations = 10,
+  percentmd = 0.2
+)
+
+kssa_plot(results_kssa, type = "complete", metric = "rmse")
+
+
+</code></pre>
+
+
+</div>

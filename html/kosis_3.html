@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getStatData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KOSIS Statistic Data</h2>
+
+<h3>Description</h3>
+
+<p>KOSIS Statistic Data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getStatData(
+  orgId,
+  tblId,
+  prdSe = c("Y", "H", "Q", "M", "D", "IR"),
+  startPrdDe,
+  endPrdDe,
+  newEstPrdCnt = 3,
+  prdInterval = 1,
+  itmId = "ALL",
+  objL1 = "ALL",
+  objL2 = "",
+  objL3 = "",
+  objL4 = "",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>orgId</code></td>
+<td>
+<p>A string specifying the organization id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tblId</code></td>
+<td>
+<p>A string specifying the table id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prdSe</code></td>
+<td>
+<p>A string specifying the period symbol (Y, H, Q, M, D, IR: Irregularly)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>startPrdDe</code></td>
+<td>
+<p>A string specifying start period
+(format: YYYY, YYYYMM(MM:01~12), YYYYHH(HH:01,02), YYYYQQ(QQ:01~04), YYYYMMDD)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>endPrdDe</code></td>
+<td>
+<p>A string specifying end period
+(format: YYYY, YYYYMM(MM:01~12), YYYYHH(HH:01,02), YYYYQQ(QQ:01~04), YYYYMMDD)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newEstPrdCnt</code></td>
+<td>
+<p>A string specifying newest period count</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prdInterval</code></td>
+<td>
+<p>A string specifying period interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>itmId</code></td>
+<td>
+<p>A string item id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objL1</code></td>
+<td>
+<p>A string specifying object level 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objL2</code></td>
+<td>
+<p>A string specifying object level 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objL3</code></td>
+<td>
+<p>A string specifying object level 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>objL4</code></td>
+<td>
+<p>A string specifying object level 4</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>A string specifying object level 5, 6, 7, 8 (objL5, objL6, objL7, objL8)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<pre>
+## Example
+getStatData(orgId = "101", tblId = "DT_1B41")
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame object containing queried information
+</p>
+
+
+</div>

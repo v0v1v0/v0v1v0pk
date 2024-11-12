@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>text_dataset_from_directory</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate a <code>tf.data.Dataset</code> from text files in a directory</h2>
+
+<h3>Description</h3>
+
+<p>Generate a <code>tf.data.Dataset</code> from text files in a directory
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">text_dataset_from_directory(
+  directory,
+  labels = "inferred",
+  label_mode = "int",
+  class_names = NULL,
+  batch_size = 32L,
+  max_length = NULL,
+  shuffle = TRUE,
+  seed = NULL,
+  validation_split = NULL,
+  subset = NULL,
+  follow_links = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>directory</code></td>
+<td>
+<p>Directory where the data is located.
+If <code>labels</code> is "inferred", it should contain
+subdirectories, each containing text files for a class.
+Otherwise, the directory structure is ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>Either "inferred"
+(labels are generated from the directory structure),
+NULL (no labels),
+or a list of integer labels of the same size as the number of
+text files found in the directory. Labels should be sorted according
+to the alphanumeric order of the text file paths
+(obtained via <code>os.walk(directory)</code> in Python).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_mode</code></td>
+<td>
+
+<ul>
+<li> <p><code>'int'</code>: means that the labels are encoded as integers
+(e.g. for <code>sparse_categorical_crossentropy</code> loss).
+</p>
+</li>
+<li> <p><code>'categorical'</code> means that the labels are
+encoded as a categorical vector
+(e.g. for <code>categorical_crossentropy</code> loss).
+</p>
+</li>
+<li> <p><code>'binary'</code> means that the labels (there can be only 2)
+are encoded as <code>float32</code> scalars with values 0 or 1
+(e.g. for <code>binary_crossentropy</code>).
+</p>
+</li>
+<li> <p><code>NULL</code> (no labels).
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_names</code></td>
+<td>
+<p>Only valid if <code>labels</code> is <code>"inferred"</code>. This is the explicit
+list of class names (must match names of subdirectories). Used
+to control the order of the classes
+(otherwise alphanumerical order is used).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Size of the batches of data. Default: <code>32</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_length</code></td>
+<td>
+<p>Maximum size of a text string. Texts longer than this will
+be truncated to <code>max_length</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shuffle</code></td>
+<td>
+<p>Whether to shuffle the data. Default: <code>TRUE</code>.
+If set to <code>FALSE</code>, sorts the data in alphanumeric order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Optional random seed for shuffling and transformations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>validation_split</code></td>
+<td>
+<p>Optional float between 0 and 1,
+fraction of data to reserve for validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>One of "training" or "validation".
+Only used if <code>validation_split</code> is set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>follow_links</code></td>
+<td>
+<p>Whether to visits subdirectories pointed to by symlinks.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For future compatibility (unused presently).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If your directory structure is:
+</p>
+<div class="sourceCode"><pre>main_directory/
+...class_a/
+......a_text_1.txt
+......a_text_2.txt
+...class_b/
+......b_text_1.txt
+......b_text_2.txt
+</pre></div>
+<p>Then calling <code>text_dataset_from_directory(main_directory, labels = 'inferred')</code>
+will return a <code>tf.data.Dataset</code> that yields batches of texts from
+the subdirectories <code>class_a</code> and <code>class_b</code>, together with labels
+0 and 1 (0 corresponding to <code>class_a</code> and 1 corresponding to <code>class_b</code>).
+</p>
+<p>Only <code>.txt</code> files are supported at this time.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/utils/text_dataset_from_directory">https://www.tensorflow.org/api_docs/python/tf/keras/utils/text_dataset_from_directory</a>
+</p>
+</li></ul>
+</div>

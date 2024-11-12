@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_best_models</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get best models</h2>
+
+<h3>Description</h3>
+
+<p>The function for retrieving the top best models with hyperparameters
+Returns the best model(s), as determined by the tuner's objective.
+The models are loaded with the weights corresponding to their best checkpoint (at the end of the best epoch of best trial).
+This method is only a convenience shortcut. For best performance, It is recommended to retrain your Model on the full 
+dataset using the best hyperparameters found during search.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_best_models(tuner = NULL, num_models = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tuner</code></td>
+<td>
+<p>A tuner object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_models</code></td>
+<td>
+<p>When search is over, one can retrieve the best model(s)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the list of best model(s)
+</p>
+
+
+</div>

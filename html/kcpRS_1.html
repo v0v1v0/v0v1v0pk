@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kcpRS-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KCP on the running statistics</h2>
+
+<h3>Description</h3>
+
+<p>Flagging change points on a user-specified running statistics through KCP (Kernel Change Point) detection. A KCP permutation test is first implemented to confirm whether there is at least one change point (<em>k</em>&gt;0) in the running statistics. If this permutation test is significant, a model selection procedure is implemented to choose the most optimal number of change points.</p>
+
+
+<h3>Details</h3>
+
+<p>This package contains the function <code>kcpRS</code> that can accept a user-defined function, <code>RS_fun</code>, which should derive the running statistics of interest. For examples, see <code>runMean</code>, <code>runVar</code>, <code>runAR</code> and <code>runCorr</code>. <code>kcpRS</code> performs a full change point analysis on the running statistics starting from locating the optimal change points given <em>k</em>, significance testing if <em>k</em>&gt;0, and finally, determining the most optimal <em>k</em>. This function calls the function <code>kcpa</code> to find the most optimal change points given <em>k</em> and then the <code>permTest</code> function to carry out the permutation test. The model selection step is embedded in the <code>kcpRS</code> function.
+</p>
+<p>This package also contains the function <code>kcpRS_workflow</code> which carries out a stepwise change point analysis to flag changes in 4 basic time series statistics: mean, variance, autocorrelation (lag 1) and correlations.
+</p>
+<p>Two illustrative data sets are included: <code>MentalLoad</code> and <code>CO2Inhalation</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jedelyn Cabrieto (<a href="mailto:jed.cabrieto@kuleuven.be">jed.cabrieto@kuleuven.be</a>) and Kristof Meers
+</p>
+<p>For the core KCP analysis, the authors built upon the codes from the Supplementary Material available in doi:10.1080/01621459.2013.849605 by Matteson and James (2012).
+</p>
+
+
+<h3>References</h3>
+
+<p>Arlot, S., Celisse, A., &amp; Harchaoui, Z. (2019). A kernel multiple change-point algorithm via model selection. <em>Journal of Machine Learning Research</em>, 20(162), 1-56.
+</p>
+<p>Cabrieto, J., Tuerlinckx, F., Kuppens, P., Grassmann, M., &amp; Ceulemans, E. (2017). Detecting correlation changes in multivariate time series: A comparison of four non-parametric change point detection methods. <em>Behavior Research Methods</em>, 49, 988-1005. doi:10.3758/s13428-016-0754-9
+</p>
+<p>Cabrieto, J., Tuerlinckx, F., Kuppens, P., Hunyadi, B., &amp; Ceulemans, E. (2018). Testing for the presence of correlation changes
+in a multivariate time series: A permutation based approach. <em>Scientific Reports</em>, 8, 769, 1-20. doi:10.1038/s41598-017-19067-2
+</p>
+<p>Cabrieto, J., Tuerlinckx, F., Kuppens, P., Wilhelm, F., Liedlgruber, M., &amp; Ceulemans, E. (2018). Capturing correlation changes by applying kernel change point
+detection on the running correlations. <em>Information Sciences</em>, 447, 117-139. doi:10.1016/j.ins.2018.03.010
+</p>
+<p>Cabrieto, J., Adolf, J., Tuerlinckx, F., Kuppens, P., &amp; Ceulemans, E. (2018). Detecting long-lived autodependency changes in a multivariate system via change point detection
+and regime switching models. <em>Scientific Reports</em>, 8, 15637, 1-15. doi:10.1038/s41598-018-33819-8
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kcpRS</code>
+</p>
+<p><code>kcpRS_workflow</code>
+</p>
+<p><code>MentalLoad</code>
+</p>
+<p><code>CO2Inhalation</code>
+</p>
+
+
+</div>

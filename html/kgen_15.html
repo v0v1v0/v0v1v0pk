@@ -1,0 +1,145 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calc_K</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate a single equilibrium constant</h2>
+
+<h3>Description</h3>
+
+<p>Calculate <strong>a single</strong> specified stoichiometric equilibrium constant at given temperature, salinity, pressure and the concentration of magnesium, calcium, sulphate, and fluorine.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calc_K(
+  k,
+  temp_c = 25,
+  sal = 35,
+  p_bar = NULL,
+  magnesium = 0.0528171,
+  calcium = 0.0102821,
+  sulphate = NULL,
+  fluorine = NULL,
+  method = "r_polynomial"
+)
+
+calc_Ks(
+  ks = NULL,
+  temp_c = 25,
+  sal = 35,
+  p_bar = NULL,
+  magnesium = 0.0528171,
+  calcium = 0.0102821,
+  sulphate = NULL,
+  fluorine = NULL,
+  method = "r_polynomial"
+)
+
+calc_all_Ks(
+  temp_c = 25,
+  sal = 35,
+  p_bar = NULL,
+  magnesium = 0.0528171,
+  calcium = 0.0102821,
+  sulphate = NULL,
+  fluorine = NULL,
+  method = "r_polynomial"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>K to be calculated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>temp_c</code></td>
+<td>
+<p>Temperature (Celcius)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sal</code></td>
+<td>
+<p>Salinity</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p_bar</code></td>
+<td>
+<p>Pressure (Bar) (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>magnesium</code></td>
+<td>
+<p>magnesium concentration in mol/kgsw. If None, modern is assumed (0.0528171). Should be the average magnesium concentration in seawater - a salinity correction is then applied to calculate the magnesium concentration in the sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calcium</code></td>
+<td>
+<p>calcium concentration in mol/kgsw. If None, modern is assumed (0.0102821). Should be the average calcium concentration in seawater - a salinity correction is then applied to calculate the magnesium concentration in the sample.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sulphate</code></td>
+<td>
+<p>Sulphate concentration in mol/kgsw. Calculated from salinity if not given.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fluorine</code></td>
+<td>
+<p>Fluorine concentration in mol/kgsw. Calculated from salinity if not given.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>string describing method which should be either 'myami', 'myami_polynomial', or 'r_polynomial' (Default: 'r_polynomial').</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ks</code></td>
+<td>
+<p>character vectors of Ks to be calculated e.g., c("K0", "K1") (Default: NULL, calculate all Ks)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><strong>A single</strong> K at given conditions
+</p>
+<p>Data.table of <strong>multiple</strong> Ks at given conditions
+</p>
+<p>Data.table of <strong>all</strong> Ks at given conditions
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>calc_Ks()</code>: Wrapper to calculate <strong>multiple</strong> stoichiometric equilibrium constants at given temperature, salinity, pressure and the concentration of magnesium, calcium, sulphate, and fluorine.
+</p>
+</li>
+<li> <p><code>calc_all_Ks()</code>: Wrapper to calculate <strong>all</strong> stoichiometric equilibrium constants at given temperature, salinity, pressure and the concentration of magnesium, calcium, sulphate, and fluorine.
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>Dennis Mayk
+</p>
+
+
+</div>

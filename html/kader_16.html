@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kfn_vectorized</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convolution of Kernel Function K with fn</h2>
+
+<h3>Description</h3>
+
+<p>Vectorized evaluation of the convolution of the kernel function K with fn.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kfn_vectorized(u, K, xixj, h, sig)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>Numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>Kernel function with vectorized in- &amp; output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xixj</code></td>
+<td>
+<p>Numeric matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>Numeric scalar.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig</code></td>
+<td>
+<p>Numeric scalar.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Vectorized (in u) evaluation of - a more explicit representation of - the
+integrand <code class="reqn">K(u) * f_n(\ldots - h^2/\sigma * u)</code> which is used in the
+computation of the bias estimator before eq. (2.3) in Srihera &amp; Stute (2011).
+Also used for the analogous computation of the respective bias estimator
+in the paragraph after eq. (6) in Eichner &amp; Stute (2013).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of <code class="reqn">(K * f_n)(u)</code> evaluated at the values in
+<code>u</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>An alternative implementation could be
+<code>K(u) * sapply(h/sig * u, function(v) mean(K(xixj - v))) / h</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(stats)
+
+set.seed(2017);   n &lt;- 100;   Xdata &lt;- rnorm(n)
+x0 &lt;- 1;          sig &lt;- 1;   h &lt;- n^(-1/5)
+
+Ai &lt;- (x0 - Xdata)/h
+Bj &lt;- mean(Xdata) - Xdata   # in case of non-robust method
+AiBj &lt;- outer(Ai, Bj/sig, "+")
+
+ugrid &lt;- seq(-10, 10, by = 1)
+kader:::kfn_vectorized(u = ugrid, K = dnorm, xixj = AiBj, h = h, sig = sig)
+
+</code></pre>
+
+
+</div>

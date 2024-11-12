@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>oBellPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Ordinary Bell polynomials
+</h2>
+
+<h3>Description</h3>
+
+<p>The function generates a complete or a partial ordinary Bell polynomial.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">oBellPol(n = 1, m = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer, the degree of the polynomial</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>integer, the fixed degree of each monomial in the polynomial</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Faa di Bruno's formula gives the coefficients of the exponential formal power series obtained 
+from the composition <code>f[g()]</code> of the exponential formal power series <code>f</code> with <code>g</code>. The 
+partial ordinary Bell polynomials <code>B[n,m]</code> can be expressed 
+in the terms of the partial exponential Bell polynomials <code>B(n,m)(y[1],...,y[n-m+1])</code>  using the 
+following formula:  
+</p>
+
+<table><tr>
+<td style="text-align: left;"><code>B[n,m](y[1],...,y[n-m+1])=k!/n!B(n,m)(y[1],...,y[n-m+1]).</code></td>
+</tr></table>
+<p>The complete ordinary Bell polynomials are given by <code>B[n]=B[n,1]+B[n,2]+...B[n,n]</code>, where 
+<code>B[n,m]</code> is the partial ordinary  Bell polynomial of order <code>(n,m)</code> for <code>m</code> from <code>1</code>
+to <code>n</code>.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>string</code></td>
+<td>
+<p>the expression of the polynomial</p>
+</td>
+</tr></table>
+<h3>Warning</h3>
+
+<p>The value of the first parameter is the same as the <code>MFB</code> function in the univariate with 
+univariate composition.</p>
+
+
+<h3>Note</h3>
+
+<p>This function calls the <code>MFB</code> function in the <code>kStatistics</code> package.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>C.A. Charalambides (2002) Enumerative Combinatoris, Chapman &amp; Haii/CRC. 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2011) A new algorithm for computing the multivariate Faa di Bruno's formula. 
+Appl. Math. Comp. 217, 6286-6295. (download from <a href="https://arxiv.org/abs/1012.6008">https://arxiv.org/abs/1012.6008</a>)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>MFB</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Return the complete ordinary Bell Polynomial for n=5, that is 
+# (y1^5) + 20(y1^3)(y2) + 30(y1)(y2^2) + 60(y1^2)(y3) + 120(y2)(y3) + 120(y1)(y4) + 120(y5)
+oBellPol(5)
+#
+# OR (same output)
+#
+oBellPol(5,0)
+
+# Return the partial ordinary Bell polynomial for n=5 and m=3, that is 
+# 30(y1)(y2^2) + 60(y1^2)(y3)
+oBellPol(5,3)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>additive_shap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Additive SHAP</h2>
+
+<h3>Description</h3>
+
+<p>Exact additive SHAP assuming feature independence. The implementation
+works for models fitted via
+</p>
+
+<ul>
+<li> <p><code>lm()</code>,
+</p>
+</li>
+<li> <p><code>glm()</code>,
+</p>
+</li>
+<li> <p><code>mgcv::gam()</code>,
+</p>
+</li>
+<li> <p><code>mgcv::bam()</code>,
+</p>
+</li>
+<li> <p><code>gam::gam()</code>,
+</p>
+</li>
+<li> <p><code>survival::coxph()</code>, and
+</p>
+</li>
+<li> <p><code>survival::survreg()</code>.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">additive_shap(object, X, verbose = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Fitted model object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Dataframe with rows to be explained. Will be used like
+<code>predict(object, newdata = X, type = "terms")</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Set to <code>FALSE</code> to suppress messages and the progress bar.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently unused.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The SHAP values are extracted via <code>predict(object, newdata = X, type = "terms")</code>,
+a logic heavily inspired by <code>fastshap:::explain.lm(..., exact = TRUE)</code>.
+Models with interactions (specified via <code>:</code> or <code>*</code>), or with terms of
+multiple features like <code>log(x1/x2)</code> are not supported.
+</p>
+<p>Note that the SHAP values obtained by <code>additive_shap()</code> are expected to
+match those of <code>permshap()</code> and <code>kernelshap()</code> as long as their background
+data equals the full training data (which is typically not feasible).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class "kernelshap" with the following components:
+</p>
+
+<ul>
+<li> <p><code>S</code>: <code class="reqn">(n \times p)</code> matrix with SHAP values.
+</p>
+</li>
+<li> <p><code>X</code>: Same as input argument <code>X</code>.
+</p>
+</li>
+<li> <p><code>baseline</code>: The baseline.
+</p>
+</li>
+<li> <p><code>exact</code>: <code>TRUE</code>.
+</p>
+</li>
+<li> <p><code>txt</code>: Summary text.
+</p>
+</li>
+<li> <p><code>predictions</code>: Vector with predictions of <code>X</code> on the scale of "terms".
+</p>
+</li>
+<li> <p><code>algorithm</code>: "additive_shap".
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># MODEL ONE: Linear regression
+fit &lt;- lm(Sepal.Length ~ ., data = iris)
+s &lt;- additive_shap(fit, head(iris))
+s
+
+# MODEL TWO: More complicated (but not very clever) formula
+fit &lt;- lm(
+  Sepal.Length ~ poly(Sepal.Width, 2) + log(Petal.Length) + log(Sepal.Width),
+  data = iris
+)
+s_add &lt;- additive_shap(fit, head(iris))
+s_add
+
+# Equals kernelshap()/permshap() when background data is full training data
+s_kernel &lt;- kernelshap(
+ fit, head(iris[c("Sepal.Width", "Petal.Length")]), bg_X = iris
+)
+all.equal(s_add$S, s_kernel$S)
+</code></pre>
+
+
+</div>

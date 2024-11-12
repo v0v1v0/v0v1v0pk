@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gene_name_number,character-method</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to get genes names and numbers from kegg (for internal use)</h2>
+
+<h3>Description</h3>
+
+<p>This function extracts for a particular <code>pathway</code> all genes and 
+the numbers they are represented with in the KEGG network from the 
+corresponding KGML pathway file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'character'
+gene_name_number(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>character</code> hsa identifier of the pathway for which gene 
+infomation should be extracted as used in KEGG database ('hsa00100').</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> listing the genes included in the pathway with 
+their names as well as numbers used in KEGG database.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs, Patricia Burger
+</p>
+
+
+</div>

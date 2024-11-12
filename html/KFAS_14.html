@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hatvalues.KFS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract Hat Values from KFS Output</h2>
+
+<h3>Description</h3>
+
+<p>Extract hat values from KFS output, when <code>KFS</code> was run with signal
+(non-Gaussian case) or mean smoothing (Gaussian case).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'KFS'
+hatvalues(model, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>An object of class <code>KFS</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments to <code>approxSSM</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Hat values in <code>KFAS</code> are defined as the diagonal elements of <code>V_t/H_t</code> where V_t
+is the covariance matrix of signal/mean at time t and H_t is the covariance
+matrix of disturbance vector <code class="reqn">\epsilon</code> of (approximating) Gaussian model
+at time t. This definition gives identical results with the standard
+definition in case of GLMs. Note that it is possible to construct a state
+space model where this definition is not meaningful (for example the
+covariance matrix H_t can contain zeros on diagonal).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Multivariate time series containing hat values.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">model &lt;- SSModel(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings)
+out &lt;- KFS(model, filtering = "state", smoothing = "none")
+# estimate sigma2
+model["H"] &lt;- mean(c(out$v[1:out$d][out$Finf==0]^2/out$F[1:out$d][out$Finf==0],
+                     out$v[-(1:out$d)]^2/out$F[-(1:out$d)]))
+c(hatvalues(KFS(model)))
+
+</code></pre>
+
+
+</div>

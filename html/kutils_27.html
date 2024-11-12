@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyCrossRef</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>keyCrossRef</h2>
+
+<h3>Description</h3>
+
+<p>Checks a key for dangerous matches of old and new values in a key
+for different levels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyCrossRef(key, ignoreClass = NULL, verbose = FALSE, lowercase = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>A variable key, ideally a long key. If a wide key is
+provided it is converted to long.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignoreClass</code></td>
+<td>
+<p>Classes that should be excluded from
+check. Useful when many integer variables are being reverse-
+coded. Takes a string or vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Should a statement about the number of issues
+detected be returned? Defaults to FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lowercase</code></td>
+<td>
+<p>Should old and new values be passed through
+tolower function? Defaults to FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Positions in a long key are referred to as levels. If a value is
+mismatched at levels 1 and 3, this means that issues are in rows 1
+and 3 of the section of the given variable in a long key.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Presents a warning for potentially problematic key
+sections. Return is dependent on verbose argument.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ben Kite &lt;bakite@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- data.frame(x1 = sample(c("a", "b", "c", "d"), 100, replace = TRUE),
+                  x2 = sample(c("Apple", "Orange"), 100, replace = TRUE),
+                  x3 = ordered(sample(c("low", "medium", "high"), 100, replace = TRUE),
+                  levels = c("low", "medium", "high")),
+                  stringsAsFactors = FALSE)
+key &lt;- keyTemplate(dat, long = TRUE)
+## No errors with a fresh key.
+kutils:::keyCrossRef(key, verbose = TRUE)
+key[1:2, "value_new"] &lt;- c("b", "a")
+key[5, "value_new"]
+key[7:9, "value_new"] &lt;- c("high", "medium", "low")
+kutils:::keyCrossRef(key)
+kutils:::keyCrossRef(key, ignoreClass = c("ordered", "character"), verbose = TRUE)
+</code></pre>
+
+
+</div>

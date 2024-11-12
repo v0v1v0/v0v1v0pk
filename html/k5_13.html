@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>filter_rx</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Filter a data frame by a regular expression</h2>
+
+<h3>Description</h3>
+
+<p>A shortcut for <code>dat %&gt;% filter(str_detect(column, "\\d"))</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">filter_rx(dat, col, pattern, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>A data frame with a character column to filter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>The column containing a character vector to input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pattern</code></td>
+<td>
+<p>Pattern to look for..</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>stringr::str_detect()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A subset of rows from <code>dat</code>.
+</p>
+
+
+</div>

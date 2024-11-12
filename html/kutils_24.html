@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>isNA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check if values are R NA symbol or any one of the na.strings
+elements</h2>
+
+<h3>Description</h3>
+
+<p>A value vector in the key will generally be a character
+vector.  This utility is used to check if the characters
+are either R missing or values in a list of characters that
+represent missings.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">isNA(x, na.strings = c("\\.", "", "\\s+", "N/A"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input data vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>Vector of string values to be considered as
+missing. Defaults will match values that are equal to ., empty
+string, any number of white space elements, or charcter
+string N/A. We do not include 'NA' by default because some
+projects use NA to mean "not appropriate".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Logical vector, TRUE if a value is either NA or in
+na.strings.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x1 &lt;- c("TRUE", "FALSE", FALSE, TRUE, NA, "NA", ".", "N/A", " ", "")
+x1na &lt;- kutils:::isNA(x1)
+cbind(x1, x1na)
+</code></pre>
+
+
+</div>

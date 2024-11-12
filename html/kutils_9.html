@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cleanDataFrame</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check and Clean data.frame for usage with variable key functions</h2>
+
+<h3>Description</h3>
+
+<p>Checks that the data.frame is made up of simple individual
+columns. Checks numeric columns to find out if they are acceptable
+to treat as integers. If they are acceptable to treat as integers,
+then convert those numeric to integer class variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cleanDataFrame(dframe, safeNumericToInteger = TRUE, trimws = "both")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dframe</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safeNumericToInteger</code></td>
+<td>
+<p>Default TRUE: Should we treat values
+which appear to be integers as integers? If a column is
+numeric, it might be safe to treat it as an integer.  In many
+csv data sets, the values coded c(1, 2, 3) are really
+integers, not floats c(1.0, 2.0, 3.0). See <code>safeInteger</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trimws</code></td>
+<td>
+<p>Defaults as "both", in meaning of <code>which</code>
+argument in <code>trimws</code> function.  Set as NULL if character
+variables must not be trimmed to eliminate white
+space. Otherwise, value should be one of <code>c("left",
+"right", "both")</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A checked and cleaned data frame
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+</div>

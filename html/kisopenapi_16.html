@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kis_revise_cancel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KIS revise and cancel orders</h2>
+
+<h3>Description</h3>
+
+<p>Revise and cancel orders.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kis_revise_cancel(
+  order_no,
+  order_branch,
+  order_qty,
+  order_price,
+  prdt_code,
+  order_dv = "00",
+  cncl_dv = c("01", "02"),
+  qty_all_yn = c("Y", "N")
+)
+
+kis_revise(
+  order_no,
+  order_branch,
+  order_qty,
+  order_price,
+  prdt_code,
+  order_dv = "00",
+  cncl_dv = "01",
+  qty_all_yn = c("Y", "N")
+)
+
+kis_cancel(
+  order_no,
+  order_branch,
+  order_qty,
+  order_price,
+  prdt_code,
+  order_dv = "00",
+  cncl_dv = "02",
+  qty_all_yn = c("Y", "N")
+)
+
+kis_cancel_all()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>order_no</code></td>
+<td>
+<p>A string specifying order number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_branch</code></td>
+<td>
+<p>A string specifying branch code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_qty</code></td>
+<td>
+<p>A numeric or string specifying order quantity</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_price</code></td>
+<td>
+<p>A numeric or string specifying order price</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prdt_code</code></td>
+<td>
+<p>A string specifying account product code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_dv</code></td>
+<td>
+<p>A string specifying limit order(00) or market order(01)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cncl_dv</code></td>
+<td>
+<p>A string specifying revise(01) or cancel(02)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qty_all_yn</code></td>
+<td>
+<p>A string specifying total order quantity or not</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list contains rt_cd: return code, msg_cd: message code,
+msg1: message
+</p>
+<p>response
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## revise
+## Not run: 
+kis_revise(
+  order_no = "your order number",
+  order_branch = "your order branch", order_qty = "your order quantity",
+  order_price = "your order price"
+)
+
+## End(Not run)
+## cancel
+## Not run: 
+kis_cancel(
+  order_no = "your order number",
+  order_branch = "your order branch", order_qty = "your order quantity",
+  order_price = "your order price"
+)
+
+## End(Not run)
+## cancel all
+## Not run: 
+kis_cancel_all()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

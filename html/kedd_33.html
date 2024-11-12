@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.h.ucv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot for Unbiased Cross-Validation
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>plot.h.ucv</code> function loops through calls to 
+the <code>h.ucv</code> function. Plot for unbiased cross-validation 
+function for 1-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'h.ucv'
+plot(x, seq.bws=NULL, ...)
+## S3 method for class 'h.ucv'
+lines(x,seq.bws=NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>h.ucv</code> (output from <code>h.ucv</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.bws</code></td>
+<td>
+<p>the sequence of bandwidths in which to compute the unbiased 
+cross-validation function. By default, the procedure defines a sequence of 
+50 points, from <code>0.15*hos</code> to <code>2*hos</code> (Over-smoothing).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphics parameters, see <code>par</code> in package "graphics".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Plot of 1-d unbiased cross-validation function are sent to graphics window.<br></p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.bws</code></td>
+<td>
+<p>the sequence of bandwidths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ucv</code></td>
+<td>
+<p>the values of the unbiased cross-validation function in the bandwidths grid.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>h.ucv</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">oldpar &lt;- par(no.readonly = TRUE)
+par(mfrow=c(2,1))
+plot(h.ucv(trimodal,deriv.order=0),seq.bws=seq(0.06,0.2,length=50))
+plot(h.ucv(trimodal,deriv.order=1),seq.bws=seq(0.06,0.2,length=50))
+par(oldpar)
+</code></pre>
+
+
+</div>

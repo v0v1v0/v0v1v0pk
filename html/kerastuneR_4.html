@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fit_tuner</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Search</h2>
+
+<h3>Description</h3>
+
+<p>Start the search for the best hyperparameter configuration. 
+The call to search has the same signature as “'model.fit()“'.
+Models are built iteratively by calling the model-building function, which populates the hyperparameter space 
+(search space) tracked by the hp object. The tuner progressively explores the space, recording metrics for 
+each configuration.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fit_tuner(
+  tuner,
+  x = NULL,
+  y = NULL,
+  steps_per_epoch = NULL,
+  batch_size = NULL,
+  epochs = NULL,
+  validation_data = NULL,
+  validation_steps = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tuner</code></td>
+<td>
+<p>A tuner object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector, matrix, or array of training data (or list if the model has multiple inputs). 
+If all inputs in the model are named, you can also pass a list mapping input names to data. x can be NULL
+(default) if feeding from framework-native tensors (e.g. TensorFlow data tensors).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Vector, matrix, or array of target (label) data (or list if the model has multiple outputs). 
+If all outputs in the model are named, you can also pass a list mapping output names to data. y can be 
+NULL (default) if feeding from framework-native tensors (e.g. TensorFlow data tensors).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps_per_epoch</code></td>
+<td>
+<p>Integer. Total number of steps (batches of samples) to yield from generator before 
+declaring one epoch finished and starting the next epoch. It should typically be equal to 
+ceil(num_samples / batch_size). Optional for Sequence: if unspecified, will use the len(generator) 
+as a number of steps.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Integer or 'NULL'. Number of samples per gradient update.
+If unspecified, 'batch_size' will default to 32.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epochs</code></td>
+<td>
+<p>to train the model. Note that in conjunction with initial_epoch, 
+epochs is to be understood as "final epoch". The model is not trained for a number of iterations
+given by epochs, but merely until the epoch of index epochs is reached.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>validation_data</code></td>
+<td>
+<p>Data on which to evaluate the loss and any model metrics at the end of each epoch. 
+The model will not be trained on this data. validation_data will override validation_split. 
+validation_data could be: - tuple (x_val, y_val) of Numpy arrays or 
+tensors - tuple (x_val, y_val, val_sample_weights) of Numpy arrays - dataset or a dataset iterator</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>validation_steps</code></td>
+<td>
+<p>Only relevant if steps_per_epoch is specified. Total number of steps (batches of samples)
+to validate before stopping.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Some additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>performs a search for best hyperparameter configuations
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+
+library(keras)
+x_data &lt;- matrix(data = runif(500,0,1),nrow = 50,ncol = 5) 
+y_data &lt;-  ifelse(runif(50,0,1) &gt; 0.6, 1L,0L) %&gt;% as.matrix()
+x_data2 &lt;- matrix(data = runif(500,0,1),nrow = 50,ncol = 5)
+y_data2 &lt;-  ifelse(runif(50,0,1) &gt; 0.6, 1L,0L) %&gt;% as.matrix()
+
+
+HyperModel &lt;- PyClass(
+  'HyperModel',
+  inherit = HyperModel_class(),
+  list(
+    
+    `__init__` = function(self, num_classes) {
+      
+      self$num_classes = num_classes
+      NULL
+    },
+    build = function(self,hp) {
+      model = keras_model_sequential() 
+      model %&gt;% layer_dense(units = hp$Int('units',
+                                           min_value = 32,
+                                           max_value = 512,
+                                           step = 32),
+                            input_shape = ncol(x_data),
+                            activation = 'relu') %&gt;% 
+        layer_dense(as.integer(self$num_classes), activation = 'softmax') %&gt;% 
+        compile(
+          optimizer = tf$keras$optimizers$Adam(
+            hp$Choice('learning_rate',
+                      values = c(1e-2, 1e-3, 1e-4))),
+          loss = 'sparse_categorical_crossentropy',
+          metrics = 'accuracy')
+    }
+  )
+)
+
+hypermodel = HyperModel(num_classes=10L)
+
+
+tuner = RandomSearch(hypermodel = hypermodel,
+                     objective = 'val_accuracy',
+                     max_trials = 2,
+                    executions_per_trial = 1,
+                     directory = 'my_dir5',
+                     project_name = 'helloworld')
+                     
+tuner %&gt;% fit_tuner(x_data, y_data, epochs = 1, validation_data = list(x_data2,y_data2)) 
+
+## End(Not run)
+</code></pre>
+
+
+</div>

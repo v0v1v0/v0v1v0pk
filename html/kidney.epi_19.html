@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>service.output_message</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Produce message for warning or cat</h2>
+
+<h3>Description</h3>
+
+<p>Produce message for warning or cat
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">service.output_message(x, custom_phrase, warning_type)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric. The value to be checked (usualy a counter of some variable).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_phrase</code></td>
+<td>
+<p>Character string. Custom message to be inserted in the middle of standard message.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warning_type</code></td>
+<td>
+<p>Character string. The type of message: warning (with substitution to NA) or cat (with leave as is).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Produce message that is used by warning or cat in the ktx.kdpi.optn function. 
+Service function that will not be exported to user, and used only in the ktx.kdpi.optn function.
+</p>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character string. Returns a phrase.
+</p>
+
+
+</div>

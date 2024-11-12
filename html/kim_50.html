@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geomean</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Geometric mean</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the geometric mean of a numeric vector
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">geomean(x = NULL, zero_or_neg_convert_to = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zero_or_neg_convert_to</code></td>
+<td>
+<p>the value to which zero or negative
+values will be converted to. If <code>zero_or_neg_convert_to == NA</code>,
+zero or negative values will be converted to NA values and thus be
+excluded when calculating the geometric mean. (default = NA)</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+geomean(c(1, 4))
+geomean(c(1, 100))
+geomean(c(1, 100, NA))
+geomean(c(1, 100, NA, 0, -1, -2))
+geomean(
+x = c(1, 100, NA, 0, -1, -2),
+zero_or_neg_convert_to = 1)
+geomean(c(1, 100, NA, 1, 1, 1))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

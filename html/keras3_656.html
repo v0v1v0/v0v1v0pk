@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random_seed_generator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generates variable seeds upon each call to a RNG-using function.</h2>
+
+<h3>Description</h3>
+
+<p>In Keras, all RNG-using methods (such as <code>random_normal()</code>)
+are stateless, meaning that if you pass an integer seed to them
+(such as <code>seed = 42</code>), they will return the same values at each call.
+In order to get different values at each call, you must use a
+<code>SeedGenerator</code> instead as the seed argument. The <code>SeedGenerator</code>
+object is stateful.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random_seed_generator(seed = NULL, name = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Initial seed for the random number generator</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>SeedGenerator</code> instance, which can be passed as the <code style="white-space: pre;">⁠seed = ⁠</code>
+argument to other random tensor generators.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>seed_gen &lt;- random_seed_generator(seed = 42)
+values &lt;- random_normal(shape = c(2, 3), seed = seed_gen)
+new_values &lt;- random_normal(shape = c(2, 3), seed = seed_gen)
+</pre></div>
+<p>Usage in a layer:
+</p>
+<div class="sourceCode r"><pre>layer_dropout2 &lt;- new_layer_class(
+  "dropout2",
+  initialize = function(...) {
+    super$initialize(...)
+    self$seed_generator &lt;- random_seed_generator(seed = 1337)
+  },
+  call = function(x, training = FALSE) {
+    if (training) {
+      return(random_dropout(x, rate = 0.5, seed = self$seed_generator))
+    }
+    return(x)
+  }
+)
+
+out &lt;- layer_dropout(rate = 0.8)
+out(op_ones(10), training = TRUE)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([0. 5. 5. 0. 0. 0. 0. 0. 0. 0.], shape=(10), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other random: <br><code>random_beta()</code> <br><code>random_binomial()</code> <br><code>random_categorical()</code> <br><code>random_dropout()</code> <br><code>random_gamma()</code> <br><code>random_integer()</code> <br><code>random_normal()</code> <br><code>random_shuffle()</code> <br><code>random_truncated_normal()</code> <br><code>random_uniform()</code> <br></p>
+
+
+</div>

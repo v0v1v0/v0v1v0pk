@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>palette_shape</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Symbol Mapping</h2>
+
+<h3>Description</h3>
+
+<p>Symbol Mapping
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">palette_shape(symbols = NULL, domain = NULL, ordered = FALSE, ...)
+
+palette_line(types = NULL, domain = NULL, ordered = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>symbols, types</code></td>
+<td>
+<p>A vector of symbols or line types.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>domain</code></td>
+<td>
+<p>A vector of categorical data specifying the possible values
+that can be mapped.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ordered</code></td>
+<td>
+<p>A <code>logical</code> scalar: should the levels be treated as already
+in the correct order?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A palette <code>function</code> that when called with a single argument
+(a <code>character</code> vector of categorical values) returns a vector of symbols.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other palettes: 
+<code>palette_color_continuous()</code>,
+<code>palette_color_discrete()</code>,
+<code>palette_color_picker()</code>,
+<code>palette_size_range()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Build color palette functions
+bright &lt;- c(versicolor = "#4477AA", virginica = "#EE6677", setosa = "#228833")
+pal_color &lt;- palette_color_discrete(colors = bright)
+
+## Build symbol palette functions
+symbols &lt;- c(versicolor = 15, virginica = 16, setosa = 17)
+pal_shapes &lt;- palette_shape(symbols)
+
+## Plot
+plot(
+  x = iris$Petal.Length,
+  y = iris$Sepal.Length,
+  pch = pal_shapes(iris$Species),
+  col = pal_color(iris$Species),
+  xlab = "Petal length",
+  ylab = "Sepal length",
+  panel.first = grid(),
+  las = 1
+)
+legend("topleft", legend = names(bright), col = bright, pch = symbols)
+</code></pre>
+
+
+</div>

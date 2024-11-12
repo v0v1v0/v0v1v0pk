@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Deming</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Fit Deming regression.
+</h2>
+
+<h3>Description</h3>
+
+<p>Deming regression fit. Assume x and y variances are the same. Slightly modified from MethComp R package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Deming(x, y, vr = sdr^2, sdr = sqrt(vr), boot = TRUE, keep.boot = FALSE, 
+    alpha = 0.05) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vr</code></td>
+<td>
+
+<p>tbdvr
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdr</code></td>
+<td>
+
+<p>tbdsdr
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boot</code></td>
+<td>
+
+<p>tbdboot
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep.boot</code></td>
+<td>
+
+<p>tbdkeep.boot
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+
+<p>tbdalpha
+</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+set.seed(1)
+x=rnorm(100,0,1)
+y=x+rnorm(100,0,.5)
+x=x+rnorm(100,0,.5)
+fit=Deming(x,y, boot=TRUE)
+summary(fit)
+plot(x,y)
+abline(fit)
+# compare with lm fit
+fit.1=lm(y~x, data.frame(x,y))
+summary(fit.1)
+abline(fit.1, col=2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

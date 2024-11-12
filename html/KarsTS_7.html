@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>are2TsTimeCompatible</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+are2TsTimeCompatible: test time compatibility between two time series
+</h2>
+
+<h3>Description</h3>
+
+<p>It checks for three types of compatibility: the initial dates are the same, the sampling period is the same and the final date is the same. It is used internally to check whether the inputs chosen by the user are appropiated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">are2TsTimeCompatible (TS1, TS2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TS1</code></td>
+<td>
+
+<p>A time series
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TS2</code></td>
+<td>
+
+<p>Another time series
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A logical vector, which is c(TRUE, TRUE, TRUE) when all the time compatibilty conditions are met.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Generate two time series
+TS1 &lt;- genTSExample(InKTSEnv = FALSE)
+TS2 &lt;- genTSExample(InKTSEnv = FALSE)
+
+## Their times are identical
+timeComp &lt;- are2TsTimeCompatible (TS1, TS2)
+timeComp
+
+## We modifify the time of TS2. Now their starts are different,
+## although they still have same sampling period and length
+TS2$time &lt;- TS2$time + 1
+timeComp &lt;- are2TsTimeCompatible (TS1,  TS2)
+timeComp
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.IBD</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot IBD patterns and pattern distributions</h2>
+
+<h3>Description</h3>
+
+<p>Plot IBD patterns and pattern distributions</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'IBD'
+plot(x,labels=NULL,probs=NULL,order=NULL,colrs=c('black','red','blue'), 
+digits=3,nr=ceiling(sqrt(np)),...)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A matrix whose rows are IBD patterns, or a list whose components are <code>patt</code>, such a matrix, together with <code>pr</code>, a vector of the corresponding probabilities</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>Vector of numerical or character labels for the patterns, if <code>NA</code>, labels are constructed from the patterns by catenation, if <code>NULL</code>, the labels are not displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>probs</code></td>
+<td>
+<p>Vector of probabilities of the patterns, if not provided as a component of <code>pattern</code>; if <code>NULL</code>, the probabilities are not displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>A character string, partially matched using <code>pmatch</code> to one of 'pattern', 'probs', or 'labels', requesting ordering diagram accordingly (in the case of <code>probs</code> in decreasing order, <strong>or</strong> a numeric, complex, character or logical vector of length the number of patterns, requesting ordering by this variable, <strong>or</strong> NULL (the default), requesting no re-ordering.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colrs</code></td>
+<td>
+<p>A vector of colours: ties in the ordering variable are indicated by coloured groups, with colours chosen cyclically from this vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>Integer, overwriting default number of significant digits for <code>probs</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nr</code></td>
+<td>
+<p>Integer, overwriting default number of rows for plotted array, default a rounding up of the square root of the number of patterns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments to <code>plot</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No value is returned, the function is called for its side effect, a plot on the current display device.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(ribd)
+data(emperors)
+
+plot.IBD(convertIBD('3cousins-star'),order='probs',col=c('blue','red','black'))
+
+plot(attr(emperors,'ped'))
+
+o&lt;-order(emperors$pr)[1:12]
+plot.IBD(emperors$patt[o,],probs=emperors$pr[o],labels=NA,order='probs')
+</code></pre>
+
+
+</div>

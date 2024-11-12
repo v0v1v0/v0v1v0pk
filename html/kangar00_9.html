@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lkmt_test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A function to calculate the p-values for kernel matrices.</h2>
+
+<h3>Description</h3>
+
+<p>For parameter <code>'satt'</code> a pathway's influence on the probability of 
+beeing a case is evaluated in the logistic kernel machine test and p-values 
+are determined using a Sattherthwaite approximation as described by Dan Schaid.
+</p>
+<p>For parameter <code>'davies'</code> a pathways influence on the probability
+of beeing a case is evaluated using the p-value calculation method described 
+by Davies. Here the function <code>davies</code> from package 
+<span class="pkg">CompQuadForm</span> is used.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lkmt_test(formula, kernel, GWASdata, method = c("satt", "davies"), ...)
+
+## S4 method for signature 'matrix'
+score_test(x1, x2)
+
+## S4 method for signature 'matrix'
+davies_test(x1, x2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>The formula to be used for the regression nullmodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>An object of class <code>kernel</code> including the pathway 
+representing kernel-matrix based on which the test statistic will be calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>GWASdata</code></td>
+<td>
+<p>A <code>GWASdata</code> object stating the data used in analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A <code>character</code> specifying which method will be used for 
+p-value calculation. Available are <code>'satt'</code> for the Satterthwaite 
+approximation and <code>'davies'</code> for Davies' algorithm. For more details 
+see the references.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments can be given to the function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x1</code></td>
+<td>
+<p>A <code>matrix</code> which is the
+similarity matrix calculated for the pathway to be tested.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x2</code></td>
+<td>
+<p>An <code>lm</code> or <code>glm</code> object of the nullmodel with fixed 
+effects covariates included, but no genetic random effects.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An <code>lkmt</code> object including the following test results
+</p>
+
+<ul>
+<li>
+<p> The formula of the regression nullmodel used in the variance component test.
+</p>
+</li>
+<li>
+<p> An object of class <code>kernel</code> including the similarity matrix of the individuals based on which the pathways influence is evaluated.
+</p>
+</li>
+<li>
+<p> An object of class <code>GWASdata</code> stating the data on which the test was conducted.
+</p>
+</li>
+<li>
+<p> statistic A <code>vector</code> giving the value of the variance component test statistic.
+</p>
+</li>
+<li>
+<p> df A <code>vector</code> giving the number of degrees of freedom.
+</p>
+</li>
+<li>
+<p> p.value A <code>vector</code> giving the p-value calculated for the pathway in the variance component test.
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs, Juliane Manitz
+</p>
+
+
+<h3>References</h3>
+
+<p>For details on the variance component test 
+</p>
+
+<ul>
+<li>
+<p> Wu MC, Kraft P, Epstein MP, Taylor DM, Chanock SJ, Hunter DJ, Lin X: Powerful SNP-Set Analysis for Case-Control Genome-Wide Association Studies. Am J Hum Genet 2010, 86:929-42
+</p>
+</li>
+<li>
+<p>  Liu D, Lin X, Ghosh D: Semiparametric regression of multidimensional genetic pathway data: least-squares kernel machines and linear mixed models. Biometrics 2007, 63(4):1079-88.
+</p>
+</li>
+</ul>
+<p>For details on the p-value calculation see
+</p>
+
+<ul><li>
+<p> Schaid DJ: Genomic Similarity and Kernel Methods I: Advancements by Building on Mathematical and Statistical Foundations. Hum Hered 2010, 70:109-31
+</p>
+</li></ul>
+<ul><li>
+<p> Davies R: Algorithm as 155: the distribution of a linear combination of chi-2 random variables. J R Stat Soc Ser C 1980, 29:323-333.
+</p>
+</li></ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(hsa04020)
+data(gwas)
+net_kernel &lt;- calc_kernel(gwas, hsa04020, knots=NULL, type='net', calculation='cpu')
+lkmt_test(pheno ~ sex + age, net_kernel, gwas, method='satt')
+</code></pre>
+
+
+</div>

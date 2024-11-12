@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>EvaluatePanel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate a panel</h2>
+
+<h3>Description</h3>
+
+<p>Transfer the input allele frequency data (in a .csv file or a data frame) into form usable for other functions and then calculate several population parameters based on the frequency data for each marker.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">EvaluatePanel(
+  type = "csv",
+  strpath,
+  raremode = "ISFG",
+  Nind = "lastrow",
+  Th = 0.01
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of input data, either 'csv'(a .csv containing af matrix, with the marker names listed in the first row), or 'df' (a data frame cantaining the af matrix with the marker names as column names)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strpath</code></td>
+<td>
+<p>pathway of the .csv file or the name of the data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>raremode</code></td>
+<td>
+<p>mode of the calculation method of rare alleles, with a default of "ISFG", indicating the recommended method from ISFG, i.e., (X+1)/(2N+1), where X and N stood for the number of allele types detected in a survey and the sample size, respectively. Three alternative methods are given: "MAF", take the minimum allele frequency as such frequency; "1/2N", take the minimum of possible frequency a survey can achieved; and a number .</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Nind</code></td>
+<td>
+<p>mode of sample size, with a default of "lastrow", meaning that the sample size was presented in the last row of the .csv file. An alternative method is given, i.e., input a unified sample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Th</code></td>
+<td>
+<p>The threshold for the difference in allele frequency sum at a locus with 1, to detect data error from rounding error when the frequency sum does not equal 1. Loci exceeding this threshold will be excluded from the calculation.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of four vectors: afmatrix, a list of allele frequency data of each locus; rare, a data.frame containing the frequency of rare allele on each locus; indicators, a data.frame containing parameters of system efficiency for each locus; panelparas, a data.frame containing system efficiency parameters for the whole panel, with the form of log10(1-paramter) to avoid the situation that the parameters being displayed as 1 because they were too close to 1
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#A .csv file can be output with FortytwoSTR data
+path&lt;-tempdir()
+outputCSV(FortytwoSTR,file.path(path,'data.csv'))
+#Example 1, 'df' type, by read the csv file into a data frame
+allele_data &lt;- read.csv(file = file.path(path,'data.csv'), header = TRUE)
+STR42&lt;- EvaluatePanel(type = 'df',strpath = allele_data,raremode = "ISFG",Nind = "lastrow")
+#Example 2, 'csv' type, the same evaluation can be done by directly input the csv file
+STR42_2 &lt;- EvaluatePanel(type = 'csv',strpath = file.path(path,'data.csv'),
+raremode = "ISFG",Nind = "lastrow")
+#The data "FortytwoSTR" is generated with these codes.
+</code></pre>
+
+
+</div>

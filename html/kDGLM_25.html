@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_Normal_Multinom</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>convert_Normal_Multinom</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the parameters of the log-Normal that best approximates the given Dirichlet distribution.
+The approximation is the best in the sense that it minimizes the KL divergence from the Dirichlet to the log-Normal
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_Normal_Multinom(conj.param, parms = list())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>list: A vector containing the concentration parameters of the Dirichlet.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list: A list of extra known parameters of the distribution. Not used in this kernel.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The parameters of the Normal distribution of the linear predictor.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Multinomial outcome: 
+<code>convert_Multinom_Normal()</code>,
+<code>multnom_pred()</code>,
+<code>update_Multinom()</code>
+</p>
+
+
+</div>

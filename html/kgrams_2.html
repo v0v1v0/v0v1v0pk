@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>%+%</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>String concatenation</h2>
+
+<h3>Description</h3>
+
+<p>String concatenation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lhs %+% rhs
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lhs</code></td>
+<td>
+<p>a string or vector of strings.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rhs</code></td>
+<td>
+<p>a string or vector of strings.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The expression <code>lhs %+% rhs</code> is equivalent to
+<code>paste(lhs, rhs, sep = " ", collapse = NULL, recycle0 = FALSE)</code>.
+See paste for more details.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a string or vector of strings.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+<p>Brief synthax for string concatenation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>paste
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">"i love" %+% c("cats", "jazz", "you")
+</code></pre>
+
+
+</div>

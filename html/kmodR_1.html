@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmod</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>K-Means clustering with simultaneous Outlier Detection</h2>
+
+<h3>Description</h3>
+
+<p>An implementation of the 'k-means–' algorithm proposed
+by Chawla and Gionis, 2013 in their paper,
+"k-means– : A unified approach to clustering and outlier detection.
+SIAM International Conference on Data Mining (SDM13)",
+doi: <a href="https://doi.org/10.1137/1.9781611972832.21">10.1137/1.9781611972832.21</a>
+and using 'ordering' described by Howe, 2013 in the thesis,
+"Clustering and anomaly detection in tropical cyclones".
+</p>
+<p>Useful for creating (potentially) tighter clusters than
+standard k-means and simultaneously finding outliers inexpensively
+in multidimensional space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmod(
+  X,
+  k = 5,
+  l = 0,
+  i_max = 100,
+  conv_method = "delta_C",
+  conv_error = 0,
+  allow_empty_c = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>matrix of numeric data or an object that can be coerced
+to such a matrix (such as a data frame with numeric columns only).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>the number of clusters (default = 5)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l</code></td>
+<td>
+<p>the number of outliers (default = 0)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i_max</code></td>
+<td>
+<p>the maximum number of iterations permissible
+(default = 100)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conv_method</code></td>
+<td>
+<p>character: the method used to assess
+if kmod has converged (default = "delta_C")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conv_error</code></td>
+<td>
+<p>numeric: the tolerance permissible when
+assessing convergence (default = 0)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allow_empty_c</code></td>
+<td>
+<p>logical: set whether empty clusters are
+permissible (default = FALSE)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>kmod returns a list comprising the following components
+</p>
+<p><code>k</code> the number of clusters specified
+</p>
+<p><code>l</code> the number of outliers specified
+</p>
+<p><code>C</code> the set of cluster centroids
+</p>
+<p><code>C_sizes</code> cluster sizes
+</p>
+<p><code>C_ss</code> the sum of squares for each cluster
+</p>
+<p><code>L</code> the set of outliers
+</p>
+<p><code>L_dist_sqr</code> the distance squares for each outlier to C
+</p>
+<p><code>L_index</code> the index of each outlier in the supplied dataset
+</p>
+<p><code>XC_dist_sqr_assign</code> the distance square and cluster assignment
+of each point in the supplied dataset
+</p>
+<p><code>within_ss</code> the within cluster sum of squares (excludes outliers)
+</p>
+<p><code>between_ss</code> the between cluster sum of squares
+</p>
+<p><code>tot_ss</code> the total sum of squares
+</p>
+<p><code>iterations</code> the number of iterations taken to converge
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># a 2-dimensional example with 2 clusters and 5 outliers
+x &lt;- rbind(matrix(rnorm(100, sd = 0.3), ncol = 2),
+           matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2))
+colnames(x) &lt;- c("x", "y")
+(cl &lt;- kmod(x, 2, 5))
+
+# cluster a dataset with 8 clusters and 0 outliers
+x &lt;- kmod(x, 8)
+</code></pre>
+
+
+</div>

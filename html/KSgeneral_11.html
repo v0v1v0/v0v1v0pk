@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Kuiper2sample</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Computes the p-value for a two-sample Kuiper test, given arbitrary data samples on the real line or on the circle with possibly repeated observations (i.e. ties)
+</h2>
+
+<h3>Description</h3>
+
+<p>Computes the p-value, <code class="reqn">P(V_{m,n} \geq q)</code>, where <code class="reqn">V_{m,n}</code> is the two-sample Kuiper test statistic, <code class="reqn">q</code> = <code>v</code>, i.e. the observed value of the Kuiper statistic, computed based on two data samples <code class="reqn">\{x_{1},..., x_{m}\}</code> and <code class="reqn">\{y_{1},..., y_{n}\}</code> that may come from continuous, discrete or mixed distribution, i.e. they may have repeated observations (ties).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Kuiper2sample(x, y, conservative = F, tail = T)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>a numeric vector of data sample values <code class="reqn">\{x_{1}, ..., x_{m}\}</code>
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>a numeric vector of data sample values <code class="reqn">\{y_{1}, ..., y_{n}\}</code>
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conservative</code></td>
+<td>
+
+<p>logical variable indicating whether ties should be considered. See ‘Details’ for the meaning.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tail</code></td>
+<td>
+
+<p>logical variable indicating whether a p-value, <code class="reqn">P(V_{m,n} \ge q)</code> or one minus the p-value, <code class="reqn">P(V_{m,n} &lt; q)</code>, should be computed. By default, the p-value <code class="reqn">P(V_{m,n} \ge q)</code> is computed. See ‘Details’ for the meaning.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given a pair of random samples, either on the real line or the circle, denoted by <code class="reqn">\bm{X}_m=(X_{1},..., X_{m})</code> and <code class="reqn">\bm{Y}_n=(Y_{1},..., Y_{n})</code>, of sizes <code>m</code> and <code>n</code> with empirical cdfs <code class="reqn">F_{m}(t)</code> and <code class="reqn">G_{n}(t)</code> respectively, coming from some unknown cdfs <code class="reqn">F(x)</code> and <code class="reqn">G(x)</code>. It is assumed that <code class="reqn">F(x)</code> and <code class="reqn">G(x)</code> could be either <em>continuous</em>, <em>discrete</em> or <em>mixed</em>, which means that repeated observations are allowed in the corresponding observed samples. The task is to test the null hypothesis <code class="reqn">H_0: F(x) = G(x)</code>  for all <code class="reqn">x</code>, against the alternative hypothesis <code class="reqn">H_1: F(x)\neq G(x)</code>  for at least one <code class="reqn">x</code>. The two-sample Kuiper goodness-of-fit statistic that is used to test this hypothesis is defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">\varsigma_{m,n} = \sup [F_{m}(t) - G_n(t)] - \inf [F_{m}(t) - G_n(t)].</code>
+</p>
+
+<p>For a particular realization of the pooled sample <code class="reqn">\bm{Z}_{m,n}=(X_{1},..., X_{m},Y_{1},..., Y_{n})</code>, let there be <code class="reqn">k</code> distinct values, <code class="reqn">a_1&lt;a_2&lt;...&lt;a_k</code>, in the ordered, pooled sample <code class="reqn">(z_1\leq z_2\leq \ldots \leq z_{m+n})</code>, where <code class="reqn">k\leq m+n</code>, and where <code class="reqn">m_i</code> is the number of times <code class="reqn">a_i</code>, <code class="reqn">i=1,\ldots,k</code> appears in the pooled sample. The p-value is then defined as the probability
+</p>
+<p style="text-align: center;"><code class="reqn">p=P\left(V_{m,n}\geq q\right),</code>
+</p>
+
+<p>where <code class="reqn">V_{m,n}</code> is the two-sample Kuiper test statistic defined as <code class="reqn">\varsigma_{m,n}</code>, for two samples <code class="reqn">\bm{X}'_m</code> and  <code class="reqn">\bm{Y}'_n</code> of sizes <code class="reqn">m</code> and <code class="reqn">n</code>, <em>randomly drawn from the pooled sample without replacement</em> and <code class="reqn">q</code> = <code>v</code>, the observed value of the statistic calculated based on the user provided data samples <code>x</code> and <code>y</code>. By default <code>tail = T</code>, the p-value is returned, otherwise <code class="reqn">1-p</code> is returned.
+</p>
+<p>Note that, <code class="reqn">V_{m,n}</code> is defined on the space <code class="reqn">\Omega</code> of all possible pairs,  <code class="reqn">C = \frac{(m+n)!}{m!n!}</code>  of edfs <code class="reqn">F_m(x,\omega)</code> and <code class="reqn">G_n(x,\omega)</code>, <code class="reqn">\omega \in \Omega</code>, that correspond to the pairs of samples <code class="reqn">\bm{X}'_m</code> and  <code class="reqn">\bm{Y}'_n</code>, randomly drawn from, <code class="reqn">\bm{Z}_{m+n}</code>, as follows.  First, <code class="reqn">m</code> observations are drawn at random without replacement, forming the first sample <code class="reqn">\bm{X}'_m</code>, with corresponding edf, <code class="reqn">F_m(x,\omega)</code>. The remaining <code class="reqn">n</code> observations are then assigned to the second sample <code class="reqn">\bm{Y}'_n</code>, with corresponding edf <code class="reqn">G_n(x,\omega)</code>. Observations are then replaced back in <code class="reqn">\bm{Z}_{m+n}</code> and re-sampling is continued until the occurrence of all the <code class="reqn">C</code> possible pairs of edfs <code class="reqn">F_m(x,\omega)</code> and <code class="reqn">G_n(x,\omega)</code>,  <code class="reqn">\omega \in \Omega</code>. The pairs of edf's may be coincident if there are ties in the data and each pair, <code class="reqn">F_m(x,\omega)</code> and <code class="reqn">G_n(x,\omega)</code> occurs with probability <code class="reqn">1/C</code>.
+</p>
+<p><code>conservative</code> is a logical variable whether the test should be conducted conservatively. By default, <code>conservative = F</code>, <code>Kuiper2sample</code> returns the p-value that is defined through the conditional probability above. However, when the user has a priori knowledge that both samples are from a continuous distribution even if ties are present, for example, repeated observations are caused by rounding errors, the value <code>conservative = T</code> should be assigned, since the conditional probability is no longer relevant. In this case, <code>Kuiper2sample</code> computes p-values for the Kuiper test assuming no ties are present, and returns a p-value which is an upper bound of the true p-value. Note that, if the null hypothesis is rejected using the calculated upper bound for the p-value, it should also be rejected with the true p-value.
+</p>
+<p><code>Kuiper2sample</code> calculates the exact p-value of the Kuiper test using an algorithm from Dimitrova, Jia, Kaishev (2024), which is based on extending the algorithm provided by Nikiforov (1994) and generalizing the method due to  Maag and Stephens (1968) and Hirakawa (1973). If <code>tail = F</code>, <code>Kuiper2sample</code> calculates the complementary p-value <code class="reqn">1-p</code>. For the purpose, an exact algorithm which generalizes the method due to Nikiforov (1994) is implemented. Alternatively, if <code>tail = T</code>, a version of the Nikiforov's recurrence proposed recently by Viehmann (2021) is further incorporated, which computes directly the p-value, with up to 4 digits extra accuracy, but at up to 3 times higher computational cost. It is accurate and valid for <em>arbitrary (possibly large) sample sizes</em>. This algorithm ensures a total worst-case run-time of order <code class="reqn">O((mn)^{2})</code>. When  <code>m</code> and <code>n</code> have large greatest common divisor (an extreme case is <code>m</code> = <code>n</code>), it ensures a total worst-case run-time of order <code class="reqn">O((m)^{2}n)</code>. 
+</p>
+<p><code>Kuiper2sample</code> is accurate and fast compared with the function based on the Monte Carlo simulation. Compared to the implementation using asymptotic method, <code>Kuiper2sample</code> allows data samples to come from <em>continuous, discrete or mixed distribution</em> (i.e. ties may appear), and is more accurate than asymptotic method when sample sizes are small.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class <code>"htest"</code> containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>the value of the test statistic <code>v</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p>the p-value of the test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alternative</code></td>
+<td>
+<p>a character string describing the alternative
+hypothesis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>a character string giving names of the data.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Maag, U. R., Stephens, M. A. (1968). The <code class="reqn">V_{NM}</code> Two-Sample Test. The Annals of Mathematical Statistics, <b>39</b>(3), 923-935.
+</p>
+<p>Hirakawa, K. (1973). The two-sample Kuiper test. TRU Mathematics, <b>9</b>, 99-118.
+</p>
+<p>Nikiforov, A. M. (1994). "Algorithm AS 288: Exact Smirnov Two-Sample Tests for Arbitrary Distributions." Journal of the Royal Statistical Society. Series C (Applied Statistics), <b>43</b>(1), 265–270.
+</p>
+<p>Viehmann, T. (2021). Numerically more stable computation of the p-values for the two-sample Kolmogorov-Smirnov test. <em>arXiv preprint</em> arXiv:2102.08037.
+</p>
+<p>Dimitrina S. Dimitrova, Yun Jia, Vladimir K. Kaishev (2024). "The R functions KS2sample and Kuiper2sample: Efficient Exact Calculation of P-values of the Two-sample Kolmogorov-Smirnov and Kuiper Tests". <em>submitted</em>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">##Computes discrete circular data
+data1 &lt;- c(rep(pi/2,30),rep(pi,30),rep(3*pi/2,30),rep(2*pi,30))
+data2 &lt;- c(rep(pi/2,50),rep(pi,40),rep(3*pi/2,10),rep(2*pi,50))
+Kuiper2sample(data1, data2)
+
+##The calculated p-value does not change with the choice of the original point
+data3 &lt;- c(rep(pi/2,30),rep(pi,30),rep(3*pi/2,30),rep(2*pi,30))
+data4 &lt;- c(rep(pi/2,50),rep(pi,50),rep(3*pi/2,40),rep(2*pi,10))
+Kuiper2sample(data3, data4)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>centerK</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Centering a kernel matrix</h2>
+
+<h3>Description</h3>
+
+<p>It is equivalent to compute 'K' over centered data (i.e. the mean of each
+column is subtracted) in Feature Space.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">centerK(K)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>Kernel matrix (class "matrix").</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Centered 'K' (class "matrix").
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- matrix(rnorm(250),ncol=50,nrow=5)
+K &lt;- Linear(dat)
+centerK(K)
+</code></pre>
+
+
+</div>

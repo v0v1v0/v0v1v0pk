@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fixParents</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fix details on the parents for children of the pedigree</h2>
+
+<h3>Description</h3>
+
+<p>Fix the sex of parents, add parents that are missing from the pedigree
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fixParents(id, dadid, momid, sex, missid = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>Identification variable for individual</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dadid</code></td>
+<td>
+<p>Identification variable for father. Founders parents should be coded 
+to NA, or another value specified by missid.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>momid</code></td>
+<td>
+<p>Identification variable for mother. Founders parents should be coded
+to NA, or another value specified by missid.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sex</code></td>
+<td>
+<p>Gender of individual noted in 'id'. Either character ("male","female","unknown","terminated")
+or numeric (1="male", 2="female", 3="unknown", 4="terminated")
+data is allowed.  For character data the string may be truncated,
+and of arbitrary case.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>missid</code></td>
+<td>
+<p>The founders are those with no father or mother in the pedigree.  The
+<code>dadid</code> and <code>momid</code> values for these subjects will either be
+NA or the value of this variable.  The default for <code>missid</code> is 0
+if the <code>id</code> variable is numeric, and "" (the empty string)
+otherwise.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>First look to add parents whose ids are given in momid/dadid. Second,
+fix sex of parents. Last look to add second parent for children for whom
+only one parent id is given.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data.frame with id, dadid, momid, sex as columns
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jason Sinnwell
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pedigree</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">test1char &lt;- data.frame(id=paste("fam", 101:111, sep=""),
+  sex=c("male","female")[c(1,2,1,2,1, 1,2, 2,1,2, 1)],
+  father=c(0,0,"fam101","fam101","fam101", 0,0,"fam106","fam106","fam106", "fam109"),
+  mother=c(0,0,"fam102","fam102","fam102", 0,0,"fam107","fam107","fam107", "fam112"))
+test1newmom &lt;- with(test1char, fixParents(id, father, mother, sex, missid="0"))
+newped &lt;- with(test1newmom, pedigree(id, dadid, momid, sex, missid="0"))
+as.data.frame(newped)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kmeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kmeans unsupervised classification.</h2>
+
+<h3>Description</h3>
+
+<p>Performs kmeans unsupervised classification analysis in a data set.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kmeans(data, normalize = FALSE, num.groups = 2)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data to be analyzed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>normalize</code></td>
+<td>
+<p>Normalize the data (default = FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.groups</code></td>
+<td>
+<p>Number of groups to be formed (default = 2).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+ 
+<table>
+<tr style="vertical-align: top;">
+<td><code>groups</code></td>
+<td>
+<p>Original data with groups formed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res.groups</code></td>
+<td>
+<p>Results of the groups formed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R.sqt</code></td>
+<td>
+<p>Result of the R squared.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum.sqt</code></td>
+<td>
+<p>Total sum of squares.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani
+</p>
+
+
+<h3>References</h3>
+
+<p>Rencher, A. C. <em>Methods of multivariate analysis.</em> 2th. ed. New York: J.Wiley, 2002. 708 p.
+</p>
+<p>Mingoti, S. A. <em>analysis de dados atraves de metodos de estatistica multivariada:</em> uma abordagem aplicada. Belo Horizonte: UFMG, 2005. 297 p.
+</p>
+<p>Ferreira, D. F. <em>Estatistica Multivariada.</em> 2a ed. revisada e ampliada. Lavras: Editora UFLA, 2011. 676 p.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+data &lt;- iris
+
+res &lt;- kmeans(data[,1:4], normalize = FALSE, num.groups = 3)
+ 
+message("R squared: ", res$R.sqt)             
+# message("Total sum of squares: ", res$sum.sqt)
+message("Groups formed:"); res$groups
+# message("Table with the results of the groups:"); res$res.groups
+
+#write.table(file=file.path(tempdir(),"GroupData.csv"), res$groups, sep=";",
+#            dec=",",row.names = TRUE)
+</code></pre>
+
+
+</div>

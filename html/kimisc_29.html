@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>seconds.to.hms-deprecated</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts a time value given as number of seconds since midnight to the
+H:M:S format</h2>
+
+<h3>Description</h3>
+
+<p>This function is very similar to <code>strftime</code> with the
+<code>%X</code> conversion specification. Hour values larger than 24 are
+permitted. Fractions will be rounded down to the next integer. Non-numeric
+values are coerced to <code>NA</code> with a warning.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">seconds.to.hms(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A (vector of) numbers.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A (vector of) character values of the same length as <code>x</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>base::strftime()</code>
+</p>
+<p>Other deprecated functions: <code>coalesce.na-deprecated</code>,
+<code>df_to_list-deprecated</code>,
+<code>hms.to.seconds-deprecated</code>,
+<code>kimisc-deprecated</code>,
+<code>list_to_df-deprecated</code>,
+<code>nc-deprecated</code>,
+<code>nlist-deprecated</code>,
+<code>ofactor-deprecated</code>,
+<code>sample.rows-deprecated</code>,
+<code>thisfile-deprecated</code>,
+<code>tll-deprecated</code>,
+<code>vswitch-deprecated</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">seconds.to.hms(c(1, 60, 3600.5))
+seconds.to.hms(c(100000, -4000.5))
+seconds.to.hms("invalid")
+</code></pre>
+
+
+</div>

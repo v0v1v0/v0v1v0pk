@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kanjimat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create kanjimat objects</h2>
+
+<h3>Description</h3>
+
+<p>Create a (list of) kanjimat object(s), i.e. bitmap representations of a kanji using a certain font-family
+and other typographical parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kanjimat(
+  kanji,
+  family = NULL,
+  size = NULL,
+  margin = 0,
+  antialias = TRUE,
+  save = FALSE,
+  overwrite = FALSE,
+  simplify = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kanji</code></td>
+<td>
+<p>a (vector of) character string(s) containing kanji.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the font-family to be used. For details see vignette.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>the sidelength of the (square) bitmap</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>numeric. Extra margin around the character. Defaults to 0 which leaves a relatively slim margin.
+Positive values increase this margin, negative values decrease it (which usually cuts off part of the kanji).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>antialias</code></td>
+<td>
+<p>logical. Shall antialiasing be performed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save</code></td>
+<td>
+<p>logical or character. If FALSE return the (list of) kanjimat object(s). Otherwise save the result
+as an rds file in the working directory (as kmatsave.rds) or under the file path provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>logical. If FALSE return an error (before any computations are done) if the designated
+file path already exists. Otherwise an existing file is overwritten.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+<p>logical. Shall a single kanjimat object be returned (instead a list of one) if <code>kanji</code>
+is a single kanji?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>futher arguments passed to png. This is for extensibility. The only argument
+that may currently be used is <code>type</code>. Trying to change sizes, units, colors or fonts by this argument
+results in an error or an undesirable output.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of objects of class <code>kanjimat</code> or, if only one kanji was specified and
+<code>simplify</code> is <code>TRUE</code>, a single objects of class <code>kanjimat</code>. If <code>save = TRUE</code>,
+the same is (saved and) still returned invisibly.
+</p>
+
+
+<h3>Warning</h3>
+
+<p>If no font family is provided, the default <strong>Chinese</strong> font WenQuanYi Micro Hei that comes with the package showtext is used.
+This means that the characters will typically be recognizable, but quite often look odd as Japanese characters.
+We strongly advised that a Japanese font is used as detailed above.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">res &lt;- kanjimat(kanji="\u85e4", size = 128)
+
+</code></pre>
+
+
+</div>

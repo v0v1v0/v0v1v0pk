@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>file_age</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>File modification date age</h2>
+
+<h3>Description</h3>
+
+<p>The period of time since a system file was modified.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">file_age(...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed to <code>file.info()</code>, namely character vectors
+containing file paths. Tilde-expansion is done: see <code>path.expand()</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A Period class object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">file_age(system.file("README.md", package = "campfin"))
+</code></pre>
+
+
+</div>

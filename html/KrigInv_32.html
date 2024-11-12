@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vorob_optim_parallel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Parallel Vorob'ev criterion </h2>
+
+<h3>Description</h3>
+
+<p>Evaluation of the parallel Vorob'ev criterion for some candidate points. To be used in optimization routines, like in <code>max_vorob_parallel</code>.
+To avoid numerical instabilities, the new points are evaluated only if they are not too close to an existing observation, or if there is some observation noise.
+The criterion is the integral of the posterior Vorob'ev uncertainty.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vorob_optim_parallel(x, integration.points, integration.weights = NULL,
+intpoints.oldmean, intpoints.oldsd,
+precalc.data, model, T,
+new.noise.var = NULL, batchsize, alpha, current.vorob,
+penalisation=NULL,typeEx="&gt;")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input vector of size batchsize*d at which one wants to evaluate the criterion. This argument is NOT a matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.points</code></td>
+<td>
+<p>p*d matrix of points for numerical integration in the X space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.weights</code></td>
+<td>
+<p>Vector of size p corresponding to the weights of these integration points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intpoints.oldmean</code></td>
+<td>
+<p>Vector of size p corresponding to the kriging mean at the integration points before adding the batchsize points <code>x</code> to the design of experiments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intpoints.oldsd</code></td>
+<td>
+<p>Vector of size p corresponding to the kriging standard deviation at the integration points before adding  the batchsize points <code>x</code> to the design of experiments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precalc.data</code></td>
+<td>
+<p>List containing useful data to compute quickly the updated kriging variance. This list can be generated using the <code>precomputeUpdateData</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Object of class <code>km</code> (Kriging model).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>Target value (scalar). The criterion CANNOT be used with multiple thresholds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.noise.var</code></td>
+<td>
+<p>Optional scalar value of the noise variance for the new observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+<p>Number of points to sample simultaneously. The sampling criterion will return batchsize points at a time for sampling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The Vorob'ev threshold.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>current.vorob</code></td>
+<td>
+<p>Current value of the vorob criterion (before adding new observations)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>penalisation</code></td>
+<td>
+<p>Optional penalization constant for type I errors. If equal to zero,  computes the Type II criterion.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>typeEx</code></td>
+<td>
+<p>A character ("&gt;" or "&lt;") identifying the type of excursion</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The first argument <code>x</code> has been chosen to be a vector of size batchsize*d (and not a matrix with batchsize rows and d columns) so that an optimizer like genoud can optimize it easily.
+For example if d=2, batchsize=3 and <code>x=c(0.1,0.2,0.3,0.4,0.5,0.6)</code>, we will evaluate the parallel criterion at the three points (0.1,0.2),(0.3,0.4) and (0.5,0.6).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Parallel vorob value</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+<p>Dario Azzimonti (IDSIA, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Ginsbouger D., Bect J., Molchanov I. (2013) <em>Estimating and quantifying uncertainties on level sets using the Vorob'ev expectation and deviation with gaussian process models</em> mODa 10, Advances in Model-Oriented Design and Analysis, Contributions to Statistics, pp 35-43
+</p>
+<p>Chevalier C. (2013) <em>Fast uncertainty reduction strategies relying on Gaussian process models</em> Ph.D Thesis, University of Bern
+</p>
+<p>Azzimonti, D., Ginsbourger, D., Chevalier, C., Bect, J., and Richet, Y. (2018). <em>Adaptive design of experiments for conservative estimation of excursion sets</em>. Under revision. Preprint at <a href="https://hal.archives-ouvertes.fr/hal-01379642">hal-01379642</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>EGIparallel</code>, <code>max_vorob_parallel</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#vorob_optim_parallel
+
+set.seed(9)
+N &lt;- 20 #number of observations
+T &lt;- 80 #threshold
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design,
+	response = response,covtype="matern3_2")
+
+###we need to compute some additional arguments:
+#integration points, and current kriging means and variances at these points
+integcontrol &lt;- list(n.points=50,distrib="vorob",init.distrib="MC")
+obj &lt;- integration_design(integcontrol=integcontrol,
+lower=c(0,0),upper=c(1,1),model=model,T=T)
+
+integration.points &lt;- obj$integration.points
+integration.weights &lt;- obj$integration.weights
+alpha &lt;- obj$alpha
+pred &lt;- predict_nobias_km(object=model,newdata=integration.points,
+type="UK",se.compute=TRUE)
+intpoints.oldmean &lt;- pred$mean ; intpoints.oldsd&lt;-pred$sd
+
+#another precomputation
+precalc.data &lt;- precomputeUpdateData(model,integration.points)
+
+batchsize &lt;- 4
+x &lt;- c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8)
+#one evaluation of the vorob_optim_parallel criterion
+#we calculate the expectation of the future "vorob" uncertainty
+#when 4 points are added to the doe
+#the 4 points are (0.1,0.2) , (0.3,0.4), (0.5,0.6), (0.7,0.8)
+vorob_optim_parallel(x=x,integration.points=integration.points,
+          integration.weights=integration.weights,
+          intpoints.oldmean=intpoints.oldmean,intpoints.oldsd=intpoints.oldsd,
+          precalc.data=precalc.data,T=T,model=model,
+          batchsize=batchsize,alpha=alpha,current.vorob=Inf)
+
+
+#the function max_vorob_parallel will help to find the optimum:
+#ie: the batch of 4 minimizing the expectation of the future uncertainty
+
+</code></pre>
+
+
+</div>

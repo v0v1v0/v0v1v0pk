@@ -1,0 +1,239 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mscv.dkss</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Maximum-similarity Cross-validated (MSCV) bandwidth selection method for the 
+distance using kernel summation similarity (DKSS)
+</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates maximum-similarity cross-validated bandwidths for the 
+distance using kernel summation similarity. This implementation uses the method 
+described in Ghashti (2024) for mixed-type data that includes any of numeric 
+(continuous), factor (nominal), and ordered factor (ordinal) variables. 
+<code>mscv.dkss</code> calculates the bandwidths associated with each kernel function 
+for variable types and returns a numeric vector of bandwidths that can be used 
+with the <code>dkss</code> pairwise distance calculation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mscv.dkss(df, nstart = NULL, ckernel = "c_gaussian", ukernel = "u_aitken", 
+          okernel = "o_wangvanryzin", verbose = FALSE) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+
+<p>a <code class="reqn">p</code>-variate data frame. The data types may be continuous 
+(<code>numeric</code>), nominal (<code>factor</code>), ordinal 
+(<code>ordered</code>), or any combination thereof. Columns of <code>df</code> 
+should be set to the appropriate data type class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nstart</code></td>
+<td>
+
+<p>integer number of restarts for the process of finding extrema of the mscv 
+function from random initial bandwidth parameters (starting points). If the 
+default of <code>NULL</code> is used, then the number of restarts will be 
+<code class="reqn">min(3,\text{ncol(df)})</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ckernel</code></td>
+<td>
+
+<p>character string specifying the continuous kernel function. Options include 
+<code>c_gaussian</code>, <code>c_epanechnikov</code>, <code>c_uniform</code>, <code>c_triangle</code>, 
+<code>c_biweight</code>, <code>c_triweight</code>, <code>c_tricube</code>, <code>c_cosine</code>, 
+<code>c_logistic</code>, <code>c_sigmoid</code>, and <code>c_silverman</code>. Note that if 
+using <code>np</code> for <code>bw</code> selection above, continuous kernel types are 
+restricted to either <code>c_gaussian</code>, <code>c_epanechnikov</code>, or 
+<code>c_uniform</code>. Defaults to <code>c_gaussian</code>. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ukernel</code></td>
+<td>
+
+<p>character string specifying the nominal kernel function for unordered factors.
+Options include <code>u_aitken</code> and <code>u_aitchisonaitken</code>. Defaults to 
+<code>u_aitken</code>. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>okernel</code></td>
+<td>
+
+<p>character string specifying the ordinal kernel function for ordered factors. 
+Options include <code>o_aitken</code>, <code>o_aitchisonaitken</code>, <code>o_habbema</code>, 
+<code>o_wangvanryzin</code>, and <code>o_liracine</code>. Note that if using <code>np</code> 
+for <code>bw</code> selection above, ordinal kernel types are restricted to either 
+<code>o_wangvanryzin</code> or <code>o_liracine</code>. Defaults to <code>o_wangvanryzin</code>. 
+See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>a logical value which specifies whether to output the <code class="reqn">i</code>-th iteration of
+the total number of <code>nstarts</code>, and output if the optimization procedure 
+converges. Defaults to <code>FALSE</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>mscv.dkss</code> implements the maximum-similarity cross-validation (MSCV) 
+bandwidth selection technique for the <code>dkss</code> function, described 
+by Ghashti (2024). This approach uses summation kernels for continuous, 
+nominal and ordinal data, which are then summed over all variable types to 
+return the pairwise distance between mixed-type data. 
+</p>
+<p>The maximization procedure for bandwidth selection is based on the objective
+<code class="reqn">\text{arg}\max_{\boldsymbol{\lambda}}\left\{\frac{1}{n}\sum_{i=1}^n\log\left(\frac{1}{(n-1)}\sum_{\substack{j=1 \\ j \ne i}}^ns_{\text{KSS}_{\boldsymbol{\lambda}}}(\textbf{x}_i,\textbf{x}_j)\right)\right\},</code>
+where
+</p>
+<p><code class="reqn">s_{\text{KSS}}(\textbf{x}_i, \textbf{x}_j \ | \boldsymbol{\lambda}) = \sum_{k=1}^{p_c}K(x_{i,k}^c, x_{j,k}^c, \lambda_k^c) + \sum_{k=1}^{p_u}L(x_{i,k}^u,x_{j,k}^u,\lambda_k^u) + \sum_{k=1}^{p_o}\ell(x_{i,k}^o,x_{j,k}^o,\lambda_k^o).</code>
+</p>
+<p><code class="reqn">K(\cdot)</code>, <code class="reqn">L(\cdot)</code>, and <code class="reqn">\ell(\cdot)</code> are the continuous, 
+nominal, and ordinal kernel functions, repectively, with <code class="reqn">\lambda_k</code>'s 
+representing kernel specifical bandwiths for the <code class="reqn">k</code>-th variable, and 
+<code class="reqn">p_c</code>, <code class="reqn">p_u</code>, <code class="reqn">p_o</code> the number of continuous, nominal, and ordinal
+variables in the data frame <code>df</code>. The <code>bw</code> vector returned is the
+bandwidths that yield the highest objective function value. 
+</p>
+<p>Data contained in the data frame <code>df</code> may constitute any combinations of
+continuous, nominal, or ordinal data, which is to be specified in the data 
+frame <code>df</code> using <code>numeric</code> for continuous data, 
+<code>factor</code> for nominal data, and <code>ordered</code> for ordinal 
+data. Data can be entered in an arbitrary order and data types will be 
+detected automatically. User-inputted vectors of bandwidths <code>bw</code> must be 
+defined in the same order as the variables in the data frame <code>df</code>, as to 
+ensure they sorted accordingly by the routine.
+</p>
+<p>The are many kernels which can be specified by the user. Continuous kernel 
+functions may be found in Cameron and Trivedi (2005), Härdle et al. (2004) or 
+Silverman (1986). Nominal kernels use a variation of Aitchison and Aitken's 
+(1976) kernel. Ordinal kernels use a variation of the Wang and van Ryzin 
+(1981) kernel. All nominal and ordinal kernel functions can be found in Li and
+Racine (2007), Li and Racine (2003), Ouyan et al. (2006), and Titterington and
+Bowman (1985).
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>mscv.dkss</code> returns a <code>list</code> object, with the
+following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+<p>a <code class="reqn">p</code>-variate vector of bandwidth values, intended to be used for
+the <code>dkss</code> pairwise distance calculation </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fn_value</code></td>
+<td>
+<p>a numeric value of the MSCV objective function, obtained using 
+the <code>optim</code> function for constrained multivariate optimization</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>John R. J. Thompson <a href="mailto:john.thompson@ubc.ca">john.thompson@ubc.ca</a>, Jesse S. Ghashti
+<a href="mailto:jesse.ghashti@ubc.ca">jesse.ghashti@ubc.ca</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Aitchison, J. and  C.G.G. Aitken (1976), “Multivariate binary 
+discrimination by the kernel method”, Biometrika, 63, 413-420.
+</p>
+<p>Cameron, A. and P. Trivedi (2005), “Microeconometrics: Methods and 
+Applications”, Cambridge University Press.
+</p>
+<p>Ghashti, J.S. (2024), “Similarity Maximization and Shrinkage Approach 
+in Kernel Metric Learning for Clustering Mixed-type Data”, University of 
+British Columbia.
+</p>
+<p>Härdle, W., and M. Müller and S. Sperlich and A. Werwatz (2004), 
+“Nonparametric and Semiparametric Models”, (Vol. 1). Berlin: Springer.
+</p>
+<p>Li, Q. and J.S. Racine (2007), “Nonparametric Econometrics: Theory
+and Practice”, Princeton University Press.
+</p>
+<p>Li, Q. and J.S. Racine (2003), “Nonparametric estimation of
+distributions with categorical and continuous data”, Journal
+of Multivariate Analysis, 86, 266-292.
+</p>
+<p>Ouyang, D. and Q. Li and J.S. Racine (2006), “Cross-validation
+and the estimation of probability distributions with categorical
+data”, Journal of Nonparametric Statistics, 18, 69-100.
+</p>
+<p>Silverman, B.W. (1986), “Density Estimation”, London: Chapman and
+Hall.
+</p>
+<p>Titterington, D.M. and A.W. Bowman (1985), “A comparative study of 
+smoothing procedures for ordered categorical data”, Journal of Statistical 
+Computation and Simulation, 21(3-4), 291-312.
+</p>
+<p>Wang, M.C. and J. van Ryzin (1981), “A class of smooth estimators
+for discrete distributions”,  Biometrika, 68, 301-309.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mscv.dkps</code>, <code>dkss</code>, <code>dkps</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# example data frame with mixed numeric, nominal, and ordinal data.
+levels = c("Low", "Medium", "High")
+df &lt;- data.frame(
+  x1 = runif(100, 0, 100),
+  x2 = factor(sample(c("A", "B", "C"), 100, TRUE)),
+  x3 = factor(sample(c("A", "B", "C"), 100, TRUE)),
+  x4 = rnorm(100, 10, 3),
+  x5 = ordered(sample(c("Low", "Medium", "High"), 100, TRUE), levels = levels),
+  x6 = ordered(sample(c("Low", "Medium", "High"), 100, TRUE), levels = levels))
+
+# minimal implementation requires just the data frame, with defaults
+bw &lt;- mscv.dkss(df = df)
+
+# specify number of starts and kernel functions
+bw2 &lt;- mscv.dkss(df = df, nstart = 5, ckernel = "c_triangle", 
+                ukernel = "u_aitken", okernel = "o_liracine")
+
+</code></pre>
+
+
+</div>

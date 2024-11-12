@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>NNreg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate a Single Point with K Nearest Neighbors Regression</h2>
+
+<h3>Description</h3>
+
+<p>Finds the index of the nearest neighbors for a single point given that point's
+vector of similarities to all observations eligible to be considered as neighbors. The <code>k.in2</code>
+neighbors are identified by their index in the similarity vector, and this index is used to
+identify the neighbor points in <code>y.in2</code>. The function then returns the mean of the values
+in <code>y.in2</code> identified as neighbors. It is suggested to call this function through <code>knn.forecast()</code>
+for all points to be forecasted simultaneously.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">NNreg(v, k.in2, y.in2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>numeric vector of similarities used to identify nearest neighbors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k.in2</code></td>
+<td>
+<p>integer value indicating the the number of nearest neighbors to be considered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.in2</code></td>
+<td>
+<p>numeric vector of the response series to be forecast.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric value of the mean of the <code>k.in2</code> nearest neighbors in <code>y.in2</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>knn.forecast()</code> the recommended user facing function to perform knn
+regression for forecasting with <code>NNreg()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Sim.Mat &lt;- matrix(c(1, .5, .2, .5, 1, .7, .2, .7, 1),
+  nrow = 3, ncol = 3, byrow = TRUE
+)
+Sim.Mat.col &lt;- Sim.Mat[-(3), 3]
+y &lt;- c(2, 1, 5)
+k &lt;- 2
+NNreg(v = Sim.Mat.col, k.in2 = 2, y.in2 = y)
+</code></pre>
+
+
+</div>

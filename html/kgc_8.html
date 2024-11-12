@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>RoundCoordinates</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>RoundCoordinates</h2>
+
+<h3>Description</h3>
+
+<p>This function will round the inputed value to a co-ordinate present in the KG Climate Zone look up table.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">RoundCoordinates(number, res = "course", latlong = "lat")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>number</code></td>
+<td>
+<p>The value to round</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>res</code></td>
+<td>
+<p>Specify the resolution as a string - 'course' for lower resolution (default, 0.5 degrees), 'fine' for higher resolution (100s).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>latlong</code></td>
+<td>
+<p>Whether the number is a latitude value ('lat', default), or longitude value ('lon') (this parameter is only used if res='fine').</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The inputed number, rounded to a value ending in either .25 or .75 (course), or to nearest 'fine' (100s) resolution grid point.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">RoundCoordinates(10.98)
+RoundCoordinates(10.98,res='fine',latlong='lon')
+</code></pre>
+
+
+</div>

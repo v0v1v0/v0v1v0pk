@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kisopenapi-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kisopenapi: Korea Investment &amp; Securities (KIS) Open Trading API</h2>
+
+<h3>Description</h3>
+
+<p>This package allows users to easily access various financial services using
+the trading open API provided by Korea Investment &amp; Securities (KIS).<br>
+the KIS open API provides request/reponse information and error messages.<br>
+To use this package, you will first need to open a Korea investment &amp;
+securities account, and get your app key and app secret from the website
+<a href="https://apiportal.koreainvestment.com/">https://apiportal.koreainvestment.com/</a>.<br>
+Once you have your app key and app secret, you can save those as environment
+variables for the current session using the <code>set_trading_env</code>
+functions.<br>
+Alternatively, you can set those permanently by adding the following line to
+your .Renviron file:
+</p>
+
+
+<h3>For real trading</h3>
+
+<p>KIS_CANO="YOUR ACCOUNT NUMBER" (your account)<br>
+KIS_ACNT_PRDT_CD="01" (your account product code, mainly <code>01</code>)<br>
+KIS_APP_KEY="YOUR APP KEY"<br>
+KIS_APP_SECRET="YOUR APP SECRET"
+</p>
+
+
+<h3>For paper trading</h3>
+
+<p>KIS_PAPER_CANO="YOUR PAPER ACCOUNT NUMBER" (your paper account)<br>
+KIS_PAPER_ACNT_PRDT_CD="01" (your paper account product code mainly <code>01</code>)<br>
+KIS_PAPER_APP_KEY="YOUR PAPER APP KEY"<br>
+KIS_PAPER_APP_SECRET="YOUR PAPER APP SECRET"<br></p>
+<p>Any functions that require your environemt variables try to retrieve those via<br></p>
+<p><code>Sys.getenv("KIS_CANO")</code><br><code>Sys.getenv("KIS_ACNT_PRDT_CD")</code><br><code>Sys.getenv("KIS_APP_KEY")</code><br><code>Sys.getenv("KIS_APP_SECRET")</code><br><code>Sys.getenv("KIS_PAPER_CANO")</code><br><code>Sys.getenv("KIS_PAPER_ACNT_PRDT_CD")</code><br><code>Sys.getenv("KIS_PAPER_APP_KEY")</code><br><code>Sys.getenv("KIS_PAPER_APP_SECRET")</code><br></p>
+<p>unless account number, account product code, app key and app secret are
+explicitly specified as function arguments. and if you've already registered
+both trading environment variables(live and paper), you can easily change the
+environment and use the same functions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><strong>Maintainer</strong>: Seokhoon Joo <a href="mailto:seokhoonj@gmail.com">seokhoonj@gmail.com</a>
+</p>
+
+
+</div>

@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>countP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multiplicity of a multi-index partition.</h2>
+
+<h3>Description</h3>
+
+<p>The function computes the multiplicity of a multi-index partition. Note that a
+multi-index partition corresponds to a subdivision of a multiset having the input multi-index 
+as multiplicities.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">countP( v=c(1) )
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>vector or list</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Consider the partitions of an integer, let's say 3, that are <code>[1,1,1],[1,2],[3]</code> such that
+<code>1+1+1=1+2=3</code>. Consider the partitions of a set with cardinality 3, let's say <code>[a1, a2, a3]</code>
+</p>
+
+<table><tr>
+<td style="text-align: left;">
+<code>(I)</code> </td>
+<td style="text-align: left;">   <code>[[a1], [a2], [a3]], [[a1],[a2,a3]], [[a2],[a1,a3]], [[a3],[a1,a2]], [[a1,a2,a3]]</code>.</td>
+</tr></table>
+<p>The multiplicity of a partition of 3 is the number of partitions of <code>[a1, a2, a3]</code> in blocks having that
+partition as cardinalities. In the example, we have 
+</p>
+
+<table>
+<tr>
+<td style="text-align: center;">
+ a) </td>
+<td style="text-align: left;"> 1 partition in 3 blocks of cardinalities 1, that is 
+<code>[[a1], [a2], [a3]]</code> corresponding to <code>[1,1,1]</code> </td>
+</tr>
+<tr>
+<td style="text-align: center;"> 
+b) </td>
+<td style="text-align: left;"> 1 partition in 1 block of cardinalities 3, that is 
+<code>[[a1,a2,a3]]</code> corresponding to <code>[3]</code> </td>
+</tr>
+<tr>
+<td style="text-align: center;">
+c) </td>
+<td style="text-align: left;"> 3 partitions in 2 blocks of cardinalities 1 and 2 respectively, that is</td>
+</tr>
+<tr>
+<td style="text-align: center;">
+   </td>
+<td style="text-align: left;"> <code>[[a1],[a2,a3]], [[a2],[a1,a3]], [[a3],[a1,a2]]</code>.</td>
+</tr>
+</table>
+<p>So running <code>countP(c(1,2))</code> we get 3, running <code>countP(c(1,1,1))</code> or <code>countP(c(3))</code> we get 1. <br><br>
+The same device can be used to find the multiplicity of a subdivision. The subdivisions of a multiset are 
+obtained as follows: assume all distinct the elements of the multiset, determine all the corresponding set partitions 
+and then replace each element in each block with the original one. For example, consider the multiset <code>[a, a, a]</code>
+having the integer 3 as multiplicity. Assuming all distinct the elements of the multiset, the partitions of <code>[a1, a2, a3]</code>
+are given in <code>(I)</code>. Now replace <code>a1&lt;-a, a2&lt;-a, a3&lt;-a</code> and get 
+</p>
+
+<table><tr>
+<td style="text-align: left;"><code>[[a], [a], [a]], [[a], [a,a]], [[a], [a,a]], [[a], [a,a]], [[a,a,a]]</code></td>
+</tr></table>
+<p>.
+Note that the partitions 
+</p>
+
+<table><tr>
+<td style="text-align: left;"><code>[[a1,a2], [a3]], [[a1,a3], [a2]], [[a2,a3], [a1]]</code></td>
+</tr></table>
+<p>give rise to the same subdivision <code>[[a,a], [a]]</code>. Then the multiplicity of <code>[[a,a], [a]]</code> is 3. Therefore 
+the subdivisions of <code>[a, a, a,]</code>  are 
+</p>
+
+<table><tr>
+<td style="text-align: left;">
+<code>[[a], [a], [a]], [[a], [a,a]], [[a,a,a]]</code>.</td>
+</tr></table>
+<p>The multiplicity of the subdivision <code>[[a], [a,a]]</code> is 3, as for the partition <code>[1,2]</code> of the integer 3. 
+The multiplicity of the subdivisions <code>[[a], [a], [a]]</code> and <code>[[a,a,a]]</code> is 1, as for the partitions 
+<code>[1,1,1]</code> and <code>[3]</code> of the integer 3 respectively. Thus running <code>countP(c(1,2))</code> we get 3, that is 
+<br></p>
+
+<table>
+<tr>
+<td style="text-align: center;">
+a) </td>
+<td style="text-align: left;"> the multiplicity of the subdivision <code>[[a,a], [a]]</code> </td>
+</tr>
+<tr>
+<td style="text-align: center;">
+b) </td>
+<td style="text-align: left;"> the number of partitions of the set <code>[a1, a2, a3]</code> in two blocks, one of cardinality 1 and the other </td>
+</tr>
+<tr>
+<td style="text-align: center;"> 
+   </td>
+<td style="text-align: left;"> of cardinality 2 </td>
+</tr>
+<tr>
+<td style="text-align: center;">
+c) </td>
+<td style="text-align: left;"> the number of partitions of the set <code>[a1, a2, a3]</code> corresponding to the partition <code>[1,2]</code> of </td>
+</tr>
+<tr>
+<td style="text-align: center;">
+   </td>
+<td style="text-align: left;"> the integer 3. 
+</td>
+</tr>
+</table>
+<p>Now consider the partition of a multi-index, let's say (4,2). One of the partitions of (4,2) is the matrix 
+(see the output of the <code>mkmSet</code> function) <br><code style="white-space: pre;">⁠        
+               0  1  1  2
+(II)          1  0  0  1⁠</code>
+<br><br>
+as <code>1+1+2=4</code> and <code>1+1=2</code>. The partition <code>(II)</code> corresponds to the subdivision <code>[[b], [a], [a], [a,a,b]]</code> 
+of the multiset <code>[a,a,a,a,b,b]</code> having the multi-index (4,2) as multiplicities. Indeed each column <code>(i,j)</code> gives 
+the instances <code>i</code> and <code>j</code> of <code>a</code> and <code>b</code> in a block of the subdivision. Running <code>countP</code>
+<code>(list(c(0,1), c(1,0), c(1,0), c(2,1)))</code> we get 12. This multiplicity gives the number of partitions of the set <code>[a1,a2,a3,</code>
+<code>a4,b1,b2]</code> corresponding to the subdivision <code>[[b], [a], [a], [a,a,b]]</code> after the 
+replacement 
+<code>a1&lt;-a, a2&lt;-a,</code> <code>a3&lt;-a, a4&lt;-a, b1&lt;-b, b2&lt;-b.</code> <br><br>
+Note that the input of the <code>countP</code> function does not necessarily be in lexicographic order. To find all the partitions 
+of a multi-index see the <code>mkmSet</code> function.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>integer</code></td>
+<td>
+<p>the multiplicity of the given item</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>Called by the <code>mkmSet</code> and <code>nPS</code> functions in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. 14(2), 440-468. (download from <a href="https://arxiv.org/pdf/math/0607623.pdf">https://arxiv.org/pdf/math/0607623.pdf</a>) 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mkmSet</code>,
+<code>mCoeff</code>,
+<code>nStirling2</code>,
+<code>intPart</code>,
+<code>ff</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Return 3 which is the multiplicity of [1,2], partition of the integer 3, or 
+# of [[a],[a,a]], subdivision of the multiset [a,a,a]
+countP(c(1,2))
+  
+# Return 15 which is the multiplicity of [4,2], partition of the integer 6, or
+# of [[a,a,a,a],[a,a]], subdivision of the multiset [a,a,a,a,a,a]
+countP(c(4,2))
+  
+# Return 18 which is the multiplicity of 
+#  0 0 1 1 2
+#  1 2 0 0 0
+# partition of the multi-index (4,3), or of [[b],[b,b],[a],[a],[a,a]], subdivision  of 
+# the multiset [a,a,a,a,b,b,b]
+countP( list(c(2,0), c(1,0), c(1,0), c(0,1),c(0,2)) )
+ 
+</code></pre>
+
+
+</div>

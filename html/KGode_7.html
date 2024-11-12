@@ -1,0 +1,176 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>RBF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The 'RBF' class object</h2>
+
+<h3>Description</h3>
+
+<p>This a R6 class. It inherits from 'kernel' class. It provides the rbf kernel function and the 1st order derivative of rbf kernel function.
+</p>
+
+
+<h3>Format</h3>
+
+<p><code>R6Class</code> object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an  <code>R6Class</code> object which can be used for the rkhs interpolation.
+</p>
+
+
+<h3>Super class</h3>
+
+<p><code>KGode::Kernel</code> -&gt; <code>RBF</code>
+</p>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-RBF-greet"><code>RBF$greet()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-RBF-set_k_par"><code>RBF$set_k_par()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-RBF-kern"><code>RBF$kern()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-RBF-dkd_kpar"><code>RBF$dkd_kpar()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-RBF-dkdt"><code>RBF$dkdt()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-RBF-clone"><code>RBF$clone()</code></a>
+</p>
+</li>
+</ul>
+<details open><summary>Inherited methods</summary><ul>
+<li><span class="pkg-link" data-pkg="KGode" data-topic="Kernel" data-id="initialize"><a href="../../KGode/html/Kernel.html#method-Kernel-initialize"><code>KGode::Kernel$initialize()</code></a></span></li>
+</ul></details><hr>
+<a id="method-RBF-greet"></a>
+
+
+
+<h4>Method <code>greet()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>RBF$greet()</pre></div>
+
+
+<hr>
+<a id="method-RBF-set_k_par"></a>
+
+
+
+<h4>Method <code>set_k_par()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>RBF$set_k_par(val)</pre></div>
+
+
+<hr>
+<a id="method-RBF-kern"></a>
+
+
+
+<h4>Method <code>kern()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>RBF$kern(t1, t2)</pre></div>
+
+
+<hr>
+<a id="method-RBF-dkd_kpar"></a>
+
+
+
+<h4>Method <code>dkd_kpar()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>RBF$dkd_kpar(t1, t2)</pre></div>
+
+
+<hr>
+<a id="method-RBF-dkdt"></a>
+
+
+
+<h4>Method <code>dkdt()</code>
+</h4>
+
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>RBF$dkdt(t1, t2)</pre></div>
+
+
+<hr>
+<a id="method-RBF-clone"></a>
+
+
+
+<h4>Method <code>clone()</code>
+</h4>
+
+<p>The objects of this class are cloneable with this method.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>RBF$clone(deep = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>deep</code></dt>
+<dd>
+<p>Whether to make a deep clone.</p>
+</dd>
+</dl>
+</div>
+
+
+
+
+<h3>Author(s)</h3>
+
+<p>Mu Niu, <a href="mailto:mu.niu@glasgow.ac.uk">mu.niu@glasgow.ac.uk</a>
+</p>
+
+
+</div>

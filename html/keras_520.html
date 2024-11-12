@@ -1,0 +1,198 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>optimizer_adamax</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimizer that implements the Adamax algorithm</h2>
+
+<h3>Description</h3>
+
+<p>Optimizer that implements the Adamax algorithm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">optimizer_adamax(
+  learning_rate = 0.001,
+  beta_1 = 0.9,
+  beta_2 = 0.999,
+  epsilon = 1e-07,
+  weight_decay = NULL,
+  clipnorm = NULL,
+  clipvalue = NULL,
+  global_clipnorm = NULL,
+  use_ema = FALSE,
+  ema_momentum = 0.99,
+  ema_overwrite_frequency = NULL,
+  jit_compile = TRUE,
+  name = "Adamax",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>learning_rate</code></td>
+<td>
+<p>A <code>tf.Tensor</code>, floating point value, a schedule that is a
+<code>tf.keras.optimizers.schedules.LearningRateSchedule</code>, or a callable
+that takes no arguments and returns the actual value to use. The
+learning rate. Defaults to 0.001.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_1</code></td>
+<td>
+<p>A float value or a constant float tensor. The exponential decay
+rate for the 1st moment estimates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_2</code></td>
+<td>
+<p>A float value or a constant float tensor. The exponential decay
+rate for the exponentially weighted infinity norm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>A small constant for numerical stability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_decay</code></td>
+<td>
+<p>Float, defaults to NULL. If set, weight decay is applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clipnorm</code></td>
+<td>
+<p>Float. If set, the gradient of each weight is individually
+clipped so that its norm is no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clipvalue</code></td>
+<td>
+<p>Float. If set, the gradient of each weight is clipped to be no
+higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global_clipnorm</code></td>
+<td>
+<p>Float. If set, the gradient of all weights is clipped so
+that their global norm is no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_ema</code></td>
+<td>
+<p>Boolean, defaults to FALSE. If TRUE, exponential moving average
+(EMA) is applied. EMA consists of computing an exponential moving
+average of the weights of the model (as the weight values change after
+each training batch), and periodically overwriting the weights with
+their moving average.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ema_momentum</code></td>
+<td>
+<p>Float, defaults to 0.99. Only used if <code>use_ema=TRUE</code>. This is  # noqa: E501
+the momentum to use when computing the EMA of the model's weights:
+<code>new_average = ema_momentum * old_average + (1 - ema_momentum) * current_variable_value</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ema_overwrite_frequency</code></td>
+<td>
+<p>Int or NULL, defaults to NULL. Only used if
+<code>use_ema=TRUE</code>. Every <code>ema_overwrite_frequency</code> steps of iterations, we
+overwrite the model variable by its moving average. If NULL, the optimizer  # noqa: E501
+does not overwrite model variables in the middle of training, and you
+need to explicitly overwrite the variables at the end of training
+by calling <code>optimizer.finalize_variable_values()</code> (which updates the model  # noqa: E501
+variables in-place). When using the built-in <code>fit()</code> training loop, this
+happens automatically after the last epoch, and you don't need to do
+anything.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jit_compile</code></td>
+<td>
+<p>Boolean, defaults to TRUE. If TRUE, the optimizer will use XLA  # noqa: E501
+compilation. If no GPU device is found, this flag will be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String. The name to use
+for momentum accumulator weights created by
+the optimizer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Used for backward and forward compatibility</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Adamax, a variant of Adam based on the infinity norm, is a first-order
+gradient-based optimization method. Due to its capability of adjusting the
+learning rate based on data characteristics, it is suited to learn
+time-variant process, e.g., speech data with dynamically changed noise
+conditions. Default parameters follow those provided in the paper (see
+references below).
+</p>
+<p>Initialization:
+</p>
+<div class="sourceCode python"><pre>m = 0  # Initialize initial 1st moment vector
+u = 0  # Initialize the exponentially weighted infinity norm
+t = 0  # Initialize timestep
+</pre></div>
+<p>The update rule for parameter <code>w</code> with gradient <code>g</code> is described at the end
+of section 7.1 of the paper (see the referenece section):
+</p>
+<div class="sourceCode python"><pre>t += 1
+m = beta1 * m + (1 - beta) * g
+u = max(beta2 * u, abs(g))
+current_lr = learning_rate / (1 - beta1 ** t)
+w = w - current_lr * m / (u + epsilon)
+</pre></div>
+
+
+<h3>Value</h3>
+
+<p>Optimizer for use with <code>compile.keras.engine.training.Model</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/Adamax">https://www.tensorflow.org/api_docs/python/tf/keras/optimizers/Adamax</a>
+</p>
+</li></ul>
+<p>Other optimizers: 
+<code>optimizer_adadelta()</code>,
+<code>optimizer_adagrad()</code>,
+<code>optimizer_adam()</code>,
+<code>optimizer_ftrl()</code>,
+<code>optimizer_nadam()</code>,
+<code>optimizer_rmsprop()</code>,
+<code>optimizer_sgd()</code>
+</p>
+
+
+</div>

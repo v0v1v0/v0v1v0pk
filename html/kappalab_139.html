@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>normalize-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Normalizes a capacity.</h2>
+
+<h3>Description</h3>
+
+<p>Returns the normalized version of a capacity. The capacity
+can be given either under the form of an object of class
+<code>capacity</code>, <code>card.capacity</code> or <code>Mobius.capacity</code>. In
+the case of objects of class <code>capacity</code> and <code>card.capacity</code>,
+the normalization is performed by dividing each coefficient of the
+capacity by the value of the capacity on the universe. In the case of
+objects of class <code>Mobius.capacity</code>, the normalization is
+performed by dividing each coefficient of the Möbius transform by the
+sum of all the coefficients.  
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.capacity" </dt>
+<dd>
+<p>Returns an object of class <code>Mobius.capacity</code>.</p>
+</dd>
+<dt>object = "capacity" </dt>
+<dd>
+<p>Returns an object of class <code>capacity</code>.</p>
+</dd>
+<dt>object = "card.capacity" </dt>
+<dd>
+<p>Returns an object of class <code>card.capacity</code>.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>capacity-class</code>,
+<br><code>Mobius.capacity-class</code>,
+<br><code>card.capacity-class</code>,
+<br><code>Mobius-methods</code>,
+<br><code>is.normalized-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(0:15)
+
+## normalize it
+is.normalized(mu)
+normalize(mu)
+
+## a similar example with a Mobius.capacity object
+a &lt;- Mobius(mu)
+is.normalized(a)
+normalize(a)
+zeta(normalize(a))
+
+## a similar example with a card.capacity object
+mu &lt;- card.capacity(0:6)
+is.normalized(mu)
+normalize(mu)
+Mobius(normalize(mu))
+
+</code></pre>
+
+
+</div>

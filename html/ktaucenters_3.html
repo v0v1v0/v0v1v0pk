@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>.ktaucenters_run</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Robust Clustering algorithm based on centers, a robust and efficient version
+of kmeans.</h2>
+
+<h3>Description</h3>
+
+<p>Robust Clustering algorithm based on centers, a robust and efficient version
+of kmeans.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">.ktaucenters_run(x, centers, tolerance, max_iter)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric matrix of size n x p with all observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centers</code></td>
+<td>
+<p>numeric matrix with initial cluster centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tolerance</code></td>
+<td>
+<p>maximum difference between current and new computed
+clusters. Parameter used for the algorithm stopping rule.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_iter</code></td>
+<td>
+<p>a maximum number of iterations used for the algorithm
+stopping rule.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>tau </code></td>
+<td>
+<p><code class="reqn">\tau</code> scale value. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter </code></td>
+<td>
+<p>number of iterations until convergence is achieved or maximum
+number of iteration is reached. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>di </code></td>
+<td>
+<p>distance of each observation to its nearest cluster center. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centers </code></td>
+<td>
+<p>numeric matrix of size K x p, with the estimated K centers.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clusters </code></td>
+<td>
+<p>integer vector of size n with the cluster location for each
+observation. </p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>[1] Gonzalez, J. D., Yohai, V. J., &amp; Zamar, R. H. (2019).
+Robust Clustering Using Tau-Scales. arXiv preprint arXiv:1906.08198.
+</p>
+<p>[2] Maronna, R. A. and Yohai, V. J. (2017). Robust and efficient estimation
+of multivariate scatter and location.Computational Statistics &amp;Data
+Analysis, 109 : 64–75.
+</p>
+
+
+</div>

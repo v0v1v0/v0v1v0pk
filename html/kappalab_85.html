@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>game-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "game"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing a game, i.e. a set function vanishing at
+the empty set (also called <em>non monotonic fuzzy measure</em>).</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the function <code>game</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal to the
+number of elements of the set on which the game is defined.</p>
+</dd>
+<dt>
+<code>subsets</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>2^n</code> containing the power set of the underlying set in
+"natural" order. The subsets are coded as integers.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>2^n</code> containing the coefficients of the game in binary
+order.  We necessarily have <code>data[1] = 0</code>.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>set.func</code>, directly.
+Class <code>superclass.set.func</code>, by class <code>set.func</code>.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.card.game</dt>
+<dd>
+<p><code>signature(object = "game")</code></p>
+</dd>
+<dt>Choquet.integral</dt>
+<dd>
+<p><code>signature(object = "game", f = "numeric")</code></p>
+</dd>
+<dt>Mobius</dt>
+<dd>
+<p><code>signature(object = "game")</code></p>
+</dd>
+<dt>Sipos.integral</dt>
+<dd>
+<p><code>signature(object = "game", f = "numeric")</code></p>
+</dd>
+<dt>Sugeno.integral</dt>
+<dd>
+<p><code>signature(object = "game", f =
+	"numeric")</code></p>
+</dd>
+<dt>pdf.Choquet.unif</dt>
+<dd>
+<p><code>signature(object = "game", f = "numeric")</code></p>
+</dd>
+<dt>cdf.Choquet.unif</dt>
+<dd>
+<p><code>signature(object = "game", f = "numeric")</code></p>
+</dd>
+<dt>expect.Choquet.unif</dt>
+<dd>
+<p><code>signature(object = "game")</code></p>
+</dd>
+<dt>sd.Choquet.unif</dt>
+<dd>
+<p><code>signature(object = "game")</code></p>
+</dd>
+<dt>expect.Choquet.norm</dt>
+<dd>
+<p><code>signature(object = "game")</code></p>
+</dd>
+<dt>sd.Choquet.norm</dt>
+<dd>
+<p><code>signature(object = "game")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+	
+<p><code>game</code>,
+<br><code>as.card.game-methods</code>,
+<br><code>Choquet.integral-methods</code>, 
+<br><code>Mobius-methods</code>,
+<br><code>Sipos.integral-methods</code>, 
+<br><code>Sugeno.integral-methods</code>,
+<br><code>pdf.Choquet.unif-methods</code>, 
+<br><code>cdf.Choquet.unif-methods</code>,
+<br><code>expect.Choquet.unif-methods</code>, 
+<br><code>sd.Choquet.unif-methods</code>,
+<br><code>expect.Choquet.norm-methods</code>, 
+<br><code>sd.Choquet.norm-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a game (which is a capacity)
+mu &lt;- game(c(0,rep(1,15)))
+
+## the attributes of the object
+mu@n
+mu@data
+mu@subsets
+
+## a conversion
+as.card.game(mu)
+
+## a transformation
+Mobius(mu)
+## let us check ...
+zeta(Mobius(mu))
+
+## integral calculations 
+f &lt;- c(0.2,0.3,0.1,0.7)
+Choquet.integral(mu,f)
+Sugeno.integral(mu,f)
+f &lt;- c(0.2,-0.3,0.1,-0.7)
+Sipos.integral(mu,f)
+</code></pre>
+
+
+</div>

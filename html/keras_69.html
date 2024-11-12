@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_remote_monitor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Callback used to stream events to a server.</h2>
+
+<h3>Description</h3>
+
+<p>Callback used to stream events to a server.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_remote_monitor(
+  root = "https://localhost:9000",
+  path = "/publish/epoch/end/",
+  field = "data",
+  headers = NULL,
+  send_as_json = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>root</code></td>
+<td>
+<p>root url of the target server.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>path relative to root to which the events will be sent.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>field</code></td>
+<td>
+<p>JSON field under which the data will be stored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>headers</code></td>
+<td>
+<p>Optional named list of custom HTTP headers. Defaults to:
+<code style="white-space: pre;">⁠list(Accept = "application/json", ⁠</code>Content-Type<code style="white-space: pre;">⁠ = "application/json")⁠</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>send_as_json</code></td>
+<td>
+<p>Whether the request should be sent as application/json.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Events are sent to <code>root + '/publish/epoch/end/'</code> by default. Calls
+are HTTP POST, with a <code>data</code> argument which is a JSON-encoded dictionary
+of event data. If send_as_json is set to True, the content type of the
+request will be application/json. Otherwise the serialized JSON will be
+send within a form
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other callbacks: 
+<code>callback_csv_logger()</code>,
+<code>callback_early_stopping()</code>,
+<code>callback_lambda()</code>,
+<code>callback_learning_rate_scheduler()</code>,
+<code>callback_model_checkpoint()</code>,
+<code>callback_progbar_logger()</code>,
+<code>callback_reduce_lr_on_plateau()</code>,
+<code>callback_tensorboard()</code>,
+<code>callback_terminate_on_naan()</code>
+</p>
+
+
+</div>

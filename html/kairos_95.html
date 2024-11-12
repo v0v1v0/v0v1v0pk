@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>RateOfChange-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rate of Change</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class to represent rates of change from an aoristic analysis.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>replicates</code></dt>
+<dd>
+<p>A non-negative <code>integer</code> giving the number of
+replications.</p>
+</dd>
+<dt><code>groups</code></dt>
+<dd>
+<p>A <code>character</code> vector to store the group names (if any).</p>
+</dd>
+</dl>
+<h3>Coerce</h3>
+
+<p>In the code snippets below, <code>x</code> is an <code>AoristicSum</code> object.
+</p>
+
+<dl>
+<dt><code>as.data.frame(x)</code></dt>
+<dd>
+<p>Coerces to a <code>data.frame</code>.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This class inherits from <code>aion::TimeSeries</code>: dates are internally
+stored as <em>rata die</em>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other classes: 
+<code>AoristicSum-class</code>,
+<code>CountApportion-class</code>,
+<code>EventDate-class</code>,
+<code>IncrementTest-class</code>,
+<code>MeanDate-class</code>,
+<code>PermutationOrder-class</code>,
+<code>RefinePermutationOrder-class</code>
+</p>
+
+
+</div>

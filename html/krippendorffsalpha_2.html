@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>confint.krippendorffsalpha</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute a confidence interval for Krippendorff's Alpha.</h2>
+
+<h3>Description</h3>
+
+<p>Compute a confidence interval for Krippendorff's Alpha.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'krippendorffsalpha'
+confint(object, parm = "alpha", level = 0.95, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>"krippendorffsalpha"</code>, the result of a call to <code>krippendorffs.alpha</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parm</code></td>
+<td>
+<p>always ignored since there is only one parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>the desired confidence level for the interval. The default is 0.95.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments. These are passed to <code>quantile</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function computes a confidence interval for alpha, assuming that <code>krippendorffs.alpha</code> was called with <code>confint = TRUE</code>.
+</p>
+<p>For <code>method = "analytical"</code>, a jackknife-based interval is computed. For smaller samples the jackknife interval offers a very substantial improvement over the bootstrap interval, the latter of which offers quite poor coverage. For larger samples <code>method = "customary"</code> can safely be used, in which case a bootstrap interval is provided. For sufficiently large datasets the two intervals will be nearly equal, but the bootstrap approach is preferred owing to its much faster execution speed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector with entries giving lower and upper confidence limits. These will be labelled as (1 - level) / 2 and 1 - (1 - level) / 2.
+</p>
+
+
+<h3>References</h3>
+
+<p>Nissi, M. J., Mortazavi, S., Hughes, J., Morgan, P., and Ellermann, J. (2015). T2* relaxation time of acetabular and femoral cartilage with and without intra-articular Gd-DTPA2 in patients with femoroacetabular impingement. <em>American Journal of Roentgenology</em>, <b>204</b>(6), W695.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>krippendorffs.alpha</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Fit a subset of the cartilage data, using the customary methodology.
+# Compute bootstrap confidence intervals using a bootstrap sample size
+# of 1,000. Report the estimate of alpha, and produce a 99% interval.
+
+data(cartilage)
+cartilage = as.matrix(cartilage[1:100, ])
+fit.cart = krippendorffs.alpha(cartilage, level = "ratio", method = "customary", confint = TRUE,
+                               control = list(bootit = 1000, parallel = FALSE))
+fit.cart$alpha.hat
+confint(fit.cart, level = 0.99)
+</code></pre>
+
+
+</div>

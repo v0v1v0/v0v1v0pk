@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_est</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kullback-Leibler divergence estimator for discrete, continuous or mixed data.</h2>
+
+<h3>Description</h3>
+
+<p>For two mixed continuous/discrete distributions with densities <code class="reqn">p</code> and
+<code class="reqn">q</code>, and denoting <code class="reqn">x = (x_\text{c},x_\text{d})</code>, the Kullback-Leibler
+divergence <code class="reqn">D_{KL}(p||q)</code> is given as
+</p>
+<p style="text-align: center;"><code class="reqn">D_{KL}(p||q) = \sum_{x_d} \int p(x_c,x_d) \log\left(\frac{p(x_c,x_d)}{q(x_c,x_d)}\right)dx_c.</code>
+</p>
+
+<p>Conditioning on the discrete variables <code class="reqn">x_d</code>, this can be re-written as
+</p>
+<p style="text-align: center;"><code class="reqn">D_{KL}(p||q) = \sum_{x_d} p(x_d) D_{KL}\big(p(\cdot|x_d)||q(\cdot|x_d)\big) +
+D_{KL}\big(p_{x_d}||q_{x_d}\big).</code>
+</p>
+
+<p>Here, the terms
+</p>
+<p style="text-align: center;"><code class="reqn">D_{KL}\big(p(\cdot|x_d)||q(\cdot|x_d)\big)</code>
+</p>
+
+<p>are approximated via nearest neighbour- or kernel-based density estimates on
+the datasets <code>X</code> and <code>Y</code> stratified by the discrete variables, and
+</p>
+<p style="text-align: center;"><code class="reqn">D_{KL}\big(p_{x_d}||q_{x_d}\big)</code>
+</p>
+
+<p>is approximated using relative frequencies.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_est(
+  X,
+  Y = NULL,
+  q = NULL,
+  estimator.continuous = kld_est_nn,
+  estimator.discrete = kld_est_discrete,
+  vartype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> data frames or matrices (multivariate
+samples), or numeric/character vectors (univariate samples, i.e. <code>d = 1</code>),
+representing <code>n</code> samples from the true distribution <code class="reqn">P</code> and <code>m</code>
+samples from the approximate distribution <code class="reqn">Q</code> in <code>d</code> dimensions.
+<code>Y</code> can be left blank if <code>q</code> is specified (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>The density function of the approximate distribution <code class="reqn">Q</code>. Either
+<code>Y</code> or <code>q</code> must be specified. If the distributions are all continuous or
+all discrete, <code>q</code> can be directly specified as the probability density/mass
+function. However, for mixed continuous/discrete distributions, <code>q</code> must
+be given in decomposed form, <code class="reqn">q(y_c,y_d)=q_{c|d}(y_c|y_d)q_d(y_d)</code>,
+specified as a named list with field <code>cond</code> for the conditional density
+<code class="reqn">q_{c|d}(y_c|y_d)</code> (a function that expects two arguments <code>y_c</code> and
+<code>y_d</code>) and <code>disc</code> for the discrete marginal density <code class="reqn">q_d(y_d)</code> (a
+function that expects one argument <code>y_d</code>). If such a decomposition is not
+available, it may be preferable to instead simulate a large sample from
+<code class="reqn">Q</code> and use the two-sample syntax.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator.continuous, estimator.discrete</code></td>
+<td>
+<p>KL divergence estimators for
+continuous and discrete data, respectively. Both are functions with two
+arguments <code>X</code> and <code>Y</code> or <code>X</code> and <code>q</code>, depending on whether a two-sample or
+one-sample problem is considered. Defaults are <code>kld_est_nn</code> and
+<code>kld_est_discrete</code>, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vartype</code></td>
+<td>
+<p>A length <code>d</code> character vector, with <code>vartype[i] = "c"</code> meaning
+the <code>i</code>-th variable is continuous, and <code>vartype[i] = "d"</code> meaning it is
+discrete. If unspecified, <code>vartype</code> is <code>"c"</code> for numeric columns and <code>"d"</code>
+for character or factor columns. This default will mostly work, except if
+levels of discrete variables are encoded using numbers (e.g., <code>0</code> for
+females and <code>1</code> for males) or for count data.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar, the estimated Kullback-Leibler divergence <code class="reqn">\hat D_{KL}(P||Q)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 2D example, two samples
+set.seed(0)
+X &lt;- data.frame(cont  = rnorm(10),
+                discr = c(rep('a',4),rep('b',6)))
+Y &lt;- data.frame(cont  = c(rnorm(5), rnorm(5, sd = 2)),
+                discr = c(rep('a',5),rep('b',5)))
+kld_est(X, Y)
+
+# 2D example, one sample
+set.seed(0)
+X &lt;- data.frame(cont  = rnorm(10),
+                discr = c(rep(0,4),rep(1,6)))
+q &lt;- list(cond = function(xc,xd) dnorm(xc, mean = xd, sd = 1),
+          disc = function(xd) dbinom(xd, size = 1, prob = 0.5))
+kld_est(X, q = q, vartype = c("c","d"))
+</code></pre>
+
+
+</div>

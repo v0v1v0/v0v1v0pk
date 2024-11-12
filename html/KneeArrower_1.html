@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>derivative</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Derivative of a function with respect to x</h2>
+
+<h3>Description</h3>
+
+<p>Derivative of a function with respect to x
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">derivative(x, y, m = 0, n = 50)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>x coordinates of points in function's domain</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>y coordinates of points in function's range</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>the order of the derivative (0 for y, 1 for y', 2 for y”)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of points in the domain for interpolation</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a function representing the mth derivative of y(x) with respect to x
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- seq(0,5,0.1)
+y &lt;- x^2 - 2*x + 3 # So dy/dx = 2x - 2
+fp &lt;- derivative(x, y, 1)
+fp(2) # 2
+fp(5) # 8
+</code></pre>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>wheeler.smith</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Wheeler-Smith Score</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">wheeler.smith(txt.file, hyphen = NULL, parameters = c(syll = 2), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hyphen</code></td>
+<td>
+<p>An object of class kRp.hyphen. If <code>NULL</code>,
+the text will be hyphenated automatically.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A numeric vector with named magic numbers,
+defining the relevant parameters for the index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function calculates the Wheeler-Smith Score. In contrast to
+<code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+<p>If <code>parameters="de"</code>, the calculation stays the same, but grade placement
+is done according to Bamberger &amp; Vanecek (1984), that is for german texts.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bamberger, R. &amp; Vanecek,
+E. (1984). <em>Lesen–Verstehen–Lernen–Schreiben</em>. Wien: Jugend und Volk.
+</p>
+<p>Wheeler, L.R. &amp; Smith,
+E.H. (1954). A practical readability formula for the classroom teacher in the primary grades. <em>Elementary English</em>,
+31, 397–399.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  wheeler.smith(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bezier_find_length</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Solve for arclength</h2>
+
+<h3>Description</h3>
+
+<p>Finds the value of the Bezier parameter <code class="reqn">t</code> that corresponds to a
+given arclength from the start of a Bezier curve
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bezier_find_length(P, len, from = 0, increasing = TRUE, give = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>Control points in the form of a 4 by 2 matrix with rows
+corresponding to <code class="reqn">P_0</code> to <code class="reqn">P_3</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>Point from which to start measuring arc length</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>len</code></td>
+<td>
+<p>Arc length</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>increasing</code></td>
+<td>
+<p>Boolean, with default <code>TRUE</code> meaning to
+measure length towards the end, and<code>FALSE</code> meaning to measure
+in the opposite direction</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>give</code></td>
+<td>
+<p>Boolean, with <code>TRUE</code> meaning to return details from
+<code>uniroot()</code> and default <code>FALSE</code> meaning to give just the
+position on the curve</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed to <code>uniroot()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function just uses <code>uniroot()</code> to find the appropriate value
+of <code>tee</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>bezier_integral</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+P &lt;- matrix(c(1, 3, 6, 4, 7, 3, 2, 2),ncol=2)
+bezier_find_length(P,5)
+
+</code></pre>
+
+
+</div>

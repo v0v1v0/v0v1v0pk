@@ -1,0 +1,135 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tunedwd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>fast tune procedure for DWD</h2>
+
+<h3>Description</h3>
+
+<p>A fast implementaiton of cross-validation for <code>kerndwd</code> to find the optimal values of the tuning parameter <code>lambda</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tunedwd(x, y, kern, lambda, qvals=1, eps=1e-5, maxit=1e+5, nfolds=5, foldid=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A matrix of predictors, i.e., the matrix <code>x</code> used in <code>kerndwd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A vector of binary class labels, i.e., the <code>y</code> used in <code>kerndwd</code>. <code>y</code> has two levels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern</code></td>
+<td>
+<p>A kernel function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>A user specified <code>lambda</code> candidate sequence for cross-validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qvals</code></td>
+<td>
+<p>A vector containing the index of the generalized DWD. Default value is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>The algorithm stops when (i.e. <code class="reqn">\sum_j(\beta_j^{new}-\beta_j^{old})^2</code> is less than <code>eps</code>, where <code class="reqn">j=0,\ldots, p</code>. Default value is <code>1e-5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxit</code></td>
+<td>
+<p>The maximum of iterations allowed. Default is 1e5.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfolds</code></td>
+<td>
+<p>The number of folds. Default value is 5. The allowable range is from 3 to the sample size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>foldid</code></td>
+<td>
+<p>An optional vector with values between 1 and <code>nfold</code>, representing the fold indices for each observation. If supplied, <code>nfold</code> can be missing.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function returns the best tuning parameters
+<code>q</code> and <code>lambda</code> by cross-validation. An efficient tune method is employed to accelerate the algorithm.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tunedwd.kerndwd</code> object including the cross-validation results is return.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>lam.tune</code></td>
+<td>
+<p>The optimal <code>lambda</code> value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q.tune</code></td>
+<td>
+<p>The optimal <code>q</code> value.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Boxiang Wang and Hui Zou<br>
+Maintainer: Boxiang Wang  <a href="mailto:boxiang-wang@uiowa.edu">boxiang-wang@uiowa.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Wang, B. and Zou, H. (2018)
+“Another Look at Distance Weighted Discrimination," 
+<em>Journal of Royal Statistical Society, Series B</em>, <b>80</b>(1), 177–198. <br><a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244">https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244</a><br>
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," <em>Journal of Statistical Software</em>, <b>33</b>(1), 1–22.<br><a href="https://www.jstatsoft.org/v33/i01/paper">https://www.jstatsoft.org/v33/i01/paper</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kerndwd</code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1)
+data(BUPA)
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
+lambda = 10^(seq(-3, 3, length.out=10))
+kern = rbfdot(sigma=sigest(BUPA$X))
+ret = tunedwd(BUPA$X, BUPA$y, kern, qvals=c(1,2,10), lambda=lambda, eps=1e-5, maxit=1e5)
+ret
+</code></pre>
+
+
+</div>

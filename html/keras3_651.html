@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>random_categorical</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draws samples from a categorical distribution.</h2>
+
+<h3>Description</h3>
+
+<p>This function takes as input <code>logits</code>, a 2-D input tensor with shape
+(batch_size, num_classes). Each row of the input represents a categorical
+distribution, with each column index containing the log-probability for a
+given class.
+</p>
+<p>The function will output a 2-D tensor with shape (batch_size, num_samples),
+where each row contains samples from the corresponding row in <code>logits</code>.
+Each column index contains an independent samples drawn from the input
+distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">random_categorical(logits, num_samples, dtype = "int32", seed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>logits</code></td>
+<td>
+<p>2-D Tensor with shape (batch_size, num_classes). Each row
+should define a categorical distibution with the unnormalized
+log-probabilities for all classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_samples</code></td>
+<td>
+<p>Int, the number of independent samples to draw for each
+row of the input. This will be the second dimension of the output
+tensor's shape.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>Optional dtype of the output tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>An R integer or instance of
+<code>random_seed_generator()</code>.
+Used to make the behavior of the initializer
+deterministic. Note that an initializer seeded with an integer
+or <code>NULL</code> (unseeded) will produce the same random values
+across multiple calls. To get different random values
+across multiple calls, use as seed an instance
+of <code>random_seed_generator()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A 2-D tensor with (batch_size, num_samples).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other random: <br><code>random_beta()</code> <br><code>random_binomial()</code> <br><code>random_dropout()</code> <br><code>random_gamma()</code> <br><code>random_integer()</code> <br><code>random_normal()</code> <br><code>random_seed_generator()</code> <br><code>random_shuffle()</code> <br><code>random_truncated_normal()</code> <br><code>random_uniform()</code> <br></p>
+
+
+</div>

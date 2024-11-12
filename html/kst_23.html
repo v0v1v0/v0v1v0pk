@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kstructure_is_wellgraded</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Well-Gradedness of Knowledge Structures</h2>
+
+<h3>Description</h3>
+
+<p>Tests for the well-gradedness of knowledge structures.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  kstructure_is_wellgraded(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>kstructure</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>A knowledge structure is considered <em>well-graded</em> if any two of 
+its states are connected by a bounded path, i.e., each knowledge state 
+(except the state for the full set of domain problems <em>Q</em>) has at 
+least one immediate successor state that comprises the same domain items 
+plus exactly one and each knowledge state (except the empty set <em>{}</em>) 
+has at least one predecessor state that contains the same domain items 
+with the exception of exactly one. 
+</p>
+<p><code>kstructure_is_wellgraded</code> takes an arbitrary knowledge structure 
+and tests for its well-gradedness.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A logical value.
+</p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P., Falmagne, J.-C. (1999) <em>Knowledge Spaces</em>. Heidelberg:
+Springer Verlag.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kstructure</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kst &lt;- kstructure(set(set(), set("a"), set("b"), set("c"), set("a","b"), 
+   set("b","c"), set("a","b","c")))
+kstructure_is_wellgraded(kst)
+
+kst &lt;- kstructure(set(set(), set("a"), set("b"), set("c"), set("a","b"), 
+   set("a","b","c")))
+kstructure_is_wellgraded(kst)
+</code></pre>
+
+
+</div>

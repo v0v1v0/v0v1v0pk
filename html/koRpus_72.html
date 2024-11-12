@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ELF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Readability: Fang's Easy Listening Formula (ELF)</h2>
+
+<h3>Description</h3>
+
+<p>This is just a convenient wrapper function for <code>readability</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ELF(txt.file, hyphen = NULL, parameters = c(syll = 1), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt.file</code></td>
+<td>
+<p>Either an object of class <code>kRp.text</code>,
+a character vector which must be be
+a valid path to a file containing the text to be analyzed,
+or a list of text features. If the latter, calculation
+is done by <code>readability.num</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hyphen</code></td>
+<td>
+<p>An object of class kRp.hyphen. If <code>NULL</code>,
+the text will be hyphenated automatically.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A numeric vector with named magic numbers,
+defining the relevant parameters for the index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further valid options for the main function,
+see <code>readability</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function calculates Fang's Easy Listening Formula (ELF). In contrast to
+<code>readability</code>,
+which by default calculates all possible indices,
+this function will only calculate the index value.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kRp.readability</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>DuBay, W.H. (2004). <em>The Principles of Readability</em>. Costa Mesa: Impact Information.
+WWW: <a href="http://www.impact-information.com/impactinfo/readability02.pdf">http://www.impact-information.com/impactinfo/readability02.pdf</a>; 22.03.2011.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  ELF(tagged.text)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

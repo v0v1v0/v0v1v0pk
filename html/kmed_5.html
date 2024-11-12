@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>clustheatmap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Consensus matrix heatmap from A consensus matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a consensus matrix heatmap from a
+consensus/ agreement matrix. The values of the consensus/ agreement
+matrix are transformed in order to plot the heatmap.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">clustheatmap(consmat, title = "")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>consmat</code></td>
+<td>
+<p>A matrix of consensus/ agreement matrix (see
+<strong>Details</strong>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>A title of the plot.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a function to produce a consensus matrix heatmap from a
+consensus/ agreement matrix. A matrix produced by the
+<code>consensusmatrix</code> function can be directly provided in the
+<code>consmat</code> argument. The values of the consensus matrix, <strong>A</strong>,
+are then transformed via a non-linear transformation by applying
+</p>
+<p style="text-align: center;"><code class="reqn">a_{ij}^{trf} = \frac{a_{ij} - min(a_{..})}{max(a_{..}) - min(a_{..})}</code>
+</p>
+
+<p>where <code class="reqn">a_{ij}</code> is the value of the consensus matrix in row i and
+column j, and <code class="reqn">a_{..}</code> is the all values of the matrix
+(<code class="reqn">\forall</code><strong>A</strong>).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Function returns a heatmap plot.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weksi Budiaji <br> Contact: <a href="mailto:budiaji@untirta.ac.id">budiaji@untirta.ac.id</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Monti, S., P. Tamayo, J. Mesirov, and T. Golub. 2003. Consensus
+clustering: A resampling-based method for class discovery and visualization
+of gene expression microarray data. Machine Learning 52 pp. 91-118.
+</p>
+<p>Hahsler, M., and Hornik, K., 2011. Dissimilarity plots:
+A visual exploration tool for partitional clustering. Journal of
+Computational and Graphical Statistics 20(2) pp. 335-354.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">num &lt;- as.matrix(iris[,1:4])
+mrwdist &lt;- distNumeric(num, num, method = "mrw")
+irisfast &lt;- clustboot(mrwdist, nclust=3, nboot=7)
+complete &lt;- function(x, nclust) {
+res &lt;- hclust(as.dist(x), method = "complete")
+member &lt;- cutree(res, nclust)
+return(member)
+}
+consensuscomplete &lt;- consensusmatrix(irisfast, nclust = 3, reorder = complete)
+clustheatmap(consensuscomplete)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reader</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reading and writing svg files</h2>
+
+<h3>Description</h3>
+
+<p>Various utilities for reading and creating svg files for use with inkscape
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reader(filename)
+write_svg(k, oldfile, safe=TRUE,
+    regex1 ='sodipodi:docname=',
+    regex2=' *d *= *" *M.*C.*[zZ] *"')
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>Name of a file to be read by <code>reader()</code>; usually
+an inkscape <code>.svg</code> file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safe</code></td>
+<td>
+<p>Boolean, with default <code>TRUE</code> meaning to save file
+“<code>foo.svg</code>” as “<code>foo_smooth.svg</code>”
+and <code>FALSE</code> meaning to overwrite <code>foo.svg</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k, oldfile, regex1, regex2</code></td>
+<td>
+<p>Various arguments sent to
+<code>write_svg()</code>; see the source code for details.
+Argument <code>k</code> is a knot, <code>oldfile</code> an <code>.svg</code> file for
+reference.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>reader()</code> is the way to get started with a new
+knot.  This takes a filename which is an <code>.svg</code> file created with
+inkscape.  Instructions for creating a suitable inkscape file are
+given in <code>knotR-package.Rd</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Inkscape's default is to use a mixture of absolute and relative
+coordinates.  Function <code>reader()</code> assumes that the <code>.svg</code>
+file uses only absolute coordinates.
+</p>
+<p>To ensure that only absolute coordinates are used, open the
+‘SVG output’ menu in ‘inkscape preferences’ and uncheck
+the “Allow relative coordinates” option.
+</p>
+<p>The format of <code>.svg</code> file is described in the W3C recommendation
+(2011) for Scalable Vector Graphics (SVG) 1.1, second edition.
+</p>
+<p>Sometimes, <code>reader()</code> will fail with a valid <code>.svg</code> file if
+a node is sufficiently close to the x or y axis to require exponential
+notation (this typically happens with complicated rotational
+symmetry).  If the file contains text like
+</p>
+<p><code>...35.3635879230533 -1.323423734554e-15 , 10.3538368384142...</code>
+</p>
+<p>the second value is zero to numerical precision, but the text form of
+the number interferes with the operation of <code>reader()</code>.  To deal
+with this we need to edit the file in a text editor and replace the
+offending number with an exact zero:
+</p>
+<p><code>...35.3635879230533 0 , 10.3538368384142...</code>
+</p>
+<p>(I guess the ideal would be to incorporate some clever regexp
+technique into <code>reader()</code> but this turned out to be harder than I
+thought).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>utilities</code>,<code>knotR-package</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+a &lt;- reader("6_3.svg")
+b &lt;- getcontrolpoints(a)
+knotplot(a)
+
+
+## End(Not run)
+</code></pre>
+
+
+</div>

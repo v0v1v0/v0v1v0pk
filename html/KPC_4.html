@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KMAc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KMAc (the unconditional version of graph-based KPC) with geometric graphs.</h2>
+
+<h3>Description</h3>
+
+<p>Calculate <code class="reqn">\hat{\eta}_n</code> (the unconditional version of graph-based KPC) using directed K-NN graph or minimum spanning tree (MST).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KMAc(
+  Y,
+  X,
+  k = kernlab::rbfdot(1/(2 * stats::median(stats::dist(Y))^2)),
+  Knn = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a matrix of response (n by dy)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a matrix of predictors (n by dx)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>a function <code class="reqn">k(y, y')</code> of class <code>kernel</code>. It can be the kernel implemented in <code>kernlab</code> e.g., Gaussian kernel: <code>rbfdot(sigma = 1)</code>, linear kernel: <code>vanilladot()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Knn</code></td>
+<td>
+<p>the number of K-nearest neighbor to use; or "MST". A small Knn (e.g., Knn=1) is recommended for an accurate estimate of the population KMAc.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code class="reqn">\hat{\eta}_n</code> is an estimate of the population kernel measure of association, based on data <code class="reqn">\{(X_i,Y_i)\}_{i=1}^n</code> from <code class="reqn">\mu</code>.
+For K-NN graph, ties will be broken at random. MST is found using package <code>emstreeR</code>.
+In particular,
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{\eta}_n:=\frac{n^{-1}\sum_{i=1}^n d_i^{-1}\sum_{j:(i,j)\in\mathcal{E}(G_n)} k(Y_i,Y_j)-(n(n-1))^{-1}\sum_{i\neq j}k(Y_i,Y_j)}{n^{-1}\sum_{i=1}^n k(Y_i,Y_i)-(n(n-1))^{-1}\sum_{i\neq j}k(Y_i,Y_j)},</code>
+</p>
+
+<p>where <code class="reqn">G_n</code> denotes a MST or K-NN graph on <code class="reqn">X_1,\ldots , X_n</code>, <code class="reqn">\mathcal{E}(G_n)</code> denotes the set of edges of <code class="reqn">G_n</code> and
+<code class="reqn">(i,j)\in\mathcal{E}(G_n)</code> implies that there is an edge from <code class="reqn">X_i</code> to <code class="reqn">X_j</code> in <code class="reqn">G_n</code>.
+Euclidean distance is used for computing the K-NN graph and the MST.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The algorithm returns a real number ‘KMAc’, the empirical kernel measure of association
+</p>
+
+
+<h3>References</h3>
+
+<p>Deb, N., P. Ghosal, and B. Sen (2020), “Measuring association on topological spaces using kernels and geometric graphs” &lt;arXiv:2010.01768&gt;.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KPCgraph</code>, <code>Klin</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(kernlab)
+KMAc(Y = rnorm(100), X = rnorm(100), k = rbfdot(1), Knn = 1)
+</code></pre>
+
+
+</div>

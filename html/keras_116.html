@@ -1,0 +1,39 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generator_next</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve the next item from a generator</h2>
+
+<h3>Description</h3>
+
+<p>Use to retrieve items from generators (e.g. <code>image_data_generator()</code>). Will return
+either the next item or <code>NULL</code> if there are no more items.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generator_next(generator, completed = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>generator</code></td>
+<td>
+<p>Generator</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>completed</code></td>
+<td>
+<p>Sentinel value to return from <code>generator_next()</code> if the iteration
+completes (defaults to <code>NULL</code> but can be any R value you specify).</p>
+</td>
+</tr>
+</table>
+</div>

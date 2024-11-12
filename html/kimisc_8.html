@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export.list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Exports to an environment</h2>
+
+<h3>Description</h3>
+
+<p>This function is a wrapper around <code>assign()</code> that
+exports the contents of a named list to an environment.  The variable names
+in the target environment are constructed from the names of the list items
+or taken from a separate argument.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">export.list(arg.list, arg.names = names(arg.list), target.env = .GlobalEnv)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>arg.list</code></td>
+<td>
+<p>list of objects, possibly named.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>arg.names</code></td>
+<td>
+<p>names to use for the items in the target environment. Use
+the names of <code>arg.list</code> by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target.env</code></td>
+<td>
+<p>The target environment.  Use the global environment by
+default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisible <code>NULL</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Roland
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="http://stackoverflow.com/a/17484932/946850">http://stackoverflow.com/a/17484932/946850</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>export, assign
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">export.list(list(newly.created.var=5))
+newly.created.var
+rm(newly.created.var)
+</code></pre>
+
+
+</div>

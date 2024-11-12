@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>forget</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Forgets the Continuation
+</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a function of the form <code>f(x, ret)</code> and forgets the <code>ret</code> part returning a function of the form <code>g(x)</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">forget(f)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+
+<p>a function of the form <code>f(x, ret)</code>.
+</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a function of the form <code>f(x)</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matteo Provenzano<br><a href="http://www.alephdue.com">http://www.alephdue.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>compose</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># forget the FUN part in lapply
+to.list &lt;- forget(lapply)
+
+# returns the list of the natural numbers from 1 to 10
+to.list(1:10)
+</code></pre>
+
+
+</div>

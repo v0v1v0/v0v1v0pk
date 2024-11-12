@@ -1,0 +1,493 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>DMHeatMap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Better Heatmap Function
+</h2>
+
+<h3>Description</h3>
+
+<p>Makes a heatmap representation of correaltion coefficients easier.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">DMHeatMap(x, Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
+ distfun = dist, hclustfun = hclust, dendrogram =
+ c("both", "row", "column", "none"), symm = FALSE,
+ scale = c("none", "row", "column"), na.rm = TRUE, revC
+ = identical(Colv, "Rowv"), add.expr, breaks, symbreaks
+ = min(x &lt; 0, na.rm = TRUE) || scale != "none", col =
+ "heat.colors", colsep, rowsep, sepcolor = "white",
+ sepwidth = c(0.05, 0.05), cellnote, notecex = 1,
+ notecol = "cyan", na.color = par("bg"), trace =
+ c("column", "row", "both", "none"), tracecol = "cyan",
+ hline = median(breaks), vline = median(breaks),
+ linecol = tracecol, margins = c(5, 5), ColSideColors,
+ RowSideColors, cexRow = 0.2 + 1/log10(nr), cexCol =
+ 0.2 + 1/log10(nc), labRow = NULL, labCol = NULL,
+ labColor = NULL, axis = TRUE, heatmapOnly = FALSE, key
+ = TRUE, keysize = 1.5, density.info = c("histogram",
+ "density", "none"), denscol = tracecol, symkey = min(x
+ &lt; 0, na.rm = TRUE) || symbreaks, densadj = 0.25, main
+ = NULL, xlab = NULL, ylab = NULL, lmat = NULL, lhei =
+ NULL, lwid = NULL, lower.left.only = TRUE, legend =
+ TRUE, legend.x = "topright", verbose = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>heatmapOnly</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.x</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend</code></td>
+<td>
+
+<p>tbd
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rowv</code></td>
+<td>
+
+<p>tbdRowv
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Colv</code></td>
+<td>
+
+<p>tbdColv
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distfun</code></td>
+<td>
+
+<p>tbddistfun
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hclustfun</code></td>
+<td>
+
+<p>tbdhclustfun
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dendrogram</code></td>
+<td>
+
+<p>tbddendrogram
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symm</code></td>
+<td>
+
+<p>tbdsymm
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+
+<p>tbdscale
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+
+<p>tbdna.rm
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>revC</code></td>
+<td>
+
+<p>tbdrevC
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.expr</code></td>
+<td>
+
+<p>tbdadd.expr
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+
+<p>tbdbreaks
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbreaks</code></td>
+<td>
+
+<p>tbdsymbreaks
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+
+<p>tbdcol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colsep</code></td>
+<td>
+
+<p>tbdcolsep
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowsep</code></td>
+<td>
+
+<p>tbdrowsep
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sepcolor</code></td>
+<td>
+
+<p>tbdsepcolor
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sepwidth</code></td>
+<td>
+
+<p>tbdsepwidth
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cellnote</code></td>
+<td>
+
+<p>tbdcellnote
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notecex</code></td>
+<td>
+
+<p>tbdnotecex
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notecol</code></td>
+<td>
+
+<p>tbdnotecol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.color</code></td>
+<td>
+
+<p>tbdna.color
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+
+<p>tbdtrace
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tracecol</code></td>
+<td>
+
+<p>tbdtracecol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hline</code></td>
+<td>
+
+<p>tbdhline
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vline</code></td>
+<td>
+
+<p>tbdvline
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linecol</code></td>
+<td>
+
+<p>tbdlinecol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margins</code></td>
+<td>
+
+<p>tbdmargins
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ColSideColors</code></td>
+<td>
+
+<p>tbdColSideColors
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RowSideColors</code></td>
+<td>
+
+<p>tbdRowSideColors
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cexRow</code></td>
+<td>
+
+<p>tbdcexRow
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cexCol</code></td>
+<td>
+
+<p>tbdcexCol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labRow</code></td>
+<td>
+
+<p>tbdlabRow
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labCol</code></td>
+<td>
+
+<p>tbdlabCol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labColor</code></td>
+<td>
+
+<p>tbdlabColor
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+
+<p>tbdkey
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keysize</code></td>
+<td>
+
+<p>tbdkeysize
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>density.info</code></td>
+<td>
+
+<p>tbddensity.info
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>denscol</code></td>
+<td>
+
+<p>tbddenscol
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symkey</code></td>
+<td>
+
+<p>tbdsymkey
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>densadj</code></td>
+<td>
+
+<p>tbddensadj
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+
+<p>tbdmain
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+
+<p>tbdxlab
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+
+<p>tbdylab
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lmat</code></td>
+<td>
+
+<p>tbdlmat
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lhei</code></td>
+<td>
+
+<p>tbdlhei
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwid</code></td>
+<td>
+
+<p>tbdlwid
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower.left.only</code></td>
+<td>
+
+<p>tbdlower.left.only
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+cor=matrix(runif(15),5,3)
+breaks=c(-1,-.7,-.5,-.3,-.1,.1,.3,.5,.7,1)
+hU=DMHeatMap(cor, trace="none", symm=FALSE,dendrogram="none", col=RColorBrewer::brewer.pal(
+    length(breaks)-1,"RdYlGn"), distfun = function(c) as.dist(1 - c), cexRow =1.5, cexCol =1.5, 
+    lmat=rbind( c(2, 1), c(4,3) ), lhei=c(4, 1 ), breaks=breaks, margins=c(2,2), key = FALSE, 
+    Rowv=NA, lower.left.only=FALSE)
+
+
+</code></pre>
+
+
+</div>

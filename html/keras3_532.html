@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>op_map</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Map a function over leading array axes.</h2>
+
+<h3>Description</h3>
+
+<p>Like <code>purrr::map()</code> or <code>base::lapply()</code>, except inputs and outputs are in the form of
+stacked arrays. Consider using the <code>op_vectorized_map()</code> transform instead,
+unless you need to apply a function element by element for reduced memory
+usage or heterogeneous computation with other control flow primitives.
+</p>
+<p>When <code>xs</code> is an array type, the semantics of <code>op_map()</code> match this
+implementation:
+</p>
+<div class="sourceCode r"><pre>op_map &lt;- function(xs, f) {
+  xs |&gt;
+    op_unstack() |&gt;
+    lapply(f) |&gt;
+    op_stack()
+}
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">op_map(xs, f)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>xs</code></td>
+<td>
+<p>Values over which to map along the leading axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>Callable defines the function to apply element-wise over the first
+axis or axes of <code>xs</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Mapped values.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>f &lt;- function(x) x^2
+xs &lt;- op_arange(10)
+ys &lt;- op_map(xs, f)
+ys
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([ 0.  1.  4.  9. 16. 25. 36. 49. 64. 81.], shape=(10), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>f &lt;- function(x) list(y1 = x^2, y2 = x * 10)  # Can have nested outputs
+ys &lt;- op_map(xs, f)
+ys$y1
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([ 0.  1.  4.  9. 16. 25. 36. 49. 64. 81.], shape=(10), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>ys$y2
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([ 0. 10. 20. 30. 40. 50. 60. 70. 80. 90.], shape=(10), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other core ops: <br><code>op_associative_scan()</code> <br><code>op_cast()</code> <br><code>op_cond()</code> <br><code>op_convert_to_numpy()</code> <br><code>op_convert_to_tensor()</code> <br><code>op_custom_gradient()</code> <br><code>op_dtype()</code> <br><code>op_fori_loop()</code> <br><code>op_is_tensor()</code> <br><code>op_scan()</code> <br><code>op_scatter()</code> <br><code>op_scatter_update()</code> <br><code>op_searchsorted()</code> <br><code>op_shape()</code> <br><code>op_slice()</code> <br><code>op_slice_update()</code> <br><code>op_stop_gradient()</code> <br><code>op_switch()</code> <br><code>op_unstack()</code> <br><code>op_vectorized_map()</code> <br><code>op_while_loop()</code> <br></p>
+<p>Other ops: <br><code>op_abs()</code> <br><code>op_add()</code> <br><code>op_all()</code> <br><code>op_any()</code> <br><code>op_append()</code> <br><code>op_arange()</code> <br><code>op_arccos()</code> <br><code>op_arccosh()</code> <br><code>op_arcsin()</code> <br><code>op_arcsinh()</code> <br><code>op_arctan()</code> <br><code>op_arctan2()</code> <br><code>op_arctanh()</code> <br><code>op_argmax()</code> <br><code>op_argmin()</code> <br><code>op_argpartition()</code> <br><code>op_argsort()</code> <br><code>op_array()</code> <br><code>op_associative_scan()</code> <br><code>op_average()</code> <br><code>op_average_pool()</code> <br><code>op_batch_normalization()</code> <br><code>op_binary_crossentropy()</code> <br><code>op_bincount()</code> <br><code>op_broadcast_to()</code> <br><code>op_cast()</code> <br><code>op_categorical_crossentropy()</code> <br><code>op_ceil()</code> <br><code>op_cholesky()</code> <br><code>op_clip()</code> <br><code>op_concatenate()</code> <br><code>op_cond()</code> <br><code>op_conj()</code> <br><code>op_conv()</code> <br><code>op_conv_transpose()</code> <br><code>op_convert_to_numpy()</code> <br><code>op_convert_to_tensor()</code> <br><code>op_copy()</code> <br><code>op_correlate()</code> <br><code>op_cos()</code> <br><code>op_cosh()</code> <br><code>op_count_nonzero()</code> <br><code>op_cross()</code> <br><code>op_ctc_decode()</code> <br><code>op_ctc_loss()</code> <br><code>op_cumprod()</code> <br><code>op_cumsum()</code> <br><code>op_custom_gradient()</code> <br><code>op_depthwise_conv()</code> <br><code>op_det()</code> <br><code>op_diag()</code> <br><code>op_diagonal()</code> <br><code>op_diff()</code> <br><code>op_digitize()</code> <br><code>op_divide()</code> <br><code>op_divide_no_nan()</code> <br><code>op_dot()</code> <br><code>op_dtype()</code> <br><code>op_eig()</code> <br><code>op_eigh()</code> <br><code>op_einsum()</code> <br><code>op_elu()</code> <br><code>op_empty()</code> <br><code>op_equal()</code> <br><code>op_erf()</code> <br><code>op_erfinv()</code> <br><code>op_exp()</code> <br><code>op_expand_dims()</code> <br><code>op_expm1()</code> <br><code>op_extract_sequences()</code> <br><code>op_eye()</code> <br><code>op_fft()</code> <br><code>op_fft2()</code> <br><code>op_flip()</code> <br><code>op_floor()</code> <br><code>op_floor_divide()</code> <br><code>op_fori_loop()</code> <br><code>op_full()</code> <br><code>op_full_like()</code> <br><code>op_gelu()</code> <br><code>op_get_item()</code> <br><code>op_greater()</code> <br><code>op_greater_equal()</code> <br><code>op_hard_sigmoid()</code> <br><code>op_hard_silu()</code> <br><code>op_hstack()</code> <br><code>op_identity()</code> <br><code>op_imag()</code> <br><code>op_image_affine_transform()</code> <br><code>op_image_crop()</code> <br><code>op_image_extract_patches()</code> <br><code>op_image_hsv_to_rgb()</code> <br><code>op_image_map_coordinates()</code> <br><code>op_image_pad()</code> <br><code>op_image_resize()</code> <br><code>op_image_rgb_to_grayscale()</code> <br><code>op_image_rgb_to_hsv()</code> <br><code>op_in_top_k()</code> <br><code>op_inv()</code> <br><code>op_irfft()</code> <br><code>op_is_tensor()</code> <br><code>op_isclose()</code> <br><code>op_isfinite()</code> <br><code>op_isinf()</code> <br><code>op_isnan()</code> <br><code>op_istft()</code> <br><code>op_leaky_relu()</code> <br><code>op_less()</code> <br><code>op_less_equal()</code> <br><code>op_linspace()</code> <br><code>op_log()</code> <br><code>op_log10()</code> <br><code>op_log1p()</code> <br><code>op_log2()</code> <br><code>op_log_sigmoid()</code> <br><code>op_log_softmax()</code> <br><code>op_logaddexp()</code> <br><code>op_logical_and()</code> <br><code>op_logical_not()</code> <br><code>op_logical_or()</code> <br><code>op_logical_xor()</code> <br><code>op_logspace()</code> <br><code>op_logsumexp()</code> <br><code>op_lstsq()</code> <br><code>op_lu_factor()</code> <br><code>op_matmul()</code> <br><code>op_max()</code> <br><code>op_max_pool()</code> <br><code>op_maximum()</code> <br><code>op_mean()</code> <br><code>op_median()</code> <br><code>op_meshgrid()</code> <br><code>op_min()</code> <br><code>op_minimum()</code> <br><code>op_mod()</code> <br><code>op_moments()</code> <br><code>op_moveaxis()</code> <br><code>op_multi_hot()</code> <br><code>op_multiply()</code> <br><code>op_nan_to_num()</code> <br><code>op_ndim()</code> <br><code>op_negative()</code> <br><code>op_nonzero()</code> <br><code>op_norm()</code> <br><code>op_normalize()</code> <br><code>op_not_equal()</code> <br><code>op_one_hot()</code> <br><code>op_ones()</code> <br><code>op_ones_like()</code> <br><code>op_outer()</code> <br><code>op_pad()</code> <br><code>op_power()</code> <br><code>op_prod()</code> <br><code>op_psnr()</code> <br><code>op_qr()</code> <br><code>op_quantile()</code> <br><code>op_ravel()</code> <br><code>op_real()</code> <br><code>op_reciprocal()</code> <br><code>op_relu()</code> <br><code>op_relu6()</code> <br><code>op_repeat()</code> <br><code>op_reshape()</code> <br><code>op_rfft()</code> <br><code>op_roll()</code> <br><code>op_round()</code> <br><code>op_rsqrt()</code> <br><code>op_scan()</code> <br><code>op_scatter()</code> <br><code>op_scatter_update()</code> <br><code>op_searchsorted()</code> <br><code>op_segment_max()</code> <br><code>op_segment_sum()</code> <br><code>op_select()</code> <br><code>op_selu()</code> <br><code>op_separable_conv()</code> <br><code>op_shape()</code> <br><code>op_sigmoid()</code> <br><code>op_sign()</code> <br><code>op_silu()</code> <br><code>op_sin()</code> <br><code>op_sinh()</code> <br><code>op_size()</code> <br><code>op_slice()</code> <br><code>op_slice_update()</code> <br><code>op_slogdet()</code> <br><code>op_softmax()</code> <br><code>op_softplus()</code> <br><code>op_softsign()</code> <br><code>op_solve()</code> <br><code>op_solve_triangular()</code> <br><code>op_sort()</code> <br><code>op_sparse_categorical_crossentropy()</code> <br><code>op_split()</code> <br><code>op_sqrt()</code> <br><code>op_square()</code> <br><code>op_squeeze()</code> <br><code>op_stack()</code> <br><code>op_std()</code> <br><code>op_stft()</code> <br><code>op_stop_gradient()</code> <br><code>op_subtract()</code> <br><code>op_sum()</code> <br><code>op_svd()</code> <br><code>op_swapaxes()</code> <br><code>op_switch()</code> <br><code>op_take()</code> <br><code>op_take_along_axis()</code> <br><code>op_tan()</code> <br><code>op_tanh()</code> <br><code>op_tensordot()</code> <br><code>op_tile()</code> <br><code>op_top_k()</code> <br><code>op_trace()</code> <br><code>op_transpose()</code> <br><code>op_tri()</code> <br><code>op_tril()</code> <br><code>op_triu()</code> <br><code>op_unstack()</code> <br><code>op_var()</code> <br><code>op_vdot()</code> <br><code>op_vectorize()</code> <br><code>op_vectorized_map()</code> <br><code>op_vstack()</code> <br><code>op_where()</code> <br><code>op_while_loop()</code> <br><code>op_zeros()</code> <br><code>op_zeros_like()</code> <br></p>
+
+
+</div>

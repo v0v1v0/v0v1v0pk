@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ad.pval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+<code class="reqn">P</code>-Value for the Asymptotic Anderson-Darling Test Distribution
+</h2>
+
+<h3>Description</h3>
+
+<p>This function computes upper tail probabilities for the limiting distribution of the 
+standardized Anderson-Darling test statistic.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ad.pval(tx,m,version=1) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tx</code></td>
+<td>
+
+<p>a vector of desired thresholds <code class="reqn">\ge 0</code>
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+ 
+<p>The degrees of freedom for the asymptotic standardized Anderson-Darling test statistic
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>version</code></td>
+<td>
+<p><code>= 1</code> (default) if <code class="reqn">P</code>-value for version 1 of the 
+test statistic is desired, otherwise the version 2 <code class="reqn">P</code>-value is calculated.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Extensive simulations (sampling from a common continuous distribution)
+were used to extend the range of the asymptotic 
+<code class="reqn">P</code>-value calculation from the original <code class="reqn">[.01,.25]</code> in Table 1 of the reference paper
+to 36 quantiles corresponding to <code class="reqn">P</code>  = .00001, .00005, .0001, .0005, .001, .005, .01, .025, 
+.05, .075, .1, .2, .3, .4, .5, .6, .7, .8, .9, .925, .95, .975, .99, .9925, .995, .9975, .999,
+.99925, .9995, .99975, .9999, .999925, .99995, .999975, .99999. Note that the entries of the original Table 1
+were obtained by using the first 4 moments of the asymptotic distribution and a
+Pearson curve approximation.
+</p>
+<p>Using <code>ad.test</code>,
+1 million replications of the standardized <code class="reqn">AD</code> statistics with sample sizes
+<code class="reqn">n_i=500</code>, <code class="reqn">i=1,\ldots,k</code> were run for <code class="reqn">k=2,3,4,5,7</code> (<code class="reqn">k=2</code> was done twice).
+These values of <code class="reqn">k</code> correspond to degrees of freedom
+<code class="reqn">m=k-1=1,2,3,4,6</code> in the asymptotic distribution. The random variable described by this 
+distribution is denoted by <code class="reqn">T_m</code>.
+The actual variances (for <code class="reqn">n_i=500</code>) agreed fairly well with the asymptotic variances.
+</p>
+<p>Using the convolution nature of the asymptotic distribution, the performed simulations
+were exploited to result in an effective simulation of 2 million cases, except for 
+<code class="reqn">k=11</code>, i.e., <code class="reqn">m=k-1=10</code>, for which the asymptotic distribution of 
+<code class="reqn">T_{10}</code>
+was approximated by the sum of the <code class="reqn">AD</code> statistics for <code class="reqn">k=7</code> and <code class="reqn">k=5</code>, 
+for just the 1 million cases run for each <code class="reqn">k</code>. 
+</p>
+<p>The interpolation of tail 
+probabilities <code class="reqn">P</code>
+for any desired <code class="reqn">k</code> is done in two stages. First, a spline in <code class="reqn">1/\sqrt{m}</code> is
+fitted to each of the 36 quantiles obtained for <code class="reqn">m=1,2,3,4,6,8,10,\infty</code> to obtain 
+the corresponding interpolated quantiles for the <code class="reqn">m</code> in question. 
+</p>
+<p>Then a spline is fitted
+to the <code class="reqn">\log((1-P)/P)</code> as a function of these 36 interpolated quantiles. This latter
+spline is used to determine the tail probabilities <code class="reqn">P</code> for the 
+specified threshold <code>tx</code>, corresponding to either <code class="reqn">AD</code> 
+statistic version. The above procedure is based on simulations for either version
+of the test statistic,
+appealing to the same limiting distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector of upper tail probabilities corresponding to <code>tx</code>
+</p>
+
+
+<h3>References</h3>
+
+<p>Scholz, F. W. and Stephens, M. A. (1987), K-sample Anderson-Darling Tests, 
+<em>Journal of the American Statistical Association</em>, 
+<b>Vol 82, No. 399</b>, 918–924. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ad.test</code>,
+<code>ad.test.combined</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ad.pval(tx=c(3.124,5.65),m=2,version=1)
+ad.pval(tx=c(3.124,5.65),m=2,version=2)
+</code></pre>
+
+
+</div>

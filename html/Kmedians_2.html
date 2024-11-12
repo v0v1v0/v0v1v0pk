@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gen_K</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>gen_K</h2>
+
+<h3>Description</h3>
+
+<p>Generate a sample of a Gaussian Mixture Model whose centers are generate randomly on a sphere of radius <code>radius</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gen_K(n=500,d=5,K=3,pcont=0,df=1,
+      cont="Student",min=-5,max=5,radius=5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A positive integer giving the number of data per cluster. Default is <code>500</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>A positive integer giving the dimension. Default is <code>5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>A positive integer giving the number of clusters. Default is <code>3</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcont</code></td>
+<td>
+<p>A scalar between <code>0</code> and <code>1</code> giving the proportion of contaminated data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>A positive integer giving the degrees of freedom of the law of the contaminated data if <code>cont='Student'</code>. Default is <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cont</code></td>
+<td>
+<p>The law of the contaminated data. Can be <code>'Student'</code> (default) and <code>'Unif'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min</code></td>
+<td>
+<p>A scalar giving the lower bound of the uniform law if <code>cont='Unif'</code>. Default is <code>-5</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max</code></td>
+<td>
+<p>A scalar giving the upper bound of the uniform law if <code>cont='Unif'</code>. Default is <code>5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>radius</code></td>
+<td>
+<p>The radius of the sphere on each the centers of the class are generated. Default is <code>5</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A numerical matrix giving the generated data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>An character vector specifying the true classification.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>See also <code>Kmedians</code> and <code>Kmeans</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n &lt;- 500
+K &lt;- 3
+pcont &lt;- 0.2
+ech &lt;- gen_K(n=n,K=K,pcont=pcont)
+X=ech$X
+</code></pre>
+
+
+</div>

@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dkde1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Working with a kde1d object</h2>
+
+<h3>Description</h3>
+
+<p>Density, distribution function, quantile function and random generation
+for a 'kde1d' kernel density estimate.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dkde1d(x, obj)
+
+pkde1d(q, obj)
+
+qkde1d(p, obj)
+
+rkde1d(n, obj, quasi = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of density evaluation points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>a <code>kde1d</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>vector of quantiles.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>vector of probabilities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer; number of observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quasi</code></td>
+<td>
+<p>logical; the default (<code>FALSE</code>) returns pseudo-random
+numbers, use <code>TRUE</code> for quasi-random numbers (generalized Halton, see
+<code>randtoolbox::sobol()</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>dkde1d()</code> gives the density, <code>pkde1d()</code> gives
+the distribution function, <code>qkde1d()</code> gives the quantile function,
+and <code>rkde1d()</code> generates random deviates.
+</p>
+<p>The length of the result is determined by <code>n</code> for <code>rkde1d()</code>, and
+is the length of the numerical argument for the other functions.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The density, distribution function or quantile functions estimates
+evaluated respectively at <code>x</code>, <code>q</code>, or <code>p</code>, or a sample of <code>n</code> random
+deviates from the estimated kernel density.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kde1d()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(0) # for reproducibility
+x &lt;- rnorm(100) # simulate some data
+fit &lt;- kde1d(x) # estimate density
+dkde1d(0, fit) # evaluate density estimate (close to dnorm(0))
+pkde1d(0, fit) # evaluate corresponding cdf (close to pnorm(0))
+qkde1d(0.5, fit) # quantile function (close to qnorm(0))
+hist(rkde1d(100, fit)) # simulate
+</code></pre>
+
+
+</div>

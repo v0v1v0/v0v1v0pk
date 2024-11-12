@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cox.zph.2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Test the Proportional Hazards Assumption of a Cox Regression (a slightly modified version)
+</h2>
+
+<h3>Description</h3>
+
+<p>A slightly modified test of the proportional hazards assumption for a Cox regression model fit (coxph). This version corrects some conservativeness of the test.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cox.zph.2(fit, transform = "km", global = TRUE, exact=TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+
+<p>fit
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+
+<p>transform
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global</code></td>
+<td>
+
+<p>global
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+
+<p>Boolean. If FALSE, this function is an identical copy of cox.zph. If TRUE, it computes the variance of the test statistic exactly, instead of approximately.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When the model uses time-dependent covariates, the approximation used in Grambsch and Therneau resulted in conservativeness of the test. This is "fixed" here at a cost of up to 2.5 times longer execution time. 
+</p>
+
+
+<h3>References</h3>
+
+<p>Fong, Y. and Halloran, M Elizabeth and Gilbert, P.  Using Time-Dependent Age Group in Cox Regression Analysis of Vaccine Efficacy Trials, Just Another Epi Journal, in prep.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+fit &lt;- coxph(Surv(futime, fustat) ~ age + ecog.ps,  
+             data=ovarian) 
+temp &lt;- cox.zph(fit) 
+print(temp)        
+temp.2 &lt;- cox.zph.2(fit) 
+print(temp.2)        
+
+</code></pre>
+
+
+</div>

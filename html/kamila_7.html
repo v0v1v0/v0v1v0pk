@@ -1,0 +1,230 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kamila</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KAMILA clustering of mixed-type data.</h2>
+
+<h3>Description</h3>
+
+<p>KAMILA is an iterative clustering method that equitably balances the
+contribution of continuous and categorical variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kamila(
+  conVar,
+  catFactor,
+  numClust,
+  numInit,
+  conWeights = rep(1, ncol(conVar)),
+  catWeights = rep(1, ncol(catFactor)),
+  maxIter = 25,
+  conInitMethod = "runif",
+  catBw = 0.025,
+  verbose = FALSE,
+  calcNumClust = "none",
+  numPredStrCvRun = 10,
+  predStrThresh = 0.8
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conVar</code></td>
+<td>
+<p>A data frame of continuous variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catFactor</code></td>
+<td>
+<p>A data frame of factors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numClust</code></td>
+<td>
+<p>The number of clusters returned by the algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numInit</code></td>
+<td>
+<p>The number of initializations used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conWeights</code></td>
+<td>
+<p>A vector of continuous weights for the continuous variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catWeights</code></td>
+<td>
+<p>A vector of continuous weights for the categorical variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxIter</code></td>
+<td>
+<p>The maximum number of iterations in each run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conInitMethod</code></td>
+<td>
+<p>Character: The method used to initialize each run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catBw</code></td>
+<td>
+<p>The bandwidth used for the categorical kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Logical: Whether detailed results should be printed and returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calcNumClust</code></td>
+<td>
+<p>Character: Method for selecting the number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numPredStrCvRun</code></td>
+<td>
+<p>Numeric: Number of CV runs for prediction strength method. Ignored unless calcNumClust == 'ps'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predStrThresh</code></td>
+<td>
+<p>Numeric: Threshold for prediction strength method. Ignored unless calcNumClust == 'ps'</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>KAMILA (KAy-means for MIxed LArge data sets) is an iterative clustering
+method that equitably balances the contribution of the continuous and
+categorical variables. It uses a kernel density estimation technique to
+flexibly model spherical clusters in the continuous domain, and uses a
+multinomial model in the categorical domain.
+</p>
+<p>Weighting scheme: If no weights are desired, set all weights to 1 (the
+default setting). Let a_1, ..., a_p denote the weights for p continuous 
+variables. Let b_1, ..., b_q denote the weights for q categorical variables.
+Currently, continuous weights are applied during the calculation of 
+Euclidean distance, as:
+Categorical weights are applied to the log-likelihoods obtained by the 
+level probabilities given cluster membership as:
+Total log likelihood for the kth cluster is obtained by weighting the
+single continuous log-likelihood by the mean of all continuous weights
+plus logLikCat_k:
+Note that weights between 0 and 1 are admissible; weights equal to zero
+completely remove a variable's influence on the clustering; weights equal
+to 1 leave a variable's contribution unchanged. Weights between 0 and 1
+may not be comparable across continuous and categorical variables.
+Estimating the number of clusters: Default is no estimation method. Setting
+calcNumClust to 'ps' uses the prediction strength method of Tibshirani &amp; 
+Walther (J. of Comp. and Graphical Stats. 14(3), 2005). There is no perfect
+method for estimating the number of clusters; PS tends to give a smaller
+number than, say, BIC based methods for large sample sizes. The user must
+specify the number of cross-validation runs and the threshold for
+determining the number of clusters. The smaller the threshold, the larger
+the number of clusters selected.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following results objects:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>finalMemb</code></td>
+<td>
+<p>A numeric vector with cluster assignment indicated by integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numIter</code></td>
+<td>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>finalLogLik</code></td>
+<td>
+<p>The pseudo log-likelihood of the returned clustering.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>finalObj</code></td>
+<td>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>finalCenters</code></td>
+<td>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>finalProbs</code></td>
+<td>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>Object with the given input parameter values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nClust</code></td>
+<td>
+<p>An object describing the results of selecting the number of clusters, empty if calcNumClust == 'none'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>An optionally returned object with more detailed information.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Foss A, Markatou M; kamila: Clustering Mixed-Type Data in R and Hadoop. Journal of Statistical Software, 83(13). 2018. doi: 10.18637/jss.v083.i13
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate toy data set with poor quality categorical variables and good
+# quality continuous variables.
+set.seed(1)
+dat &lt;- genMixedData(200, nConVar = 2, nCatVar = 2, nCatLevels = 4,
+  nConWithErr = 2, nCatWithErr = 2, popProportions = c(.5, .5),
+  conErrLev = 0.3, catErrLev = 0.8)
+catDf &lt;- data.frame(apply(dat$catVars, 2, factor), stringsAsFactors = TRUE)
+conDf &lt;- data.frame(scale(dat$conVars), stringsAsFactors = TRUE)
+
+kamRes &lt;- kamila(conDf, catDf, numClust = 2, numInit = 10)
+
+table(kamRes$finalMemb, dat$trueID)
+</code></pre>
+
+
+</div>

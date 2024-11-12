@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KS.prelim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Preliminary data management for KnockoffScreen
+</h2>
+
+<h3>Description</h3>
+
+<p>This function does the preliminary data management and fit the model under null hypothesis. The output will be passed to the other functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KS.prelim(Y, X=NULL, id=NULL, out_type="C")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+
+<p>The outcome variable, an n*1 matrix where n is the total number of observations
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>An n*d covariates matrix where d is the total number of covariates.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+
+<p>The subject id. This is used to match phenotype with genotype. The default is NULL, where the matched phenotype and genotype matrices are assumed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_type</code></td>
+<td>
+
+<p>Type of outcome variable. Can be either "C" for continuous or "D" for dichotomous. The default is "C".
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>It returns a list that will be passed to function KS.chr().
+
+
+
+
+
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(KnockoffScreen)
+
+# load example vcf file from package "seqminer"
+vcf.filename = system.file("vcf/1000g.phase1.20110521.CFH.var.anno.vcf.gz", package = "seqminer")
+
+## this is how the actual genotype matrix from package "seqminer" looks like
+example.G &lt;- t(readVCFToMatrixByRange(vcf.filename, "1:196621007-196716634",annoType='')[[1]])
+
+# simulated outcomes, covariates and inidividual id.
+Y&lt;-as.matrix(rnorm(nrow(example.G),0,1))
+X&lt;-as.matrix(rnorm(nrow(example.G),0,1))
+id&lt;-rownames(example.G)
+
+# fit null model
+result.prelim&lt;-KS.prelim(Y,X=X,id=id,out_type="C")
+
+</code></pre>
+
+
+</div>

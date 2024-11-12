@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>download_cached_file</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>get_dataset</h2>
+
+<h3>Description</h3>
+
+<p>Download a predefined set of time series.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">download_cached_file(username, api_key, file_to_download, target = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>username</code></td>
+<td>
+<p>Your dataservice user name</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>api_key</code></td>
+<td>
+<p><strong>character</strong> Your API key. An API key is needed if accessing non-public timeseries. 
+If downloading public timeseries parameter can be omitted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file_to_download</code></td>
+<td>
+<p>The name of the file to retrieve.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>target</code></td>
+<td>
+<p>Path to the location, at which to store the file. If NULL, the file will be
+saved to the working directory.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">f &lt;-  download_cached_file("kofdatapkg", "313984fcd9f343d3961891319b0ed321",
+"empty.txt",file.path(tempdir(),"empty.txt"))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,221 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rmshoulders</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Shoulders Removal in Frequency Polygons
+</h2>
+
+<h3>Description</h3>
+
+<p>Removes the shoulders around the main peaks in a frequency polygon.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rmshoulders(xm, xc, trmethod, tv)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>xm</code></td>
+<td>
+
+<p>a numeric vector containing the middle values of peaks of a frequency polygon.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xc</code></td>
+<td>
+
+<p>an integer vector containing the frequencies of peaks of a frequency polygon.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trmethod</code></td>
+<td>
+<p>a string representing the type of shoulders removal option for computing a threshold value. Default method is <span class="option">usr</span>. The alternatives are <span class="option">sd</span>, <span class="option">q1</span>, <span class="option">iqr</span>, <span class="option">avg</span> and <span class="option">med</span>. These methods compute the threshold distance value using some statistics of the distances between the middle values of two successive peaks in the vector <code>xm</code>.
+</p>
+
+<ul>
+<li> <p><span class="option">sd</span> uses the standard deviation.
+</p>
+</li>
+<li> <p><span class="option">q1</span> uses the first quartile (Q1).
+</p>
+</li>
+<li> <p><span class="option">q3</span> uses the third quartile (Q3).
+</p>
+</li>
+<li> <p><span class="option">iqr</span> uses the interquartile range (IQR).
+</p>
+</li>
+<li> <p><span class="option">avg</span> uses the arithmetic mean.
+</p>
+</li>
+<li> <p><span class="option">med</span> uses the median.
+</p>
+</li>
+<li> <p><span class="option">usr</span> uses a user-specified number.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tv</code></td>
+<td>
+<p>a numeric value to be used as the threshold distance for deciding the shoulders. Default threshold is 1 if the removal method <span class="option">usr</span> is chosen. Depending on the selected removal method <code>tv</code> equals to:
+</p>
+
+<ul>
+<li>
+<p> one standart deviation if <code>trmethod</code> is <span class="option">sd</span>,
+</p>
+</li>
+<li>
+<p> the first quartile if <code>trmethod</code> is <span class="option">q1</span>, 
+</p>
+</li>
+<li>
+<p> the third quartile if <code>trmethod</code> is <span class="option">q3</span>, 
+</p>
+</li>
+<li>
+<p> one quarter of the interquartile range if <code>trmethod</code> is <span class="option">iqr</span>, 
+</p>
+</li>
+<li>
+<p> the arithmetic mean if <code>trmethod</code> is <span class="option">avg</span>,
+</p>
+</li>
+<li>
+<p> the median if <code>trmethod</code> is <span class="option">med</span>,
+</p>
+</li>
+<li>
+<p> a user-specified number if <code>trmethod</code> is <span class="option">usr</span>. 
+</p>
+</li>
+</ul>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Literally speaking, a <dfn>shoulder peak</dfn> or shortly <dfn>shoulder</dfn> is a secondary peak in a close location before or after the main peak of a mountain. In a frequency polygon, a shoulder is a smaller peak that is quite close to a higher peak resulting a non-obvious valley between them. Shoulders may occur randomly due to some reasons such as random noises or selecting higher number of classes in histogram building etc. Usually, it is desired to remove them from the peaks vector of a frequency polygon. In '<span class="pkg">kpeaks</span>', a peak considered as a shoulder when its height is smaller than the height of its neighbor peak and its distance to its neighbor is also lower than a threshold distance value. In order to compute a threshold distance value, here, we propose to use seven options as listed in the section ‘arguments’. The options <code>q1</code> and <code>iqr</code> can be applied to remove the minor shoulders that are very near to the main peaks while <code>q3</code> is recommended to eliminate the substantial shoulders in the processed frequency polygon. The remaining options may be more efficient for removing the moderate shoulders.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pm</code></td>
+<td>
+<p>a data frame with two columns whose names are <var>pvalues</var> and <var>pfreqs</var> for the middle values and the frequencies of the peaks after removal process, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>np</code></td>
+<td>
+<p>an integer representing the number of peaks after removal of the shoulders.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The function <code>rmshoulders</code> normally should be called with the input values that are returned by the function <code>findpolypeaks</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Zeynel Cebeci, Cagatay Cebeci
+</p>
+
+
+<h3>References</h3>
+
+<p>Cebeci, Z. &amp; Cebeci, C. (2018). "A novel technique for fast determination of K in partitioning cluster analysis", <em>Journal of Agricultural Informatics</em>, 9(2), 1-11. 
+doi: <a href="https://doi.org/10.17700/jai.2018.9.2.442">10.17700/jai.2018.9.2.442</a>.
+</p>
+<p>Cebeci, Z. &amp; Cebeci, C. (2018). "kpeaks: An R Package for Quick Selection of K for Cluster Analysis", In <em>2018 International Conference on Artificial Intelligence and Data Processing (IDAP)</em>, IEEE. 
+doi: <a href="https://doi.org/10.1109/IDAP.2018.8620896">10.1109/IDAP.2018.8620896</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>findpolypeaks</code>,
+<code>plotpolygon</code>,
+<code>genpolygon</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Build a data vector with three peaks
+x1 &lt;-rnorm(100, mean=20, sd=5)
+x2 &lt;-rnorm(50, mean=50, sd=5)
+x3 &lt;-rnorm(150, mean=90, sd=10)
+x &lt;- c(x1,x3,x2)
+
+# generate the frequency polygon and histogram of x by using Doane rule
+hvals &lt;- genpolygon(x, binrule="doane")
+plotpolygon(x, nbins=hvals$nbins, ptype="p")
+
+# find the peaks in frequency polygon of x by using the default threshold frequency
+resfpp &lt;- findpolypeaks(xm=hvals$mids, xc=hvals$freqs)
+print(resfpp)
+
+# remove the shoulders with the threshold distance option 'avg'
+resrs &lt;- rmshoulders(resfpp$pm[,1], resfpp$pm[,2], trmethod = "avg")
+print(resrs)
+
+# remove the shoulders with the threshold distance option 'iqr'
+resrs &lt;- rmshoulders(resfpp$pm[,1], resfpp$pm[,2], trmethod = "iqr")
+print(resrs)
+
+data(x5p4c)
+# plot the frequnecy polygon and histogram of p2 in x5p4c data set 
+hvals &lt;- genpolygon(x5p4c$p2, binrule="usr", nbins=30)
+plotpolygon(x5p4c$p2, nbins=hvals$nbins, ptype="ph")
+
+# find the peaks in frequency polygon of p2 
+resfpp &lt;- findpolypeaks(xm=hvals$mids, xc=hvals$freqs, tcmethod = "min")
+print(resfpp)
+
+# remove the shoulders with threshold distance option 'q1'
+resrs &lt;- rmshoulders(resfpp$pm[,1], resfpp$pm[,2], trmethod = "q1")
+print(resrs)
+
+## Not run: 
+data(iris)
+# plot the frequency polygon and histogram of Petal.Length in iris data set 
+# by using a user-defined class number 
+hvals &lt;- genpolygon(iris$Petal.Length, binrule="usr", nbins=30)
+plotpolygon(iris$Petal.Length, nbins=hvals$nbins, ptype="p")
+
+# find the peaks in frequency polygon of Petal.Length with default 
+# threshold frequency value
+resfpp &lt;- findpolypeaks(xm=hvals$mids, xc=hvals$freqs)
+print(resfpp)
+
+# remove the shoulders with threshold option 'med'
+resrs &lt;- rmshoulders(resfpp$pm[,1], resfpp$pm[,2], trmethod = "med")
+print(resrs)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

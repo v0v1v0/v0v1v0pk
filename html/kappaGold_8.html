@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kappa_test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Significance test for homogeneity of kappa coefficients</h2>
+
+<h3>Description</h3>
+
+<p>When groups of different subjects are rated on a nominal scale. Assuming
+independence of subjects and their ratings between groups a chi-squared test
+for equality of kappa between these groups is performed. The test requires
+estimates of kappa and its standard error per group.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kappa_test(kappas, val = "value0", se = "se0", conf.level = 0.95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kappas</code></td>
+<td>
+<p>list of kappas from different groups. It uses the kappa
+estimate and its standard error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>val</code></td>
+<td>
+<p>character. Name of field to extract kappa coefficient estimate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se</code></td>
+<td>
+<p>character. Name of field to extract standard error of kappa.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.level</code></td>
+<td>
+<p>numeric. confidence level of confidence interval for
+overall kappa</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A common overall kappa coefficient across groups is estimated. The test
+statistic assesses the weighted squared deviance of the individual kappas
+from the overall kappa estimate. The weights depend on the provided standard
+errors.
+</p>
+
+
+<h3>Value</h3>
+
+<p>list containing the test results, including the entries <code>statistic</code>
+and <code>p.value</code> (class <code>htest</code>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Joseph L. Fleiss, Statistical Methods for Rates and Proportions,
+3rd ed., 2003, section 18.1
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># script concordance test on 34 clinical situations,
+# rated by 39 students and 11 experts
+kappa_stud &lt;- kappam_fleiss(SC_test[, 1:39])
+kappa_expert &lt;- kappam_fleiss(SC_test[, 40:50])
+
+# compare student and expert agreement
+kappa_test(kappas = list(kappa_stud, kappa_expert))
+
+
+</code></pre>
+
+
+</div>

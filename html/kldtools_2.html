@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ksboot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bootstrapping based on the Kolmogorov-Smirnov test</h2>
+
+<h3>Description</h3>
+
+<p>Performs bootstrapping with the Kolmogorov-Smirnov test to
+estimate differences between frequencies</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+ksboot(x, y, nboots=1000, alternative=c("two.sided", "less", "greater"))
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The first vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>The second vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboots</code></td>
+<td>
+<p>The number of bootstraps to perform</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alternative</code></td>
+<td>
+<p>The type of alternative hypothesis (the default is
+"two.sided")</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This bootstrap version of the Kolmogorov-Smirnov test is suitable for
+estimating not only continuous but also frequency distributions. This is
+because bootstrap theories suggest that the asymptotic theory of
+estimates (which is built on the bootstrapping data) is, in a sense,
+similar to the asymptotic theory of large data sets. Hence, although the
+Kolmogorov-Smirnov test is initially designed for continuous
+distributions, in bootstrapping, it is possible to apply this method to
+discrete random variables, for which an empirical distribution function
+is built on the observed frequencies (see Abadie 2002 for an example).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The list with the following components: "ksboot.pvalue" for the bootstrap
+p-value of the Kolmogorov-Smirnov test, calculated for the null hypothesis
+that the probability densities of two compared distributions are the
+same; "nboots" for the number of the completed bootstraps.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jasjeet S. Sekhon, Alexey Shipunov</p>
+
+
+<h3>References</h3>
+
+<p>Abadie A. 2002. Bootstrap tests for distributional treatment effects in
+instrumental variable models. Journal of the American statistical
+Association. 97: 284-292.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ks.test</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- stack(data.frame(V1=c(1213, 57683, 74466, 44419, 17481, 3403, 42252, 7045,
+ 29445, 15004, 21337, 1892, 21861, 238, 26574, 17579),
+ V2=c(3185, 29692, 12570, 26081, 4992, 1659, 16592, 1748, 37583, 6751, 10188, 355,
+ 8116, 9, 5064, 1846)))
+
+ksboot(data$values[data$ind == "V1"], data$values[data$ind == "V2"])
+
+pairwise.table(function(i, j)
+ suppressWarnings(ksboot(data$values[as.integer(data$ind) == i],
+ data$values[as.integer(data$ind) == j])$ksboot.pvalue),
+ levels(data$ind), p.adjust.method="bonferroni")
+
+pairwise.table(function(i, j)
+ suppressWarnings(ksboot(data$values[as.integer(data$ind) == i],
+ data$values[as.integer(data$ind) == j])$ksboot.pvalue),
+ levels(data$ind), p.adjust.method="none")
+
+</code></pre>
+
+
+</div>

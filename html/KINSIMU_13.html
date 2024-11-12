@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pedisimu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pedigree simulation</h2>
+
+<h3>Description</h3>
+
+<p>Generating genotype combinations of multiple pedigrees with specific relationships on an autosomal marker.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pedisimu(
+  af,
+  ss,
+  pedi,
+  random_name = "RI",
+  muf = 0,
+  mum = 0,
+  allelename = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>af</code></td>
+<td>
+<p>name of allele frequency matrix, a data.frame of 1 column containing frequencies with allele names being row names, which can be loaded with "EvaluatePanel" function, not necessary if Parent is not NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ss</code></td>
+<td>
+<p>sample size, i.e., how many individual pairs do you want simulate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pedi</code></td>
+<td>
+<p>a matrix in data.frame form containing the pedigree structure information</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random_name</code></td>
+<td>
+<p>the name of random individual, with a default of "RI"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>muf</code></td>
+<td>
+<p>father-child mutation rate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mum</code></td>
+<td>
+<p>mother-child mutation rate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allelename</code></td>
+<td>
+<p>if TRUE the output data would be the allele name, which should be the row names of af matrix, otherwise, it would be the position in that matrix</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data.frame with <code>ss</code> rows and 2*<code>n</code> columns, where <code>n</code> is equal to the number of rows in the pedi data.frame. Each pair of columns contains alleles of an individual, with the individuals sorted in the same order as in the pedi data.frame.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#simulating a first cousin pedigree without considring mutation
+pedi&lt;-pediexample
+af&lt;-FortytwoSTR$afmatrix[[1]]
+pedisimu(af = af,ss = 10000,pedi = pedi)
+
+
+</code></pre>
+
+
+</div>

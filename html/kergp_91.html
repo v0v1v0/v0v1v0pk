@@ -1,0 +1,215 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covOrd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Warping-Based Covariance for an Ordinal Input</h2>
+
+<h3>Description</h3>
+
+<p>Creator function for the class <code>covOrd-class</code></p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">covOrd(ordered, 
+       k1Fun1 = k1Fun1Matern5_2, 
+       warpFun = c("norm", "unorm", "power", "spline1", "spline2"), 
+       cov = c("corr", "homo"), 
+       hasGrad = TRUE, inputs = "u", 
+       par = NULL, parLower = NULL, parUpper = NULL, 
+       warpKnots = NULL, nWarpKnots = NULL,
+       label = "Ordinal kernel", 
+       intAsChar = TRUE, 
+       ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ordered</code></td>
+<td>
+
+<p>An object coerced to <code>ordered</code> representing an ordinal input. 
+Only the levels and their order will be used.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k1Fun1</code></td>
+<td>
+
+<p>A function representing a 1-dimensional stationary kernel function, with no or fixed parameters.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warpFun</code></td>
+<td>
+
+<p>Character corresponding to an increasing warping function. See <code>warpFun</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>Character indicating whether a correlation or homoscedastic kernel is used.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hasGrad</code></td>
+<td>
+
+<p>Object of class <code>"logical"</code>. If <code>TRUE</code>, both <code>k1Fun1</code> and <code>warpFun</code> 
+must return the gradient as an attribute of the result.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inputs</code></td>
+<td>
+
+<p>Character: name of the ordinal input.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>par, parLower, parUpper</code></td>
+<td>
+
+<p>Numeric vectors containing covariance parameter values/bounds in the following order: 
+warping, range and variance if required (<code>cov == "homo"</code>).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warpKnots</code></td>
+<td>
+
+<p>Numeric vector containing the knots used when a spline warping is chosen. 
+The knots must be in [0, 1], and 0 and 1 are automatically added if not provided. 
+The number of knots cannot be greater than the number of levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nWarpKnots</code></td>
+<td>
+
+<p>Number of knots when a spline warping is used. Ignored if <code>warpKnots</code> is given. 
+<code>nWarpKnots</code> cannot be greater than the number of levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+
+<p>Character giving a brief description of the kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intAsChar</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> (default), an integer-valued input will be coerced into a character. 
+Otherwise, it will be coerced into a factor.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Not used at this stage.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Covariance kernel for qualitative ordered inputs obtained by warping. 
+</p>
+<p>Let <code class="reqn">u</code> be an ordered factor with levels <code class="reqn">u_1, \dots, u_L</code>. 
+Let <code class="reqn">k_1</code> be a 1-dimensional stationary kernel (with no or fixed parameters), 
+<code class="reqn">F</code> a warping function i.e. an increasing function on the interval <code class="reqn">[0,1]</code> 
+and <code class="reqn">\theta</code> a scale parameter. Then <code class="reqn">k</code> is defined by:
+</p>
+<p style="text-align: center;"><code class="reqn">k(u_i, u_j) = k_1([F(z_i) - F(z_{j})]/\theta)</code>
+</p>
+
+<p>where <code class="reqn">z_1, \dots, z_L</code> form a regular sequence from <code class="reqn">0</code> to <code class="reqn">1</code> (included). 
+At this stage, the possible choices are:
+</p>
+
+<ul>
+<li>
+<p> A distribution function (cdf) truncated to <code class="reqn">[0,1]</code>, among the Power and Normal cdfs. 
+</p>
+</li>
+<li>
+<p> For the Normal distribution, an unnormalized version, corresponding to the restriction of the cdf on <code class="reqn">[0,1]</code>, is also implemented (<code>warp = "unorm"</code>).
+</p>
+</li>
+<li>
+<p> An increasing spline of degree 1 (piecewise linear function) or 2. In this case, <code class="reqn">F</code> is unnormalized. 
+For degree 2, the implementation depends on scaling functions from DiceKriging package, which must be loaded here.
+</p>
+</li>
+</ul>
+<p>Notice that for unnormalized <code>F</code>, we set <code class="reqn">\theta</code> to 1, in order to avoid overparameterization.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>covOrd-class</code>, inheriting from <code>covQual-class</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>covOrd-class</code>, <code>warpFun</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">u &lt;- ordered(1:6, labels = letters[1:6])
+
+myCov &lt;- covOrd(ordered = u, cov = "homo", intAsChar = FALSE)
+myCov
+coef(myCov) &lt;- c(mean = 0.5, sd = 1, theta = 3, sigma2 = 2)
+myCov
+
+checkX(myCov, X = data.frame(u = c(1L, 3L)))
+covMat(myCov, X = data.frame(u = c(1L, 3L)))
+
+myCov2 &lt;- covOrd(ordered = u, k1Fun1 = k1Fun1Cos, warpFun = "power")
+coef(myCov2) &lt;- c(pow = 1, theta = 1) 
+myCov2
+
+plot(myCov2, type = "cor", method = "ellipse")
+plot(myCov2, type = "warp", col = "blue", lwd = 2)
+
+myCov3 &lt;- covOrd(ordered = u, k1Fun1 = k1Fun1Cos, warpFun = "spline1")
+coef(myCov3) &lt;- c(rep(0.5, 2), 2, rep(0.5, 2))
+myCov3
+
+plot(myCov3, type = "cor", method = "ellipse")
+plot(myCov3, type = "warp", col = "blue", lwd = 2)
+
+
+str(warpPower)  # details on the list describing the Power cdf
+str(warpNorm)   # details on the list describing the Normal cdf
+</code></pre>
+
+
+</div>

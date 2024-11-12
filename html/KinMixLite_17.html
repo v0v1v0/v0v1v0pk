@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gt2aca</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts genotype profiles to allele count arrays</h2>
+
+<h3>Description</h3>
+
+<p>Returns list of vectors of allele counts corresponding to genotype profile in gt</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gt2aca(mixture,gt,eps=0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A compiled DNAmixture object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gt</code></td>
+<td>
+<p>Genotype profile as a data frame containing variables <code>marker</code>, <code>allele1</code> and <code>allele2</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>If non-zero, the function creates the output allele count arrays in a different format, that mitigates subsequent propagation errors in some situations. Instead of a vector of allele counts, each element of the list is a matrix with 3 columns, corresponding to allele counts 0, 1 and 2, with entries 1 or <code>eps</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns list of vectors of allele counts. The log probability for the genotype is returned in its attribute '<code>logGt</code>'.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+data(NGMDyes)
+
+# set threshold C
+C&lt;-0.001
+
+mixD&lt;-DNAmixture(list(epg),k=2,C=list(C),database=db,dyes=list(NGMDyes))
+cgtcaca&lt;-gt2aca(mixD,Cgt)
+
+print(Cgt)
+print(cgtcaca)
+</code></pre>
+
+
+</div>

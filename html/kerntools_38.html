@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Rec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Recall or Sensitivity or TPR</h2>
+
+<h3>Description</h3>
+
+<p>'Rec()' computes the Recall, also known as Sensitivity or TPR (True Positive Rate),
+between the output of a classification model and the actual values of the target.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Rec(ct, multi.class = "macro")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ct</code></td>
+<td>
+<p>Confusion Matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multi.class</code></td>
+<td>
+<p>Should the results of each class be aggregated, and how?
+Options: "none", "macro", "micro". (Defaults: "macro").</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>TPR (a single value).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y &lt;- c(rep("a",3),rep("b",2))
+y_pred &lt;- c(rep("a",2),rep("b",3))
+ct &lt;- table(y,y_pred)
+Rec(ct)
+</code></pre>
+
+
+</div>

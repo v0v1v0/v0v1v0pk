@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>as.famset</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert a binary matrix to a family of sets</h2>
+
+<h3>Description</h3>
+
+<p>Create a <code>set</code> of <code>sets</code> from a binary
+matrix where each row of the matrix is taken as one set.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  as.famset(m, as.letters = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>A binary matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as.letters</code></td>
+<td>
+<p>logical, should the elements of the sets be letters
+or numbers?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>as.famset</code> takes a binary matrix and converts it to a family (i.e.
+<code>set</code>) of sets where each row of the matrix represents
+one set and a "1" in row i and column j means that element j is contained
+in set i.
+</p>
+<p>If <code>as.letters</code> is <code>TRUE</code> the elements of the sets are letters,
+otherwise numbers. However, if the matrix has colnames, these are taken
+as names for the elements of the sets taking precedence over the
+<code>as.letters</code> parameter.
+</p>
+<p>If the matrix contains the same row multiple times it is contained only
+once in the resulting family of sets.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> object of class <code>set</code> containing <code>sets</code>..
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>as.binaryMatrix</code>, <code>set</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">m &lt;- matrix(c(1, 0, 0, 1, 1, 0), nrow = 2, ncol = 3)
+m
+as.famset(m)
+as.famset(m, as.letters = FALSE)
+</code></pre>
+
+
+</div>

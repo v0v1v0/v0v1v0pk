@@ -1,0 +1,225 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitting Kernel Semi Parametric model</h2>
+
+<h3>Description</h3>
+
+<p>kspm is used to fit kernel semi parametric models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kspm(response, linear = NULL, kernel = NULL, data = NULL,
+  level = 1, control = kspmControl())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>response</code></td>
+<td>
+<p>a character with the name of the response variable or a vector containing the outcome or a matrix with outcome in the first column.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear</code></td>
+<td>
+<p>an optional object of class "formula": a symbolic description of the linear part of the model to be fitted or a vector or a matrix containing covariates included in the linear part of the model. Default is intercept only. The details of model specification are given under ‘Details’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>an object of class "formula": a symbolic description of the kernel part of the model to be fitted. If missing a linear model is fitted using lm function. The details of model specification are given under ‘Details’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>an optional data frame containing the variables in the model. If NULL (default), data are taken from the workspace.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>printed information about the model (0: no information, 1: information about kernels included in the model (default))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>see kspmControl.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The kernel semi parametric model refers to the following equation <code class="reqn">Y_i = X_i\beta + h(Z_i) + e_i</code> with <code class="reqn">i=1..n</code> where <code class="reqn">n</code> is the sample size, <code class="reqn">Y</code> is the univariate response, <code class="reqn">X\beta</code> is the linear part, <code class="reqn">h(Z)</code> is the kernel part and <code class="reqn">e</code> are the residuals. The linear part is defined using the <code>linear</code> argument by specifying the covariates <code class="reqn">X</code>. It could be either a formula, a vector of length <code class="reqn">n</code> if only one variable is included in the linear part or a <code class="reqn">n \times p</code> design matrix containing the values of the <code class="reqn">p</code> covariates included in the linear part (columns), for each individuals (rows). By default, an intercept is included. To remove the intercept term, use formula specification and add the term <code>-1</code>, as usual. Kernel part is defined using the <code>kernel</code> argument. It should be a formula of <code>Kernel</code> object(s). For a multiple kernel semi parametric model, <code>Kernel</code> objects are separated by the usual signs <code>"+"</code>, <code>"*"</code> and <code>":"</code> to specify addition and interaction between kernels. Specification formats of each <code>Kernel</code>  object may be different. See Kernel for more information about their specification.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>kspm</code> returns an object of class kspm.
+</p>
+<p>An object of class kspm is a list containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>linear.coefficients</code></td>
+<td>
+<p>matrix of coefficients associated with linear part, the number of coefficients is the number of terms included in linear part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.coefficients</code></td>
+<td>
+<p>matrix of coefficients associated with kernel part, the number of rows is the sample size included in the analysis and the number of columns is the number of kernels included in the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>penalization parameter(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fitted.values</code></td>
+<td>
+<p>the fitted mean values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>residuals</code></td>
+<td>
+<p>the residuals, that is response minus the fitted values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>standard deviation of residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>vector of responses</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>design matrix for linear part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>kernel matrices computed by the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.total</code></td>
+<td>
+<p>total sample size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>sample size of the model (model is performed on complete data only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>edf</code></td>
+<td>
+<p>effective degree of freedom</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linear.formula</code></td>
+<td>
+<p>formula corresponding to the linear part of the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.info</code></td>
+<td>
+<p>information about kernels included in the model such as matrices of covariates (<code>Z</code>),  kernel function (<code>type</code>), values of hyperparameters (<code>rho</code>, <code>gamma</code>, <code>d</code>). A boolean indicates if covariates were scaled (<code>kernel.scale</code>) and if <code>TRUE</code>, <code>kernel.mean</code>, <code>kernel.sd</code> and <code>Z.scale</code> give information about scaling. <code>kernel.formula</code> indicates the formula of the kernel and <code>free.parameters</code> indicates the hyperparameters that were estimated by the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hat</code></td>
+<td>
+<p>The hat matrix <code class="reqn">H</code> such that <code class="reqn">\hat{Y} = HY</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>A matrix corresponding to <code class="reqn">I - \sum\limits_{\ell = 1}^L K_{\ell} G_{\ell}^{-1} M_{\ell}</code> according to our notations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XLX_inv</code></td>
+<td>
+<p>A matrix corresponding to <code class="reqn">(XLX)^{-1}</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>GinvM</code></td>
+<td>
+<p>A list of matrix, each corresponding to a kernel and equaling <code class="reqn">G_{\ell}^{-1}M_{\ell}</code> according to our notations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>List of control parameters</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>References</h3>
+
+<p>Liu, D., Lin, X., and Ghosh, D. (2007). Semiparametric regression of multidimensional genetic pathway data: least squares kernel machines and linear mixed models. Biometrics, 63(4), 1079:1088.
+</p>
+<p>Kim, Choongrak, Byeong U. Park, and Woochul Kim. "Influence diagnostics in semiparametric regression models." Statistics and probability letters 60.1 (2002): 49:58.
+</p>
+<p>Oualkacha, Karim, et al. "Adjusted sequence kernel association test for rare variants controlling for cryptic and family relatedness." Genetic epidemiology 37.4 (2013): 366:376.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>summary.kspm for summary, predict.kspm for predictions, plot.kspm for diagnostics
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 1:15
+z1 &lt;- runif(15, 1, 6)
+z2 &lt;- rnorm(15, 1, 2)
+y &lt;- 3*x + (z1 + z2)^2 + rnorm(15, 0, 2)
+fit &lt;- kspm(y, linear = ~ x, kernel = ~ Kernel(~ z1 + z2,
+kernel.function = "polynomial", d= 2, rho = 1, gamma = 0))
+summary(fit)
+
+</code></pre>
+
+
+</div>

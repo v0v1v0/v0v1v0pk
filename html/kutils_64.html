@@ -1,0 +1,134 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>updatePackages</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Update packages, spot new dependencies, and install them</h2>
+
+<h3>Description</h3>
+
+<p>Addresses the problem that updates for previously installed R
+packages may insert new dependencies. R's update.packages does not
+trigger the installation of packages that are added as new
+requirements in existing packages.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">updatePackages(
+  ask = FALSE,
+  checkBuilt = TRUE,
+  dependencies = c("Depends", "Imports", "LinkingTo"),
+  libnew = "/usr/share/R/library/",
+  repos = options("repos"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>If TRUE, asks user to select packages to update</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkBuilt</code></td>
+<td>
+<p>If TRUE, packages built under earlier versions
+of R are to be considered 'old'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dependencies</code></td>
+<td>
+<p>A vector specifying which type of dependencies
+need to be taken into account. We default to c("Depends",
+"Imports", "LinkingTo").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>libnew</code></td>
+<td>
+<p>The R library folder into which the new packages
+must be installed.  Defaults to "/usr/share/R/library", which
+is where EL7 likes those things.  To install packages in
+personal user directory, put libnew = NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>repos</code></td>
+<td>
+<p>A vector of repositories on which to search for
+packages. Same definition as in R's install.packages or
+install.packages.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments passed to update.packages and
+install.packages</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function checks for existence of updates, ascertains whether
+those packages impose new requirements, and installs any new
+requirements. Then it conducts the update.
+</p>
+<p>This function is valuable in system maintenance because sometimes
+existing packages adopt new requirements and the update.packages
+function does not notice.  Another possible case would be that a user
+accidentally deletes some packages without realizing other packages
+depend on them.
+</p>
+<p>If this is run as the root/administrator privileged, then base R
+packages may be updated, but if user is not root/administrator,
+there will be a warning that packages were not updated because
+permissions were lacking. For example
+</p>
+<p>"Warning: package 'boot' in library '/usr/lib/R/library' will not
+be updated.
+</p>
+<p>This warning does not interfere with rest of purpose of this
+function, since the new dependencies can be installed in a place
+where the user has privileges, either by specifying libnew as a
+full directory name or by setting it to NULL, which puts new
+packages in $R_LIBS_USER
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of new packages being installed
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+myrepos &lt;- c("http://rweb.crmda.ku.edu/cran",
+             "http://www.bioconductor.org/packages/3.3/bioc")
+updatePackages(repos = myrepos)
+## libnew defaults to "/usr/share/R/library". Specify NULL
+## so that new packages will go to user's directory
+updatePackages(libnew = NULL)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

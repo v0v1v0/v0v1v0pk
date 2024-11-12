@@ -1,0 +1,201 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kstIO-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+<code>kstIO</code> File formats</h2>
+
+<h3>Description</h3>
+
+<p>Knowledge space theory by Doignon and Falmagne (1985, 1999) 
+is a set- and order-theoretical
+framework, which proposes mathematical formalisms to operationalize 
+knowledge structures in a particular domain.  The 'kstIO' package 
+provides basic functionalities to read and write KST data from/to files.
+</p>
+
+
+<h3>Details</h3>
+
+<p>This page focuses on the different file formats that can be used with 
+the <code>kstIO</code> functions.
+</p>
+
+
+<h3>File Formats</h3>
+
+<p>Over time and in different research groups with 
+knowledge space theory, different file formats have evolved.
+</p>
+
+
+<h4>Matrix Format</h4>
+
+<p>The probably simplest and most direct approach
+is to store the information in a binary ASCII matrix where a "1" 
+in row i and column j means that item j is element of state/response 
+pattern i. 
+</p>
+<p>There is no separating character between the columns, 
+and there should be no trailing whitespace at the end of the line.
+The last line of the matrix must carry an EndOfLine - in most editors
+(except vi) this means an empty line after the matrix.
+</p>
+
+
+
+<h4>KST Tools Format</h4>
+
+<p>This format (Hockemeyer, 2001) extends the 
+matrix format by two preceding header lines containing the number of 
+items and the number of states/response patterns, respectively.
+</p>
+
+
+
+<h4>SRBT Tools Format</h4>
+
+<p>This format (Poetzi &amp; Wesiak, 2001) extends 
+the KST tools format by yet another preceding header line with format and 
+content metadata. This new header line has the format
+</p>
+<pre>#SRBT v2.0 &lt;struct&gt; ASCII &lt;comment&gt;</pre>
+<p>where <code style="white-space: pre;">⁠&lt;struct&gt;⁠</code> specifies the type of data stored in the
+file and <code style="white-space: pre;">⁠&lt;comment&gt;⁠</code> is an optional arbitrary comment.
+</p>
+<p>Furthermore, SRBT files may contain an arbitrary number of comment lines 
+after the number of states/patterns.
+</p>
+<p>The following data types are supported by the respective
+<code>kstIO</code> functions:
+</p>
+
+<ul>
+<li>
+<p> basis
+</p>
+</li>
+<li>
+<p> data
+</p>
+</li>
+<li>
+<p> relation
+</p>
+</li>
+<li>
+<p> space
+</p>
+</li>
+<li>
+<p> structure
+</p>
+</li>
+</ul>
+<p>For <code>kbase</code> and surmise <code>relation</code> files, the encoding
+information <code>"ASCII"</code> is missing because these files are always
+in ASCII format.
+</p>
+
+
+
+<h4>CSV Format</h4>
+
+<p>CSV (comma separated values) is a standard file format for data tables. Within a row, 
+the different columns are separated by commas. Please note that in some European 
+countries and for some programs, rows are instead separated by semicolon, and the comma
+replaces the decimal point.
+</p>
+<p>CSV files written/read by <code>kstIO</code> functions start with a head row containing
+the item IDs. The subsequent rows build the matrix as described n the previous
+format descriptions.
+</p>
+
+
+
+<h3>Special File/Data Types</h3>
+
+
+
+<h4>Base Files</h4>
+
+<p>Base files are not available  in KST tools format. 
+</p>
+<p>Their matrix part differs from the other files 
+in that it contains "0", "1", and "2". A "1" means that the state
+is minimal for the item and a "2" means that it is not (but contains 
+the item). A "0" stands (as always) for the state not containing 
+the item.
+</p>
+
+
+
+<h4>Surmise Relation Files</h4>
+
+<p>Surmise relation files are not
+available  in KST Tools format, either.
+</p>
+<p>Their matrices are somewhat transposed in
+comparison to all the other formats. Row i and column j is
+equal to "1" if knowing i can be surmised from knowing j, and 
+equal to "0" otherwise. Thus, column j describes the minimal
+state for item j.
+</p>
+
+
+
+<h4>Surmise Function Files</h4>
+
+<p>Surmise function files are available only in CSV format. 
+</p>
+<p>The matrix is here preceded by a row which denotes the item for 
+which the respective state is a clause.
+</p>
+
+
+
+<h3>Example</h3>
+
+<pre>#SRBT v2.0 structure ASCII
+3
+5
+# Some comment or item information
+000
+100
+110
+101
+111</pre>
+
+
+<h3>Author(s)</h3>
+
+<p>Cord Hockemeyer <a href="mailto:cord.hockemeyer@uni-graz.at">cord.hockemeyer@uni-graz.at</a></p>
+
+
+<h3>References</h3>
+
+<p>Doignon, J.-P. &amp; Falmagne, J.-C. (1985). Spaces for the assessment of knowledge. 
+<em>International Journal of Man-Machine Studies, 23,</em> 175–196.
+</p>
+<p>Doignon, J.-P. &amp; Falmagne, J.-C. (1999). <em>Knowledge Spaces.</em> 
+Springer Verlag, Berlin.
+</p>
+<p>Hockemeyer, C. (2001). KST Tools User Manual (2nd ed.).
+<a href="https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf</a>.
+</p>
+<p>Poetzi, S. &amp; Wesiak, G. (2001). SRbT Tools User Manual. 
+<a href="https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kbase</code>
+<code>space_property</code>
+<code>kstructure</code>
+</p>
+
+
+</div>

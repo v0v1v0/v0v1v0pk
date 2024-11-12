@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to_uniform_scale</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Transform samples to uniform scale</h2>
+
+<h3>Description</h3>
+
+<p>Since Kullback-Leibler divergence is scale-invariant, its sample-based
+approximations can be computed on a conveniently chosen scale. This helper
+functions transforms each variable in a way that all marginal distributions
+of the joint dataset <code class="reqn">(X,Y)</code> are uniform. In this way, the scales of
+different variables are rendered comparable, with the idea of a better
+performance of neighbour-based methods in this situation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">to_uniform_scale(X, Y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> matrices, representing <code>n</code> samples from
+the true distribution <code class="reqn">P</code> and <code>m</code> samples from the approximate distribution
+<code class="reqn">Q</code>, both in <code>d</code> dimensions. Vector input is treated as a column matrix.
+<code>Y</code> can be left blank if <code>q</code> is specified (see below).</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list with fields <code>X</code> and <code>Y</code>, containing the transformed samples.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 2D example
+n &lt;- 10L
+X &lt;- cbind(rnorm(n, mean = 0, sd = 3),
+           rnorm(n, mean = 1, sd = 2))
+Y &lt;- cbind(rnorm(n, mean = 1, sd = 2),
+           rnorm(n, mean = 0, sd = 2))
+to_uniform_scale(X, Y)
+</code></pre>
+
+
+</div>

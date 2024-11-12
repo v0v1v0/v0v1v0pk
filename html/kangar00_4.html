@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anno</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Example annotation file for three pathways.</h2>
+
+<h3>Description</h3>
+
+<p>A dataset containing an annotation example for 4056 SNPs in three different 
+pathways.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(anno)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A <code>data frame</code> with 4056 rows and 5 variables:
+</p>
+
+<dl>
+<dt>pathway</dt>
+<dd>
+<p>includes KEGG identifiers of three example pathways</p>
+</dd>
+<dt>gene</dt>
+<dd>
+<p>names of genes in the pathways</p>
+</dd>
+<dt>chr</dt>
+<dd>
+<p>specifies the chromosome</p>
+</dd>
+<dt>snp</dt>
+<dd>
+<p>includes rs-numbers of example SNPs</p>
+</dd>
+<dt>position</dt>
+<dd>
+<p>gives positions of example SNPs</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>simulated data
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(anno)
+head(anno)
+# create gwas object
+data(pheno)
+data(geno)
+gwas &lt;- new('GWASdata', pheno=pheno, geno=geno, anno=anno, desc="some study") 
+</code></pre>
+
+
+</div>

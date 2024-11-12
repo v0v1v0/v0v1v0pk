@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corLevDiag</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Correlation or Covariance Matrix for a Diagonal Structure</h2>
+
+<h3>Description</h3>
+
+<p>Compute the correlation or covariance matrix for a diagonal
+structure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">corLevDiag(par, nlevels, levels, lowerSQRT = FALSE, compGrad = TRUE,
+  cov = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>par</code></td>
+<td>
+
+<p>A numeric vector with length <code>npVar</code> where
+<code>npVar</code> is the number of variance parameters, namely
+<code>0</code>, <code>1</code> or <code>nlevels</code> corresponding to the values
+of <code>cov</code>: <code>0</code>, <code>1</code> and <code>2</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlevels</code></td>
+<td>
+
+<p>Number of levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>levels</code></td>
+<td>
+
+<p>Character representing the levels.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lowerSQRT</code></td>
+<td>
+
+<p>Logical. When <code>TRUE</code> the (lower) Cholesky
+root <code class="reqn">\mathbf{L}</code> of the correlation or covariance matrix
+<code class="reqn">\mathbf{C}</code> is returned instead of the correlation matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compGrad</code></td>
+<td>
+
+<p>Logical. Should the gradient be computed?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+
+<p>Integer <code>0</code>, <code>1</code> or <code>2</code>. If <code>cov</code>
+is <code>0</code>, the matrix is a <em>correlation</em> matrix (or its
+Cholesky root) i.e. an identity matrix. If <code>cov</code> is <code>1</code>
+or <code>2</code>, the matrix is a <em>covariance</em> (or its square
+root) with constant variance vector for <code>code = 1</code> and with
+arbitrary variance vector for <code>code = 2</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A correlation matrix (or its Cholesky root) with the
+optional <code>gradient</code> attribute.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(123)
+checkGrad &lt;- TRUE
+nlevels &lt;- 12
+sigma2 &lt;- rexp(n = nlevels)
+T0 &lt;- corLevDiag(nlevels = nlevels, par = sigma2, cov = 2)
+L0 &lt;- corLevDiag(nlevels = nlevels, par = sigma2, cov = 2,
+                 lowerSQRT = TRUE)
+
+</code></pre>
+
+
+</div>

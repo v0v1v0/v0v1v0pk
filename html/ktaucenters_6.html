@@ -1,0 +1,180 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ktaucenters</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ktaucenters</h2>
+
+<h3>Description</h3>
+
+<p>Robust and efficient version of Kmeans algorithm for clustering based on centers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ktaucenters(
+  X,
+  K,
+  centers = NULL,
+  tolmin = 1e-06,
+  NiterMax = 100,
+  nstart = 1,
+  startWithKmeans = TRUE,
+  startWithROBINPD = TRUE,
+  cutoff = 0.999
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>numeric matrix of size n x p.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centers</code></td>
+<td>
+<p>a matrix of size K x p containing the K initial centers,
+one at each matrix-row. If centers is NULL a random set of (distinct) rows in
+<code>X</code>
+are chosen as the initial centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tolmin</code></td>
+<td>
+<p>a tolerance parameter used for the algorithm stopping rule.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>NiterMax</code></td>
+<td>
+<p>a maximum number of iterations used for the algorithm stopping rule.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nstart</code></td>
+<td>
+<p>the number of trials that the base algorithm is run.
+If it is greater than 1 and centers is not set as NULL, a random set of (distinct)
+rows
+in <code>X</code> will be chosen as the initial centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>startWithKmeans</code></td>
+<td>
+<p>if positive (or true) kmeans estimated centers are included
+as starting point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>startWithROBINPD</code></td>
+<td>
+<p>if positive (or true) ROBINDEN estimated centers are
+included as starting point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff</code></td>
+<td>
+<p>optional argument for outliers detection - quantiles of chi-square
+to be used as a threshold
+for outliers detection, defaults to 0.999.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>centers</code></td>
+<td>
+<p>: Matrix of size K x p with the estimated K centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>: A vector of integer (from 1:K) indicating the cluster to
+which each point is allocated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+<p>: Number of iterations until convergence is achieved or
+maximum number of iterations reached.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>di</code></td>
+<td>
+<p>: Distance of each observation to its assigned cluster-center.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outliers</code></td>
+<td>
+<p>: A vector of integers with indices for each observation
+considered as outlier.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Gonzalez, J. D., Yohai, V. J., &amp; Zamar, R. H. (2019). 
+Robust Clustering Using Tau-Scales. arXiv preprint arXiv:1906.08198.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate synthetic data (three clusters well separated)
+Z &lt;- rnorm(600)
+mues &lt;- rep(c(-3, 0, 3), 200)
+X &lt;- matrix(Z + mues, ncol = 2)
+
+# Generate 60 synthetic outliers (contamination level 20%)
+X[sample(1:300,60), ] &lt;- matrix(runif( 40, 3 * min(X), 3 * max(X) ),
+                                ncol = 2, nrow = 60)
+
+robust &lt;- ktaucenters(
+     X, K = 3, centers = X[sample(1:300, 3), ],
+     tolmin = 1e-3, NiterMax = 100)
+
+oldpar &lt;- par(mfrow = c(1, 2))
+
+plot(X,type = "n", main = "ktaucenters (Robust) \n outliers: solid black dots")
+points(X[robust$cluster == 1, ], col = 2)
+points(X[robust$cluster == 2, ], col = 3)
+points(X[robust$cluster == 3, ], col = 4)
+points(X[robust$outliers, 1], X[robust$outliers, 2], pch = 19)
+
+# Classical (non Robust) algorithm
+non_robust &lt;- kmeans(X, centers = 3, nstart = 100)
+
+plot(X, type = "n", main = "kmeans (Classical)")
+points(X[non_robust$cluster == 1, ], col = 2)
+points(X[non_robust$cluster == 2, ], col = 3)
+points(X[non_robust$cluster == 3, ], col = 4)
+
+par(oldpar)
+</code></pre>
+
+
+</div>

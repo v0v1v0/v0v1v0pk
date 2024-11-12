@@ -1,0 +1,35 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>slopeOutliersBut</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+slopeOutliersBut: remove slope outliers
+</h2>
+
+<h3>Description</h3>
+
+<p>This function handles the inputs and outputs from function rmSlopeOutliers. It removes, one by one, points that produce abnormally steep slopes and replaces them by linear interpolation. The peaks are progresively filed down and the result is a smoothed time series. Usually, these outliers are caused by wrong measurements; filling missing values can produce them also.It is used through the button Rm slope Outliers in the Filling menu.
+</p>
+
+
+<h3>Details</h3>
+
+<p>In the first step, the user must choose the time series to smooth and whether if the outliers must be removed from a filling or from the whole time series. In the second step, the user must provide the maximum positive and negative slopes or, alternatively, a reference time series from which calculate them. When the outliers are removed from a filling, the reference time series is the non-filled time series.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The smoothed time series. In order to avoid infinite loops, there is a maximum of 100000 iterations. If, by then, the time series has not been completely smoothed, it will necessary to apply the function again.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

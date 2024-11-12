@@ -1,0 +1,331 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>forest_plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Forest plot</h2>
+
+<h3>Description</h3>
+
+<p>Create a forest plot using outputs from 'metafor' package
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">forest_plot(
+  estimates = NULL,
+  estimate_ci_ll = NULL,
+  estimate_ci_ul = NULL,
+  point_size_range = c(2, 10),
+  error_bar_size = 1,
+  error_bar_tip_height = 0.3,
+  weights = NULL,
+  diamond_x = NULL,
+  diamond_ci_ll = NULL,
+  diamond_ci_ul = NULL,
+  diamond_height = 1.2,
+  diamond_gap_height = 0.3,
+  diamond_1_tip_at_top_y = -0.5,
+  diamond_colors = "black",
+  study_labels = NULL,
+  diamond_labels = NULL,
+  diamond_label_size = 6,
+  diamond_label_hjust = 0,
+  diamond_label_fontface = "bold",
+  diamond_estimate_label_hjust = 0,
+  diamond_estimate_label_size = 6,
+  diamond_estimate_label_fontface = "bold",
+  round_estimates = 2,
+  x_axis_title = "Observed Outcome",
+  vline_size = 1,
+  vline_intercept = 0,
+  vline_type = "dotted",
+  study_label_hjust = 0,
+  study_label_begin_x = NULL,
+  study_label_begin_x_perc = 60,
+  study_label_size = 6,
+  study_label_fontface = "plain",
+  estimate_label_begin_x = NULL,
+  estimate_label_begin_x_perc = 25,
+  estimate_label_hjust = 0,
+  estimate_label_size = 6,
+  estimate_label_fontface = "plain",
+  x_axis_tick_marks = NULL,
+  x_axis_tick_mark_label_size = 6,
+  legend_position = "none",
+  plot_margin = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>estimates</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_ci_ll</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_ci_ul</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>point_size_range</code></td>
+<td>
+<p>default = c(2, 10)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_size</code></td>
+<td>
+<p>default = 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_bar_tip_height</code></td>
+<td>
+<p>default = 0.3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_x</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_ci_ll</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_ci_ul</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_height</code></td>
+<td>
+<p>default = 1.2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_gap_height</code></td>
+<td>
+<p>default = 0.3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_1_tip_at_top_y</code></td>
+<td>
+<p>default = -0.5</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_colors</code></td>
+<td>
+<p>default = "black"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>study_labels</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_labels</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_label_size</code></td>
+<td>
+<p>default = 6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_label_hjust</code></td>
+<td>
+<p>default = 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_label_fontface</code></td>
+<td>
+<p>default = "bold"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_estimate_label_hjust</code></td>
+<td>
+<p>default = 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_estimate_label_size</code></td>
+<td>
+<p>default = 6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diamond_estimate_label_fontface</code></td>
+<td>
+<p>default = "bold"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round_estimates</code></td>
+<td>
+<p>default = 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_title</code></td>
+<td>
+<p>default = "Observed Outcome"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vline_size</code></td>
+<td>
+<p>default = 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vline_intercept</code></td>
+<td>
+<p>default = 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vline_type</code></td>
+<td>
+<p>default = "dotted"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>study_label_hjust</code></td>
+<td>
+<p>default = 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>study_label_begin_x</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>study_label_begin_x_perc</code></td>
+<td>
+<p>default = 60</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>study_label_size</code></td>
+<td>
+<p>default = 6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>study_label_fontface</code></td>
+<td>
+<p>default = "plain"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_label_begin_x</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_label_begin_x_perc</code></td>
+<td>
+<p>default = 25</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_label_hjust</code></td>
+<td>
+<p>default = 0</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_label_size</code></td>
+<td>
+<p>default = 6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate_label_fontface</code></td>
+<td>
+<p>default = "plain"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_tick_marks</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_axis_tick_mark_label_size</code></td>
+<td>
+<p>default = 6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend_position</code></td>
+<td>
+<p>default = "none"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot_margin</code></td>
+<td>
+<p>default = NULL</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+forest_plot(
+estimates = c(2, 3, 4),
+estimate_ci_ll = c(1, 2, 3),
+estimate_ci_ul = c(3, 4, 6),
+weights = 1:3,
+diamond_x = 2,
+diamond_labels = "RE",
+diamond_ci_ll = 1.8,
+diamond_ci_ul = 2.2,
+estimate_label_begin_x_perc = 40,
+x_axis_tick_marks = seq(-2, 6, 2))
+
+</code></pre>
+
+
+</div>

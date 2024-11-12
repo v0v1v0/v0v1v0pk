@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Frobenius</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Frobenius kernel</h2>
+
+<h3>Description</h3>
+
+<p>'Frobenius()' computes the Frobenius kernel between numeric matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Frobenius(DATA, cos.norm = FALSE, feat_space = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>DATA</code></td>
+<td>
+<p>A list of <em>M</em> matrices or data.frames containing only real
+numbers (class "integer", "float" or "double").
+All matrices or data.frames should have the same number of rows and columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cos.norm</code></td>
+<td>
+<p>Should the resulting kernel matrix be cosine normalized? (Defaults: FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>feat_space</code></td>
+<td>
+<p>If FALSE, only the kernel matrix is returned. Otherwise,
+the feature space is also returned. (Defaults: FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Frobenius kernel is the same than the Frobenius inner product between
+matrices.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Kernel matrix (dimension:<em>NxN</em>), or a list with the kernel matrix and the
+feature space.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data1 &lt;- matrix(rnorm(250000),ncol=500,nrow=500)
+data2 &lt;- matrix(rnorm(250000),ncol=500,nrow=500)
+data3 &lt;- matrix(rnorm(250000),ncol=500,nrow=500)
+
+Frobenius(list(data1,data2,data3))
+</code></pre>
+
+
+</div>

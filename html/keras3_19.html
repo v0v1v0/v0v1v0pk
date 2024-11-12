@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>activation_relu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Applies the rectified linear unit activation function.</h2>
+
+<h3>Description</h3>
+
+<p>With default values, this returns the standard ReLU activation:
+<code>max(x, 0)</code>, the element-wise maximum of 0 and the input tensor.
+</p>
+<p>Modifying default parameters allows you to use non-zero thresholds,
+change the max value of the activation,
+and to use a non-zero multiple of the input for values below the threshold.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">activation_relu(x, negative_slope = 0, max_value = NULL, threshold = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input tensor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>negative_slope</code></td>
+<td>
+<p>A <code>numeric</code> that controls the slope
+for values lower than the threshold.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_value</code></td>
+<td>
+<p>A <code>numeric</code> that sets the saturation threshold (the largest
+value the function will return).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>A <code>numeric</code> giving the threshold value of the activation
+function below which values will be damped or set to zero.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tensor with the same shape and dtype as input <code>x</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>x &lt;- c(-10, -5, 0, 5, 10)
+activation_relu(x)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([ 0.  0.  0.  5. 10.], shape=(5), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>activation_relu(x, negative_slope = 0.5)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([-5.  -2.5  0.   5.  10. ], shape=(5), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>activation_relu(x, max_value = 5)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([0. 0. 0. 5. 5.], shape=(5), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>activation_relu(x, threshold = 5)
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([-0. -0.  0.  0. 10.], shape=(5), dtype=float32)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/activations#relu-function">https://keras.io/api/layers/activations#relu-function</a>
+</p>
+</li></ul>
+<p>Other activations: <br><code>activation_elu()</code> <br><code>activation_exponential()</code> <br><code>activation_gelu()</code> <br><code>activation_hard_sigmoid()</code> <br><code>activation_leaky_relu()</code> <br><code>activation_linear()</code> <br><code>activation_log_softmax()</code> <br><code>activation_mish()</code> <br><code>activation_relu6()</code> <br><code>activation_selu()</code> <br><code>activation_sigmoid()</code> <br><code>activation_silu()</code> <br><code>activation_softmax()</code> <br><code>activation_softplus()</code> <br><code>activation_softsign()</code> <br><code>activation_tanh()</code> <br></p>
+
+
+</div>

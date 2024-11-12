@@ -1,0 +1,191 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_ci_subsampling</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Uncertainty of KL divergence estimate using Politis/Romano's subsampling bootstrap.</h2>
+
+<h3>Description</h3>
+
+<p>This function computes a confidence interval for KL divergence based on the
+subsampling bootstrap introduced by Politis and Romano. See <strong>Details</strong> for
+theoretical properties of this method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_ci_subsampling(
+  X,
+  Y = NULL,
+  q = NULL,
+  estimator = kld_est_nn,
+  B = 500L,
+  alpha = 0.05,
+  subsample.size = function(x) x^(2/3),
+  convergence.rate = sqrt,
+  method = c("quantile", "se"),
+  include.boot = FALSE,
+  n.cores = 1L,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X, Y</code></td>
+<td>
+<p><code>n</code>-by-<code>d</code> and <code>m</code>-by-<code>d</code> data frames or matrices (multivariate
+samples), or numeric/character vectors (univariate samples, i.e. <code>d = 1</code>),
+representing <code>n</code> samples from the true distribution <code class="reqn">P</code> and <code>m</code>
+samples from the approximate distribution <code class="reqn">Q</code> in <code>d</code> dimensions.
+<code>Y</code> can be left blank if <code>q</code> is specified (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>The density function of the approximate distribution <code class="reqn">Q</code>. Either
+<code>Y</code> or <code>q</code> must be specified. If the distributions are all continuous or
+all discrete, <code>q</code> can be directly specified as the probability density/mass
+function. However, for mixed continuous/discrete distributions, <code>q</code> must
+be given in decomposed form, <code class="reqn">q(y_c,y_d)=q_{c|d}(y_c|y_d)q_d(y_d)</code>,
+specified as a named list with field <code>cond</code> for the conditional density
+<code class="reqn">q_{c|d}(y_c|y_d)</code> (a function that expects two arguments <code>y_c</code> and
+<code>y_d</code>) and <code>disc</code> for the discrete marginal density <code class="reqn">q_d(y_d)</code> (a
+function that expects one argument <code>y_d</code>). If such a decomposition is not
+available, it may be preferable to instead simulate a large sample from
+<code class="reqn">Q</code> and use the two-sample syntax.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>The Kullback-Leibler divergence estimation method; a
+function expecting two inputs (<code>X</code> and <code>Y</code> or <code>q</code>, depending on arguments
+provided). Defaults to <code>kld_est_nn</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>Number of bootstrap replicates (default: <code>500</code>), the larger, the
+more accurate, but also more computationally expensive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Error level, defaults to <code>0.05</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subsample.size</code></td>
+<td>
+<p>A function specifying the size of the subsamples,
+defaults to <code class="reqn">f(x) = x^{2/3}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence.rate</code></td>
+<td>
+<p>A function computing the convergence rate of the
+estimator as a function of sample sizes. Defaults to <code class="reqn">f(x) = x^{1/2}</code>.
+If <code>convergence.rate</code> is <code>NULL</code>, it is estimated empirically from the
+sample(s) using <code>kldest::convergence_rate()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Either <code>"quantile"</code> (the default), also known as the reverse
+percentile method, or <code>"se"</code> for a normal approximation of the KL
+divergence estimator using the standard error of the subsamples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.boot</code></td>
+<td>
+<p>Boolean, <code>TRUE</code> means KL divergence estimates on subsamples
+are included in the returned list. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.cores</code></td>
+<td>
+<p>Number of cores to use in parallel computing (defaults to <code>1</code>,
+which means that no parallel computing is used).
+To use this option, the <code>parallel</code> package must be installed and the OS
+must be of UNIX type (i.e., not Windows). Otherwise, <code>n.cores</code> will be
+reset to <code>1</code>, with a message.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed on to <code>estimator</code>, i.e. via the call
+<code>estimator(X, Y = Y, ...)</code> or <code>estimator(X, q = q, ...)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In general terms, tetting <code class="reqn">b_n</code> be the subsample size for a sample of
+size <code class="reqn">n</code>, and <code class="reqn">\tau_n</code> the convergence rate of the estimator, a
+confidence interval calculated by subsampling has asymptotic coverage
+<code class="reqn">1 - \alpha</code> as long as <code class="reqn">b_n/n\rightarrow 0</code>,
+<code class="reqn">b_n\rightarrow\infty</code> and <code class="reqn">\frac{\tau_{b_n}}{\tau_n}\rightarrow 0</code>.
+</p>
+<p>In many cases, the convergence rate of the nearest-neighbour based KL
+divergence estimator is <code class="reqn">\tau_n = \sqrt{n}</code> and the condition on the
+subsample size reduces to <code class="reqn">b_n/n\rightarrow 0</code> and <code class="reqn">b_n\rightarrow\infty</code>.
+By default, <code class="reqn">b_n = n^{2/3}</code>. In a two-sample problem, <code class="reqn">n</code> and <code class="reqn">b_n</code>
+are replaced by effective sample sizes <code class="reqn">n_\text{eff} = \min(n,m)</code> and
+<code class="reqn">b_{n,\text{eff}} = \min(b_n,b_m)</code>.
+</p>
+<p>Reference:
+</p>
+<p>Politis and Romano, "Large sample confidence regions based on subsamples under
+minimal assumptions", The Annals of Statistics, Vol. 22, No. 4 (1994).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following fields:
+</p>
+
+<ul>
+<li> <p><code>"est"</code> (the estimated KL divergence),
+</p>
+</li>
+<li> <p><code>"ci"</code> (a length <code>2</code> vector containing the lower and upper limits of the
+estimated confidence interval).
+</p>
+</li>
+<li> <p><code>"boot"</code> (a length <code>B</code> numeric vector with KL divergence estimates on
+the bootstrap subsamples), only included if <code>include.boot = TRUE</code>,
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 1D Gaussian (one- and two-sample problems)
+set.seed(0)
+X &lt;- rnorm(100)
+Y &lt;- rnorm(100, mean = 1, sd = 2)
+q &lt;- function(x) dnorm(x, mean =1, sd = 2)
+kld_gaussian(mu1 = 0, sigma1 = 1, mu2 = 1, sigma2 = 2^2)
+kld_est_nn(X, Y = Y)
+kld_est_nn(X, q = q)
+kld_ci_subsampling(X, Y)$ci
+kld_ci_subsampling(X, q = q)$ci
+
+</code></pre>
+
+
+</div>

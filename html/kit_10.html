@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>iif</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Fast if else </h2>
+
+<h3>Description</h3>
+
+<p><code>iif</code> is a faster and more robust replacement of <code>ifelse</code>. It is comparable to <code>dplyr::if_else</code>, <code>hutils::if_else</code> and <code>data.table::fifelse</code>. It returns a value with the same length as <code>test</code> filled with corresponding values from <code>yes</code>, <code>no</code> or eventually <code>na</code>, depending on <code>test</code>. It does not support S4 classes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  iif(test, yes, no, na=NULL, tprom=FALSE, nThread=getOption("kit.nThread"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p> A logical vector. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yes, no</code></td>
+<td>
+<p> Values to return depending on <code>TRUE</code>/<code>FALSE</code> element of <code>test</code>. They must be the same type and be either length <code>1</code> or the same length of <code>test</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na</code></td>
+<td>
+<p> Value to return if an element of <code>test</code> is missing. It must be the same type as <code>yes</code>/<code>no</code> and be either length <code>1</code> or the same length of <code>test</code>. Please note that <code>NA</code> is treated as logical value of length 1 as per the R documentation. <code>NA_integer_</code>, <code>NA_real_</code>, <code>NA_complex_</code> and <code>NA_character_</code> are equivalent to <code>NA</code> but for integer, double, complex and character. Default value for argument <code>na</code> is <code>NULL</code> and will automatically default to the equivalent NA type of argument <code>yes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tprom</code></td>
+<td>
+<p> Argument to indicate whether type promotion of <code>yes</code> and <code>no</code> is allowed or not. Either <code>FALSE</code> or <code>TRUE</code>, default is <code>FALSE</code> to not allow type promotion. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nThread</code></td>
+<td>
+<p> A integer for the number of threads to use with <em>openmp</em>. Default value is <code>getOption("kit.nThread")</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In contrast to <code>ifelse</code> attributes are copied from <code>yes</code> to the output. This is useful when returning <code>Date</code>, <code>factor</code> or other classes.
+Like <code>dplyr::if_else</code> and <code>hutils::if_else</code>, the <code>na</code> argument is by default set to <code>NULL</code>. This argument is set to <code>NA</code> in data.table::fifelse.
+Similarly to <code>dplyr::if_else</code> and when <code>tprom=FALSE</code>, <code>iif</code> requires same type for arguments <code>yes</code> and <code>no</code>. This is not strictly the case for <code>data.table::fifelse</code> which will coerce integer to double. 
+When <code>tprom=TRUE</code>, <code>iif</code> behavior is similar to <code>base::ifelse</code> in the sense that it will promote or coerce <code>yes</code> and <code>no</code>to the "highest" used type. Note, however, that unlike <code>base::ifelse</code> attributes are still conserved.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of the same length as <code>test</code> and attributes as <code>yes</code>. Data values are taken from the values of <code>yes</code> and <code>no</code>, eventually <code>na</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgan Jacob</p>
+
+
+<h3>See Also</h3>
+
+<p><code>nif</code>
+<code>vswitch</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x = c(1:4, 3:2, 1:4)
+iif(x &gt; 2L, x, x - 1L)
+
+# unlike ifelse, iif preserves attributes, taken from the 'yes' argument
+dates = as.Date(c("2011-01-01","2011-01-02","2011-01-03","2011-01-04","2011-01-05"))
+ifelse(dates == "2011-01-01", dates - 1, dates)
+iif(dates == "2011-01-01", dates - 1, dates)
+yes = factor(c("a","b","c"))
+no = yes[1L]
+ifelse(c(TRUE,FALSE,TRUE), yes, no)
+iif(c(TRUE,FALSE,TRUE), yes, no)
+
+# Example of using the 'na' argument
+iif(test = c(-5L:5L &lt; 0L, NA), yes = 1L, no = 0L, na = 2L)
+
+# Example of using the 'tprom' argument
+iif(test = c(-5L:5L &lt; 0L, NA), yes = 1L, no = "0", na = 2L, tprom = TRUE)
+</code></pre>
+
+
+</div>

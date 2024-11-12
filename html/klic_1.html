@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>copheneticCorrelation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cophenetic correlation coefficient</h2>
+
+<h3>Description</h3>
+
+<p>Compute the cophenetic correlation coefficient of a kernel matrix, which is
+a measure of how faithfully hierarchical clustering would preserve the
+pairwise distances between the original data points.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">copheneticCorrelation(kernelMatrix)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>kernelMatrix</code></td>
+<td>
+<p>kernel matrix.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>This functions returns the cophenetic correlation coefficient of the
+kernel matrix provided as input.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Alessandra Cabassi <a href="mailto:alessandra.cabassi@mrc-bsu.cam.ac.uk">alessandra.cabassi@mrc-bsu.cam.ac.uk</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Cabassi, A. and Kirk, P. D. W. (2019). Multiple kernel learning
+for integrative consensus clustering of genomic datasets. arXiv preprint.
+arXiv:1904.07701.
+</p>
+<p>Sokal, R.R. and Rohlf, F.J., 1962. The comparison of dendrograms
+by objective methods. Taxon, 11(2), pp.33-40.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Load kernel matrix
+consensus_matrix &lt;- as.matrix(read.csv(system.file('extdata',
+'consensus_matrix1.csv', package = 'klic'), row.names = 1))
+
+# Compute cophenetic correlation
+coph_corr_coeff &lt;- copheneticCorrelation(consensus_matrix)
+cat(coph_corr_coeff)
+</code></pre>
+
+
+</div>

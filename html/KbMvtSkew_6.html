@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kbMvtSkew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Khattree-Bahuguna's Multivariate Skewness</h2>
+
+<h3>Description</h3>
+
+<p>Compute Khattree-Bahuguna's Multivariate Skewness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kbMvtSkew(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a matrix of original observations.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Let <code class="reqn">\mathbf{X}=(X_1,\ldots,X_p)'</code> be the multivariate random vector and <code class="reqn">(X_{i_1}, X_{i_2}, \ldots, X_{i_p})'</code> be one of the <code class="reqn">p!</code> permutations of <code class="reqn">(X_1,\ldots,X_p)'</code>. We predict <code class="reqn">X_{i_j}</code> conditionally on subvector <code class="reqn">(X_{i_1}, \ldots,X_{i_{j-1}})</code> and compute the corresponding residual <code class="reqn">V_{i_j}</code> through a linear regression model for <code class="reqn">j = 2, \cdots, p</code>. For <code class="reqn">j=1</code>, we define <code class="reqn">V_{i_1} = X_{i_1} - \bar{X}_{i_1}</code>, where <code class="reqn">\bar{X}_{i_1}</code> is the mean of <code class="reqn">X_{i_1}</code>. For <code class="reqn">j \ge 2</code>, we have
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{X}_{i_2}  = \hat{\beta}_0 + \hat{\beta}_1 X_{i_1}, \quad V_{i_2} = X_{i_2} - \hat{X}_{i_2}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">\hat{X}_{i_3} = \hat{\beta}_0 + \hat{\beta}_1 X_{i_1} + \hat{\beta}_2 X_{i_2}, \quad V_{i_3} = X_{i_3} - \hat{X}_{i_3}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">\vdots</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">\hat{X}_{i_p} = \hat{\beta}_0 + \hat{\beta}_1 X_{i_1} + \hat{\beta}_2 X_{i_2} + \cdots + \hat{\beta}_{p-1} X_{i_{p-1}}, \quad V_{i_p} = X_{i_p} - \hat{X}_{i_p}.</code>
+</p>
+
+<p>We calculate the sample skewness <code class="reqn">\hat{\delta}_{i_j}</code> of <code class="reqn">V_{i_j}</code> by the sample Khattree-Bahuguna's univariate skewness formula (see details of <code>kbSkew</code> that follows) respectively for <code class="reqn">j=1,\cdots,p</code> and define <code class="reqn">\hat{\Delta}_{i} = \sum_{j=1}^{p} \hat{\delta}_{i_j}, i = 1, 2, \ldots, P</code> for all <code class="reqn">P = p!</code> permutations of <code class="reqn">(X_1,\ldots,X_p)'</code>. The sample Khattree-Bahuguna's multivariate skewness is defined as
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{\Delta} = \frac{1}{P} \sum_{i=1}^{P} \hat{\Delta}_{i}.</code>
+</p>
+
+<p>Clearly, <code class="reqn">0 \le \hat{\Delta} \le \frac{p}{2}</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>kbMvtSkew</code> computes the Khattree-Bahuguna's multivairate skewness for a <code class="reqn">p</code>-dimensional data.
+</p>
+
+
+<h3>References</h3>
+
+<p>Khattree, R. and Bahuguna, M. (2019). An alternative data analytic approach to measure the univariate and multivariate skewness. <em>International Journal of Data Science and Analytics</em>, Vol. 7, No. 1, 1-16.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kbSkew</code> for Khattree-Bahuguna's univariate skewness.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute Khattree-Bahuguna's multivairate skewness
+
+data(OlymWomen)
+kbMvtSkew(OlymWomen[, c("m800","m1500","m3000","marathon")])
+
+</code></pre>
+
+
+</div>

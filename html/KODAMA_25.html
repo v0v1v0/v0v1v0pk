@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pls.kodama</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Partial Least Squares regression.</h2>
+
+<h3>Description</h3>
+
+<p>Partial Least Squares (PLS) regression for test set from training set.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pls.kodama(Xtrain, 
+           Ytrain, 
+           Xtest, 
+           Ytest = NULL, 
+           ncomp, 
+           scaling = c("centering","autoscaling"),
+           perm.test=FALSE,
+           times=1000) 
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Xtrain</code></td>
+<td>
+<p>a matrix of training set cases.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ytrain</code></td>
+<td>
+<p>a classification vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xtest</code></td>
+<td>
+<p>a matrix of test set cases.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ytest</code></td>
+<td>
+<p>a classification vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncomp</code></td>
+<td>
+<p>the number of components to consider.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaling</code></td>
+<td>
+<p>the scaling method to be used. Choices are "<code>centering</code>" or "<code>autoscaling</code>" (by default = "<code>centering</code>"). A partial string sufficient to uniquely identify the choice is permitted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perm.test</code></td>
+<td>
+<p>a classification vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>a classification vector.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>the (p x m x length(ncomp)) matrix containing the regression coefficients. Each row corresponds to a predictor variable and each column to a response variable. The third dimension of the matrix B corresponds to the number of PLS components used to compute the regression coefficients. If ncomp has length 1, B is just a (p x m) matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ypred</code></td>
+<td>
+<p>the (ntest x m x length(ncomp)) containing the predicted values of the response variables for the observations from Xtest. The third dimension of the matrix Ypred corresponds to the number of PLS components used to compute the regression coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>the (p x max(ncomp)) matrix containing the X-loadings.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>the (m x max(ncomp)) matrix containing the Y-loadings.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>the (ntrain x max(ncomp)) matrix containing the X-scores (latent components)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>the (p x max(ncomp)) matrix containing the weights used to construct the latent components.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KODAMA.matrix</code>,<code>KODAMA.visualization</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+data=iris[,-5]
+labels=iris[,5]
+ss=sample(150,15)
+ncomponent=3
+
+z=pls.kodama(data[-ss,], labels[-ss], data[ss,], ncomp=ncomponent) 
+table(z$Ypred[,ncomponent],labels[ss])
+</code></pre>
+
+
+</div>

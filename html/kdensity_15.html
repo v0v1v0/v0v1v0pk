@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parametric_starts</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parametric starts</h2>
+
+<h3>Description</h3>
+
+<p>A parametric start is a density function with an associated estimator which
+is used as a starting point in <code>kdensity</code>. Several parametric starts
+are implemented, all with maximum likelihood estimation. Custom-made
+parametric starts are possible, see the Structure section.
+</p>
+
+
+<h3>Structure</h3>
+
+<p>The parametric start contains three elements: The density function, an
+estimation function, and the support of the density. The parameters of
+the density function must partially match the parameters of the estimator
+function. The estimator function takes one argument, a numeric vector,
+which is passed from <code>kdensity</code>.
+</p>
+
+
+<h3>Supported parametric starts</h3>
+
+<p><code>kdensity</code> supports more than
+20 built-in starts from the univariateML package, see
+<code>univariateML::univariateML_models</code> for a list. Densities with variable
+support, <code>power</code>, are not supported. The <code>pareto</code> density has its
+support fixed to <code style="white-space: pre;">⁠(1,Inf)⁠</code>. The
+options <code style="white-space: pre;">⁠uniform, constant⁠</code> makes <code>kdensity</code> estimate a kernel
+density without parametric starts.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdensity()</code>; <code>kernels()</code>; <code>bandwidths()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">start_exponential = list(
+ density = stats::dexp,
+ estimator = function(data) {
+   c(rate = 1/mean(data))
+ },
+ support = c(0, Inf)
+)
+
+start_inverse_gaussian = list(
+ density = extraDistr::dwald,
+ estimator = function(data) {
+  c(mu = mean(data),
+    lambda = mean(1/data - 1/mean(data)))
+  },
+ support = c(0, Inf)
+)
+
+</code></pre>
+
+
+</div>

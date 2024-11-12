@@ -1,0 +1,149 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metadata-helpers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>DHIS2 Metadata Helper Functions</h2>
+
+<h3>Description</h3>
+
+<p>These functions simplify retrieving data from specific DHIS2 API endpoints
+using <code>get_metadata()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_categories(...)
+
+get_category_combos(...)
+
+get_category_option_combos(...)
+
+get_category_option_group_sets(...)
+
+get_category_option_groups(...)
+
+get_category_options(...)
+
+get_data_element_group_sets(...)
+
+get_data_element_groups(...)
+
+get_data_elements(...)
+
+get_data_sets(...)
+
+get_user_groups(...)
+
+get_indicator_group_sets(...)
+
+get_indicator_groups(...)
+
+get_indicators(...)
+
+get_option_group_sets(...)
+
+get_option_groups(...)
+
+get_option_sets(...)
+
+get_options(...)
+
+get_organisation_unit_groupsets(...)
+
+get_organisation_unit_groups(...)
+
+get_organisation_units(...)
+
+get_organisation_unit_levels(...)
+
+get_dimensions(...)
+
+get_period_types(...)
+
+get_user_profile()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Arguments passed on to <code>get_metadata</code>
+</p>
+
+<dl>
+<dt><code>fields</code></dt>
+<dd>
+<p>The specific columns to be returned in the data frame.</p>
+</dd>
+<dt><code>retry</code></dt>
+<dd>
+<p>Number of times to retry the API call in case of failure
+(defaults to 2).</p>
+</dd>
+<dt><code>verbosity</code></dt>
+<dd>
+<p>Level of HTTP information to print during the call:
+</p>
+
+<ul>
+<li>
+<p> 0: No output
+</p>
+</li>
+<li>
+<p> 1: Show headers
+</p>
+</li>
+<li>
+<p> 2: Show headers and bodies
+</p>
+</li>
+<li>
+<p> 3: Show headers, bodies, and CURL status message.
+</p>
+</li>
+</ul>
+</dd>
+<dt><code>timeout</code></dt>
+<dd>
+<p>Maximum number of seconds to wait for the DHIS2 API response.</p>
+</dd>
+<dt><code>call</code></dt>
+<dd>
+<p>The caller environment</p>
+</dd>
+</dl>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A tibble containing the DHIS2 metadata response.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Get all organisation units
+get_organisation_units()
+
+# Get all data elements
+get_data_elements()
+
+# Get data elements by element ids
+get_data_elements(id %.in% c('VR7vdS7P0Gb', 'gQro1y7Rsbq'))
+
+# Get datasets by name with the word 'MOH 705'
+get_data_sets(name %.like% 'MOH 705')
+
+</code></pre>
+
+
+</div>

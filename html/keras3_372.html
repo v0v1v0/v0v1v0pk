@@ -1,0 +1,140 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_sensitivity_at_specificity</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes best sensitivity where specificity is &gt;= specified value.</h2>
+
+<h3>Description</h3>
+
+<p><code>Sensitivity</code> measures the proportion of actual positives that are correctly
+identified as such <code>(tp / (tp + fn))</code>.
+<code>Specificity</code> measures the proportion of actual negatives that are correctly
+identified as such <code>(tn / (tn + fp))</code>.
+</p>
+<p>This metric creates four local variables, <code>true_positives</code>,
+<code>true_negatives</code>, <code>false_positives</code> and <code>false_negatives</code> that are used to
+compute the sensitivity at the given specificity. The threshold for the
+given specificity value is computed and used to evaluate the corresponding
+sensitivity.
+</p>
+<p>If <code>sample_weight</code> is <code>NULL</code>, weights default to 1.
+Use <code>sample_weight</code> of 0 to mask values.
+</p>
+<p>If <code>class_id</code> is specified, we calculate precision by considering only the
+entries in the batch for which <code>class_id</code> is above the threshold
+predictions, and computing the fraction of them for which <code>class_id</code> is
+indeed a correct label.
+</p>
+<p>For additional information about specificity and sensitivity, see
+<a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">the following</a>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_sensitivity_at_specificity(
+  ...,
+  specificity,
+  num_thresholds = 200L,
+  class_id = NULL,
+  name = NULL,
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>specificity</code></td>
+<td>
+<p>A scalar value in range <code style="white-space: pre;">⁠[0, 1]⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_thresholds</code></td>
+<td>
+<p>(Optional) Defaults to 200. The number of thresholds to
+use for matching the given specificity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_id</code></td>
+<td>
+<p>(Optional) Integer class ID for which we want binary metrics.
+This must be in the half-open interval <code style="white-space: pre;">⁠[0, num_classes)⁠</code>, where
+<code>num_classes</code> is the last dimension of predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>(Optional) string name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>(Optional) data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>Metric</code> instance is returned. The <code>Metric</code> instance can be passed
+directly to <code>compile(metrics = )</code>, or used as a standalone object. See
+<code>?Metric</code> for example usage.
+</p>
+
+
+<h3>Usage</h3>
+
+<p>Standalone usage:
+</p>
+<div class="sourceCode r"><pre>m &lt;- metric_sensitivity_at_specificity(specificity = 0.5)
+m$update_state(c(0,   0,   0,   1,   1),
+               c(0, 0.3, 0.8, 0.3, 0.8))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.5, shape=(), dtype=float32)
+
+</pre></div>
+<div class="sourceCode r"><pre>m$reset_state()
+m$update_state(c(0,   0,   0,   1,   1),
+               c(0, 0.3, 0.8, 0.3, 0.8),
+               sample_weight = c(1, 1, 2, 2, 1))
+m$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.33333334, shape=(), dtype=float32)
+
+</pre></div>
+<p>Usage with <code>compile()</code> API:
+</p>
+<div class="sourceCode r"><pre>model |&gt; compile(
+  optimizer = 'sgd',
+  loss = 'binary_crossentropy',
+  metrics = list(metric_sensitivity_at_specificity())
+)
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/metrics/classification_metrics#sensitivityatspecificity-class">https://keras.io/api/metrics/classification_metrics#sensitivityatspecificity-class</a>
+</p>
+</li></ul>
+<p>Other confusion metrics: <br><code>metric_auc()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

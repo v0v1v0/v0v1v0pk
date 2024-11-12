@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ki_timeseries_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get list of available time series for station or
+list of stations.</h2>
+
+<h3>Description</h3>
+
+<p>Get list of available time series for station or
+list of stations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ki_timeseries_list(
+  hub,
+  station_id,
+  ts_name,
+  coverage = TRUE,
+  group_id,
+  return_fields,
+  datasource = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>hub</code></td>
+<td>
+<p>The KiWIS database you are querying. Either one of the defaults or a URL.
+See <a href="https://github.com/rywhale/kiwisR">README</a>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>station_id</code></td>
+<td>
+<p>Either a single station id or a vector of station ids. Can be string or numeric.
+Station ids can be found using the ki_station_list function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ts_name</code></td>
+<td>
+<p>(Optional) A specific time series short name to search for. Supports the use of "*" as a wildcard.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coverage</code></td>
+<td>
+<p>(Optional) Whether or not to return period of record columns.
+Defaults to TRUE, change to FALSE for faster queries.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group_id</code></td>
+<td>
+<p>(Optional) A time series group id (see ki_group_list).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_fields</code></td>
+<td>
+<p>(Optional) Specific fields to return. Consult your KiWIS hub services documentation for available options.
+Should be a comma separate string or a vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>datasource</code></td>
+<td>
+<p>(Optional) The data source to be used, defaults to 0.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A tibble containing all available time series for selected stations.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+ki_timeseries_list(hub = "swmc", station_id = "146775")
+ki_timeseries_list(hub = "swmc", ts_name = "Vel*")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

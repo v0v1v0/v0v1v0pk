@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cohen_d_over_n</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cohen's d as a function of sample size</h2>
+
+<h3>Description</h3>
+
+<p>Plot Cohen's d as sample size increases.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cohen_d_over_n(
+  data = NULL,
+  iv_name = NULL,
+  dv_name = NULL,
+  save_as_png = FALSE,
+  png_name = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  width = 16,
+  height = 9
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_name</code></td>
+<td>
+<p>name of the independent variable (grouping variable)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable (measure variable
+of interest)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save_as_png</code></td>
+<td>
+<p>if <code>save = TRUE</code>, the plot will be saved
+as a PNG file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>png_name</code></td>
+<td>
+<p>name of the PNG file to be saved. By default, the name
+will be "cohen_d_over_n_" followed by a timestamp of the
+current time.
+The timestamp will be in the format, jan_01_2021_1300_10_000001,
+where "jan_01_2021" would indicate January 01, 2021;
+1300 would indicate 13:00 (i.e., 1 PM); and 10_000001 would
+indicate 10.000001 seconds after the hour.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>title of the x-axis for the histogram by group.
+If <code>xlab = FALSE</code>, the title will be removed. By default
+(i.e., if no input is given), <code>dv_name</code> will be used as
+the title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>title of the y-axis for the histogram by group.
+If <code>ylab = FALSE</code>, the title will be removed. By default
+(i.e., if no input is given), <code>iv_name</code> will be used as
+the title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>width of the plot to be saved. This argument will be
+directly entered as the <code>width</code> argument for the <code>ggsave</code>
+function within <code>ggplot2</code> package (default = 16)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>height of the plot to be saved. This argument will be
+directly entered as the <code>height</code> argument for the <code>ggsave</code>
+function within <code>ggplot2</code> package (default = 9)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a list of (1) ggplot object
+(histogram by group) and (2) a data.table with Cohen's d by sample size
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+cohen_d_over_n(data = mtcars, iv_name = "am", dv_name = "mpg")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

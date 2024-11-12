@@ -1,0 +1,171 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kp.pwcurv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict Wind Power Output by Using a Multivariate Power Curve</h2>
+
+<h3>Description</h3>
+
+<p>Takes multiple environmental variable inputs measured on an operating wind
+farm and predicts the wind power output under the given environmental
+condition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kp.pwcurv(y, x, x.new = x, id.spd = 1, id.dir = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>An <code class="reqn">n</code>-dimensional vector or a matrix of size <code class="reqn">n</code> by 1
+containing wind power output data. This along with x trains the
+multidimensional power curve model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An <code class="reqn">n</code> by <code class="reqn">p</code> matrix or a data frame containing the input
+data for <code class="reqn">p</code> predictor variables (wind and weather variables). This
+<code>x</code> must have the same number of rows as <code>y</code>, i.e., <code class="reqn">n</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x.new</code></td>
+<td>
+<p>A matrix or a data frame containing new input conditions of the
+<code class="reqn">p</code> predictor variables for which a prediction of wind power output
+will be made. This is an optional parameter and will be set to <code>x</code> by
+default, if it is not supplied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.spd</code></td>
+<td>
+<p>The column number of <code>x</code> (and of <code>x.new</code>, if
+supplied) indicating wind speed data . Default to <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.dir</code></td>
+<td>
+<p>The column number of <code>x</code> (and of <code>x.new</code>, if
+supplied) indicating wind direction data. Default to <code>NA</code>, but this
+parameter needs to be set if <code>x</code> includes wind direction data.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector representing the predicted power output for the new
+wind/weather condition specified in <code>x.new</code>. If <code>x.new</code> is not
+supplied, this function returns the fitted power output for the given
+<code>x</code>.
+</p>
+
+
+<h3>Note</h3>
+
+ <ul>
+<li>
+<p> This function is developed for wind power prediction.
+As such, the response <code>y</code> represents wind power output and the
+covariates <code>x</code> include multiple wind and weather variables that
+potentially affect the power output. </p>
+</li>
+<li>
+<p> The data matrix <code>x</code> is
+expected to include at least wind speed and wind direction data. As
+measurements of other environmental variables become available, they can be
+added to the <code>x</code>. Typically, the first column of <code>x</code> corresponds
+to wind speed data and the second column to wind direction data and, as
+such, <code>id.spd = 1</code> and <code>id.dir = 2</code>. </p>
+</li>
+<li>
+<p> If <code>x</code> has a
+single variable of wind speed, i.e., <code class="reqn">p = 1</code> and <code>id.spd = 1</code>,
+this function returns an estimate (or prediction) of the Nadaraya-Watson
+estimator with a Gaussian kernel by using the <code>ksmooth</code> function in
+the <span class="pkg">stats</span> package. </p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Lee, G., Ding, Y., Genton, M.G., and Xie, L. (2015) Power Curve
+Estimation with Multivariate Environmental Factors for Inland and Offshore
+Wind Farms, <em>Journal of the American Statistical Association</em>
+110(509):56-67.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>windpw</code>, <code>ksmooth</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(windpw)
+
+
+### Power curve estimation.
+
+# By using a single input of wind speed.
+pwcurv.est &lt;- kp.pwcurv(windpw$y, windpw$V)
+
+# By using wind speed and direction: id.dir needs to be set.
+pwcurv.est &lt;- kp.pwcurv(windpw$y, windpw[, c('V', 'D')], id.dir = 2)
+
+# By using full covariates: confirm whether id.spd and id.dir are correctly specified.
+pwcurv.est &lt;- kp.pwcurv(windpw$y, windpw[, c('V', 'D', 'rho', 'I', 'Sb')], id.spd = 1, id.dir = 2)
+
+
+### Wind power prediction.
+
+# Suppose only 90% of data are available and use the rest 10% for prediction.
+df.tr &lt;- windpw[1:900, ]
+df.ts &lt;- windpw[901:1000, ]
+id.cov &lt;- c('V', 'D', 'rho', 'I', 'Sb')
+pred &lt;- kp.pwcurv(df.tr$y, df.tr[, id.cov], df.ts[, id.cov], id.dir = 2)
+
+
+### Evaluation of wind power prediction based on 10-fold cross validation.
+
+# Partition the given dataset into 10 folds.
+index &lt;- sample(1:nrow(windpw), nrow(windpw))
+n.fold &lt;- round(nrow(windpw) / 10)
+ls.fold &lt;- rep(list(c()), 10)
+for(fold in 1:9) {
+  ls.fold[[fold]] &lt;- index[((fold-1)*n.fold+1):(fold*n.fold)]
+}
+ls.fold[[10]] &lt;- index[(9*n.fold+1):nrow(windpw)]
+
+# Predict wind power output.
+pred.res &lt;- rep(list(c()), 10)
+id.cov &lt;- c('V', 'D', 'rho', 'I', 'Sb')
+for(k in 1:10) {
+  id.fold &lt;- ls.fold[[k]]
+  df.tr &lt;- windpw[-id.fold, ]
+  df.ts &lt;- windpw[id.fold, ]
+  pred &lt;- kp.pwcurv(df.tr$y, df.tr[, id.cov], df.ts[, id.cov], id.dir = 2)
+  pred.res[[k]] &lt;- list(obs = df.ts$y, pred)
+}
+
+# Calculate rmse and its mean and standard deviation.
+rmse &lt;- sapply(pred.res, function(res) with(res, sqrt(mean((obs - pred)^2))))
+mean(rmse)
+sd(rmse)
+</code></pre>
+
+
+</div>

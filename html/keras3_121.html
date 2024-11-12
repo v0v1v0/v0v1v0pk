@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>custom_metric</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Custom metric function</h2>
+
+<h3>Description</h3>
+
+<p>Custom metric function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">custom_metric(name, metric_fn)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>name used to show training progress output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>metric_fn</code></td>
+<td>
+<p>An R function with signature <code style="white-space: pre;">⁠function(y_true, y_pred)⁠</code>
+that accepts tensors.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>You can provide an arbitrary R function as a custom metric. Note that
+the <code>y_true</code> and <code>y_pred</code> parameters are tensors, so computations on
+them should use <code style="white-space: pre;">⁠op_*⁠</code> tensor functions.
+</p>
+<p>Use the <code>custom_metric()</code> function to define a custom metric.
+Note that a name (<code>'mean_pred'</code>) is provided for the custom metric
+function: this name is used within training progress output.
+</p>
+<p>If you want to save and load a model with custom metrics, you should
+also call <code>register_keras_serializable()</code>, or
+specify the metric in the call the <code>load_model()</code>. For example:
+<code>load_model("my_model.keras", c('mean_pred' = metric_mean_pred))</code>.
+</p>
+<p>Alternatively, you can wrap all of your code in a call to
+<code>with_custom_object_scope()</code> which will allow you to refer to the
+metric by name just like you do with built in keras metrics.
+</p>
+<p>Alternative ways of supplying custom metrics:
+</p>
+
+<ul>
+<li> <p><code style="white-space: pre;">⁠custom_metric():⁠</code> Arbitrary R function.
+</p>
+</li>
+<li> <p><code>metric_mean_wrapper()</code>: Wrap an arbitrary R function in a <code>Metric</code> instance.
+</p>
+</li>
+<li>
+<p> Create a custom <code>Metric()</code> subclass.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A callable function with a <code style="white-space: pre;">⁠__name__⁠</code> attribute.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other metrics: <br><code>Metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_fbeta_score()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

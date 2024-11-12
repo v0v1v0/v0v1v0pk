@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>decrypt_dpapi_pw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decrypt passwords encrypted with  the Microsoft Data Protection API</h2>
+
+<h3>Description</h3>
+
+<p>Decrypt passwords encrypted with  the Microsoft Data Protection API
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">decrypt_dpapi_pw(file)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>File that holds a password encrypted using DPAPI</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Requires Powershell to be installed and execution policy set to RemoteSigned.
+This can be achieved by running
+<code>
+Set-ExecutionPolicy RemoteSigned
+</code>
+from Powershell.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An decrypted password as an invisible string.  Invisible means that
+the password won't be displayed in the console, but can be assigned to a
+variable or used inline.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# First run the command below from Powershell:
+# Read-Host "PW?" -AsSecureString |  ConvertFrom-SecureString | Out-File "C:\Temp\Password.txt"
+# Now execute the following R commands to decrypt the password and save it in
+# variable "x".  Note that if run without assignment, the password will not
+# be displayed in the console.  Passwords must be saved to a variable or used
+# inline within a connection string.
+library("keyringr")
+x &lt;- decrypt_dpapi_pw("C:\\Temp\\Password.txt")
+
+# function is best used in a connection string command:
+ch &lt;- odbcConnect("some dsn", uid = "user1", pwd = decrypt_dpapi_pw("C:\\Temp\\Password.txt"))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

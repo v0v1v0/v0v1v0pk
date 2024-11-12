@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>frml.additive.smooth</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Formula for GAM without crossterms</h2>
+
+<h3>Description</h3>
+
+<p>Creates a formula for gam to be used in regrXonS. For data <code class="reqn">X=(X_1,...X_n,X_{n+1},...,X_m)</code>, variable to be regressed <code class="reqn">X_{i}</code>, i=1...n and variables to regress on <code class="reqn">S={X_{n+1},...,X_m}</code> creates formula <code class="reqn">X_i \sim s(X_{n+1}) + ... + s(X_m)</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">frml.additive.smooth(target.ind, pred.inds, var.str = "x")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>target.ind</code></td>
+<td>
+<p>integer, number for the variable to be regressed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.inds</code></td>
+<td>
+<p>integer(s), number(s) for the variable(s) on which we regress</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.str</code></td>
+<td>
+<p>name of variables used to create formula, default is "x"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>formula.additive.smooth() returns a formula <code class="reqn">X_i \sim s(X_{n+1}) + ... + s(X_m)</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Petras Verbyla (<a href="mailto:petras.verbyla@mrc-bsu.cam.ac.uk">petras.verbyla@mrc-bsu.cam.ac.uk</a>)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>regrXonS
+</p>
+
+
+</div>

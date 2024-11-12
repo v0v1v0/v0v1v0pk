@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_geno,character-method</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>read genotype data from file to one of several available objects, which 
+can be passed to a GWASdata object <code>GWASdata</code>.</h2>
+
+<h3>Description</h3>
+
+<p>read genotype data from file to one of several available objects, which 
+can be passed to a GWASdata object <code>GWASdata</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'character'
+read_geno(
+  file.path,
+  save.path = NULL,
+  sep = " ",
+  header = TRUE,
+  use.fread = TRUE,
+  use.big = FALSE,
+  row.names = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file.path</code></td>
+<td>
+<p><code>character</code> giving the path to the data file to be read</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save.path</code></td>
+<td>
+<p><code>character</code> containing the path for the backingfile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p><code>character</code>. A field delimeter. See 
+<code>read.big.matrix</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>header</code></td>
+<td>
+<p><code>logical</code>. Does the data set contain column names?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use.fread</code></td>
+<td>
+<p><code>logical</code>. Should the dataset be read using the function 
+<code>fread</code> <code>fread</code> from package <span class="pkg">data.table</span>?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use.big</code></td>
+<td>
+<p><code>logical</code>. Should the dataset be read using the function 
+<code>read.big.matrix</code> from package <span class="pkg">bigmemory</span>?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row.names</code></td>
+<td>
+<p><code>logical</code>. Does the dataset include rownames?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to <code>read_geno</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the data set contains rownames specified, set option <code>has.row.names = TRUE</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+path &lt;- system.file("extdata", "geno.txt", package = "kangar00")
+geno &lt;- read_geno(path, save.path = getwd(), sep = " ", use.fread = FALSE, row.names = FALSE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

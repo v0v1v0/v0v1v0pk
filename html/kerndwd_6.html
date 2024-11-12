@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>BUPA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>BUPA's liver disorders data</h2>
+
+<h3>Description</h3>
+
+<p>BUPA's liver disorders data: 345 male individuals' blood test result and liver disorder status. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(BUPA)
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>This data set consists of 345 observations and 6 predictors representing the blood test result liver disorder status of 345 patients. The three predictors are mean corpuscular volume (MCV), alkaline phosphotase (ALKPHOS), alamine aminotransferase (SGPT), aspartate aminotransferase (SGOT), gamma-glutamyl transpeptidase (GAMMAGT), and the number of alcoholic beverage drinks per day (DRINKS). 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A numerical matrix for predictors: 345 rows and 6 columns; each row corresponds to a patient.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A numeric vector of length 305 representing the liver disorder status.</p>
+</td>
+</tr>
+</table>
+<h3>Source</h3>
+
+<p>The data set is available for download from UCI machine learning repository. <br></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># load data set
+data(BUPA)
+
+# the number of samples predictors
+dim(BUPA$X)
+
+# the number of samples for each class
+sum(BUPA$y == -1) 
+sum(BUPA$y == 1)
+</code></pre>
+
+
+</div>

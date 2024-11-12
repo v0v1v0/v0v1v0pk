@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fillMissingValues</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fill missing values</h2>
+
+<h3>Description</h3>
+
+<p>Fill missing values
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fillMissingValues(ids, df, maxgap = 12, parallel = FALSE,
+  formatDT = "%Y-%m-%d %H:%M")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>site identification codes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>dataframe containing the timeseries in columns separated by ID (header must follow this convention: column 1 = "datetime", column 2 = "SiteID", column 3 = "variable name"). df can be the result of GetDataFromECMWF().</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxgap</code></td>
+<td>
+<p>maximum gap to interpolate (e.g. 6 hours)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>Bolean, if TRUE parallel jobs are allowed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formatDT</code></td>
+<td>
+<p>format of the datetime variable</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>updated df with infilled values
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># fillMissingValues(clima)
+
+</code></pre>
+
+
+</div>

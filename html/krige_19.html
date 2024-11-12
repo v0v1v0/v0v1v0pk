@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geweke</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Geweke Diagnostic for MCMC</h2>
+
+<h3>Description</h3>
+
+<p>Conducts a Geweke convergence diagnostic on MCMC iterations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">geweke(object, early.prop = 0.1, late.prop = 0.5, precision = 4)
+
+## S3 method for class 'krige'
+geweke(object, early.prop = 0.1, late.prop = 0.5, precision = 4)
+
+## S3 method for class 'summary.krige'
+geweke(object, early.prop = 0.1, late.prop = 0.5, precision = 4)
+
+## Default S3 method:
+geweke(object, early.prop = 0.1, late.prop = 0.5, precision = 4)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An matrix or <code>krige</code>/<code>summary.krige</code> object for which 
+a Geweke diagnostic is desired</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>early.prop</code></td>
+<td>
+<p>Proportion of iterations to use from the start of the chain.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>late.prop</code></td>
+<td>
+<p>Proportion of iterations to use from the end of the chain.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precision</code></td>
+<td>
+<p>Number of digits of test statistics and p-values to print.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a generic function currently works with <code>matrix</code>, <code>krige</code>, 
+and <code>summary.krige</code> objects. It is a simplified version of the Geweke 
+test for use with this package.
+</p>
+<p>Geweke's (1992) test for nonconvergence of a MCMC chain is to conduct a 
+difference-of-means test that compares the mean early in the chain to the mean 
+late in the chain. If the means are significantly different from each other, 
+then this is evidence that the chain has not converged. The difference-of-means 
+test is a simple z-ratio, though the standard error is estimated using the 
+spectral density at zero to account for autocorrelation in the chain.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>matrix</code> in which the first row consists of z-scores for tests 
+of equal means for the first and last parts of the chain. The second row 
+consists of the corresponding p-values. Each column of the matrix represents 
+another parameter. For each column, a significant result is evidence that the 
+chain has not converged for that parameter. Thus, a non-significant result 
+is desired.
+</p>
+
+
+<h3>References</h3>
+
+<p>John Geweke. 1992. "Evaluating the Accuracy of Sampling-Based Approaches to 
+the Calculation of Posterior Moments." In <em>Bayesian Statistics 4</em>, ed. 
+J.M. Bernardo, J.O. Berger, A.P. Dawid, and A.F.M. Smith. Oxford: Clarendon 
+Press.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>geweke.krige</code>, <code>geweke.summary.krige</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Load Data
+data(ContrivedData)
+
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+  data = ContrivedData, n.iter = M, range.tol = 0.05)
+
+geweke(contrived.run, early.prop=0.5)
+geweke(summary(contrived.run), early.prop=0.5)
+geweke(contrived.run$mcmc.mat, early.prop=0.5)
+# Note that the default proportions in the geweke() is more typical for longer run.
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

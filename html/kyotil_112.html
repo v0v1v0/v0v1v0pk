@@ -1,0 +1,168 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stat.functions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Stat Functions
+</h2>
+
+<h3>Description</h3>
+
+<p>H calculates entropy. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+H(p, logbase = c("e", "2"))
+
+mutual.info(two.way.table, logbase = c("e", "2"))
+
+cor.mixed(x, ...)
+
+## Default S3 method:
+ cor.mixed(x, na.fun, method=c("pearson","spearman"), ...)
+## S3 method for class 'vector'
+ cor.mixed(x, y, na.fun, method=c("pearson","spearman"), ...) 
+## S3 method for class 'formula'
+ cor.mixed(formula, data, na.fun, method=c("pearson","spearman"), ...) 
+
+skew (x, na.rm = FALSE) 
+
+info.cor(two.way.table)
+
+yule.y(two.by.two.matrix)
+
+kappacor(two.by.two.matrix, weight = c(1, 1), maximum = FALSE)
+
+l.measure(two.by.two.matrix)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+
+<p>either a count vector or a probability vector, but can not be a vector of membership indicator
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logbase</code></td>
+<td>
+
+<p>tbdlogbase
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+
+<p>tbdlogbase
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>two.way.table</code></td>
+<td>
+
+<p>tbdtwo.way.table
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>tbdx
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>tbd...
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.fun</code></td>
+<td>
+
+<p>tbdna.fun
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+
+<p>tbdmethod
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+
+<p>tbdy
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>tbdformula
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>tbddata
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>two.by.two.matrix</code></td>
+<td>
+
+<p>tbdtwo.by.two.matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+
+<p>tbdweight
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maximum</code></td>
+<td>
+
+<p>tbdmaximum
+</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">H(rep(1/5,5))
+H(rep(3,5))
+</code></pre>
+
+
+</div>

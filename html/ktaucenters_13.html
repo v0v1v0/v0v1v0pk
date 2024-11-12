@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>robinden</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Robust Initialization based on Inverse Density estimator (ROBINDEN)</h2>
+
+<h3>Description</h3>
+
+<p>Searches for k initial cluster seeds for k-means based clustering methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">robinden(D, n_clusters, mp)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>a distance matrix, which contains the distances between the rows of
+a matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_clusters</code></td>
+<td>
+<p>number of cluster centers to find.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mp</code></td>
+<td>
+<p>number of nearest neighbors to compute point density.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The centers are the observations located in the most dense region
+and far away from each other at the same time.
+In order to find the observations in the highly dense region, this function
+uses point density estimation (instead of Local Outlier Factor, Breunig et
+al (2000)), see more details.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>centers</code></td>
+<td>
+<p>: A numeric vector with the initial cluster centers
+indices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idpoints</code></td>
+<td>
+<p>: A real vector containing the inverse of point
+density estimation.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>This is a slightly modified version of ROBIN algorithm
+implementation done by Sarka Brodinova &lt;sarka.brodinova@tuwien.ac.at&gt;.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Juan Domingo Gonzalez &lt;juanrst@hotmail.com&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Hasan AM, et al. Robust partitional clustering by
+outlier and density insensitive seeding. Pattern Recognition Letters,
+30(11), 994-1002, 2009.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate synthetic data (7 cluster well separated)
+K &lt;- 5
+nk &lt;- 100
+Z &lt;- rnorm(2 * K * nk)
+mues &lt;- rep(5 * -floor(K/2):floor(K/2), 2 * nk * K)
+X &lt;-  matrix(Z + mues, ncol = 2)
+
+# Generate synthetic outliers (contamination level 20%)
+X[sample(1:(nk * K), (nk * K) * 0.2), ] &lt;-
+  matrix(runif((nk * K) * 0.2 * 2, 3 * min(X), 3 * max(X)),
+         ncol = 2,
+         nrow = (nk * K)* 0.2)
+res &lt;- robinden(D = as.matrix(dist(X)), n_clusters = K, mp = 10);
+# plot the Initial centers found
+plot(X)
+points(X[res$centers, ], pch = 19, col = 4, cex = 2)
+
+</code></pre>
+
+
+</div>

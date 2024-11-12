@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KinPairSimulation_custom</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Constructor for KinPairSimulation Class (custom)</h2>
+
+<h3>Description</h3>
+
+<p>Constructor for KinPairSimulation Class (custom)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KinPairSimulation_custom(
+  data = NULL,
+  kinship = NULL,
+  kerneltype = NULL,
+  customsigma = NULL,
+  simdims = NULL,
+  lifestage = NULL,
+  kernelshape = NULL,
+  cycle = NULL,
+  call = NULL,
+  model = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>tibble of pairwise kin classes &amp; distances. Ideally contains fields id1 &amp; id2 (chr) an distance (dbl) optionally includes coords (x1, y1, x2, y2), lifestage (ls1 &amp; ls2), kinship (chr) and sims (dbl)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>character. Code for kinship category of simulation. one of PO, FS, HS, AV, GG, HAV, GGG, 1C, 1C1, 2C, GAV, HGAV, H1C or H2C</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kerneltype</code></td>
+<td>
+<p>character. Statistical model for simulated dispersal kernel. Currently either "Gaussian", "Laplace" or "vgamma" (variance-gamma).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>customsigma</code></td>
+<td>
+<p>numeric. Named vector of custom breeding cycle stages and their corresponding axial dispersal values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simdims</code></td>
+<td>
+<p>numeric. Length of side of simulated area square.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lifestage</code></td>
+<td>
+<p>character. Simulated lifestage of sampling. Here, must correspond to a custom lifestage derived from 'customsigma'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernelshape</code></td>
+<td>
+<p>numeric. Value of shape parameter for simulated kernel if kernel requires one (e.g. vgamma kernel).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cycle</code></td>
+<td>
+<p>non-negative integer. Breeding cycle numbers of dispersed kin to be modeled.  Represents
+the number of complete breeding cycles each simulated individual has undergone before the sampling point, where the time between
+birth and first reproduction is coded as '0', that between first and second reproduction '1', etc. (default 0)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>call object. Use to pass the system call that led to the generation of this class. (via sys.call)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>DispersalModel - model information passed from simulation function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a <code>KinPairSimulation</code> Class object with simtype set to 'custom' and relevant fields included.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kindata &lt;- tibble::tibble(
+  id1 = c("a", "b", "c"), id2 = c("x", "y", "z"),
+  distance = c(50, 45, 65), kinship = c("1C", "1C", "1C")
+)
+KinPairSimulation_custom(kindata,
+  kinship = "1C", kerneltype = "Gaussian",
+  customsigma = c(initsigma = 15, breedsigma = 25, gravsigma = 20, ovisigma = 10),
+  lifestage = "ovisigma", cycle = 0
+)
+</code></pre>
+
+
+</div>

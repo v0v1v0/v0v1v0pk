@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>m2Set</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Detecting equal columns in multi-index partitions</h2>
+
+<h3>Description</h3>
+
+<p>The function returns the vectors (only counted once) of all the multi-index 
+partitions output of the <code>mkmSet</code> function. These vectors correspond also to the blocks 
+of the subdivisions of the multiset having the given multi-index as multeplicites.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">m2Set( v=c(0) ) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>sequence of type <code>[[e1,e2,...], m1], [[f1,f2,...], m2],...</code> with 
+<code>m1, m2,...</code> multiplicities</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Consider the multi-index (2,1). The partitions are<br><code style="white-space: pre;">⁠
+0 1 1      0 2      1 1     2
+1 0 0      1 0      0 1     1⁠</code>
+<br><br>
+with multiplicities 1, 1, 2, 1 respectively. The <code>m2Set</code> function 
+deletes column repetitions, that is transforms the given list in 
+<code>[[0,1],[1,0],[2,0],[1,1],[2,1]]</code> 
+according to the order given in the input. In terms of subdivisions, suppose to consider 
+the multiset <code>[a,a,b]</code> with multiplicities (2,1). The subdivisions are  
+</p>
+
+<table><tr>
+<td style="text-align: center;"><code>[[[b],[a],[a]],1], [[[a,a],[b]],1], [[[a],[a,b]],2], [[a,a,b],1].</code></td>
+</tr></table>
+<p>The <code>m2Set</code> function deletes block repetitions, that is transforms the given list 
+in 
+</p>
+
+<table><tr>
+<td style="text-align: center;"><code>[[b],[a],[a,a],[a,b],[a,a,b]]</code></td>
+</tr></table>
+<p>according to the order given in the input. See also the examples.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>set</code></td>
+<td>
+<p>the sequence with distinct elements</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>Called by the <code>nKM</code> and <code>nPM</code> functions in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>list2m</code>,
+<code>list2Set</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+M1 &lt;- mkmSet(c(2,1))
+# M1 is  
+#  list(   
+#       list( list(  c(0,1), c(1,0), c(1,0) )  ,1),
+#       list( list(  c(0,1), c(2,0)         )  ,1), 
+#       list( list(  c(1,0), c(1,1)         )  ,2),            
+#       list( list(  c(2,1)                 )  ,1),    
+#      )
+# To print all the partitions of the multi-index (2,1) run mkmSet(c(2,1),TRUE)
+#   [( 0 1 )( 1 0 )( 1 0 ),  1 ]
+#   [( 0 1 )( 2 0 ),  1 ]
+#   [( 1 0 )( 1 1 ),  2 ] 
+#   [( 2 1 ),  1 ]
+#
+# Then m2Set(M1) returns the following set:  [[0,1],[1,0],[2,0],[1,1],[2,1]]
+# 
+m2Set( M1 )
+
+</code></pre>
+
+
+</div>

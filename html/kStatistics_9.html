@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GCBellPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generalized Complete Bell Polynomial</h2>
+
+<h3>Description</h3>
+
+<p>The function generates a generalized complete Bell polynomial, that is a coefficient 
+of the composition <code>exp(y[1] g1(z1,...,zm) + ... + y[n] gn(z1,...,zm))</code>, where <code>y[1],...,y[n]</code> are 
+variables. The input vector of integers identifies the subscript of the polynomial.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GCBellPol(nv = c(), m = 1, b = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>nv</code></td>
+<td>
+<p>vector of integers, the subscript of the polynomial, corresponding to the powers of the product
+among <code>z1, z2, ..., zm</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>integer, the number of <code>z</code>'s variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>boolean, <code>TRUE</code> if the inner formal power series <code>"g"</code> are all equal</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The multivariate Faa di Bruno's formula, output of the <code>MFB</code> function, gives 
+a coefficient of the multivariate exponential power series obtained from the composition of 
+the multivariate exponential power series <code>f(x1,...,xn)</code> with <code>xi=gi(z1,...,zm)</code> for each 
+<code>i</code> from <code>1</code> to <code>n</code>. Now, set <code>f(y[1],...,y[n];x1,...,xn)=exp(y[1] x1 + ... + y[n] xn)</code>.
+In such a case, the coefficients are the generalized complete Bell polynomials, 
+see the referred papers. In particular, the <code>GCBellPol</code> function  gives 
+the expression of these polynomials when <code>n=1</code> or when <code>n&gt;1</code> and <code>g1=...=gn=g</code> or when 
+<code>n&gt;1</code> and  <code>g1, ..., gn</code> are all different. See the <code>e_GCBellPol</code> function for 
+evaluating this polynomial when its variables <code>y[1], ..., y[n]</code> or/and its coefficients are substituted
+with numerical values.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>string</code></td>
+<td>
+<p>the expression of the polynomial</p>
+</td>
+</tr></table>
+<h3>Warning</h3>
+
+<p>The value of the first parameter is the same as the <code>mkmSet</code> 
+function.</p>
+
+
+<h3>Note</h3>
+
+<p>This function calls the <code>MFB</code> function in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>G. M. Constantine, T. H. Savits  (1996) A Multivariate Faa Di Bruno Formula With 
+Applications. Trans. Amer. Math. Soc. 348(2), 503–520.
+</p>
+<p>E. Di Nardo (2016) On multivariable cumulant polynomial sequence with applications. Jour. 
+Algebraic Statistics 7(1), 72-89.  (download from <a href="https://arxiv.org/abs/1606.01004">https://arxiv.org/abs/1606.01004</a>)
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2011) A new algorithm for computing the multivariate Faa di Bruno's formula. 
+Appl. Math. Comp. 217, 6286–6295. (download from <a href="https://arxiv.org/abs/1012.6008">https://arxiv.org/abs/1012.6008</a>)
+</p>
+<p>E. Di Nardo, M. Marena, P. Semeraro (2020) On non-linear dependence of multivariate subordinated Levy processes.
+In press Stat. Prob. Letters (download from <a href="https://arxiv.org/abs/2004.03933">https://arxiv.org/abs/2004.03933</a>) 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mkmSet</code>,
+<code>MFB</code>,
+<code>e_GCBellPol</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Return the generalized complete Bell Polynomial for n=1, m=1 and g1=g, 
+# that is (y^2)g[1]^2 + (y)g[2]
+#
+GCBellPol( c(2),1 )
+
+# Return the generalized complete Bell Polynomial for n=1, m=2 and g1=g, 
+# 2(y^2)g[1,0]g[1,1] + (y^3)g[0,1]g[1,0]^2 + (y)g[2,1] + (y^2)g[0,1]g[2,0]
+#
+GCBellPol( c(2,1),1 )
+
+# Return the generalized complete Bell Polynomial for n=2, m=2 and g1=g2=g, 
+# (y1)g[1,1] + (y1^2)g[0,1]g[1,0] + (y2)g[1,1] + (y2^2)g[0,1]g[1,0] + 2(y1)(y2)g[0,1]g[1,0]
+#
+GCBellPol( c(1,1),2, TRUE )
+
+# Return the generalized complete Bell Polynomial for n=2, m=2 and g1 different from g2, 
+# that is (y1)g1[1,1] + (y1^2)g1[1,0]g1[0,1] + (y2)g2[1,1] + (y2^2)g2[1,0]g2[0,1] + 
+# (y1)(y2)g1[1,0]g2[0,1] + (y1)(y2)g1[0,1]g2[1,0]
+#
+GCBellPol( c(1,1),2 )
+
+</code></pre>
+
+
+</div>

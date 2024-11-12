@@ -1,0 +1,110 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generic_smoother</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>generic_smoother</h2>
+
+<h3>Description</h3>
+
+<p>Generic smoother for all models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generic_smoother(mt, Ct, at, Rt, G, G.labs)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mt</code></td>
+<td>
+<p>matrix: A matrix containing the filtered mean of the latent states at each time. Each row should represent one variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ct</code></td>
+<td>
+<p>array: A 3D-array representing the filtered covariance matrix of the latent states at each time. The third dimension should represent the time index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>at</code></td>
+<td>
+<p>matrix: A matrix containing the one-step-ahead mean of the latent states at each time based upon the filtered mean. Each row should represent one variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rt</code></td>
+<td>
+<p>array: A 3D-array representing the one-step-ahead covariance matrix of the latent states at each time based upon the filtered covariance matrix. The third dimension should represent the time index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>array: A 3D-array representing the transition matrix of the model at each time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G.labs</code></td>
+<td>
+<p>matrix: A character matrix containing the type associated with each value in G.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For the models covered in this package, we always assume that the latent states have Multivariate Normal distribution. With that assumption, we can use Kalman Smoother algorithm to calculate the posterior of the states at each time, given everything that has been observed (assuming that we already know the filtered distribution of the states).
+</p>
+<p>For the details about the implementation see dos Santos et al. (2024).
+</p>
+<p>For the details about the algorithm implemented see Alves et al. (2024), Petris et al. (2009), chapter 2, West and Harrison (1997), chapter 4, and Kalman (1960).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing the smoothed mean (mts) and covariance (Cts) of the latent states at each time. Their dimension follows, respectively, the dimensions of mt and Ct.
+</p>
+
+
+<h3>References</h3>
+
+<p>Mariane
+Branco Alves, Helio
+S. Migon, Raíra Marotta, Junior,
+Silvaneo
+Vieira dos Santos (2024).
+“k-parametric Dynamic Generalized Linear Models: a sequential approach via Information Geometry.”
+2201.05387.<br><br> Rudolph
+Emil Kalman (1960).
+“A New Approach to Linear Filtering and Prediction Problems.”
+<em>Transactions of the ASME–Journal of Basic Engineering</em>, <b>82</b>(Series D), 35–45.<br><br> Giovanni Petris, Sonia Petrone, Patrizia Campagnoli (2009).
+<em>Dynamic Linear Models with R</em>,  useR!
+Springer-Verlag, New York.<br><br> Mike West, Jeff Harrison (1997).
+<em>Bayesian Forecasting and Dynamic Models (Springer Series in Statistics)</em>.
+Springer-Verlag.
+ISBN 0387947256.<br><br> Junior,
+Silvaneo
+Vieira dos Santos, Mariane
+Branco Alves, Helio
+S. Migon (2024).
+“kDGLM: an R package for Bayesian analysis of Dynamic Generialized Linear Models.”
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fit_model</code>
+</p>
+<p><code>analytic_filter</code>
+</p>
+
+
+</div>

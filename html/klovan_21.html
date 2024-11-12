@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>manage_outliers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Outlier Management</h2>
+
+<h3>Description</h3>
+
+<p>This function appends a new column to the input data, marking potential outliers.
+Once identified, these outliers can either be removed or imputed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">manage_outliers(data, property)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset of class data.frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>property</code></td>
+<td>
+<p>A string representing the property on which the range transformation is based.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The input dataset, supplemented with a new Boolean column. TRUE signifies a high likelihood of an outlier, while FALSE signifies a low likelihood.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("Klovan_2D_all_outlier")
+manage_outliers(Klovan_2D_all_outlier, "P_Mg")
+
+</code></pre>
+
+
+</div>

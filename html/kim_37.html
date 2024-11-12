@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>detach_user_installed_pkgs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Detach all user-installed packages</h2>
+
+<h3>Description</h3>
+
+<p>Detach all user-installed packages
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">detach_user_installed_pkgs(exceptions = NULL, force = FALSE, keep_kim = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>exceptions</code></td>
+<td>
+<p>a character vector of names of packages to keep attached</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>logical. Should a package be detached even though other
+attached packages depend on it? By default, <code>force = FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_kim</code></td>
+<td>
+<p>logical. If <code>keep_kim = FALSE</code>, Package 'kim'
+will be detached along with all other user-installed packages.
+If <code>keep_kim = TRUE</code>, Package 'kim' will not be detached.
+By default, <code>keep_kim = FALSE</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+detach_user_installed_pkgs()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

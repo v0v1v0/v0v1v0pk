@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scorefunctiongmm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Score function for given GMM : calculates score function dlogp(x)/dx
+for a given Gaussian Mixture Model</h2>
+
+<h3>Description</h3>
+
+<p>Score function for given GMM : calculates score function dlogp(x)/dx
+for a given Gaussian Mixture Model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scorefunctiongmm(model = NULL, X = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>: The Gaussian Mixture Model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>(n by d): The dataset of interest,
+where n is the number of samples and d is the dimension</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>y : The score computed by the given function
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute score for a given gaussianmixture model and dataset
+model &lt;- gmm()
+X &lt;- rgmm(model)
+score &lt;- scorefunctiongmm(model=model, X=X)
+</code></pre>
+
+
+</div>

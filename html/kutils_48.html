@@ -1,0 +1,177 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>natlongsurv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smoking, Happiness, and other survey responses</h2>
+
+<h3>Description</h3>
+
+<p>An idiosyncratic selection of 29 variables from the Original
+Cohort-Young Women 1968-2003 edition of the US National
+Longitudinal Survey.  This originally included 5159 rows, but
+subset includes only 2867 rows, so sample frequencies will not
+match the values listed in the codebook.  A snapshot of the
+codebook, "natlongsurv.cdb.txt", which we have trimmed down, is
+included in the package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(natlongsurv)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 2867 rows and 29 variables:
+</p>
+
+<ul>
+<li>
+<p>	R0000100	IDENTIFICATION CODE
+</p>
+</li>
+<li>
+<p>	R0003300	MARITAL STATUS, 1968
+</p>
+</li>
+<li>
+<p>	R0005700	AGE WHEN STOPPED ATTENDING SCHOOL, 1968
+</p>
+</li>
+<li>
+<p>	R0060300	IQ SCORE, 1968
+</p>
+</li>
+<li>
+<p>	R1051600	HIGHEST GRADE COMPLETED
+</p>
+</li>
+<li>
+<p>	R1302000	SMOKING - DOES R SMOKE, 1991
+</p>
+</li>
+<li>
+<p>	R1302100	SMOKING - NUMBER OF CIGARETTES R SMOKES PER DAY, 91 (PRESENT SMOKER)
+</p>
+</li>
+<li>
+<p>	R6235600	HIGHEST GRADE COMPLETED
+</p>
+</li>
+<li>
+<p>	R6502300	IS RESIDENCE/LIVING QUARTERS HOME/APARTMENT/OTHER?
+</p>
+</li>
+<li>
+<p>	R6513700	HOUSEHOLD RECORD - HOUSEHOLD MEMBER - AGE CALCULATED FROM BIRTH DATE
+</p>
+</li>
+<li>
+<p>	R6516200	CURRENT MARITAL STATUS
+</p>
+</li>
+<li>
+<p>	R6520300	HIGHEST GRADE COMPLETED OF HUSBAND
+</p>
+</li>
+<li>
+<p>	R6553600	HIGHEST GRADE COMPLETED OF PARTNER
+</p>
+</li>
+<li>
+<p>	R7289200	SMOKING - CURRENTLY SMOKE CIGARETTES
+</p>
+</li>
+<li>
+<p>	R7289400	ALCOHOL USE - HAS R CONSUMED ANY ALCOHOLIC BEVERAGES IN PAST MONTH?
+</p>
+</li>
+<li>
+<p>	R7293430	YOUNG WOMEN 20-ITEM CES-D ITEM RESPONSE SCORE
+</p>
+</li>
+<li>
+<p>	R7312300	INCOME FROM WAGES/SALARY IN PAST YEAR
+</p>
+</li>
+<li>
+<p>	R7329900	INCOME ADEQUACY: R OPINION OF HER HAPPINESS WITH HER/FAMILY INCOME
+</p>
+</li>
+<li>
+<p>	R7330000	INCOME ADEQUACY: R OPINION OF AMOUNT NEEDED TO MAKE ENDS MEET $ AMOUNT
+</p>
+</li>
+<li>
+<p>	R7337600	R HAS ATTENDED/COMPLETED TWO/MORE YEARS OF COLLEGE
+</p>
+</li>
+<li>
+<p>	R7344600	ATTITUDE TOWARD FEELINGS OVERALL
+</p>
+</li>
+<li>
+<p>	R7344700	DID R DO ANY UNPAID VOLUNTEER WORK IN PAST YEAR?
+</p>
+</li>
+<li>
+<p>	R7347500	ATTITUDE TOWARD SOCIAL SECURITY - PERCENT WOULD INVEST IN STOCKS? 2004
+</p>
+</li>
+<li>
+<p>	R7347600	ATTITUDE TOWARD SOCIAL SECURITY - PERCENT WOULD INVEST IN BONDS OF PRIVATE COMPANIES? 2004
+</p>
+</li>
+<li>
+<p>	R7347700	ATTITUDE TOWARD SOCIAL SECURITY - PERCENT WOULD INVEST IN U.S. GOVERNMENT BONDS? 2004
+</p>
+</li>
+<li>
+<p>	R7477700	TOTAL CHILDREN IN ROSTER
+</p>
+</li>
+<li>
+<p>	R7477800	COUNT ELIGIBLE HOUSEHOLD CHILDREN
+</p>
+</li>
+<li>
+<p>	R7610300	REGION OF RESIDENCE
+</p>
+</li>
+</ul>
+<h3>Details</h3>
+
+<p>All variables are for the 2003 year, except where otherwise noted.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Source</h3>
+
+<p>National Longitudinal Surveys public-use data set (Bureau of Labor Statistics, 2018).
+</p>
+
+
+<h3>References</h3>
+
+<p>Bureau of Labor Statistics. 2018.  NLS Original Cohort: Mature and Young Women, US National Longitudinal Surveys Public Use Data Sets (www.bls.gov/nls/home.htm).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(natlongsurv)
+peek(natlongsurv, ask = FALSE, file = paste0(tempdir(), "/","peek.pdf"))
+</code></pre>
+
+
+</div>

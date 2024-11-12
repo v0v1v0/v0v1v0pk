@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lasso_max_lambda</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Maximum lambda in lasso model</h2>
+
+<h3>Description</h3>
+
+<p>Computes the earliest (largest) lambda's for which predictors enter the
+lasso model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lasso_max_lambda(X, y, method = c("glmnet", "lars"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>matrix of predictors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>response vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>either 'glmnet' or 'lars'</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>vector of maximum lambda's
+</p>
+
+
+</div>

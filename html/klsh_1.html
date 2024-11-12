@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bag_of_word_ify</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to convert a record into a bag of tokens with a fieldwise flag</h2>
+
+<h3>Description</h3>
+
+<p>Function to convert a record into a bag of tokens with a fieldwise flag
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bag_of_word_ify(record, k, fieldwise = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>record</code></td>
+<td>
+<p>String or record</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Parameter k, which is the number of shingle, tokens, or grams to break the string into</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fieldwise</code></td>
+<td>
+<p>Flag where the defalt setting to include the record as the entire string</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Computes the bag of tokens for a string
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(RLdata500)
+data.500 &lt;- RLdata500[-c(2,4)]
+bag_of_word_ify(data.500[1,c(-2)],k=2)
+bag_of_word_ify(data.500[300,c(-2)],k=2)
+names(bag_of_word_ify(data.500[300,c(-2)],k=2))
+</code></pre>
+
+
+</div>

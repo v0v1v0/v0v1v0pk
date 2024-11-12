@@ -1,0 +1,230 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print_uncertainty_nd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Print a measure of uncertainty for functions with dimension d strictly larger than 2.
+</h2>
+
+<h3>Description</h3>
+
+<p>This function draws projections on various plans of a given measure of uncertainty. 
+The function can be used to print relevant outputs after having used the function <code>EGI</code> or <code>EGIparallel</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">print_uncertainty_nd(model,T,type="pn",lower=NULL,upper=NULL,
+  		resolution=20, nintegpoints=400,
+  		cex.lab=1,cex.contourlab=1,cex.axis=1,
+			nlevels=10,levels=NULL,
+			xdecal=3,ydecal=3, option="mean", pairs=NULL,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Array containing one or several thresholds.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Type of uncertainty that the user wants to print. 
+Possible values are <code>"pn"</code> (probability of excursion), or 
+<code>"sur"</code>, <code>"imse"</code>, <code>"timse"</code> if we print a measure of uncertainty corresponding to one criterion. 
+The <code>"vorob"</code> option is not available due to the difficulty of computing a Vorob'ev threshold.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+
+<p>Vector containing the lower bounds of the input domain. If nothing is set we use a vector of 0.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+
+<p>Vector containing the upper bounds of the input domain. If nothing is set we use a vector of 1.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resolution</code></td>
+<td>
+
+<p>Number of points to discretize a plan included in the domain. For the moment, we cannot use values higher than 40 do to 
+computation time, except when the argument <code>"pairs"</code> is not set to its default value.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nintegpoints</code></td>
+<td>
+
+<p>to do
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.lab</code></td>
+<td>
+
+<p>Multiplicative factor for the size of titles of the axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.contourlab</code></td>
+<td>
+
+<p>Multiplicative factor for the size of labels of the contour plot.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis</code></td>
+<td>
+
+<p>Multiplicative factor for the size of the axis graduations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nlevels</code></td>
+<td>
+
+<p>Integer corresponding to the number of levels of the contour plot.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>levels</code></td>
+<td>
+
+<p>Array: one can directly set the levels of the contour plot.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xdecal</code></td>
+<td>
+
+<p>Optional position shifting of the titles of the x axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ydecal</code></td>
+<td>
+
+<p>Optional position shifting of the titles of the y axis.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>option</code></td>
+<td>
+
+<p>Optional argument (a string). The 3 possible values are <code>"mean"</code> (default), <code>"max"</code> and <code>"min"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pairs</code></td>
+<td>
+
+<p>Optional argument. When set to codeNULL (default) the function performs the projections on plans spanned by each pair (i,j) of dimension. Otherwise, the argument is an array of size 2 corresponding to the dimensions spanning the (only) plan on which the projection is performed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Additional arguments to the <code>image</code> function.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The integrated uncertainty
+</p>
+
+
+<h3>Author(s)</h3>
+
+ 
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Bect J., Ginsbourger D., Li L., Picheny V., Vazquez E. (2012), <em>Sequential design of computer experiments for the estimation of a probability of failure</em>, Statistics and Computing vol. 22(3), pp 773-793
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>print_uncertainty_1d</code>,<code>print_uncertainty_2d</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#print_uncertainty_nd
+
+set.seed(9)
+N &lt;- 30 #number of observations
+T &lt;- -1 #threshold
+testfun &lt;- hartman3
+#The hartman3 function is defined over the domain [0,1]^3. 
+
+lower &lt;- rep(0,times=3)
+upper &lt;- rep(1,times=3)
+
+#a 30 points initial design
+design &lt;- data.frame( matrix(runif(3*N),ncol=3) )
+response &lt;- apply(design,1,testfun)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+## Not run: 
+print_uncertainty_nd(model=model,T=T,main="average probability of excursion",type="pn",
+                    option="mean")
+
+print_uncertainty_nd(model=model,T=T,main="maximum probability of excursion",type="pn",
+                     option="max")
+
+
+## End(Not run)
+</code></pre>
+
+
+</div>

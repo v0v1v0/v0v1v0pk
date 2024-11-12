@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knn.forecast</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KNN Forecast</h2>
+
+<h3>Description</h3>
+
+<p>Provide an n x n similarity matrix as input, all points both observed and those to be
+forecasted should be included. The <code>f.index.in</code> argument indicates which observations
+to identify neighbors for, and removes them from consideration as eligible neighbors.
+Once the matrix is subset down to only the columns in <code>f.index.in</code> and the rows excluding <code>f.index.in</code>, the
+<code>NNreg()</code> function is applied over the columns, returning for each column the mean of those points in <code>y.in</code> identified as neighbors
+based on the row index of the <code>k.in</code> most similar observations in the column. It is important that the index of the similarity matrix
+and <code>y.in</code> accurately reflect the time order of the observations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knn.forecast(Sim.Mat.in, f.index.in, k.in, y.in)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Sim.Mat.in</code></td>
+<td>
+<p>numeric and symmetric matrix of similarities (recommend use of <code>S_w</code>, see <code>SwMatrixCalc()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f.index.in</code></td>
+<td>
+<p>numeric vector indicating the indices of <code>Sim.Mat.in</code> and <code>y.in</code> which correspond to the time order of the points to be forecast.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k.in</code></td>
+<td>
+<p>integer value indicating the the number of nearest neighbors to be considered in forecasting, must be <code>&gt;= 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.in</code></td>
+<td>
+<p>numeric vector of the response series to be forecast.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric vector of the same length as <code>f.index.in</code>, of forecasted observations.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>NNreg()</code> for the function used to perform knn regression on a single
+point.
+</p>
+</li>
+<li> <p><code>SwMatrixCalc()</code> for the function to calculate a matrix with the recommended similarity measure.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">Sim.Mat &lt;- matrix(c(1, .5, .2, .5, 1, .7, .2, .7, 1),
+  nrow = 3, ncol = 3, byrow = TRUE
+)
+y &lt;- c(2, 1, 5)
+f.index &lt;- c(3)
+k &lt;- 2
+knn.forecast(Sim.Mat.in = Sim.Mat, f.index.in = f.index, y.in = y, k.in = k)
+</code></pre>
+
+
+</div>

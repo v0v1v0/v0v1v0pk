@@ -1,0 +1,159 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knotplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plotting of knots
+</h2>
+
+<h3>Description</h3>
+
+<p>Routines to plot projections of knots with a wide range of user-settable options
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knotplot(x, ou, gapwidth=1, n=100, lwd=8, add=FALSE, ...)
+knotplot_old(x, ou, gap=20, n=100, lwd=8, add=FALSE, ...)
+knotplot2(x, rainbow=FALSE, seg=FALSE, text=FALSE, cross=FALSE, ink=FALSE,
+                node=FALSE, width=TRUE, all=FALSE, n=100, circ=1000,
+                lwd=8, add=FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Description of a knot, coerced to a <code>controlpoints</code>
+object and a <code>minobj</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rainbow,seg,text,cross,ink,node,all,width,circ</code></td>
+<td>
+<p>Variables
+controlling sundry <code>knotplot2()</code> features; see details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ou</code></td>
+<td>
+<p>An overunder object, useful if overunder information not
+included in argument <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gap,gapwidth</code></td>
+<td>
+<p>Variables controlling visual representation of
+strand crossings; see details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of points on each Bezier curve</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>Width of line to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+<p>Boolean, with default <code>FALSE</code> meaning to set up a new
+plot, and <code>TRUE</code> meaning to just add points and lines to an
+existing plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments, passed to <code>plot()</code> and <code>points()</code>
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>knotplot()</code> is useful for production-quality plotting
+of knots with crossings indicated by the understrand having a gap;
+function <code>knotplot2()</code> is more useful for development.  Function
+<code>knotplot_old()</code> is included for backward compatibility and is
+possibly more robust than <code>knotplot()</code>.
+</p>
+<p>Function <code>knotplot()</code> works by setting a suitable length of the
+understrand to <code>NA</code> which results in it not being plotted.
+</p>
+<p>For <code>knotplot()</code>:
+</p>
+
+<ul>
+<li> <p><code>overunderobj</code>; A two-column matrix indicating the sense
+of the crossing.  Each row corresponds to a crossing; the first entry
+is the segment number of the overstrand, and the second is the
+understrand
+</p>
+</li>
+<li> <p><code>gapwidth</code>; the width of the gap, measured in units of
+width of the string
+</p>
+</li>
+</ul>
+<p>For <code>knotplot2()</code>:
+</p>
+
+<ul>
+<li> <p><code>rainbow</code>; use rainbow colouring for the segments
+</p>
+</li>
+<li> <p><code>seg</code>; plot the Bezier nodes and handles.  The positions
+of the nodes and handles are obtained from an object of class
+<code>controlpoints</code>.
+</p>
+</li>
+<li> <p><code>text</code>; include the segment number on the segment
+</p>
+</li>
+<li> <p><code>cross</code>; label the crossings
+</p>
+</li>
+<li> <p><code>ink</code>; label the nodes with their inkscape numbering
+</p>
+</li>
+<li> <p><code>width</code>; show the bending strain energy
+</p>
+</li>
+</ul>
+<p>The <code>gap</code> argument of <code>knotplot_old()</code> is a the same as the
+<code>gapwidth</code> argument of <code>knotplot()</code> but <code>gap</code> is
+measured in the same units as the <code>plot()</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+knotplot(k5_1)
+
+knotplot2(k6_1,text=TRUE,seg=TRUE,lwd=1)
+
+</code></pre>
+
+
+</div>

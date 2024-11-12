@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>df_cuis_pairs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A dataset containing CUIs pairs</h2>
+
+<h3>Description</h3>
+
+<p>The dataframe provides clinician-curated pairs of related of
+medical concepts, useful to evaluate the performance of a
+machine learning model. It's an extract of the PrimeKG database
+(see vignette for URL).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("df_cuis_pairs")
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A dataframe with 2358 rows and 4 columns.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Each row defines a relationship between two CUIs, along with their textual
+descriptions.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('m_embeds')
+data('df_cuis_pairs')
+
+fit_kg = fit_embeds_kg(m_embeds, 'cosine', df_pairs = df_cuis_pairs[c(1, 3)])
+pROC::plot.roc(fit_kg$roc, print.auc = TRUE)
+
+</code></pre>
+
+
+</div>

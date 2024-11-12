@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getCytobands</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add chromosome cytobands and chromosome arms to <code>TapestriExperiment</code>
+</h2>
+
+<h3>Description</h3>
+
+<p><code>getCytobands()</code> retrieves the chromosome arm and cytoband for each probe based on stored positional data and saves them in <code>rowData</code>.
+This is run automatically as part of <code>createTapestriExperiment()</code>.
+Note: Some downstream smoothing and plotting functions may fail if chromosome arms are not present in <code>rowData</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getCytobands(TapestriExperiment, genome = "hg19", verbose = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>genome</code></td>
+<td>
+<p>Character, reference genome to use. Only hg19 is currently supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), progress is output as message text.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> object with <code>rowData</code> updated to include chromosome arms and cytobands.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- getCytobands(tap.object, genome = "hg19")
+</code></pre>
+
+
+</div>

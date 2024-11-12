@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kde.truncate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Truncated kernel density derivative estimate</h2>
+
+<h3>Description</h3>
+
+<p>Truncated kernel density derivative estimate for 2-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kde.truncate(fhat, boundary) 
+kdde.truncate(fhat, boundary) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fhat</code></td>
+<td>
+<p>object of class <code>kde</code> or <code>kdde</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boundary</code></td>
+<td>
+<p>two column matrix delimiting the boundary for truncation</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A simple truncation is performed on the kernel estimator. All the
+points in the estimation grid which are outside of the regions
+delimited by <code>boundary</code> are set to 0, and their probability
+mass is distributed proportionally to the remaining density (derivative) values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A truncated kernel density (derivative) estimate inherits the same
+object class as the input estimate. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kde</code>, <code>kdde</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(worldbank)
+wb &lt;- as.matrix(na.omit(worldbank[,c("internet", "ag.value")]))
+fhat &lt;- kde(x=wb)
+rectb &lt;- cbind(x=c(0,100,100,0,0), y=c(0,0,100,100,0))
+fhat.b &lt;- kde.truncate(fhat, boundary=rectb)
+plot(fhat, col=1, xlim=c(0,100), ylim=c(0,100))
+plot(fhat.b, add=TRUE, col=4)
+rect(0,0,100,100, lty=2)
+
+library(oz)
+data(grevillea)
+wa.coast &lt;- ozRegion(section=1)
+wa.polygon &lt;- cbind(wa.coast$lines[[1]]$x, wa.coast$lines[[1]]$y)
+fhat1 &lt;- kdde(x=grevillea, deriv.order=1)
+fhat1 &lt;- kdde.truncate(fhat1, wa.polygon)
+oz(section=1, xlim=c(113,122), ylim=c(-36,-29))
+plot(fhat1, add=TRUE, display="filled.contour")
+</code></pre>
+
+
+</div>

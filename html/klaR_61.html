@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.NaiveBayes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Naive Bayes Classifier</h2>
+
+<h3>Description</h3>
+
+<p>Computes the conditional a-posterior probabilities of a categorical
+class variable given independent predictor variables using
+the Bayes rule.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'NaiveBayes'
+predict(object, newdata, threshold = 0.001, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>"naiveBayes"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>A dataframe with new predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>Value replacing cells with 0 probabilities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>passed to <code>dkernel</code> function if neccessary.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This implementation of Naive Bayes as well as this help is based on the code by 
+David Meyer in the package e1071 but extended for kernel estimated densities.
+The standard naive Bayes classifier (at least this implementation)
+assumes independence of the predictor
+variables. For attributes with missing values, the
+corresponding table entries are omitted for prediction.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the conditional a-posterior
+probabilities for each class and the estimated class are returned.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karsten Luebke, <a href="mailto:karsten.luebke@fom.de">karsten.luebke@fom.de</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>NaiveBayes</code>,<code>dkernel</code><code>naiveBayes</code>,<code>qda</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(iris)
+m &lt;- NaiveBayes(Species ~ ., data = iris)
+predict(m)
+</code></pre>
+
+
+</div>

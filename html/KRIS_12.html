@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simsnp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Synthetic dataset containing single nucleotide polymorphisms (SNP)</h2>
+
+<h3>Description</h3>
+
+<p>The simsnp is the simulated dataset which consists of 3,000 independent SNPs
+and 753 individuals belonging to one of three populations (250 individuals
+each) and 3 outlying individuals. The pairwise genetic distance between
+populations was set to Fst=0.01 as in Balding (1995).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(example_SNP)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A list with 3 objects
+</p>
+
+
+<h3>Details</h3>
+
+
+<dl>
+<dt>ind.info</dt>
+<dd>
+<p>A character matrix of 753 rows and 6 columns representing
+individuals and individual information respectively. The columns of
+ind.info represents sample_ID, family_ID, father_ID, mother_ID, gender,
+and phenotype respectively.</p>
+</dd>
+<dt>snp.info</dt>
+<dd>
+<p>A character matrix of 3,000 rows and 6 columns representing
+SNPs and SNP information respectively. The columns of snp.info represents
+SNP_CHR (chromosome), SNP_ID, centimorgan, position, allele1, and allele2
+respectively.</p>
+</dd>
+<dt>snp</dt>
+<dd>
+<p>A numeric matrix of 753 rows and 3,000 columns representing
+individuals and SNPs respectively. The matrix snp contains the number 0, 1,
+and 2 representing SNP in additive coding.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>Balding, D.J., and Nichols, R.A. (1995). A method for quantifying
+differentiation between populations at multi-allelic loci and its
+implications for investigating identity and paternity. Genetica 96, 3-12.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>sample_labels</code>
+</p>
+
+
+</div>

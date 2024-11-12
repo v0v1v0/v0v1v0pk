@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pathway_info</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An S4 class for an object assigning genes to pathways</h2>
+
+<h3>Description</h3>
+
+<p>This function lists all genes formig a particular <code>pathway</code>. Start and end  
+positions of these genes are extracted from the Ensemble database. The 
+database is accessed via the R-package <span class="pkg">biomaRt</span>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pathway_info(x)
+
+## S4 method for signature 'character'
+pathway_info(x)
+
+## S4 method for signature 'pathway_info'
+show(object)
+
+## S4 method for signature 'pathway_info'
+summary(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>character</code> identifying the pathway for which gene infomation 
+should be extracted. Here KEGG IDs (format: 'hsa00100') are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>pathway_info</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> including as many rows as genes appear in the 
+<code>pathway</code>. for each gene its name, the start and end point and the chromosome 
+it lies on are given.
+</p>
+<p><code>show</code> Basic information on <code>pathway_info</code> object.
+</p>
+<p><code>summary</code> Summarized information on <code>pathway_info</code> object.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>info</code></dt>
+<dd>
+<p>A <code>data.frame</code> including information on genes contained in 
+pathways with columns 'pathway', 'gene_start', 'gene_end', 'chr' and 'gene'.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs, Juliane Manitz
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>snp_info</code>, <code>get_anno</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(hsa04022_info) # pathway_info('hsa04020') 
+show(hsa04022_info)
+summary(hsa04022_info)
+
+</code></pre>
+
+
+</div>

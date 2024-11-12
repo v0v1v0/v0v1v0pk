@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rgmm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generates dataset from Gaussian Mixture Model</h2>
+
+<h3>Description</h3>
+
+<p>Generates dataset from Gaussian Mixture Model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rgmm(model = NULL, n = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>: Gaussian Mixture Model defined by gmm()</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>: number of samples desired</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data (n by d): Random dataset generated from given the Gaussian Mixture Model
+</p>
+
+
+<h3>Note</h3>
+
+<p>Requires library mvtnorm
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Generate 100 samples from default gaussian mixture model
+model &lt;- gmm()
+X &lt;- rgmm(model)
+
+#Generate 300 samples from 3-d gaussian mixture model
+model &lt;- gmm(d=3)
+X &lt;- rgmm(model,n=300)
+</code></pre>
+
+
+</div>

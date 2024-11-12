@@ -1,0 +1,161 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.krige</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predictions by Kriging</h2>
+
+<h3>Description</h3>
+
+<p>This function uses the results of a model estimated by <code>metropolis.krige</code> 
+to make kriging-based predictions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'krige'
+predict(object, newdata, credible = FALSE, new.X, new.east, new.north, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An <code>krige</code> object estimated by <code>metropolis.krige</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>An optional data frame in which to look for variables with which 
+to predict. If omitted, the fitted values are produced. Alternatively, the new 
+data can be specified using <code>new.X</code>, <code>new.east</code>, and <code>new.north</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>credible</code></td>
+<td>
+<p>If a credible interval on predictions is desired, a user may 
+specify a proportion between 0 and 1 to indicate the interval probability. 
+For example, a value of 0.9 would create a 90% credible interval. If <code>NULL</code>, 
+then no credible interval will be produced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.X</code></td>
+<td>
+<p>The matrix of independent variables for observations to be predicted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.east</code></td>
+<td>
+<p>Vector of eastings for observations to be predicted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.north</code></td>
+<td>
+<p>Vector of northings for observations to be predicted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>predict</code> methods. Not supported 
+for <code>krige</code> objects.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Analysts should use this function if they want to make kriged predictions 
+for observations at new locations or predict fitted values at original locations. 
+To do this, researchers first must estimate a model using the <code>metropolis.krige</code> 
+function.
+</p>
+<p>After estimating the model, a <code>krige</code> object can provide information from 
+the model fitted with <code>metropolis.krige</code>, including the original imput 
+data, coordinates, and the model results themselves. The prediction will also 
+use the same <code>powered.exp</code>. <code>new.data</code> can be specified for predicting 
+the observations at new location. Otherwise, the fitted values for the original 
+data and locations will be produced.
+</p>
+<p>By default, the function uses median values of parameters to make a single point 
+prediction for every kriged data point. However, if the uses specifies a probability 
+with the <code>credible</code> option, then the function will determine the predictions 
+for all iterations of the MCMC sample. The point estimates will then be a median 
+of these predictions, and a credible interval will be returned based on percentiles. 
+Note that estimating a credible interval is substantially more intensive computationally, 
+but has the benefit of reporting uncertainty in predictions.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>matrix</code> with one prediction per row. By default 
+the matrix has one column, as only point predictions are returned. If the <code>credible</code> 
+option is specified, there are three columns respectively indicating a point 
+estimate (median prediction from MCMC), lower bound of the credible interval, 
+and upper bound of the credible interval.
+</p>
+
+
+<h3>References</h3>
+
+<p>Jeff Gill. 2020. Measuring Constituency Ideology Using Bayesian Universal Kriging. 
+<em>State Politics &amp; Policy Quarterly</em>. <code>doi:10.1177/1532440020930197</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize Data
+summary(ContrivedData)
+
+# Initial OLS model
+contrived.ols&lt;-lm(y~x.1+x.2,data=ContrivedData)
+# summary(contrived.ols)
+
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+#M&lt;-10000
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+   data = ContrivedData, n.iter = M, range.tol = 0.05)
+   
+# Predict fitted values
+predict(contrived.run)
+
+# Predict new data
+euler&lt;-c(0.2,0.7)
+archimedes&lt;-c(0.3,0.1)
+pythagoras&lt;-c(0.1,0.4)
+mathematicians&lt;-rbind(euler,archimedes,pythagoras)
+basel&lt;-c(0.1,0.8)
+sicily&lt;-c(0.4,0.1)
+samos&lt;-c(0.1,0.4)
+new.locations&lt;-rbind(basel,sicily,samos)
+newDf &lt;- as.data.frame(cbind(mathematicians, new.locations))
+colnames(newDf) &lt;- c("x.1", "x.2", "s.1", "s.2")
+
+# Make predictions from median parameter values:
+(median.pred &lt;- predict(contrived.run, newdata = newDf))
+
+# Make predictions with 90\
+(cred.pred &lt;- predict(contrived.run, newdata = newDf, credible=0.9))
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

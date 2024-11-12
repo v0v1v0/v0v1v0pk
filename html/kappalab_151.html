@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rnd-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rounding of set function coefficients</h2>
+
+<h3>Description</h3>
+
+<p>Rounds the coefficients of a set function to the specified
+number of decimal places (default 0).
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>x = "superclass.set.func", digits = "numeric" </dt>
+<dd>
+<p>Returns an object of the same class as
+<code>x</code> whose <code>data</code> attribute is rounded.</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a capacity
+mu &lt;- capacity(0:15/15)
+mu
+rnd(mu,2)
+
+## a similar example with a Mobius.capacity object
+a &lt;- Mobius(mu)
+a
+rnd(a,1)
+
+## a similar example with a card.capacity object
+mu &lt;- uniform.capacity(6)
+mu
+rnd(mu)
+</code></pre>
+
+
+</div>

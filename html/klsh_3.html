@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>block.ids.from.blocking</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Returns the block ids associated with a blocking method.</h2>
+
+<h3>Description</h3>
+
+<p>Returns the block ids associated with a blocking method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">block.ids.from.blocking(blocking)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>blocking</code></td>
+<td>
+<p>A list of the blocks.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list of the blocks ids that corresponds to each block
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("RLdata500")
+klsh.blocks &lt;- klsh(RLdata500, p=20, num.blocks=5, k=2)
+block.ids.from.blocking(klsh.blocks)
+</code></pre>
+
+
+</div>

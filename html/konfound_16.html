@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>output_df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Output data frame based on model estimates and thresholds</h2>
+
+<h3>Description</h3>
+
+<p>Output data frame based on model estimates and thresholds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">output_df(
+  est_eff,
+  beta_threshhold,
+  unstd_beta,
+  bias = NULL,
+  sustain = NULL,
+  recase,
+  obs_r,
+  critical_r,
+  r_con,
+  itcv,
+  non_linear
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>est_eff</code></td>
+<td>
+<p>estimated effect</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_threshhold</code></td>
+<td>
+<p>threshold for beta</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unstd_beta</code></td>
+<td>
+<p>unstandardized beta value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias</code></td>
+<td>
+<p>bias to change inference</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sustain</code></td>
+<td>
+<p>sustain to change inference</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recase</code></td>
+<td>
+<p>number of cases to replace null</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs_r</code></td>
+<td>
+<p>observed correlation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>critical_r</code></td>
+<td>
+<p>critical correlation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r_con</code></td>
+<td>
+<p>correlation for omitted variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>itcv</code></td>
+<td>
+<p>inferential threshold for confounding variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>non_linear</code></td>
+<td>
+<p>flag for non-linear models</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data frame with model information
+</p>
+
+
+</div>

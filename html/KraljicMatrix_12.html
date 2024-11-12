@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SAVF_score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Single attribute value function</h2>
+
+<h3>Description</h3>
+
+<p><code>SAVF_score</code> computes the exponential single attribute value score of <code>x</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SAVF_score(x, x_low, x_high, rho)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric vector of values to score</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_low</code></td>
+<td>
+<p>Lower bound anchor point (can be different than <code>min(x)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_high</code></td>
+<td>
+<p>Upper bound anchor point (can be different than <code>max(x)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>Exponential constant for the value function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector of the same length as <code>x</code> with the exponential single attribute value scores
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>SAVF_plot</code> for plotting single attribute scores
+</p>
+<p><code>SAVF_preferred_rho</code> for identifying the preferred rho
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# The single attribute x is bounded between 1 and 5 and follows an exponential
+# utility curve with rho = .653
+
+x &lt;- runif(10, 1, 5)
+x
+## [1] 2.964853 1.963182 1.223949 1.562025 4.381467 2.286030 3.071066
+## [8] 4.470875 3.920913 4.314907
+
+SAVF_score(x, x_low = 1, x_high = 5, rho = .653)
+## [1] 0.7800556 0.5038275 0.1468234 0.3315217 0.9605856 0.6131944 0.8001003
+## [8] 0.9673124 0.9189685 0.9553165
+
+</code></pre>
+
+
+</div>

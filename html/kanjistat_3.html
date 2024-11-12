@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>codepoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert between Unicode codepoint and kanji</h2>
+
+<h3>Description</h3>
+
+<p>Given codepoints <code>cp</code>, the function <code>codepointToKanji</code> transforms
+to UTF-8, which will typically show as the actual character the codepoints stands for.
+Vice versa, given (UTF-8 encoded) kanjis <code>kan</code>, the function <code>kanjiToCodepoint</code> transforms
+to unicode codepoints.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">codepointToKanji(cp, concat = FALSE)
+
+kanjiToCodepoint(kan, character = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cp</code></td>
+<td>
+<p>a vector of character strings or objects of class <code>hexmode</code>, representing
+hexadecimal numbers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>concat</code></td>
+<td>
+<p>logical. Shall the returned characters be concatenated?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kan</code></td>
+<td>
+<p>a vector of kanjis (strings of length 1) or a single string of length &gt;= 1
+of kanjis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>character</code></td>
+<td>
+<p>logical. Shall the returned codepoints be of class "character" or hexmode.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>For <code>codepointToKanji</code> a character vector of kanji. For <code>kanjiToCodepoint</code> a vector
+of hexadecimal numbers (class <code>hexmode</code>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">codepointToKanji(c("51b7", "6696", "71b1"))
+kanjiToCodepoint("\u51b7\u6696\u71b1")
+
+</code></pre>
+
+
+</div>

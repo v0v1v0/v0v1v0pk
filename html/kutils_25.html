@@ -1,0 +1,132 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keyApply</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Apply variable key to data frame (generate recoded data frame)</h2>
+
+<h3>Description</h3>
+
+<p>This is the main objective of the variable key system.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keyApply(
+  dframe,
+  key,
+  diagnostic = TRUE,
+  safeNumericToInteger = TRUE,
+  trimws = "both",
+  ignoreCase = TRUE,
+  drop = TRUE,
+  debug = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dframe</code></td>
+<td>
+<p>An R data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>A variable key object, of class either "key" or
+"keylong"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diagnostic</code></td>
+<td>
+<p>Default TRUE: Compare the old and new data
+frames carefully with the keyDiagnostic function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safeNumericToInteger</code></td>
+<td>
+<p>Default TRUE: Should we treat values
+which appear to be integers as integers? If a column is
+numeric, it might be safe to treat it as an integer.  In many
+csv data sets, the values coded c(1, 2, 3) are really
+integers, not floats c(1.0, 2.0, 3.0). See <code>safeInteger</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trimws</code></td>
+<td>
+<p>Default is "both", can change to "left", "right", or
+set as NULL to avoid any trimming.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignoreCase</code></td>
+<td>
+<p>Default TRUE. If column name is capitalized
+differently than name_old in the key, but the two are
+otherwise identical, then the difference in capitalization
+will be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop</code></td>
+<td>
+<p>Default TRUE. True implies drop = c("vars",
+"vals"). TRUE applies to both variables ("vars") and values
+("vals"). "vars" means that a column will be omitted from data
+if it is not in the key "name_old". Similarly, if anything
+except "." appears in value_old, then setting drop="vals"
+means omission of a value from key "value_old" causes
+observations with those values to become NA.  This is the
+original variable key behavior.  The drop argument allows
+"partial keys", beginning with kutils version 1.12. drop =
+FALSE means that neither values nor variables are omitted.
+Rather than TRUE, one can specify either drop = "vars", or
+drop = "vals".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>debug</code></td>
+<td>
+<p>Default FALSE. If TRUE, emit some warnings.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A new data.frame object, with renamed and recoded variables
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mydf.key.path &lt;- system.file("extdata", "mydf.key.csv", package = "kutils")
+mydf.key &lt;-  keyImport(mydf.key.path)
+mydf.path &lt;- system.file("extdata", "mydf.csv", package = "kutils")
+
+mydf &lt;- read.csv(mydf.path, stringsAsFactors = FALSE)
+mydf2 &lt;- keyApply(mydf, mydf.key)
+
+nls.keylong.path &lt;- system.file("extdata", "natlongsurv.key_long.csv", package = "kutils")
+nls.keylong &lt;- keyImport(nls.keylong.path, long = TRUE)
+data(natlongsurv)
+nls.dat &lt;- keyApply(natlongsurv, nls.keylong)
+
+</code></pre>
+
+
+</div>

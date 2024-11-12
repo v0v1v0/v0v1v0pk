@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mcmc.samples</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract MCMC Samples</h2>
+
+<h3>Description</h3>
+
+<p>Extract MCMC samples estimated by <code>metropolis.krige()</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mcmc.samples(object, as.matrix, as.data.frame, ...)
+
+## S3 method for class 'krige'
+mcmc.samples(object, as.matrix = !as.data.frame, as.data.frame = FALSE, ...)
+
+## S3 method for class 'summary.krige'
+mcmc.samples(object, as.matrix = !as.data.frame, as.data.frame = FALSE, ...)
+
+## S3 method for class 'krige'
+as.matrix(x, ...)
+
+## S3 method for class 'summary.krige'
+as.matrix(x, ...)
+
+## S3 method for class 'krige'
+as.data.frame(x, ...)
+
+## S3 method for class 'summary.krige'
+as.data.frame(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>krige</code>or <code>summary.krige</code> object from the <code>metropolis.krige</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as.matrix</code></td>
+<td>
+<p>Logical values indicating if the output format should be a matrix. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as.data.frame</code></td>
+<td>
+<p>Logical values indicating if the output format should be a 
+data.frame. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>as.matrix</code> or <code>as.data.frame</code> methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>krige</code> or <code>summary.krige</code> object for <code>as.matrix</code> and <code>as.data.frame</code> methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function extracts the MCMC samples from the a <code>krige</code>or <code>summary.krige</code> 
+object from the <code>metropolis.krige</code> function. Users can define the output by using <code>as.matrix</code>
+or <code>as.data.frame</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>summary.krige</code> list object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>as.mcmc.krige</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize Data
+summary(ContrivedData)
+
+# Initial OLS model
+contrived.ols&lt;-lm(y~x.1+x.2,data=ContrivedData)
+# summary(contrived.ols)
+
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+#M&lt;-10000
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+   data = ContrivedData, n.iter = M, n.burnin = 20, range.tol = 0.05)
+   
+contrived.run.mat &lt;- mcmc.samples(contrived.run)
+
+### Alternatively, use generic methods
+contrived.run.mat &lt;- as.matrix(contrived.run)
+contrived.run.df &lt;- as.data.frame(contrived.run)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

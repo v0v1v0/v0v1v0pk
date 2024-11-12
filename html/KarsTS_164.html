@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>writeMethodSummary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+writeMethodSummary: writes a summary of the filling method
+</h2>
+
+<h3>Description</h3>
+
+<p>This function is internally used when any of the filling methods that KarsTS offers is used. It writes on KarsTS output window information that is shared by all filling methods: which time series and gap set were to fill, which gaps were effectively filled and which remained empty. Filling-method-specific information is writen trhough other functions. It is used internally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">writeMethodSummary(filledNasTable, remainingNAsInGap, selTsName, selGapName, selGap)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filledNasTable</code></td>
+<td>
+
+<p>Table of filled gaps
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remainingNAsInGap</code></td>
+<td>
+
+<p>Table of gaps that could not be filled. It does not include gaps whose filling was not attempted. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selTsName</code></td>
+<td>
+
+<p>Name of the time series that was filled.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selGapName</code></td>
+<td>
+
+<p>Name of the gap set that was meant to be filled
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selGap</code></td>
+<td>
+
+<p>Gap set that was meant to be filled
+</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

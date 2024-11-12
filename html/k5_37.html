@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>word_count</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Count file words, lines, and bytes</h2>
+
+<h3>Description</h3>
+
+<p>Invoke system tool to print newline, word, and byte counts for each file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">word_count(path, count = "")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Character vector of file paths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>count</code></td>
+<td>
+<p>The type of element to count, see details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>One of five options or an empty string (default):
+</p>
+
+<ol>
+<li>
+<p> "lines" for newline characters (separating lines).
+</p>
+</li>
+<li>
+<p> "words" for words separated by white space.
+</p>
+</li>
+<li>
+<p> "chars" for individual characters.
+</p>
+</li>
+<li>
+<p> "bytes" for total bytes, differs with multibyte characters.
+</p>
+</li>
+<li>
+<p> "max" for the maximum display width of longest line.
+</p>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p>A data frame of counts by file.
+</p>
+
+
+</div>

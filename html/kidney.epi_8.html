@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>service.check_obligatory_params</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check whether all obligatory paramenters of a given function are present.</h2>
+
+<h3>Description</h3>
+
+<p>Check whether all obligatory paramenters of a given function are present.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">service.check_obligatory_params(fx_params, args,
+  predefined_result = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fx_params</code></td>
+<td>
+<p>List. List of parameters required by function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>args</code></td>
+<td>
+<p>List. Arguments transferred to the function upon user call.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predefined_result</code></td>
+<td>
+<p>Logical. Required only in case if other checks were performed in the main script and the result of this check has to be processed to the function.
+For example, if in the parent script I've checked the presence of height parameter, and it is absent (while is obligatory), I transfer this info in the "predefined_result = FALSE", so in the function the fx_params_resulting become False and will lead to stop().</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Check whether all obligatory paramenters of a given function are present. 
+</p>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character string. Returns a messages and stops function if any of the obligatory parameters are absent.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># could be run only inside function wich receives some parameters 
+# fx_params &lt;- c("creatinine", "age", "ethnicity", "sex")
+# args &lt;- names(as.list(match.call())[-1])
+# service.check_obligatory_params(fx_params, args)
+</code></pre>
+
+
+</div>

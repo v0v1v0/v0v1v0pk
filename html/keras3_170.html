@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>image_from_array</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts a 3D array to a PIL Image instance.</h2>
+
+<h3>Description</h3>
+
+<p>Converts a 3D array to a PIL Image instance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">image_from_array(x, data_format = NULL, scale = TRUE, dtype = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input data, in any form that can be converted to an array.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>Image data format, can be either <code>"channels_first"</code> or
+<code>"channels_last"</code>. Defaults to <code>NULL</code>, in which case the global
+setting <code>config_image_data_format()</code> is used (unless you
+changed it, it defaults to <code>"channels_last"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>Whether to rescale the image such that minimum and maximum values
+are 0 and 255 respectively. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>Dtype to use. <code>NULL</code> means the global setting
+<code>config_floatx()</code> is used (unless you changed it, it
+defaults to <code>"float32"</code>). Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A PIL Image instance.
+</p>
+
+
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>img &lt;- array(runif(30000), dim = c(100, 100, 3))
+pil_img &lt;- image_from_array(img)
+pil_img
+</pre></div>
+<div class="sourceCode"><pre>## &lt;PIL.Image.Image image mode=RGB size=100x100&gt;
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other image utils: <br><code>image_array_save()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>op_image_affine_transform()</code> <br><code>op_image_crop()</code> <br><code>op_image_extract_patches()</code> <br><code>op_image_hsv_to_rgb()</code> <br><code>op_image_map_coordinates()</code> <br><code>op_image_pad()</code> <br><code>op_image_resize()</code> <br><code>op_image_rgb_to_grayscale()</code> <br><code>op_image_rgb_to_hsv()</code> <br></p>
+<p>Other utils: <br><code>audio_dataset_from_directory()</code> <br><code>clear_session()</code> <br><code>config_disable_interactive_logging()</code> <br><code>config_disable_traceback_filtering()</code> <br><code>config_enable_interactive_logging()</code> <br><code>config_enable_traceback_filtering()</code> <br><code>config_is_interactive_logging_enabled()</code> <br><code>config_is_traceback_filtering_enabled()</code> <br><code>get_file()</code> <br><code>get_source_inputs()</code> <br><code>image_array_save()</code> <br><code>image_dataset_from_directory()</code> <br><code>image_load()</code> <br><code>image_smart_resize()</code> <br><code>image_to_array()</code> <br><code>layer_feature_space()</code> <br><code>normalize()</code> <br><code>pad_sequences()</code> <br><code>set_random_seed()</code> <br><code>split_dataset()</code> <br><code>text_dataset_from_directory()</code> <br><code>timeseries_dataset_from_array()</code> <br><code>to_categorical()</code> <br><code>zip_lists()</code> <br></p>
+
+
+</div>

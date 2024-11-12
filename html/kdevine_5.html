@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dkdevinecop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Working with a <code>kdevinecop</code> object</h2>
+
+<h3>Description</h3>
+
+<p>A vine copula density estimate (stored in a <code>kdevinecop</code> object)
+can be evaluated on arbitrary points with <code>dkevinecop</code>. Furthermore,
+you can simulate from the estimated density with <code>rkdevinecop</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dkdevinecop(u, obj, stable = FALSE)
+
+rkdevinecop(n, obj, U = NULL, quasi = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p><code class="reqn">m x 2</code> matrix of evaluation points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p><code>kdevinecop</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stable</code></td>
+<td>
+<p>logical; option for stabilizing the estimator: the estimated
+pair copula density is cut off at <code class="reqn">50</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>integer; number of observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>U</code></td>
+<td>
+<p>(optional) <code class="reqn">n x d</code> matrix of independent uniform random
+variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quasi</code></td>
+<td>
+<p>logical; the default (<code>FALSE</code>) returns pseudo-random
+numbers, use <code>TRUE</code> for quasi-random numbers (generalized Halton, see
+<code>ghalton</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric vector of the density/cdf or a <code class="reqn">n x 2</code> matrix of
+simulated data.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Nagler
+</p>
+
+
+<h3>References</h3>
+
+<p>Nagler, T., Czado, C. (2016) <br>
+Evading the curse of dimensionality in nonparametric density estimation. <br>
+Journal of Multivariate Analysis 151, 69-89 (doi:10.1016/j.jmva.2016.07.003)
+</p>
+<p>Dissmann, J., Brechmann, E. C., Czado, C., and Kurowicka, D. (2013). <br>
+Selecting and estimating regular vine copulae and application to financial returns. <br>
+Computational Statistics &amp; Data Analysis, 59(0):52–69.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kdevinecop</code>,
+<code>dkdecop</code>,
+<code>rkdecop</code>,
+<code>ghalton</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(wdbc, package = "kdecopula")                    # load data
+u &lt;- VineCopula::pobs(wdbc[, 5:7], ties = "average") # rank-transform
+
+fit &lt;- kdevinecop(u)                # estimate density
+dkdevinecop(c(0.1, 0.1, 0.1), fit)  # evaluate density estimate
+
+</code></pre>
+
+
+</div>

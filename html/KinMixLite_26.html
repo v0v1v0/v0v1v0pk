@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pedigreeIBD</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Construct IBD pattern distribution from pedigree</h2>
+
+<h3>Description</h3>
+
+<p>Construct IBD pattern distribution from a pedigree and a target list of individuals</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pedigreeIBD(x, targets, cond = TRUE, ped=FALSE, quiet = TRUE, verbose = FALSE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A pedigree in <code>pedtools</code> format</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>targets</code></td>
+<td>
+<p>Character vector, some or all of the individual identifiers in the pedigree <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cond</code></td>
+<td>
+<p>should IBD pattern be condensed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ped</code></td>
+<td>
+<p>logical, should complete pedigree be added as an attribute to the output, if available?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>should resulting IBD pattern distribution be printed?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>should trace information be printed?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function computes the multi-person condensed coefficients of identity for an arbitrary set of individuals, in the sparse notation of the IBD pattern distribution of Green and Vigeland (2019).
+</p>
+
+
+<h3>Value</h3>
+
+<p>IBD pattern distribution as a list with components <code>pr</code> and <code>patt</code></p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>References</h3>
+
+<p><em>Multi-person condensed coefficients of identity</em>,
+by Peter J. Green and Magnus Dehli Vigeland,
+University of Bristol technical report, 2019.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pedtools</code>, <code>formats</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">require(ribd)
+
+id&lt;-c('gf','gm','b1','b2','m','c')
+fid&lt;-c(0,0,'gf','gf',0,'b1')
+mid&lt;-c(0,0,'gm','gm',0,'m')
+sex&lt;-c(1,2,1,1,2,0)   
+x&lt;-ped(id,fid,mid,sex)
+
+IBD&lt;-pedigreeIBD(x,c('m','c','b1','b2'))
+
+kappaIBD(x,c('m','c','b1','b2'))
+</code></pre>
+
+
+</div>

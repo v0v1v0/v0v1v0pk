@@ -1,0 +1,130 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>intervention</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An auxiliary function for model intervention</h2>
+
+<h3>Description</h3>
+
+<p>This function adds timely modifications to a dlm_block, such that in the specified time the model will override the usual value of the each variable to the value chosen by the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">intervention(
+  block,
+  time,
+  var.index = 1:block$n,
+  FF = NULL,
+  D = NULL,
+  h = NULL,
+  H = NULL,
+  G = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>block</code></td>
+<td>
+<p>dlm_block: The block to add the intervention.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>Vector: A sequence of integers indicating the time of the intervention.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.index</code></td>
+<td>
+<p>Vector: A sequence of integers indicating which variables should be modified in the intervention.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FF</code></td>
+<td>
+<p>Array: A n x k x t array with the modified FF to be used during the intervention, where n is the length of var.index, k is the number of linear predictors in the block and t is the size of time (can be omitted if time is a scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>Array: A n x n x t array with the modified D to be used during the intervention, where n is the length of var.index and t is the size of time (can be omitted if time is a scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>matrix: A n x t matrix with the modified h to be used during the intervention, where n is the length of var.index and t is the size of time (can be omitted if time is a scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>Array: A n x n x t array with the modified H to be used during the intervention, where n is the length of var.index and t is the size of time (can be omitted if time is a scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>Array: A n x n x t array with the modified G to be used during the intervention, where n is the length of var.index and t is the size of time (can be omitted if time is a scalar).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A dlm_block with the added intervention.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for structural blocks: 
+<code>TF_block()</code>,
+<code>block_mult()</code>,
+<code>block_rename()</code>,
+<code>block_superpos()</code>,
+<code>harmonic_block()</code>,
+<code>noise_block()</code>,
+<code>polynomial_block()</code>,
+<code>regression_block()</code>,
+<code>specify.dlm_block()</code>,
+<code>summary.dlm_block()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- c(AirPassengers)
+# Adding an artificial change, so that we can make an intervention on the data at that point
+# Obviously, one should NOT change their own data.
+data[60:144] &lt;- data[60:144] + 500
+
+level &lt;- polynomial_block(rate = 1, order = 2, D = 0.95)
+season &lt;- harmonic_block(rate = 1, order = 2, period = 12, D = 0.975)
+
+# Reducing the discount factor so that the model can capture the expected change.
+level &lt;- level |&gt; intervention(time = 60, H = 1, var.index = 1)
+# Comment the line above to see the fit without the intervention
+
+outcome &lt;- Poisson(lambda = "rate", data = data)
+
+fitted.data &lt;- fit_model(level, season,
+  AirPassengers = outcome
+)
+
+plot(fitted.data, plot.pkg = "base")
+
+</code></pre>
+
+
+</div>

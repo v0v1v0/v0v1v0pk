@@ -1,0 +1,153 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>influence.gp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Diagnostics for a Gaussian Process Model, Based on Leave-One-Out
+</h2>
+
+<h3>Description</h3>
+
+<p>Cross Validation by leave-one-out for a <code>gp</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'gp'
+influence(model, type = "UK", trend.reestim = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>An object of class <code>"gp"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Character string corresponding to the GP "kriging" family, to be
+chosen between simple kriging (<code>"SK"</code>), or universal kriging
+(<code>"UK"</code>).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trend.reestim</code></td>
+<td>
+
+<p>Should the trend be re-estimated when removing an observation?
+Default to <code>TRUE</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Not used.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Leave-one-out (LOO) consists in computing the prediction at a design
+point when the corresponding observation is removed from the learning
+set (and this, for all design points). A quick version of LOO based on
+Dubrule's formula is also implemented; It is limited to 2 cases:
+</p>
+
+<ul>
+<li>
+<p><code>(type == "SK") &amp; !trend.reestim</code> and
+</p>
+</li>
+<li>
+<p><code>(type == "UK") &amp; trend.reestim</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A list composed of the following elements, where <em>n</em> is the total
+number of observations.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mean </code></td>
+<td>
+
+<p>Vector of length <em>n</em>. The <code class="reqn">i</code>-th element is the kriging
+mean (including the trend) at the <code class="reqn">i</code>th observation number when
+removing it from the learning set.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd </code></td>
+<td>
+
+<p>Vector of length <em>n</em>. The <code class="reqn">i</code>-th element is the kriging
+standard deviation at the <code class="reqn">i</code>-th observation number when
+removing it from the learning set.
+</p>
+</td>
+</tr>
+</table>
+<h3>Warning</h3>
+
+<p>Only trend parameters are re-estimated when removing one
+observation. When the number <code class="reqn">n</code> of observations is small, the
+re-estimated values can be far away from those obtained with the
+entire learning set.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>O. Roustant, D. Ginsbourger.
+</p>
+
+
+<h3>References</h3>
+
+ 
+<p>F. Bachoc (2013), "Cross Validation and Maximum Likelihood estimations of
+hyper-parameters of Gaussian processes with model
+misspecification". <em>Computational Statistics and Data Analysis</em>,
+<b>66</b>, 55-69
+<a href="https://www.sciencedirect.com/science/article/pii/S0167947313001187">link</a>
+
+</p>
+<p>N.A.C. Cressie (1993), <em>Statistics for spatial data</em>. Wiley series
+in probability and mathematical statistics.
+</p>
+<p>O. Dubrule (1983), "Cross validation of Kriging in a unique
+neighborhood". <em>Mathematical Geology</em>, <b>15</b>, 687-699.
+</p>
+<p>J.D. Martin and T.W. Simpson (2005), "Use of kriging models to
+approximate deterministic computer models". <em>AIAA Journal</em>,
+<b>43</b> no. 4, 853-863.
+</p>
+<p>M. Schonlau (1997), <em>Computer experiments and global optimization</em>.
+Ph.D. thesis, University of Waterloo.
+</p>
+
+
+<h3>See Also</h3>
+
+ <p><code>predict.gp</code>,  <code>plot.gp</code> </p>
+
+
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>desparsify</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>This function deletes those columns and/or rows in a matrix/data.frame that
+only contain 0s.</h2>
+
+<h3>Description</h3>
+
+<p>This function deletes those columns and/or rows in a matrix/data.frame that
+only contain 0s.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">desparsify(X, dim = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Numeric matrix or data.frame of any size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim</code></td>
+<td>
+<p>A numeric vector. 1 indicates that the function should be applied
+to rows, 2 to columns, c(1, 2) indicates rows and columns. (Defaults: 2).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>X with less rows or columns. (Class: the same than X).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dat &lt;- matrix(rnorm(150),ncol=50,nrow=30)
+dat[c(2,6,12),] &lt;- 0
+dat[,c(30,40,50)] &lt;- 0
+dim(desparsify(dat))
+dim(desparsify(dat,dim=c(1,2)))
+</code></pre>
+
+
+</div>

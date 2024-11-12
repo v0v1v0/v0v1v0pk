@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>und</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Undocumented functions</h2>
+
+<h3>Description</h3>
+
+<p>A collection of miscellaneous functions lacking documentations
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">und(fn, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>name of the function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments for the function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will vary by function
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># correlation
+und(corr_text, x = 1:5, y = c(1, 2, 2, 2, 3))
+# mean center
+und(mean_center, 1:10)
+# compare results with base function
+scale(1:10, scale = TRUE)
+# find the modes
+und(mode, c(3, 3, 3, 1, 2, 2))
+# return values that are not outliers
+und(outlier_rm, c(12:18, 100))
+kim::outlier(c(1:10, 100))
+</code></pre>
+
+
+</div>

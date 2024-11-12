@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mutual_inf_cd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mutual information estimation</h2>
+
+<h3>Description</h3>
+
+<p>Estimate the mutual information MI(X;Y) of the target <code>X</code> and features <code>Y</code>
+where <code>X</code> is continuous or discrete and <code>Y</code> is discrete using k-nearest neighbor distances.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mutual_inf_cd(target, features, k = 3L)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>target</code></td>
+<td>
+<p>input vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>features</code></td>
+<td>
+<p>input vector or matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Integer number of nearest neighbors. The default value is 3.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The features argument is a vector of the same size as the target vector, or a matrix whose column dimension matches
+the size of the target vector. Discrete values for the features or targets must be numeric or integer types.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns the estimated mutual information. The return value is a vector of size 1 if the features argument is
+a vector. If the features argument is a matrix then the return value is a vector whose size matches the
+number of rows in the matrix.
+</p>
+
+
+<h3>References</h3>
+
+<p>Ross BC (2014) Mutual Information between Discrete and Continuous Data Sets. PLoS ONE 9(2): e87357.
+<a href="https://doi.org/10.1371/journal.pone.0087357">doi:10.1371/journal.pone.0087357</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(mutual_info_df)
+set.seed(654321)
+mutual_inf_cd(mutual_info_df$Zc_XdYd, t(mutual_info_df$Xd))
+
+M &lt;- cbind(mutual_info_df$Xd, mutual_info_df$Yd)
+mutual_inf_cd(mutual_info_df$Zc_XdYdWd, t(M))
+
+
+</code></pre>
+
+
+</div>

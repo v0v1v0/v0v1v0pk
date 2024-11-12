@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>poisson_pred</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>poisson_pred</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the values for the predictive distribution given the values of the parameter of the conjugated distribution of the linear predictor.
+The data is assumed to have Poisson distribution with its mean having distribution Gamma with shape parameter a e rate parameter b.
+In this scenario, the marginal distribution of the data is Negative Binomial with a as the dispersion parameter and b/(b+1) as the probability.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">poisson_pred(conj.param, outcome = NULL, parms = list(), pred.cred = 0.95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>conj.param</code></td>
+<td>
+<p>list or data.frame: The parameters of the conjugated distributions of the linear predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcome</code></td>
+<td>
+<p>numeric or matrix (optional): The observed values at the current time. Not used in this function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>list (optional): A list of extra parameters for the model. Not used in this function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.cred</code></td>
+<td>
+<p>numeric: the desired credibility for the credibility interval.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the following values:
+</p>
+
+<ul>
+<li>
+<p> pred numeric/matrix: the mean of the predictive distribution of a next observation. Same type and shape as the parameter in model.
+</p>
+</li>
+<li>
+<p> var.pred numeric/matrix: the variance of the predictive distribution of a next observation. Same type and shape as the parameter in model.
+</p>
+</li>
+<li>
+<p> icl.pred numeric/matrix: the percentile of 100*((1-pred.cred)/2)
+</p>
+</li>
+<li>
+<p> icu.pred numeric/matrix: the percentile of 100*(1-(1-pred.cred)/2)
+</p>
+</li>
+<li>
+<p> log.like numeric: the The log likelihood for the outcome given the conjugated parameters.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p>Other auxiliary functions for a Poisson outcome: 
+<code>convert_Normal_Poisson()</code>,
+<code>convert_Poisson_Normal()</code>,
+<code>update_Poisson()</code>
+</p>
+
+
+</div>

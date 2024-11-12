@@ -1,0 +1,296 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_batch_normalization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Layer that normalizes its inputs.</h2>
+
+<h3>Description</h3>
+
+<p>Batch normalization applies a transformation that maintains the mean output
+close to 0 and the output standard deviation close to 1.
+</p>
+<p>Importantly, batch normalization works differently during training and
+during inference.
+</p>
+<p><strong>During training</strong> (i.e. when using <code>fit()</code> or when calling the layer/model
+with the argument <code>training = TRUE</code>), the layer normalizes its output using
+the mean and standard deviation of the current batch of inputs. That is to
+say, for each channel being normalized, the layer returns
+<code>gamma * (batch - mean(batch)) / sqrt(var(batch) + epsilon) + beta</code>, where:
+</p>
+
+<ul>
+<li> <p><code>epsilon</code> is small constant (configurable as part of the constructor
+arguments)
+</p>
+</li>
+<li> <p><code>gamma</code> is a learned scaling factor (initialized as 1), which
+can be disabled by passing <code>scale = FALSE</code> to the constructor.
+</p>
+</li>
+<li> <p><code>beta</code> is a learned offset factor (initialized as 0), which
+can be disabled by passing <code>center = FALSE</code> to the constructor.
+</p>
+</li>
+</ul>
+<p><strong>During inference</strong> (i.e. when using <code>evaluate()</code> or <code>predict()</code> or when
+calling the layer/model with the argument <code>training = FALSE</code> (which is the
+default), the layer normalizes its output using a moving average of the
+mean and standard deviation of the batches it has seen during training. That
+is to say, it returns
+<code>gamma * (batch - self$moving_mean) / sqrt(self$moving_var+epsilon) + beta</code>.
+</p>
+<p><code>self$moving_mean</code> and <code>self$moving_var</code> are non-trainable variables that
+are updated each time the layer in called in training mode, as such:
+</p>
+
+<ul>
+<li> <p><code>moving_mean = moving_mean * momentum + mean(batch) * (1 - momentum)</code>
+</p>
+</li>
+<li> <p><code>moving_var = moving_var * momentum + var(batch) * (1 - momentum)</code>
+</p>
+</li>
+</ul>
+<p>As such, the layer will only normalize its inputs during inference
+<em>after having been trained on data that has similar statistics as the
+inference data</em>.
+</p>
+<p><strong>About setting <code>layer$trainable &lt;- FALSE</code> on a <code>BatchNormalization</code> layer:</strong>
+</p>
+<p>The meaning of setting <code>layer$trainable &lt;- FALSE</code> is to freeze the layer,
+i.e. its internal state will not change during training:
+its trainable weights will not be updated
+during <code>fit()</code> or <code>train_on_batch()</code>, and its state updates will not be run.
+</p>
+<p>Usually, this does not necessarily mean that the layer is run in inference
+mode (which is normally controlled by the <code>training</code> argument that can
+be passed when calling a layer). "Frozen state" and "inference mode"
+are two separate concepts.
+</p>
+<p>However, in the case of the <code>BatchNormalization</code> layer, <strong>setting
+<code>trainable &lt;- FALSE</code> on the layer means that the layer will be
+subsequently run in inference mode</strong> (meaning that it will use
+the moving mean and the moving variance to normalize the current batch,
+rather than using the mean and variance of the current batch).
+</p>
+<p>Note that:
+</p>
+
+<ul>
+<li>
+<p> Setting <code>trainable</code> on an model containing other layers will recursively
+set the <code>trainable</code> value of all inner layers.
+</p>
+</li>
+<li>
+<p> If the value of the <code>trainable</code> attribute is changed after calling
+<code>compile()</code> on a model, the new value doesn't take effect for this model
+until <code>compile()</code> is called again.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_batch_normalization(
+  object,
+  axis = -1L,
+  momentum = 0.99,
+  epsilon = 0.001,
+  center = TRUE,
+  scale = TRUE,
+  beta_initializer = "zeros",
+  gamma_initializer = "ones",
+  moving_mean_initializer = "zeros",
+  moving_variance_initializer = "ones",
+  beta_regularizer = NULL,
+  gamma_regularizer = NULL,
+  beta_constraint = NULL,
+  gamma_constraint = NULL,
+  synchronized = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>Integer, the axis that should be normalized
+(typically the features axis). For instance, after a <code>Conv2D</code> layer
+with <code>data_format = "channels_first"</code>, use <code>axis = 2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>momentum</code></td>
+<td>
+<p>Momentum for the moving average.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>Small float added to variance to avoid dividing by zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>If <code>TRUE</code>, add offset of <code>beta</code> to normalized tensor.
+If <code>FALSE</code>, <code>beta</code> is ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>If <code>TRUE</code>, multiply by <code>gamma</code>. If <code>FALSE</code>, <code>gamma</code> is not used.
+When the next layer is linear this can be disabled
+since the scaling will be done by the next layer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_initializer</code></td>
+<td>
+<p>Initializer for the beta weight.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_initializer</code></td>
+<td>
+<p>Initializer for the gamma weight.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>moving_mean_initializer</code></td>
+<td>
+<p>Initializer for the moving mean.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>moving_variance_initializer</code></td>
+<td>
+<p>Initializer for the moving variance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_regularizer</code></td>
+<td>
+<p>Optional regularizer for the beta weight.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_regularizer</code></td>
+<td>
+<p>Optional regularizer for the gamma weight.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_constraint</code></td>
+<td>
+<p>Optional constraint for the beta weight.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_constraint</code></td>
+<td>
+<p>Optional constraint for the gamma weight.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>synchronized</code></td>
+<td>
+<p>Only applicable with the TensorFlow backend.
+If <code>TRUE</code>, synchronizes the global batch statistics (mean and
+variance) for the layer across all devices at each training step
+in a distributed training strategy.
+If <code>FALSE</code>, each replica uses its own local batch statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Base layer keyword arguments (e.g. <code>name</code> and <code>dtype</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Call Arguments</h3>
+
+
+<ul>
+<li> <p><code>inputs</code>: Input tensor (of any rank).
+</p>
+</li>
+<li> <p><code>training</code>: R boolean indicating whether the layer should behave in
+training mode or in inference mode.
+</p>
+
+<ul>
+<li> <p><code>training = TRUE</code>: The layer will normalize its inputs using
+the mean and variance of the current batch of inputs.
+</p>
+</li>
+<li> <p><code>training = FALSE</code>: The layer will normalize its inputs using
+the mean and variance of its moving statistics, learned during
+training.
+</p>
+</li>
+</ul>
+</li>
+<li> <p><code>mask</code>: Binary tensor of shape broadcastable to <code>inputs</code> tensor, with
+<code>TRUE</code> values indicating the positions for which mean and variance
+should be computed. Masked elements of the current inputs are not
+taken into account for mean and variance computation during
+training. Any prior unmasked element values will be taken into
+account until their momentum expires.
+</p>
+</li>
+</ul>
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1502.03167">Ioffe and Szegedy, 2015</a>.
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/normalization_layers/batch_normalization#batchnormalization-class">https://keras.io/api/layers/normalization_layers/batch_normalization#batchnormalization-class</a>
+</p>
+</li></ul>
+<p>Other normalization layers: <br><code>layer_group_normalization()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_unit_normalization()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_analytics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieves Disaggregated Analytics Data from DHIS2</h2>
+
+<h3>Description</h3>
+
+<p><code>get_analytics()</code> retrieves disaggregated data from DHIS2 analytics tables for a
+specified period and data element(s), without performing any aggregation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_analytics(
+  ...,
+  return_type = c("uid", "name"),
+  retry = 2,
+  verbosity = 0,
+  timeout = 60
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>One or more <code>analytics_dimension()</code> parameters in key-value pairs.
+These define the analytics query, including data elements, periods, and organization units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_type</code></td>
+<td>
+<p>Optional argument specifying the return format for identifiers.
+defaults to <code>'uid'</code>. Choose <code>'name'</code> for human readable labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>retry</code></td>
+<td>
+<p>Number of times to retry the API call in case of failure (defaults to 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbosity</code></td>
+<td>
+<p>Level of HTTP information to print during the call:
+</p>
+
+<ul>
+<li>
+<p> 0: No output
+</p>
+</li>
+<li>
+<p> 1: Show headers
+</p>
+</li>
+<li>
+<p> 2: Show headers and bodies
+</p>
+</li>
+<li>
+<p> 3: Show headers, bodies, and CURL status message.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeout</code></td>
+<td>
+<p>Maximum number of seconds to wait for the API response.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li>
+<p> Retrieves data directly from DHIS2 analytics tables.
+</p>
+</li>
+<li>
+<p> Allows specifying analytics dimensions, return format for identifiers, retry
+attempts, and logging verbosity.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A tibble containing the disaggregated analytics data, or <code>NULL</code> if no data is retrieved.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Clinical Breast Examination data elements
+# XEX93uLsAm2 = CBE Abnormal
+# cXe64Yk0QMY = CBE Normal
+element_id &lt;- c('cXe64Yk0QMY', 'XEX93uLsAm2')
+
+# Download data from February 2023 to current date
+data &lt;- get_analytics(dx %.d% element_id, pe %.d% 'LAST_MONTH')
+data
+
+</code></pre>
+
+
+</div>

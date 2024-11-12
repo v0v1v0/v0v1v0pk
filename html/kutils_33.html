@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keySave</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save key as file after deducing type from suffix</h2>
+
+<h3>Description</h3>
+
+<p>This is specialized to saving of key objects, it is not a
+general purpose function for saving things.  It scans the
+suffix of the file name and then does the right thing.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keySave(obj, file, na_ = ".", varlab)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>a variable key object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>file name. must end in "csv", "xlsx" or "rds"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na_</code></td>
+<td>
+<p>Value to insert to represent a missing score. Default
+".".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varlab</code></td>
+<td>
+<p>FALSE or TRUE. Default is FALSE, no new labels will
+be created. If a key object has a varlab already, it is saved
+with the key, always. This parameter controls whether a new
+varlab template should be created when the object is saved.
+If TRUE and obj has no varlab attribute, a new varlab template
+is created by the <code>varlabTemplate</code> function. If TRUE and
+a varlab attribute currently exists, but some variables are
+missing labels, then <code>varlabTemplate</code> is called to fill
+in new variable labels.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In updates 2017-09, a varlab element was introduced.  The varlab
+attribute of the object is saved.  The files created incorporate
+the variable labels object in different ways. 1) XLSX: variable
+labels a worksheet named "varlab" 2) CSV: variable labels saved in
+a separate file suffixed "-varlab.csv". 3) RDS: varlab is an
+attribute of the key object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>NULL if no file is created. Otherwise, a key object with
+an attribute varlab is returned.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+</div>

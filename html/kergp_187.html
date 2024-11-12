@@ -1,0 +1,286 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulate.gp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulation of Paths from a <code>gp</code> Object</h2>
+
+<h3>Description</h3>
+
+<p>Simulation of paths from a <code>gp</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'gp'
+simulate(object, nsim = 1L, seed = NULL,
+         newdata = NULL,
+         cond = TRUE,
+         trendKnown = FALSE,
+         newVarNoise = NULL,
+         nuggetSim = 1e-8,
+         checkNames = TRUE,
+         output = c("list", "matrix"),
+         label = "y", unit = "",
+         ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object with class <code>"gp"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+
+<p>Number of paths wanted.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+
+<p>Not used yet.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+
+<p>A data frame containing the inputs values used for simulation as
+well as the required trend covariates, if any. This is similar to
+the <code>newdata</code> formal in <code>predict.gp</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cond</code></td>
+<td>
+
+<p>Logical. Should the simulations be conditional on the observations
+used in the object or not?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trendKnown</code></td>
+<td>
+
+<p>Logical. If <code>TRUE</code> the vector of trend coefficients will be
+regarded as known so all simulated paths share the same trend. When
+<code>FALSE</code>, the trend must have been estimated so that its estimation
+covariance is known. Then each path will have a different trend.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newVarNoise</code></td>
+<td>
+
+<p>Variance of the noise for the "new" simulated observations. For the
+default <code>NULL</code>, the noise variance found in <code>object</code> is
+used. Note that if a very small positive value is used, each
+simulated path is the sum of the trend the smooth GP part and an
+interval containing say <code class="reqn">95</code>% of the simulated responses can
+be regarded as a confidence interval rather than a prediction
+interval.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nuggetSim</code></td>
+<td>
+
+<p>Small positive number ("nugget") added to the diagonal of conditional covariance matrices before computing a Cholesky decomposition, for numerical lack of positive-definiteness.
+This may happen when the covariance kernel is not (either theoretically or numerically) positive definite.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>checkNames</code></td>
+<td>
+
+<p>Logical. It <code>TRUE</code> the colnames of <code>X</code> and the input names
+of the covariance in <code>object</code> as given by
+<code>inputNames(object)</code> must be identical sets.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+
+<p>The type of output wanted. A simple matrix as in standard simulation
+methods may be quite poor, since interesting intermediate results
+are then lost.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label, unit</code></td>
+<td>
+
+<p>A label and unit that will be copied into the output object
+when <code>output</code> is <code>"list"</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Further arguments to be passed to the <code>simulate</code> method
+of the <code>"covAll"</code> class.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A matrix with the simulated paths as its columns or a more complete
+list with more results. This list which is given the S3 class
+<code>"simulate.gp"</code> has the following elements.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td>
+<code>X</code>, <code>F</code>, <code>y</code>
+</td>
+<td>
+<p> Inputs,
+trend covariates and response. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<code>XNew</code>,
+<code>FNew</code>
+</td>
+<td>
+<p> New inputs, new trend covariates. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sim</code></td>
+<td>
+<p> Matrix of simulated paths. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trend</code></td>
+<td>
+<p> Matrix of simulated trends. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<code>trendKnown</code>, <code>noise</code>, <code>newVarNoise</code>
+</td>
+<td>
+
+<p>Values of the formals. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Call</code></td>
+<td>
+<p> The call. </p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>When <code>betaKnown</code> is <code>FALSE</code>, the <em>trend</em> and the
+<em>smooth GP</em> parts of a simulation are usually correlated, and
+their sum will show less dispersion than each of the two
+components. The covariance of the vector
+<code class="reqn">\widehat{\boldsymbol{\beta}}</code> can be regarded as the
+posterior distribution corresponding to a non-informative prior, the
+distribution from which a new path is drawn being the predictive
+distribution.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Yves Deville
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(314159)
+n &lt;- 40
+x &lt;- sort(runif(n))
+y &lt;- 2 + 4 * x  + 2 * x^2 + 3 * sin(6 * pi * x ) + 1.0 * rnorm(n)
+df &lt;- data.frame(x = x, y = y)
+
+##-------------------------------------------------------------------------
+## use a Matern 3/2 covariance. With model #2, the trend is mispecified,
+## so the smooth GP part of the model captures a part of the trend.
+##-------------------------------------------------------------------------
+
+myKern &lt;- k1Matern3_2
+inputNames(myKern) &lt;- "x"
+mygp &lt;- list()
+mygp[[1]] &lt;- gp(formula = y ~ x + I(x^2) + sin(6 * pi * x), data = df, 
+                parCovLower = c(0.01, 0.01), parCovUpper = c(10, 100),
+                cov = myKern, estim = TRUE, noise = TRUE)
+mygp[[2]] &lt;- gp(formula = y ~ sin(6 * pi * x), data = df, 
+                parCovLower = c(0.01, 0.01), parCovUpper = c(10, 100),
+                cov = myKern, estim = TRUE, noise = TRUE)
+
+##-------------------------------------------------------------------------
+## New data
+##-------------------------------------------------------------------------
+
+nNew &lt;- 150
+xNew &lt;- seq(from = -0.2, to= 1.2, length.out = nNew)
+dfNew &lt;- data.frame(x = xNew)
+
+opar &lt;- par(mfrow = c(2L, 2L))
+
+nsim &lt;- 40
+for (i in 1:2) {
+
+    ##--------------------------------------------------------------------
+    ## beta known or not, conditional
+    ##--------------------------------------------------------------------
+
+    simTU &lt;- simulate(object = mygp[[i]], newdata = dfNew,  nsim = nsim,
+                      trendKnown = FALSE)
+    plot(simTU, main = "trend unknown, conditional")
+
+    simTK &lt;- simulate(object = mygp[[i]], newdata = dfNew, nsim = nsim,
+                      trendKnown = TRUE)
+    plot(simTK, main = "trend known, conditional")
+
+    ##--------------------------------------------------------------------
+    ## The same but UNconditional
+    ##--------------------------------------------------------------------
+
+    simTU &lt;- simulate(object = mygp[[i]], newdata = dfNew,  nsim = nsim,
+                     trendKnown = FALSE, cond = FALSE)
+    plot(simTU, main = "trend unknown, unconditional")
+    simTK &lt;- simulate(object = mygp[[i]], newdata = dfNew, nsim = nsim,
+                      trendKnown = TRUE, cond = FALSE)
+    plot(simTK, main = "trend known, unconditional")
+}
+
+par(opar)
+</code></pre>
+
+
+</div>

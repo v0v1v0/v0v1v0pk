@@ -1,0 +1,180 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kde1d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Univariate local-polynomial likelihood kernel density estimation</h2>
+
+<h3>Description</h3>
+
+<p>The estimators can handle data with bounded, unbounded, and discrete support,
+see <em>Details</em>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kde1d(
+  x,
+  xmin = NaN,
+  xmax = NaN,
+  mult = 1,
+  bw = NA,
+  deg = 2,
+  weights = numeric(0)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector (or one-column matrix/data frame) of observations; can be
+<code>numeric</code> or <code>ordered</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmin</code></td>
+<td>
+<p>lower bound for the support of the density (only for continuous
+data); <code>NaN</code> means no boundary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmax</code></td>
+<td>
+<p>upper bound for the support of the density (only for continuous
+data); <code>NaN</code> means no boundary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mult</code></td>
+<td>
+<p>positive bandwidth multiplier; the actual bandwidth used is
+<code class="reqn">bw*mult</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bw</code></td>
+<td>
+<p>bandwidth parameter; has to be a positive number or <code>NA</code>; the
+latter uses the plug-in methodology of Sheather and Jones (1991) with
+appropriate modifications for <code>deg &gt; 0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deg</code></td>
+<td>
+<p>degree of the polynomial; either <code>0</code>, <code>1</code>, or <code>2</code> for
+log-constant, log-linear, and log-quadratic fitting, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>optional vector of weights for individual observations.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A gaussian kernel is used in all cases. If <code>xmin</code> or <code>xmax</code> are
+finite, the density estimate will be 0 outside of <code class="reqn">[xmin, xmax]</code>. A
+log-transform is used if there is only one boundary (see, Geenens and Wang,
+2018); a probit transform is used if there are two (see, Geenens, 2014).
+</p>
+<p>Discrete variables are handled via jittering (see, Nagler, 2018a, 2018b).
+A specific form of deterministic jittering is used, see <code>equi_jitter()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kde1d</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Geenens, G. (2014). <em>Probit transformation for kernel density
+estimation on the unit interval</em>. Journal of the American Statistical
+Association, 109:505, 346-358,
+<a href="https://arxiv.org/abs/1303.4121">arXiv:1303.4121</a>
+</p>
+<p>Geenens, G., Wang, C. (2018). <em>Local-likelihood transformation kernel density
+estimation for positive random variables.</em> Journal of Computational and
+Graphical Statistics, to appear,
+<a href="https://arxiv.org/abs/1602.04862">arXiv:1602.04862</a>
+</p>
+<p>Nagler, T. (2018a). <em>A generic approach to nonparametric function estimation
+with mixed data.</em> Statistics &amp; Probability Letters, 137:326–330,
+<a href="https://arxiv.org/abs/1704.07457">arXiv:1704.07457</a>
+</p>
+<p>Nagler, T. (2018b). <em>Asymptotic analysis of the jittering kernel density
+estimator.</em> Mathematical Methods of Statistics, in press,
+<a href="https://arxiv.org/abs/1705.05431">arXiv:1705.05431</a>
+</p>
+<p>Sheather, S. J. and Jones, M. C. (1991). A reliable data-based bandwidth
+selection method for kernel density estimation. Journal of the Royal
+Statistical Society, Series B, 53, 683–690.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dkde1d()</code>, <code>pkde1d()</code>, <code>qkde1d()</code>, <code>rkde1d()</code>,
+<code>plot.kde1d()</code>, <code>lines.kde1d()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## unbounded data
+x &lt;- rnorm(500) # simulate data
+fit &lt;- kde1d(x) # estimate density
+dkde1d(0, fit) # evaluate density estimate
+summary(fit) # information about the estimate
+plot(fit) # plot the density estimate
+curve(dnorm(x),
+  add = TRUE, # add true density
+  col = "red"
+)
+
+## bounded data, log-linear
+x &lt;- rgamma(500, shape = 1) # simulate data
+fit &lt;- kde1d(x, xmin = 0, deg = 1) # estimate density
+dkde1d(seq(0, 5, by = 1), fit) # evaluate density estimate
+summary(fit) # information about the estimate
+plot(fit) # plot the density estimate
+curve(dgamma(x, shape = 1), # add true density
+  add = TRUE, col = "red",
+  from = 1e-3
+)
+
+## discrete data
+x &lt;- rbinom(500, size = 5, prob = 0.5) # simulate data
+x &lt;- ordered(x, levels = 0:5) # declare as ordered
+fit &lt;- kde1d(x) # estimate density
+dkde1d(sort(unique(x)), fit) # evaluate density estimate
+summary(fit) # information about the estimate
+plot(fit) # plot the density estimate
+points(ordered(0:5, 0:5), # add true density
+  dbinom(0:5, 5, 0.5),
+  col = "red"
+)
+
+## weighted estimate
+x &lt;- rnorm(100) # simulate data
+weights &lt;- rexp(100) # weights as in Bayesian bootstrap
+fit &lt;- kde1d(x, weights = weights) # weighted fit
+plot(fit) # compare with unweighted fit
+lines(kde1d(x), col = 2)
+</code></pre>
+
+
+</div>

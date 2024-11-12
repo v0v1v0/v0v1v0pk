@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>periodogram</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Periodogram</h2>
+
+<h3>Description</h3>
+
+<p>Raw periodogram.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">periodogram(y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>The raw data.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Periodogram is an estimate of the spectral density using FFT.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kzp</code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">t&lt;-1:1000
+f1&lt;-0.3
+f2&lt;-0.4
+noise&lt;-15*rnorm(length(t))
+s&lt;-3*sin(2*pi*f1*t)+3*sin(2*pi*f2*t)
+plot(periodogram(s+noise),type='l')
+</code></pre>
+
+
+</div>

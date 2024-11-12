@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GetGCVbw2D</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bandwidth selection through GCV for two-dimension cases</h2>
+
+<h3>Description</h3>
+
+<p>Bandwidth selection through generalized cross-validation (GCV) for two-dimension cases.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GetGCVbw2D(tPairs, yin, Lt, kern, ObsGrid, RegGrid, dataType = "Sparse")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tPairs</code></td>
+<td>
+<p>A <code>matrix</code> with two columns containing the pairs of time points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yin</code></td>
+<td>
+<p>A <code>vector</code> denoting the corresponding values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Lt</code></td>
+<td>
+<p>A <code>list</code> of <em>n</em> vectors, where <em>n</em> is the sample size. Each entry contains the observation time in ascending order for each subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern</code></td>
+<td>
+<p>A <code>character</code> denoting the kernel type; 'epan'(Epanechnikov), 'unif'(Uniform), 'quar'(Quartic), 'gauss'(Gaussian).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ObsGrid</code></td>
+<td>
+<p>A <code>vector</code> containing all observation grids in ascending order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RegGrid</code></td>
+<td>
+<p>A <code>vector</code> of the equally spaced time points in the support interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dataType</code></td>
+<td>
+<p>A <code>character</code> denoting the data type; 'Sparse'-default, 'Dense'.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar denoting the optimal bandwidth.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate data
+n &lt;- 100
+interval &lt;- c(0, 10)
+lambda_1 &lt;- 9 #the first eigenvalue
+lambda_2 &lt;- 1.5 #the second eigenvalue
+eigfun &lt;- list()
+eigfun[[1]] &lt;- function(x){cos(pi * x/10)/sqrt(5)}
+eigfun[[2]] &lt;- function(x){sin(pi * x/10)/sqrt(5)}
+score &lt;- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
+DataNew &lt;- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
+                     meanfun = function(x){0}, score = score,
+                     eigfun = eigfun, sd = sqrt(0.1))
+# Optimal bandwidth for the estimate of
+# E{X(s)X(t)} = cov(X(s), X(t)) + mu(s) * mu(t)
+xin2D &lt;- NULL
+yin2D &lt;- NULL
+for(i in 1:n){
+  xin2D &lt;- rbind(xin2D, t(utils::combn(DataNew$Lt[[i]], 2)))
+  yin2D &lt;- rbind(yin2D, t(utils::combn(DataNew$Ly[[i]], 2)))
+}
+tPairs &lt;- xin2D
+yin &lt;- yin2D[,1] * yin2D[, 2]
+bwOpt &lt;- GetGCVbw2D(tPairs = tPairs, yin = yin, Lt = DataNew$Lt,
+                    kern = "epan", ObsGrid = sort(unique(unlist(DataNew$Lt))),
+                    RegGrid = seq(interval[1], interval[2], length.out = 51))
+</code></pre>
+
+
+</div>

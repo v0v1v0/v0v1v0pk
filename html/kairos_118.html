@@ -1,0 +1,142 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>seriate_refine</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Refine CA-based Seriation</h2>
+
+<h3>Description</h3>
+
+<p>Refine CA-based Seriation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">seriate_refine(object, ...)
+
+## S4 method for signature 'AveragePermutationOrder'
+seriate_refine(object, cutoff, margin = 1, axes = 1, n = 30, ...)
+
+## S4 method for signature 'BootstrapCA'
+seriate_refine(object, cutoff, margin = 1, axes = 1, ...)
+
+## S4 method for signature 'RefinePermutationOrder'
+hist(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>PermutationOrder</code> object (typically returned by
+<code>seriate_average()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to internal methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff</code></td>
+<td>
+<p>A function that takes a numeric vector as argument and returns
+a single numeric value (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>A length-one <code>numeric</code> vector giving the subscripts which the
+refinement will be applied over: <code>1</code> indicates rows, <code>2</code> indicates columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axes</code></td>
+<td>
+<p>An <code>integer</code> vector giving the subscripts of the CA axes to be
+used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A non-negative <code>integer</code> giving the number of bootstrap
+replications.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>RefinePermutationOrder</code> object</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>seriate_refine()</code> allows to identify samples that are subject to
+sampling error or samples that have underlying structural relationships
+and might be influencing the ordering along the CA space.
+</p>
+<p>This relies on a partial bootstrap approach to CA-based seriation where each
+sample is replicated <code>n</code> times. The maximum dimension length of
+the convex hull around the sample point cloud allows to remove samples for
+a given <code>cutoff</code> value.
+</p>
+<p>According to Peebles and Schachner (2012), "[this] point removal procedure
+[results in] a reduced dataset where the position of individuals within
+the CA are highly stable and which produces an ordering consistent with the
+assumptions of frequency seriation."
+</p>
+
+
+<h3>Value</h3>
+
+
+<ul>
+<li> <p><code>seriate_refine()</code> returns a <code>RefinePermutationOrder</code> object.
+</p>
+</li>
+<li> <p><code>hist()</code> is called it for its side-effects: it results in a histogram
+being displayed (invisibly returns <code>x</code>).
+</p>
+</li>
+</ul>
+<h3>Methods (by class)</h3>
+
+
+<ul><li> <p><code>hist(RefinePermutationOrder)</code>: Compute and plot a histogram of convex hull
+maximum dimension length.
+</p>
+</li></ul>
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>References</h3>
+
+<p>Peeples, M. A., &amp; Schachner, G. (2012). Refining correspondence
+analysis-based ceramic seriation of regional data sets. <em>Journal of
+Archaeological Science</em>, 39(8), 2818-2827.
+<a href="https://doi.org/10.1016/j.jas.2012.04.040">doi:10.1016/j.jas.2012.04.040</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other seriation methods: 
+<code>permute()</code>,
+<code>seriate_average()</code>,
+<code>seriate_rank()</code>
+</p>
+
+
+</div>

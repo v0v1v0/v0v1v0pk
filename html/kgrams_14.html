@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>smoothers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k-gram Probability Smoothers</h2>
+
+<h3>Description</h3>
+
+<p>Information on available k-gram continuation probability smoothers.
+</p>
+
+
+<h4>List of smoothers currently supported by <code>kgrams</code>
+</h4>
+
+
+<ul>
+<li> <p><code>"ml"</code>: Maximum Likelihood estimate
+(Markov 1913).
+</p>
+</li>
+<li> <p><code>"add_k"</code>: Add-k smoothing
+(Dale and Laplace 1995; Lidstone 1920; Johnson 1932; Jeffreys 1998).
+</p>
+</li>
+<li> <p><code>"abs"</code>: Absolute discounting (Ney and Essen 1991).
+</p>
+</li>
+<li> <p><code>"wb"</code>: Witten-Bell smoothing (Bell et al. 1990; Witten and Bell 1991)
+</p>
+</li>
+<li> <p><code>"kn"</code>: Interpolated Kneser-Ney.
+(Kneser and Ney 1995; Chen and Goodman 1999).
+</p>
+</li>
+<li> <p><code>"mkn"</code>: Interpolated modified Kneser-Ney.
+(Chen and Goodman 1999).
+</p>
+</li>
+<li> <p><code>"sbo"</code>: Stupid Backoff (Brants et al. 2007).
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">smoothers()
+
+info(smoother)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>smoother</code></td>
+<td>
+<p>a string. Code name of probability smoother.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>smoothers()</code> returns a character vector, the list of code names
+of probability smoothers available in kgrams.
+<code>info(smoother)</code> returns <code>NULL</code> (invisibly) and prints some
+information on the selected smoothing technique.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Valerio Gherardi
+</p>
+
+
+<h3>References</h3>
+
+<p>Bell TC, Cleary JG, Witten IH (1990).
+<em>Text compression</em>.
+Prentice-Hall, Inc.<br><br> Brants T, Popat AC, Xu P, Och FJ, Dean J (2007).
+“Large Language Models in Machine Translation.”
+In <em>Proceedings of the 2007 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning (EMNLP-CoNLL)</em>, 858–867.
+<a href="https://aclanthology.org/D07-1090/">https://aclanthology.org/D07-1090/</a>.<br><br> Chen SF, Goodman J (1999).
+“An empirical study of smoothing techniques for language modeling.”
+<em>Computer Speech &amp; Language</em>, <b>13</b>(4), 359–394.<br><br> Dale AI, Laplace P (1995).
+<em>Philosophical essay on probabilities</em>.
+Springer.<br><br> Jeffreys H (1998).
+<em>The theory of probability</em>.
+OUP Oxford.<br><br> Johnson WE (1932).
+“Probability: The deductive and inductive problems.”
+<em>Mind</em>, <b>41</b>(164), 409–423.<br><br> Kneser R, Ney H (1995).
+“Improved backing-off for M-gram language modeling.”
+<em>1995 International Conference on Acoustics, Speech, and Signal Processing</em>, <b>1</b>, 181-184 vol.1.<br><br> Lidstone GJ (1920).
+“Note on the general case of the Bayes-Laplace formula for inductive or a posteriori probabilities.”
+<em>Transactions of the Faculty of Actuaries</em>, <b>8</b>(182-192), 13.<br><br> Markov AA (1913).
+“Essai d'une Recherche Statistique Sur le Texte du Roman Eugene Oneguine.”
+<em>Bull. Acad. Imper. Sci. St. Petersburg</em>, <b>7</b>.<br><br> Ney H, Essen U (1991).
+“On smoothing techniques for bigram-based natural language modelling.”
+In <em>Acoustics, Speech, and Signal Processing, IEEE International Conference on</em>, 825–828.
+IEEE Computer Society.<br><br> Witten IH, Bell TC (1991).
+“The zero-frequency problem: Estimating the probabilities of novel events in adaptive text compression.”
+<em>Ieee transactions on information theory</em>, <b>37</b>(4), 1085–1094.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># List available smoothers
+smoothers()
+
+# Get information on smoother "kn", i.e. Interpolated Kneser-Ney
+info("kn")
+
+
+</code></pre>
+
+
+</div>

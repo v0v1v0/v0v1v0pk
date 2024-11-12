@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GetKlass</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fetch classification data
+Fetch Statistics Norway classification data using API</h2>
+
+<h3>Description</h3>
+
+<p>Fetch classification data
+Fetch Statistics Norway classification data using API
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GetKlass(
+  klass,
+  date = NULL,
+  correspond = NULL,
+  correspondID = NULL,
+  variant = NULL,
+  output_level = NULL,
+  language = "nb",
+  output_style = "normal",
+  notes = FALSE,
+  quiet = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>klass</code></td>
+<td>
+<p>Number/string of the classification ID/number. (use Klass_list() to find this)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>date</code></td>
+<td>
+<p>String for the required date of the classification. Format must be "yyyy-mm-dd". For an inverval, provide two dates as a vector. If blank, will default to today's date.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correspond</code></td>
+<td>
+<p>Number/string of the target klass for correspondence table (if a correspondence table is requested).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correspondID</code></td>
+<td>
+<p>ID number of the correspondence table to retrieve. Use as an alternative to correspond.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variant</code></td>
+<td>
+<p>The classification variant to fetch (if a variant is wanted).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_level</code></td>
+<td>
+<p>Number/string specifying the requested hierarchy level (optional).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>language</code></td>
+<td>
+<p>Two letter string for the requested language output. Default is Bokmål ("nb"). Nynorsk ("nn") and English ("en") also available for some classification.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output_style</code></td>
+<td>
+<p>String variable for the output type. Default is "normal". Specify "wide" for a wide formatted table output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>notes</code></td>
+<td>
+<p>Logical for if notes should be returned as a column. Default FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Logical for whether to suppress the printing of the API address. Default TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a data frame of the specified classification/correspondence table. Output variables include:
+code, parentCode, level, and name for standard lists. For correspondence tables variables include:
+sourceCode, sourceName, targetCode and targetName. For date correspondence tables variables include:
+oldCode, oldName, newCode and newName. For "wide" output, code and name with level suffixes is specified.
+For date ranges, validFromInRequestedRange and validToInRequestedRange give the dates for the classification. Variable ChangeOccured gives the 
+effective date for classification change in classification change tables.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get classification for occupation classifications
+head(GetKlass(klass = "7"))
+# Get classification for occupation classifications in English
+head(GetKlass(klass = "7", language = "en"))
+</code></pre>
+
+
+</div>

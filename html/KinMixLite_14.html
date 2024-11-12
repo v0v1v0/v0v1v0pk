@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>expr.make.findings</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Coding additional findings as expression</h2>
+
+<h3>Description</h3>
+
+<p>Returns an expression that will be evaluated 
+in logL.UKX whenever the likelihood of the model is calculated using the
+current method, and encodes the additional findings needed to implement the 
+method; the details of the model and the extra information needed are held in the list z
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">expr.make.findings(z)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>z</code></td>
+<td>
+<p>A list specifying the additional findings; for the format, see Details</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Each component of the list <code>z</code> is a list encoding a particular type of additional finding: the first component of this (sub-)list being a character string specifying the type of finding, and the remainder of its components being named parameters giving details of the finding. The types of finding and the valid parameters of each are as follows:
+</p>
+
+<dl>
+<dt><code>Male</code></dt>
+<dd>
+<p><code>ind</code>: index of relevant contributor: which ‘unknown’ contributor are we modelling by amending his CPTs?</p>
+</dd>
+<dt><code>Female</code></dt>
+<dd>
+<p><code>ind</code>: index of relevant contributor</p>
+</dd>
+<dt><code>Rlikd</code></dt>
+<dd>
+<p><code>aca</code>: allele count array, <code>cgt</code>: character string naming genotype profile data frame, <code>evid</code>: character string naming list with one component for each marker, whose value is the evidence</p>
+</dd>
+<dt><code>Aca</code></dt>
+<dd>
+<p><code>ind</code>: index of relevant contributor, <code>aca</code>: allele count array</p>
+</dd>
+<dt><code>Caca</code></dt>
+<dd>
+<p><code>ind</code>: index of relevant contributor, <code>aca</code>: allele count array</p>
+</dd>
+<dt><code>Denom</code></dt>
+<dd>
+<p>no parameters</p>
+</dd>
+</dl>
+<p>If <code>z</code> is NULL, then there are no additional findings.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Expression encoding the additional findings.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+</div>

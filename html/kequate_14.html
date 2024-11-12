@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getEqlin</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve Equated Values of the Linear Equating</h2>
+
+<h3>Description</h3>
+
+<p>Function to retrieve the equated values of the linear equating from an object of class keout created by kequate.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getEqlin(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+
+<p>An object of class keout as created by the function kequate.
+</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A numeric vector with the equated valuesof the linear equating.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><a href="mailto:bjorn.andersson@statistik.uu.se">bjorn.andersson@statistik.uu.se</a><br><a href="mailto:kenny.branberg@stat.umu.se">kenny.branberg@stat.umu.se</a><br><a href="mailto:marie.wiberg@stat.umu.se">marie.wiberg@stat.umu.se</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kequate</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">P&lt;-c(5, 20, 35, 25, 15)
+Q&lt;-c(10, 30, 30, 20, 10)
+x&lt;-0:4
+glmx&lt;-glm(P~I(x)+I(x^2), family="poisson", x=TRUE)
+glmy&lt;-glm(Q~I(x)+I(x^2), family="poisson", x=TRUE)
+keEG&lt;-kequate("EG", 0:4, 0:4, glmx, glmy)
+getEqlin(keEG)
+</code></pre>
+
+
+</div>

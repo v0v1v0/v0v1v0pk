@@ -1,0 +1,169 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_zero_padding_3d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Zero-padding layer for 3D data (spatial or spatio-temporal).</h2>
+
+<h3>Description</h3>
+
+<p>Zero-padding layer for 3D data (spatial or spatio-temporal).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_zero_padding_3d(
+  object,
+  padding = list(list(1L, 1L), list(1L, 1L), list(1L, 1L)),
+  data_format = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>Int, or list of 3 ints, or list of 3 lists of 2 ints.
+</p>
+
+<ul>
+<li>
+<p> If int: the same symmetric padding is applied to depth, height,
+and width.
+</p>
+</li>
+<li>
+<p> If list of 3 ints: interpreted as three different symmetric
+padding values for depth, height, and width:
+<code style="white-space: pre;">⁠(symmetric_dim1_pad, symmetric_dim2_pad, symmetric_dim3_pad)⁠</code>.
+</p>
+</li>
+<li>
+<p> If list of 3 lists of 2 ints: interpreted as
+<code style="white-space: pre;">⁠((left_dim1_pad, right_dim1_pad), (left_dim2_pad, right_dim2_pad), (left_dim3_pad, right_dim3_pad))⁠</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>A string, one of <code>"channels_last"</code> (default) or
+<code>"channels_first"</code>. The ordering of the dimensions in the inputs.
+<code>"channels_last"</code> corresponds to inputs with shape
+<code style="white-space: pre;">⁠(batch_size, spatial_dim1, spatial_dim2, spatial_dim3, channels)⁠</code>
+while <code>"channels_first"</code> corresponds to inputs with shape
+<code style="white-space: pre;">⁠(batch_size, channels, spatial_dim1, spatial_dim2, spatial_dim3)⁠</code>.
+When unspecified, uses <code>image_data_format</code> value found in your Keras
+config file at <code style="white-space: pre;">⁠~/.keras/keras.json⁠</code> (if exists). Defaults to
+<code>"channels_last"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>input_shape &lt;- c(1, 1, 2, 2, 3)
+x &lt;- op_reshape(seq_len(prod(input_shape)), input_shape)
+x
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(
+## [[[[[ 1  2  3]
+##     [ 4  5  6]]
+##
+##    [[ 7  8  9]
+##     [10 11 12]]]]], shape=(1, 1, 2, 2, 3), dtype=int32)
+
+</pre></div>
+<div class="sourceCode r"><pre>y &lt;- layer_zero_padding_3d(x, padding = 2)
+shape(y)
+</pre></div>
+<div class="sourceCode"><pre>## shape(1, 5, 6, 6, 3)
+
+</pre></div>
+
+
+<h3>Input Shape</h3>
+
+<p>5D tensor with shape:
+</p>
+
+<ul>
+<li>
+<p> If <code>data_format</code> is <code>"channels_last"</code>:
+<code style="white-space: pre;">⁠(batch_size, first_axis_to_pad, second_axis_to_pad, third_axis_to_pad, depth)⁠</code>
+</p>
+</li>
+<li>
+<p> If <code>data_format</code> is <code>"channels_first"</code>:
+<code style="white-space: pre;">⁠(batch_size, depth, first_axis_to_pad, second_axis_to_pad, third_axis_to_pad)⁠</code>
+</p>
+</li>
+</ul>
+<h3>Output Shape</h3>
+
+<p>5D tensor with shape:
+</p>
+
+<ul>
+<li>
+<p> If <code>data_format</code> is <code>"channels_last"</code>:
+<code style="white-space: pre;">⁠(batch_size, first_padded_axis, second_padded_axis, third_axis_to_pad, depth)⁠</code>
+</p>
+</li>
+<li>
+<p> If <code>data_format</code> is <code>"channels_first"</code>:
+<code style="white-space: pre;">⁠(batch_size, depth, first_padded_axis, second_padded_axis, third_axis_to_pad)⁠</code>
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/reshaping_layers/zero_padding3d#zeropadding3d-class">https://keras.io/api/layers/reshaping_layers/zero_padding3d#zeropadding3d-class</a>
+</p>
+</li></ul>
+<p>Other reshaping layers: <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_flatten()</code> <br><code>layer_permute()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_reshape()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

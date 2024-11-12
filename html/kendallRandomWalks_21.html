@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kendall_simulation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generic function that draws simulated trajectories of Kendall random walk</h2>
+
+<h3>Description</h3>
+
+<p>Generic function that draws simulated trajectories of Kendall random walk
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kendall_simulation'
+plot(x, max_x = NULL, max_id = NULL,
+  level = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object returned by normalising_sequences function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_x</code></td>
+<td>
+<p>maximum value on x axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_id</code></td>
+<td>
+<p>Number of trajectories to plot. If NULL, all paths will be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Y-axis value which will be marked (level to be crossed).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>ggplot2 object
+</p>
+
+
+</div>

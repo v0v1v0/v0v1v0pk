@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_cols_to_numeric</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert columns to numeric</h2>
+
+<h3>Description</h3>
+
+<p>Check whether each column in a data.table can be converted to numeric,
+and if so, convert every such column.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_cols_to_numeric(
+  data = NULL,
+  classes = "character",
+  warn_accuracy_loss = TRUE,
+  print_summary = TRUE,
+  silent = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classes</code></td>
+<td>
+<p>a character vector specifying classes of columns
+that will be converted. For example, if <code>classes = "character"</code>,
+all columns of the class "character" will be converted–if they can be
+converted. The current version of the function only supports converting
+character columns to numeric.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warn_accuracy_loss</code></td>
+<td>
+<p>logical. whether to warn the user if
+converting character to numeric leads to loss of accuracy.
+(default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print_summary</code></td>
+<td>
+<p>If <code>print_summary = TRUE</code>, a summary of
+converted columns will printed. (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>If <code>silent = FALSE</code>, a message regarding conversion
+for a data.frame will be printed. If <code>silent = TRUE</code>, this message
+will be suppressed. By default, <code>silent = FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data_frame_1 &lt;- data.frame(a = c("1", "2"), b = c("1", "b"), c = 1:2)
+convert_cols_to_numeric(data = data_frame_1)
+data_table_1 &lt;- data.table::data.table(
+a = c("1", "2"), b = c("1", "b"), c = 1:2)
+convert_cols_to_numeric(data = data_table_1)
+</code></pre>
+
+
+</div>

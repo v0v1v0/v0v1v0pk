@@ -1,0 +1,188 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict_update_km_parallel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Quick update of kriging means and variances when one or many new points are added to the DOE.
+</h2>
+
+<h3>Description</h3>
+
+<p>The functions uses the kriging update formulas to quickly compute kriging mean and variances at points newdata, when <code>r</code> new points <code>newX</code> are added. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predict_update_km_parallel(newXmean, newXvar, newXvalue, 
+Sigma.r, newdata.oldmean, newdata.oldsd, kn)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>newXmean</code></td>
+<td>
+
+<p>Vector of size r: old kriging mean at points x_(n+1),...,x_(n+r).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newXvar</code></td>
+<td>
+
+<p>Vector of size r: kriging variance at points x_(n+1),...,x_(n+r).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newXvalue</code></td>
+<td>
+
+<p>Vector of size r: value of the objective function at x_(n+1),...,x_(n+r).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma.r</code></td>
+<td>
+
+<p>An r*r matrix: kriging covariances between the points x_(n+1),...,x_(n+r).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata.oldmean</code></td>
+<td>
+
+<p>Vector: old kriging mean at the points <code>newdata</code> (before adding x_(n+1),...,x_(n+r))
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata.oldsd</code></td>
+<td>
+
+<p>Vector: old kriging standard deviations at the points <code>newdata</code> (before adding x_(n+1),...,x_(n+r))
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kn</code></td>
+<td>
+
+<p>Kriging covariances between the points <code>newdata</code> and the r points <code>newX</code>. These covariances can be computed using the function <code>computeQuickKrigcov</code>
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with the following fields:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>Updated kriging mean at points <code>newdata</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+<p>Updated kriging standard deviation at points <code>newdata</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>New kriging weight of x_(n+1),...,x_(n+r) for the prediction at points <code>newdata</code></p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Ginsbourger D. (2014), <em>Corrected Kriging update formulae for batch-sequential data assimilation</em>, in Pardo-Iguzquiza, E., et al. (Eds.) Mathematics of Planet Earth, pp 119-122
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>computeQuickKrigcov</code>, <code>precomputeUpdateData</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#predict_update_km_parallel
+
+set.seed(9)
+N &lt;- 20 #number of observations
+testfun &lt;- branin
+
+#a 20 points initial design
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+
+#km object with matern3_2 covariance
+#params estimated by ML from the observations
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+
+#points where we want to compute prediction (if a point new.x is added to the doe)
+n.grid &lt;- 20 #you can run it with 100
+x.grid &lt;- y.grid &lt;- seq(0,1,length=n.grid)
+newdata &lt;- expand.grid(x.grid,y.grid)
+newdata &lt;- as.matrix(newdata)
+precalc.data &lt;- precomputeUpdateData(model=model,integration.points=newdata)
+pred2 &lt;- predict_nobias_km(object=model,newdata=newdata,type="UK",se.compute=TRUE)
+newdata.oldmean &lt;- pred2$mean; newdata.oldsd &lt;- pred2$sd
+
+#the point that we are going to add
+new.x &lt;- matrix(c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8),ncol=2,byrow=TRUE)   
+pred1 &lt;- predict_nobias_km(object=model,newdata=new.x,type="UK",
+se.compute=TRUE,cov.compute=TRUE)
+newXmean &lt;- pred1$mean; newXvar &lt;- pred1$sd^2; newXvalue &lt;- pred1$mean + 2*pred1$sd
+Sigma.r &lt;- pred1$cov
+
+kn &lt;- computeQuickKrigcov(model=model,integration.points=newdata,X.new=new.x,
+                    precalc.data=precalc.data,F.newdata=pred1$F.newdata,
+                    c.newdata=pred1$c)
+
+updated.predictions &lt;- predict_update_km_parallel(newXmean=newXmean,newXvar=newXvar,
+                                         newXvalue=newXvalue,Sigma.r=Sigma.r,
+                                         newdata.oldmean=newdata.oldmean,
+                                         newdata.oldsd=newdata.oldsd,kn=kn)
+
+#the new kriging variance is usually lower than the old one
+updated.predictions$sd - newdata.oldsd 
+
+z.grid1 &lt;- matrix(newdata.oldsd, n.grid, n.grid)
+z.grid2 &lt;- matrix(updated.predictions$sd, n.grid, n.grid)
+
+par(mfrow=c(1,2))
+
+image(x=x.grid,y=y.grid,z=z.grid1,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid1,15,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+title("Kriging standard deviation")
+
+image(x=x.grid,y=y.grid,z=z.grid2,col=grey.colors(10))
+contour(x=x.grid,y=y.grid,z=z.grid2,15,add=TRUE)
+points(design, col="black", pch=17, lwd=4,cex=2)
+points(new.x, col="red", pch=17, lwd=4,cex=2)
+title("updated Kriging standard deviation")
+</code></pre>
+
+
+</div>

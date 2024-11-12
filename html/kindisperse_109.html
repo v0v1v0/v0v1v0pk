@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sample_kindist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subsample and filter a <code>KinPairSimulation</code> or <code>KinPairData</code> Object</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a pre-existing <code>KinPairSimulation</code> or <code>KinPairData</code> Object with distance and coordinate data and filters
+it to simulate various in-field sampling schemes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sample_kindist(
+  kindist,
+  upper = NULL,
+  lower = NULL,
+  spacing = NULL,
+  n = NULL,
+  dims = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kindist</code></td>
+<td>
+<p><code>KinPairSimulation</code> Class Object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p><code>numeric</code> - upper cutoff for kin pair distances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p><code>numeric</code> - lower cutoff for kin pair distances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spacing</code></td>
+<td>
+<p><code>numeric</code> - spacing between traps (location-independent)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p><code>numeric</code> - number of individuals to keep after filtering (if possible)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dims</code></td>
+<td>
+<p>dimensions to sample within (works with the <code>KinPairSimulation</code> spatial &amp; dimension information).
+Either <code>num</code> (defining a square) or <code>c(num1, num2)</code> (defining a rectangle).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function enables the testing of the impact of some basic sampling constraints that might be encountered in study design or
+implementation on the effectiveness of the <code>kindisperse</code> estimation of intergenerational dispersal. It is typically paired with
+a simulation function such as <code>simulate_kindist_composite</code> to generate a 'pure' dataset, then an estimation function
+such as <code>axpermute</code> to examine the impact of filter settings on the 'detected' value of dispersal sigma. The filter
+parameters <code>upper</code>, <code>lower</code>, &amp; <code>spacing</code> all work on the vector of (direction-independent) distances, &amp; the parameter
+<code>n</code> enables the random subsampling of n kin dyads. The parameter <code>dims</code> requires 2D location information for each individual,
+meaning it can ordinarily only be used with the <code>KinPairSimulation</code> object (not <code>KinPairData</code>). All filter parameters are
+stackable.
+</p>
+<p>The <code>upper</code> parameter implements a cutoff for the <strong>maximum</strong> distance allowable in the dataset. If set to e.g. 100m, all kin dyads
+separated by a distance greater than 100m will be excluded from the filtered dataset. Note that this is a geometry-independent metric;
+it is naive to the edge effects of an actual sample site. The <code>lower</code> parameter implements a cutoff for the <strong>minimum</strong>
+distance allowable in the dataset.It operates in the same manner as the previous parameter (in this case, removing results smaller
+than a distance threshold)
+</p>
+<p>The <code>spacing</code> parameter as currently implemented takes all distances &amp; alters them to lie at the midpoint of a bin with width set
+by this parameter. So if <code>spacing</code> is set to 10 meters, all kin pairs with distances between 0 and 10m will have their distances
+rest to 5m, all between 10 &amp; 20 will be set to 15 m, etc. (quantizing the data). Note that once again this is a geometry-independent
+action: These binwiths &amp; 'trap spacing' are not spatially related to each other like they would be in a sample site, and there is no
+simulated dropout of kinpairs too far from a trap. There is also no geometry-dependent profiling of possible frequency of recaptures
+across each distance category (will be implemented in a future version). (this parameter leaves 2D spatial information intact)
+</p>
+<p>The <code>dims</code> parameter defines the dimensions of a rectangle within which <strong>both</strong> individuals of a kin dyad will need to lie
+to be included in the filtered dataset. This measure (which excludes e.g. long-distance dispersal into &amp; out of the study site) is
+<em>geometry-dependent</em>, unlike the <code>upper</code> parameter. This enables the testing of (rectangular) site geometries potentially
+corresponding to an actual site (two-dimensional estimates of dispersal such as <code>kindisperse</code> become unreliable as edge effects
+significantly reduce the size of either one or both dimensions with respect to the real underlying dispersal sigma). These site
+geometries can be entered in a few ways: (a) a single numeric value, which will be interpreted as the length of the side of a square;
+(b) a numeric vector of length two, which will be interpreted as the length &amp; width of the sample site; (c) either of the above passed
+to the <code>elongate</code> function, which takes the rectangular site dimensions and alters their <code>aspect ratio</code> (ratio of
+length to width) while preserving the underlying area the study site covers. The implementation of this filtering step permutes the
+absolute positions of all dyads so that at least one member of the dyad is in the inial site rectangle, while preserving their relative
+positions (and angles) with respect to each other. This means that following this step, the xy coordinate positions of each
+individual will not match those contained in the previous round. It also means that the repeated calling of this function will
+result in a steady reduction in retained kin dyads due to edge effects.
+</p>
+<p>The <code>n</code> parameter randomly samples n pairs from the dataset. It is implemented after all other filtering has taken place, so
+will only sample surviving individuals A typical strategy for the use of this functions in simulations would be to simulate an
+extremely large (e.g. one million pairs) dataset, then pass it repeatedly to this filter function, with a final sub-sampling step of
+1,000 included. This enables comparisons across sampling conditions (in most cases) regardless of the amount of data filtered prior to
+this step.
+</p>
+<p>As this function returns a <code>KinPairData</code> or <code>KinPairSimulation</code> object, the returned object can be passed back for filtering
+an arbitrary number of times, or alternatively passed to an estimation strategy.
+</p>
+<p>This function can be used to test for bias in the results of a close-kin dispersal study that has been conducted. After the field
+sampling, kin identification, &amp; sigma calculation steps, use the estimated sigmas as inputs into simulation functions that are
+then filtered for size &amp; geometry of the actual study site (via the <code>dims</code> method). Then pass this filtered dataset back to the
+sigma-determining functions. If filtering has resulted in a substantial drop in sigma, the estimate of sigma from the study site has
+likely been biased by the site geometry (note that the impact of this is dependent on the shape of the dispersal kernel - the more
+leptokurtic (dominated by long-distance dispersal), the more severe bias will be for a particular sigma and site geometry.
+</p>
+
+
+<h3>Value</h3>
+
+<p>returns an object of class <code>KinPairData</code> or <code>KinPairSimulation</code> containing simulation and filtering
+details and a filtered dataset of dispersed individuals.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">simobject &lt;- simulate_kindist_simple(nsims = 100000, sigma = 100, kinship = "PO")
+
+sample_kindist(simobject, upper = 200, lower = 50, spacing = 15, n = 100)
+</code></pre>
+
+
+</div>

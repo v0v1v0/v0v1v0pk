@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Custom Slot Getters and Setters</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Getter and Setter functions for <code>TapestriExperiment</code> slots</h2>
+
+<h3>Description</h3>
+
+<p>Get and set custom slots in <code>TapestriExperiment</code>. Slots include
+<code>barcodeProbe</code> for a sample barcode probe ID
+and <code>grnaProbe</code> for a gRNA-associated probe ID. These are used as shortcuts for
+<code>moveNonGenomeProbes()</code> and <code>countBarcodedReads()</code>.
+<code>gmmParams</code> holds parameters and metadata for GMM copy number calling models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">barcodeProbe(x)
+
+## S4 method for signature 'TapestriExperiment'
+barcodeProbe(x)
+
+barcodeProbe(x) &lt;- value
+
+## S4 replacement method for signature 'TapestriExperiment'
+barcodeProbe(x) &lt;- value
+
+grnaProbe(x)
+
+## S4 method for signature 'TapestriExperiment'
+grnaProbe(x)
+
+grnaProbe(x) &lt;- value
+
+## S4 replacement method for signature 'TapestriExperiment'
+grnaProbe(x) &lt;- value
+
+gmmParams(x)
+
+## S4 method for signature 'TapestriExperiment'
+gmmParams(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>Character, probe ID to assign to slot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p>A <code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>For the getter methods <code>barcodeProbe</code>, <code>grnaProbe</code>, and <code>gmmParams</code>, the value
+of the given slot is returned. For the setter methods <code>barcodeProbe</code> and <code>grnaProbe</code>,
+a <code>TapestriExperiment</code> object is returned with modifications made to the given slot.
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>barcodeProbe(TapestriExperiment)</code>: barcodeProbe getter
+</p>
+</li>
+<li> <p><code>barcodeProbe(TapestriExperiment) &lt;- value</code>: barcodeProbe setter
+</p>
+</li>
+<li> <p><code>grnaProbe(TapestriExperiment)</code>: grnaProbe getter
+</p>
+</li>
+<li> <p><code>grnaProbe(TapestriExperiment) &lt;- value</code>: grnaProbe setter
+</p>
+</li>
+<li> <p><code>gmmParams(TapestriExperiment)</code>: gmmParams getter
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+barcodeProbe(tap.object) &lt;- "Probe01"
+barcodeProbe(tap.object)
+
+grnaProbe(tap.object) &lt;- "Probe02"
+grnaProbe(tap.object)
+
+gmmParams(tap.object)
+</code></pre>
+
+
+</div>

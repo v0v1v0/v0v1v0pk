@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knockoff.threshold</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Threshold for the knockoff filter</h2>
+
+<h3>Description</h3>
+
+<p>Computes the threshold for the knockoff filter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knockoff.threshold(W, fdr = 0.1, offset = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>the test statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fdr</code></td>
+<td>
+<p>target false discovery rate (default: 0.1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>either 0 or 1 (default: 1). The offset used to compute the rejection threshold on the
+statistics. The value 1 yields a slightly more conservative procedure ("knockoffs+") that
+controls the FDR according to the usual definition, while an offset of 0 controls a modified FDR.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The threshold for variable selection.
+</p>
+
+
+</div>

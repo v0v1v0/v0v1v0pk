@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>makekinship</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Create a sparse kinship matrix
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute the overall kinship matrix for a collection of families, and
+store it efficiently.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">makekinship(famid, id, father.id, mother.id, unrelated=0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>famid</code></td>
+<td>
+
+<p>a vector of family identifiers
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+
+<p>a vector of unique subject identifiers
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>father.id </code></td>
+<td>
+
+<p>for each subject, the identifier of their biolgical father
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mother.id </code></td>
+<td>
+
+<p>for each subject, the identifier of thier biological mother
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unrelated</code></td>
+<td>
+
+<p>subjects with this family id are considered to be unrelated singletons,
+i.e., not related to each other or to anyone else.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This command is depricated.  The kinship command now can be applied
+directly to pedigreeList objects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a sparse kinship matrix of class <code>bdsmatrix</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kinship</code>, <code>makefamid</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Data set from a large family study of breast cancer
+#  there are 26050 subjects in the file, from 426 families
+## Not run: 
+&gt; table(cdata$sex)
+     F     M 
+ 12699 13351
+&gt; length(unique(cdata$famid))
+[1] 426
+
+&gt; kin1 &lt;- makekinship(cdata$famid, cdata$gid, cdata$dadid, cdata$momid)
+&gt; dim(kin1)
+[1] 26050 26050
+&gt; class(kin1)
+[1] "bdsmatrix"
+# The next line shows that few of the elements of the full matrix are &gt;0
+&gt; length(kin1@blocks)/ prod(dim(kin1))
+[1] 0.00164925
+
+# kinship matrix for the females only
+&gt; femid &lt;- cdata$gid[cdata$sex=='F']
+&gt; femindex &lt;- !is.na(match(dimnames(kin1)[[1]], femid))
+&gt; kin2 &lt;- kin1[femindex, femindex]
+#
+# Note that "femindex &lt;- match(femid, dimnames(kin1)[[1]])" is wrong, since
+#  then kin1[femindex, femindex] might improperly reorder the rows/cols 
+#  (if families were not contiguous in cdata).  
+# However sort(match(femid, dimnames(kin1)[[1]])) would be okay.
+
+## End(Not run)</code></pre>
+
+
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>runPCA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cluster assay data by Principal Components Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Analyzes assay data by Principal Components Analysis (PCA) and saves results
+to <code>reducedDims</code> slot of <code>TapestriObject</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">runPCA(
+  TapestriExperiment,
+  alt.exp = "alleleFrequency",
+  assay = NULL,
+  sd.min.threshold = NULL,
+  center = TRUE,
+  scale. = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.exp</code></td>
+<td>
+<p>Character, <code>altExp</code> to use, <code>NULL</code> uses top-level/main experiment. Default "alleleFrequency".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>assay</code></td>
+<td>
+<p>Character, <code>assay</code> to use. <code>NULL</code> (default) uses first-indexed assay.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd.min.threshold</code></td>
+<td>
+<p>Numeric, minimum threshold for allelefreq.sd. Increase to run PCA on fewer, more variable dimensions. Set to <code>NULL</code> if not using for alleleFrequency slot. Default <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>Logical, if <code>TRUE</code> (default), variables are shifted to be zero centered. See <code>stats::prcomp()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.</code></td>
+<td>
+<p>Logical,if <code>TRUE</code> (default), variables are scaled to have unit variance prior to PCA. See <code>stats::prcomp()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> with PCA results saved to <code>reducedDims</code> slot of <code>altExp</code>, and proportion of variance explained by each PC saved to <code>metadata</code> slot of <code>altExp.</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>stats::prcomp()</code> for PCA method details.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment
+tap.object &lt;- runPCA(tap.object, alt.exp = "alleleFrequency")
+</code></pre>
+
+
+</div>

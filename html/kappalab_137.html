@@ -1,0 +1,194 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Mobius.set.func-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "Mobius.set.func"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing the Möbius transform of a set function.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the
+function <code>Mobius.set.func</code>.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 containing the
+number of elements of the set on which the Möbius transform is
+defined. </p>
+</dd>
+<dt>
+<code>k</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 containg the order
+of truncation of the Möbius transform: subsets whose cardinal is
+superior to k are considered to be zero.</p>
+</dd>
+<dt>
+<code>subsets</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> containing
+the "<code>k</code> power set" of the underlying
+set in "natural" order . The subsets are encoded as integers.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>choose(n,0) + ... + choose(n,k)</code> representing the
+coefficients of a truncated Möbius transform of a set function in "natural" order.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>superclass.set.func</code>, directly.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>show</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code> </p>
+</dd>
+<dt>as.Mobius.card.set.func</dt>
+<dd>
+<p><code>signature(object =
+	"Mobius.set.func")</code> </p>
+</dd>
+<dt>as.card.set.func</dt>
+<dd>
+<p><code>signature(object =
+	"Mobius.set.func")</code> </p>
+</dd>
+<dt>as.set.func</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>as.Mobius.game</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>as.Mobius.capacity</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>interaction.indices</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>is.cardinal</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>is.kadditive</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func", k =
+	"numeric")</code> </p>
+</dd>
+<dt>is.monotone</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>k.truncate.Mobius</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func",
+	k = "numeric")</code></p>
+</dd>
+<dt>Shapley.value</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>to.data.frame</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+<dt>zeta</dt>
+<dd>
+<p><code>signature(object = "Mobius.set.func")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>set.func-class</code>, 
+<br><code>Mobius.set.func</code>,
+<br><code>as.Mobius.card.set.func-methods</code>,
+<br><code>as.card.set.func-methods</code>,
+<br><code>as.set.func-methods</code>,  
+<br><code>as.Mobius.game-methods</code>,
+<br><code>as.Mobius.capacity-methods</code>, 
+<br><code>interaction.indices-methods</code>, 
+<br><code>is.cardinal-methods</code>, 
+<br><code>is.kadditive-methods</code>,
+<br><code>is.monotone-methods</code>, 
+<br><code>k.truncate.Mobius-methods</code>, 
+<br><code>Shapley.value-methods</code>, 
+<br><code>to.data.frame-methods</code>,
+<br><code>zeta-methods</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## the Mobius transform of a set function directly
+a &lt;- Mobius.set.func(1:16,4,4)
+
+## the attributes of the object
+a@n
+a@k
+a@data
+a@subsets
+
+## a set function
+mu &lt;- set.func(7:-8)
+## and its Mobius transform
+a &lt;- Mobius(mu)
+
+## some conversions that cannot work
+## as.game(a)
+## as.capacity(a)
+## as.card.set.func(a)
+
+## some tests
+is.cardinal(a)
+is.kadditive(a,2)
+is.monotone(a)
+
+## some transformations
+zeta(a)
+k.truncate.Mobius(a,2)
+
+## summary 
+Shapley.value(a)
+interaction.indices(a)
+# the same
+summary(a)
+
+## save the Mobius transform to a file
+d &lt;- to.data.frame(a)
+## Not run: write.table(d,"my.Mobius.set.func.csv",sep="\t")
+
+# finally, some conversions that should work
+mu &lt;- set.func(c(0,1,1,1,2,2,2,3))
+a &lt;- Mobius(mu)
+as.Mobius.game(a)
+as.Mobius.capacity(a)
+as.Mobius.card.set.func(a)
+</code></pre>
+
+
+</div>

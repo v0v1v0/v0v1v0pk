@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tkonfound</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform Sensitivity Analysis on 2x2 Tables</h2>
+
+<h3>Description</h3>
+
+<p>This function performs a sensitivity analysis on a 2x2 contingency table.
+It calculates the number of cases that need to be replaced to invalidate
+or sustain the statistical inference. The function also allows switching
+between treatment success and failure or control success and failure
+based on the provided parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tkonfound(
+  a,
+  b,
+  c,
+  d,
+  alpha = 0.05,
+  switch_trm = TRUE,
+  test = "fisher",
+  replace = "control",
+  to_return = to_return
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>Number of unsuccessful cases in the control group.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>Number of successful cases in the control group.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+<p>Number of unsuccessful cases in the treatment group.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>Number of successful cases in the treatment group.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Significance level for the statistical test, default is 0.05.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>switch_trm</code></td>
+<td>
+<p>Boolean indicating whether to switch treatment row cells,
+default is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>Type of statistical test to use, either "fisher"
+(default) or "chisq".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replace</code></td>
+<td>
+<p>Indicates whether to use the entire sample or the control
+group for base rate calculation, default is "control".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_return</code></td>
+<td>
+<p>Type of output to return, either "raw_output" or "print".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns detailed information about the sensitivity analysis,
+including the number of cases to be replaced (RIR), user-entered
+table, transfer table, and conclusions.
+</p>
+
+
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>activation_hard_silu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hard SiLU activation function, also known as Hard Swish.</h2>
+
+<h3>Description</h3>
+
+<p>It is defined as:
+</p>
+
+<ul>
+<li> <p><code>0</code> if <code style="white-space: pre;">⁠if x &lt; -3⁠</code>
+</p>
+</li>
+<li> <p><code>x</code> if <code>x &gt; 3</code>
+</p>
+</li>
+<li> <p><code>x * (x + 3) / 6</code> if <code style="white-space: pre;">⁠-3 &lt;= x &lt;= 3⁠</code>
+</p>
+</li>
+</ul>
+<p>It's a faster, piecewise linear approximation of the silu activation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">activation_hard_silu(x)
+
+activation_hard_swish(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Input tensor.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A tensor, the result from applying the activation to the input tensor <code>x</code>.
+</p>
+
+
+<h3>Reference</h3>
+
+
+<ul><li> <p><a href="https://arxiv.org/abs/1905.02244">A Howard, 2019</a>
+</p>
+</li></ul>
+</div>

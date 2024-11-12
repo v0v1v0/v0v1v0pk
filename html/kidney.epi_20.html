@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>service.singular_or_plural</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Form output message in singular or plural.</h2>
+
+<h3>Description</h3>
+
+<p>Form output message in singular or plural.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">service.singular_or_plural(x, singular, plural)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric. The value to be checked (usualy a counter of some variable).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>singular</code></td>
+<td>
+<p>Character string. The value to be returned in case of singular form (usualy a string, but could be any type).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plural</code></td>
+<td>
+<p>Character string. The value to be returned in case of plural form (usualy a string, but could be any type).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Provide different output for constructing messages in singular or plural. 
+</p>
+<p>Programming: Boris Bikbov <a href="mailto:boris@bikbov.ru">boris@bikbov.ru</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Character string. Returns a value for constructing messages in singular or plural form.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">service.singular_or_plural(1, "This value was", "These values were") # "This value was"
+service.singular_or_plural(99, "This value was", "These values were") # "These values were"
+</code></pre>
+
+
+</div>

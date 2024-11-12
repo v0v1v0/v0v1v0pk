@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kRp.cluster</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Work in (early) progress. Probably don't even look at it. Consider it pure magic that is not to be tempered with.</h2>
+
+<h3>Description</h3>
+
+<p>In some future release,
+this might evolve into a function to help comparing several texts by features like average
+sentece length, word length, lexical diversity,
+and so forth. The idea behind it is to conduct a cluster analysis,
+to discover which texts out of several are similar to (or very different from) each other. This can be useful,
+e.g., if
+you need texts for an experiment which are different in content,
+but similar regarding syntactic features, like
+listed above.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kRp.cluster(txts, lang, TT.path, TT.preset)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txts</code></td>
+<td>
+<p>A character vector with paths to texts to analyze.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>A character string with a valid Language identifier.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TT.path</code></td>
+<td>
+<p>A character string, path to TreeTagger installation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TT.preset</code></td>
+<td>
+<p>A character string naming the TreeTagger preset to use.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>It is included in this package not really to be used, but to maybe inspire you,
+to toy around with the code and help me to
+come up with something useful in the end...
+</p>
+
+
+</div>

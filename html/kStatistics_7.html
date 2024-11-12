@@ -1,0 +1,182 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>e_MFB</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of Faa di Bruno's formula</h2>
+
+<h3>Description</h3>
+
+<p>The function evaluates the Faa di Bruno's formula, output of the <code>MFB</code> 
+function, when the coefficients of the exponential formal power series <code>f</code> and <code>g1,...,gn</code> 
+in the composition <code>f[g1(),...,gn()]</code> are substituted with numerical values.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">e_MFB(pv = c(), pn = 0, pf = c(), pg = c(), b = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pv</code></td>
+<td>
+<p>vector of integers, the subscript of Faa di Bruno's formula</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pn</code></td>
+<td>
+<p>integer, the number of the inner formal power series <code>"g"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pf</code></td>
+<td>
+<p>vector, the numerical values in place of the coefficients of the outer formal power series 
+<code>"f"</code> or the string with the direct assignments in place of the coefficients of both <code>"f"</code> and <code>"g"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pg</code></td>
+<td>
+<p>vector, the numerical values in place of the coefficients of the inner formal power series <code>"g"</code>  
+[Optional if <code>pf</code> is a string]</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>boolean</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The output of the <code>MFB</code> function is a coefficient of the exponential formal 
+power series compositions in the cases 
+</p>
+
+<table>
+<tr>
+<td style="text-align: center;">
+a) </td>
+<td style="text-align: left;"> univariate <code>f</code> with univariate <code>g</code> </td>
+</tr>
+<tr>
+<td style="text-align: center;">
+b) </td>
+<td style="text-align: left;"> univariate <code>f</code> with multivariate <code>g</code> </td>
+</tr>
+<tr>
+<td style="text-align: center;">
+c) </td>
+<td style="text-align: left;"> multivariate <code>f</code> with multivariates <code>{gi}</code>
+</td>
+</tr>
+</table>
+<p>The <code>e_MFB</code> function evaluates this coefficient when the coefficients of <code>f</code> and 
+<code>{gi}</code> are substituted with numerical values. These values are passed to the <code>e_MFB</code> 
+function trough the third and the fourth input parameter. There is one 
+further input boolean parameter: when equal to <code>TRUE</code>, the function prints the list of all 
+the assignments. See the examples for more details on how to use this boolean parameter when the expression 
+of the coefficients of <code>f</code> and <code>{gi}</code> becomes more complex.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>numerical</code></td>
+<td>
+<p>the evaluation of Faa di Bruno's formula</p>
+</td>
+</tr></table>
+<h3>Warning</h3>
+
+<p>The value of the first parameter is the same as the <code>mkmSet</code> function.</p>
+
+
+<h3>Note</h3>
+
+<p>Called from the <code>MFB</code> function in the <code>kStatistics</code> package.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. Vol. 14(2), 440-468. (download from <a href="http://www.elviradinardo.it/lavori1.html">http://www.elviradinardo.it/lavori1.html</a>) 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) Symbolic computation of moments of sampling distributions. 
+Comp. Stat. Data Analysis Vol. 52(11), 4909-4922, (download from <a href="http://www.elviradinardo.it/lavori1.html">http://www.elviradinardo.it/lavori1.html</a>) 
+</p>
+<p>E. Di Nardo, G. Guarino, D. Senato (2011) A new algorithm for computing the multivariate Faa di Bruno's formula. 
+Appl. Math. Comp. 217, 6286–6295. (download from <a href="https://arxiv.org/abs/1012.6008">https://arxiv.org/abs/1012.6008</a>)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mkmSet</code>,
+<code>MFB</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# The numerical value of f[1]g[1,1] + f[2]g[1,0]g[0,1], that is the coefficient of z1z2 in 
+# f(g1(z1,z2),g2(z1,z2))) output of MFB(c(1,1),1) when 
+# f[1] = 5 and f[2] = 10 
+# g[0,1]=3,  g[1,0]=6,  g[1,1]=9
+e_MFB(c(1,1),1, c(5,10), c(3,6,9))
+
+# Same as the previous example, with a string of assignments as third input parameter
+e_MFB(c(1,1),1, "f[1]=5, f[2]=10, g[0,1]=3, g[1,0]=6, g[1,1]=9")
+
+
+# Use the boolean parameter to verify the assignments to the coefficients of "f" and "g", 
+# that is f[1]=5, f[2]=10, g[0,1]=3, g[1,0]=6, g[1,1]=9
+e_MFB(c(1,1),1, c(5,10), c(3,6,9), TRUE)
+
+# To recover which coefficients are involved, run the function without any assignment. 
+# The error message recalls which coefficients are necessary, that is
+# e_MFB(c(1,1),1)
+# Error in e_MFB(c(1, 1), 1) : 
+#   The third parameter must contain the 2 values of f: f[1] f[2]. 
+#   The fourth parameter must contain the 3 values of g: g[0,1] g[1,0] g[1,1]
+
+# To assign correctly the values to the coefficients of "f" and "g" when the functions 
+# become more complex:
+# 1) run e_MFB(c(1,1),2) and get the errors with the indication of the involved coefficients 
+#    of "f" and "g", that is 
+#      The third parameter must contain the 5 values of f: 
+#                      f[0,1] f[0,2] f[1,0] f[1,1] f[2,0]
+#      The fourth parameter must contain the 6 values of g: 
+#                      g1[0,1] g1[1,0] g1[1,1] g2[0,1] g2[1,0] g2[1,1]"
+# 2) initialize f[0,1] f[0,2] f[1,0] f[1,1] f[2,0] with - for example - the first 5 integer 
+#    numbers and do the same for g1[0,1] g1[1,0] g1[1,1] g2[0,1] g2[1,0] g2[1,1], that is
+#    e_MFB(c(1,1),2, c(1:5), c(1:6), TRUE)
+# 3) trought the boolean value TRUE, recover the string f[0,1]=1, f[0,2]=2, f[1,0]=3, f[1,1]=4, 
+#    f[2,0]=5, g1[0,1]=1, g1[1,0]=2, g1[1,1]=3, g2[0,1]=4, g2[1,0]=5, g2[1,1]=6
+# 4) copy and past the string in place of " ... " when run 
+#    e_MFB(c(1,1),1," ... ")
+# 5) change the assignments if necessary
+cfVal&lt;-"f[0,1]=2, f[0,2]=5, f[1,0]=13, f[1,1]=-4, f[2,0]=0"
+cgVal&lt;-"g1[0,1]=-2.1, g1[1,0]=2,g1[1,1]=3.1, g2[0,1]=5, g2[1,0]=0, g2[1,1]=6.1"
+cVal&lt;-paste0(cfVal,",",cgVal)
+e_MFB(c(1,1),2,cVal)
+</code></pre>
+
+
+</div>

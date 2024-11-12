@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calculate_weight</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate weight from population designs</h2>
+
+<h3>Description</h3>
+
+<p>Calculate weight using population genotype or summary statistics.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calculate_weight(
+  pval = NULL,
+  beta = NULL,
+  method = "score",
+  geno = NULL,
+  y = NULL,
+  phetype = "D",
+  PCs = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pval</code></td>
+<td>
+<p>A numeric vector of length p for p-values. P-values must be between 0 and 1. If not NULL, weight will be calculated as -log10(p-value).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+<p>A numeric vector of length p for beta coefficients. If not NULL, weight will be calculated as the absolute value of beta coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A character string for the name of the weight estimation method. Must not be NULL if population genotype is used to calculate weight. Weight can be calculated using "score" (i.e., single variant score test) or "lasso" (i.e., least absolute shrinkage and selection operator). The default is "score".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geno</code></td>
+<td>
+<p>A n*p matrix for the population genotype data, in which n is the number of subjects and p is the number of variants. The genotypes must be coded as 0, 1, or 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A numeric vector of length n for the phenotype data for the n subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phetype</code></td>
+<td>
+<p>A character for the variable type of the phenotype. The type can be "C" (i.e., continuous) or "D" (i.e., dichotomous). The default is "D".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PCs</code></td>
+<td>
+<p>A n*k matrix for the principal components of population structure, in which n is the number of subjects and k is the number of (top) principal components. If not NULL, principal components will be included as covariates when calculating weight from population genotype.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric vector of length p for the weight.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(KnockoffHybrid.example)
+weight&lt;-calculate_weight(geno=KnockoffHybrid.example$dat.pop,y=KnockoffHybrid.example$y.pop)
+</code></pre>
+
+
+</div>

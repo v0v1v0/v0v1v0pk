@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cvtree</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extracts variable cluster IDs</h2>
+
+<h3>Description</h3>
+
+<p>Extracts cluster IDs for variables according to a dendrogram from object of class <code>cvtree</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cvtree(object, k = 2, mincor = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object of class <code>corclust</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of clusters to be extracted from dendrogram.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mincor</code></td>
+<td>
+<p>Minimum within cluster correlation. Can be specified alternatively to <code>k</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently not used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Like in <code>corclust</code> for correlation comparison numerics and factors are considered separately. 
+For factors Cramer's V statistic is used.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>cvtree</code> with elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>Vector of cluster IDs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>correlations</code></td>
+<td>
+<p>Matrix of average within cluster correlations and average corrleation to all variables of the closest cluster as well as the ID of the closest cluster. For factor variables Cramer's V is computed.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Gero Szepannek</p>
+
+
+<h3>References</h3>
+
+<p>Roever, C. and Szepannek, G. (2005): Application of a genetic algorithm
+to variable selection in fuzzy clustering. In C. Weihs and W. Gaul (eds), Classification 
+- The Ubiquitous Challenge, 674-681, Springer.</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>corclust</code>,  <code>plot.corclust</code> and <code>hclust</code> for details on the clustering algorithm.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">    data(B3)
+    ccres &lt;- corclust(B3)
+    plot(ccres)
+    cvtree(ccres, k = 3)
+</code></pre>
+
+
+</div>

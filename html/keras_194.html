@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_ctc_batch_cost</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Runs CTC loss algorithm on each batch element.</h2>
+
+<h3>Description</h3>
+
+<p>Runs CTC loss algorithm on each batch element.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_ctc_batch_cost(y_true, y_pred, input_length, label_length)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>tensor <code style="white-space: pre;">⁠(samples, max_string_length)⁠</code> containing the truth
+labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>tensor <code style="white-space: pre;">⁠(samples, time_steps, num_categories)⁠</code> containing the
+prediction, or output of the softmax.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input_length</code></td>
+<td>
+<p>tensor <code style="white-space: pre;">⁠(samples, 1)⁠</code> containing the sequence length for
+each batch item in <code>y_pred</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label_length</code></td>
+<td>
+<p>tensor <code style="white-space: pre;">⁠(samples, 1)⁠</code> containing the sequence length for
+each batch item in <code>y_true</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Tensor with shape (samples,1) containing the CTC loss of each
+element.
+</p>
+
+
+<h3>Keras Backend</h3>
+
+<p>This function is part of a set of Keras backend functions that enable
+lower level access to the core operations of the backend tensor engine
+(e.g. TensorFlow, CNTK, Theano, etc.).
+</p>
+<p>You can see a list of all available backend functions here:
+<a href="https://tensorflow.rstudio.com/reference/keras/index.html#backend">https://tensorflow.rstudio.com/reference/keras/index.html#backend</a>.
+</p>
+
+
+</div>

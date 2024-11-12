@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print.kernelshap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prints "kernelshap" Object</h2>
+
+<h3>Description</h3>
+
+<p>Prints "kernelshap" Object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kernelshap'
+print(x, n = 2L, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of class "kernelshap".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Maximum number of rows of SHAP values to print.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisibly, the input is returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kernelshap()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fit &lt;- lm(Sepal.Length ~ ., data = iris)
+s &lt;- kernelshap(fit, iris[1:3, -1], bg_X = iris[, -1])
+s
+</code></pre>
+
+
+</div>

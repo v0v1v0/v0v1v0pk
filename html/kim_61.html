@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kurtosis</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kurtosis</h2>
+
+<h3>Description</h3>
+
+<p>Calculate kurtosis of the sample using a formula for either the
+(1) biased estimator or (2) an unbiased estimator of the
+population kurtosis. Formulas were taken from DeCarlo (1997),
+<a href="https://doi.org/10.1037/1082-989X.2.3.292">doi:10.1037/1082-989X.2.3.292</a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kurtosis(vector = NULL, unbiased = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unbiased</code></td>
+<td>
+<p>logical. If <code>unbiased = TRUE</code>, the unbiased
+estimate of the population kurtosis will be calculated.
+If <code>unbiased = FALSE</code>, the biased estimate of the population
+kurtosis will be calculated. By default, <code>unbiase = TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a numeric value, i.e., kurtosis of the given vector
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># calculate the unbiased estimator (e.g., kurtosis value that
+# Excel 2016 will produce)
+kim::kurtosis(c(1, 2, 3, 4, 5, 10))
+# calculate the biased estimator (e.g., kurtosis value that
+# R Package 'moments' will produce)
+kim::kurtosis(c(1, 2, 3, 4, 5, 10), unbiased = FALSE)
+# compare with kurtosis from 'moments' package
+moments::kurtosis(c(1, 2, 3, 4, 5, 10))
+</code></pre>
+
+
+</div>

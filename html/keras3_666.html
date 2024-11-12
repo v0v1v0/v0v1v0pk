@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reset_state</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reset the state for a model, layer or metric.</h2>
+
+<h3>Description</h3>
+
+<p>Reset the state for a model, layer or metric.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reset_state(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Model, Layer, or Metric instance
+</p>
+<p>Not all Layers have resettable state (E.g., <code>adapt()</code>-able preprocessing
+layers and rnn layers have resettable state, but a <code>layer_dense()</code> does not).
+Calling this on a Layer instance without any resettable-state will error.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>object</code>, invisibly.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other layer methods: <br><code>count_params()</code> <br><code>get_config()</code> <br><code>get_weights()</code> <br><code>quantize_weights()</code> <br></p>
+
+
+</div>

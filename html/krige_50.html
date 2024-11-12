@@ -1,0 +1,236 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>WVwells</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>West Virginia Oil and Gas Production in 2012</h2>
+
+<h3>Description</h3>
+
+<p>These data are a subset of the West Virginia Geological and Economic Survey of 
+2014. They contain information on the coordinates of wells that yielded at 
+least some quantity of natural gas in 2012. In addition to coordinates, the 
+data contain information on well ownership and operation, rock pressure at 
+the well, elevation of the well, oil production, and gas production.
+</p>
+
+
+<h3>Format</h3>
+
+<p>The <code>WVwells</code> dataset has 1949 observations and 18 variables.
+</p>
+
+<dl>
+<dt><code>APINum</code></dt>
+<dd>
+<p>A 10-digit number in the format assigned by the American 
+Petroleum Institute (API), consisting of a 2-digit state code, a 3-digit county 
+code with leading zeroes, and a 5-digit permit number with leading zeroes. 
+Data Source: West Virginia Department of Environmental Protection, Office 
+of Oil &amp; Gas (WVDEP-OOG).</p>
+</dd>
+<dt><code>CntyCode</code></dt>
+<dd>
+<p>A 3-digit numeric code, assigned in numeric order by 
+county name. Data Source: The county code for a well is assigned by WVDEP-OOG, 
+based on the well location.</p>
+</dd>
+<dt><code>CntyName</code></dt>
+<dd>
+<p>The name of the county. Please see CntyCode (County Code) 
+for a list of all West Virginia county names. Data Source: The county code for 
+a well is assigned by WVDEP-OOG, based on the well location. The county name 
+is a translation of the county code.</p>
+</dd>
+<dt><code>Operator</code></dt>
+<dd>
+<p>The name of the operator who owns the well at the time 
+of reporting.  Data Source:  WVDEP-OOG plat; verified on the WR-35 completion record.</p>
+</dd>
+<dt><code>SurfaceOwn</code></dt>
+<dd>
+<p>The name of the owner of the surface property on which 
+the well is located. Data Source: WVDEP-OOG plat; verified on the WR-35 completion 
+record.</p>
+</dd>
+<dt><code>MineralOwn</code></dt>
+<dd>
+<p>Mineral Owner: The name of the owner of the mineral 
+rights where the well is located. Data Source: WVDEP-OOG plat.</p>
+</dd>
+<dt><code>CompanyNum</code></dt>
+<dd>
+<p>The operator's serial number for the well. Data Source: 
+WVDEP-OOG plat; verified on the WR-35 completion record.</p>
+</dd>
+<dt><code>WellNum</code></dt>
+<dd>
+<p>The operator's number for the well on the surface property 
+(farm). Data Source: WVDEP-OOG plat; verified on the WR-35 completion record.</p>
+</dd>
+<dt><code>UTMESrf</code></dt>
+<dd>
+<p>Surface Location–Universal Transverse Mercator, Easting: 
+The well location at the surface measured in meters to one decimal point, 
+east of the central meridian in UTM Zone 17; datum: NAD83. Data Source: 
+Taken directly from the plat if given as such. Otherwise, computed from 
+the location reported on the plat. Suspect locations may be adjusted using 
+various additional resources (e.g. topographic maps) if deemed necessary.</p>
+</dd>
+<dt><code>UTMNSrf</code></dt>
+<dd>
+<p>Surface Location–Universal Transverse Mercator, Northing: 
+The well location at the surface measured in meters to one decimal point, north 
+of the equator in UTM Zone 17; datum: NAD83. Data Source: Taken directly from 
+the plat if given as such. Otherwise, computed from the location reported on 
+the plat. Suspect locations may be adjusted using various additional resources 
+(e.g. topographic maps) if deemed necessary.</p>
+</dd>
+<dt><code>LonSrf</code></dt>
+<dd>
+<p>Surface Location–Longitude: The well location at the 
+surface measured to a precision of 6 decimal points, in degrees west of the 
+Prime Meridian. Data Source: Taken directly from the plat if given as such. 
+Otherwise, computed from the location reported on the plat. Suspect locations 
+may be adjusted using various additional resources (e.g. topographic maps) 
+if deemed necessary.</p>
+</dd>
+<dt><code>LatSrf</code></dt>
+<dd>
+<p>Surface Location–Latitude: The well location at the surface 
+measured to a precision of 6 decimal points, in degrees north of the equator. 
+Data Source: Taken directly from the plat if given as such. Otherwise, computed 
+from the location reported on the plat. Suspect locations may be adjusted using 
+various additional resources (e.g. topographic maps) if deemed necessary.</p>
+</dd>
+<dt><code>Elevation</code></dt>
+<dd>
+<p>Elevation: The height of the well in feet above mean 
+sea level. Data Source: WVDEP-OOG plat; verified on the WR-35 completion record.</p>
+</dd>
+<dt><code>RockPres</code></dt>
+<dd>
+<p>Formation Rock Pressure at Surface: The pressure measured 
+at the surface usually after stimulation, in pounds per square inch (psi). 
+Data Source: WVDEP-OOG WR-35 comp#'   letion record, submitted by the operator 
+to WVDEP-OOG.</p>
+</dd>
+<dt><code>GProd2012</code></dt>
+<dd>
+<p>2012 Gas Production Reported: The total gas production 
+for the well for 2012 in thousands of cubic feet (MCF); includes all pay zones. 
+Data Source: Production data reported by the operator to the State regulatory 
+authority for Oil and Gas (WVDEP-OOG); WVGES obtained the data from WVDEP-OOG.</p>
+</dd>
+<dt><code>OProd2012</code></dt>
+<dd>
+<p>2012 Oil Production Reported: The total oil production 
+for the well for 2012 in barrels (Bbl); includes all pay zones. Production 
+data reported by the operator to the State regulatory authority for Oil and 
+Gas (WVDEP-OOG); WVGES obtained the data from WVDEP-OOG.</p>
+</dd>
+<dt><code>logElevation</code></dt>
+<dd>
+<p>Logarithm of <code>Elevation</code>.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+
+<p>West Virginia Geological and Economic Survey. 2014. "WVMarcellusWellsCompleted102014." Morgantown, WV. 
+<a href="http://www.wvgs.wvnet.edu/www/datastat/devshales.htm">http://www.wvgs.wvnet.edu/www/datastat/devshales.htm</a> Accessed via: FracTracker. 2019. 
+"West Virginia Oil &amp; Gas Activity." <a href="https://www.fractracker.org/map/us/west-virginia/">https://www.fractracker.org/map/us/west-virginia/</a>
+
+</p>
+
+
+<h3>References</h3>
+
+<p>Jason S. Byers &amp; Jeff Gill. N.D. "Applied Geospatial Data Modeling in the Big 
+Data Era: Challenges and Solutions."
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Descriptive Statistics
+summary(WVwells)
+
+# Record means of predictors: 
+# These are used BOTH to eliminate the intercept and to recover predictions later.
+mean.logGas&lt;-mean(WVwells$logGProd2012);mean.logGas
+mean.logElevation&lt;-mean(WVwells$logElevation);mean.logElevation
+mean.RockPres&lt;-mean(WVwells$RockPres);mean.RockPres
+
+# Outcome Variable, De-Meaned
+WVwells$logGas &lt;- WVwells$logGProd2012-mean.logGas
+
+# Explanatory Variable: DE-MEANED PREDICTORS AND NO CONSTANT TERM
+# Because we deducted the mean from all predictors and the outcome,
+# it is valid to do regression through the origin. 
+WVwells$LogElevation &lt;- WVwells$logElevation-mean.logElevation
+WVwells$RockPressure &lt;- WVwells$RockPres-mean.RockPres
+
+# OLS Model
+fracking.ols&lt;-lm(logGas~LogElevation+RockPressure-1, data = WVwells)
+summary(fracking.ols)
+
+intercept.mod&lt;-lm(logGProd2012~ logElevation+RockPres,data=WVwells)
+summary(intercept.mod)
+
+# Set Number of Iterations:
+# WARNING: 100 iterations is intensive on many machines.
+# This example was tuned on Amazon Web Services (EC2) over many hours
+# with 5,000 iterations--unsuitable in 2020 for most desktop machines.
+#M&lt;-5000
+M&lt;-20
+
+set.seed(1000, kind="Mersenne-Twister")#SET SEED FOR CONSISTENCY
+
+# Trial Run, Linear Model of Ideology with Geospatial Errors Using Metropolis-Hastings:
+wv.fit &lt;- metropolis.krige(logGas~LogElevation+RockPressure-1, coords = c("UTMESrf", "UTMNSrf"),
+                           data = WVwells, n.iter=M, powered.exp=0.5, spatial.share=0.60, 
+                           range.share=0.31, beta.var=1000, range.tol=0.1, b.tune=1, 
+                           nugget.tune=1, psill.tune=30)
+
+# Discard first 20% of Iterations as Burn-In (User Discretion Advised).
+wv.fit &lt;- burnin(wv.fit, M/5)
+
+# Summarize Results
+summary(wv.fit)
+
+# Convergence Diagnostics
+# geweke(wv.fit) Not applicable due to few iterations.
+heidel.welch(wv.fit)
+
+# Draw Semivariogram
+semivariogram(wv.fit)
+
+# Predictive Data for Two Wells Tapped in 2013
+well.1&lt;-c(log(1110)-mean.logElevation,1020-mean.RockPres)
+well.2&lt;-c(log(643)-mean.logElevation,630-mean.RockPres)
+site.1&lt;-c(557306.0, 4345265)
+site.2&lt;-c(434515.7, 4258449)
+well.newdata &lt;- as.data.frame(cbind(rbind(well.1,well.2),rbind(site.1,site.2)))
+colnames(well.newdata)&lt;-c("LogElevation", "RockPressure", "UTMESrf","UTMNSrf")
+
+# Make predictions from median parameter values:
+(median.pred &lt;- predict(wv.fit, newdata = well.newdata))
+
+# Prediction in thousands of cubic feet (MCF):
+round(exp(median.pred+mean.logGas))
+
+# Make predictions with 90\
+(cred.pred &lt;- predict(wv.fit, newdata = well.newdata, credible = 0.9))
+
+# Prediction in thousands of cubic feet (MCF) and the true yield in 2013:
+Actual.Yield&lt;-c(471171, 7211)
+round(cbind(exp(cred.pred+mean.logGas),Actual.Yield))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

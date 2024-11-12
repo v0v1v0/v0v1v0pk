@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getSeqKernel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Protein Sequence Kernels
+</h2>
+
+<h3>Description</h3>
+
+<p>Get mutual information and other kernels for protein sequences
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getSeqKernel (sequences, kern.type=c("mm", "prop", "mi"), tau, call.C=TRUE
+    , seq.start=NULL, seq.end=NULL) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sequences</code></td>
+<td>
+
+<p>String or list. If string, the name of a fasta file containing aligned sequences. If list, a list of strings, each string is a protein sequence. If list, call.C will be set to FALSE internally because C/C++ function needs sequence file name as input
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kern.type</code></td>
+<td>
+
+<p>string. Type of kernel. mm: match-mismatch, prop: physicochemical properties, mi: mutual information.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tau</code></td>
+<td>
+
+<p>Numeric. It is the same as rho^-2.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call.C</code></td>
+<td>
+
+<p>Boolean. If TRUE, do a .C call. If FALSE, the implementation is in R. The .C call is 50 times faster.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.start</code></td>
+<td>
+
+<p>integer. Start position of subsequence to be used in computing kernel.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.end</code></td>
+<td>
+
+<p>integer. End position of subsequence to be used in computing kernel.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>call.C option is to allow comparison of R and C implementation. The two should give the same results and C implementation is 50 times faster. 
+</p>
+<p>when kern.type is mi and call.C is TRUE and when running on linux, this function will print messages like "read ...". This message is generated from U::openRead
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+fileName=paste(system.file(package="krm")[1],'/misc/SETpfamseed_aligned_for_testing.fasta',
+     sep="")
+K=getSeqKernel (fileName, kern.type="mi", tau=1, call.C=TRUE)
+K
+
+
+</code></pre>
+
+
+</div>

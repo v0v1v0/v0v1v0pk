@@ -1,0 +1,132 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dlunif</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Log Uniform Distribution</h2>
+
+<h3>Description</h3>
+
+<p>Density, distribution function, quantile function and random generation for
+the log uniform distribution in the interval from <code>min</code> to <code>max</code>.
+Parameters must be raw values (not log-transformed) and will be
+log-transformed using specified <code>base</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dlunif(x, min, max, base = exp(1))
+
+plunif(q, min, max, base = exp(1))
+
+qlunif(p, min, max, base = exp(1))
+
+rlunif(n, min, max, base = exp(1))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of quantiles.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min</code></td>
+<td>
+<p>Lower limit of the distribution, in raw (not log-transformed)
+values. Negative values will give warning.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max</code></td>
+<td>
+<p>Upper limit of the distribution, in raw (not log-transformed)
+values. Negative values will give warning.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base</code></td>
+<td>
+<p>The base to which logarithms are computed. Defaults to
+<code>e=exp(1)</code>. Must be a positive number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>Vector of quantiles.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Vector of probabilities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of observations.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A log uniform (or loguniform or log-uniform) random variable has a
+uniform distribution when log-transformed.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>dlunif</code> gives the density, <code>plunif</code> gives the distribution
+function, <code>qlunif</code> gives the quantile function, and <code>rlunif</code>
+generates random numbers.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Parameters <code>min, max</code> must be provided as raw (not
+log-transformed) values and will be log-transformed using <code>base</code>. In
+other words, when log-transformed, a log uniform random variable with
+parameters <code>min=a</code> and <code>max=b</code> is uniform over the interval from
+<code>log(a)</code> to <code>log(b)</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steve Wang <a href="mailto:scwang@swarthmore.edu">scwang@swarthmore.edu</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Distributions</code> for other standard distributions
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">plot(1:100, dlunif(1:100, exp(1), exp(10)), type="l", main="Loguniform density")
+plot(log(1:100), dlunif(log(1:100), log(1), log(10)), type="l",
+     main="Loguniform density")
+
+plot(1:100, plunif(1:100, exp(1), exp(10)), type="l", main="Loguniform cumulative")
+plot(qlunif(ppoints(100), exp(1), exp(10)), type="l", main="Loguniform quantile")
+
+hist(rlunif(1000, exp(1), exp(10)), main="random loguniform sample")
+hist(log(rlunif(10000, exp(1), exp(10))), main="random loguniform sample")
+hist(log(rlunif(10000, exp(1), exp(10), base=10), base=10), main="random loguniform sample")
+
+</code></pre>
+
+
+</div>

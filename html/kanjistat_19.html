@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kanjidistmat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute distance matrix based on hierarchical optimal transport for lists of kanjivec objects</h2>
+
+<h3>Description</h3>
+
+<p>Individual distances are based on <code>kanjidist</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kanjidistmat(
+  klist,
+  klist2 = NULL,
+  compo_seg_depth = 3,
+  p = 1,
+  C = 0.2,
+  approx = c("grid", "pc", "pcweighted"),
+  type = c("rtt", "unbalanced", "balanced"),
+  size = 48,
+  lwd = 2.5,
+  density = 30,
+  verbose = FALSE,
+  minor_warnings = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>klist</code></td>
+<td>
+<p>a list of <code>kanjimat</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>klist2</code></td>
+<td>
+<p>an optional second list of <code>kanjimat</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compo_seg_depth</code></td>
+<td>
+<p>integer <code class="reqn">\geq 1</code>. Specifies for all kanji the
+deepest level included for component matching. If 1, only the kanji itself is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p, C, type, approx, size, lwd, density, verbose, minor_warnings</code></td>
+<td>
+<p>the same as for the function <code>kanjidist</code>,
+with the sole difference that <code>minor_warnings</code> defaults to <code>FALSE</code> here.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A matrix of dimension <code>length(klist)</code> x <code>length(klist2)</code> having
+as its <code class="reqn">(i,j)</code>-th entry the distance between <code>klist[[i]]</code> and
+<code>klist2[[j]]</code>. If <code>klist2</code> is not provided it is assumed to be equal to
+<code>klist</code>, but computation is more efficient as only the upper triangular part
+is computed and then symmetrized with diagonal zero.
+</p>
+
+
+<h3>Warning</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a><br>
+The same precautions apply as for <code>kanjidist</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kanjidist</code>, <code>kmatdistmat</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+kanjidistmat(fivebetas)
+
+</code></pre>
+
+
+</div>

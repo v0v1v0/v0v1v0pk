@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot3views</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create scatter plots in three views.</h2>
+
+<h3>Description</h3>
+
+<p>Visualize data in X-Y plane, X-Z plane, and Y-Z
+plane. The input object (matrix or data.frame) must contain at least 3
+columns.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot3views(
+  X,
+  labels,
+  only.row = NA,
+  plot.legend = NA,
+  plot.pattern = NA,
+  plot.color = NA
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix or a data.frame that contains at least 3 columns of numeric
+data. If there are more than 3 columns in X, only the first 3 columns will be
+used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>A vector containing row labels of X for display. All vector
+elements should be of type "character" (as.character). The length of
+vector equals the number of rows in X.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>only.row</code></td>
+<td>
+<p>A vector that contains subset of row numbers that are
+selected to be plotted. Default = NA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.legend</code></td>
+<td>
+<p>A vector of characters representing legends, also see the note below. Default = NA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.pattern</code></td>
+<td>
+<p>A vector of characters or integer representing patterns, also see the note below. Default = NA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.color</code></td>
+<td>
+<p>A vector of characters or integer representing  colors, also see the note below. Default = NA.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Note that the vectors of plot.legend, plot.pattern, and plot.color
+need to be defined as the same length. All of these vectors need to be given
+to the function otherwise the default colors and patterns will be used.
+The vectors need to be set properly, see the section "Examples" for more details.
+</p>
+<p>From version 1.1.5 onward, the parameter 'col.pat.table' is removed out from the
+function.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+#Load simulated dataset
+data(example_SNP)
+
+PCs &lt;- cal.pc.linear(simsnp$snp, no.pc = 3)
+plot3views( PCs$PC, sample_labels)
+
+#To change colors and patterns using symbols
+all.labels &lt;- unique(sample_labels)
+my.colors &lt;- c('pink', 'yellow', 'cyan', 'green')
+my.patterns &lt;- c(0,1,2,3)
+plot3views(PCs$PC, labels = sample_labels, plot.legend = all.labels,
+plot.pattern = my.patterns, plot.color = my.colors)
+
+#To change patterns using characters
+my.patterns &lt;- c('o', 'x', '&amp;', '#')
+#To change colors using Hex code
+my.colors &lt;- c('#E74C3C', '#8E44AD', '#2ECC71', '#E67E22')
+plot3views(PCs$PC, labels = sample_labels, plot.legend = all.labels,
+plot.pattern = my.patterns, plot.color = my.colors)
+</code></pre>
+
+
+</div>

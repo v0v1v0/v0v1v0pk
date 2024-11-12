@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knit_code</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The code manager to manage code in all chunks</h2>
+
+<h3>Description</h3>
+
+<p>This object provides methods to manage code (as character vectors) in all
+chunks in <span class="pkg">knitr</span> source documents. For example,
+<code>knitr::knit_code$get()</code> returns a named list of all code chunks (the
+names are chunk labels), and <code>knitr::knit_code$get('foo')</code> returns the
+character vector of the code in the chunk with the label <code>foo</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knit_code
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>list</code> of length 7.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The methods on this object include the <code>set()</code> method (i.e., you
+could do something like <code>knitr::knit_code$set(foo = "'my precious new
+  code'")</code>), but we recommend that you do not use this method to modify the
+content of code chunks, unless you are
+<a href="https://emitanaka.rbind.io/post/knitr-knitr-code/">as creative as Emi
+Tanaka</a> and know what you are doing.
+</p>
+
+
+</div>

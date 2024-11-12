@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regex_match</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Regular expression matches</h2>
+
+<h3>Description</h3>
+
+<p>Returns elements of a character vector that match the given
+regular expression
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regex_match(regex = NULL, vector = NULL, silent = FALSE, perl = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>regex</code></td>
+<td>
+<p>a regular expression
+provided, a default theme will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>a character vector in which to search for regular
+expression matches, or a data table whose column names will be searched</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>logical. If <code>silent = FALSE</code>, a report on regular
+expression matches will be printed. If <code>silent = TRUE</code>, the report
+on regular expression matches will not be printed.
+By default, <code>silent = FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perl</code></td>
+<td>
+<p>logical. Should Perl-compatible regexps be used?</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">regex_match("p$", names(mtcars))
+
+colnames_ending_with_p &lt;- regex_match("p$", names(mtcars))
+
+</code></pre>
+
+
+</div>

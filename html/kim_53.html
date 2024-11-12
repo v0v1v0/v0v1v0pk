@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>histogram_by_group</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Histogram by group</h2>
+
+<h3>Description</h3>
+
+<p>Creates histograms by group to compare distributions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">histogram_by_group(
+  data = NULL,
+  iv_name = NULL,
+  dv_name = NULL,
+  order_of_groups_top_to_bot = NULL,
+  number_of_bins = 40,
+  space_between_histograms = 0.15,
+  draw_baseline = FALSE,
+  xlab = NULL,
+  ylab = NULL,
+  x_limits = NULL,
+  x_breaks = NULL,
+  x_labels = NULL,
+  sigfigs = 3,
+  convert_dv_to_numeric = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv_name</code></td>
+<td>
+<p>name of the independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dv_name</code></td>
+<td>
+<p>name of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order_of_groups_top_to_bot</code></td>
+<td>
+<p>a character vector indicating
+the desired presentation order of levels in the independent variable
+(from the top to bottom). Omitting a group in this argument will
+remove the group in the set of histograms.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>number_of_bins</code></td>
+<td>
+<p>number of bins for the histograms (default = 40)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>space_between_histograms</code></td>
+<td>
+<p>space between histograms
+(minimum = 0, maximum = 1, default = 0.15)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>draw_baseline</code></td>
+<td>
+<p>logical. Should the baseline and the trailing
+lines to either side of the histogram be drawn? (default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>title of the x-axis for the histogram by group.
+If <code>xlab = FALSE</code>, the title will be removed. By default
+(i.e., if no input is given), <code>dv_name</code> will be used as
+the title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>title of the y-axis for the histogram by group.
+If <code>ylab = FALSE</code>, the title will be removed. By default
+(i.e., if no input is given), <code>iv_name</code> will be used as
+the title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_limits</code></td>
+<td>
+<p>a numeric vector with values of the endpoints
+of the x axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_breaks</code></td>
+<td>
+<p>a numeric vector indicating the points at which to
+place tick marks on the x axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_labels</code></td>
+<td>
+<p>a vector containing labels for the place tick marks
+on the x axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to (default = 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convert_dv_to_numeric</code></td>
+<td>
+<p>logical. Should the values in the
+dependent variable be converted to numeric for plotting the
+histograms? (default = TRUE)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following package(s) must be installed prior to running this function:
+Package 'ggridges' v0.5.3 (or possibly a higher version) by
+Claus O. Wilke (2021),
+<a href="https://cran.r-project.org/package=ggridges">https://cran.r-project.org/package=ggridges</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>the output will be a set of vertically arranged histograms
+(a ggplot object), i.e., one histogram for each level of the
+independent variable.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+histogram_by_group(data = mtcars, iv_name = "cyl", dv_name = "mpg")
+histogram_by_group(
+  data = mtcars, iv_name = "cyl", dv_name = "mpg",
+  order_of_groups_top_to_bot = c("8", "4"), number_of_bins = 10,
+  space_between_histograms = 0.5
+)
+histogram_by_group(
+data = iris, iv_name = "Species", dv_name = "Sepal.Length", x_breaks = 4:8,
+x_limits = c(4, 8))
+
+</code></pre>
+
+
+</div>

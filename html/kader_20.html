@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>pc</h2>
+
+<h3>Description</h3>
+
+<p>Coefficient <code class="reqn">p_c</code> of eq. (15.15) in Eichner (2017).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pc(cc)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>cc</code></td>
+<td>
+<p>Numeric vector.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>p_c = 1/5 * (3c^2 - 5) / (3 - c^2) * c^2.
+</p>
+<p>For further details see p. 297 f. in Eichner (2017) and/or Eichner &amp; Stute
+(2013).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Vector of same length and mode as <code>cc</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p><code class="reqn">p_c</code> should be undefined for <code class="reqn">c = \sqrt 3</code>, but <code>pc</code>
+is here implemented to return <code>Inf</code> in each element of its
+return vector for which the corresponding element in <code>cc</code>
+contains R's value of <code>sqrt(3)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+c0 &lt;- expression(sqrt(5/3))
+c1 &lt;- expression(sqrt(3) - 0.01)
+cgrid &lt;- seq(1.325, 1.7, by = 0.025)
+cvals &lt;- c(eval(c0), cgrid, eval(c1))
+
+plot(cvals, pc(cvals), xaxt = "n", xlab = "c", ylab = expression(p[c]))
+axis(1, at = cvals, labels = c(c0, cgrid, c1), las = 2)
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>BowleySkew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bowley's Univariate Skewness</h2>
+
+<h3>Description</h3>
+
+<p>Compute Bowley's Univariate Skewness.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">BowleySkew(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of original observations.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Bowley's skewness is defined in terms of quantiles as
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{\gamma} = \frac{Q_3 + Q_1 - 2 Q_2}{Q_3 - Q_1}</code>
+</p>
+
+<p>where <code class="reqn">Q_i</code> is the <code class="reqn">i</code>th quartile <code class="reqn">i=1,2,3</code> of the data.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>BowleySkew</code> gives the Bowley's univariate skewness of the data.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bowley, A. L. (1920). <em>Elements of Statistics</em>. London : P.S. King &amp; Son, Ltd.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute Bowley's univariate skewness
+
+set.seed(2019)
+x &lt;- rnorm(1000) # Normal Distribution
+BowleySkew(x)
+
+set.seed(2019)
+y &lt;- rlnorm(1000, meanlog = 1, sdlog = 0.25) # Log-normal Distribution
+BowleySkew(y)
+
+</code></pre>
+
+
+</div>

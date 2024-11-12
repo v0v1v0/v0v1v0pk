@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>demo_iris</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fits Gaussian Mixture model and computes the KSD value for the model</h2>
+
+<h3>Description</h3>
+
+<p>We fit a Gaussian Mixture Model for a given dataset (Fisher's Iris),
+and we compute the KSD P-value on the hold-out test dataset. User may tune
+the parameters and observe the change in results. Reports average of p-values obtained during each k-fold.
+It also plots the contour for each k-fold iteration if only 2 dimensions of data are used.
+If a vector is specified for nClust, the code tries each element as the number of clusters
+and reports the optimal parameter by choosing one with highest p-value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">demo_iris(cols = c(1, 2), nClust = 3, kfold = 5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cols</code></td>
+<td>
+<p>: Columns of iris data set to use. If 2 dimensions, plots the contour for each k-fold.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nClust</code></td>
+<td>
+<p>: Number of clusters want to estimate with
+If vector, use each element as number of clusters and reports the optimal number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kfold</code></td>
+<td>
+<p>: Number of k to use for k-fold</p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kerndwd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot coefficients</h2>
+
+<h3>Description</h3>
+
+<p>Plot the solution paths for a fitted <code>kerndwd</code> object.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kerndwd'
+plot(x, color=FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A fitted “<code>kerndwd</code>"" model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>If <code>TRUE</code>, plots the curves with rainbow colors; otherwise, with gray colors (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Other graphical parameters to <code>plot</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Plots the solution paths as a coefficient profile plot. This function is modified based on the <code>plot</code> function from the <code>glmnet</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Boxiang Wang and Hui Zou<br>
+Maintainer: Boxiang Wang  <a href="mailto:boxiang-wang@uiowa.edu">boxiang-wang@uiowa.edu</a></p>
+
+
+<h3>References</h3>
+
+<p>Wang, B. and Zou, H. (2018)
+“Another Look at Distance Weighted Discrimination," 
+<em>Journal of Royal Statistical Society, Series B</em>, <b>80</b>(1), 177–198. <br><a href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244">https://rss.onlinelibrary.wiley.com/doi/10.1111/rssb.12244</a><br>
+Friedman, J., Hastie, T., and Tibshirani, R. (2010), "Regularization paths for generalized linear models via coordinate descent," <em>Journal of Statistical Software</em>, <b>33</b>(1), 1–22.<br><a href="https://www.jstatsoft.org/v33/i01/paper">https://www.jstatsoft.org/v33/i01/paper</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kerndwd</code>, <code>predict.kerndwd</code>, <code>coef.kerndwd</code>, <code>plot.kerndwd</code>, and <code>cv.kerndwd</code>.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(BUPA)
+BUPA$X = scale(BUPA$X, center=TRUE, scale=TRUE)
+lambda = 10^(seq(-3, 3, length.out=10))
+kern = rbfdot(sigma=sigest(BUPA$X))
+m1 = kerndwd(BUPA$X, BUPA$y, kern, qval=1, 
+  lambda=lambda, eps=1e-5, maxit=1e5)
+plot(m1, color=TRUE)
+</code></pre>
+
+
+</div>

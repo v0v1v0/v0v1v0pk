@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kobotools_api</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check kobotoolbox API and retrieve overall info about the projects/assets</h2>
+
+<h3>Description</h3>
+
+<p>'kobotools_api' is a wrapper for kobotoolbox API 'https://[kpi-url]/api/v2/assets/'
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kobotools_api(
+  url = "eu.kobotoolbox.org",
+  simplified = TRUE,
+  uname = "",
+  pwd = "",
+  encoding = "UTF-8",
+  qry = ""
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>The '[kpi-url]' of kobotoolbox. Default is "eu.kobotoolbox.org"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplified</code></td>
+<td>
+<p>A logical value, default is true</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>uname</code></td>
+<td>
+<p>takes the username</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pwd</code></td>
+<td>
+<p>takes the password</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>is the encoding to be used. Default is "UTF-8".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qry</code></td>
+<td>
+<p>to add queries</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function takes two variables. First one is 'url' which is the '[kpi-url]'. For most users it will be "eu.kobotoolbox.org" or
+"kf.kobotoolbox.org". Former is the default. The second parameter is 'simplified' which takes a logical value. If set to true,
+the function will return selected values from the parsed data and return a data frame. When set to false, a json will be returned with
+all the details.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function returns the asset details from the API, inform of a data frame or json.
+</p>
+
+
+</div>

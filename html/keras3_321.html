@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loss_dice</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the Dice loss value between <code>y_true</code> and <code>y_pred</code>.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode python"><pre>loss = 1 - (2 * sum(y_true * y_pred)) / (sum(y_true) + sum(y_pred))
+</pre></div>
+<p>Formula:
+</p>
+<div class="sourceCode python"><pre>loss = 1 - (2 * sum(y_true * y_pred)) / (sum(y_true) + sum(y_pred))
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loss_dice(
+  y_true,
+  y_pred,
+  ...,
+  reduction = "sum_over_batch_size",
+  name = "dice",
+  axis = NULL,
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_true</code></td>
+<td>
+<p>Tensor of true targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_pred</code></td>
+<td>
+<p>Tensor of predicted targets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reduction</code></td>
+<td>
+<p>Type of reduction to apply to the loss. In almost all cases
+this should be <code>"sum_over_batch_size"</code>.
+Supported options are <code>"sum"</code>, <code>"sum_over_batch_size"</code> or <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String, name for the object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>List of which dimensions the loss is calculated. Defaults to
+<code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>The dtype of the loss's computations. Defaults to <code>NULL</code>, which
+means using <code>config_floatx()</code>. <code>config_floatx()</code> is a
+<code>"float32"</code> unless set to different value
+(via <code>config_set_floatx()</code>). If a <code>keras$DTypePolicy</code> is
+provided, then the <code>compute_dtype</code> will be utilized.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>if <code>y_true</code> and <code>y_pred</code> are provided, Dice loss value. Otherwise,
+a <code>Loss()</code> instance.
+</p>
+
+
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>y_true &lt;- array(c(1, 1, 0, 0,
+                  1, 1, 0, 0), dim = c(2, 2, 2, 1))
+y_pred &lt;- array(c(0, 0.4, 0,   0,
+                  1,   0, 1, 0.9), dim = c(2, 2, 2, 1))
+
+axis &lt;- c(2, 3, 4)
+loss &lt;- loss_dice(y_true, y_pred, axis = axis)
+stopifnot(shape(loss) == shape(2))
+loss
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([0.50000001 0.75757576], shape=(2), dtype=float64)
+
+</pre></div>
+<div class="sourceCode r"><pre>loss = loss_dice(y_true, y_pred)
+stopifnot(shape(loss) == shape())
+loss
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor(0.6164383614186526, shape=(), dtype=float64)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+<p>Other losses: <br><code>Loss()</code> <br><code>loss_binary_crossentropy()</code> <br><code>loss_binary_focal_crossentropy()</code> <br><code>loss_categorical_crossentropy()</code> <br><code>loss_categorical_focal_crossentropy()</code> <br><code>loss_categorical_hinge()</code> <br><code>loss_cosine_similarity()</code> <br><code>loss_ctc()</code> <br><code>loss_hinge()</code> <br><code>loss_huber()</code> <br><code>loss_kl_divergence()</code> <br><code>loss_log_cosh()</code> <br><code>loss_mean_absolute_error()</code> <br><code>loss_mean_absolute_percentage_error()</code> <br><code>loss_mean_squared_error()</code> <br><code>loss_mean_squared_logarithmic_error()</code> <br><code>loss_poisson()</code> <br><code>loss_sparse_categorical_crossentropy()</code> <br><code>loss_squared_hinge()</code> <br><code>loss_tversky()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_poisson()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_squared_hinge()</code> <br></p>
+
+
+</div>

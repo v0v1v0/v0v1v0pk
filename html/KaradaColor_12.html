@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scale_fill_kg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Use Color fills on 'ggplot2'</h2>
+
+<h3>Description</h3>
+
+<p><code>scale_fill_kg</code> Use color palette on 'ggplot2' fills.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_fill_kg(
+  name = "Sapporo_Sta",
+  alpha = 1,
+  na.value = "red",
+  discrete = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>color palette name. (default: <code>"Sapporo_Sta"</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The alpha transparency. Numbers range from 0-1.
+see argument alpha in <code>rgb</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.value</code></td>
+<td>
+<p>Color of missing value.(default: "red")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>discrete</code></td>
+<td>
+<p>Generate a discrete palette.
+(<code>FALSE</code> - generate continuous palette)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Create a user defined color palette for 'ggplot2'.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1)
+x &lt;- LETTERS[1:20]
+y &lt;- paste0("var", seq(1,20))
+data &lt;- expand.grid(X=x, Y=y)
+data$Z &lt;- sample(c(NA, rnorm(15)), 20, replace = TRUE)
+library("ggplot2")
+ggplot(data, aes(X, Y, fill= Z)) +
+  geom_tile() +
+  scale_fill_kg(discrete = FALSE, name = "Hanamushiro",
+                alpha = 0.4, na.value = "red")
+</code></pre>
+
+
+</div>

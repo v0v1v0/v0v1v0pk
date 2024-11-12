@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rpt.AMEL</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Replace CPTs for AMEL marker in a DNA mixture</h2>
+
+<h3>Description</h3>
+
+<p>Used after a call to <code>DNAmixture</code> with <code>compile=FALSE,triangulate=FALSE</code>, this function replaces the CPTs for the genotype allele count arrays for the AMEL marker in a DNA mixture to specify sex of contributors</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rpt.AMEL(mixture,sex,compile=TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>A DNAmixture object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sex</code></td>
+<td>
+<p>Integer vector, sex of each contributor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compile</code></td>
+<td>
+<p>Logical, should BN be compiled after modification?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The sex of each contributor is coded as in <code>pedtools</code>, namely 0=unspecified, 1=male, 2=female.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No value is returned, the function is called for its side effect</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Peter Green (P.J.Green@bristol.ac.uk)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(test2data)
+data(NGMDyes)
+
+mixD&lt;-DNAmixture(list(epg),k=3,C=list(0.001),database=db,dyes=list(NGMDyes),
+        triangulate=FALSE,compile=FALSE)
+rpt.AMEL(mixD,c(1,2,0))  # the 3 contributors are male, female, and unspecified,respectively.
+</code></pre>
+
+
+</div>

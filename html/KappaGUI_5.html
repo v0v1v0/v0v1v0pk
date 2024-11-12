@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>StartKappa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+A graphical user interface for calculating Cohen's and Fleiss' Kappa
+</h2>
+
+<h3>Description</h3>
+
+<p>Launches the R-Shiny application. The user can retrieve inter-rater agreement scores from a file (.CSV or .TXT) loaded directly through the graphical interface.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">StartKappa()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>Data importation is done directly through the graphical user interface. Only CSV and TXT files are accepted.
+</p>
+<p>If there are <code class="reqn">p</code> variables observed by <code class="reqn">k</code> raters on <code class="reqn">n</code> individuals, the input file should be a data frame with <code class="reqn">n</code> rows and (<code class="reqn">k \times p</code>) columns. The first <code class="reqn">k</code> columns represent the scores attributed by the <code class="reqn">k</code> raters for the first variable; the next <code class="reqn">k</code> columns represent the scores attributed by the <code class="reqn">k</code> raters for the second variable; etc. Cohen's or Fleiss' kappas are returned for each variable. 
+</p>
+<p>The data file must contains a header, and the columns must be labeled as follows: ‘VariableName_X’, where X is a unique character (letter or number) associated with each rater. An example of correct data file with two raters is given here: <a href="http://www.pacea.u-bordeaux.fr/IMG/csv/data_Kappa_Cohen.csv">http://www.pacea.u-bordeaux.fr/IMG/csv/data_Kappa_Cohen.csv</a>.
+</p>
+<p>Kappa values are calculated using the functions kappa2 and kappam.fleiss from the package ‘irr’. Please check their help pages for more technical details, in particular about the weighting options for Cohen's kappa. For ordered factors, linear or quadratic weighting could be a good choice, as they give more importance to strong disgreements. If linear or quadratic weighting are chosen, the levels of the factors will be supposed to be ordered alphabetically (as a consequence, a factor with three levels "Low", "Medium" and "High" would be ordered in an inconvenient way: in this case, please recode the levels with names matching the natural order of the levels).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The function returns no value, but the table of results can be downloaded as a CSV file through the user interface.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Frédéric Santos, <a href="mailto:frederic.santos@u-bordeaux.fr">frederic.santos@u-bordeaux.fr</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Cohen, J. (1960) A coefficient of agreement for nominal scales. <em>Educational and Psychological Measurement</em>, <b>20</b>, 37–46.
+</p>
+<p>Cohen, J. (1968) Weighted kappa: Nominal scale agreement with provision for scaled disagreement or partial credit. <em>Psychological Bulletin</em>, <b>70</b>, 213–220.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>irr::kappa2, irr::kappam.fleiss
+</p>
+
+
+</div>

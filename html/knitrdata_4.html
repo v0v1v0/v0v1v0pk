@@ -1,0 +1,187 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>data_decode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decode and encode text and binary data files</h2>
+
+<h3>Description</h3>
+
+<p>These helper functions allow one to encode as text a binary or text data file
+using either <code>base64</code> or <code>gpg</code> encoding (<code>data_encode</code>) and
+decode text-encoded data back into its original binary or text format
+(<code>data_decode</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data_decode(data, encoding, as_text = FALSE, options = list())
+
+data_encode(file, encoding, options = list(), output = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Encoded data as a character string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>Either <code>'base64'</code> or <code>'gpg'</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as_text</code></td>
+<td>
+<p>A boolean indicating if decoded data should be treated as text
+(<code>TRUE</code>) or binary (<code>FALSE</code>). Defaults to <code>FALSE</code>, meaning
+binary.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>A list containing extra arguments for the encoding/decoding
+functions. For <code>base64</code> encoding, <code>linewidth</code> (defaults to 64)
+and and <code>newline</code> (defaults to <code>platform.newline()</code>)
+optional arguments are possible. For <code>gpg</code> encoding, see the
+description below for details regarding the required <code>receiver</code> option
+to define the key to use for encryption. For further details and
+potentially other additional arguments, see the help of the corresponding
+underlying encoding functions:
+<code>base64_encode</code> and
+<code>gpg_encrypt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>Path to file containing data to be encoded</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>Path where encoded data is to be stored. Optional; if
+<code>NULL</code> then encoded data will not be written to a file.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Encoding and decoding in <code>base64</code> format uses functionality from the
+<code>xfun</code> package, whereas encoding and decoding
+using <code>gpg</code> uses functionality from the
+<code>gpg</code> package. See those packages for more
+details on the encoding and decoding process and setting up a <code>gpg</code>
+keyring.
+</p>
+<p><code>data_encode</code> takes the name of a file containing the binary or text
+data to be encoded and returns the encoded data as a character string. The
+encoded data is returned silently to avoid outputing to the screen large
+amounts of encoded data. If you want to visualize the encoded data, use the
+<code>cat</code> function. For larger data files, set the <code>output</code> argument to
+a path where the encoded data will be stored.
+</p>
+<p><code>data_encode</code> takes a character string of encoded data and returns
+either a character string of decoded data (if <code>as_text=TRUE</code>) or a raw
+vector of decoded binary data (if <code>as_text=FALSE</code>).
+</p>
+<p>For both functions, the <code>options</code> input argument takes a list of
+additional input arguments that are passed directly to the encoding or
+decoding functions in the respective packages that handle the actual data
+translation. See <code>base64_encode</code> and
+<code>gpg_encrypt</code> for details.
+</p>
+<p>For <code>gpg</code> encoding and decoding, in addition to installing the
+<code>gpg</code> package, a <code>gpg</code> keyring must be
+installed and properly configured. For encoding, the <code>receiver</code> and
+potentially the <code>signer</code> arguments must be supplied as elements of the
+<code>options</code> input argument.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns either the decoded data (<code>data_decode</code>) or the encoded
+data (<code>data_encode</code>).
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>data_decode</code>: Returns decoded data as either a character string
+(<code>as_text=TRUE</code>) or raw vector (<code>as_text=FALSE</code>).
+</p>
+</li>
+<li> <p><code>data_encode</code>: Returns data encoded as a character string using
+<code>base64</code> or <code>gpg</code> encoding.
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>David M. Kaplan <a href="mailto:dmkaplan2000@gmail.com">dmkaplan2000@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See also <code>base64_encode</code> and
+<code>gpg_encrypt</code>, <code>platform.newline</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Use a temporary directory ----------------------------
+owd = getwd()
+td = tempdir()
+setwd(td)
+
+# Do some data encoding and decoding ------------------
+library(knitrdata)
+
+x = data.frame(a=1:5,b=letters[1:5])
+write.csv(x,"test.csv")
+saveRDS(x,"test.RDS")
+
+enccsv = data_encode("test.csv","base64")
+encrds = data_encode("test.RDS","base64")
+
+csv = data_decode(enccsv,"base64",as_text=TRUE)
+cat(csv)
+
+rds = data_decode(encrds,"base64",as_text=FALSE)
+writeBin(rds,"test_output.RDS")
+y = readRDS("test_output.RDS")
+y
+
+params = list(run_gpg=FALSE)
+if (requireNamespace("gpg") &amp;&amp; params$run_gpg) {
+  k = gpg::gpg_keygen("test","test@test.org")
+  encgpg = data_encode("test.csv","gpg",options = list(receiver=k))
+
+  cat(data_decode(encgpg,"gpg",as_text=TRUE))
+
+  gpg::gpg_delete(k,secret=TRUE)
+}
+
+# Cleanup ------------------------------------
+file.remove("test.csv","test.RDS","test_output.RDS")
+
+setwd(owd)
+</code></pre>
+
+
+</div>

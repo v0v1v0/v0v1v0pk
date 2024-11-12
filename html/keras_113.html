@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.keras.engine.training.Model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Print a summary of a Keras model</h2>
+
+<h3>Description</h3>
+
+<p>Print a summary of a Keras model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'keras.engine.training.Model'
+summary(object, ...)
+
+## S3 method for class 'keras.engine.training.Model'
+format(
+  x,
+  line_length = width - (11L * show_trainable),
+  positions = NULL,
+  expand_nested = FALSE,
+  show_trainable = x$built &amp;&amp; as.logical(length(x$non_trainable_weights)),
+  ...,
+  compact = TRUE,
+  width = getOption("width")
+)
+
+## S3 method for class 'keras.engine.training.Model'
+print(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object, x</code></td>
+<td>
+<p>Keras model instance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>for <code>summary()</code> and <code>print()</code>, passed on to <code>format()</code>. For
+<code>format()</code>, passed on to <code>model$summary()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_length</code></td>
+<td>
+<p>Total length of printed lines</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>positions</code></td>
+<td>
+<p>Relative or absolute positions of log elements in each line.
+If not provided, defaults to <code>c(0.33, 0.55, 0.67, 1.0)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expand_nested</code></td>
+<td>
+<p>Whether to expand the nested models. If not provided,
+defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_trainable</code></td>
+<td>
+<p>Whether to show if a layer is trainable. If not
+provided, defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compact</code></td>
+<td>
+<p>Whether to remove white-space only lines from the model
+summary. (Default <code>TRUE</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>the column width to use for printing.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>format()</code> returns a length 1 character vector. <code>print()</code> returns the
+model object invisibly. <code>summary()</code> returns the output of <code>format()</code>
+invisibly after printing it.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other model functions: 
+<code>compile.keras.engine.training.Model()</code>,
+<code>evaluate.keras.engine.training.Model()</code>,
+<code>evaluate_generator()</code>,
+<code>fit.keras.engine.training.Model()</code>,
+<code>fit_generator()</code>,
+<code>get_config()</code>,
+<code>get_layer()</code>,
+<code>keras_model()</code>,
+<code>keras_model_sequential()</code>,
+<code>multi_gpu_model()</code>,
+<code>pop_layer()</code>,
+<code>predict.keras.engine.training.Model()</code>,
+<code>predict_generator()</code>,
+<code>predict_on_batch()</code>,
+<code>predict_proba()</code>,
+<code>train_on_batch()</code>
+</p>
+
+
+</div>

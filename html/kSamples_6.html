@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>contingency2xt.comb</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Combined Kruskal-Wallis Tests for the 2 x t Contingency Tables
+</h2>
+
+<h3>Description</h3>
+
+<p>This function uses the Kruskal-Wallis criterion to test
+the hypothesis of no association between the counts 
+for two responses
+"A" and "B" across t categories and across <code class="reqn">M</code> blocks.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">contingency2xt.comb(..., 
+	method = c("asymptotic", "simulated", "exact"), 
+	dist = FALSE, Nsim = 10000)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+ 
+<p>Either several lists <code class="reqn">L_1,\ldots,L_M</code>, each
+of two equal length vectors <code class="reqn">A_i</code> and
+<code class="reqn">B_i</code>, <code class="reqn">i=1,\ldots,M</code>, of counts <code class="reqn">\ge 0</code>, 
+where the common length <code class="reqn">t_i</code> of <code class="reqn">A_i</code> and
+<code class="reqn">B_i</code> may vary from list to list
+</p>
+<p>or a list of <code>M</code> such lists
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>= <code>c("asymptotic","simulated","exact")</code>, where
+</p>
+<p><code>"asymptotic"</code> uses only an asymptotic chi-square approximation 
+with <code class="reqn">(t_1-1)+\ldots+(t_M-1)</code> degrees of freedom
+to approximate the <code class="reqn">P</code>-value, This calculation is always done.
+</p>
+<p><code>"simulated"</code> uses <code>Nsim</code> simulated counts for the two vectors
+<code class="reqn">A_i</code> and <code class="reqn">B_i</code> in list <code class="reqn">L_i</code>, 
+with the observed marginal totals, <code class="reqn">m_i=\sum A_i</code>, 
+<code class="reqn">n_i = \sum B_i</code>, <code class="reqn">d_i = A_i+B_i</code>. 
+It does this independently from list to list using the same <code>Nsim</code> each time, 
+adding the resulting Kruskal-Wallis criteria across lists
+to get <code>Nsim</code> such summed values to estimate the <code class="reqn">P</code>-value.
+</p>
+<p><code>"exact"</code> enumerates all counts for <code class="reqn">A_i</code> and <code class="reqn">B_i</code> with 
+the respective observed marginal totals to get an exact distribution for each list. 
+These distributions are then convolved to obtain the <code class="reqn">P</code>-value.
+It is used only when <code>Nsim</code> is at least as large as the product across blocks
+of the number <code>choose(m+t-1,t-1)</code> of full enumerations per block, where
+<code class="reqn">t = t_1,\ldots, t_M</code>.
+Otherwise, <code>method</code> reverts to <code>"simulated"</code> using the given <code>Nsim</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist</code></td>
+<td>
+<p><code>FALSE</code> (default) or <code>TRUE</code>. If <code>TRUE</code>, the 
+simulated or fully enumerated null distribution <code>null.dist</code> is returned
+for the Kruskal-Wallis test statistic. Otherwise <code>null.dist = NULL</code> is returned.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Nsim</code></td>
+<td>
+<p><code>=10000</code> (default), number of simulated <code class="reqn">A_i</code> splits to use per block.
+It is only used when <code>method = "simulated"</code>,
+or when <code>method = "exact"</code> reverts to <code>method = "simulated"</code>, as previously explained.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For details on the calculation of the Kruskal-Wallis criterion and its exact or simulated
+distribution for each block see <code>contingency2xt</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>kSamples</code> with components 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>test.name</code></td>
+<td>
+<p><code>"Combined 2 x t Contingency Tables"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>vector giving the number of classification categories per block</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>number of blocked tables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kw.list</code></td>
+<td>
+<p>a list of the <code>KW.cont</code> output componenents from 
+<code>contingency2xt</code> for each of the blocks</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>null.dist</code></td>
+<td>
+<p>simulated or enumerated null distribution 
+of the combined test statistic. It is given as an <code>L</code> by 2 matrix,
+where the first column (named <code>KW</code>) gives the <code>L</code> unique ordered 
+values of the combined Kruskal-Wallis 
+statistic and the second column (named <code>prob</code>) gives the corresponding (simulated or exact)
+probabilities.
+</p>
+<p><code>null.dist = NULL</code> is returned when <code>dist = FALSE</code> or when 
+<code>method =</code> <code>"asymptotic"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the <code>method</code> used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Nsim</code></td>
+<td>
+<p>the number of simulations.</p>
+</td>
+</tr>
+</table>
+<h3>warning</h3>
+
+<p><code>method = "exact"</code> should only be used with caution.
+Computation time is proportional to the number of enumerations. In most cases
+<code>dist = TRUE</code> should not be used, i.e.,  
+when the returned distribution objects 
+become too large for R's work space.</p>
+
+
+<h3>Note</h3>
+
+<p>The required level for <code>Nsim</code> in order for <code>method = "exact"</code>
+to be carried out, is conservative, but there is no transparent way to get a 
+better estimate. The actual dimension <code>L</code> of the realized <code>null.dist</code>
+will typically be much smaller, since the distribution is compacted to
+its unique support values.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">out &lt;- contingency2xt.comb(list(c(25,15,20),c(16,6,18)),
+list(c(12,4,5),c(13,8,9)),method = "simulated", dist=FALSE, Nsim=1e3)
+</code></pre>
+
+
+</div>

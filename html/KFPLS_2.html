@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.KFPLS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction by KFPLS</h2>
+
+<h3>Description</h3>
+
+<p>Prediction of the scalar response by KFPLS.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'KFPLS'
+predict(object, newdata, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A KFPLS object obtained from <code>KFPLS</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>An <code>array</code> with three indices denoting the new observations of the functional predictors. The (i, j, k)-th element of it corresponds to the measurment of the i-th subject for the k-th functional predictor at j-th observation grid.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>vector</code> denoting the prediction of the scalar response.
+</p>
+
+
+</div>

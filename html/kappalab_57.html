@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Choquet.integral-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Choquet integral</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Choquet integral of a discrete function with
+respect to a game. The game can be given either under the form of an
+object of class <code>game</code>, <code>card.game</code> or
+<code>Mobius.game</code>. If the integrand is not positive, this function
+computes what is known as the <em>asymmetric Choquet integral</em>.</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>object = "Mobius.game", f = "numeric" </dt>
+<dd>
+<p>The Choquet integral of
+<code>f</code> is computed from the Möbius transform of a game.</p>
+</dd>
+<dt>object = "game", f = "numeric" </dt>
+<dd>
+<p>The Choquet integral of
+<code>f</code> is computed from a game.</p>
+</dd>
+<dt>object = "card.game", f = "numeric" </dt>
+<dd>
+<p>The Choquet integral of
+<code>f</code> is computed from  a cardinal game.</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>G. Choquet (1953), <em>Theory of capacities</em>, Annales de l'Institut
+Fourier 5, pages 131-295.
+</p>
+<p>D. Denneberg (2000), <em>Non-additive measure and integral, basic concepts and their
+role for applications</em>, in: M. Grabisch, T. Murofushi, and M. Sugeno Eds, Fuzzy
+Measures and Integrals: Theory and Applications, Physica-Verlag, pages 42-69.
+</p>
+<p>M. Grabisch, T. Murofushi, M. Sugeno Eds (2000), <em>Fuzzy Measures and
+Integrals: Theory and Applications</em>, Physica-Verlag.
+</p>
+<p>M. Grabisch and Ch. Labreuche (2002), <em>The symmetric and asymmetric Choquet
+integrals on finite spaces for decision making</em>, Statistical Papers 43, pages
+37-52.
+</p>
+<p>M. Grabisch (2000), <em>A graphical interpretation of the Choquet integral</em>, IEEE
+Transactions on Fuzzy Systems 8, pages 627-631.
+</p>
+<p>J.-L. Marichal (2000), <em>An axiomatic approach of the discrete Choquet integral as
+a tool to aggregate interacting criteria</em>, IEEE Transactions on Fuzzy Systems
+8:6, pages 800-807.
+</p>
+<p>Murofushi and M. Sugeno (1993), <em>Some quantities represented by the Choquet
+integral</em>, Fuzzy Sets and Systems 56, pages 229-235.
+</p>
+<p>Murofushi and M. Sugeno (2000), <em>Fuzzy measures and fuzzy integrals</em>, in: M.
+Grabisch, T. Murofushi, and M. Sugeno Eds, Fuzzy Measures and Integrals: Theory
+and Applications, Physica-Verlag, pages 3-41.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>game-class</code>, <br><code>Mobius.game-class</code>,
+<br><code>card.game-class</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a normalized capacity
+mu &lt;- capacity(c(0:13/13,1,1))
+
+## and its Mobius transform
+a &lt;- Mobius(mu)
+
+## a discrete positive function f
+f &lt;- c(0.1,0.9,0.3,0.8)
+
+## the Choquet integral of f w.r.t mu
+Choquet.integral(mu,f)
+Choquet.integral(a,f)
+
+## a similar example with a cardinal capacity
+mu &lt;- uniform.capacity(4)
+Choquet.integral(mu,f)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>condiciones</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Condiciones que Karel puede verificar</h2>
+
+<h3>Description</h3>
+
+<p>Este conjunto de funciones devuelven un valor lógico <code>TRUE</code> o
+<code>FALSE</code> según la evaluación que Karel puede hacer de su mundo.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">frente_abierto()
+
+frente_cerrado()
+
+izquierda_abierto()
+
+izquierda_cerrado()
+
+derecha_abierto()
+
+derecha_cerrado()
+
+hay_cosos()
+
+no_hay_cosos()
+
+karel_tiene_cosos()
+
+karel_no_tiene_cosos()
+
+mira_al_este()
+
+mira_al_norte()
+
+mira_al_oeste()
+
+mira_al_sur()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>Las funciones <code>frente_abierto()</code>, <code>frente_cerrado()</code>,
+<code>izquierda_abierto()</code>, <code>izquierda_cerrado()</code>,
+<code>derecha_abierto()</code> y <code>derecha_cerrado()</code> analizan si hay paredes
+al frente, a la izquierda o a la derecha de Karel. Las funciones
+<code>hay_cosos()</code> y <code>no_hay_cosos()</code> analizan si hay <code>cosos</code> en
+la posición actual de Karel. Las funciones <code>karel_tiene_cosos()</code> y
+<code>karel_no_tiene_cosos()</code> analizan si Karel tiene <code>cosos</code> en su
+mochila (no visibles en la representación gráfica). Las funciones
+<code>mira_al_este()</code>, <code>mira_al_oeste()</code>, <code>mira_al_norte()</code> y
+<code>mira_al_sur()</code> analizan la dirección hacia la cual Karel está
+mirando.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Valor lógico TRUE o FALSE.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>generar_mundo</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generar_mundo("mundo001")
+frente_abierto()
+frente_cerrado()
+izquierda_abierto()
+izquierda_cerrado()
+derecha_abierto()
+derecha_cerrado()
+hay_cosos()
+no_hay_cosos()
+karel_tiene_cosos()
+karel_no_tiene_cosos()
+mira_al_este()
+mira_al_oeste()
+mira_al_norte()
+mira_al_sur()
+
+</code></pre>
+
+
+</div>

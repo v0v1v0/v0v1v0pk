@@ -1,0 +1,264 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_depthwise_conv_2d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>2D depthwise convolution layer.</h2>
+
+<h3>Description</h3>
+
+<p>Depthwise convolution is a type of convolution in which each input channel
+is convolved with a different kernel (called a depthwise kernel). You can
+understand depthwise convolution as the first step in a depthwise separable
+convolution.
+</p>
+<p>It is implemented via the following steps:
+</p>
+
+<ul>
+<li>
+<p> Split the input into individual channels.
+</p>
+</li>
+<li>
+<p> Convolve each channel with an individual depthwise kernel with
+<code>depth_multiplier</code> output channels.
+</p>
+</li>
+<li>
+<p> Concatenate the convolved outputs along the channels axis.
+</p>
+</li>
+</ul>
+<p>Unlike a regular 2D convolution, depthwise convolution does not mix
+information across different input channels.
+</p>
+<p>The <code>depth_multiplier</code> argument determines how many filters are applied to
+one input channel. As such, it controls the amount of output channels that
+are generated per input channel in the depthwise step.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_depthwise_conv_2d(
+  object,
+  kernel_size,
+  strides = list(1L, 1L),
+  padding = "valid",
+  depth_multiplier = 1L,
+  data_format = NULL,
+  dilation_rate = list(1L, 1L),
+  activation = NULL,
+  use_bias = TRUE,
+  depthwise_initializer = "glorot_uniform",
+  bias_initializer = "zeros",
+  depthwise_regularizer = NULL,
+  bias_regularizer = NULL,
+  activity_regularizer = NULL,
+  depthwise_constraint = NULL,
+  bias_constraint = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_size</code></td>
+<td>
+<p>int or list of 2 integer, specifying the size of the
+depthwise convolution window.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strides</code></td>
+<td>
+<p>int or list of 2 integer, specifying the stride length
+of the depthwise convolution. <code>strides &gt; 1</code> is incompatible with
+<code>dilation_rate &gt; 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>string, either <code>"valid"</code> or <code>"same"</code> (case-insensitive).
+<code>"valid"</code> means no padding. <code>"same"</code> results in padding evenly to
+the left/right or up/down of the input. When <code>padding="same"</code> and
+<code>strides=1</code>, the output has the same size as the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depth_multiplier</code></td>
+<td>
+<p>The number of depthwise convolution output channels
+for each input channel. The total number of depthwise convolution
+output channels will be equal to <code>input_channel * depth_multiplier</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_format</code></td>
+<td>
+<p>string, either <code>"channels_last"</code> or <code>"channels_first"</code>.
+The ordering of the dimensions in the inputs. <code>"channels_last"</code>
+corresponds to inputs with shape <code style="white-space: pre;">⁠(batch, height, width, channels)⁠</code>
+while <code>"channels_first"</code> corresponds to inputs with shape
+<code style="white-space: pre;">⁠(batch, channels, height, width)⁠</code>. It defaults to the
+<code>image_data_format</code> value found in your Keras config file
+at <code style="white-space: pre;">⁠~/.keras/keras.json⁠</code>.
+If you never set it, then it will be <code>"channels_last"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dilation_rate</code></td>
+<td>
+<p>int or list of 2 integers, specifying the dilation
+rate to use for dilated convolution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function. If <code>NULL</code>, no activation is applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>bool, if <code>TRUE</code>, bias will be added to the output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depthwise_initializer</code></td>
+<td>
+<p>Initializer for the convolution kernel.
+If <code>NULL</code>, the default initializer (<code>"glorot_uniform"</code>)
+will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector. If <code>NULL</code>, the
+default initializer (<code>"zeros"</code>) will be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depthwise_regularizer</code></td>
+<td>
+<p>Optional regularizer for the convolution kernel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Optional regularizer for the bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activity_regularizer</code></td>
+<td>
+<p>Optional regularizer function for the output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depthwise_constraint</code></td>
+<td>
+<p>Optional projection function to be applied to the
+kernel after being updated by an <code>Optimizer</code> (e.g. used to implement
+norm constraints or value constraints for layer weights). The
+function must take as input the unprojected variable and must return
+the projected variable (which must have the same shape). Constraints
+are not safe to use when doing asynchronous distributed training.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Optional projection function to be applied to the
+bias after being updated by an <code>Optimizer</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A 4D tensor representing
+<code>activation(depthwise_conv2d(inputs, kernel) + bias)</code>.
+</p>
+
+
+<h3>Input Shape</h3>
+
+
+<ul>
+<li>
+<p> If <code>data_format="channels_last"</code>:
+A 4D tensor with shape: <code style="white-space: pre;">⁠(batch_size, height, width, channels)⁠</code>
+</p>
+</li>
+<li>
+<p> If <code>data_format="channels_first"</code>:
+A 4D tensor with shape: <code style="white-space: pre;">⁠(batch_size, channels, height, width)⁠</code>
+</p>
+</li>
+</ul>
+<h3>Output Shape</h3>
+
+
+<ul>
+<li>
+<p> If <code>data_format="channels_last"</code>:
+A 4D tensor with shape:
+<code style="white-space: pre;">⁠(batch_size, new_height, new_width, channels * depth_multiplier)⁠</code>
+</p>
+</li>
+<li>
+<p> If <code>data_format="channels_first"</code>:
+A 4D tensor with shape:
+<code style="white-space: pre;">⁠(batch_size, channels * depth_multiplier, new_height, new_width)⁠</code>
+</p>
+</li>
+</ul>
+<h3>Raises</h3>
+
+<p>ValueError: when both <code>strides &gt; 1</code> and <code>dilation_rate &gt; 1</code>.
+</p>
+
+
+<h3>Example</h3>
+
+<div class="sourceCode r"><pre>x &lt;- random_uniform(c(4, 10, 10, 12))
+y &lt;- x |&gt; layer_depthwise_conv_2d(3, 3, activation = 'relu')
+shape(y)
+</pre></div>
+<div class="sourceCode"><pre>## shape(4, 3, 3, 12)
+
+</pre></div>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/convolution_layers/depthwise_convolution2d#depthwiseconv2d-class">https://keras.io/api/layers/convolution_layers/depthwise_convolution2d#depthwiseconv2d-class</a>
+</p>
+</li></ul>
+<p>Other convolutional layers: <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_lstm()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

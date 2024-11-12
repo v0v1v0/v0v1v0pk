@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>metric_fbeta_score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes F-Beta score.</h2>
+
+<h3>Description</h3>
+
+<p>Formula:
+</p>
+<div class="sourceCode r"><pre>b2 &lt;- beta^2
+f_beta_score &lt;- (1 + b2) * (precision * recall) / (precision * b2 + recall)
+</pre></div>
+<p>This is the weighted harmonic mean of precision and recall.
+Its output range is <code style="white-space: pre;">⁠[0, 1]⁠</code>. It works for both multi-class
+and multi-label classification.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">metric_fbeta_score(
+  ...,
+  average = NULL,
+  beta = 1,
+  threshold = NULL,
+  name = "fbeta_score",
+  dtype = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>average</code></td>
+<td>
+<p>Type of averaging to be performed across per-class results
+in the multi-class case.
+Acceptable values are <code>NULL</code>, <code>"micro"</code>, <code>"macro"</code> and
+<code>"weighted"</code>. Defaults to <code>NULL</code>.
+If <code>NULL</code>, no averaging is performed and <code>result()</code> will return
+the score for each class.
+If <code>"micro"</code>, compute metrics globally by counting the total
+true positives, false negatives and false positives.
+If <code>"macro"</code>, compute metrics for each label,
+and return their unweighted mean.
+This does not take label imbalance into account.
+If <code>"weighted"</code>, compute metrics for each label,
+and return their average weighted by support
+(the number of true instances for each label).
+This alters <code>"macro"</code> to account for label imbalance.
+It can result in an score that is not between precision and recall.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+<p>Determines the weight of given to recall
+in the harmonic mean between precision and recall (see pseudocode
+equation above). Defaults to <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>Elements of <code>y_pred</code> greater than <code>threshold</code> are
+converted to be 1, and the rest 0. If <code>threshold</code> is
+<code>NULL</code>, the argmax of <code>y_pred</code> is converted to 1, and the rest to 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Optional. String name of the metric instance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtype</code></td>
+<td>
+<p>Optional. Data type of the metric result.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>Metric</code> instance is returned. The <code>Metric</code> instance can be passed
+directly to <code>compile(metrics = )</code>, or used as a standalone object. See
+<code>?Metric</code> for example usage.
+</p>
+
+
+<h3>Examples</h3>
+
+<div class="sourceCode r"><pre>metric &lt;- metric_fbeta_score(beta = 2.0, threshold = 0.5)
+y_true &lt;- rbind(c(1, 1, 1),
+                c(1, 0, 0),
+                c(1, 1, 0))
+y_pred &lt;- rbind(c(0.2, 0.6, 0.7),
+                c(0.2, 0.6, 0.6),
+                c(0.6, 0.8, 0.0))
+metric$update_state(y_true, y_pred)
+metric$result()
+</pre></div>
+<div class="sourceCode"><pre>## tf.Tensor([0.3846154  0.90909094 0.8333332 ], shape=(3), dtype=float32)
+
+</pre></div>
+
+
+<h3>Returns</h3>
+
+<p>F-Beta Score: float.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other f score metrics: <br><code>metric_f1_score()</code> <br></p>
+<p>Other metrics: <br><code>Metric()</code> <br><code>custom_metric()</code> <br><code>metric_auc()</code> <br><code>metric_binary_accuracy()</code> <br><code>metric_binary_crossentropy()</code> <br><code>metric_binary_focal_crossentropy()</code> <br><code>metric_binary_iou()</code> <br><code>metric_categorical_accuracy()</code> <br><code>metric_categorical_crossentropy()</code> <br><code>metric_categorical_focal_crossentropy()</code> <br><code>metric_categorical_hinge()</code> <br><code>metric_cosine_similarity()</code> <br><code>metric_f1_score()</code> <br><code>metric_false_negatives()</code> <br><code>metric_false_positives()</code> <br><code>metric_hinge()</code> <br><code>metric_huber()</code> <br><code>metric_iou()</code> <br><code>metric_kl_divergence()</code> <br><code>metric_log_cosh()</code> <br><code>metric_log_cosh_error()</code> <br><code>metric_mean()</code> <br><code>metric_mean_absolute_error()</code> <br><code>metric_mean_absolute_percentage_error()</code> <br><code>metric_mean_iou()</code> <br><code>metric_mean_squared_error()</code> <br><code>metric_mean_squared_logarithmic_error()</code> <br><code>metric_mean_wrapper()</code> <br><code>metric_one_hot_iou()</code> <br><code>metric_one_hot_mean_iou()</code> <br><code>metric_poisson()</code> <br><code>metric_precision()</code> <br><code>metric_precision_at_recall()</code> <br><code>metric_r2_score()</code> <br><code>metric_recall()</code> <br><code>metric_recall_at_precision()</code> <br><code>metric_root_mean_squared_error()</code> <br><code>metric_sensitivity_at_specificity()</code> <br><code>metric_sparse_categorical_accuracy()</code> <br><code>metric_sparse_categorical_crossentropy()</code> <br><code>metric_sparse_top_k_categorical_accuracy()</code> <br><code>metric_specificity_at_sensitivity()</code> <br><code>metric_squared_hinge()</code> <br><code>metric_sum()</code> <br><code>metric_top_k_categorical_accuracy()</code> <br><code>metric_true_negatives()</code> <br><code>metric_true_positives()</code> <br></p>
+
+
+</div>

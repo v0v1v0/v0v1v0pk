@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write_kbase</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write a base file</h2>
+
+<h3>Description</h3>
+
+<p>Write a base to
+a file. The file formats are described in the kstIO-package
+information page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  write_kbase(x, filename, format = "SRBT")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The data to be written, either a binary matrix or an object
+of <code>kbase</code> class.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>A character string specifying the name of the base file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>Specification of the files format. Can be "SRBT" (default), "KST", 
+"CSV", or "matrix".
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>format</code> values <code>"SRBT"</code>, <code>"KST"</code>, and 
+<code>"matrix"</code> refer to the different generations of file formats 
+described in kstIO-package.  
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cord Hockemeyer <a href="mailto:cord.hockemeyer@uni-graz.at">cord.hockemeyer@uni-graz.at</a></p>
+
+
+<h3>References</h3>
+
+<p>Hockemeyer, C. (2001). <em>KST Tools User Manual</em> (2nd ed.). 
+<a href="https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/KST-Tools_TechRep_FWF01.pdf</a>.
+</p>
+<p>Poetzi, S. &amp; Wesiak, G. (2001). <em>SRbT Tools User Manual.</em>
+<a href="https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf">https://kst.hockemeyer.at/techreports/SRBT-Tools_TechRep_FWF01.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kbase</code>,
+kstIO-package
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Obtain data to write from the 'pks' package
+library(kst)
+d &lt;- getwd()
+setwd(tempdir())
+data(DoignonFalmagne7)
+b &lt;- kbase(kspace(kstructure(as.pattern(DoignonFalmagne7$K, as.set=TRUE))))
+# Write base to file
+write_kbase(b, "DF7.bas") # Write in (default) SRBT format
+write_kbase(b, "DF7.bas", "KST") # (Old) KST format
+setwd(d)
+</code></pre>
+
+
+</div>

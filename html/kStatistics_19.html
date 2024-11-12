@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mCoeff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extraction of a number from a list</h2>
+
+<h3>Description</h3>
+
+<p>Given a list containing vectors paired with numbers, the function returns 
+the number paired with the vector matching the one passed in input.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mCoeff( v=NULL,L=NULL ) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>vector to be searched in the list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>two-dimensional list: in the first there is a vector and in the second 
+a number</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The input variable <code>L</code> of the <code>mCoeff</code> function is a list 
+containing vectors and numbers. The  input variable <code>v</code> of the <code>mCoeff</code> 
+function is one of vectors contained in the list. The function searches the vector 
+<code>v</code> in the list and returns the number which is paired with <code>v</code> in the list.
+This function is useful in the construction of k-statistics but also to manage monomials 
+and their coefficients.</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>float</code></td>
+<td>
+<p>the number paired with the input vector</p>
+</td>
+</tr></table>
+<h3>Note</h3>
+
+<p>Called by the <code>nPS</code>, <code>nKM</code> and <code>nPM</code> functions 
+in the <code>kStatistics</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Elvira Di Nardo <a href="mailto:elvira.dinardo@unito.it">elvira.dinardo@unito.it</a>,<br> 
+Giuseppe Guarino <a href="mailto:giuseppe.guarino@rete.basilicata.it">giuseppe.guarino@rete.basilicata.it</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>E. Di Nardo, G. Guarino, D. Senato (2008) An unifying framework for k-statistics, polykays and their generalizations. 
+Bernoulli. 14(2), 440-468. (download from <a href="https://arxiv.org/pdf/math/0607623.pdf">https://arxiv.org/pdf/math/0607623.pdf</a>) 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mkmSet</code>,
+<code>countP</code>,
+<code>nStirling2</code>,
+<code>intPart</code>,
+<code>ff</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Run mkmSet(c(3)) to get the list L1 = [[1,1,1],1], [[1,2],3], [[3],1]
+L1 &lt;- mkmSet(c(3))   
+
+# Return the number 3, which is the number paired with [1,2] in L1
+mCoeff( c(1,2), L1)  
+ 
+</code></pre>
+
+
+</div>

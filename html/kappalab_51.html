@@ -1,0 +1,168 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>card.set.func-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "card.set.func"</h2>
+
+<h3>Description</h3>
+
+<p>Class representing a cardinal set function, i.e. whose values
+depend only on the cardinality of subsets.</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls to the function <code>card.set.func</code>.</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt>
+<code>n</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length 1 equal
+to the number of elements of the set on which the cardinal set
+function is defined.</p>
+</dd>
+<dt>
+<code>data</code>:</dt>
+<dd>
+<p>Object of class <code>numeric</code> of length
+<code>n+1</code> containing the coefficients of the cardinal set function.</p>
+</dd>
+</dl>
+<h3>Extends</h3>
+
+<p>Class <code>superclass.set.func</code>, directly.
+</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>as.card.game</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>as.card.capacity</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>as.set.func</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code> </p>
+</dd>
+<dt>as.Mobius.card.set.func</dt>
+<dd>
+<p><code>signature(object =
+	"card.set.func")</code> </p>
+</dd>
+<dt>as.Mobius.set.func</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>conjugate</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>interaction.indices</dt>
+<dd>
+<p><code>signature(object =
+	"card.set.func")</code></p>
+</dd>
+<dt>is.cardinal</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>is.kadditive</dt>
+<dd>
+<p><code>signature(object = "card.set.func", k =
+	"numeric")</code></p>
+</dd>
+<dt>is.monotone</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>Mobius</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>Shapley.value</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+<dt>to.data.frame</dt>
+<dd>
+<p><code>signature(object = "card.set.func")</code></p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>set.func-class</code>,
+<br><code>card.set.func</code>,
+<br><code>as.card.game-methods</code>, 
+<br><code>as.card.capacity-methods</code>,
+<br><code>as.set.func-methods</code>,
+<br><code>as.Mobius.set.func-methods</code>,
+<br><code>as.Mobius.card.set.func-methods</code>,
+<br><code>conjugate-methods</code>, 
+<br><code>interaction.indices-methods</code>,
+<br><code>is.cardinal-methods</code>, 
+<br><code>is.kadditive-methods</code>,
+<br><code>is.monotone-methods</code>, 
+<br><code>Mobius-methods</code>,
+<br><code>Shapley.value-methods</code>, 
+<br><code>to.data.frame-methods</code>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## a cardinal set function
+mu &lt;- card.set.func(-3:2)
+
+# the attributes of the object
+mu@n
+mu@data
+
+## some conversions that cannot work
+## Not run: as.card.game(mu)
+## Not run: as.card.capacityfunc(mu)
+
+## the following should work
+as.set.func(mu)
+
+## some tests
+is.cardinal(mu)
+is.kadditive(mu,2)
+is.monotone(mu)
+
+## some transformations
+conjugate(mu)
+Mobius(mu)
+## let us check ...
+zeta(Mobius(mu))
+
+## summary 
+Shapley.value(mu)
+interaction.indices(mu)
+# the same
+summary(mu)
+
+## save the set function to a file
+d &lt;- to.data.frame(mu)
+## Not run: write.table(d,"my.card.set.func.csv",sep="\t")
+
+# finally, some other conversions that should work
+mu &lt;- card.set.func(0:5)
+as.card.game(mu)
+as.card.capacity(mu)
+</code></pre>
+
+
+</div>

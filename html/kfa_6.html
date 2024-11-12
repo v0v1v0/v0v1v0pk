@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>example.kfa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kfa results from simulated data example</h2>
+
+<h3>Description</h3>
+
+<p>Simulated responses for 900 observations on 20 variables loading onto a 3 factor
+structure (see example in <code>kfa</code> documentation for model).
+The simulated data was run through <code>kfa</code> with the call
+kfa(sim.data, k = 2, m = 3) which tested 1-, 2-, and 3-factor structures over 2 folds.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(example.kfa)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>"kfa"</code>, which is a four-element <code>list</code>:
+</p>
+
+<ul>
+<li> <p><strong>cfas</strong> <code>lavaan</code> CFA objects for each <em>k</em> fold
+</p>
+</li>
+<li> <p><strong>cfa.syntax</strong> syntax used to produce CFA objects
+</p>
+</li>
+<li> <p><strong>model.names</strong> vector of names for CFA objects
+</p>
+</li>
+<li> <p><strong>efa.structures</strong> all factor structures identified in the EFA
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(example.kfa)
+agg_cors(example.kfa)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geno</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Example genotypes for 50 individuals.</h2>
+
+<h3>Description</h3>
+
+<p>A matrix containing example genotypes for 4056 SNPs of 50 individuals. 
+Column names give the rs-numbers of 4056 example SNPs, row names the 
+identifiers of 50 example individuals.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(geno)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A <code>matrix</code> with 5 rows and 4056 columns:
+</p>
+
+<p>each entry in the matrix represents a simulated minor allele count for the
+corresponding SNP and individual.
+
+</p>
+
+
+<h3>Source</h3>
+
+<p>simulated data
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(geno)
+head(geno)
+# create gwas object
+data(pheno)
+data(anno)
+gwas &lt;- new('GWASdata', pheno=pheno, geno=geno, anno=anno, desc="some study") 
+</code></pre>
+
+
+</div>

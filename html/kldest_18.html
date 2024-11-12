@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kld_gaussian</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Analytical KL divergence for two uni- or multivariate Gaussian distributions</h2>
+
+<h3>Description</h3>
+
+<p>This function computes <code class="reqn">D_{KL}(p||q)</code>, where <code class="reqn">p\sim \mathcal{N}(\mu_1,\Sigma_1)</code>
+and <code class="reqn">q\sim \mathcal{N}(\mu_2,\Sigma_2)</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kld_gaussian(mu1, sigma1, mu2, sigma2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu1</code></td>
+<td>
+<p>A numeric vector (mean of true Gaussian)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma1</code></td>
+<td>
+<p>A s.p.d. matrix (Covariance matrix of true Gaussian)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu2</code></td>
+<td>
+<p>A numeric vector (mean of approximate Gaussian)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma2</code></td>
+<td>
+<p>A s.p.d. matrix  (Covariance matrix of approximate Gaussian)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A scalar (the Kullback-Leibler divergence)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kld_gaussian(mu1 = 1, sigma1 = 1, mu2 = 1, sigma2 = 2^2)
+kld_gaussian(mu1 = rep(0,2), sigma1 = diag(2),
+                mu2 = rep(1,2), sigma2 = matrix(c(1,0.5,0.5,1), nrow = 2))
+</code></pre>
+
+
+</div>

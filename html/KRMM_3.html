@@ -1,0 +1,257 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Kernel_Ridge_MM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Kernel ridge regression in the mixed model framework
+</h2>
+
+<h3>Description</h3>
+
+<p>Kernel_Ridge_MM solves kernel ridge regression for various kernels within the following mixed model framework: Y =X*Beta + Z*U + E, where
+X and Z correspond to the design matrices of predictors with fixed and random effects respectively.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">	
+	Kernel_Ridge_MM( Y_train, X_train=as.vector(rep(1,length(Y_train))), 
+
+	Z_train=diag(1,length(Y_train)), Matrix_covariates_train, method="RKHS",
+
+	kernel="Gaussian", rate_decay_kernel=0.1, degree_poly=2, scale_poly=1, 
+	
+	offset_poly=1, degree_anova=3, init_sigma2K=2, init_sigma2E=3, 
+
+	convergence_precision=1e-8, nb_iter=1000, display="FALSE" )
+	</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y_train</code></td>
+<td>
+<p>numeric vector; response vector for training data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_train</code></td>
+<td>
+<p>numeric matrix; design matrix of predictors with fixed effects for training data (default is a vector of ones)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z_train</code></td>
+<td>
+<p>numeric matrix; design matrix of predictors with random effects for training data (default is identity matrix)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Matrix_covariates_train</code></td>
+<td>
+<p>numeric matrix of entries used to build the kernel matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>character string; RKHS, GBLUP or RR-BLUP</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>character string; Gaussian, Laplacian or ANOVA (kernels for RKHS regression ONLY, the linear kernel is automatically built for GBLUP and RR-BLUP and hence no kernel is supplied for these methods) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate_decay_kernel</code></td>
+<td>
+<p>numeric scalar; hyperparameter of the Gaussian, Laplacian or ANOVA kernel (default is 0.1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>degree_poly, scale_poly, offset_poly</code></td>
+<td>
+<p>numeric scalars; parameters for polynomial kernel (defaults are 2, 1 and 1 respectively)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>degree_anova</code></td>
+<td>
+<p>numeric scalar; parameter for ANOVA kernel (defaults is 3)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init_sigma2K, init_sigma2E</code></td>
+<td>
+<p>numeric scalars;
+initial guess values, associated to the mixed model variance parameters, for the EM-REML algorithm
+(defaults are 2 and 3 respectively)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence_precision, nb_iter</code></td>
+<td>
+		
+<p>numeric scalars; convergence precision (i.e. tolerance) associated to the mixed model variance parameters,
+for the EM-REML algorithm, and number of maximum iterations allowed if 
+convergence is not reached (defaults are 1e-8 and 1000 respectively)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display</code></td>
+<td>
+
+<p>boolean (TRUE or FALSE character string); 
+should estimated components be displayed at each   
+iteration 
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+ 
+<p>The matrix Matrix_covariates_train is mandatory to build the kernel matrix for model estimation, and prediction (see Predict_kernel_Ridge_MM).
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Beta_hat</code></td>
+<td>
+<p>Estimated fixed effect(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma2K_hat, Sigma2E_hat</code></td>
+<td>
+<p>Estimated variance components</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Vect_alpha</code></td>
+<td>
+<p>Estimated dual variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Gamma_hat</code></td>
+<td>
+<p>RR-BLUP of covariates effects 
+(i.e. available for RR-BLUP method only)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Laval Jacquin &lt;jacquin.julien@gmail.com&gt;</p>
+
+
+<h3>References</h3>
+
+<p>Jacquin et al. (2016). A unified and comprehensible view of parametric and kernel methods for genomic prediction with application to rice (in peer review).
+</p>
+<p>Robinson, G. K. (1991). That blup is a good thing: the estimation of random effects. Statistical science, 534 15-32 
+</p>
+<p>Foulley, J.-L. (2002). Algorithme em: théorie et application au modèle mixte. Journal de la Société française de Statistique 143, 57-109
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+
+library(KRMM)
+
+### SIMULATE DATA 
+set.seed(123)
+p=200
+N=100
+
+beta=rnorm(p, mean=0, sd=1.0)
+X=matrix(runif(p*N, min=0, max=1), ncol=p, byrow=TRUE)  #X: covariates (i.e. predictors)
+
+f=X%*%beta                    #f: data generating process (i.e. DGP)
+E=rnorm(N, mean=0, sd=0.5)
+
+Y=f+E                           #Y: observed response data
+
+hist(f)
+hist(beta)
+Nb_train=floor((2/3)*N)
+
+###======================================================================###
+### CREATE TRAINING AND TARGET SETS FOR RESPONSE AND PREDICTOR VARIABLES ###
+###======================================================================###
+
+Index_train=sample(1:N, size=Nb_train, replace=FALSE)
+
+### Covariates (i.e. predictors) for training and target sets
+
+Predictors_train=X[Index_train, ]
+Response_train=Y[Index_train]
+
+Predictors_target=X[-Index_train, ]
+True_value_target=f[-Index_train]    #True value (generated by DGP) we want to predict
+
+
+###=================================================================================###
+### PREDICTION WITH KERNEL RIDGE REGRESSION SOLVED WITHIN THE MIXED MODEL FRAMEWORK ### 
+###=================================================================================###
+
+
+#Linear kernel
+
+Linear_KRR_model_train = Kernel_Ridge_MM(Y_train=Response_train, 
+Matrix_covariates_train=Predictors_train, method="RR-BLUP")
+
+f_hat_target_Linear_KRR = Predict_kernel_Ridge_MM( Linear_KRR_model_train, 
+Matrix_covariates_target=Predictors_target )
+
+#Gaussian kernel
+
+Gaussian_KRR_model_train = Kernel_Ridge_MM( Y_train=Response_train, 
+Matrix_covariates_train=Predictors_train, method="RKHS", rate_decay_kernel=5.0)
+f_hat_target_Gaussian_KRR = Predict_kernel_Ridge_MM( Gaussian_KRR_model_train, 
+Matrix_covariates_target=Predictors_target )
+
+
+#Graphics for RR-BLUP
+
+dev.new(width=30, height=20)
+par(mfrow=c(3,1))	
+plot(f_hat_target_Linear_KRR, True_value_target)
+plot(Linear_KRR_model_train$Gamma_hat, xlab="Feature (i.e. covariate) number", 
+ ylab="Feature effect (i.e. Gamma_hat)", main="BLUP of covariate effects based on training data")
+hist(Linear_KRR_model_train$Gamma_hat, main="Distribution of BLUP of
+covariate effects based on training data" )
+
+
+# Compare prediction based on linear (i.e. RR-BLUP) and Gaussian kernel
+
+par(mfrow=c(1,2))
+plot(f_hat_target_Linear_KRR, True_value_target)
+plot(f_hat_target_Gaussian_KRR, True_value_target)
+
+mean((f_hat_target_Linear_KRR - True_value_target)^2)
+mean((f_hat_target_Gaussian_KRR - True_value_target)^2)
+
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

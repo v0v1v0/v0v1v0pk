@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.kgschart</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot method for kgschart object</h2>
+
+<h3>Description</h3>
+
+<p>Plot data or image
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'kgschart'
+plot(x, y = NULL, image = FALSE, separate = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p><code>kgschart</code> class object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>not in use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>image</code></td>
+<td>
+<p>if <code>TRUE</code>, draw the image, otherwise plot the data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>separate</code></td>
+<td>
+<p>if <code>TRUE</code>, and <code>image</code> is TRUE, draw the image separated by
+component. Useful for debugging.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>not in use</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>gtable</code> object if <code>image</code> and <code>separate</code> are both <code>TRUE</code>,
+<code>ggplot</code> object otherwise
+</p>
+
+
+</div>

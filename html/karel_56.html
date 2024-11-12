@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>put_ver_walls</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Put vertical walls (streets)</h2>
+
+<h3>Description</h3>
+
+<p>Helper function for <code>generate_open_moves()</code>. It takes the available data
+for a piece of vertical wall (x and y coordinates of its beginning point and
+its length) and produces a dataset with the positions and directions of
+prohibited moves for Karel because of this wall.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">put_ver_walls(x, y, lgth)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, </code></td>
+<td>
+<p>y x and y coordinates of the beginning point of the wall</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lgth</code></td>
+<td>
+<p>length of the wall</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A lgth x 3 dataset with coordinates where Karel can't move and the
+direction (side) towards it can't move because of this piece of vertical
+wall.
+</p>
+
+
+</div>

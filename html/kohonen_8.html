@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>expandMap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Expand a self-organising map</h2>
+
+<h3>Description</h3>
+
+<p>Double the size of a map, imputing the codebookvectors of the new units
+by averiging their immediate neighbours.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">expandMap(kohobj)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>kohobj</code></td>
+<td>
+<p>Object of class <code>"kohonen"</code>)</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A new kohonen object, with a double size.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ron Wehrens</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(yeast)
+yeast.supersom &lt;- supersom(yeast, somgrid(4, 4, "hexagonal"),
+                           whatmap = 3:6, maxNA.fraction = .5)
+yeast.supersom2 &lt;- expandMap(yeast.supersom)
+yeast.supersom3 &lt;- supersom(yeast, yeast.supersom2$grid,
+                            whatmap = 3:6, maxNA.fraction = .5,
+                            init = yeast.supersom2$codes[3:6])
+</code></pre>
+
+
+</div>

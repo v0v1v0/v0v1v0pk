@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callback_early_stopping</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Stop training when a monitored quantity has stopped improving.</h2>
+
+<h3>Description</h3>
+
+<p>Stop training when a monitored quantity has stopped improving.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callback_early_stopping(
+  monitor = "val_loss",
+  min_delta = 0,
+  patience = 0,
+  verbose = 0,
+  mode = c("auto", "min", "max"),
+  baseline = NULL,
+  restore_best_weights = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>monitor</code></td>
+<td>
+<p>quantity to be monitored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_delta</code></td>
+<td>
+<p>minimum change in the monitored quantity to qualify as an
+improvement, i.e. an absolute change of less than min_delta, will count as
+no improvement.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>patience</code></td>
+<td>
+<p>number of epochs with no improvement after which training
+will be stopped.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>verbosity mode, 0 or 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p>one of "auto", "min", "max". In <code>min</code> mode, training will stop when
+the quantity monitored has stopped decreasing; in <code>max</code> mode it will stop
+when the quantity monitored has stopped increasing; in <code>auto</code> mode, the
+direction is automatically inferred from the name of the monitored
+quantity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>baseline</code></td>
+<td>
+<p>Baseline value for the monitored quantity to reach.
+Training will stop if the model doesn't show improvement
+over the baseline.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>restore_best_weights</code></td>
+<td>
+<p>Whether to restore model weights from
+the epoch with the best value of the monitored quantity.
+If <code>FALSE</code>, the model weights obtained at the last step of
+training are used.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>Other callbacks: 
+<code>callback_csv_logger()</code>,
+<code>callback_lambda()</code>,
+<code>callback_learning_rate_scheduler()</code>,
+<code>callback_model_checkpoint()</code>,
+<code>callback_progbar_logger()</code>,
+<code>callback_reduce_lr_on_plateau()</code>,
+<code>callback_remote_monitor()</code>,
+<code>callback_tensorboard()</code>,
+<code>callback_terminate_on_naan()</code>
+</p>
+
+
+</div>

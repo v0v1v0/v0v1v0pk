@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>xl_renderer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Represents an R object into a format that can be printed into an XLSX file</h2>
+
+<h3>Description</h3>
+
+<p>This is a generic function that is intended for developers who want
+to extend <code>knitxl</code> to print new classes R objects. It transforms an object
+into a <code style="white-space: pre;">⁠knitxl_output_*⁠</code> class (either <code>text</code>, <code>vector</code> or <code>data_frame</code>)
+that can be printed in an XLSX file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">xl_renderer(x, options)
+
+## Default S3 method:
+xl_renderer(x, options)
+
+## S3 method for class 'data.frame'
+xl_renderer(x, options)
+
+## S3 method for class 'numeric'
+xl_renderer(x, options)
+
+## S3 method for class 'logical'
+xl_renderer(x, options)
+
+## S3 method for class 'list'
+xl_renderer(x, options)
+
+## S3 method for class 'character'
+xl_renderer(x, options)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the object to be rendered in the XLSX file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>the <code>knitr</code> and <code>knitxl</code> options used to cutomize the
+rendering of <code>x</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character singleton, a data vector, or a data frame with class
+<code style="white-space: pre;">⁠knitxl_output_*⁠</code> (either <code>text</code>, <code>vector</code> or <code>data_frame</code>, respectively).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">   # Writes the summary of linear model fits a print output:
+   xl_renderer.lm &lt;- function(x, options) {
+     res &lt;- capture.output(summary(x))
+     res &lt;- paste0(res, collapse = "\n")
+     class(res) &lt;- "knit_xl_output_vector"
+     res
+   }
+   registerS3method("xl_renderer", "lm", xl_renderer.lm)
+   # knitxl will now print the summary of `lm` object in the generated
+   # .xlsx file.
+
+   # This will instead write the summary information about the coefficients
+   # in a table:
+   xl_renderer.lm &lt;- function(x, options) {
+     summary(x)$coefficients %&gt;%
+     as.data.frame() %&gt;%
+     new_knitxl_output_data_frame()
+   }
+  registerS3method("xl_renderer", "lm", xl_renderer.lm)
+
+</code></pre>
+
+
+</div>

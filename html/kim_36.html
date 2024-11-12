@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>desc_stats_by_group</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Descriptive statistics by group</h2>
+
+<h3>Description</h3>
+
+<p>Returns descriptive statistics by group
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">desc_stats_by_group(
+  data = NULL,
+  var_for_stats = NULL,
+  grouping_vars = NULL,
+  stats = "all",
+  sigfigs = NULL,
+  cols_to_round = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var_for_stats</code></td>
+<td>
+<p>name of the variable for which descriptive
+statistics will be calculated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grouping_vars</code></td>
+<td>
+<p>name(s) of grouping variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stats</code></td>
+<td>
+<p>statistics to calculate. If <code>stats = "basic"</code>,
+group size, mean, standard deviation, median, minimum, and maximum will
+be calculated. If <code>stats = "all"</code>, in addition to the
+aforementioned statistics, standard error, 95% confidence and
+prediction intervals, skewness, and kurtosis will also be calculated.
+The <code>stats</code> argument can also be a character vector with types of
+statistics to calculate. For example, entering
+<code>stats = c("mean", "median")</code> will calculate mean and median.
+By default, <code>stats = "all"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigfigs</code></td>
+<td>
+<p>number of significant digits to round to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols_to_round</code></td>
+<td>
+<p>names of columns whose values will be rounded</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the output will be a data.table showing descriptive statistics
+of the variable for each of the groups formed by the grouping variables.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">desc_stats_by_group(data = mtcars, var_for_stats = "mpg",
+grouping_vars = c("vs", "am"))
+desc_stats_by_group(data = mtcars, var_for_stats = "mpg",
+grouping_vars = c("vs", "am"), sigfigs = 3)
+desc_stats_by_group(data = mtcars, var_for_stats = "mpg",
+grouping_vars = c("vs", "am"), stats = "basic", sigfigs = 2)
+desc_stats_by_group(data = mtcars, var_for_stats = "mpg",
+grouping_vars = c("vs", "am"), stats = "basic", sigfigs = 2,
+cols_to_round = "all")
+desc_stats_by_group(data = mtcars, var_for_stats = "mpg",
+grouping_vars = c("vs", "am"), stats = c("mean", "median"), sigfigs = 2,
+cols_to_round = "all")
+</code></pre>
+
+
+</div>

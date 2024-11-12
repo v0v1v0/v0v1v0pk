@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>show,klausuR-method</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Show methods for S4 objects of classes klausuR and klausuR.mult</h2>
+
+<h3>Description</h3>
+
+<p>Print a nice summary of the slots <code>results</code>, <code>anon</code>,
+<code>cronbach</code> and <code>item.analysis</code>.
+If object is of class klausuR.mult,
+the global results for tests with several test forms are evaluated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'klausuR'
+show(object)
+
+## S4 method for signature 'klausuR.mult'
+show(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object of class <code>klausuR</code> or <code>klausuR.mult</code></p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>, <code>klausur.mufo</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+klausur(data.obj)
+
+# multiple test forms
+klausur.mufo(data.obj, marks=notenschluessel)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

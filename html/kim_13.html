@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>clean_data_from_qualtrics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Clean data from Qualtrics</h2>
+
+<h3>Description</h3>
+
+<p>Clean a data set downloaded from Qualtrics
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">clean_data_from_qualtrics(
+  data = NULL,
+  remove_survey_preview_data = TRUE,
+  remove_test_response_data = TRUE,
+  default_cols_by_qualtrics = NULL,
+  default_cols_by_qualtrics_new = NULL,
+  warn_accuracy_loss = FALSE,
+  click_data_cols = "rm",
+  page_submit_cols = "move_to_right"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data object (a data frame or a data.table)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove_survey_preview_data</code></td>
+<td>
+<p>logical. Whether to remove data
+from survey preview (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove_test_response_data</code></td>
+<td>
+<p>logical. Whether to remove data
+from test response (default = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default_cols_by_qualtrics</code></td>
+<td>
+<p>names of columns that Qualtrics
+includes in the data set by default (e.g., "StartDate", "Finished").
+Accepting the default value <code>default_cols_by_qualtrics = NULL</code>
+will set the names to be those that Qualtrics uses as of Dec 25, 2020.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default_cols_by_qualtrics_new</code></td>
+<td>
+<p>new names for columns that
+Qualtrics includes in the data set by default
+(e.g., "StartDate", "Finished").
+Accepting the default value <code>default_cols_by_qualtrics_new = NULL</code>
+will set the names to be those that Qualtrics uses as of Dec 25, 2020
+converted to snake_case (e.g., "start_date", "finished").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warn_accuracy_loss</code></td>
+<td>
+<p>logical. whether to warn the user if
+converting character to numeric leads to loss of accuracy.
+(default = FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>click_data_cols</code></td>
+<td>
+<p>if <code>click_data_cols = "rm"</code>,
+columns containing click data (e.g., "_First Click") will be
+removed. If <code>click_data_cols = "move_to_right"</code>, the columns
+will be moved to the right (end) of the data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>page_submit_cols</code></td>
+<td>
+<p>if <code>page_submit_cols = "rm"</code>,
+columns containing page submit data (e.g., "_Page Submit";
+"response time" data) will be removed.
+If <code>page_submit_cols = "move_to_right"</code>, the columns
+will be moved to the right (end) of the data set.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data.table object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">clean_data_from_qualtrics(mtcars)
+clean_data_from_qualtrics(mtcars, default_cols_by_qualtrics = "mpg",
+default_cols_by_qualtrics_new = "mpg2")
+</code></pre>
+
+
+</div>

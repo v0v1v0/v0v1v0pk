@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KFAS-defunct</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Defunct Functions of Package KFAS</h2>
+
+<h3>Description</h3>
+
+<p>The function listed here are removed from KFAS.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'KFS'
+deviance(object, ...)
+
+## S3 replacement method for class 'SSModel'
+subset(x, element, states, etas, series, times, ...) &lt;- value
+
+subset(x, ...) &lt;- value
+
+## S3 method for class 'SSModel'
+subset(x, element, states, etas, series, times, ...)
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>Subset-based methods were removed as they were somewhat confusingly
+named as the <code>subset</code> generic in <code>base</code>, and most likely not
+that useful (compared to <code>[&lt;-.SSModel</code>).
+</p>
+<p>Deviance.KFS was removed as it was mostly useless. The value was not a <code class="reqn">-2*(logL-logL*)</code>
+where <code class="reqn">L</code> is the likelihood and <code class="reqn">L*</code> is the saturated likelihood.
+Instead it was based on the conditional likelihood <code class="reqn">p(y|theta)</code> i.e. it disregards
+the effect of hidden states. Therefore the value
+returned by this function did not make much sense in non-GLM setting.
+</p>
+<p>From <code>rstandard.KFS</code> and <code>residuals.KFS</code>: Computation of deviance residuals. 
+This option was meant to be used only for the GLM comparisons, as their 
+generalization to other models is lacking, but in order to avoid misleading 
+results in non-GLM settings, these are now completely removed.
+</p>
+
+
+</div>

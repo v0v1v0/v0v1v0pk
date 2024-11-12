@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>transform_kendall_rw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Transforming (scaling and shifting) Kendall random walks</h2>
+
+<h3>Description</h3>
+
+<p>If one trajectory has length n, an_seq and bn_seq arguments should be sequnces of length n.
+Object returned by this function has plot and print methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">transform_kendall_rw(simulations, an_seq = 1, bn_seq = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>simulations</code></td>
+<td>
+<p>tibble returned by simulation function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>an_seq</code></td>
+<td>
+<p>sequence that the trajectories will be multiplied by</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bn_seq</code></td>
+<td>
+<p>sequence that will be substracted from scaled trajectory</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>List like in simulate_kendall_rw function after transforming trajectories.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">kendall_simulations &lt;- simulate_kendall_rw(10, 1000, runif, 0.5)
+scaled_kendall &lt;- transform_kendall_rw(kendall_simulations, (1:1000)^(-2))
+scaled_kendall # kendall random walked scaled by the sequence n^(-1/alpha)
+scaled_data &lt;- scaled_kendall$simulation # simulated values
+plot(scaled_kendall)
+
+</code></pre>
+
+
+</div>

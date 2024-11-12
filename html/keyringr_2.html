@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>decrypt_gk_pw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get a password from Gnome Keyring using secret-tool</h2>
+
+<h3>Description</h3>
+
+<p>Get a password from Gnome Keyring using secret-tool
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">decrypt_gk_pw(key_value_pairs)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>key_value_pairs</code></td>
+<td>
+<p>A string of key value pairs as expected by secret-tool</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Requires the Gnome Keyring and secret-tool to be installed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An decrypted password as an invisible string.  Invisible means that
+the password won't be displayed in the console, but can be assigned to a
+variable or used inline.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# First encrypt a password using secret-tool as follows:
+# secret-tool store --label=mylabel db mydb user user1
+# now return the password above to the R environment
+x &lt;- decrypt_gk_pw("db mydb user user1")
+
+# function is best used in a connection string command:
+ch &lt;- odbcConnect("some dsn", uid = "user1", pwd = decrypt_gk_pw("db mydb user user1"))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

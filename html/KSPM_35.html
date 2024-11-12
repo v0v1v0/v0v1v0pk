@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lossFunction.looe</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computation of the leave one out error (LOOE) in kernel semi parametric model</h2>
+
+<h3>Description</h3>
+
+<p>internal function to optimize model for estimating hyperparameters based on LOOE
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lossFunction.looe(param. = NULL, Y. = NULL, X. = NULL,
+  kernelList. = NULL, n. = NULL, not.missing. = NULL,
+  compute.kernel. = NULL, print.lambda. = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>param.</code></td>
+<td>
+<p>initial parameter values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y.</code></td>
+<td>
+<p>response matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X.</code></td>
+<td>
+<p>X matrix (linear part).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernelList.</code></td>
+<td>
+<p>list of kernels (kernel part).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.</code></td>
+<td>
+<p>nb of samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>not.missing.</code></td>
+<td>
+<p>nb of non missing samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compute.kernel.</code></td>
+<td>
+<p>boolean. If TRUE, the kernel matrix is computed at each iteration. Should be TRUE when hyperparameters of kernel functions should be estimated by the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print.lambda.</code></td>
+<td>
+<p>boolean. If TRUE, values of tunning parameters (lambda) are printed at each iteration.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+</div>

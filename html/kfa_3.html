@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>agg_model_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summary table of model fit</h2>
+
+<h3>Description</h3>
+
+<p>Summary table of model fit aggregated over k-folds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">agg_model_fit(kfits, index = "all", digits = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kfits</code></td>
+<td>
+<p>an object returned from <code>k_model_fit</code> when <code>by.folds = TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>character; one or more fit indices to summarize. Indices
+must be present in the <code>kfits</code> object. Default is <code>"all"</code> indices present in <code>kfits</code>.
+Chi-square value and degrees of freedom are always reported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>integer; number of decimal places to display in the report</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>data.frame</code> of aggregated model fit statistics
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(example.kfa)
+fits &lt;- k_model_fit(example.kfa, by.fold = TRUE)
+agg_model_fit(fits)
+
+</code></pre>
+
+
+</div>

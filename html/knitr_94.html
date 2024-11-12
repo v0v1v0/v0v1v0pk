@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pat_rnw</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set regular expressions to read input documents</h2>
+
+<h3>Description</h3>
+
+<p>These are convenience functions to set pre-defined pattern lists (the syntax
+to read input documents). The function names are built from corresponding
+file extensions, e.g. <code>pat_rnw()</code> can set the Sweave syntax to read Rnw
+documents.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pat_rnw()
+
+pat_brew()
+
+pat_tex()
+
+pat_html()
+
+pat_md()
+
+pat_rst()
+
+pat_asciidoc()
+
+pat_textile()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>The patterns object <code>knit_patterns</code> is modified as a side
+effect.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># see how knit_patterns is modified
+knit_patterns$get()
+pat_rnw()
+knit_patterns$get()
+
+knit_patterns$restore()  # empty the list
+</code></pre>
+
+
+</div>

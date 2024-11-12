@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>checkCoercion</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check if values can be safely coerced without introduction of
+missing values</h2>
+
+<h3>Description</h3>
+
+<p>This might be named "coercesSafely" or such.  If values cannot be
+coerced into class specified, then values must be incorrect.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">checkCoercion(value, targetclass, na.strings = c("\\.", "", "\\s+", "N/A"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>Character vector of values, such as value_new or
+value_old for one variable in a key.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>targetclass</code></td>
+<td>
+<p>R class name</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>Values that should be interpreted as R NA.
+These are ignored in the coercion check.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>either TRUE, or a vector of values which are not
+successfully coerced
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x1 &lt;- c("TRUE", "FALSE", FALSE, TRUE, NA, ".", "N/A", " ", "")
+checkCoercion(x1, "logical")
+x1 &lt;- c(x1, "TRUE.FALSE", "Has a space")
+## Should fail:
+checkCoercion(x1, "logical")
+x2 &lt;- c(4, 5, 6, 9.2, ".", " ")
+## Should fail
+checkCoercion(x2, "logical")
+x3 &lt;- factor(c("bob", "emily", "bob", "jane", "N/A", " ", NA, "NA"))
+checkCoercion(x3, "ordered")
+checkCoercion(x3, "integer")
+## Should fail:
+checkCoercion(x3, "logical")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,145 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>covComp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creator for the Class <code>"covComp"</code> for Composite Covariance
+Kernels</h2>
+
+<h3>Description</h3>
+
+<p>Creator for the class "covComp" for Composite Covariance kernels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">covComp(formula, where = .GlobalEnv, topParLower = NULL,
+  topParUpper = NULL, trace = 0, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula. See <b>Examples</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>where</code></td>
+<td>
+<p>An environment where the covariance kernels objects
+and top parameters will be looked for.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>topParLower</code></td>
+<td>
+<p>A numeric vector of lower bounds for the "top"
+parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>topParUpper</code></td>
+<td>
+<p>A numeric vector of upper bounds for the "top"
+parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>Integer level of verbosity.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Not used yet. For passing other slot values.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A covariance object is built using <code>formula</code> which involves
+kernel objects inheriting from the class <code>"covAll"</code> and
+possibly of other scalar numeric parameters called <em>top</em>
+parameters. The formula can be thought of as involving the
+covariance matrices rather than the kernel objects, each kernel
+object say <code>obj</code> being replaced by <code>covMat(obj, X)</code> for
+some design matrix or data frame <code>X</code>. Indeed, the sum or the
+product of two kernel objects lead to a covariance which is simply
+the sum or product of the kernel covariances. The top parameters
+are considered as parameters of the covariance structure, as well
+as the parameters of the covariance objects used in the
+formula. Their value at the creation time will be used and thus
+will serve as initial value in estimation.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with S4 class <code>"covComp"</code>.
+</p>
+
+
+<h3>Caution</h3>
+
+<p>The class definition and its creator are to
+regarded as a DRAFT, many changes being necessary until a stable
+implementation will be reached. The functions relating to this
+class are not for final users of GP models, but rather to those
+interested in the conception and specification in view of a future
+release of the <b>kergp</b> package.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## =========================================================================
+## build some kernels (with their inputNames) in the global environment
+## =========================================================================
+
+myCovExp3 &lt;- kMatern(d = 3, nu = "1/2")
+inputNames(myCovExp3) &lt;- c("x", "y", "z")
+
+myCovGauss2 &lt;- kGauss(d = 2)
+inputNames(myCovGauss2) &lt;- c("temp1", "temp2")
+
+k &lt;- kMatern(d = 1)
+inputNames(k) &lt;- "x"
+
+ell &lt;- kMatern(d = 1)
+inputNames(ell) &lt;- "y"
+
+tau2 &lt;- 100
+sigma2 &lt;- 4
+
+myCovComp &lt;- covComp(formula = ~ tau2 * myCovGauss2() * myCovExp3() + sigma2 * k())
+
+myCovComp1 &lt;- covComp(formula = ~ myCovGauss2() * myCovExp3() + k())
+
+inputNames(myCovComp)
+coef(myCovComp)
+
+n &lt;- 5
+set.seed(1234)
+X &lt;- data.frame(x = runif(n), y = runif(n), z = runif(n),
+                temp1 = runif(n), temp2 = runif(n))
+
+C &lt;- covMat(myCovComp, X = X)
+
+Cg &lt;- covMat(myCovComp, X = X, compGrad = TRUE)
+
+## Simulation: purely formal example, not meaningful.
+
+Y &lt;- simulate(myCovComp, X = X, nsim = 100)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kronosListToTable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Wrangle results from list of <code>KronosOut</code> Objects to publication ready table.</h2>
+
+<h3>Description</h3>
+
+<p>These functions provides a unified wrapper to retrieve results
+from a list of <code>kronosOut</code> objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kronosListToTable(kronos_list, padjust = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kronos_list</code></td>
+<td>
+<p>a list of preferrably named <code>kronosOut</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padjust</code></td>
+<td>
+<p>a boolean. Toggles FDR using Benjamini and Hochbergs procedure.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A table with circadian output stats per group per feature.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Load prepared data stored in 'kronos' library
+data("kronos_demo")
+output &lt;- kronos(formula = Variable_1 ~ time(Timepoint), 
+data = onevariable, period = 24, verbose = TRUE, pairwise = FALSE)
+
+#Extracting data from the output object:
+getKronos_fit(output)
+getKronos_trace(output)
+getKronos_groupwise(output)
+
+#Plotting:
+gg_kronos_circle(output)
+gg_kronos_sinusoid(output)
+
+#For high-dimensional data, use fw_kronos:
+out_list = fw_kronos(x = bigdata[1:50,], formula = ~ Group + time(Timepoint), 
+metadata = bigmeta, period = 24, verbose = FALSE, pairwise = TRUE) 
+
+#Extracting data from the output object: 
+kronosListToTable(out_list)
+
+#Plotting:
+gg_kronos_acrogram(out_list)
+
+</code></pre>
+
+
+</div>

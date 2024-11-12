@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>snp_info</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An S4 class for an object assigning SNP positions to rs-numbers (for internal use)</h2>
+
+<h3>Description</h3>
+
+<p>An S4 class for an object assigning SNP positions to rs-numbers (for internal use)
+</p>
+<p>This function gives for a <code>vector</code> of SNP identifiers the position of each SNP 
+as extracted from the Ensemble database. The database is accessed via the
+R-package <span class="pkg">biomaRt</span>.
+</p>
+<p><code>show</code> Shows basic information on <code>snp_info</code> object
+</p>
+<p><code>summary</code> Summarizes information on <code>snp_info</code> object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">snp_info(x, ...)
+
+## S4 method for signature 'character'
+snp_info(x)
+
+## S4 method for signature 'snp_info'
+show(object)
+
+## S4 method for signature 'snp_info'
+summary(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>character</code> <code>vector</code> of SNP rsnumbers for which 
+positions will be extracted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments can be added.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An <code>object</code> of class <code>snp_info</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> including the SNP positions with columns
+'chromosome', 'position' and 'snp'. SNPs not found in the Ensemble database
+will not be listed in the returned <code>snp_info</code> object, SNPs with multiple
+positions  will appear several times.
+</p>
+<p><code>show</code> Basic information on <code>snp_info</code> object.
+</p>
+<p><code>summary</code> Summarized information on <code>snp_info</code> object.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>info</code></dt>
+<dd>
+<p>A <code>data.frame</code> including information on SNP positions</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Stefanie Friedrichs
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pathway_info</code>, <code>get_anno</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(rs10243170_info) # snp_info("rs10243170")
+
+rs10243170_info
+summary(rs10243170_info)
+</code></pre>
+
+
+</div>

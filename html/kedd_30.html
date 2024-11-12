@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.h.mcv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Plot for Modified Cross-Validation
+</h2>
+
+<h3>Description</h3>
+
+<p>The <code>plot.h.mcv</code> function loops through calls to 
+the <code>h.mcv</code> function. Plot for modified cross-validation 
+function for 1-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'h.mcv'
+plot(x, seq.bws=NULL, ...)
+## S3 method for class 'h.mcv'
+lines(x,seq.bws=NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>h.mcv</code> (output from <code>h.mcv</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.bws</code></td>
+<td>
+<p>the sequence of bandwidths in which to compute the modified 
+cross-validation function. By default, the procedure defines a sequence of 
+50 points, from <code>0.15*hos</code> to <code>2*hos</code> (Over-smoothing).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphics parameters, see <code>par</code> in package "graphics".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Plot of 1-d modified cross-validation function are sent to graphics window.<br></p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq.bws</code></td>
+<td>
+<p>the sequence of bandwidths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcv</code></td>
+<td>
+<p>the values of the modified cross-validation function in the bandwidths grid.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>h.mcv</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">oldpar &lt;- par(no.readonly = TRUE)
+par(mfrow=c(2,1))
+plot(h.mcv(trimodal,deriv.order=0),main="")
+plot(h.mcv(trimodal,deriv.order=1),main="")
+par(oldpar)
+</code></pre>
+
+
+</div>

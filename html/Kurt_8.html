@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>NoKurt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>NoKurt: data projections whose excess kurtosis is as close to zero as possible
+
+</h2>
+
+<h3>Description</h3>
+
+<p>Data projections whose excess kurtosis is as close to zero as possible. Excess kurtosis is the fourth standardized cumulant , that is the fourth standardized moment minus three.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">NoKurt(data, number)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>data matrix
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>number</code></td>
+<td>
+
+<p>number of required projections. It must be greater than one and less than the number of variables
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Nkurtoses</code></td>
+<td>
+<p>kurtoses of Nprojections</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Nprojections</code></td>
+<td>
+<p>data projections ordered according to the absolute values of their excess kurtoses</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MATRIX</code></td>
+<td>
+<p>matrix characterizing the projection</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Cinzia Franceschini and Nicola Loperfido
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris)
+iris&lt;-data.matrix(iris[,1:4])
+NoKurt(iris[,1:4],3)#returns data projections whose excess kurtosis is as close to zero as possible
+</code></pre>
+
+
+</div>

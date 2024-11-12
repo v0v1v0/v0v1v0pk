@@ -1,0 +1,160 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KHQScores</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate scores for each dimension of the KHQ</h2>
+
+<h3>Description</h3>
+
+<p>Function used to generate scores for each dimension of the KHQ.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KHQScores(
+  scores,
+  country,
+  author,
+  year,
+  ignore.invalid = FALSE,
+  mean.na = FALSE,
+  save.xlsx = FALSE,
+  filename = NULL,
+  sheetName = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>scores</code></td>
+<td>
+<p>data.frame containing all the KHQ items. See the 'Details' for
+information on naming the data.frame columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>country</code></td>
+<td>
+<p>string specifying the country to calculate the correct KHQ
+structure scores. Most countries where the KHQ has been translated use
+the same structure as the original version (Kelleher et al., 1997), so
+use UK. If the structure of your country has changed, use your country's
+acronym.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>author</code></td>
+<td>
+<p>string specifying the author of the article who published the
+structure used to calculate the score.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>string specifying the year the article with the structure used
+to calculated the scores was published.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore.invalid</code></td>
+<td>
+<p>logical to indicate whether to ignore items data
+with invalid, incomplete or missing data; Default: FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean.na</code></td>
+<td>
+<p>logical to indicate whether or not to use the mean of the
+dimension items when there is NA in the data; Default: FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save.xlsx</code></td>
+<td>
+<p>logical to indicate whether or not save the results; Default: FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>string specifying the file name if save.xlsx = TRUE;
+Default: "Res_Scores_Dimensions_KHQ.xlsx".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sheetName</code></td>
+<td>
+<p>string specifying the sheet name if save.xlsx = TRUE;
+Default: "Scores".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If using the original structure the items must be named equal the
+number in the original questionnaire published by Kelleher and collaborator
+in 1997 (1, 2, 3a, 3b, 4a, 4b, 4c, 4d, 5a, 5b, 5c, 6a, 6b, 6c, 7a, 7b, 8a,
+8b, 8c, 8d, 8e, 9a, 9b, 9c, 9d, 9e, 9f, 9g, 9h, 9i, 9j, 9k).
+</p>
+<p>If using the Brazilian structure the items must be named equal the number in
+the questionnaire published by Brusaca and collaborator in 2021 (1, 2, 3a, 3b,
+3c, 3d, 3e, 4a, 4b, 4c, 5a, 5b, 5c, 6a, 6b, 7a, 7b, 7c, 8a, 8b, 8c, 8d, 8e,
+8f, 8g, 8h, 8i, 8j).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with scores of each dimension of the KHQ.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">scores_UK &lt;- data.frame(
+  "1" = c(1,2,3,4,5,NA), "2" = c(1,2,3,4,NA,NA), 
+  "3a" = c(1,2,3,4,NA,NA), "3b" = c(1,2,3,4,NA,NA), 
+  "4a" = c(1,2,3,4,NA,NA), "4b" = c(1,2,3,4,NA,NA), 
+  "4c" = c(1,2,3,4,NA,1), "4d" = c(1,2,3,4,NA,1), 
+  "5a" = c(1,2,3,4,1,NA), "5b" = c(1,2,3,4,NA,1), 
+  "5c" = c(1,2,3,4,0,1), "6a" = c(1,2,3,4,NA,NA), 
+  "6b" = c(1,2,3,4,NA,NA), "6c" = c(1,2,3,4,NA,NA), 
+  "7a" = c(1,2,3,4,NA,NA), "7b" = c(1,2,3,4,NA,NA), 
+  "8a" = c(1,2,3,4,NA,NA), "8b" = c(1,2,3,4,NA,NA), 
+  "8c" = c(1,2,3,4,NA,NA), "8d" = c(1,2,3,4,NA,NA), 
+  "8e" = c(1,2,3,4,NA,NA), "9a" = c(0,1,2,3,NA,NA), 
+  "9b" = c(0,1,2,3,NA,NA), "9c" = c(0,1,2,3,NA,NA), 
+  "9d" = c(0,1,2,3,NA,NA), "9e" = c(0,1,2,3,NA,NA), 
+  "9f" = c(0,1,2,3,NA,NA), "9g" = c(0,1,2,3,NA,NA), 
+  "9h" = c(0,1,2,3,NA,NA), "9i" = c(0,1,2,3,NA,NA), 
+  "9j" = c(0,1,2,3,NA,NA), "9k" = c(0,1,2,3,NA,NA), 
+  check.names = FALSE)
+
+KHQScores(scores = scores_UK, country = "UK",
+  author = "Kelleher", year = 1997, ignore.invalid = TRUE,
+  mean.na = FALSE)
+  
+KHQScores(scores = scores_UK, country = "UK",
+  author = "Kelleher", year = 1997, ignore.invalid = TRUE,
+  mean.na = FALSE, save.xlsx = FALSE, 
+  filename = "Res_Scores_Dimensions_KHQ.xlsx",
+  sheetName = "Scores")
+
+KHQScores(scores = KHQ_data_Kelleher, country = "UK",
+  author = "Kelleher", year = 1997, ignore.invalid = TRUE,
+  mean.na = FALSE, save.xlsx = FALSE, 
+  filename = "Res_Scores_Dimensions_KHQ.xlsx",
+  sheetName = "Scores")
+
+</code></pre>
+
+
+</div>

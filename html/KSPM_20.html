@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>info.kspm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Giving information about Kernel Semi parametric Model Fits</h2>
+
+<h3>Description</h3>
+
+<p>gives information about Kernel Semi parametric Model Fits
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">info.kspm(object, print = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class "kspm", usually, a result of a call to <code>kspm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print</code></td>
+<td>
+<p>logical, if <code>TRUE</code>, table of information are printed.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>info.kspm</code> returns a table of information whose each row corresponds to a kernel included in the model and columns are:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>type of object used to define the kernel</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim</code></td>
+<td>
+<p>dimension of data used in the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type.predict</code></td>
+<td>
+<p>type of object the user should provide in predict.kspm function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.predict</code></td>
+<td>
+<p>dimension of object the user should provide in predict.kspm function</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Catherine Schramm, Aurelie Labbe, Celia Greenwood
+</p>
+
+
+<h3>See Also</h3>
+
+<p>kspm, predict.kspm
+</p>
+
+
+</div>

@@ -1,0 +1,347 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_rnn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Base class for recurrent layers</h2>
+
+<h3>Description</h3>
+
+<p>Base class for recurrent layers
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_rnn(
+  object,
+  cell,
+  return_sequences = FALSE,
+  return_state = FALSE,
+  go_backwards = FALSE,
+  stateful = FALSE,
+  unroll = FALSE,
+  time_major = FALSE,
+  ...,
+  zero_output_for_mask = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cell</code></td>
+<td>
+<p>A RNN cell instance or a list of RNN cell instances.
+A RNN cell is a class that has:
+</p>
+
+<ul>
+<li>
+<p> A <code>call(input_at_t, states_at_t)</code> method, returning
+<code style="white-space: pre;">⁠(output_at_t, states_at_t_plus_1)⁠</code>. The call method of the
+cell can also take the optional argument <code>constants</code>, see
+section "Note on passing external constants" below.
+</p>
+</li>
+<li>
+<p> A <code>state_size</code> attribute. This can be a single integer
+(single state) in which case it is the size of the recurrent
+state. This can also be a list of integers (one size per state).
+The <code>state_size</code> can also be TensorShape or list of
+TensorShape, to represent high dimension state.
+</p>
+</li>
+<li>
+<p> A <code>output_size</code> attribute. This can be a single integer or a
+TensorShape, which represent the shape of the output. For backward
+compatible reason, if this attribute is not available for the
+cell, the value will be inferred by the first element of the
+<code>state_size</code>.
+</p>
+</li>
+<li>
+<p> A <code>get_initial_state(inputs=NULL, batch_size=NULL, dtype=NULL)</code>
+method that creates a tensor meant to be fed to <code>call()</code> as the
+initial state, if the user didn't specify any initial state via other
+means. The returned initial state should have a shape of
+<code style="white-space: pre;">⁠[batch_size, cell$state_size]⁠</code>. The cell might choose to create a
+tensor full of zeros, or full of other values based on the cell's
+implementation.
+<code>inputs</code> is the input tensor to the RNN layer, which should
+contain the batch size as first dimension (<code>inputs$shape[1]</code>),
+and also dtype (<code>inputs$dtype</code>). Note that
+the <code>shape[1]</code> might be <code>NULL</code> during the graph construction. Either
+the <code>inputs</code> or the pair of <code>batch_size</code> and <code>dtype</code> are provided.
+<code>batch_size</code> is a scalar tensor that represents the batch size
+of the inputs. <code>dtype</code> is <code>tf.DType</code> that represents the dtype of
+the inputs.
+For backward compatibility, if this method is not implemented
+by the cell, the RNN layer will create a zero filled tensor with the
+size of <code style="white-space: pre;">⁠[batch_size, cell$state_size]⁠</code>.
+In the case that <code>cell</code> is a list of RNN cell instances, the cells
+will be stacked on top of each other in the RNN, resulting in an
+efficient stacked RNN.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_sequences</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>). Whether to return the last
+output in the output sequence, or the full sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_state</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>). Whether to return the last state
+in addition to the output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>go_backwards</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>).
+If <code>TRUE</code>, process the input sequence backwards and return the
+reversed sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stateful</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>). If <code>TRUE</code>, the last state
+for each sample at index <code>i</code> in a batch will be used as initial
+state for the sample of index <code>i</code> in the following batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unroll</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>).
+If TRUE, the network will be unrolled, else a symbolic loop will be used.
+Unrolling can speed-up a RNN, although it tends to be more
+memory-intensive. Unrolling is only suitable for short sequences.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time_major</code></td>
+<td>
+<p>The shape format of the <code>inputs</code> and <code>outputs</code> tensors.
+If <code>TRUE</code>, the inputs and outputs will be in shape
+<code style="white-space: pre;">⁠(timesteps, batch, ...)⁠</code>, whereas in the FALSE case, it will be
+<code style="white-space: pre;">⁠(batch, timesteps, ...)⁠</code>. Using <code>time_major = TRUE</code> is a bit more
+efficient because it avoids transposes at the beginning and end of the
+RNN calculation. However, most TensorFlow data is batch-major, so by
+default this function accepts input and emits output in batch-major
+form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zero_output_for_mask</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>).
+Whether the output should use zeros for the masked timesteps. Note that
+this field is only used when <code>return_sequences</code> is TRUE and mask is
+provided. It can useful if you want to reuse the raw output sequence of
+the RNN without interference from the masked timesteps, eg, merging
+bidirectional RNNs.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>See <a href="https://www.tensorflow.org/guide/keras/rnn">the Keras RNN API guide</a>
+for details about the usage of RNN API.
+</p>
+
+
+<h3>Call arguments</h3>
+
+
+<ul>
+<li> <p><code>inputs</code>: Input tensor.
+</p>
+</li>
+<li> <p><code>mask</code>: Binary tensor of shape <code style="white-space: pre;">⁠[batch_size, timesteps]⁠</code> indicating whether
+a given timestep should be masked. An individual <code>TRUE</code> entry indicates
+that the corresponding timestep should be utilized, while a <code>FALSE</code>
+entry indicates that the corresponding timestep should be ignored.
+</p>
+</li>
+<li> <p><code>training</code>: R or Python Boolean indicating whether the layer should behave in
+training mode or in inference mode. This argument is passed to the cell
+when calling it. This is for use with cells that use dropout.
+</p>
+</li>
+<li> <p><code>initial_state</code>: List of initial state tensors to be passed to the first
+call of the cell.
+</p>
+</li>
+<li> <p><code>constants</code>: List of constant tensors to be passed to the cell at each
+timestep.
+</p>
+</li>
+</ul>
+<h3>Input shapes</h3>
+
+<p>N-D tensor with shape <code style="white-space: pre;">⁠(batch_size, timesteps, ...)⁠</code>,
+or <code style="white-space: pre;">⁠(timesteps, batch_size, ...)⁠</code> when <code>time_major = TRUE</code>.
+</p>
+
+
+<h3>Output shape</h3>
+
+
+<ul>
+<li>
+<p> if <code>return_state</code>: a list of tensors. The first tensor is
+the output. The remaining tensors are the last states,
+each with shape <code style="white-space: pre;">⁠(batch_size, state_size)⁠</code>, where <code>state_size</code>
+could be a high dimension tensor shape.
+</p>
+</li>
+<li>
+<p> if <code>return_sequences</code>: N-D tensor with shape <code style="white-space: pre;">⁠[batch_size, timesteps, output_size]⁠</code>, where <code>output_size</code> could be a high dimension tensor shape, or
+<code style="white-space: pre;">⁠[timesteps, batch_size, output_size]⁠</code> when <code>time_major</code> is <code>TRUE</code>
+</p>
+</li>
+<li>
+<p> else, N-D tensor with shape <code style="white-space: pre;">⁠[batch_size, output_size]⁠</code>, where
+<code>output_size</code> could be a high dimension tensor shape.
+</p>
+</li>
+</ul>
+<h3>Masking</h3>
+
+<p>This layer supports masking for input data with a variable number of
+timesteps. To introduce masks to your data, use
+<code>layer_embedding()</code> with the <code>mask_zero</code> parameter set to <code>TRUE</code>.
+</p>
+
+
+<h3>Statefulness in RNNs</h3>
+
+<p>You can set RNN layers to be 'stateful', which means that the states computed
+for the samples in one batch will be reused as initial states for the samples
+in the next batch. This assumes a one-to-one mapping between samples in
+different successive batches.
+</p>
+<p>For intuition behind statefulness, there is a helpful blog post here:
+<a href="https://philipperemy.github.io/keras-stateful-lstm/">https://philipperemy.github.io/keras-stateful-lstm/</a>
+</p>
+<p>To enable statefulness:
+</p>
+
+<ul>
+<li>
+<p> Specify <code>stateful = TRUE</code> in the layer constructor.
+</p>
+</li>
+<li>
+<p> Specify a fixed batch size for your model. For sequential models,
+pass <code>batch_input_shape = list(...)</code> to the first layer in your model.
+For functional models with 1 or more Input layers, pass
+<code>batch_shape = list(...)</code> to all the first layers in your model.
+This is the expected shape of your inputs <em>including the batch size</em>.
+It should be a list of integers, e.g. <code>list(32, 10, 100)</code>.
+For dimensions which can vary (are not known ahead of time),
+use <code>NULL</code> in place of an integer, e.g. <code>list(32, NULL, NULL)</code>.
+</p>
+</li>
+<li>
+<p> Specify <code>shuffle = FALSE</code> when calling <code>fit()</code>.
+</p>
+</li>
+</ul>
+<p>To reset the states of your model, call <code>layer$reset_states()</code> on either
+a specific layer, or on your entire model.
+</p>
+
+
+<h3>Initial State of RNNs</h3>
+
+<p>You can specify the initial state of RNN layers symbolically by calling them
+with the keyword argument <code>initial_state.</code> The value of initial_state should
+be a tensor or list of tensors representing the initial state of the RNN
+layer.
+</p>
+<p>You can specify the initial state of RNN layers numerically by calling
+<code>reset_states</code> with the named argument <code>states.</code> The value of <code>states</code> should
+be an array or list of arrays representing the initial state of the RNN
+layer.
+</p>
+
+
+<h3>Passing external constants to RNNs</h3>
+
+<p>You can pass "external" constants to the cell using the <code>constants</code> named
+argument of <code style="white-space: pre;">⁠RNN$__call__⁠</code> (as well as <code>RNN$call</code>) method. This requires that the
+<code>cell$call</code> method accepts the same keyword argument <code>constants</code>. Such constants
+can be used to condition the cell transformation on additional static inputs
+(not changing over time), a.k.a. an attention mechanism.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://www.tensorflow.org/guide/keras/rnn">https://www.tensorflow.org/guide/keras/rnn</a>
+</p>
+</li></ul>
+<ul>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/RNN">https://www.tensorflow.org/api_docs/python/tf/keras/layers/RNN</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/recurrent_layers/rnn">https://keras.io/api/layers/recurrent_layers/rnn</a>
+</p>
+</li>
+<li> <p><code>reticulate::py_help(keras$layers$RNN)</code>
+</p>
+</li>
+</ul>
+<p>Other recurrent layers: 
+<code>layer_cudnn_gru()</code>,
+<code>layer_cudnn_lstm()</code>,
+<code>layer_gru()</code>,
+<code>layer_lstm()</code>,
+<code>layer_simple_rnn()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>list.update</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>list.update</h2>
+
+<h3>Description</h3>
+
+<p>Helper function to update items in an R list.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">list.update(main_list, new_list, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>main_list</code></td>
+<td>
+<p>A list, which items should be updated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new_list</code></td>
+<td>
+<p>A list with new values of items from <code>main_list</code> that should
+be updated. All names of <code>new_list</code> must be present in <code>main_list</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed to <code>utils::modifyList()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a save wrapper around <code>utils::modifyLists</code> to
+update items in R lists as it checks for the input types and only accepts
+named lists.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>list</code> is returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>utils::modifyList()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">l1 &lt;- list("a" = 1, "b" = 2)
+l2 &lt;- list("a" = 3, "b" = 4)
+list.update(l1, l2)
+</code></pre>
+
+
+</div>

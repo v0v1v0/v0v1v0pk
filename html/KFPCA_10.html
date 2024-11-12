@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.KFPCA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict FPC scores</h2>
+
+<h3>Description</h3>
+
+<p>Predict FPC scores using least square estimate (LSE) for a new sample.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'KFPCA'
+predict(object, newLt, newLy, nK, more = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A KFPCA object obtained from <code>KFPCA</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newLt</code></td>
+<td>
+<p>A <code>list</code> of <em>n</em> vectors, where <em>n</em> is the new sample size. Each entry contains the observation time in ascending order for each new subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newLy</code></td>
+<td>
+<p>A <code>list</code> of <em>n</em> vectors, where <em>n</em> is the new sample size. Each entry contains the measurements of each new subject at the observation time correspond to <code>newLt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nK</code></td>
+<td>
+<p>An integer denoting the number of FPCs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>more</code></td>
+<td>
+<p>Logical; If <code>FALSE</code>, only the predictions of FPC scores are returned. If <code>TRUE</code>, the mean function estimates and the eigenfunction estimates at the new observation time points are also returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>If <code>more = FALSE</code>, a <em>n</em> by <code>nK</code> <code>matrix</code> containing the predictions of the FPC scores is returned, where <em>n</em> is the new sample size. If <code>more = TRUE</code>, a <code>list</code> containing the following components is returned:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>score_new</code></td>
+<td>
+<p>a <em>n</em> by <code>nK</code> <code>matrix</code> containing the predictions of the FPC scores.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meanest_new</code></td>
+<td>
+<p>Mean function estimates at the new observation time points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FPC_dis_new</code></td>
+<td>
+<p>Eigenfunction estimates at the new observation time points.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate training data
+n &lt;- 100
+interval &lt;- c(0, 10)
+lambda_1 &lt;- 9 #the first eigenvalue
+lambda_2 &lt;- 1.5 #the second eigenvalue
+eigfun &lt;- list()
+eigfun[[1]] &lt;- function(x){cos(pi * x/10)/sqrt(5)}
+eigfun[[2]] &lt;- function(x){sin(pi * x/10)/sqrt(5)}
+score &lt;- cbind(rnorm(n, 0, sqrt(lambda_1)), rnorm(n, 0, sqrt(lambda_2)))
+DataNew &lt;- GenDataKL(n, interval = interval, sparse = 6:8, regular = FALSE,
+                     meanfun = function(x){0}, score = score,
+                     eigfun = eigfun, sd = sqrt(0.1))
+basis &lt;- fda::create.bspline.basis(interval, nbasis = 13, norder = 4,
+                              breaks = seq(0, 10, length.out = 11))
+Klist &lt;- KFPCA(DataNew$Lt, DataNew$Ly, interval, nK = 2, bw = 1,
+               nRegGrid = 51, fdParobj = basis)
+# Generate test data
+n_test &lt;- 20
+score_test &lt;- cbind(rnorm(n_test, 0, sqrt(lambda_1)),
+                    rnorm(n_test, 0, sqrt(lambda_2)))
+Data_test &lt;- GenDataKL(n_test, interval = interval, sparse = 6:8, regular = FALSE,
+                       meanfun = function(x){0}, score = score_test,
+                       eigfun = eigfun, sd = sqrt(0.1))
+# Prediction
+score_pre &lt;- predict(Klist, Data_test$Lt, Data_test$Ly, nK = 2)
+plot(score_test[,1], score_pre[,1])
+</code></pre>
+
+
+</div>

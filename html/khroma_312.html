@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scale_picker</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Color Scale Builder</h2>
+
+<h3>Description</h3>
+
+<p>Builds a color scale for <span class="pkg">ggplot2</span> or <span class="pkg">ggraph</span>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_colour_picker(..., palette = "YlOrBr")
+
+scale_color_picker(..., palette = "YlOrBr")
+
+scale_fill_picker(..., palette = "YlOrBr")
+
+scale_edge_colour_picker(..., palette = "YlOrBr")
+
+scale_edge_color_picker(..., palette = "YlOrBr")
+
+scale_edge_fill_picker(..., palette = "YlOrBr")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra parameters to be passed to the color scale function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>A <code>character</code> string giving the name of the color scheme to
+be used (see <code>info()</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A discrete or
+continuous scale.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>N. Frerebeau
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(ggplot2)
+
+ggplot2::ggplot(mpg, ggplot2::aes(displ, hwy, colour = class)) +
+  ggplot2::geom_point() +
+  scale_colour_picker(palette = "okabeito")
+</code></pre>
+
+
+</div>

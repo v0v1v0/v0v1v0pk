@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stat.lasso_lambdasmax</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Penalized linear regression statistics for knockoff</h2>
+
+<h3>Description</h3>
+
+<p>Computes the signed maximum statistic
+</p>
+<p style="text-align: center;"><code class="reqn">W_j = \max(Z_j, \tilde{Z}_j) \cdot \mathrm{sgn}(Z_j - \tilde{Z}_j),</code>
+</p>
+
+<p>where <code class="reqn">Z_j</code> and <code class="reqn">\tilde{Z}_j</code> are the maximum values of 
+<code class="reqn">\lambda</code> at which the jth variable and its knockoff, respectively,
+enter the penalized linear regression model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stat.lasso_lambdasmax(X, X_k, y, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>n-by-p matrix of original variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_k</code></td>
+<td>
+<p>n-by-p matrix of knockoff variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>vector of length n, containing the response variables. It should be numeric.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments specific to <code>glmnet</code> or <code>lars</code> (see Details).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function uses <code>glmnet</code> to compute the regularization path
+on a fine grid of <code class="reqn">\lambda</code>'s.
+</p>
+<p>The additional <code>nlambda</code> 
+parameter can be used to control the granularity of the grid of <code class="reqn">\lambda</code> values. 
+The default value of <code>nlambda</code> is <code>500</code>.
+</p>
+<p>Unless a lambda sequence is provided by the user, this function generates it on a 
+log-linear scale before calling <code>glmnet</code> (default 'nlambda': 500).
+</p>
+<p>This function is a wrapper around the more general 
+<code>stat.glmnet_lambdadiff</code>.
+</p>
+<p>For a complete list of the available additional arguments, see <code>glmnet</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of statistics <code class="reqn">W</code> of length p.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p=200; n=100; k=15
+mu = rep(0,p); Sigma = diag(p)
+X = matrix(rnorm(n*p),n)
+nonzero = sample(p, k)
+beta = 3.5 * (1:p %in% nonzero)
+y = X %*% beta + rnorm(n)
+knockoffs = function(X) create.gaussian(X, mu, Sigma)
+
+# Basic usage with default arguments
+result = knockoff.filter(X, y, knockoff=knockoffs,
+                           statistic=stat.lasso_lambdasmax)
+print(result$selected)
+
+# Advanced usage with custom arguments
+foo = stat.lasso_lambdasmax
+k_stat = function(X, X_k, y) foo(X, X_k, y, nlambda=200)
+result = knockoff.filter(X, y, knockoffs=knockoffs, statistic=k_stat)
+print(result$selected)
+
+</code></pre>
+
+
+</div>

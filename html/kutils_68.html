@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>zapspace</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert leading or trailing white space and tab characters to nothing.</h2>
+
+<h3>Description</h3>
+
+<p>This eliminates any characters matched by the regular expression
+'\s' if they appear at the beginning of a string or at its
+end. It does not alter spaces in the interior of a string. This
+was created when I was not aware of R's <code>trimws</code> and the purpose
+is the same. On our TODO list, we intend to eliminate this function
+and replace its use with <code>trimws</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">zapspace(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A character vector</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>If x is a character vector, return is a character vector
+with leading and trailing white space values removed. If x is
+not a character vector, an unaltered x is returned.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;-  c("", " ", "   ", "\t", "\t some", "some\t", " space first")
+zapspace(x)
+</code></pre>
+
+
+</div>

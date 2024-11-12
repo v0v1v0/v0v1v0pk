@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>load_super_karel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Turn on Karel's superpowers</h2>
+
+<h3>Description</h3>
+
+<p>After running <code>load_super_karel()</code>, Karel can also turn right and turn
+around with <code>turn_right()</code> and <code>turn_around()</code>. If these
+superpowers aren't loaded, then these functions won't be available and Karel
+can't use them.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">load_super_karel()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>It doesn't return anything but attaches to the global environment the
+functions <code>turn_right()</code> and <code>turn_around()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>actions</code> <code>generate_world</code>
+<code>run_actions</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generate_world("mundo001")
+load_super_karel()
+turn_around()
+turn_right()
+run_actions()
+
+</code></pre>
+
+
+</div>

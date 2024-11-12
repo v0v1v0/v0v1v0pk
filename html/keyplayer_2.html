@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>delta.score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The change on objective function for greedy search implimentation</h2>
+
+<h3>Description</h3>
+
+<p><code>delta.score</code> calculates the change in group centrality score.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">delta.score(
+  adj.matrix,
+  candidate,
+  residual,
+  i,
+  j,
+  type,
+  M = Inf,
+  T = ncol(adj.matrix),
+  method,
+  binary = FALSE,
+  cmode,
+  large = TRUE,
+  geodist.precomp = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>The adjacency matrix of the network.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>candidate</code></td>
+<td>
+<p>An initial set of players selected.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>residual</code></td>
+<td>
+<p>The remaining players in the network without members in the initial set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i</code></td>
+<td>
+<p>The specific member in the candidate set to be replaced</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>j</code></td>
+<td>
+<p>The specific member in the residual set to replace <code>i</code> in the candidate set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Choose
+<code>type="betweenness"</code> for betweenness centrality,
+<code>type="closeness"</code> for closeness centrality,
+<code>type="degree"</code> for degree centraslity,
+<code>type="diffusion"</code> for diffusion centrality.
+<code>type="evcent"</code> for eigenvector centrality,
+<code>type="fragment"</code> for fragmentation centrality,
+<code>type="mreach.degree"</code> for mreach.degree centrality, and
+<code>type="mreach.closeness"</code> for mreach.closeness centrality.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>Positive number indicating the maximum distance between two nodes,
+above witch the two nodes are considered disconnected. The default is
+<code>Inf</code>.
+The option is applicable to mreach.degree, mreach.closeness, fragmentation,
+and diffusion centralities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+<p>Integer indicating the maximum number of iterations
+of communication process. For diffusion centrality only.
+In the first iteration, the adjacency matrix
+is as the input. In the nth iteration, the adjacency matrix becomes
+the input adjacency matrix to the power of n. By default, T is the network size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Indication of which grouping criterion should be used.
+<code>method="min"</code> indicates the "minimum" criterion (edge values as distances).
+<code>method="max"</code> indicates the "maximum" criterion (edge values as non-cummulative strengths).
+<code>method="add"</code> indicates the "addition" criterion (edge values as cummulative strengths).
+<code>method="union"</code> indicates the "union" criterion (edge values as probability).
+By default, the minimun criterion is used for betweenness, closeness, fragmentation,
+mreach.degree, and mreach.closeness centralities.
+The maximun criterion is used for degree and eigenvector centralities.
+The union criterion is used for diffusion centrality.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary</code></td>
+<td>
+<p>If <code>TRUE</code>, the adjacency matrix is binarized.
+If <code>FALSE</code>, the edge values are considered. By default, <code>binary=FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmode</code></td>
+<td>
+<p>String indicating the type of centrality being evaluated.
+The option is applicable to degree, mreach.degree, and mreach.closeness centralities.
+The default is to report the total degree.
+<code>cmode="outdegree"</code> and <code>cmode="indegree"</code> refer to indegree and outdegree
+respectively. If <code>cmode="all"</code>, all the three types are reported.
+The option can also applicable to closeness centrality.
+See <code>closeness</code> Details section.
+The default is to use the Gil-Schmidt power index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>large</code></td>
+<td>
+<p>Logical scalar, whether the computation method for large network is
+implemented. If <code>TRUE</code> (the default), the method implmented in <span class="pkg">igraph</span> is
+used; otherwise the method implemented in <span class="pkg">sna</span> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geodist.precomp</code></td>
+<td>
+<p>Geodistance precomputed for the graph to be
+analyzed (optional).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The change in group centrality score
+</p>
+
+
+</div>

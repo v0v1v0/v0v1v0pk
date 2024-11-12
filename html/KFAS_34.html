@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulateSSM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulation of a Gaussian State Space Model</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>simulateSMM</code> simulates states, signals, disturbances or missing observations of
+the Gaussian state space model either conditional on the data (simulation smoother) or
+unconditionally.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simulateSSM(
+  object,
+  type = c("states", "signals", "disturbances", "observations", "epsilon", "eta"),
+  filtered = FALSE,
+  nsim = 1,
+  antithetics = FALSE,
+  conditional = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Gaussian state space object of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>What to simulate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filtered</code></td>
+<td>
+<p>Simulate from <code class="reqn">p(\alpha_t|y_{t-1},...,y_1)</code>
+instead of <code class="reqn">p(\alpha|y)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>Number of independent samples. Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>antithetics</code></td>
+<td>
+<p>Use antithetic variables in simulation. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conditional</code></td>
+<td>
+<p>Simulations are conditional to data. If <code>FALSE</code>, the
+states having exact diffuse initial distribution (as defined by <code>P1inf</code>
+are fixed to corresponding values of <code>a1</code>. See details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Simulation smoother algorithm is based on article by J. Durbin and S.J. Koopman (2002).
+The simulation filter (<code>filtered = TRUE</code>) is a straightforward modification
+of the simulations smoother, where only filtering steps are performed.
+</p>
+<p>Function can use two antithetic variables, one for location and other for scale, so output
+contains four blocks of simulated values which correlate which each other (ith block correlates
+negatively with (i+1)th block, and positively with (i+2)th block etc.).
+</p>
+<p>Note that KFAS versions 1.2.0 and older, for unconditional simulation the initial
+distribution of states was fixed so that <code>a1</code> was set to the smoothed estimates
+of the first state and the initial variance was set to zero. Now original
+<code>a1</code> and <code>P1</code> are used, and <code>P1inf</code> is ignored (i.e. diffuse states are
+fixed to corresponding elements of <code>a1</code>).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An n x k x nsim array containing the simulated series, where k is number of observations,
+signals, states or disturbances.
+</p>
+
+
+<h3>References</h3>
+
+<p>Durbin J. and Koopman, S.J. (2002). A simple and efficient simulation smoother for
+state space time series analysis, Biometrika, Volume 89, Issue 3
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+set.seed(123)
+# simulate new observations from the "fitted" model
+model &lt;- SSModel(Nile ~ SSMtrend(1, Q = 1469), H = 15099)
+# signal conditional on the data i.e. samples from p(theta | y)
+# unconditional simulation is not reasonable as the model is nonstationary
+signal_sim &lt;- simulateSSM(model, type = "signals", nsim = 10)
+# and add unconditional noise term i.e samples from p(epsilon)
+epsilon_sim &lt;- simulateSSM(model, type = "epsilon", nsim = 10,
+  conditional = FALSE)
+observation_sim &lt;- signal_sim + epsilon_sim
+
+ts.plot(observation_sim[,1,], Nile, col = c(rep(2, 10), 1),
+  lty = c(rep(2, 10), 1), lwd = c(rep(1, 10), 2))
+
+# fully unconditional simulation:
+observation_sim2 &lt;- simulateSSM(model, type = "observations", nsim = 10,
+  conditional = FALSE)
+ts.plot(observation_sim[,1,], observation_sim2[,1,], Nile,
+col = c(rep(2:3, each = 10), 1), lty = c(rep(2, 20), 1),
+lwd = c(rep(1, 20), 2))
+
+# illustrating use of antithetics
+model &lt;- SSModel(matrix(NA, 100, 1) ~ SSMtrend(1, 1, P1inf = 0), H = 1)
+
+set.seed(123)
+sim &lt;- simulateSSM(model, "obs", nsim = 2, antithetics = TRUE)
+# first time points
+sim[1,,]
+# correlation structure between simulations with two antithetics
+cor(sim[,1,])
+
+out_NA &lt;- KFS(model, filtering = "none", smoothing = "state")
+model["y"] &lt;- sim[, 1, 1]
+out_obs &lt;- KFS(model, filtering = "none", smoothing = "state")
+
+set.seed(40216)
+# simulate states from the p(alpha | y)
+sim_conditional &lt;- simulateSSM(model, nsim = 10, antithetics = TRUE)
+
+# mean of the simulated states is exactly correct due to antithetic variables
+mean(sim_conditional[2, 1, ])
+out_obs$alpha[2]
+# for variances more simulations are needed
+var(sim_conditional[2, 1, ])
+out_obs$V[2]
+
+set.seed(40216)
+# no data, simulations from p(alpha)
+sim_unconditional &lt;- simulateSSM(model, nsim = 10, antithetics = TRUE,
+  conditional = FALSE)
+mean(sim_unconditional[2, 1, ])
+out_NA$alpha[2]
+var(sim_unconditional[2, 1, ])
+out_NA$V[2]
+
+ts.plot(cbind(sim_conditional[,1,1:5], sim_unconditional[,1,1:5]),
+  col = rep(c(2,4), each = 5))
+lines(out_obs$alpha, lwd=2)
+
+</code></pre>
+
+
+</div>

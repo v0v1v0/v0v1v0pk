@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dummyCodeFactorDf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Dummy coding of a data frame of factor variables</h2>
+
+<h3>Description</h3>
+
+<p>Given a data frame of factor variables, this function returns a numeric
+matrix of 0–1 dummy-coded variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dummyCodeFactorDf(dat)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>A data frame of factor variables</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A numeric matrix of 0–1 dummy coded variables
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dd &lt;- data.frame(a=factor(1:8), b=factor(letters[1:8]), stringsAsFactors = TRUE)
+dummyCodeFactorDf(dd)
+</code></pre>
+
+
+</div>

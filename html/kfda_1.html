@@ -1,0 +1,135 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kfda</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernel Fisher Discriminant Analysis (KFDA)</h2>
+
+<h3>Description</h3>
+
+<p>Train the trainData using KFDA. Basically, we run KFDA using Gaussian kernel. Returns trained KFDA object.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kfda(trainData = data, kernel.name = "rbfdot", kpar.sigma = 0.001, threshold = 1e-05)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>trainData</code></td>
+<td>
+<p>an optional <code>data frame</code> or <code>matrix</code> containing the variables in the model. In particular, the last column of the data frame should contain the target value.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel.name</code></td>
+<td>
+<p>the kernel function used in training and predicting. This parameter is fixed in the <code>rbfdot</code>(Gaussian kernel).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kpar.sigma</code></td>
+<td>
+
+<p>hyper-parameter of selected kernel. <code>sigma</code> inverse kernel width for the Gaussian kernel function "rbfdot".
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+
+<p>the value of the eigenvalue under which principal components are ignored (only valid when features = 0). (default : 1e-05).
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Train the trainData using KFDA. Basically, we run KFDA using Gaussian kernel. Returns trained KFDA object.
+Since this function performs KFDA with the appropriate combination of <code>kpca</code> and <code>lda</code>, the following values can show the result of each function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>kfda</code>.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>kpca.train</code></td>
+<td>
+<p>An object of class "kpca". It has results of <code>kpca</code> function. (see<code>kpca</code> (in package <span class="pkg">kernlab</span>))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lda.rotation.train</code></td>
+<td>
+<p>The result of applying LDA, After KPCA is performed on trainData.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>LDs</code></td>
+<td>
+<p>A dataframe of linear discriminants of LDA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>A vector of class label of trainData.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>This package is an early version and will be updated in the future.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Donghwan Kim<br><a href="mailto:ainsuotain@hanmail.net">ainsuotain@hanmail.net</a>
+<a href="mailto:donhkim9714@korea.ac.kr">donhkim9714@korea.ac.kr</a>
+<a href="mailto:dhkim2@bistel.com">dhkim2@bistel.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Yang, J., Jin, Z., Yang, J. Y., Zhang, D., and Frangi, A. F. (2004) &lt;DOI:10.1016/j.patcog.2003.10.015&gt;. Essence of kernel Fisher discriminant: KPCA plus LDA. <em>Pattern Recognition</em>, 37(10): 2097-2100.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>kpca</code> (in package <span class="pkg">kernlab</span>)
+<code>lda</code> (in package <span class="pkg">MASS</span>)
+<code>kfda.predict</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># data input
+data(iris)
+
+# data separation
+idx &lt;- sample(1:dim(iris)[1], round(dim(iris)[1]*0.7))
+trainData &lt;- iris[idx, ]
+
+# training KFDA model
+kfda.model &lt;- kfda(trainData = trainData, kernel.name = "rbfdot")
+
+# structure of kfda.model
+str(kfda.model)
+</code></pre>
+
+
+</div>

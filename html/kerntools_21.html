@@ -1,0 +1,157 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Jaccard</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kernels for sets</h2>
+
+<h3>Description</h3>
+
+<p>'Intersect()' or 'Jaccard()' compute the kernel functions of the same name,
+which are useful for set data. Their input is a matrix or data.frame with
+dimension <em>NxD</em>, where <em>N</em>&gt;1, <em>D</em>&gt;0. Samples should be in the
+rows and features in the columns. When there is a single feature,
+'Jaccard()' returns 1 if the elements of the set are exactly the same in
+two given samples, and 0 if they are completely different (see Details). Instead,
+in the multivariate case (<em>D</em>&gt;1), the results (for both 'Intersect()' and
+'Jaccard()') of the <em>D</em> features are combined with a sum, a mean, or a
+weighted mean.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Jaccard(X, elements = LETTERS, comp = "mean", coeff = NULL)
+
+Intersect(
+  X,
+  elements = LETTERS,
+  comp = "mean",
+  coeff = NULL,
+  feat_space = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Matrix (class "character") or data.frame (class "character", or columns = "factor").
+The elements in X are assumed to be categorical in nature.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>elements</code></td>
+<td>
+<p>All potential elements (symbols) that can appear in the sets. If there are
+some elements that are not of interest, they can be excluded so they are not
+taken into account by these kernels. (Defaults: LETTERS).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comp</code></td>
+<td>
+<p>When <em>D</em>&gt;1, this argument indicates how the variables
+of the dataset are combined. Options are: "mean", "sum" and "weighted". (Defaults: "mean")
+</p>
+
+<ul>
+<li>
+<p> "sum" gives the same importance to all variables, and returns an
+unnormalized kernel matrix.
+</p>
+</li>
+<li>
+<p> "mean" gives the same importance to all variables, and returns a
+normalized kernel matrix (all its elements range between 0 and 1).
+</p>
+</li>
+<li>
+<p> "weighted" weights each variable according to the 'coeff' parameter, and returns a
+normalized kernel matrix.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeff</code></td>
+<td>
+<p>(optional) A vector of weights with length <em>D</em>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>feat_space</code></td>
+<td>
+<p>(not available for the Jaccard kernel). If FALSE, only the
+kernel matrix is returned. Otherwise, the feature space is returned too. (Defaults: FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Let <code class="reqn">A,B</code> be two sets. Then, the Intersect
+kernel is defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">K_{Intersect}(A,B)=|A \cap B| </code>
+</p>
+
+<p>And the Jaccard kernel is defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">K_{Jaccard}(A,B)=|A \cap B| / |A \cup B|</code>
+</p>
+
+<p>This specific implementation of the Intersect and Jaccard kernels expects
+that the set members (elements) are character symbols (length=1). In case the
+set data is multivariate (<em>D</em>&gt;1 columns, and each one contains a set feature),
+elements for the <em>D</em> sets should come from the same domain (universe).
+For instance, a dataset with two variables, so the elements
+in the first one are colors c("green","black","white","red") and the second are names
+c("Anna","Elsa","Maria") is not allowed. In that case, set factors should be recoded
+to colors c("g","b","w","r") and names c("A","E","M") and, if necessary, 'Intersect()'
+(or 'Jaccard()') should be called twice.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Kernel matrix (dimension: <em>NxN</em>), or a list with the kernel matrix and the
+feature space.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bouchard, M., Jousselme, A. L., and Doré, P. E. (2013).
+A proof for the positive definiteness of the Jaccard index matrix.
+International Journal of Approximate Reasoning, 54(5), 615-626.
+</p>
+<p>Ruiz, F., Angulo, C., and Agell, N. (2008).
+Intersection and Signed-Intersection Kernels for Intervals.
+Frontiers in Artificial Intelligence and Applications. 184. 262-270.
+doi: 10.3233/978-1-58603-925-7-262.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Sets data
+## Generating a dataset with sets containing uppercase letters
+random_set &lt;- function(x)paste(sort(sample(LETTERS,x,FALSE)),sep="",collapse = "")
+max_setsize &lt;- 4
+setsdata &lt;- matrix(replicate(20,random_set(sample(2:max_setsize,1))),nrow=4,ncol=5)
+
+## Computing the Intersect kernel:
+Intersect(setsdata,elements=LETTERS,comp="sum")
+
+## Computing the Jaccard kernel weighting the variables:
+coeffs &lt;- c(0.1,0.15,0.15,0.4,0.20)
+Jaccard(setsdata,elements=LETTERS,comp="weighted",coeff=coeffs)
+</code></pre>
+
+
+</div>

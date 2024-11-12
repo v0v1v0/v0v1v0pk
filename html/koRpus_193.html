@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>segment.optimizer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A function to optimize MSTTR segment sizes</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates an optimized segment size for <code>MSTTR</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">segment.optimizer(txtlgth, segment = 100, range = 20, favour.min = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txtlgth</code></td>
+<td>
+<p>Integer value, size of text in tokens.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>segment</code></td>
+<td>
+<p>Integer value, start value of the segment size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>Integer value,
+range around <code>segment</code> to search for better fitting sizes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>favour.min</code></td>
+<td>
+<p>Logical,
+whether as a last ressort smaller or larger segment sizes should be
+prefered, if in doubt.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When calculating the mean segmental type-token ratio (MSTTR), tokens are divided into
+segments of a given size and analyzed. If at the end text is left over which won't fill another
+full segment, it is discarded,
+i.e. information is lost. For interpretation it is debatable
+which is worse: Dropping more or less actual token material,
+or variance in segment size between
+analyzed texts. If you'd prefer the latter, this function might prove helpful.
+</p>
+<p>Starting with a given text length, segment size and range to investigate,
+<code>segment.optimizer</code>
+iterates through possible segment values. It returns the segment size which would drop the fewest
+tokens (zero, if you're lucky). Should more than one value fulfill this demand,
+the one nearest to
+the segment start value is taken. In cases,
+where still two values are equally far away from the
+start value,
+it depends on the setting of <code>favour.min</code> if the smaller or larger segment size
+is returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector with two elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>seg</code></td>
+<td>
+<p>The optimized segment size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop</code></td>
+<td>
+<p>The number of tokens that would be dropped using this segment size</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>lex.div</code>, <code>MSTTR</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">segment.optimizer(2014, favour.min=FALSE)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,175 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summarize_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Summarize Data by Groups
+</h2>
+
+<h3>Description</h3>
+
+<p>This function summarizes the provided data column by one or two grouping variables. It calculates the mean, standard deviation, sample size, minimum, maximum, median, and standard error.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">summarize_data(column_data, group_var1, group_var2 = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>column_data</code></td>
+<td>
+
+<p>A numeric vector containing the data to be summarized.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group_var1</code></td>
+<td>
+
+<p>A factor or vector to group the data by.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group_var2</code></td>
+<td>
+
+<p>An optional second factor or vector to group the data by.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If only one grouping variable is provided, the function will summarize the data by that variable. If two grouping variables are provided, it will summarize the data by both variables.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with the following columns:
+</p>
+
+<dl>
+<dt>Group1</dt>
+<dd>
+<p>The first grouping variable (from <code>group_var1</code>).</p>
+</dd>
+<dt>Group2</dt>
+<dd>
+<p>The second grouping variable (from <code>group_var2</code>), if provided.</p>
+</dd>
+<dt>Mean</dt>
+<dd>
+<p>The mean of the <code>column_data</code> for each group.</p>
+</dd>
+<dt>SD</dt>
+<dd>
+<p>The standard deviation of the <code>column_data</code> for each group.</p>
+</dd>
+<dt>N</dt>
+<dd>
+<p>The sample size for each group.</p>
+</dd>
+<dt>Min</dt>
+<dd>
+<p>The minimum value of the <code>column_data</code> for each group.</p>
+</dd>
+<dt>Max</dt>
+<dd>
+<p>The maximum value of the <code>column_data</code> for each group.</p>
+</dd>
+<dt>Median</dt>
+<dd>
+<p>The median value of the <code>column_data</code> for each group.</p>
+</dd>
+<dt>SE</dt>
+<dd>
+<p>The standard error of the mean for each group.</p>
+</dd>
+</dl>
+<h3>Output</h3>
+
+<p>A data frame with the above columns.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The grouping variables and the data column can be of different lengths.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Oswald Omuron
+</p>
+
+
+<h3>References</h3>
+
+<p>No references available.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>aggregate</code>,
+<code>summarize_data</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  # Example data
+  example_data &lt;- c(
+    445, 372, 284, 247, 328, 98.8, 108.7, 100.8, 123.6, 129.9, 133.3,
+    130.1, 123.1, 186.6, 215, 19.4, 19.3, 27.8, 26, 22, 30.9, 19.8,
+    16.5, 20.2, 31, 21.1, 16.5, 19.7, 18.9, 27, 161.8, 117, 94.6, 97.5,
+    142.7, 109.9, 118.3, 111.4, 96.5, 109, 114.1, 114.9, 101.2, 112.7,
+    111.1, 194.8, 169.9, 159.1, 100.8, 130.8, 93.6, 105.7, 178.4, 203,
+    172.2, 127.3, 128.3, 110.9, 124.1, 179.1, 293, 197.5, 139.1, 98.1,
+    84.6, 81.4, 87.2, 71.1, 70.3, 120.4, 194.5, 167.5, 121, 86.5, 81.7
+  )
+
+  example_group1 &lt;- c(
+    rep("Palm", 15), rep("Papyrus", 10), rep("Typha", 15),
+    rep("Eucalyptus", 15), rep("Rice farm", 20)
+  )
+
+  example_group2 &lt;- rep(c(50, 40, 30, 20, 10), 15)
+
+  # Create dataframe
+  example_df &lt;- data.frame(
+    Vegetation_types = example_group1,
+    Depth_revised = example_group2,
+    EC_uS_cm = example_data
+  )
+
+  # Summarize by one grouping variable
+  summary_one_group &lt;- summarize_data(
+    example_df$EC_uS_cm,
+    example_df$Vegetation_types
+  )
+  print(summary_one_group)
+
+  # Summarize by two grouping variables
+  summary_two_groups &lt;- summarize_data(
+    example_df$EC_uS_cm,
+    example_df$Vegetation_types,
+    example_df$Depth_revised
+  )
+  print(summary_two_groups)
+</code></pre>
+
+
+</div>

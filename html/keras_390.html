@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_normalization</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A preprocessing layer which normalizes continuous features.</h2>
+
+<h3>Description</h3>
+
+<p>A preprocessing layer which normalizes continuous features.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_normalization(
+  object,
+  axis = -1L,
+  mean = NULL,
+  variance = NULL,
+  invert = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>What to compose the new <code>Layer</code> instance with. Typically a
+Sequential model or a Tensor (e.g., as returned by <code>layer_input()</code>).
+The return value depends on <code>object</code>. If <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> missing or <code>NULL</code>, the <code>Layer</code> instance is returned.
+</p>
+</li>
+<li>
+<p> a <code>Sequential</code> model, the model with an additional layer is returned.
+</p>
+</li>
+<li>
+<p> a Tensor, the output tensor from <code>layer_instance(object)</code> is returned.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>axis</code></td>
+<td>
+<p>Integer, list of integers, or NULL. The axis or axes that should
+have a separate mean and variance for each index in the shape. For
+example, if shape is <code style="white-space: pre;">⁠(NULL, 5)⁠</code> and <code>axis=1</code>, the layer will track 5
+separate mean and variance values for the last axis. If <code>axis</code> is set to
+<code>NULL</code>, the layer will normalize all elements in the input by a scalar
+mean and variance. Defaults to -1, where the last axis of the input is
+assumed to be a feature dimension and is normalized per index. Note that
+in the specific case of batched scalar inputs where the only axis is the
+batch axis, the default will normalize each index in the batch
+separately. In this case, consider passing <code>axis = NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>The mean value(s) to use during normalization. The passed value(s)
+will be broadcast to the shape of the kept axes above; if the value(s)
+cannot be broadcast, an error will be raised when this layer's <code>build()</code>
+method is called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variance</code></td>
+<td>
+<p>The variance value(s) to use during normalization. The passed
+value(s) will be broadcast to the shape of the kept axes above; if the
+value(s) cannot be broadcast, an error will be raised when this layer's
+<code>build()</code> method is called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>invert</code></td>
+<td>
+<p>If <code>TRUE</code>, this layer will apply the inverse transformation
+to its inputs: it would turn a normalized input back into its
+original form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>standard layer arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This layer will shift and scale inputs into a distribution centered around 0
+with standard deviation 1. It accomplishes this by precomputing the mean and
+variance of the data, and calling <code>(input - mean) / sqrt(var)</code> at runtime.
+</p>
+<p>The mean and variance values for the layer must be either supplied on
+construction or learned via <code>adapt()</code>. <code>adapt()</code> will compute the mean and
+variance of the data and store them as the layer's weights. <code>adapt()</code> should
+be called before <code>fit()</code>, <code>evaluate()</code>, or <code>predict()</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>adapt()</code>
+</p>
+</li>
+<li> <p><a href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Normalization">https://www.tensorflow.org/api_docs/python/tf/keras/layers/Normalization</a>
+</p>
+</li>
+<li> <p><a href="https://keras.io/api/layers/preprocessing_layers/numerical/normalization">https://keras.io/api/layers/preprocessing_layers/numerical/normalization</a>
+</p>
+</li>
+</ul>
+<p>Other numerical features preprocessing layers: 
+<code>layer_discretization()</code>
+</p>
+<p>Other preprocessing layers: 
+<code>layer_category_encoding()</code>,
+<code>layer_center_crop()</code>,
+<code>layer_discretization()</code>,
+<code>layer_hashing()</code>,
+<code>layer_integer_lookup()</code>,
+<code>layer_random_brightness()</code>,
+<code>layer_random_contrast()</code>,
+<code>layer_random_crop()</code>,
+<code>layer_random_flip()</code>,
+<code>layer_random_height()</code>,
+<code>layer_random_rotation()</code>,
+<code>layer_random_translation()</code>,
+<code>layer_random_width()</code>,
+<code>layer_random_zoom()</code>,
+<code>layer_rescaling()</code>,
+<code>layer_resizing()</code>,
+<code>layer_string_lookup()</code>,
+<code>layer_text_vectorization()</code>
+</p>
+
+
+</div>

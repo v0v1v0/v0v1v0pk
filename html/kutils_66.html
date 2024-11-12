@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>wide2long</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert a key object from wide to long format</h2>
+
+<h3>Description</h3>
+
+<p>This is not flexible, assumes columns are named in our canonical
+style, which means the columns are named c("name_old", "name_new",
+"class_old", "class_new", "value_old", "value_new").
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">wide2long(
+  key,
+  sep = c(character = "\\|", logical = "\\|", integer = "\\|", factor = "\\|",
+    ordered = "[\\|&lt;]", numeric = "\\|")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>key</code></td>
+<td>
+<p>A variable key in the wide format</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>Default separator is the pipe, "\|" for most
+variables, while ordered accepts pipe or less than, "\|&lt;". If
+the key did not follow those customs, other sep values may be
+specified for each variable class.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A long format variable key
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Johnson &lt;pauljohn@ku.edu&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mydf.path &lt;- system.file("extdata", "mydf.csv", package = "kutils")
+mydf &lt;- read.csv(mydf.path, stringsAsFactors=FALSE)
+## Target we are trying to match:
+mydf.keylong &lt;- keyTemplate(mydf, long = TRUE, sort = FALSE)
+
+mydf.key &lt;- keyTemplate(mydf)
+mydf.keywide2long &lt;- wide2long(mydf.key)
+
+## rownames not meaningful in long key, so remove in both versions
+row.names(mydf.keywide2long) &lt;- NULL
+row.names(mydf.keylong) &lt;- NULL
+all.equal(mydf.keylong, mydf.keywide2long)
+</code></pre>
+
+
+</div>

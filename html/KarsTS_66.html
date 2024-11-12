@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>findDateFormat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+findDateFormat: finds the format of a set of dates
+</h2>
+
+<h3>Description</h3>
+
+<p>This function identifies the format of a set of dates from a list of allowed formats.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">findDateFormat(X, tz = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>The date (given as a character string)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tz</code></td>
+<td>
+
+<p>The time zone
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The allowed formats are: "%m/%d/%Y %H:%M", "%Y/%m/%d %H:%M","%Y-%m-%d %H:%M" and "%m-%d-%Y %H:%M"
+</p>
+
+
+<h3>Value</h3>
+
+<p>It returns the date format, ready to use in the funtion strptime. If the dates have different formats, the function returns "variousFormats". If the format is not one of the allowed ones, it returns "notAllowedformat".
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marina Saez Andreu
+</p>
+
+
+</div>

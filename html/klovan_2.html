@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calc_eigenvectors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Eigenvectors</h2>
+
+<h3>Description</h3>
+
+<p>This function calculates the Eigenvectors of a given covariance matrix
+or a klovan dataset. In case of a klovan dataset, it is first converted
+into a covariance matrix. For further details on klovan datasets, refer to the README.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calc_eigenvectors(data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A covariance matrix made with <code>covar_mtrx()</code> function, or a
+A dataset of class data.frame. The data should contain 'C_X' and 'C_Y' columns
+representing the x and y coordinates of the data points and excludes any rank,
+ID, or column not for analysis.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A data frame with two columns: "Evalues_COV" and "pc.names1".
+"Evalues_COV" represents the eigenvectors for each principal component
+listed in "pc.names1".
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("Klovan_Row80")
+calc_eigenvectors(covar_mtrx(Klovan_Row80)) # view eigenvectors
+
+</code></pre>
+
+
+</div>

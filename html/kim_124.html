@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>start_kim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Start kim</h2>
+
+<h3>Description</h3>
+
+<p>Start kim (update kim; attach default packages; set working directory, etc.)
+This function requires installing Package 'remotes' v2.4.2
+(or possibly a higher version) by Csardi et al. (2021),
+<a href="https://cran.r-project.org/package=remotes">https://cran.r-project.org/package=remotes</a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">start_kim(
+  update = TRUE,
+  upgrade_other_pkg = FALSE,
+  setup_r_env = TRUE,
+  default_packages = c("data.table", "ggplot2"),
+  silent_load_pkgs = c("data.table", "ggplot2")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>update</code></td>
+<td>
+<p>If <code>update = "force"</code>, force updating the package
+'kim'. If <code>update = TRUE</code>, compares the currently installed package
+'kim' with the most recent version on GitHub and, if the version on GitHub
+is more recent, ask the user to confirm the update. If confirmed,
+then update the package. If <code>update = FALSE</code>, skip updating
+the package. By default, <code>update = "force"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upgrade_other_pkg</code></td>
+<td>
+<p>input for the <code>upgrade</code> argument to
+be passed on to <code>remotes::install_github</code>.
+One of "default", "ask", "always", "never", TRUE, or FALSE.
+"default" respects the value of the R_REMOTES_UPGRADE environment
+variable if set, and falls back to "ask" if unset.
+"ask" prompts the user for which out of date packages to upgrade.
+For non-interactive sessions "ask" is equivalent to "always".
+TRUE and FALSE correspond to "always" and "never" respectively.
+By default, <code>upgrade_other_pkg = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>setup_r_env</code></td>
+<td>
+<p>logical. If <code>update = TRUE</code>, runs the function
+setup_r_env in the package "kim". Type "?kim::setup_r_env" to learn more.
+By default, <code>setup_r_env = TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default_packages</code></td>
+<td>
+<p>a vector of names of packages to load and attach.
+By default, <code>default_packages = c("data.table", "ggplot2")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent_load_pkgs</code></td>
+<td>
+<p>a character vector indicating names of
+packages to load silently (i.e., suppress messages that get printed
+when loading the packages).
+By default, <code>silent_load_pkgs = c("data.table", "ggplot2")</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+start_kim()
+start_kim(default_packages = c("dplyr", "ggplot2"))
+start_kim(update = TRUE, setup_r_env = FALSE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

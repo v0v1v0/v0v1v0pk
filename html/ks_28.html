@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>histde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Histogram density estimate</h2>
+
+<h3>Description</h3>
+
+<p>Histogram density estimate for 1- and 2-dimensional data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">histde(x, binw, xmin, xmax, adj=0)
+
+## S3 method for class 'histde'
+predict(object, ..., x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>matrix of data values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binw</code></td>
+<td>
+<p>(vector) of binwidths</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmin,xmax</code></td>
+<td>
+<p>vector of minimum/maximum values for grid</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>adj</code></td>
+<td>
+<p>displacement of default anchor point, in percentage of 1
+bin</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>object of class <code>histde</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>binw</code> is missing, the default binwidth is <code class="reqn">\hat{b}_i = 2 \cdot 3^{1/(d+2)} \pi^{d/(2d+4)} S_i
+  n^{-1/(d+2)}</code>, the
+normal scale selector.  
+</p>
+<p>If <code>xmin</code> is missing then it defaults to the data minimum.  If
+<code>xmax</code> is missing then it defaults to the data maximum.  
+</p>
+
+
+<h3>Value</h3>
+
+<p>A histogram density estimate is an object of class <code>histde</code> which is a
+list with fields: 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eval.points</code></td>
+<td>
+<p>vector or list of points at which the estimate is evaluated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimate</code></td>
+<td>
+<p>density estimate at <code>eval.points</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binw</code></td>
+<td>
+<p>(vector of) bandwidths</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbin</code></td>
+<td>
+<p>(vector of) number of bins</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>variable names</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>plot.histde</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## positive data example
+set.seed(8192)
+x &lt;- 2^rnorm(100)
+fhat &lt;- histde(x=x)
+plot(fhat, border=6)
+points(c(0.5, 1), predict(fhat, x=c(0.5, 1)))
+
+## large data example on a non-default grid
+set.seed(8192)
+x &lt;- rmvnorm.mixt(10000, mus=c(0,0), Sigmas=invvech(c(1,0.8,1)))
+fhat &lt;- histde(x=x, xmin=c(-5,-5), xmax=c(5,5))
+plot(fhat)
+
+## See other examples in ? plot.histde
+</code></pre>
+
+
+</div>

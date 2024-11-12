@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>contract_convert</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert contract names to factor intervals</h2>
+
+<h3>Description</h3>
+
+<p>Can perform one of three <strong>rough</strong> conversions:
+</p>
+
+<ol>
+<li>
+<p> For interval contracts (e.g., "220 - 229", "9% or more", etc.), convert
+the character strings to proper interval notation.
+</p>
+</li>
+<li>
+<p> For contracts with multiple discrete outcomes (e.g., Candidate names),
+convert the character vector to simple factors.
+</p>
+</li>
+<li>
+<p> For markets with a single binary question (e.g., "Will the Democrats have
+a brokered convention in 2020?"), contracts returned are always "Yes" which
+is converted to <code>TRUE</code>.
+</p>
+</li>
+</ol>
+<h3>Usage</h3>
+
+<pre><code class="language-R">contract_convert(x, decimal = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A character vector of contract names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal</code></td>
+<td>
+<p>Should percentages be converted to decimals?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A interval factor, unique factor, or logical vector.
+</p>
+
+
+</div>

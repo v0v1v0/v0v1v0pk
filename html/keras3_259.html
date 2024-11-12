@@ -1,0 +1,361 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>layer_lstm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Long Short-Term Memory layer - Hochreiter 1997.</h2>
+
+<h3>Description</h3>
+
+<p>Based on available runtime hardware and constraints, this layer
+will choose different implementations (cuDNN-based or backend-native)
+to maximize the performance. If a GPU is available and all
+the arguments to the layer meet the requirement of the cuDNN kernel
+(see below for details), the layer will use a fast cuDNN implementation
+when using the TensorFlow backend.
+The requirements to use the cuDNN implementation are:
+</p>
+
+<ol>
+<li> <p><code>activation</code> == <code>tanh</code>
+</p>
+</li>
+<li> <p><code>recurrent_activation</code> == <code>sigmoid</code>
+</p>
+</li>
+<li> <p><code>dropout</code> == 0 and <code>recurrent_dropout</code> == 0
+</p>
+</li>
+<li> <p><code>unroll</code> is <code>FALSE</code>
+</p>
+</li>
+<li> <p><code>use_bias</code> is <code>TRUE</code>
+</p>
+</li>
+<li>
+<p> Inputs, if use masking, are strictly right-padded.
+</p>
+</li>
+<li>
+<p> Eager execution is enabled in the outermost context.
+</p>
+</li>
+</ol>
+<p>For example:
+</p>
+<div class="sourceCode r"><pre>input &lt;- random_uniform(c(32, 10, 8))
+output &lt;- input |&gt; layer_lstm(4)
+shape(output)
+</pre></div>
+<div class="sourceCode"><pre>## shape(32, 4)
+
+</pre></div>
+<div class="sourceCode r"><pre>lstm &lt;- layer_lstm(units = 4, return_sequences = TRUE, return_state = TRUE)
+c(whole_seq_output, final_memory_state, final_carry_state) %&lt;-% lstm(input)
+shape(whole_seq_output)
+</pre></div>
+<div class="sourceCode"><pre>## shape(32, 10, 4)
+
+</pre></div>
+<div class="sourceCode r"><pre>shape(final_memory_state)
+</pre></div>
+<div class="sourceCode"><pre>## shape(32, 4)
+
+</pre></div>
+<div class="sourceCode r"><pre>shape(final_carry_state)
+</pre></div>
+<div class="sourceCode"><pre>## shape(32, 4)
+
+</pre></div>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">layer_lstm(
+  object,
+  units,
+  activation = "tanh",
+  recurrent_activation = "sigmoid",
+  use_bias = TRUE,
+  kernel_initializer = "glorot_uniform",
+  recurrent_initializer = "orthogonal",
+  bias_initializer = "zeros",
+  unit_forget_bias = TRUE,
+  kernel_regularizer = NULL,
+  recurrent_regularizer = NULL,
+  bias_regularizer = NULL,
+  activity_regularizer = NULL,
+  kernel_constraint = NULL,
+  recurrent_constraint = NULL,
+  bias_constraint = NULL,
+  dropout = 0,
+  recurrent_dropout = 0,
+  seed = NULL,
+  return_sequences = FALSE,
+  return_state = FALSE,
+  go_backwards = FALSE,
+  stateful = FALSE,
+  unroll = FALSE,
+  use_cudnn = "auto",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Object to compose the layer with. A tensor, array, or sequential model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>Positive integer, dimensionality of the output space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activation</code></td>
+<td>
+<p>Activation function to use.
+Default: hyperbolic tangent (<code>tanh</code>).
+If you pass <code>NULL</code>, no activation is applied
+(ie. "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_activation</code></td>
+<td>
+<p>Activation function to use
+for the recurrent step.
+Default: sigmoid (<code>sigmoid</code>).
+If you pass <code>NULL</code>, no activation is applied
+(ie. "linear" activation: <code>a(x) = x</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_bias</code></td>
+<td>
+<p>Boolean, (default <code>TRUE</code>), whether the layer
+should use a bias vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_initializer</code></td>
+<td>
+<p>Initializer for the <code>kernel</code> weights matrix,
+used for the linear transformation of the inputs. Default:
+<code>"glorot_uniform"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_initializer</code></td>
+<td>
+<p>Initializer for the <code>recurrent_kernel</code>
+weights matrix, used for the linear transformation of the recurrent
+state. Default: <code>"orthogonal"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_initializer</code></td>
+<td>
+<p>Initializer for the bias vector. Default: <code>"zeros"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unit_forget_bias</code></td>
+<td>
+<p>Boolean (default <code>TRUE</code>). If <code>TRUE</code>,
+add 1 to the bias of the forget gate at initialization.
+Setting it to <code>TRUE</code> will also force <code>bias_initializer="zeros"</code>.
+This is recommended in <a href="https://github.com/mlresearch/v37/blob/gh-pages/jozefowicz15.pdf">Jozefowicz et al.</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the <code>kernel</code> weights
+matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the
+<code>recurrent_kernel</code> weights matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the bias vector.
+Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activity_regularizer</code></td>
+<td>
+<p>Regularizer function applied to the output of the
+layer (its "activation"). Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel_constraint</code></td>
+<td>
+<p>Constraint function applied to the <code>kernel</code> weights
+matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_constraint</code></td>
+<td>
+<p>Constraint function applied to the
+<code>recurrent_kernel</code> weights matrix. Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bias_constraint</code></td>
+<td>
+<p>Constraint function applied to the bias vector.
+Default: <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop for the
+linear transformation of the inputs. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recurrent_dropout</code></td>
+<td>
+<p>Float between 0 and 1. Fraction of the units to drop
+for the linear transformation of the recurrent state. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Random seed for dropout.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_sequences</code></td>
+<td>
+<p>Boolean. Whether to return the last output
+in the output sequence, or the full sequence. Default: <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_state</code></td>
+<td>
+<p>Boolean. Whether to return the last state in addition
+to the output. Default: <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>go_backwards</code></td>
+<td>
+<p>Boolean (default: <code>FALSE</code>).
+If <code>TRUE</code>, process the input sequence backwards and return the
+reversed sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stateful</code></td>
+<td>
+<p>Boolean (default: <code>FALSE</code>). If <code>TRUE</code>, the last state
+for each sample at index i in a batch will be used as initial
+state for the sample of index i in the following batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unroll</code></td>
+<td>
+<p>Boolean (default <code>FALSE</code>).
+If <code>TRUE</code>, the network will be unrolled,
+else a symbolic loop will be used.
+Unrolling can speed-up a RNN,
+although it tends to be more memory-intensive.
+Unrolling is only suitable for short sequences.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_cudnn</code></td>
+<td>
+<p>Whether to use a cuDNN-backed implementation. <code>"auto"</code> will
+attempt to use cuDNN when feasible, and will fallback to the
+default implementation if not.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The return value depends on the value provided for the first argument.
+If  <code>object</code> is:
+</p>
+
+<ul>
+<li>
+<p> a <code>keras_model_sequential()</code>, then the layer is added to the sequential model
+(which is modified in place). To enable piping, the sequential model is also
+returned, invisibly.
+</p>
+</li>
+<li>
+<p> a <code>keras_input()</code>, then the output tensor from calling <code>layer(input)</code> is returned.
+</p>
+</li>
+<li> <p><code>NULL</code> or missing, then a <code>Layer</code> instance is returned.
+</p>
+</li>
+</ul>
+<h3>Call Arguments</h3>
+
+
+<ul>
+<li> <p><code>inputs</code>: A 3D tensor, with shape <code style="white-space: pre;">⁠(batch, timesteps, feature)⁠</code>.
+</p>
+</li>
+<li> <p><code>mask</code>: Binary tensor of shape <code style="white-space: pre;">⁠(samples, timesteps)⁠</code> indicating whether
+a given timestep should be masked  (optional).
+An individual <code>TRUE</code> entry indicates that the corresponding timestep
+should be utilized, while a <code>FALSE</code> entry indicates that the
+corresponding timestep should be ignored. Defaults to <code>NULL</code>.
+</p>
+</li>
+<li> <p><code>training</code>: Boolean indicating whether the layer should behave in
+training mode or in inference mode. This argument is passed to the
+cell when calling it. This is only relevant if <code>dropout</code> or
+<code>recurrent_dropout</code> is used  (optional). Defaults to <code>NULL</code>.
+</p>
+</li>
+<li> <p><code>initial_state</code>: List of initial state tensors to be passed to the first
+call of the cell (optional, <code>NULL</code> causes creation
+of zero-filled initial state tensors). Defaults to <code>NULL</code>.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/layers/recurrent_layers/lstm#lstm-class">https://keras.io/api/layers/recurrent_layers/lstm#lstm-class</a>
+</p>
+</li></ul>
+<p>Other lstm rnn layers: <br><code>rnn_cell_lstm()</code> <br></p>
+<p>Other rnn layers: <br><code>layer_bidirectional()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_gru()</code> <br><code>layer_rnn()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_time_distributed()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+<p>Other layers: <br><code>Layer()</code> <br><code>layer_activation()</code> <br><code>layer_activation_elu()</code> <br><code>layer_activation_leaky_relu()</code> <br><code>layer_activation_parametric_relu()</code> <br><code>layer_activation_relu()</code> <br><code>layer_activation_softmax()</code> <br><code>layer_activity_regularization()</code> <br><code>layer_add()</code> <br><code>layer_additive_attention()</code> <br><code>layer_alpha_dropout()</code> <br><code>layer_attention()</code> <br><code>layer_average()</code> <br><code>layer_average_pooling_1d()</code> <br><code>layer_average_pooling_2d()</code> <br><code>layer_average_pooling_3d()</code> <br><code>layer_batch_normalization()</code> <br><code>layer_bidirectional()</code> <br><code>layer_category_encoding()</code> <br><code>layer_center_crop()</code> <br><code>layer_concatenate()</code> <br><code>layer_conv_1d()</code> <br><code>layer_conv_1d_transpose()</code> <br><code>layer_conv_2d()</code> <br><code>layer_conv_2d_transpose()</code> <br><code>layer_conv_3d()</code> <br><code>layer_conv_3d_transpose()</code> <br><code>layer_conv_lstm_1d()</code> <br><code>layer_conv_lstm_2d()</code> <br><code>layer_conv_lstm_3d()</code> <br><code>layer_cropping_1d()</code> <br><code>layer_cropping_2d()</code> <br><code>layer_cropping_3d()</code> <br><code>layer_dense()</code> <br><code>layer_depthwise_conv_1d()</code> <br><code>layer_depthwise_conv_2d()</code> <br><code>layer_discretization()</code> <br><code>layer_dot()</code> <br><code>layer_dropout()</code> <br><code>layer_einsum_dense()</code> <br><code>layer_embedding()</code> <br><code>layer_feature_space()</code> <br><code>layer_flatten()</code> <br><code>layer_flax_module_wrapper()</code> <br><code>layer_gaussian_dropout()</code> <br><code>layer_gaussian_noise()</code> <br><code>layer_global_average_pooling_1d()</code> <br><code>layer_global_average_pooling_2d()</code> <br><code>layer_global_average_pooling_3d()</code> <br><code>layer_global_max_pooling_1d()</code> <br><code>layer_global_max_pooling_2d()</code> <br><code>layer_global_max_pooling_3d()</code> <br><code>layer_group_normalization()</code> <br><code>layer_group_query_attention()</code> <br><code>layer_gru()</code> <br><code>layer_hashed_crossing()</code> <br><code>layer_hashing()</code> <br><code>layer_identity()</code> <br><code>layer_integer_lookup()</code> <br><code>layer_jax_model_wrapper()</code> <br><code>layer_lambda()</code> <br><code>layer_layer_normalization()</code> <br><code>layer_masking()</code> <br><code>layer_max_pooling_1d()</code> <br><code>layer_max_pooling_2d()</code> <br><code>layer_max_pooling_3d()</code> <br><code>layer_maximum()</code> <br><code>layer_mel_spectrogram()</code> <br><code>layer_minimum()</code> <br><code>layer_multi_head_attention()</code> <br><code>layer_multiply()</code> <br><code>layer_normalization()</code> <br><code>layer_permute()</code> <br><code>layer_random_brightness()</code> <br><code>layer_random_contrast()</code> <br><code>layer_random_crop()</code> <br><code>layer_random_flip()</code> <br><code>layer_random_rotation()</code> <br><code>layer_random_translation()</code> <br><code>layer_random_zoom()</code> <br><code>layer_repeat_vector()</code> <br><code>layer_rescaling()</code> <br><code>layer_reshape()</code> <br><code>layer_resizing()</code> <br><code>layer_rnn()</code> <br><code>layer_separable_conv_1d()</code> <br><code>layer_separable_conv_2d()</code> <br><code>layer_simple_rnn()</code> <br><code>layer_spatial_dropout_1d()</code> <br><code>layer_spatial_dropout_2d()</code> <br><code>layer_spatial_dropout_3d()</code> <br><code>layer_spectral_normalization()</code> <br><code>layer_string_lookup()</code> <br><code>layer_subtract()</code> <br><code>layer_text_vectorization()</code> <br><code>layer_tfsm()</code> <br><code>layer_time_distributed()</code> <br><code>layer_torch_module_wrapper()</code> <br><code>layer_unit_normalization()</code> <br><code>layer_upsampling_1d()</code> <br><code>layer_upsampling_2d()</code> <br><code>layer_upsampling_3d()</code> <br><code>layer_zero_padding_1d()</code> <br><code>layer_zero_padding_2d()</code> <br><code>layer_zero_padding_3d()</code> <br><code>rnn_cell_gru()</code> <br><code>rnn_cell_lstm()</code> <br><code>rnn_cell_simple()</code> <br><code>rnn_cells_stack()</code> <br></p>
+
+
+</div>

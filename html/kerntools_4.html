@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Boots_CI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence Interval using Bootstrap</h2>
+
+<h3>Description</h3>
+
+<p>'Boots_CI()' computes the Confidence Interval (CI) of a performance measure
+(for instance, accuracy) via bootstrapping.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Boots_CI(target, pred, index = "acc", nboots, confidence = 95, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>target</code></td>
+<td>
+<p>Numeric vector containing the actual values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>Numeric vector containing the predicted values.
+(The order should be the same than the target's).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>Performance measure name, in lowercase. (Defaults: "acc").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboots</code></td>
+<td>
+<p>Number of bootstrapping replicas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confidence</code></td>
+<td>
+<p>Confidence level; for instance, 95% or 99%. (Defaults: 95).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to the performance measures functions;
+notably, multi.class="macro" or multi.class="micro" for the macro or micro
+performance measures. (Defaults: "macro").</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector containing the bootstrap estimate of the performance and its CI.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y &lt;- c(rep("a",30),rep("b",20))
+y_pred &lt;- c(rep("a",20),rep("b",30))
+# Computing Accuracy with their 95%CI
+Boots_CI(target=y, pred=y_pred, index="acc", nboots=1000, confidence=95)
+</code></pre>
+
+
+</div>

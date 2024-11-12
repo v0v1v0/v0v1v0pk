@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SAVF_plot_rho_error</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot the rho squared error terms</h2>
+
+<h3>Description</h3>
+
+<p><code>SAVF_plot_rho_error</code> plots the squared error terms for the rho search
+space to illustrate the preferred rho that minimizes the squared error
+between subject matter desired values and exponentially fitted scores
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SAVF_plot_rho_error(desired_x, desired_v, x_low, x_high, rho_low = 0,
+  rho_high = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>desired_x</code></td>
+<td>
+<p>Elicited input x value(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desired_v</code></td>
+<td>
+<p>Elicited value score related to elicited input value(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_low</code></td>
+<td>
+<p>Lower bound anchor point (can be different than <code>min(x)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_high</code></td>
+<td>
+<p>Upper bound anchor point (can be different than <code>max(x)</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho_low</code></td>
+<td>
+<p>Lower bound of the exponential constant search space for a best fit value function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho_high</code></td>
+<td>
+<p>Upper bound of the exponential constant search space for a best fit value function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot that visualizes the squared error terms for the rho search space
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>SAVF_preferred_rho</code> for identifying the preferred rho value
+</p>
+<p><code>SAVF_score</code> for computing the exponential single attribute value score
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Given the single attribute x is bounded between 1 and 5 and the subject matter experts
+# prefer x values of 3, 4, &amp; 5 provide a utility score of .75, .90 &amp; 1.0 respectively, we
+# can visualize the error terms for rho values between 0-1:
+
+SAVF_plot_rho_error(desired_x = c(3, 4, 5),
+                    desired_v = c(.75, .9, 1),
+                    x_low = 1,
+                    x_high = 5,
+                    rho_low = 0,
+                    rho_high = 1)
+
+</code></pre>
+
+
+</div>

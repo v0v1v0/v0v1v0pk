@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getstringpoints</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Returns the coordinates of a knot's path
+</h2>
+
+<h3>Description</h3>
+
+<p>Returns the coordinates of a knot's path
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getstringpoints(b, give_strand = FALSE, n = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>The knot path (coerced to <code>controlpoints</code> form)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>give_strand</code></td>
+<td>
+<p>Boolean, with default <code>FALSE</code> meaning to
+return a two-column matrix with rows corresponding to coordinates
+of the knot path, and <code>TRUE</code> meaning to return a matrix with
+an additional column indicating the strand number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>The number of points to use when constructing the Bezier
+curve</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns either a two- or three- column matrix</p>
+
+
+<h3>Note</h3>
+
+<p>Function <code>knotplot()</code> returns the points of the string too, but
+with <code>NA</code> for understrands.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>knotplot</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">plot(getstringpoints(k4_1),asp=1)
+
+a &lt;- getstringpoints(k11a179,TRUE)
+plot(a,asp=1,col=rainbow(24)[a[,3]])
+ 
+d &lt;- 1200
+plot(rbind(
+    sweep(getstringpoints(k7_1),2,c(0,0)),
+    sweep(getstringpoints(k7_2),2,c(0,d)),
+    sweep(getstringpoints(k7_3),2,c(d,0)),
+    sweep(getstringpoints(k7_4),2,c(d,d))
+),asp=1,xlab='',ylab='')
+
+</code></pre>
+
+
+</div>

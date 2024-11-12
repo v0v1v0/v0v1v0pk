@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>confactord</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Mixed-type Data Generation with True Membership Labels
+</h2>
+
+<h3>Description</h3>
+
+<p>This function generates a mixed-type data frame with a combination of continuous
+(<code>numeric</code>), nominal (<code>factor</code>), and  ordinal (<code>ordered</code>) 
+variables with prespecified cluster overlap for each variable type. 
+<code>confactord</code> allows the user to specify the number of each 
+variable type, the amount of variables per variable type that have cluster 
+overlap, the amount of cluster overlap for each variable type, the number of 
+levels for the nominal and ordinal variables, and proportion of observations 
+per class membership. Within and across-type variables are generated 
+independently from one another. Currently, only two classes are may be generated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">confactord(n = 200, 
+            popProb = c(0.5,0.5), 
+            numMixVar = c(1,1,1), 
+            numMixVarOl = c(1,1,1),  
+            olVarType = c(0.1,0.1,0.1), 
+            catLevels = c(2,4))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>integer number of observations to be generated. Defaults to <code>n = 200</code>
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>popProb</code></td>
+<td>
+
+<p>numeric vector of length two specifying the proportion of observations 
+allocated to each class membership, which must sum to one. Defaults to 
+<code>popProb = c(0.5, 0.5)</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numMixVar</code></td>
+<td>
+
+<p>numeric vector of integers of length three specifying (in order) the total 
+number of continuous (numeric), nominal (factor), and ordinal (ordered) 
+variables to be generated. If a specific variable type is not required, 
+set the appropriate vector indice to zero. Defaults to 
+<code>numMixVar = c(1,1,1)</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numMixVarOl</code></td>
+<td>
+
+<p>numeric vector of integers of length three specifying (in order) the total 
+number of continuous (numeric), nominal (factor), and ordinal (ordered) 
+variables that will have class membership overlap. If all variables are to
+be well-separated by class membership, set all indices to zero. No indice 
+of this vector may be greater than the corresponding indice in 
+<code>numMixVar</code>. Defaults to <code>numMixVarOl = c(1,1,1)</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>olVarType</code></td>
+<td>
+
+<p>numeric vector of length three specifying (in order) the percentage of class 
+membership overlap to be applied to the continuous (numeric), nominal 
+(factor), and ordinal (ordered) No argument required if 
+<code>numMixVarOl = c(0,0,0)</code>. Permissible class membership overlap per 
+variable type is between 0.01 and 0.99. Defaults to ten percent overlap per
+variable type, <code>olVarType = c(0.1,0.1,0.1)</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catLevels</code></td>
+<td>
+
+<p>numeric vector of length two specifying (in order) the number of levels 
+(integer values) for each of the nominal (factor) and ordinal (ordered) 
+variable types. Defaults to <code>catLevels = c(2,4)</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Continuous variables are generated independently from normal distributions, 
+with means determined by true class membership. If overlap is specified, 
+additional variance is introduced to simulate cluster overlap. Nominal 
+variables are generated using Dirichlet distributions representing different 
+population proportions. Ordinal variables are initially simulated as 
+continuous variables and then discretized into ordered categories based on 
+quantile distributions, similar to a latent class model where ordinal 
+categories are inferred based on underlying continuous distributions and 
+adjusted for cluster overlap parameters.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>confactord</code> returns a <code>list</code> object, with the
+following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a <code>data.frame</code> of mixed variable types based on user-
+specified parameters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>a numeric vector of integers specifying the true class memberships 
+for the returned <code>data</code> data frame</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>John R. J. Thompson <a href="mailto:john.thompson@ubc.ca">john.thompson@ubc.ca</a>, Jesse S. Ghashti
+<a href="mailto:jesse.ghashti@ubc.ca">jesse.ghashti@ubc.ca</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mscv.dkss</code>, <code>mscv.dkps</code>, <code>dkss</code>, 
+<code>dkps</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># EXAMPLE1: Default implementation generates the following
+# 200 observations split into two clusters of equal size (100 observations each) 
+# Three variables-- one of each numeric, factor, and ordered
+# Each variable has ten percent cluster overlap
+# Nominal variable is binary
+# Ordinal variable has four levels
+
+df1 &lt;- confactord()
+
+
+# EXAMPLE2: 
+# 500 observations; 100 observations in cluster one and 400 in cluster two 
+# Three continuous variables, two nominal, one ordinal
+# Only one continuous variable has cluster overlap
+# All nominal and ordinal variables have cluster overlap
+# Cluster overlap for continuous variable is twenty percent
+# Cluster overlap for nominal variables are thirty percent
+# Cluster overlap for ordinal variable is fourty percent
+# Nominal variable has three levels, while ordinal has 5
+
+df2 &lt;- confactord(n = 500, 
+                    popProb = c(0.2,0.8), 
+                    numMixVar = c(3,2,1), 
+                    numMixVarOl = c(1,2,1),  
+                    olVarType = c(0.2,0.3,0.4), 
+                    catLevels = c(3,5))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logsmoo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Logarithmic smoothing with loess</h2>
+
+<h3>Description</h3>
+
+<p>Logarithmic smoothing with loess
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logsmoo(x, y, x.is.log = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric; the index series (cannot contain <code>NA</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>numeric; the series of values associated with x</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x.is.log</code></td>
+<td>
+<p>logical; determines whether the series in <code>x</code> has
+been log-transformed already. If <code>FALSE</code> then <code>log10</code> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional parameters (e.g., <code>span</code>) passed to <code>loess.smooth</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The result of <code>loess.smooth</code>
+</p>
+
+
+<h3>References</h3>
+
+<p>Barbour, A. J., and D. C. Agnew (2011), Noise levels on 
+Plate Boundary Observatory borehole strainmeters in southern California,
+Bulletin of the Seismological Society of America, 101(5), 2453-2466,
+doi: 10.1785/0120110062
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>loess.smooth</code> and <code>approxfun</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(11133)
+n &lt;- 101
+lx &lt;- seq(-1,1,length.out=n)
+y &lt;- rnorm(n) + cumsum(rnorm(n))
+plot(lx, y, col='grey')
+lines(logsmoo(lx, y, x.is.log=TRUE))
+
+</code></pre>
+
+
+</div>

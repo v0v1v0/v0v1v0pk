@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rebase_dims</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Change the dimensions of a KinPairSimulation Object and shift kinpairs so at least one individual is within the area</h2>
+
+<h3>Description</h3>
+
+<p>Change the dimensions of a KinPairSimulation Object and shift kinpairs so at least one individual is within the area
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rebase_dims(kindist, dims)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kindist</code></td>
+<td>
+<p><code>KinPairSimulation</code> - <code>KinPairSimulation</code> Class Object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dims</code></td>
+<td>
+<p>New site dimensions - either single number (length of side of square) or length 2 vector (lengths of sides x and y of rectangle)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a rebased object of class <code>KinPairSimulation</code> with adjusted simulation dimensions
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">simobject &lt;- simulate_kindist_simple()
+
+rebase_dims(simobject, c(1, 100))
+rebase_dims(simobject, 15)
+</code></pre>
+
+
+</div>

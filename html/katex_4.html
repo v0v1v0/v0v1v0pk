@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>katex</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tex math rendering in R</h2>
+
+<h3>Description</h3>
+
+<p>Converts tex-style math expressions to html and mathml for use in manual pages or
+markdown documents.
+The conversion is done in R using V8 ("server-side"), hence the resulting fragment can
+be inserted into an HTML document without the need for a JavaScript library like MathJax.
+Only the <a href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">katex.css</a>
+style file is required in the final html document.
+Use math_to_rd for embedding math into R documentation (<code>.rd</code>) pages.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">katex_html(
+  tex,
+  displayMode = TRUE,
+  ...,
+  include_css = FALSE,
+  preview = interactive()
+)
+
+katex_mathml(tex, displayMode = TRUE, ...)
+
+example_math()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tex</code></td>
+<td>
+<p>input string with tex math expression.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>displayMode</code></td>
+<td>
+<p>render math in centered 2D layout, similar to <code style="white-space: pre;">⁠$$⁠</code> in tex.
+Set to <code>FALSE</code> to render (non-centered) inline layout for use in text.
+For pdf output, this corresponds to the <code style="white-space: pre;">⁠\deqn{}⁠</code> and <code style="white-space: pre;">⁠\eqn{}⁠</code> macros, see
+<a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html#Mathematics">WRE 2.6: Mathematics</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional html rendering options passed to
+<a href="https://katex.org/docs/options.html">katex.render</a></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include_css</code></td>
+<td>
+<p>adds the katex css file to the output.
+This is only required once per html webpage. Set to <code>FALSE</code> if you include css
+files into the your html head some other way.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>preview</code></td>
+<td>
+<p>open an HTML preview page showing the snipped in the browser</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Refer to the upstream <a href="https://katex.org/docs/support_table.html">katex support table</a> for
+the full list of supported tex functions that can be rendered to html using katex.
+</p>
+<p>By default, katex_html returns a mix of HTML for visual rendering and includes
+MathML for accessibility. To only get html, pass <code>output="html"</code> in the extra options,
+see also the <a href="https://katex.org/docs/options.html">katex documentation</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a string with a html/mathml fragment
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other katex: 
+<code>math_to_rd()</code>,
+<code>pandoc</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Basic examples
+html &lt;- katex_html(example_math())
+mathml &lt;- katex_mathml(example_math())
+
+# Example from katex.org homepage:
+macros &lt;- list("\\f" = "#1f(#2)")
+math &lt;- "\\f\\relax{x} = \\int_{-\\infty}^\\infty \\f\\hat\\xi\\,e^{2 \\pi i \\xi x} \\,d\\xi"
+html &lt;- katex_html(math,  macros = macros)
+mathml &lt;- katex_mathml(math,  macros = macros)
+</code></pre>
+
+
+</div>

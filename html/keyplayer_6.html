@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>group.mreach.closeness</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the Group-level mreach.closeness Centrality Score in a Netwrok</h2>
+
+<h3>Description</h3>
+
+<p><code>mreach.closeness</code> refines the <code>mreach.degree</code> centrality by
+using the (inverse) geodistance as weights.
+The edge values should be properly interpreted as distances.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">group.mreach.closeness(
+  adj.matrix,
+  nodes,
+  M = Inf,
+  method = "min",
+  binary = FALSE,
+  cmode = "total",
+  large = TRUE,
+  geodist.precomp = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>adj.matrix</code></td>
+<td>
+<p>Matrix indicating the adjacency matrix of the network.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nodes</code></td>
+<td>
+<p>Integer indicating the column index of the chosen player
+in the adjacenncy matrix. If there are multiple players,
+use <code>c(index1,index2,...)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>Number indicating the maximum distance between two nodes,
+above witch the two nodes are considered disconnected. The default is
+<code>Inf</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Indication of which grouping criterion should be used.
+<code>method="min"</code> indicates the "minimum" criterion (edge values as distances).
+<code>method="max"</code> indicates the "maximum" criterion (edge values as non-cummulative strengths).
+<code>method="add"</code> indicates the "addition" criterion (edge values as cummulative strengths).
+<code>method="union"</code> indicates the "union" criterion (edge values as probability).
+The default is the "minimum" criterion for mrach.closeness centrality.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary</code></td>
+<td>
+<p>If <code>TRUE</code>, the adjacency matrix is binarized.
+If <code>FALSE</code>, the edge values are considered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmode</code></td>
+<td>
+<p>String indicating the type of centrality being evaluated.
+The default is to report the total degree.
+<code>"outdegree"</code> and <code>"indegree"</code> refer to indegree and outdegree
+respectively. If <code>"all"</code>, all the three types are reported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>large</code></td>
+<td>
+<p>Logical scalar, whether the computation method for large network is
+implemented. If <code>TRUE</code> (the default), the method implmented in <span class="pkg">igraph</span> is
+used; otherwise the method implemented in <span class="pkg">sna</span> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geodist.precomp</code></td>
+<td>
+<p>Geodistance precomputed for the graph to be
+analyzed (optional).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector indicating the outdegree, indegree, or total-degree
+cohesion score of the chosen players; or a data frame containing all
+the above information. Note that the outdegree and indegree scores are normalized
+to [0,1]. This means that the total-degree score is between [0,2].
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Weihua An <a href="mailto:weihua.an@emory.edu">weihua.an@emory.edu</a>; Yu-Hsin Liu <a href="mailto:ugeneliu@meta.com">ugeneliu@meta.com</a>
+</p>
+
+
+</div>

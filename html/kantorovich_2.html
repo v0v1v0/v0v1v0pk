@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>edistances</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extremal distances</h2>
+
+<h3>Description</h3>
+
+<p>Compute the distances at the extreme joinings.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">edistances(mu, nu, dist = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>(row margins) probability measure in numeric or bigq/character mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>(column margins) probability measure in numeric or bigq/character mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist</code></td>
+<td>
+<p>function or matrix, the distance to be minimized on average.
+If <code>NULL</code>, the 0-1 distance is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments passed to <code>dist</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with two components: the extreme joinings in a list and the distances in a vector.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function, called by <code>kantorovich</code>, is rather for internal purpose.
+</p>
+
+
+</div>

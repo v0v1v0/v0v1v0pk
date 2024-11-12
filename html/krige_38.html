@@ -1,0 +1,187 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>semivariance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Semivariance for Geospatial Data</h2>
+
+<h3>Description</h3>
+
+<p>This function computes the empirical semivariance for a spatially-distributed 
+variable. Based on the user's chosen level of coarsening, the semivariance is 
+presented for various distances.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">semivariance(object, ...)
+
+## S3 method for class 'krige'
+semivariance(object, bins = 13, terms = "all", plot = FALSE, ...)
+
+## S3 method for class 'lm'
+semivariance(
+  object,
+  bins = 13,
+  coords,
+  terms = c("raw", "residual"),
+  east,
+  north,
+  plot = FALSE,
+  ...
+)
+
+## Default S3 method:
+semivariance(object, bins = 13, coords, data, east, north, plot = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>An object for which the semivariance is desired. The object can 
+be a <code>krige</code> object, a <code>lm</code> object, or a vector of variables (or 
+variable names in the <code>data</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>semivariance</code> methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bins</code></td>
+<td>
+<p>Number of bins into which distances should be divided. The observed 
+distances will be split at equal intervals, and the semivariance will be computed 
+within each interval. Defaults to 13 intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>terms</code></td>
+<td>
+<p>A vector of strings specifies for which the semivariogram is created. 
+Options are "raw" (the semivariogram for raw data), "residual" (the semivariogram
+for residuals from linear regression).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>Logical values indicates whether a graph of the empirical semivariogram 
+should be presented with a run of the function. Default omits the plot and only 
+returns semivariance values. See <code>semivariogram</code> for additional 
+plotting functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coords</code></td>
+<td>
+<p>A matrix of coordinates for all observations or a vector of variable 
+names indicating the coordinates variables in the data. Alternatively, the 
+coordinates can also be specified separately using <code>east</code> and <code>north</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>east</code></td>
+<td>
+<p>Alternative specification for the vector of eastings for all observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>north</code></td>
+<td>
+<p>Alternative specification for the vector of northing for all observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>If object is a variable name, a data frame must be provided.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Semivariance is equal to half of the variance of the difference in a 
+variable's values at a given distance. That is, the semivariance is defined 
+as: <code class="reqn">\gamma(h)=0.5*E[X(s+h)-X(s)]^2</code>, where <code class="reqn">X</code> is the variable of 
+interest, s is a location, and h is the distance from s to another location.
+</p>
+<p>The function can be applied to a variable, a fitted linear model (<code>lm</code> 
+object) before fitting a spatial model or to a <code>krige</code> object or <code>semivariance</code>
+object to assess the model fit. When applying to a variable, it will describes 
+the raw data; for a <code>lm</code> object, the default will present empirical 
+semivariogram for both the raw data and linear residuals. Users can also specify 
+which semivariance is needed in the <code>terms</code> argument if there are multiple 
+kinds of semivariogram can be plotted. A <code>semivariance</code> object can also 
+be used to create semivariogram afterwards using generic <code>plot</code> function 
+with more options.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A semivariance object. It will be a numeric vector with each bin's value 
+of the semivariance if only one kind of semivariance is computed; a list including 
+different kinds of semivariance if both raw and residual semivariance is computed.
+</p>
+
+
+<h3>References</h3>
+
+<p>Sudipto Banerjee, Bradley P. Carlin, and Alan E. Gelfand. 2015. <em>Hierarchical 
+Modeling and Analysis for Spatial Data</em>. 2nd ed. Boca Raton, FL: CRC Press.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>semivariogram</code>, <code>plot.semivariance</code>, <code>exponential.semivariance</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Summarize example data
+summary(ContrivedData)
+
+# Empirical semivariance for variable y
+semivariance(ContrivedData$y,coords = cbind(ContrivedData$s.1, ContrivedData$s.2))
+
+# Initial OLS Model
+contrived.ols&lt;-lm(y~x.1+x.2,data=ContrivedData); summary(contrived.ols)
+
+# Empirical semivariance for ols fit
+(sv.ols &lt;- semivariance(contrived.ols, coords = c("s.1","s.2"), bins=13))
+plot(sv.ols)
+
+# Estimation using metropolis.krige()
+# Set seed
+set.seed(1241060320)
+
+M &lt;- 100
+
+contrived.run &lt;- metropolis.krige(y ~ x.1 + x.2, coords = c("s.1","s.2"), 
+  data = ContrivedData, n.iter = M, range.tol = 0.05)
+  
+# Parametric semivariance
+(sv.krige &lt;- semivariance(contrived.run, plot = TRUE))
+
+# Convert to other format for further use
+as.matrix(sv.krige)
+as.data.frame(sv.krige)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

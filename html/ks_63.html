@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>vector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Vector and vector half operators</h2>
+
+<h3>Description</h3>
+
+<p>The vec (vector) operator takes a <code class="reqn">d \times d</code> matrix and stacks the
+columns into a single vector of length <code class="reqn">d^2</code>. The vech (vector
+half) operator
+takes a symmetric <code class="reqn">d \times d</code> matrix and stacks the lower
+triangular half into a single vector of length <code class="reqn">d(d+1)/2</code>.
+The functions invvec and invvech are the inverses of vec and
+vech i.e. they form matrices from vectors. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">vec(x, byrow=FALSE)
+vech(x)
+invvec(x, ncol, nrow, byrow=FALSE)
+invvech(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector or matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncol,nrow</code></td>
+<td>
+<p>number of columns and rows for inverse of vech</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>byrow</code></td>
+<td>
+<p>flag for stacking row-wise or column-wise. Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p> Magnus, J.R. &amp; Neudecker H.M. (2007) <em>Matrix
+Differential Calculus with Applications in Statistics and
+Econometrics (3rd edition)</em>, Wiley &amp; Sons. Chichester.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- matrix(1:9, nrow=3, ncol=3)
+vec(x)
+invvec(vec(x))
+</code></pre>
+
+
+</div>

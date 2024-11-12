@@ -1,0 +1,191 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>integration_design</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Construction of a sample of integration points and weights
+</h2>
+
+<h3>Description</h3>
+
+<p>Generic function to build integration points for some sampling criterion. 
+Available important sampling schemes are <code>"sur"</code>, <code>"jn"</code>, <code>"timse"</code>, <code>"vorob"</code> and <code>"imse"</code>. 
+Each of them corresponds to a sampling criterion. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">integration_design(integcontrol = NULL, d = NULL, 
+lower, upper, model = NULL, T = NULL,min.prob=0.001)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>integcontrol</code></td>
+<td>
+
+<p>Optional list specifying the procedure to build the integration points and weights, relevant only for the sampling criteria based on numerical integration: 
+(<code>"imse"</code>, <code>"timse"</code>, <code>"sur"</code>, <code>"vorob"</code> or <code>"jn"</code>). Many options are possible.
+A) If nothing is specified, 100*d points are chosen using the Sobol sequence. 
+B) One can directly set the field <code>integration.points</code> (a p * d matrix) for prespecified integration points. In this case these integration points and the corresponding vector <code>integration.weights</code> will be used for all the iterations of the algorithm. 
+C) If the field <code>integration.points</code> is not set then the integration points are renewed at each iteration. 
+In that case one can control the number of integration points <code>n.points</code> (default: 100*d) and a specific distribution <code>distrib</code>. Possible values for <code>distrib</code> are: 
+<code>"sobol"</code>, <code>"MC"</code>, <code>"timse"</code>, <code>"imse"</code>, <code>"sur"</code>, <code>"vorob"</code> and <code>"jn"</code> (default: <code>"sobol"</code>). 
+C.1) The choice <code>"sobol"</code> corresponds to integration points chosen with the Sobol sequence in dimension d (equal weights). 
+C.2) The choice <code>"MC"</code> corresponds to points chosen randomly, uniformly on the domain (equal weights). 
+C.3) The choices <code>"timse"</code>, <code>"imse"</code>, <code>"sur"</code>, <code>"vorob"</code> and <code>"jn"</code> correspond to importance sampling distributions (unequal weights). It is  recommended to use the importance sampling distribution corresponding to the chosen sampling criterion. 
+When important sampling procedures are chosen, <code>n.points</code> points are chosen using importance sampling among a discrete set of <code>n.candidates</code> points (default: <code>n.points*10</code>) which are distributed according to a distribution <code>init.distrib</code> (default: <code>"sobol"</code>). Possible values for <code>init.distrib</code> are <code>"sobol"</code> or <code>"MC"</code> (uniform random points) or an user defined distribution <code>"spec"</code>. 
+If the <code>"spec"</code> value is chosen the user must fill manually the field <code>init.distrib.spec</code> with a n.candidates*d matrix of points in dimension d.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+
+<p>The dimension of the input set. If not provided d is set equal to the length of <code>lower</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+
+<p>Vector containing the lower bounds of the design space.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+
+<p>Vector containing the upper bounds of the design space.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>A Kriging model of <code>km</code> class.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T</code></td>
+<td>
+
+<p>Array containing one or several thresholds.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.prob</code></td>
+<td>
+
+<p>This argument applies only when importance sampling distributions are chosen. For numerical reasons we give a minimum probability for a point to belong to the importance sample. This avoids potential importance sampling weights equal to infinity. In an importance sample of M points, the maximum weight becomes <code>1/min.prob * 1/M</code>.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The important sampling aims at improving the accuracy of the computation of criteria which involve numerical integration, like <code>"timse"</code>, <code>"sur"</code>, etc.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>integration.points</code></td>
+<td>
+<p> p * d matrix of p points used for the numerical calculation of integrals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integration.weights</code></td>
+<td>
+<p> Vector of size p corresponding to the weights of each points. If all the points are equally weighted, <code>integration.weights</code> is set to <code>NULL</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p> If the <code>"vorob"</code> important sampling schemes is chosen, the function also returns a scalar, alpha, being the calculated Vorob'ev threshold</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Clement Chevalier (University of Neuchatel, Switzerland)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chevalier C., Bect J., Ginsbourger D., Vazquez E., Picheny V., Richet Y. (2014), <em>Fast parallel kriging-based stepwise uncertainty reduction with application to the identification of an excursion set</em>, Technometrics, vol. 56(4), pp 455-465
+</p>
+<p>Chevalier C. (2013) <em>Fast uncertainty reduction strategies relying on Gaussian process models</em> Ph.D Thesis, University of Bern
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>max_timse_parallel</code>, <code>max_sur_parallel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#integration_design
+
+
+#when nothing is specified: integration points 
+#are chosen with the sobol sequence
+integ.param &lt;- integration_design(lower=c(0,0),upper=c(1,1))
+plot(integ.param$integration.points)
+
+
+#an example with pure random integration points
+integcontrol &lt;- list(distrib="MC",n.points=50)
+integ.param &lt;- integration_design(integcontrol=integcontrol,
+		lower=c(0,0),upper=c(1,1))
+plot(integ.param$integration.points)
+
+#an example with important sampling distributions
+#these distributions are used to compute integral criterion like
+#"sur","timse" or "imse"
+
+#for these, we need a kriging model
+set.seed(9)
+N &lt;- 16;testfun &lt;- branin
+lower &lt;- c(0,0);upper &lt;- c(1,1)
+design &lt;- data.frame( matrix(runif(2*N),ncol=2) )
+response &lt;- testfun(design)
+model &lt;- km(formula=~., design = design, 
+	response = response,covtype="matern3_2")
+integcontrol &lt;- list(distrib="sur",n.points=200,n.candidates=5000,
+  init.distrib="MC")
+  
+T &lt;- c(60,100) 
+#we are interested in the set of points where the response is in [60,100]
+
+integ.param &lt;- integration_design(integcontrol=integcontrol,
+		lower=c(0,0),upper=c(1,1), model=model,T=T)
+
+print_uncertainty_2d(model=model,T=T,type="sur",
+col.points.init="red",cex.points=2,
+main="sur uncertainty and one sample of integration points")
+points(integ.param$integration.points,pch=17,cex=1)
+</code></pre>
+
+
+</div>

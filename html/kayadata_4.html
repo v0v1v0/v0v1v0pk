@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fuel_mix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mix of fuels contributing to primary energy supply for many countries and
+regions</h2>
+
+<h3>Description</h3>
+
+<p>A dataset containing the fuel mix of how many quads and what fraction of
+total primary energy supply comes from coal, gas, oil, nuclear, and
+renewable sources.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fuel_mix
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A tibble containing 948 rows and 7 variables
+</p>
+
+<dl>
+<dt>region</dt>
+<dd>
+<p>Country or region name</p>
+</dd>
+<dt>region_code</dt>
+<dd>
+<p>Three-letter country or region code</p>
+</dd>
+<dt>geography</dt>
+<dd>
+<p>Geographic category: "nation", "region", or "world"</p>
+</dd>
+<dt>year</dt>
+<dd>
+<p>The year</p>
+</dd>
+<dt>fuel</dt>
+<dd>
+<p>The fuel: "Coal", "Natural Gas", "Oil", "Nuclear", "Hydro",
+and "Renewables"</p>
+</dd>
+<dt>quads</dt>
+<dd>
+<p>The number of quads of that fuel consumed in the given country
+or region and year</p>
+</dd>
+<dt>frac</dt>
+<dd>
+<p>The fraction of that country or region's total primary
+energy consumption from the fuel</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>The data for 2022,
+from the 2023 release of the Energy Institute's Statistical Review,
+has inconsistencies in the fuel
+mix for Hong Kong and Sri Lanka: The percentages add up to 98.7% and
+102.9%, respectively. The sums of energy in quads are off by
+-0.095 and +0.095 quads, respectively, from the total energy figure.
+</p>
+
+
+<h3>Source</h3>
+
+<p><a href="https://www.energyinst.org/statistical-review/resources-and-data-downloads">https://www.energyinst.org/statistical-review/resources-and-data-downloads</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>regions, <code>get_fuel_mix()</code>
+</p>
+
+
+</div>

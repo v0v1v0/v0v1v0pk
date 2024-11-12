@@ -1,0 +1,267 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>optimizer_ftrl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimizer that implements the FTRL algorithm.</h2>
+
+<h3>Description</h3>
+
+<p>"Follow The Regularized Leader" (FTRL) is an optimization algorithm
+developed at Google for click-through rate prediction in the early 2010s. It
+is most suitable for shallow models with large and sparse feature spaces.
+The algorithm is described by
+<a href="https://research.google.com/pubs/archive/41159.pdf">McMahan et al., 2013</a>.
+The Keras version has support for both online L2 regularization
+(the L2 regularization described in the paper
+above) and shrinkage-type L2 regularization
+(which is the addition of an L2 penalty to the loss function).
+</p>
+<p>Initialization:
+</p>
+<div class="sourceCode r"><pre>n &lt;- 0
+sigma &lt;- 0
+z &lt;- 0
+</pre></div>
+<p>Update rule for one variable <code>w</code>:
+</p>
+<div class="sourceCode r"><pre>prev_n &lt;- n
+n &lt;- n + g^2
+sigma &lt;- (n^(-lr_power) - prev_n^(-lr_power)) / lr
+z &lt;- z + g - sigma * w
+if (abs(z) &lt; lambda_1) {
+  w &lt;- 0
+} else {
+  w &lt;- (sgn(z) * lambda_1 - z) / ((beta + sqrt(n)) / alpha + lambda_2)
+}
+</pre></div>
+<p>Notation:
+</p>
+
+<ul>
+<li> <p><code>lr</code> is the learning rate
+</p>
+</li>
+<li> <p><code>g</code> is the gradient for the variable
+</p>
+</li>
+<li> <p><code>lambda_1</code> is the L1 regularization strength
+</p>
+</li>
+<li> <p><code>lambda_2</code> is the L2 regularization strength
+</p>
+</li>
+<li> <p><code>lr_power</code> is the power to scale n.
+</p>
+</li>
+</ul>
+<p>Check the documentation for the <code>l2_shrinkage_regularization_strength</code>
+parameter for more details when shrinkage is enabled, in which case gradient
+is replaced with a gradient with shrinkage.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">optimizer_ftrl(
+  learning_rate = 0.001,
+  learning_rate_power = -0.5,
+  initial_accumulator_value = 0.1,
+  l1_regularization_strength = 0,
+  l2_regularization_strength = 0,
+  l2_shrinkage_regularization_strength = 0,
+  beta = 0,
+  weight_decay = NULL,
+  clipnorm = NULL,
+  clipvalue = NULL,
+  global_clipnorm = NULL,
+  use_ema = FALSE,
+  ema_momentum = 0.99,
+  ema_overwrite_frequency = NULL,
+  name = "ftrl",
+  ...,
+  loss_scale_factor = NULL,
+  gradient_accumulation_steps = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>learning_rate</code></td>
+<td>
+<p>A float, a
+<code>LearningRateSchedule()</code> instance, or
+a callable that takes no arguments and returns the actual value to
+use. The learning rate. Defaults to <code>0.001</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>learning_rate_power</code></td>
+<td>
+<p>A float value, must be less or equal to zero.
+Controls how the learning rate decreases during training. Use zero
+for a fixed learning rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initial_accumulator_value</code></td>
+<td>
+<p>The starting value for accumulators. Only
+zero or positive values are allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l1_regularization_strength</code></td>
+<td>
+<p>A float value, must be greater than or equal
+to zero. Defaults to <code>0.0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l2_regularization_strength</code></td>
+<td>
+<p>A float value, must be greater than or equal
+to zero. Defaults to <code>0.0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l2_shrinkage_regularization_strength</code></td>
+<td>
+<p>A float value, must be greater
+than or equal to zero. This differs from L2 above in that the L2
+above is a stabilization penalty, whereas this L2 shrinkage is a
+magnitude penalty. When input is sparse shrinkage will only happen
+on the active weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+<p>A float value, representing the beta value from the paper.
+Defaults to <code>0.0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight_decay</code></td>
+<td>
+<p>Float. If set, weight decay is applied.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clipnorm</code></td>
+<td>
+<p>Float. If set, the gradient of each weight is individually
+clipped so that its norm is no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clipvalue</code></td>
+<td>
+<p>Float. If set, the gradient of each weight is clipped to be
+no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global_clipnorm</code></td>
+<td>
+<p>Float. If set, the gradient of all weights is clipped
+so that their global norm is no higher than this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_ema</code></td>
+<td>
+<p>Boolean, defaults to <code>FALSE</code>.
+If <code>TRUE</code>, exponential moving average
+(EMA) is applied. EMA consists of computing an exponential moving
+average of the weights of the model (as the weight values change after
+each training batch), and periodically overwriting the weights with
+their moving average.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ema_momentum</code></td>
+<td>
+<p>Float, defaults to 0.99. Only used if <code>use_ema=TRUE</code>.
+This is the momentum to use when computing
+the EMA of the model's weights:
+<code>new_average = ema_momentum * old_average + (1 - ema_momentum) * current_variable_value</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ema_overwrite_frequency</code></td>
+<td>
+<p>Int or NULL, defaults to NULL. Only used if
+<code>use_ema=TRUE</code>. Every <code>ema_overwrite_frequency</code> steps of iterations,
+we overwrite the model variable by its moving average.
+If NULL, the optimizer
+does not overwrite model variables in the middle of training, and you
+need to explicitly overwrite the variables at the end of training
+by calling <code>optimizer$finalize_variable_values()</code>
+(which updates the model
+variables in-place). When using the built-in <code>fit()</code> training loop,
+this happens automatically after the last epoch,
+and you don't need to do anything.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>String. The name to use
+for momentum accumulator weights created by
+the optimizer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>For forward/backward compatability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loss_scale_factor</code></td>
+<td>
+<p>Float or <code>NULL</code>. If a float, the scale factor will
+be multiplied the loss before computing gradients, and the inverse of
+the scale factor will be multiplied by the gradients before updating
+variables. Useful for preventing underflow during mixed precision
+training. Alternately, <code>optimizer_loss_scale</code> will
+automatically set a loss scale factor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gradient_accumulation_steps</code></td>
+<td>
+<p>Int or <code>NULL</code>. If an int, model and optimizer
+variables will not be updated at every step; instead they will be
+updated every <code>gradient_accumulation_steps</code> steps, using the average
+value of the gradients since the last update. This is known as
+"gradient accumulation". This can be useful
+when your batch size is very small, in order to reduce gradient
+noise at each update step. EMA frequency will look at "accumulated"
+iterations value (optimizer steps // gradient_accumulation_steps).
+Learning rate schedules will look at "real" iterations value
+(optimizer steps).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an <code>Optimizer</code> instance
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul><li> <p><a href="https://keras.io/api/optimizers/ftrl#ftrl-class">https://keras.io/api/optimizers/ftrl#ftrl-class</a>
+</p>
+</li></ul>
+<p>Other optimizers: <br><code>optimizer_adadelta()</code> <br><code>optimizer_adafactor()</code> <br><code>optimizer_adagrad()</code> <br><code>optimizer_adam()</code> <br><code>optimizer_adam_w()</code> <br><code>optimizer_adamax()</code> <br><code>optimizer_lamb()</code> <br><code>optimizer_lion()</code> <br><code>optimizer_loss_scale()</code> <br><code>optimizer_nadam()</code> <br><code>optimizer_rmsprop()</code> <br><code>optimizer_sgd()</code> <br></p>
+
+
+</div>

@@ -1,0 +1,327 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dkde</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Derivatives of Kernel Density Estimator
+</h2>
+
+<h3>Description</h3>
+
+<p>The (S3) generic function <code>dkde</code> computes the r'th 
+derivative of kernel density estimator for one-dimensional 
+data. Its default method does so with the given kernel 
+and bandwidth <code class="reqn">h</code> for one-dimensional observations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dkde(x, ...)
+## Default S3 method:
+dkde(x, y = NULL, deriv.order = 0, h, kernel = c("gaussian", 
+         "epanechnikov", "uniform", "triangular", "triweight", 
+         "tricube", "biweight", "cosine"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the data from which the estimate is to be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the points of the grid at which the
+density derivative is to be estimated; the defaults are <code class="reqn">\tau * h</code> outside
+of range(<code class="reqn">x</code>), where <code class="reqn">\tau = 4</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>derivative order (scalar).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>the smoothing bandwidth to be used, can also be a character 
+string giving a rule to choose the bandwidth, see <code>h.bcv</code>. The default <code>h.ucv</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>a character string giving the smoothing kernel to be used, with default
+<code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for (non-default) methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A simple estimator for the density derivative can be obtained by taking the derivative
+of the kernel density estimate. If the kernel <code class="reqn">K(x)</code> is differentiable <code class="reqn">r</code> times 
+then the r'th density derivative estimate can be written as:
+</p>
+<p style="text-align: center;"><code class="reqn">\hat{f}^{(r)}_{h}(x)=\frac{1}{nh^{r+1}}\sum_{i=1}^{n} K^{(r)}\left(\frac{x-X_{i}}{h}\right)</code>
+</p>
+
+<p>where, </p>
+<p style="text-align: center;"><code class="reqn">K^{(r)}(x) = \frac{d^{r}}{d x^{r}} K(x)</code>
+</p>
+
+<p>for <code class="reqn">r = 0, 1, 2, \dots</code>
+</p>
+<p>The following assumptions on the density <code class="reqn">f^{(r)}(x)</code>, the bandwidth <code class="reqn">h</code>, and the kernel <code class="reqn">K(x)</code>:
+</p>
+
+<ol>
+<li>
+<p> The <code class="reqn">(r+2)</code> derivative <code class="reqn">f^{(r+2)}(x)</code> is continuous, square integrable and ultimately monotone.
+</p>
+</li>
+<li> <p><code class="reqn">\lim_{n \to \infty} h = 0</code> and <code class="reqn">\lim_{n \to \infty}n h^{2r+1} = \infty</code> i.e., as the number of samples <code class="reqn">n</code> is increased <code class="reqn">h</code> approaches zero at a rate slower than <code class="reqn">1/n^{2r+1}</code>.
+</p>
+</li>
+<li> <p><code class="reqn">K(x) \geq 0</code> and <code class="reqn">\int_{R} K(x) dx = 1</code>. The kernel function is assumed to be symmetric about the origin i.e., <code class="reqn">\int_{R} xK^{(r)}(x) dx = 0</code> for even <code class="reqn">r</code> and has finite second moment i.e., <code class="reqn">\mu_{2}(K)=\int_{R}x^{2} K(x) dx &lt; \infty</code>.
+</p>
+</li>
+</ol>
+<p>Some theoretical properties of the estimator <code class="reqn">\hat{f}^{(r)}_{h}</code> have been investigated, among others, by Bhattacharya (1967), Schuster (1969). Let us now turn to the statistical properties of estimator. We are interested in the mean squared error since it combines squared bias and variance.  
+</p>
+<p>The <b>bias</b> can be written as:
+</p>
+<p style="text-align: center;"><code class="reqn">E\left[\hat{f}^{(r)}_{h}(x)\right]- f^{(r)}(x) = \frac{1}{2}h^{2}\mu_{2}(K) f^{(r+2)}(x)+o(h^{2})</code>
+</p>
+
+<p>The <b>variance</b> of the estimator can be written as:
+</p>
+<p style="text-align: center;"><code class="reqn">VAR\left[\hat{f}^{(r)}_{h}(x)\right]=\frac{f(x) R\left(K^{(r)}\right)}{nh^{2r+1}} + o(1/nh^{2r+1})</code>
+</p>
+
+<p>with, <code class="reqn">R\left(K^{(r)}\right) = \int_{R} \left(K^{(r)}(x)\right)^{2}dx.</code>
+</p>
+<p>The <b>MSE</b> (Mean Squared Error) for kernel density derivative estimators can be written as:
+</p>
+<p style="text-align: center;"><code class="reqn">MSE\left(\hat{f}^{(r)}_{h}(x),f^{(r)}(x)\right)=\frac{f(x)R\left(K^{(r)}\right)}{nh^{2r+1}}+\frac{1}{4}h^{4}\mu_{2}^{2}(K) f^{(r+1)}(x)^{2}+o(h^{4}+1/nh^{2r+1})</code>
+</p>
+
+<p>It follows that the MSE-optimal bandwidth for estimating <code class="reqn">\hat{f}^{(r)}_{h}S(x)</code>, is of order <code class="reqn">n^{-1/(2r+5)}</code>. Therefore, 
+the estimation of <code class="reqn">\hat{f}^{(1)}_{h}(x)</code> requires a bandwidth of order <code class="reqn">n^{-1/7}</code> compared to the optimal <code class="reqn">n^{-1/5}</code> 
+for estimating <code class="reqn">f(x)</code> itself. It reveals the increasing difficulty in problems of estimating higher derivatives.<br></p>
+<p>The <b>MISE</b> (Mean Integrated Squared Error) can be written as:
+</p>
+<p style="text-align: center;"><code class="reqn">MISE\left(\hat{f}^{(r)}_{h}(x),f^{(r)}(x)\right)=AMISE\left(\hat{f}^{(r)}_{h}(x),f^{(r)}(x)\right)+o(h^{4}+1/nh^{2r+1})</code>
+</p>
+
+<p>where,
+</p>
+<p style="text-align: center;"><code class="reqn">AMISE\left(\hat{f}^{(r)}_{h}(x),f^{(r)}(x)\right)=\frac{1}{nh^{2r+1}}R\left(K^{(r)}\right)+\frac{1}{4}h^{4}\mu_{2}^{2}(K)R\left(f^{(r+2)}\right)</code>
+</p>
+
+<p>with: <code class="reqn">R\left(f^{(r)}(x)\right) = \int_{R} \left(f^{(r)}(x)\right)^{2}dx.</code><br>
+The performance of kernel is measured by <b>MISE</b> or <b>AMISE</b> (Asymptotic MISE).<br></p>
+<p>If the bandwidth <code>h</code> is missing from <code>dkde</code>, then the default bandwidth is 
+<code>h.ucv(x,deriv.order,kernel)</code> (Unbiased cross-validation, see <code>h.ucv</code>).<br>
+For more details see references.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data points - same as input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.name</code></td>
+<td>
+<p>the deparsed name of the <code>x</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the sample size after elimination of missing values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>name of kernel to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deriv.order</code></td>
+<td>
+<p>the derivative order to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>the bandwidth value to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eval.points</code></td>
+<td>
+<p>the coordinates of the points where the 
+density derivative is estimated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>est.fx</code></td>
+<td>
+<p>the estimated density derivative values.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>This function are available in other packages such as <a href="https://CRAN.R-project.org/package=KernSmooth"><span class="pkg">KernSmooth</span></a>, <a href="https://CRAN.R-project.org/package=sm"><span class="pkg">sm</span></a>, 
+<a href="https://CRAN.R-project.org/package=np"><span class="pkg">np</span></a>, <a href="https://CRAN.R-project.org/package=GenKern"><span class="pkg">GenKern</span></a> and <a href="https://CRAN.R-project.org/package=locfit"><span class="pkg">locfit</span></a> if <code>deriv.order=0</code>, and in <a href="https://CRAN.R-project.org/package=ks"><span class="pkg">ks</span></a> package 
+for Gaussian kernel only if <code>0 &lt;= deriv.order &lt;= 10</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Arsalane Chouaib Guidoum <a href="mailto:acguidoum@usthb.dz">acguidoum@usthb.dz</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Alekseev, V. G. (1972).
+Estimation of a probability density function and its derivatives.
+<em>Mathematical notes of the Academy of Sciences of the USSR</em>. <b>12</b> (5), 808–811.
+</p>
+<p>Alexandre, B. T. (2009).
+<em>Introduction to Nonparametric Estimation</em>.
+Springer-Verlag, New York.
+</p>
+<p>Bowman, A. W. and Azzalini, A. (1997). 
+<em>Applied Smoothing Techniques for
+Data Analysis: the Kernel Approach with 
+S-Plus Illustrations</em>.
+Oxford University Press, Oxford.
+</p>
+<p>Bhattacharya, P. K. (1967).
+Estimation of a probability density function and Its derivatives.
+<em>Sankhya: The Indian Journal of Statistics, Series A</em>, <b>29</b>, 373–382.  
+</p>
+<p>Jeffrey, S. S. (1996).
+<em>Smoothing Methods in Statistics</em>.
+Springer-Verlag, New York.
+</p>
+<p>Radhey, S. S. (1987).
+MISE of kernel estimates of a density and its derivatives.
+<em>Statistics and Probability Letters</em>, <b>5</b>, 153–159.
+</p>
+<p>Scott, D. W. (1992).
+<em>Multivariate Density Estimation. Theory, Practice and Visualization</em>.
+New York: Wiley.
+</p>
+<p>Schuster, E. F. (1969) 
+Estimation of a probability density function and its derivatives. 
+<em>The Annals of Mathematical Statistics</em>, <b>40</b> (4), 1187–1195.
+</p>
+<p>Silverman, B. W. (1986).
+<em>Density Estimation for Statistics and Data Analysis</em>.
+Chapman &amp; Hall/CRC. London.
+</p>
+<p>Stoker, T. M. (1993).
+Smoothing bias in density derivative estimation. 
+<em>Journal of the American Statistical Association</em>, <b>88</b>, 855–863.
+</p>
+<p>Venables, W. N. and Ripley, B. D. (2002).
+<em>Modern Applied Statistics with S</em>.
+New York: Springer.
+</p>
+<p>Wand, M. P. and Jones, M. C. (1995).
+<em>Kernel Smoothing</em>.
+Chapman and Hall, London.
+</p>
+<p>Wolfgang, H. (1991).
+<em>Smoothing Techniques</em>, 
+<em>With Implementation in S</em>.
+Springer-Verlag, New York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.dkde</code>, see <code>density</code> in package "stats" if <code>deriv.order = 0</code>, and <code>kdde</code> in package <a href="https://CRAN.R-project.org/package=ks"><span class="pkg">ks</span></a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## EXAMPLE 1:  Simple example of a Gaussian density derivative
+
+x &lt;- rnorm(100)
+dkde(x,deriv.order=0)  ## KDE of f
+dkde(x,deriv.order=1)  ## KDDE of d/dx f
+dkde(x,deriv.order=2)  ## KDDE of d^2/x^2 f
+dkde(x,deriv.order=3)  ## KDDE of d^3/x^3 f
+oldpar &lt;- par(no.readonly = TRUE)
+dev.new()
+par(mfrow=c(2,2))
+plot(dkde(x,deriv.order=0))
+plot(dkde(x,deriv.order=1))
+plot(dkde(x,deriv.order=2))
+plot(dkde(x,deriv.order=3))
+par(oldpar)
+
+## EXAMPLE 2: Bimodal Gaussian density derivative
+## show the kernels in the dkde parametrization
+
+fx  &lt;- function(x) 0.5 * dnorm(x,-1.5,0.5) + 0.5 * dnorm(x,1.5,0.5)
+fx1 &lt;- function(x) 0.5 *(-4*x-6)* dnorm(x,-1.5,0.5) + 0.5 *(-4*x+6) * 
+                   dnorm(x,1.5,0.5)
+				   
+## 'h = 0.3' ; 'Derivative order = 0'
+
+kernels &lt;- eval(formals(dkde.default)$kernel)
+dev.new()
+plot(dkde(bimodal,h=0.3),sub=paste("Derivative order = 0",";",
+     "Bandwidth =0.3 "),ylim=c(0,0.5), main = "Bimodal Gaussian Density")
+for(i in 2:length(kernels))
+   lines(dkde(bimodal, h = 0.3, kernel =  kernels[i]), col = i)
+curve(fx,add=TRUE,lty=8)
+legend("topright", legend = c(TRUE,kernels), col = c("black",seq(kernels)),
+          lty = c(8,rep(1,length(kernels))),cex=0.7, inset = .015)
+	   
+## 'h = 0.6' ; 'Derivative order = 1'
+
+kernels &lt;- eval(formals(dkde.default)$kernel)[-3]
+dev.new()
+plot(dkde(bimodal,deriv.order=1,h=0.6),main = "Bimodal Gaussian Density Derivative",sub=paste
+         ("Derivative order = 1",";","Bandwidth =0.6"),ylim=c(-0.6,0.6))
+for(i in 2:length(kernels))
+   lines(dkde(bimodal,deriv.order=1, h = 0.6, kernel =  kernels[i]), col = i)
+curve(fx1,add=TRUE,lty=8)
+legend("topright", legend = c(TRUE,kernels), col = c("black",seq(kernels)),
+          lty = c(8,rep(1,length(kernels))),cex=0.7, inset = .015)
+</code></pre>
+
+
+</div>

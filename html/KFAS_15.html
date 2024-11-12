@@ -1,0 +1,186 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>importanceSSM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Importance Sampling of Exponential Family State Space Model</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>importanceSSM</code> simulates states or signals of the exponential
+family state space model conditioned with the observations, returning the
+simulated samples of the states/signals with the corresponding importance
+weights.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">importanceSSM(
+  model,
+  type = c("states", "signals"),
+  filtered = FALSE,
+  nsim = 1000,
+  save.model = FALSE,
+  theta,
+  antithetics = FALSE,
+  maxiter = 50,
+  expected = FALSE,
+  H_tol = 1e+15
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Exponential family state space model of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>What to simulate, <code>"states"</code> or <code>"signals"</code>. Default is
+<code>"states"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filtered</code></td>
+<td>
+<p>Simulate from <code class="reqn">p(\alpha_t|y_{t-1},...,y_1)</code> instead of
+<code class="reqn">p(\alpha|y)</code>. Note that for large models this can be very slow. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>Number of independent samples. Default is 1000.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save.model</code></td>
+<td>
+<p>Return the original model with the samples. Default is
+FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Initial values for the conditional mode theta.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>antithetics</code></td>
+<td>
+<p>Logical. If TRUE, two antithetic variables are used in
+simulations, one for location and another for scale. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>Maximum number of iterations used in linearisation. Default is
+50.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expected</code></td>
+<td>
+<p>Logical value defining the approximation of H_t in case of Gamma 
+and negative binomial distribution. Default is <code>FALSE</code> which matches the 
+algorithm of Durbin &amp; Koopman (1997), whereas <code>TRUE</code> uses the expected value
+of observations in the equations, leading to results which match with <code>glm</code> (where applicable).
+The latter case was the default behaviour of KFAS before version 1.3.8.
+Essentially this is the difference between observed and expected information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H_tol</code></td>
+<td>
+<p>Tolerance parameter for check <code>max(H) &gt; H_tol</code>, which suggests that the approximation 
+converged to degenerate case with near zero signal-to-noise ratio. Default is very generous 1e15.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function can use two antithetic variables, one for location and other for
+scale, so output contains four blocks of simulated values which correlate
+which each other (ith block correlates negatively with (i+1)th block, and
+positively with (i+2)th block etc.).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing elements
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>samples</code></td>
+<td>
+<p>Simulated samples. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>Importance weights. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Original model in case of <code>save.model==TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data("sexratio")
+model &lt;- SSModel(Male ~ SSMtrend(1, Q = list(NA)), u = sexratio[,"Total"], data = sexratio,
+                distribution = "binomial")
+fit &lt;- fitSSM(model, inits = -15, method = "BFGS")
+fit$model$Q #1.107652e-06
+# Computing confidence intervals for sex ratio
+# Uses importance sampling on response scale (1000 samples with antithetics)
+set.seed(1)
+imp &lt;- importanceSSM(fit$model, nsim = 250, antithetics = TRUE)
+sexratio.smooth &lt;- numeric(length(model$y))
+sexratio.ci &lt;- matrix(0, length(model$y), 2)
+w &lt;- imp$w/sum(imp$w)
+for(i in 1:length(model$y)){
+  sexr &lt;- exp(imp$sample[i,1,])
+  sexratio.smooth[i]&lt;-sum(sexr*w)
+  oo &lt;- order(sexr)
+  sexratio.ci[i,] &lt;- c(sexr[oo][which.min(abs(cumsum(w[oo]) - 0.05))],
+                   sexr[oo][which.min(abs(cumsum(w[oo]) - 0.95))])
+}
+
+## Not run: 
+# Filtered estimates
+impf &lt;- importanceSSM(fit$model, nsim = 250, antithetics = TRUE,filtered=TRUE)
+sexratio.filter &lt;- rep(NA,length(model$y))
+sexratio.fci &lt;- matrix(NA, length(model$y), 2)
+w &lt;- impf$w/rowSums(impf$w)
+for(i in 2:length(model$y)){
+  sexr &lt;- exp(impf$sample[i,1,])
+  sexratio.filter[i] &lt;- sum(sexr*w[i,])
+  oo&lt;-order(sexr)
+  sexratio.fci[i,] &lt;- c(sexr[oo][which.min(abs(cumsum(w[i,oo]) - 0.05))],
+                    sexr[oo][which.min(abs(cumsum(w[i,oo]) - 0.95))])
+}
+
+ts.plot(cbind(sexratio.smooth,sexratio.ci,sexratio.filter,sexratio.fci),
+        col=c(1,1,1,2,2,2),lty=c(1,2,2,1,2,2))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

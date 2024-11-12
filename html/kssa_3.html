@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kssa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kssa Algorithm</h2>
+
+<h3>Description</h3>
+
+<p>Run the Known Sub-Sequence Algorithm to compare the performance of imputation methods on a time series of interest
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kssa(
+  x_ts,
+  start_methods,
+  actual_methods,
+  segments = 5,
+  iterations = 10,
+  percentmd = 0.2,
+  seed = 1234
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x_ts</code></td>
+<td>
+<p>Time series object <code>ts</code> containing missing data (NA)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_methods</code></td>
+<td>
+<p>String vector. The method or methods to start the algorithm.
+Same as for actual_methods</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>actual_methods</code></td>
+<td>
+<p>The imputation methods to be compared and validated. It can be a string vector containing the following
+You can choose between the following:
+</p>
+
+<ul>
+<li>
+<p>"all" - compare among all methods automatically - Default
+</p>
+</li>
+<li>
+<p>"auto.arima" - State space representation of an ARIMA model
+</p>
+</li>
+<li>
+<p>"StructTS" - State space representation of a structural model
+</p>
+</li>
+<li>
+<p>"seadec" - Seasonal decomposition with Kalman smoothing
+</p>
+</li>
+<li>
+<p>"linear_i" - Linear interpolation
+</p>
+</li>
+<li>
+<p>"spline_i" - Spline interpolation
+</p>
+</li>
+<li>
+<p>"stine_i" - Stineman interpolation
+</p>
+</li>
+<li>
+<p>"simple_ma" - Simple moving average
+</p>
+</li>
+<li>
+<p>"linear_ma" - Linear moving average
+</p>
+</li>
+<li>
+<p>"exponential_ma" - Exponential moving average
+</p>
+</li>
+<li>
+<p>"locf" - Last observation carried forward
+</p>
+</li>
+<li>
+<p>"stl" - Seasonal and trend decomposition with Loess
+</p>
+</li>
+</ul>
+<p>For further details on these imputation methods please check packages <code>imputeTS</code> and <code>forecast</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>segments</code></td>
+<td>
+<p>Integer. Into how many segments the time series will be divided</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterations</code></td>
+<td>
+<p>Integer. How many iterations to run</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>percentmd</code></td>
+<td>
+<p>Numeric. Percentage of missing data. Must match with the true percentage of missing data in x_ts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Numeric. Random seed to choose</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of results to be plotted with function <code>kssa_plot</code> for easy interpretation
+</p>
+
+
+<h3>References</h3>
+
+<p>Benavides, I. F., Santacruz, M., Romero-Leiton, J. P., Barreto, C., &amp; Selvaraj, J. J. (2022). Assessing methods for multiple imputation of systematic missing data in marine fisheries time series with a new validation algorithm. Aquaculture and Fisheries.
+<a href="https://www.sciencedirect.com/science/article/pii/S2468550X21001696">Full text publication</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Example 1: Compare all imputation methods
+
+library("kssa")
+library("imputeTS")
+
+# Create 20% random missing data in tsAirgapComplete time series from imputeTS
+airgap_na &lt;- missMethods::delete_MCAR(as.data.frame(tsAirgapComplete), 0.2)
+
+# Convert to time series object
+airgap_na_ts &lt;- ts(airgap_na, start = c(1959, 1), end = c(1997, 12), frequency = 12)
+
+# Apply the kssa algorithm with 5 segments, 10 iterations, 20% of missing data,
+# compare among all available methods in the package.
+# Remember that percentmd must match with
+# the real percentage of missing data in the input time series
+
+results_kssa &lt;- kssa(airgap_na_ts,
+  start_methods = "all",
+  actual_methods = "all",
+  segments = 5,
+  iterations = 10,
+  percentmd = 0.2
+)
+
+# Print and check results
+results_kssa
+
+# For an easy interpretation of kssa results
+# please use function kssa_plot
+
+
+
+
+# Example 2: Compare only locf and linear imputation
+
+library("kssa")
+library("imputeTS")
+
+# Create 20% random missing data in tsAirgapComplete time series from imputeTS
+airgap_na &lt;- missMethods::delete_MCAR(as.data.frame(tsAirgapComplete), 0.2)
+
+# Convert to time series object
+airgap_na_ts &lt;- ts(airgap_na, start = c(1959, 1), end = c(1997, 12), frequency = 12)
+
+# Apply the kssa algorithm with 5 segments, 10 iterations, 20% of missing data,
+# compare among all applied methods (locf and linear interpolation).
+# Remember that percentmd must match with
+# the real percentage of missing data in the input time series
+
+results_kssa &lt;- kssa(airgap_na_ts,
+  start_methods = c("locf", "linear_i"),
+  actual_methods = c("locf", "linear_i"),
+  segments = 5,
+  iterations = 10,
+  percentmd = 0.2
+)
+
+# Print and check results
+results_kssa
+
+# For an easy interpretation of kssa results
+# please use function kssa_plot
+
+</code></pre>
+
+
+</div>

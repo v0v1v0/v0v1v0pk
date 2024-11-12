@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_ifl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create an Indexed Frequency List</h2>
+
+<h3>Description</h3>
+
+<p>The keyperm package stores frequency lists in a special data structure called
+indexed frequency list. This can currently be created from a tdm object as   
+implemented in the tm package.
+</p>
+<p>Indexed frequency lists are essentially frequency lists stored in a three-column format,
+similar to the simple triplet matrix internally used by tm to store term-document-matrices.
+The first column stores number of document <code>i</code>, second number of term <code>j</code> and the third the 
+frequencies with which the term <code>j</code> occurs in document <code>i</code>. Zero occurences are omitted. 
+All columns contain integers, and the frequency list is sorted by document.  
+</p>
+<p>The object returned is of class <code>indexed_frequency_list</code>. In addition to the actual frequency 
+list it contains an index for fast access as well as pre-computed total number of tokens per
+document and total occurences per term.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_ifl(
+  tdm,
+  subset_terms = 1:dim(tdm)[1],
+  subset_docs = 1:dim(tdm)[2],
+  corpus
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tdm</code></td>
+<td>
+<p>a tdm-matrix from the tm package. Currently, this is the only supported input, but others may be added in later versions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset_terms</code></td>
+<td>
+<p>vector of terms to be considered. Can be integer (indices) or boolean. Terms not included still are counted for total number of token per document.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset_docs</code></td>
+<td>
+<p>vector of documents to be considered. Can be integer (indices) or boolean. Documents excluded do not contribute to total number of occurences of a term.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corpus</code></td>
+<td>
+<p>vector indicating which documents belong to corpus A (first corpus). Can be integer (indices) or boolean. Currently, only comparisons of two corpora are supported.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with class <code>indexed_frequency_list</code> containing the following components:
+</p>
+
+
+</div>

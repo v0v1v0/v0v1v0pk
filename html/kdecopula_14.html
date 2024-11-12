@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hkdecop</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>H-function and inverse of a <code>kdecop()</code> fit</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates the h-function (or its inverse) corresponding to a <code>kdecopula</code>
+object. H-functions are conditional distribution functions obtained by
+integrating the copula density w.r.t. to one of its arguments (see also
+<code>VineCopula::BiCopHfunc()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hkdecop(u, obj, cond.var, inverse = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p><code class="reqn">n x 2</code> matrix of evaluation points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p><code>kdecopula</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cond.var</code></td>
+<td>
+<p>integer; <code>cond.var = 1</code> conditions on the first variable,
+<code>cond.var = 2</code> on the second.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inverse</code></td>
+<td>
+<p>logical; indicates whether the h-function or its inverse shall be
+calculated.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A length <code class="reqn">n</code> vector of the (inverse) h-function evaluated at
+<code>u</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Nagler
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## load data and transform with empirical cdf
+data(wdbc)
+udat &lt;- apply(wdbc[, -1], 2, function(x) rank(x) / (length(x) + 1))
+
+## estimation of copula density of variables 5 and 6
+fit &lt;- kdecop(udat[, 5:6])
+plot(fit) 
+
+## evaluate h-function estimate and its inverse at (u1|u2) = (0.123 | 0.321)
+hkdecop(c(0.123, 0.321), fit, cond.var = 2) 
+hkdecop(c(0.123, 0.321), fit, cond.var = 2, inverse = TRUE) 
+
+</code></pre>
+
+
+</div>

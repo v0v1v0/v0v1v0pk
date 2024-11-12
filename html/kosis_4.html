@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getStatDataFromURL</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>KOSIS Statistic Data from URL</h2>
+
+<h3>Description</h3>
+
+<p>KOSIS Statistic Data from URL
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getStatDataFromURL(url)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>A string specifying the KOSIS URL</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<pre>
+## Example
+url &lt;- "https://kosis.kr/openapi/Param/statisticsParameterData.do?
+method=getList&amp;apiKey=&amp;
+itmId=T6+T16+T26+T5+T15+T25+T2+T12+T22+T3+T13+T23+T4+T14+T24+T1+T11+T21+&amp;
+objL1=ALL&amp;objL2=&amp;objL3=&amp;objL4=&amp;objL5=&amp;objL6=&amp;objL7=&amp;objL8=&amp;
+format=json&amp;jsonVD=Y&amp;
+prdSe=Y&amp;newEstPrdCnt=3&amp;prdInterval=1&amp;
+orgId=101&amp;tblId=DT_1B41"
+getStatDataFromURL(url = url)
+</pre>
+
+
+<h3>Value</h3>
+
+<p>A data.frame object containing queried information
+</p>
+
+
+</div>

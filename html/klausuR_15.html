@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>klausur.gen.corr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A function to generate a vector with correct answers</h2>
+
+<h3>Description</h3>
+
+<p>Create a vector of correct answers to be used by <code>klausur</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">klausur.gen.corr(answ = NULL, items.char = FALSE, test.forms = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>answ</code></td>
+<td>
+<p>Either an object with item names in klausuR scheme (see <code>klausur</code>),
+e.g. your observation data,
+or an integer representing the maximum score of the test. If NULL, you will
+be asked for the maximum score.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>items.char</code></td>
+<td>
+<p>Logical,
+will the answers be coded as characters or integer numbers (default)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test.forms</code></td>
+<td>
+<p>An integer value specifying how many parallel test forms are available</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>By default answers are expected to be numeric values. You can change that to character with <code>items.char=TRUE</code>.
+</p>
+<p>The parameter <code>answ</code> is quite versatile. You can just feed it your observation data,
+if it complies
+with the naming scheme for items (<code>Item###</code>,
+see also <code>klausur.gen</code>), and
+<code>klausur.gen.corr</code> will use all of its items automatically. Or you assign the number of items directly
+as an integer value. If you leave <code>answ=NULL</code>,
+you will be asked for the number of items.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric or character vector (depending on the parameter <code>items.char</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>m.eik michalke <a href="mailto:meik.michalke@uni-duesseldorf.de">meik.michalke@uni-duesseldorf.de</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>klausur</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+richtig &lt;- klausur.gen.corr(answ=antworten)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

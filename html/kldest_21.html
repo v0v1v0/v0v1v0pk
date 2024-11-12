@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mvdnorm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Probability density function of multivariate Gaussian distribution</h2>
+
+<h3>Description</h3>
+
+<p>Probability density function of multivariate Gaussian distribution
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mvdnorm(x, mu, Sigma)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector of length <code>d</code> at which Gaussian density is evaluated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>A vector of length <code>d</code>, mean of Gaussian distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma</code></td>
+<td>
+<p>A <code>d</code>-by-<code>d</code> matrix, covariance matrix of Gaussian distribution.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The probability density of <code class="reqn">N(\mu,\Sigma)</code> evaluated at <code>x</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 1D example
+mvdnorm(x = 2, mu = 1, Sigma = 2)
+dnorm(x = 2, mean = 1, sd = sqrt(2))
+# Independent 2D example
+mvdnorm(x = c(2,2), mu = c(1,1), Sigma = diag(1:2))
+prod(dnorm(x = c(2,2), mean = c(1,1), sd = sqrt(1:2)))
+# Correlated 2D example
+mvdnorm(x = c(2,2), mu = c(1,1), Sigma = matrix(c(2,1,1,2),nrow=2))
+</code></pre>
+
+
+</div>

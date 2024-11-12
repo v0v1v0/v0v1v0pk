@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CheckNonNumeric</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Detecting Non-numeric Values.</h2>
+
+<h3>Description</h3>
+
+<p>Check whether or not an input matrix includes any non-numeric values (NA, NULL, "", character, etc) before being used for training. If any non-numeric values exist, then TrainBuddle() or FetchBuddle() will return non-numeric results.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CheckNonNumeric(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>an n-by-p matrix.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list of (n+1) values where n is the number of non-numeric values. The first element of the list is n, and all other elements are entries of X where non-numeric values occur. For example, when the (1,1)th and the (2,3)th entries of a 5-by-5 matrix X are non-numeric, then the list returned by CheckNonNumeric() will contain 2, (1,1), and (2,3).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+n = 5;
+p = 5;
+X = matrix(0, n, p)       #### Generate a 5-by-5 matrix which includes two NA's.
+X[1,1] = NA
+X[2,3] = NA
+
+lst = CheckNonNumeric(X)
+
+lst
+
+</code></pre>
+
+
+</div>

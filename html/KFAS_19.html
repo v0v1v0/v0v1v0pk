@@ -1,0 +1,496 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KFS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kalman Filter and Smoother with Exact Diffuse Initialization for Exponential
+Family State Space Models</h2>
+
+<h3>Description</h3>
+
+<p>Performs Kalman filtering and smoothing with exact diffuse initialization
+using univariate approach for exponential family state space models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KFS(
+  model,
+  filtering,
+  smoothing,
+  simplify = TRUE,
+  transform = c("ldl", "augment"),
+  nsim = 0,
+  theta,
+  maxiter = 50,
+  convtol = 1e-08,
+  return_model = TRUE,
+  expected = FALSE,
+  H_tol = 1e+15,
+  transform_tol
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Object of class <code>SSModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filtering</code></td>
+<td>
+<p>Types of filtering. Possible choices are <code>"state"</code>,
+<code>"signal"</code>, <code>"mean"</code>, and <code>"none"</code>. Default is
+<code>"state"</code> for Gaussian and <code>"none"</code> for non-Gaussian models.
+Multiple values are allowed. For Gaussian models, the signal is the mean.
+Note that filtering for non-Gaussian models with importance sampling can be
+very slow with large models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smoothing</code></td>
+<td>
+<p>Types of smoothing. Possible choices are <code>"state"</code>,
+<code>"signal"</code>, <code>"mean"</code>, <code>"disturbance"</code>, and <code>"none"</code>. Default is <code>"state"</code> and <code>"mean"</code>. For
+non-Gaussian models, option <code>"disturbance"</code> is not supported, and for
+Gaussian models option <code>"mean"</code> is identical to <code>"signal"</code>. Multiple values are
+allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+<p>If <code>FALSE</code> and the model is completely Gaussian, <code>KFS</code> returns some
+generally not so interesting variables from filtering and smoothing. Default
+is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+<p>How to transform the model in case of non-diagonal
+covariance matrix <code>H</code>. Defaults to <code>"ldl"</code>. See function
+<code>transformSSM</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>The number of independent samples used in importance sampling.
+Only used for non-Gaussian models. Default is 0, which computes the
+approximating Gaussian model by <code>approxSSM</code> and performs the
+usual Gaussian filtering/smoothing so that the smoothed state estimates
+equals to the conditional mode of <code class="reqn">p(\alpha_t|y)</code>.
+In case of <code>nsim = 0</code>, the mean estimates and their variances are computed using
+the Delta method (ignoring the covariance terms).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Initial values for conditional mode theta. Only used for
+non-Gaussian models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>The maximum number of iterations used in Gaussian
+approximation. Default is 50. Only used for non-Gaussian models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convtol</code></td>
+<td>
+<p>Tolerance parameter for convergence checks for Gaussian
+approximation. Only used for non-Gaussian models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_model</code></td>
+<td>
+<p>Logical, indicating whether the original input model should be 
+returned as part of the output. Defaults to TRUE, but for large models can be set 
+to FALSE in order to save memory. However, many of the methods operating on the 
+output of <code>KFS</code> use this model so this will not work if <code>return_model=FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expected</code></td>
+<td>
+<p>Logical value defining the approximation of H_t in case of Gamma 
+and negative binomial distribution. Default is <code>FALSE</code> which matches the 
+algorithm of Durbin &amp; Koopman (1997), whereas <code>TRUE</code> uses the expected value
+of observations in the equations, leading to results which match with <code>glm</code> (where applicable).
+The latter case was the default behaviour of KFAS before version 1.3.8.
+Essentially this is the difference between observed and expected information in the GLM context. 
+Only used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H_tol</code></td>
+<td>
+<p>Tolerance parameter for check <code>max(H) &gt; tol_H</code>, which suggests that the approximation 
+converged to degenerate case with near zero signal-to-noise ratio. Default is very generous 1e15. 
+Only used for non-Gaussian model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform_tol</code></td>
+<td>
+<p>Tolerance parameter for LDL decomposition in case of a 
+non-diagonal H and <code>transform = "ldl"</code>. See <code>transformSSM</code> and 
+<code>ldl</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Notice that in case of multivariate Gaussian observations, <code>v</code>, <code>F</code>,
+<code>Finf</code>, <code>K</code> and <code>Kinf</code> are usually not the same as those
+calculated in usual multivariate Kalman filter. As filtering is done one
+observation element at the time, the elements of the prediction error
+<code class="reqn">v_t</code> are uncorrelated, and <code>F</code>, <code>Finf</code>, <code>K</code> and
+<code>Kinf</code> contain only the diagonal elemens of the corresponding covariance
+matrices. The usual multivariate versions of <code>F</code> and <code>v</code> can be
+obtained from the output of <code>KFS</code> using the function
+<code>mvInnovations</code>.
+</p>
+<p>In rare cases (typically with regression components with high multicollinearity or 
+long cyclic patterns), the cumulative rounding errors in Kalman filtering and 
+smoothing can cause the diffuse phase end too early,
+or the backward smoothing gives negative variances (in diffuse and nondiffuse cases). 
+Since version 1.4.0, filtering and smoothing algorithms truncate these values to zero during the 
+recursions, but this can still leads some numerical problems.
+In these cases, redefining the  prior state variances more informative is often helpful. 
+Changing the tolerance parameter <code>tol</code> of the model (see <code>SSModel</code>) to smaller 
+(or larger), or scaling the model input can sometimes help as well. These numerical issues 
+are well known in Kalman filtering/smoothing in general 
+(there are other numerically more stable versions available, but these are in general slower).
+</p>
+<p>Fon non-Gaussian models the components corresponding to diffuse filtering
+(<code>Finf</code>, <code>Pinf</code>, <code>d</code>, <code>Kinf</code>) are not returned even
+when <code>filtering</code> is used. Results based on approximating Gaussian model
+can be obtained by running <code>KFS</code> using the output of <code>approxSSM</code>.
+</p>
+<p>In case of non-Gaussian models with <code>nsim = 0</code>, the smoothed estimates
+relate to the conditional mode of <code class="reqn">p(\alpha|y)</code>. When using importance
+sampling (<code>nsim&gt;0</code>), results correspond to the conditional mean of
+<code class="reqn">p(\alpha|y)</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>What <code>KFS</code> returns depends on the arguments <code>filtering</code>,
+<code>smoothing</code> and <code>simplify</code>, and whether the model is Gaussian or
+not:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Original state space model. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>KFS_transform</code></td>
+<td>
+<p>How the non-diagonal <code>H</code> was handled. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logLik</code></td>
+<td>
+<p>Value of the log-likelihood function. Only returned for fully
+Gaussian models. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>One-step-ahead predictions of states, <code class="reqn">a_t = E(\alpha_t | y_{t-1},
+  \ldots, y_{1})</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>Non-diffuse parts of the error covariance matrix of predicted states,
+<code class="reqn">P_t = Var(\alpha_t | y_{t-1}, \ldots, y_{1})
+  </code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pinf</code></td>
+<td>
+<p>Diffuse part of the error covariance matrix of predicted states.
+Only returned for Gaussian models. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>att</code></td>
+<td>
+<p>Filtered estimates of states, <code class="reqn">a_tt = E(\alpha_t | y_{t},
+  \ldots, y_{1})</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ptt</code></td>
+<td>
+<p>Non-diffuse parts of the error covariance matrix of filtered states,
+<code class="reqn">P_tt = Var(\alpha_t | y_{t}, \ldots, y_{1})
+  </code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>One-step-ahead predictions of signals, <code class="reqn">E(Z_t\alpha_t | y_{t-1},
+  \ldots, y_{1})</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P_theta</code></td>
+<td>
+<p>Non-diffuse part of <code class="reqn">Var(Z_t\alpha_t | y_{t-1}, \ldots,
+  y_{1})</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>One-step-ahead predictions <code class="reqn">f(\theta_t) | y_{t-1}, \ldots,
+  y_{1})</code>, where <code class="reqn">f</code> is the
+inverse link function. In case of Poisson distribution these predictions are
+multiplied with exposure <code class="reqn">u_t</code>.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P_mu</code></td>
+<td>
+<p>Non-diffuse part of <code class="reqn">Var(f(\theta_t) |
+  y_{t-1}, \ldots, y_{1})</code>.
+In case of Poisson distribution this is <code class="reqn">Var(u_t f(\theta_t) | y_{t-1},
+  \ldots, y_{1})</code>.
+If <code>nsim = 0</code>, only diagonal elements (variances) are computed, using the
+Delta method. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alphahat</code></td>
+<td>
+<p>Smoothed estimates of states, <code class="reqn">E(\alpha_t | y_1, \ldots,
+  y_n)</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V</code></td>
+<td>
+<p>Error covariance matrices of smoothed states, <code class="reqn">Var(\alpha_t | y_1,
+  \ldots, y_n)</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thetahat</code></td>
+<td>
+<p>Smoothed estimates of signals, <code class="reqn">E(Z_t\alpha_t | y_1,
+  \ldots, y_n)</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_theta</code></td>
+<td>
+<p>Error covariance matrices of smoothed signals
+<code class="reqn">Var(Z[t]\alpha_t | y_1, \ldots, y_n).</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>muhat</code></td>
+<td>
+<p>Smoothed estimates of <code class="reqn">f(\theta_t) | y_1, \ldots,
+  y_n)</code>, where <code class="reqn">f</code> is the inverse
+link function, or in Poisson case <code class="reqn">u_t f(\theta_t) | y_1, \ldots,
+  y_n)</code>, where <code class="reqn">u</code> is the exposure term. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_mu</code></td>
+<td>
+<p>Error covariances <code class="reqn">Cov(f(\theta_t)| y_1, \ldots,
+  y_n)</code> (or the covariances of
+<code class="reqn">u_t f(\theta_t)</code> given the data in case of Poisson
+distribution). If <code>nsim = 0</code>, only diagonal elements (variances) are
+computed, using the Delta method.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>etahat</code></td>
+<td>
+<p>Smoothed disturbance terms <code class="reqn">E(\eta_t | y_1, \ldots,
+  y_n)</code>. Only for Gaussian models. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_eta</code></td>
+<td>
+<p>Error covariances <code class="reqn">Var(\eta_t | y_1, \ldots, y_n)</code>. Note that for computing auxiliary residuals you shoud use method
+<code>rstandard.KFS</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epshat</code></td>
+<td>
+<p>Smoothed disturbance terms <code class="reqn">E(\epsilon_{t,i} | y_1,
+  \ldots, y_n)</code>. Note that due to
+the possible diagonalization these are on transformed scale.
+Only for Gaussian models. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_eps</code></td>
+<td>
+<p>Diagonal elements of <code class="reqn">Var(\epsilon_{t} | y_1, \ldots,
+  y_n)</code>. Note that due to the
+diagonalization the off-diagonal elements are zero.
+Only for Gaussian models. Note that for computing auxiliary residuals you shoud use method
+<code>rstandard.KFS</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iterations</code></td>
+<td>
+<p>The number of iterations used in linearization of
+non-Gaussian model. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>Prediction errors <code class="reqn">v_{t,i} = y_{t,i} - Z_{i,t}a_{t,i},
+  i = 1, \ldots,p</code>, where
+</p>
+<p style="text-align: center;"><code class="reqn">a_{t,i} = E(\alpha_t | y_{t,i-1}, \ldots, y_{t,1}, \ldots,
+  y_{1,1})</code>
+</p>
+<p>.
+Only returned for Gaussian models.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F</code></td>
+<td>
+<p>Prediction error variances <code class="reqn">Var(v_{t,i})</code>. Only
+returned for Gaussian models. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Finf</code></td>
+<td>
+<p>Diffuse part of prediction error variances. Only returned for Gaussian
+models. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>The last time index of diffuse phase, i.e. the non-diffuse
+phase began at time <code class="reqn">d+1</code>. Only returned for Gaussian models.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>j</code></td>
+<td>
+<p>The last observation index <code class="reqn">i</code> of <code class="reqn">y_{i,t}</code> of the
+diffuse phase. Only returned for Gaussian models.  </p>
+</td>
+</tr>
+</table>
+<p>In addition, if argument <code>simplify = FALSE</code>, list contains following
+components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>Covariances <code class="reqn">Cov(\alpha_{t,i}, y_{t,i} | y_{t,i-1}, \ldots,
+  y_{t,1}, y_{t-1}, \ldots , y_{1}), \quad i = 1, \ldots, p</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kinf</code></td>
+<td>
+<p>Diffuse part of <code class="reqn">K_t</code>.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>Weighted sums of innovations <code class="reqn">v_{t+1}, \ldots, v_{n}</code>.  Notice that in literature <code class="reqn">t</code> in <code class="reqn">r_t</code> goes from
+<code class="reqn">0, \ldots, n</code>. Here <code class="reqn">t = 1, \ldots, n + 1</code>. Same applies to all <code class="reqn">r</code> and
+<code class="reqn">N</code> variables.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r0, r1</code></td>
+<td>
+<p>Diffuse phase decomposition of <code class="reqn">r_t</code>.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>Covariances <code class="reqn">Var(r_t)</code>.  </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N0, N1, N2</code></td>
+<td>
+<p>Diffuse phase decomposition of <code class="reqn">N_t</code>.   </p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Koopman, S.J. and Durbin J. (2000).  Fast filtering and
+smoothing for non-stationary time series models, Journal of American
+Statistical Assosiation, 92, 1630-38.  <br></p>
+<p>Koopman, S.J. and Durbin J. (2001).  Time Series Analysis by State Space
+Methods. Oxford: Oxford University Press.  <br></p>
+<p>Koopman, S.J. and Durbin J. (2003).  Filtering and smoothing of state vector
+for diffuse state space models, Journal of Time Series Analysis, Vol. 24,
+No. 1.  <br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>KFAS</code> for examples
+</p>
+<p><code>logLik</code>, <code>KFAS</code>, <code>fitSSM</code>, 
+<code>boat</code>, <code>sexratio</code>,
+<code>GlobalTemp</code>, <code>SSModel</code>, 
+<code>importanceSSM</code>, <code>approxSSM</code> for examples.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1)
+x &lt;- cumsum(rnorm(100, 0, 0.1))
+y &lt;- rnorm(100, x, 0.1)
+model &lt;- SSModel(y ~ SSMtrend(1, Q = 0.01), H = 0.01)
+out &lt;- KFS(model)
+ts.plot(ts(x), out$a, out$att, out$alpha, col = 1:4)
+
+</code></pre>
+
+
+</div>

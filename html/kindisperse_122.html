@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simgraph_graph</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple kin dispersal simulation for graphical display. (graphs the pre-existing simulation).</h2>
+
+<h3>Description</h3>
+
+<p>Simple kin dispersal simulation for graphical display. (graphs the pre-existing simulation).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simgraph_graph(
+  result,
+  nsims = 10,
+  labls = TRUE,
+  steps = TRUE,
+  moves = TRUE,
+  shadows = TRUE,
+  kinship = NULL,
+  show_area = TRUE,
+  centred = FALSE,
+  pinwheel = FALSE,
+  scattered = FALSE,
+  lengths = TRUE,
+  lengthlabs = TRUE,
+  histogram = FALSE,
+  binwidth = posigma/5,
+  freqpoly = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>result</code></td>
+<td>
+<p>simulation supplied from simgraph_data() function (tibble)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsims</code></td>
+<td>
+<p>number of families to graph</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labls</code></td>
+<td>
+<p>Logical. Displays labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>Logical. Whether or not to show any details of dispersal movement</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>moves</code></td>
+<td>
+<p>Logical. Whether or not to show (curved) lines denoting dispersal movement</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shadows</code></td>
+<td>
+<p>Logical. Whether or not to show (dashed) shadows tracing dispersal movement.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kinship</code></td>
+<td>
+<p>Character. Lists the kin category the simulation is reconstructing. One of "PO", "FS", "HS", "AV", "GG", "HAV", "GGG", "1C", "1C1", "2C", "GAV" (no half-categoris included)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_area</code></td>
+<td>
+<p>Logical. Whether or not to show the parental seed area as defined in data$dims</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centred</code></td>
+<td>
+<p>Logical. Whether or not to centre the coordinates on one individual.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pinwheel</code></td>
+<td>
+<p>Logical. Whether the final graph should be of the pinwheel form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scattered</code></td>
+<td>
+<p>Logical. Whether the final graph should be of the scatter form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lengths</code></td>
+<td>
+<p>Logical. Whether or not to show a dashed line connecting the 'focus' kin to illustrate overall distance of dispersal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lengthlabs</code></td>
+<td>
+<p>Logical. Whether to show labels denoting distance of dispersal between focus kin.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>histogram</code></td>
+<td>
+<p>Logical. Whether the final graph should be of the histogram form.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binwidth</code></td>
+<td>
+<p>Numeric. Binwidth for histogram or freqpoly.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freqpoly</code></td>
+<td>
+<p>Logical. Whether the final graph should be of the freqpoly form.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<pre> Returns a ggplot object for graphing.
+</pre>
+
+
+<h3>See Also</h3>
+
+<p>Other simgraph: 
+<code>simgraph_data()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">simdata &lt;- simgraph_data()
+simgraph_graph(simdata)
+</code></pre>
+
+
+</div>

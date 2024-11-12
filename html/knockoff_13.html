@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knockoff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>knockoff: A package for controlled variable selection</h2>
+
+<h3>Description</h3>
+
+<p>This package implements the Knockoff Filter, which is a powerful and versatile tool for 
+controlled variable selection.
+</p>
+
+
+<h3>Outline</h3>
+
+<p>The procedure is based on the contruction of artificial 'knockoff copies' of the variables 
+present in the given statistical model. Then, it selects those variables that are clearly better 
+than their corresponding knockoffs, based on some measure of variable importance.
+A wide range of statistics and machine learning tools can be exploited to estimate the 
+importance of each variable, while guaranteeing finite-sample control of the false
+discovery rate (FDR).
+</p>
+<p>The Knockoff Filter controls the FDR in either of two statistical scenarios:
+</p>
+
+<ul>
+<li>
+<p>The "model-X" scenario: the response <code class="reqn">Y</code> can depend on the variables <code class="reqn">X=(X_1,\ldots,X_p)</code>
+in an arbitrary and unknown fashion, but the distribution of <code class="reqn">X</code> must be known. In thise case
+there are no constraints on the dimensions <code class="reqn">n</code> and <code class="reqn">p</code> of the problem.
+</p>
+</li>
+<li>
+<p>The "fixed-X" scenario: the response <code class="reqn">Y</code> depends upon <code class="reqn">X</code> through a 
+homoscedastic Gaussian linear model and the problem is low-dimensional (<code class="reqn">n \geq p</code>). 
+In this case, no modeling assumptions on <code class="reqn">X</code> are required. 
+</p>
+</li>
+</ul>
+<p>For more information, see the website below and the accompanying paper.
+</p>
+<p><a href="https://web.stanford.edu/group/candes/knockoffs/index.html">https://web.stanford.edu/group/candes/knockoffs/index.html</a>
+</p>
+
+
+</div>

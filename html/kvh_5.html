@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kvh_get_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get matrix from kvh file</h2>
+
+<h3>Description</h3>
+
+<p>Given a read connection to kvh file and a vector of keys pointing to a matrix, return this matrix
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kvh_get_matrix(f, v)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>connection from which kvh file can be read</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>v</code></td>
+<td>
+<p>character vector of key-subkeys pointing to a matrix</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>It is expected that matrix in the kvh file has its upper-leftmost item called "row_col" and it has
+rownames in the first column and colnames in the first row.
+</p>
+
+
+<h3>Value</h3>
+
+<p>matrix read from kvh
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># write a test matrix
+obj2kvh(list(comment="this is a test matrix",  m=diag(2)), "li", "test.kvh")
+# read it back
+mr=kvh_get_matrix(file("test.kvh"), c("li", "m"))
+# clean
+unlink("test.kvh")
+
+</code></pre>
+
+
+</div>

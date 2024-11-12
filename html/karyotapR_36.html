@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>runClustering</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cluster 2D data</h2>
+
+<h3>Description</h3>
+
+<p>Clusters data using dbscan method and saves cluster assignments for each cell barcode to <code>colData</code>.
+Generally used to assign clusters to UMAP projection after PCA and UMAP dimensional reduction.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">runClustering(
+  TapestriExperiment,
+  alt.exp = "alleleFrequency",
+  dim.reduction = "UMAP",
+  eps = 0.8,
+  dim.1 = 1,
+  dim.2 = 2,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>TapestriExperiment</code></td>
+<td>
+<p><code>TapestriExperiment</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt.exp</code></td>
+<td>
+<p>Character, <code>altExp</code> slot to use. <code>NULL</code> uses top-level/main experiment. Default "alleleFrequency".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.reduction</code></td>
+<td>
+<p>Character, reduced dimension data to use. Default "UMAP".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>Numeric, <code>dbscan</code> <code>eps</code> parameter. Lower to increase cluster granularity. See <code>dbscan::dbscan()</code>. Default 0.8.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.1</code></td>
+<td>
+<p>Numeric, index of data dimension to use. Default 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.2</code></td>
+<td>
+<p>Numeric, index of data dimension to use. Default 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional parameters to pass to <code>dbscan::dbscan()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TapestriExperiment</code> object with updated <code>colData</code> containing cluster assignments.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dbscan::dbscan()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tap.object &lt;- newTapestriExperimentExample() # example TapestriExperiment object
+tap.object &lt;- runPCA(tap.object, alt.exp = "alleleFrequency")
+tap.object &lt;- runUMAP(tap.object, pca.dims = 1:3)
+tap.object &lt;- runClustering(tap.object, dim.reduction = "UMAP", eps = 0.8)
+</code></pre>
+
+
+</div>

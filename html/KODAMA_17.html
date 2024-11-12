@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loads</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Variable Ranking</h2>
+
+<h3>Description</h3>
+
+<p>This function can be used to extract the variable ranking when KODAMA is performed with the PLS-DA classifier.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">loads(model,method=c("loadings","kruskal.test"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>output of KODAMA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method to be used. Choices are "<code>loadings</code>" and "<code>kruskal.test</code>".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns a vector of values indicating the "importance" of each variable. If "<code>method="loadings"</code> the average of the loading of the first component of PLS models based on the cross-validated accuracy maximized vector is computed. If "<code>method="kruskal.test"</code> the average of minus logarithm of p-value of Kruskal-Wallis Rank Sum test is computed. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stefano Cacciatore</p>
+
+
+<h3>References</h3>
+
+<p>Cacciatore S, Luchinat C, Tenori L	<br>
+Knowledge discovery by accuracy maximization.<br><em>Proc Natl Acad Sci U S A</em> 2014;111(14):5117-22. doi: 10.1073/pnas.1220873111. <a href="https://www.pnas.org/doi/10.1073/pnas.1220873111">Link</a>
+<br><br>
+Cacciatore S, Tenori L, Luchinat C, Bennett PR, MacIntyre DA	<br>
+KODAMA: an updated R package for knowledge discovery and data mining.	<br><em>Bioinformatics</em> 2017;33(4):621-623. doi: 10.1093/bioinformatics/btw705. <a href="https://academic.oup.com/bioinformatics/article/33/4/621/2667156">Link</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KODAMA.matrix</code>,<code>KODAMA.visualization</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ data(iris)
+ data=iris[,-5]
+ labels=iris[,5]
+ kk=KODAMA.matrix(data,FUN="PLS-DA")
+ loads(kk)
+
+</code></pre>
+
+
+</div>

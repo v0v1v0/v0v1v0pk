@@ -1,0 +1,132 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>knn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>k-nearest neighbor (kNN) supervised classification method</h2>
+
+<h3>Description</h3>
+
+<p>Performs the k-nearest neighbor (kNN) supervised classification method.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">knn(train, test, class, k = 1, dist = "euclidean", lambda = 3)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>train</code></td>
+<td>
+<p>Data set of training, without classes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>Test data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>Vector with data classes names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of nearest neighbors (default = 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dist</code></td>
+<td>
+<p>Distances used in the method: "euclidean" (default), "manhattan", "minkowski", "canberra", "maximum" or "chebyshev".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>Value used in the minkowski distance (default = 3).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>predict</code></td>
+<td>
+<p>The classified factors of the test set.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paulo Cesar Ossani</p>
+
+
+<h3>References</h3>
+
+<p>Aha, D. W.; Kibler, D. and Albert, M. K. Instance-based learning algorithms. <em>Machine learning.</em> v.6, n.1, p.37-66. 1991.
+</p>
+<p>Nicoletti, M. do C. O modelo de aprendizado de maquina baseado em exemplares: principais caracteristicas e algoritmos. Sao Carlos: EdUFSCar, 2005. 61 p.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot_curve</code> and <code>results</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(iris) # data set
+
+data  &lt;- iris
+names &lt;- colnames(data)
+colnames(data) &lt;- c(names[1:4],"class")
+
+#### Start - hold out validation method ####
+dat.sample = sample(2, nrow(data), replace = TRUE, prob = c(0.7,0.3))
+data.train = data[dat.sample == 1,] # training data set
+data.test  = data[dat.sample == 2,] # test data set
+class.train = as.factor(data.train$class) # class names of the training data set
+class.test  = as.factor(data.test$class)  # class names of the test data set
+#### End - hold out validation method ####
+
+
+dist = "euclidean" 
+# dist = "manhattan"
+# dist = "minkowski"
+# dist = "canberra"
+# dist = "maximum"
+# dist = "chebyshev"
+
+k = 1
+lambda = 5
+
+r &lt;- (ncol(data) - 1)
+res &lt;- knn(train = data.train[,1:r], test = data.test[,1:r], class = class.train, 
+           k = 1, dist = dist, lambda = lambda)
+
+resp &lt;- results(orig.class = class.test, predict = res$predict)
+
+message("Mean squared error:"); resp$mse
+message("Mean absolute error:"); resp$mae
+message("Relative absolute error:"); resp$rae
+message("Confusion matrix:"); resp$conf.mtx  
+message("Hit rate: ", resp$rate.hits)
+message("Error rate: ", resp$rate.error)
+message("Number of correct instances: ", resp$num.hits)
+message("Number of wrong instances: ", resp$num.error)
+message("Kappa coefficient: ", resp$kappa)
+message("General results of the classes:"); resp$res.class
+
+</code></pre>
+
+
+</div>
